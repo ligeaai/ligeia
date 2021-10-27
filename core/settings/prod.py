@@ -1,5 +1,5 @@
 import os
-from settings.base import *  # NOQA
+from core.settings.base import *  # NOQA
 
 DEBUG = os.environ.get("DEBUG", False)
 

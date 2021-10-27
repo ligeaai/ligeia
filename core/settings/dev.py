@@ -1,4 +1,4 @@
-from settings.base import *  # NOQA
+from core.settings.base import *  # NOQA
 
 DEBUG = True
 INSTALLED_APPS += ['django_extensions', ]
@@ -8,7 +8,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',    
         'USER': 'postgres',
-        'PASSWORD': 'postgres',
+        'PASSWORD': 'admin',
         'NAME': 'dev_db',
     },
 }
