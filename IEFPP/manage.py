@@ -6,7 +6,9 @@ import sys
 
 def main():
     """Run administrative tasks."""
-    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'IEFPP.settings.base')
+    if os.environ.get('DJANGO_SETTINGS_MODULE', None) is None:
+        os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'settings.dev')
+
     try:
         from django.core.management import execute_from_command_line
     except ImportError as exc:
@@ -20,4 +22,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-#TODO: 1.Check manage.py
