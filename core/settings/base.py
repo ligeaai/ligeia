@@ -41,8 +41,6 @@ INSTALLED_APPS = [
     'polymorphic',
     'django.contrib.contenttypes',
     'core',
-    
-    # 'pgdbmodel',
 ]
 
 MIDDLEWARE = [
