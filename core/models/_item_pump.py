@@ -1,15 +1,12 @@
 from django.db import models
 import uuid
-from core.models._base_equip import Equip_base
+from core.models._base_equip import Base_equip
 
-class Pump(Equip_base):
+class Pump(Base_equip):
    battery_id = models.ForeignKey('battery', on_delete=models.CASCADE)
    measurement= models.CharField(db_column='measurement', max_length=15  ,blank=True)
-   product= models.CharField(db_column='product', max_length=15  ,blank=True)
-   type= models.CharField(db_column='type', max_length=15  ,blank=True)
-
-   # stop_id = models.ForeignKey('pgdbmodel.Stop', on_delete=models.CASCADE)
-   # route_many_id = models.ManyToManyField('pgdbmodel.Route', through='pgdbmodel.Route_itemref_pump')
+   product= models.ForeignKey('type_battery', on_delete=models.CASCADE, blank=True, null=True)
+   type= models.ForeignKey('type_pump', on_delete=models.CASCADE, blank=True, null=True)
 
    def __str__(self):
       if self.measurement:

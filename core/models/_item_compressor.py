@@ -1,8 +1,8 @@
 from django.db import models
 import uuid
-from core.models._base_equip import Equip_base
+from core.models._base_equip import Base_equip
 
-class Compressor(Equip_base):
+class Compressor(Base_equip):
    battery_id = models.ForeignKey('battery', on_delete=models.CASCADE)
    cumulative_m= models.CharField(db_column='cumulative_m', max_length=15  ,blank=True)
    disc_press_meas= models.BooleanField(db_column='disc_press_meas',blank=True)

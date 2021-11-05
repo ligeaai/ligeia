@@ -3,27 +3,26 @@ from django.utils import timezone
 import uuid
 import pytz
 from timezone_field import TimeZoneField
-from core.models._base_domain import Domain_base
+from core.models._base_domain import Base_domain
 
 
-class Battery(Domain_base):
-   name= models.CharField(db_column='name', max_length=15, blank=False, unique=True)
-   operated= models.BooleanField(db_column='operated',default=True)
-   active= models.BooleanField(db_column='active',blank=False, default=True)
-   latitude= models.TextField(db_column='latitude', max_length=15, blank=True, null=True)
-   longitude= models.TextField(db_column='longitude',  max_length=15, blank=True, null=True)
+class Battery(Base_domain):
+   latitude= models.CharField(db_column='latitude', max_length=15, blank=True, null=True)
+   longitude= models.CharField(db_column='longitude',  max_length=15, blank=True, null=True)
    # time_zone= timezone.now() 
-   type= models.ForeignKey('battery_type', on_delete=models.CASCADE, null=True)
-   company_id = models.ForeignKey('company', on_delete=models.CASCADE, null=True)   
+   type= models.ForeignKey('type_battery', on_delete=models.CASCADE, blank=True, null=True)
    day_start= models.DateTimeField(auto_now_add=False, blank=True, null=True)   
-   product= models.CharField(db_column='product', max_length=15, blank=True, null= True)
-   country= models.CharField(db_column='country', max_length=15, blank=True, null= True)
-   county= models.CharField(db_column='county', max_length=15, blank=True, null= True)
-   code= models.CharField(db_column='code', max_length=15, blank=True, null= True)
-   direct_entry= models.BooleanField(db_column='direct_entry',default=False)
-   accounting_id= models.CharField(db_column='accounting_id', max_length=15, blank=True, null= True)
-   fdc_id= models.CharField(db_column='fdc_id', max_length=15, blank=True, null= True)
-   registry_id= models.CharField(db_column='registry_id', max_length=15, blank=True, null= True)
+   product= models.CharField(db_column='type_product', max_length=15, blank=True, null= True)
+   company_id = models.ForeignKey('company', on_delete=models.CASCADE, null=True)   
+   country = models.ForeignKey('type_country', on_delete=models.CASCADE, blank=True, null=True)
+   state = models.ForeignKey('type_state', on_delete=models.CASCADE, blank=True, null=True)
+   county = models.ForeignKey('type_county', on_delete=models.CASCADE, blank=True, null=True)
+   code = models.CharField(db_column='code', max_length=15, blank=True, null= True)
+   direct_entry = models.BooleanField(db_column='direct_entry',default=False)
+   scada = models.BooleanField(db_column='SCADA',default=True)
+   accounting_id = models.CharField(db_column='accounting_id', max_length=15, blank=True, null= True)
+   fdc_id = models.CharField(db_column='fdc_id', max_length=15, blank=True, null= True)
+   registry_id = models.CharField(db_column='registry_id', max_length=15, blank=True, null= True)
    
    def __str__(self):
       if self.name:

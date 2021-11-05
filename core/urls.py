@@ -33,3 +33,7 @@ urlpatterns = [
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL,
                           document_root=settings.MEDIA_ROOT)
+
+admin.site.site_header = "Nordal Administration"
+admin.site.site_title = "Nordal Administration Portal"
+admin.site.index_title = "Welcome to Nordal Administration Portal"                          

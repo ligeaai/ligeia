@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.apps import apps
-from core.models._base_domain import Domain_base
+# from core.models._base_domain import Do
 
 # admin.site.register()
 
@@ -13,3 +13,4 @@ for model in models:
         pass
 
 # admin.site.register(Domain_base)
+
