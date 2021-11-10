@@ -24,7 +24,9 @@ from smart_selects import urls as smart_selects_urls
 
 urlpatterns = [
     path(r'admin/', admin.site.urls),
-    path(r'chaining/', include('smart_selects.urls'))
+    path(r'chaining/', include('smart_selects.urls')),
+    path('api-auth/', include('rest_framework.urls'))
+
     # path('product/', include('altair_product.urls')),
     # path(r'api/', include('api.urls'), name='api'),
     # path('api-auth/', include('rest_framework.urls')),
@@ -32,9 +34,9 @@ urlpatterns = [
     # path('ckeditor/', include('ckeditor_uploader.urls')),
 ]
 
-# if settings.DEBUG:
-#     urlpatterns += static(settings.MEDIA_URL,
-#                           document_root=settings.MEDIA_ROOT)
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL,
+                          document_root=settings.MEDIA_ROOT)
 
 admin.site.site_header = "Nordal Administration"
 admin.site.site_title = "Nordal Administration Portal"
