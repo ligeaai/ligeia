@@ -1,6 +1,6 @@
 from django.db import models
 import uuid
-from cities_light.models import City, Region, Country
+from cities_light.models import City, Region, Country, SubRegion
 from cities_light.models import Region
 from smart_selects.db_fields import ChainedForeignKey
 from core.models._base_domain import Base_domain
@@ -9,6 +9,7 @@ class Company(Base_domain):
    company_ref = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True)
    country = models.ForeignKey(Country, on_delete=models.CASCADE, blank=True)
    region = ChainedForeignKey(Region, chained_field="country", chained_model_field="country", show_all=False, auto_choose=True, sort=True, blank=True)
+   subregion = ChainedForeignKey(SubRegion, chained_field="region", chained_model_field="region", show_all=False, auto_choose=True, sort=True, blank=True)
    city = ChainedForeignKey(City, chained_field="region", chained_model_field="region", show_all=False, auto_choose=True, sort=True, blank=True)
    contact_name = models.CharField(db_column='contact_name', max_length=15, blank=True, null=True)   
    address = models.CharField(db_column='address', max_length=30, blank=True, null=True)
