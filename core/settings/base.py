@@ -48,9 +48,11 @@ INSTALLED_APPS = [
     'smart_selects',
     'polymorphic',
     'knox',
+    'drf_yasg',
 
     #defined apps
-    'core',
+    'dbmodels',
+    # 'restapi',
     'oauth',
 ]
 
@@ -145,13 +147,13 @@ CITIES_LIGHT_INCLUDE_COUNTRIES = ['KZ']
 MODELTRANSLATION_LANGUAGES = ('en', 'ru')
 
 MODELTRANSLATION_TRANSLATIONS_FILES = (
-    'core.translation'
+    'translation'
 )
 
 LANGUAGE_CODE = 'en-us'
 
 LOCALE_PATHS = (
-    os.path.join(BASE_DIR, 'core/locale'),
+    os.path.join(BASE_DIR, 'locale'),
 )
 
 TIME_ZONE = 'UTC'

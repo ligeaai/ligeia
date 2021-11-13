@@ -1,4 +1,4 @@
-from core.settings.base import *  # NOQA
+from settings.base import *  # NOQA
 
 DEBUG = True
 INSTALLED_APPS += ['django_extensions', ]
