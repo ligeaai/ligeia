@@ -1,1 +1,1 @@
-from admin import company
+from admin import *

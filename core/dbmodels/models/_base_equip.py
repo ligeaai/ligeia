@@ -5,11 +5,11 @@ from dbmodels.models._base_domain import Base_domain
 
 
 class Base_equip(Base_domain):
-   accounting_id = models.CharField(db_column='accounting_id', max_length=15, blank=True, null= True)
-   serial_id = models.CharField(db_column='serial_id', max_length=15, blank=True, null= True)
-   registry_id = models.CharField(db_column='registry_id', max_length=15, blank=True, null= True)
+   pass
    
    def __str__(self):
+      if self.name:
+         return self.name
       if self.accounting_id:
          return self.accounting_id
       if self.serial_id:
@@ -18,3 +18,6 @@ class Base_equip(Base_domain):
          return self.registry_id
 class Meta:
       db_table = 'base_equip'
+      ordering = ["name"]
+      verbose_name = "base_equip"
+      verbose_name_plural = "base_equips"
