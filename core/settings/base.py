@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'polymorphic',
     'knox',
     'drf_yasg',
+    'adminsortable2',
 
     #defined apps
     'dbmodels',
@@ -142,7 +143,7 @@ LANGUAGES = [
 
 
 CITIES_LIGHT_TRANSLATION_LANGUAGES = ['en', 'ru']
-CITIES_LIGHT_INCLUDE_COUNTRIES = ['KZ']
+CITIES_LIGHT_INCLUDE_COUNTRIES = ['KZ', 'CA']
 
 MODELTRANSLATION_LANGUAGES = ('en', 'ru')
 

@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.apps import apps
 from modeltranslation.admin import TranslationAdmin
-from core.models._base_domain import Base_domain
+from dbmodels.models._base_domain import Base_domain
 # from core.models._base_domain import Do
 from modeltranslation.admin import TranslationTabularInline
 
@@ -17,11 +17,13 @@ models = apps.get_models()
 
 # admin.site.register(Base_domain, BaseDomainAdmin)
 
-# for model in models:
-#     try:
-#         admin.site.register(model)
-#     except admin.sites.AlreadyRegistered:
-#         pass
+for model in models:
+    try:
+        admin.site.register(model)
+    except admin.sites.AlreadyRegistered:
+        pass
 
-# admin.site.register(Domain_base)
+# admin.site.register(Base_domain)
+
+
 

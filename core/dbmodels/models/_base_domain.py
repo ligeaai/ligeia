@@ -15,21 +15,20 @@ class Base_domain(models.Model):
    # x= models.DecimalField(db_column='x', max_digits=12, decimal_places=8,blank=True)
    # y= models.DecimalField(db_column='y', max_digits=12, decimal_places=8,blank=True)
 
-   start_datetime = models.DateTimeField(db_column='start_datetime', auto_now_add=True, blank=True) 
+   start_datetime = models.DateTimeField(db_column='start_datetime', default=timezone.now, blank=True) 
    end_datetime = models.DateTimeField(db_column='end_datetime', default=end_datetime, blank=False)
-   name = models.CharField(db_column='name', max_length=30, blank=False, unique=True)
+   name = models.CharField(db_column='name', max_length=50, blank=False, unique=True)
    short_name = models.CharField(db_column='short_name', max_length=30, blank=True, unique=True)   
    active = models.BooleanField(db_column='active',blank=False, default=True)   
    operated = models.BooleanField(db_column='operated', default=True)
-   last_updt_user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, blank=True, editable = False)
-   last_updt_date = models.DateTimeField(auto_now=True, blank=True, null=True, unique=True, editable = False)   
-   row_id = models.UUIDField(db_column='row_id', primary_key = False, default = uuid.uuid4, editable = False)
-   update_source = models.CharField(db_column='update_source', max_length=15, blank=True, editable = False)
-   version = models.CharField(db_column='version', max_length=15, blank=True, editable = False)
+   last_updt_user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, blank=True, editable = False, null=True,)
+   last_updt_date = models.DateTimeField(auto_now=True, blank=True, editable = False, null=True,)   
+   row_id = models.UUIDField(db_column='row_id', primary_key = False, default = uuid.uuid4, editable = False, null=True,)
+   update_source = models.CharField(db_column='update_source', max_length=15, blank=True, editable = False, null=True,)
+   version = models.CharField(db_column='version', max_length=15, blank=True, editable = False, null=True,)
    
-   # def __str__(self):
-   #    if self.name:
-   #       return self.name
+   def __str__(self):
+         return f"{self.name}, {self.short_name}"
    #    if self.short_name:
    #       return self.short_name
    #    if self.last_updt_user:

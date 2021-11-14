@@ -1,1 +1,1 @@
-from core.admin.admin import *
+from admin import company
