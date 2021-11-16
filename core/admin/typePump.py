@@ -1,21 +1,21 @@
 from django.contrib import admin
 from mptt.admin import DraggableMPTTAdmin
-from dbmodels.models._type_battery import Type_battery
+from dbmodels.models._type_pump import Type_pump
 
 
-class TypepBatteryInline(admin.StackedInline):
-    model = Type_battery
+class TypepPumpInline(admin.StackedInline):
+    model = Type_pump
     extra = 0
     max_num = 1
     show_change_link = True
 
 
-class TypeBatteryAdmin(DraggableMPTTAdmin):
+class TypePumpAdmin(DraggableMPTTAdmin):
     mptt_indent_field = "parent"
     list_display = ('indented_title','code_text','code','parent')
     list_display_links = ('indented_title',)    
     list_filter = ['parent']
-    inlines = [TypepBatteryInline]
+    inlines = [TypepPumpInline]
     
     search_fields = ['code_text', 'code']
     # ordering = ['code_text', 'code']
@@ -24,4 +24,4 @@ class TypeBatteryAdmin(DraggableMPTTAdmin):
     list_per_page = 250
     list_max_show_all = 1000
 
-admin.site.register(Type_battery, TypeBatteryAdmin)
+admin.site.register(Type_pump, TypePumpAdmin)

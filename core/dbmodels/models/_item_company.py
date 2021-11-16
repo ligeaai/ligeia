@@ -20,7 +20,7 @@ class Company(Base_domain):
     address = models.CharField(
         db_column='address', max_length=100, blank=True, null=True, verbose_name='Address')
     email = models.CharField(
-        db_column='email', max_length=100, blank=True, null=True, verbose_name='E-mail')
+        db_column='email', max_length=100, blank=True, null=True, verbose_name='e-mail')
     phone = models.CharField(
         db_column='phone', max_length=100, blank=True, null=True, verbose_name='Phone')
     operator = models.BooleanField(

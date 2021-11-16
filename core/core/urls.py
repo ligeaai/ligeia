@@ -3,7 +3,10 @@ from django.urls import include, path, re_path
 from django.conf import settings
 from django.conf.urls.static import static
 from smart_selects import urls as smart_selects_urls
-from admin import (company, field, battery, typeProduct, typeBattery)
+from admin import (
+                base_uom, item_company, item_field, 
+                item_battery, typeProduct, 
+                typeBattery, typePump)
 from rest_framework import permissions
 
 # admin.autodiscover()

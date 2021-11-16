@@ -3,9 +3,10 @@ import uuid
 from django.conf import settings
 from mptt.models import MPTTModel, TreeForeignKey
 
-class Type_battery(MPTTModel):
+
+class Type_pump(MPTTModel):
     code_text = models.CharField(
-        db_column='code_text', max_length=100, blank=False, unique=True, null=True, verbose_name='Code Name')
+        db_column='code_text', max_length=100, blank=False, unique=True, verbose_name='Code Name')
     code = models.CharField(db_column='code', max_length=100,
                             blank=False, unique=True, verbose_name='Code')
     parent = TreeForeignKey('self', blank=True, null=True, related_name='children',
@@ -29,8 +30,8 @@ class Type_battery(MPTTModel):
             return str(self.code_text)
         if self.code:
             return str(self.code)
-
-    def __str__(self):
+    
+    def __str__(self):                                                                  
         full_path = [self.code_text]
         k = self.parent
         while k is not None:
@@ -38,9 +39,8 @@ class Type_battery(MPTTModel):
             k = k.parent
         return ' / '.join(full_path[::-1])
 
-
 class MPTTMeta:
-    db_table = 'type_battery'
-    # order_insertion_by = ["code_text"]
-    verbose_name = "battery type"
-    verbose_name_plural = "battery types"
+    db_table = 'type_pump'
+    order_insertion_by = ["code_text"]
+    verbose_name = "pump type"
+    verbose_name_plural = "pump types"

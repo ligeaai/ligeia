@@ -52,9 +52,9 @@ INSTALLED_APPS = [
     'adminsortable2',
 
     #defined apps
-    'dbmodels',
-    # 'restapi',
+    'dbmodels',    
     'oauth',
+    # 'uom',
 ]
 
 MIDDLEWARE = [

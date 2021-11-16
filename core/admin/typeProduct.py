@@ -3,7 +3,7 @@ from mptt.admin import DraggableMPTTAdmin
 from dbmodels.models._type_product import Type_product
 
 
-class TypepProductLangInline(admin.StackedInline):
+class TypepProductInline(admin.StackedInline):
     model = Type_product
     extra = 0
     max_num = 1
@@ -12,10 +12,10 @@ class TypepProductLangInline(admin.StackedInline):
 
 class TypeProductAdmin(DraggableMPTTAdmin):
     mptt_indent_field = "parent"
-    list_display = ('indented_title','code_text','parent')
+    list_display = ('indented_title','code_text','code','parent')
     list_display_links = ('indented_title',)    
     list_filter = ['parent']
-    inlines = [TypepProductLangInline]
+    inlines = [TypepProductInline]
     
     search_fields = ['code_text', 'code']
     # ordering = ['code_text', 'code']

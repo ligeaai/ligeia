@@ -19,5 +19,5 @@ class Base_equip(Base_domain):
 class Meta:
       db_table = 'base_equip'
       ordering = ["name"]
-      verbose_name = "base_equip"
-      verbose_name_plural = "base_equips"
+      # verbose_name = "base_equip"
+      # verbose_name_plural = "base_equips"

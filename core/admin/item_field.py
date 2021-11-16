@@ -21,8 +21,8 @@ class FieldAdminBase(admin.ModelAdmin):
 
     fieldsets = (
         ('Defaults', {'fields': (('start_datetime', 'end_datetime'), ('name', 'short_name'), ('active', 'operated'), 'company_ref')}),
-        ('Location', {'fields': ('latitude','longitude','country', 'region', 'subregion', 'city')}),
-        ('Reference', {'fields': ('accounting_id','serial_id', 'registry_id')}),
+        ('Location', {'fields': ('product', 'latitude', 'longitude', 'country', 'region', 'subregion', 'city')}),
+        ('Reference', {'fields': ('accounting_id', 'serial_id', 'registry_id')}),
         ('Other', {'classes': ('collapse',),'fields': ('last_updt_user', 'last_updt_date', 'row_id', 'update_source', 'version')}),
     )
 

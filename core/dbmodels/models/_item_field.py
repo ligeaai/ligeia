@@ -9,6 +9,7 @@ class Field(Base_domain):
         db_column='latitude', max_length=100, blank=True, null=True, verbose_name='Latitude')
     longitude = models.CharField(
         db_column='longitude',  max_length=100, blank=True, null=True, verbose_name='Longitude')
+    product= models.ForeignKey('type_product', on_delete=models.CASCADE, blank=True, null=True, verbose_name='Product')
     country = models.ForeignKey(
         Country, on_delete=models.CASCADE, blank=True, null=True, verbose_name='Country')
     region = ChainedForeignKey(Region, chained_field="country", chained_model_field="country",
