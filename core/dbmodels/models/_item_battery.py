@@ -14,6 +14,7 @@ class Battery(Base_domain):
    product= models.ForeignKey('type_product', on_delete=models.CASCADE, blank=True, null=True, verbose_name='Product')
    day_start= models.DateTimeField(auto_now_add=False, blank=True, null=True, verbose_name='Prod. Start')      
    # company_id = models.ForeignKey('company', on_delete=models.CASCADE, null=True)
+   battery_ref = models.ForeignKey('battery', on_delete=models.CASCADE, blank=True, null=True, verbose_name='Battery Ref.')
    field_ref = models.ForeignKey('field', on_delete=models.CASCADE, blank=True, null=True, verbose_name='Field Ref.')
    code = models.CharField(db_column='code', max_length=100, blank=True, null= True, verbose_name='Code')
    direct_entry = models.BooleanField(db_column='direct_entry',default=False, verbose_name='Manual')
