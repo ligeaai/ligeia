@@ -15,12 +15,13 @@ class BatteryAdminBase(admin.ModelAdmin):
     # inlines = [FieldTabularInline]
     model = Battery
 
-    list_display = ['name', 'short_name', 'battery_ref', 'field_ref', 'type', 'product']    
+    list_display = ['name', 'short_name', 'company_ref', 'battery_ref', 'field_ref', 'type', 'product']    
     list_display_links = ['name']
     list_filter = ['field_ref', 'type', 'product']
 
     fieldsets = (
-        ('Defaults', {'fields': (('start_datetime', 'end_datetime'), ('name', 'short_name'), ('active', 'operated'), 'battery_ref', 'field_ref')}),
+        ('Defaults', {'fields': (('start_datetime', 'end_datetime'), ('name', 'short_name'), ('active', 'operated'), 
+            'company_ref', 'battery_ref', 'field_ref')}),
         ('Characteristics', {'fields': ('type', 'product', 'day_start', 'code', ('direct_entry', 'scada'))}),
         ('Location', {'fields': ('latitude','longitude')}),
         ('Reference', {'fields': ('accounting_id','serial_id', 'registry_id')}),

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from dbmodels.models._base_uom import Base_UOM
+from dbmodels.models._uom_base import UOM_Base
 
 
 # class BatteryTabularInline(admin.StackedInline):
@@ -17,30 +17,33 @@ class UOMAdminBase(admin.ModelAdmin):
     list_display = [
                     'code_id', 
                     'code_name', 
-                    'property_class',
-                    'dimension_class', 
-                    'base_uom_id',
+                    # 'parent',
+                    'property',
+                    'dimension',
+                    'layer',                     
                     'catalog_name', 
                     'metric_system',
-                    'conversion_type', 
+                    'conversion_type',                 
                     ]    
-    list_display_links = ['code_name']
-    list_filter = ['property_class', 'metric_system']
+    list_display_links = ['code_id', 'code_name']
+    list_filter = ['property', 'metric_system']
 
     fieldsets = (
         ('Defaults', {'fields': (                    
                     'code_id', 
                     'code_name', 
-                    'property_class',
-                    'dimension_class', 
-                    'base_uom_id',
+                    # 'parent',
+                    'property',
+                    'dimension',
+                    'layer',                     
                     'catalog_name', 
                     'metric_system',
-                    'conversion_type', 
+                    'conversion_type',
                     'A',
                     'B', 
                     'C',
-                    'D',)}),
+                    'D',
+                    )}),
         ('Other', {'classes': ('collapse',),'fields': ('last_updt_user', 'last_updt_date', 'row_id', 'update_source', 'version')}),
     )
 
@@ -51,4 +54,4 @@ class UOMAdminBase(admin.ModelAdmin):
     list_per_page = 250
     list_max_show_all = 1000
 
-admin.site.register(Base_UOM, UOMAdminBase)
+admin.site.register(UOM_Base, UOMAdminBase)

@@ -14,6 +14,7 @@ class Battery(Base_domain):
    product= models.ForeignKey('type_product', on_delete=models.CASCADE, blank=True, null=True, verbose_name='Product')
    day_start= models.DateTimeField(auto_now_add=False, blank=True, null=True, verbose_name='Prod. Start')      
    # company_id = models.ForeignKey('company', on_delete=models.CASCADE, null=True)
+   company_ref = models.ForeignKey('company', on_delete=models.CASCADE, null=True, blank=True, verbose_name='Company Ref.')
    battery_ref = models.ForeignKey('battery', on_delete=models.CASCADE, blank=True, null=True, verbose_name='Battery Ref.')
    field_ref = models.ForeignKey('field', on_delete=models.CASCADE, blank=True, null=True, verbose_name='Field Ref.')
    code = models.CharField(db_column='code', max_length=100, blank=True, null= True, verbose_name='Code')
@@ -23,19 +24,15 @@ class Battery(Base_domain):
    def __str__(self):
       if self.name:
          return self.name
-      if self.type:
+      elif self.type:
          return self.type
-      if self.product:
+      elif self.product:
          return self.product
-      if self.type:
-         return self.type
-      if self.product:
-         return self.product
-      if self.accounting_id:
+      elif self.accounting_id:
          return self.accounting_id
-      if self.serial_id:
+      elif self.serial_id:
          return self.serial_id
-      if self.registry_id:
+      elif self.registry_id:
          return self.registry_id
 
 class Meta:

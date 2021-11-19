@@ -4,9 +4,11 @@ from django.conf import settings
 from django.conf.urls.static import static
 from smart_selects import urls as smart_selects_urls
 from admin import (
-                base_uom, item_company, item_field, 
-                item_battery, typeProduct, 
-                typeBattery, typePump)
+                uom_property, uom_base, uom_set, 
+                item_company, item_field, item_battery,
+                typeProduct, typeBattery, typePump,                
+                # test
+                )
 from rest_framework import permissions
 
 # admin.autodiscover()
