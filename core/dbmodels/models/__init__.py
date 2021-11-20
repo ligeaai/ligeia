@@ -15,6 +15,7 @@ from dbmodels.models._item_engine import Engine
 from dbmodels.models._type_battery import Type_battery
 from dbmodels.models._type_pump import Type_pump
 from dbmodels.models._type_product import Type_product
+from dbmodels.models._type_status import Type_status
 
 # UOM
 from dbmodels.models._uom_base import UOM_Base

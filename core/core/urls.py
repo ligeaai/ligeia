@@ -6,7 +6,7 @@ from smart_selects import urls as smart_selects_urls
 from admin import (
                 uom_property, uom_base, uom_set, 
                 item_company, item_field, item_battery,
-                typeProduct, typeBattery, typePump,                
+                typeProduct, typeBattery, typePump, typeStatus,
                 # test
                 )
 from rest_framework import permissions
