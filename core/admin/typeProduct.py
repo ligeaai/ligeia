@@ -12,12 +12,12 @@ class TypepProductInline(admin.StackedInline):
 
 class TypeProductAdmin(DraggableMPTTAdmin):
     mptt_indent_field = "parent"
-    list_display = ('indented_title','code_text','code','parent')
+    list_display = ('indented_title','code','code_text','parent')
     list_display_links = ('indented_title',)    
     list_filter = ['parent']
     inlines = [TypepProductInline]
     
-    search_fields = ['code_text', 'code']
+    search_fields = ['code', 'code_text']
     # ordering = ['code_text', 'code']
     filter_horizontal = ()
     readonly_fields = ['last_updt_user', 'last_updt_date', 'row_id', 'update_source', 'version']

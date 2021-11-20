@@ -5,9 +5,10 @@ from mptt.models import MPTTModel, TreeForeignKey
 
 
 class Type_status(MPTTModel):
-    code_text = models.CharField(db_column='code_text', max_length=100, blank=False, unique=True, verbose_name='Code Name')
     code = models.CharField(db_column='code', max_length=100, blank=False, unique=True, verbose_name='Code')
+    code_text = models.CharField(db_column='code_text', max_length=100, blank=False, unique=True, verbose_name='Code Name')
     parent = TreeForeignKey('self', blank=True, null=True, related_name='children', on_delete=models.CASCADE, verbose_name='Parent')
+    
     last_updt_user = models.ForeignKey(
             settings.AUTH_USER_MODEL, on_delete=models.CASCADE, blank=True, editable=False, null=True, verbose_name='Last Update User')
     last_updt_date = models.DateTimeField(auto_now=True, blank=True, editable=False, null=True, verbose_name='Last Update Date')

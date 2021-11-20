@@ -3,7 +3,6 @@ import uuid
 from django.conf import settings
 
 class UOM_Base(models.Model):
-
     METRIC_SYSTEM = (
         ('IMPERIAL', 'Imperial'),
         ('METRIC', 'Metric')

@@ -1,16 +1,14 @@
 from smart_selects.db_fields import ChainedForeignKey, ChainedManyToManyField
-
 from django.db import models
 import uuid
 from django.conf import settings
 from mptt.models import MPTTModel, TreeForeignKey
-from dbmodels.models._uom_base import UOM_Base
-from dbmodels.models._uom_property import UOM_Property
+# from dbmodels.models._uom_base import UOM_Base
+# from dbmodels.models._uom_property import UOM_Property
 
+from mptt.models import MPTTModel, TreeForeignKey
 
-
-class UOM_Set(models.Model):
-
+class UOM_Set(MPTTModel):
     METRIC_SYSTEM = (
         ('IMPERIAL', 'Imperial'),
         ('METRIC', 'Metric')
@@ -21,18 +19,19 @@ class UOM_Set(models.Model):
         ('FRACTION', 'Fraction')
     )
 
-    code_id = models.CharField(db_column='code_id', max_length=100, blank=False, unique=True, verbose_name='Code ID')
-    code_name = models.CharField(db_column='code_name', max_length=100, null=True, blank=False, unique=False, verbose_name='Code Name')
-    property = models.ForeignKey('uom_property', on_delete=models.CASCADE, blank=True, null=True, verbose_name='Property Class')
+    code = models.CharField(db_column='code', max_length=100, blank=False, unique=True, verbose_name='Code')
+    code_text = models.CharField(db_column='code_text', max_length=100, blank=False, unique=True, verbose_name='Code Name')
+    # property = models.ForeignKey('uom_property', on_delete=models.CASCADE, blank=True, null=True, verbose_name='Property Class')
+    parent = TreeForeignKey('self', blank=True, null=True, related_name='children', on_delete=models.CASCADE, verbose_name='Parent')
     # property_class_id = models.ForeignKey('uom_property',  on_delete=models.CASCADE)
     # property = models.ForeignKey(UOM_Property,  on_delete=models.CASCADE)
-    uombase = ChainedForeignKey(
-        UOM_Base,
-        chained_field="property",
-        chained_model_field="property",
-        show_all=False,
-        auto_choose=True,
-        sort=True)
+    # uombase = ChainedForeignKey(
+    #     UOM_Base,
+    #     chained_field="property",
+    #     chained_model_field="property",
+    #     show_all=False,
+    #     auto_choose=True,
+    #     sort=True)
     layer = models.CharField(db_column='dimension_class', default="SYSTEM_UOM", max_length=100, null=True, blank=False, unique=False, verbose_name='Layer')
     catalog_name = models.CharField(db_column='catalog_name', default="POSC", max_length=100, blank=True, unique=False, verbose_name='Catalog Name')
     metric_system = models.CharField(db_column='metric_system', max_length=100, blank=True, unique=False, null=True, verbose_name='Metric System', choices = METRIC_SYSTEM)
@@ -51,26 +50,23 @@ class UOM_Set(models.Model):
     version = models.CharField(db_column='version', max_length=100, blank=True, editable=False, null=True, verbose_name='Version')
 
     def __str__(self):
-        if self.code_id:
-            return self.code_id
-        elif self.code_name:
-            return self.code_name
-        elif self.property_class:
-            return self.property_class
-        elif self.base_uom_id:
-            return self.base_uom_id
+        if self.code:
+            return self.code
+        elif self.code_text:
+            return self.code_text
+        elif self.metric_system:
+            return self.metric_system
 
-    # def __str__(self):
-    #     full_path = [self.code_name]
-    #     k = self.parent
-    #     while k is not None:
-    #         full_path.append(k.code_name)
-    #         k = k.parent
-    #     return ' / '.join(full_path[::-1])
+    def __str__(self):
+        full_path = [self.code_text]
+        k = self.parent
+        while k is not None:
+            full_path.append(k.code_text)
+            k = k.parent
+        return ' / '.join(full_path[::-1])
 
-
-class Meta:
+class MPTTMeta:
     db_table = 'uom_set'
-    order_insertion_by = ["code_id"]
+    order_insertion_by = ['code', 'code_text']
     verbose_name = "base_set"
     verbose_name_plural = "base_sets"

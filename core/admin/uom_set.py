@@ -1,54 +1,22 @@
 from django.contrib import admin
+from mptt.admin import DraggableMPTTAdmin
 from dbmodels.models._uom_set import UOM_Set
 
-
-# class BatteryTabularInline(admin.StackedInline):
-#     model = Battery
-#     # fk_name='company_ref'
-#     extra = 1
-#     show_change_link = True
-    
-#     # readonly_fields = ('country')
-#     # can_delete = False
-#     # extra = 0
-class UOMAdminBase(admin.ModelAdmin):
+class UOMAdminBase(DraggableMPTTAdmin):
     # inlines = [FieldTabularInline]
-    # model = Base_UOM
-    list_display = [
-                    'code_id', 
-                    'code_name', 
-                    # 'parent',
-                    'property',
-                    'uombase',
-                    'layer',                     
-                    'catalog_name', 
-                    'metric_system',
-                    'conversion_type',                 
-                    ]    
-    list_display_links = ['code_id', 'code_name']
-    list_filter = ['property', 'metric_system']
+    mptt_indent_field = "code"
+    list_display = ['tree_actions', 'indented_title', 'code', 'code_text', 'parent', 'layer', 'catalog_name', 'metric_system', 'conversion_type']    
+    list_display_links = ['indented_title']
+    list_filter = ['parent', 'metric_system']
 
     fieldsets = (
-        ('Defaults', {'fields': (                    
-                    'code_id', 
-                    'code_name', 
-                    # 'parent',
-                    'property',
-                    'uombase',
-                    'layer',                     
-                    'catalog_name', 
-                    'metric_system',
-                    'conversion_type',
-                    'A',
-                    'B', 
-                    'C',
-                    'D',
-                    )}),
+        ('Defaults', {'fields': ('parent', 'code', 'code_text', 'layer', 'catalog_name', 'metric_system', 'conversion_type',
+                    'A','B', 'C','D',)}),
         ('Other', {'classes': ('collapse',),'fields': ('last_updt_user', 'last_updt_date', 'row_id', 'update_source', 'version')}),
     )
 
-    search_fields = ['code_id', 'code_name']
-    ordering = ['code_id', 'code_name']
+    search_fields = ['code', 'code_text']
+    # ordering = ['code', 'code_text']
     filter_horizontal = ()
     readonly_fields = ['last_updt_user', 'last_updt_date', 'row_id', 'update_source', 'version']
     list_per_page = 250
