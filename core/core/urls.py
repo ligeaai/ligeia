@@ -16,10 +16,13 @@ from rest_framework import permissions
 urlpatterns = [
     path('admin/', admin.site.urls),
     # path('post-admin/', test.urls),
-    path(r'chaining/', include('smart_selects.urls')),
-    path(r'api-auth/', include('rest_framework.urls')),
+    path('chaining/', include('smart_selects.urls')),
+    path('api-auth/', include('rest_framework.urls')),
+    path('rest-auth/', include('rest_auth.urls')),        
+    path('rest-auth/registration/', include('rest_auth.registration.urls')),
+    path('api/v1/', include('restapi.urls')),
     # path(r'o/', include('oauth2_provider.urls', namespace='oauth2_provider')),
-    path(r'accounts/', include('allauth.urls')),
+    path('accounts/', include('allauth.urls')),
 
     # path('get-auth-token/', views.LoginAPI.as_view(), name='api_token_auth'),
     # path('knox-logout/', knox_views.LogoutView.as_view()),

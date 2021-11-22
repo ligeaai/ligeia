@@ -4,8 +4,7 @@ from rest_framework import permissions
 
 # Application imports
 from restapi.views import (UserModelViewSet, UserDetails,
-                             LoginAPI, DeviceModelViewSet, WellModelViewSet,
-                             SiteModelViewSet, WellControllerModelViewSet)
+                             LoginAPI, )
 from restapi import views
 
 # Third party imoprts

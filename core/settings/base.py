@@ -15,9 +15,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'django-insecure-9j935o7+7efsdf0)zfmbsg9ipx)u@s8r@3goejc_y^d**7^78w'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-
 SITE_ID = 1
 LOGIN_REDIRECT_URL = '/admin/'
+ACCOUNT_EMAIL_REQUIRED = True
 
 ALLOWED_HOSTS = ['127.0.0.1',
                  'localhost',
@@ -42,9 +42,13 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.google',
     # 'allauth.socialaccount.providers.facebook',
 
-    #extra apps
+    #rest
     'rest_framework',
-    # 'rest_framework.authtoken',
+    'rest_framework.authtoken',
+    'rest_auth',
+    'rest_auth.registration',
+    
+    #other apps
     'corsheaders',
     'modeltranslation',
     'cities_light',
@@ -57,7 +61,7 @@ INSTALLED_APPS = [
     #defined apps
     'dbmodels',    
     'oauth',
-    # 'uom',
+    'restapi',
 ]
 
 MIDDLEWARE = [

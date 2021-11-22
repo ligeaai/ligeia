@@ -5,7 +5,7 @@ import base64
 from rest_framework.viewsets import ModelViewSet
 from restapi.serializers import (UserModelSerializer, LoginSerializer, LogoutSerializer,
                                    LoginModelSerializer, LogoutModelSerializer)
-from core.oauth.models import IEFPlUser
+from oauth.models import IEFPPUser
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 from rest_framework.response import Response
