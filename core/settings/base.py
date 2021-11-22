@@ -15,11 +15,14 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'django-insecure-9j935o7+7efsdf0)zfmbsg9ipx)u@s8r@3goejc_y^d**7^78w'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+
 SITE_ID = 1
 LOGIN_REDIRECT_URL = '/admin/'
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1',
+                 'localhost',
+                 'sandbox.nordal.kz',
+                 '20.0.0.20']
 
 # Application definition
 

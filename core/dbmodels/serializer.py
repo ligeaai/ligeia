@@ -5,6 +5,14 @@ from django.forms.models import model_to_dict
 import json
 from django.apps import apps
 
+from django.core.serializers.json import DjangoJSONEncoder
+
+class LazyEncoder(DjangoJSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, YourCustomType):
+            return str(obj)
+        return super().default(obj)
+
 # import django
 # django.setup()
 

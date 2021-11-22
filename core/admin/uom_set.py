@@ -11,7 +11,7 @@ class UOMAdminBase(DraggableMPTTAdmin):
 
     fieldsets = (
         ('Defaults', {'fields': ('parent', 'code', 'code_text', 'layer', 'catalog_name', 'metric_system', 'conversion_type',
-                    'A','B', 'C','D',)}),
+                    'A', 'B', 'C', 'D',)}),
         ('Other', {'classes': ('collapse',),'fields': ('last_updt_user', 'last_updt_date', 'row_id', 'update_source', 'version')}),
     )
 
