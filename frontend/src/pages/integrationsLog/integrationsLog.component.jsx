@@ -1,10 +1,10 @@
-import { Typography } from '@mui/material'
-import React from 'react'
+import {Typography} from "@mui/material";
+import React from "react";
 
 export default function IntegrationsLog() {
-    return(
-        <div>
-            <Typography></Typography>
-        </div>
-    )
+  return (
+    <div>
+      <Typography>Intregrations log</Typography>
+    </div>
+  );
 }
