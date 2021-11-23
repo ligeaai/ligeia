@@ -116,7 +116,8 @@ class IEFPPUser(AbstractBaseUser, PermissionsMixin):
             msg = _("A customer with the e-mail address ‘{email}’ already exists.")
             raise ValidationError({'email': msg.format(email=self.email)})
     class Meta:
-        db_table = 'oaauth'
+        db_table = 'oauth'
+        app_label = 'oauth'
         verbose_name = 'IEFPP User'
         verbose_name_plural = 'IEFPP Users'
         swappable = 'AUTH_USER_MODEL'

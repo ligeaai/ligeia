@@ -67,6 +67,7 @@ class UOM_Set(MPTTModel):
 
 class MPTTMeta:
     db_table = 'uom_set'
+    app_label = 'dbmodels'
     order_insertion_by = ['code', 'code_text']
     verbose_name = "base_set"
     verbose_name_plural = "base_sets"

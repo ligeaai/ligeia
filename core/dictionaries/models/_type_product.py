@@ -32,6 +32,7 @@ class Type_product(MPTTModel):
 
 class MPTTMeta:
     db_table = 'type_product'
+    app_label = 'dbmodels'
     order_insertion_by = ["code_text"]
     verbose_name = "product type"
     verbose_name_plural = "product types"

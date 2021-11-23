@@ -33,6 +33,7 @@ class Type_battery(MPTTModel):
 
 class MPTTMeta:
     db_table = 'type_battery'
+    app_label = 'dbmodels'
     # order_insertion_by = ["code_text"]
     verbose_name = "battery type"
     verbose_name_plural = "battery types"

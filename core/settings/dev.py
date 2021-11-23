@@ -4,9 +4,9 @@ DEBUG = True
 INSTALLED_APPS += ['django_extensions', ]
 ALLOWED_HOSTS += ['192.168.1.110']
 
-DATABASE_ROUTERS = ['manager.router.DatabaseAppsRouter']
-DATABASE_APPS_MAPPING = {'dbmodels': 'default', 
-                         'oauth':'default'}
+DATABASE_ROUTERS = ['router.DatabaseAppsRouter']
+DATABASE_APPS_MAPPING = {'dbmodels': 'default',                          
+                         'dictionaries':'mongodb'}
 
 DATABASES = {
     'default': {

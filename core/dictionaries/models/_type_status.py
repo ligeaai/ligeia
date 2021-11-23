@@ -33,6 +33,7 @@ class Type_status(MPTTModel):
 
 class MPTTMeta:
     db_table = 'type_status'
+    app_label = 'dbmodels'
     order_insertion_by = ["code_text"]
     verbose_name = "status type"
     verbose_name_plural = "status types"

@@ -33,6 +33,7 @@ class Type_pump(MPTTModel):
 
 class MPTTMeta:
     db_table = 'type_pump'
+    app_label = 'dbmodels'
     order_insertion_by = ["code_text"]
     verbose_name = "pump type"
     verbose_name_plural = "pump types"
