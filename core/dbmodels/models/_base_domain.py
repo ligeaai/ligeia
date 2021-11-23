@@ -42,4 +42,5 @@ class Base_domain(models.Model):
 
 class Meta:
     db_table = 'base_domain'
+    app_label = 'dbmodels'
     # unique_together=(('item_id'),)

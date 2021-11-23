@@ -80,7 +80,7 @@ export default function SignIn() {
               </Typography>
             </Button>
           </Link>
-        </Paper>
+        </Paper>        
         <Typography fontSize={16} fontWeight={"Regular"}>
           Dont have an account ? <> </>
           <Link to="/auth/sign-up" className={classes.customLink}>

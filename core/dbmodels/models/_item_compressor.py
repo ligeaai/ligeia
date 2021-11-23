@@ -30,3 +30,4 @@ class Compressor(Base_equip):
          
 class Meta:
       db_table = 'compressor'
+      app_label = 'dbmodels'

@@ -9,9 +9,9 @@ class Base_equip(Base_domain):
    longitude= models.CharField(db_column='longitude',  max_length=100, blank=True, null=True, verbose_name='Longitude')
    
    battery_ref = models.ForeignKey('battery', on_delete=models.CASCADE, blank=True, null=True, verbose_name='Battery Ref.')
-   product= models.ForeignKey('type_battery', on_delete=models.CASCADE, blank=True, null=True)
-   type= models.ForeignKey('type_pump', on_delete=models.CASCADE, blank=True, null=True)
-   status= models.ForeignKey('type_status', on_delete=models.CASCADE, blank=True, null=True)
+   # product= models.ForeignKey('dictionaries.type_battery', on_delete=models.CASCADE, blank=True, null=True)
+   # type= models.ForeignKey('dictionaries.type_pump', on_delete=models.CASCADE, blank=True, null=True)
+   # status= models.ForeignKey('dictionaries.type_status', on_delete=models.CASCADE, blank=True, null=True)
    
    code = models.CharField(db_column='code', max_length=100, blank=True, null= True, verbose_name='Code')
    direct_entry = models.BooleanField(db_column='direct_entry',default=False, verbose_name='Manual')
@@ -36,6 +36,7 @@ class Base_equip(Base_domain):
          return self.registry_id
 class Meta:
       db_table = 'base_equip'
+      app_label = 'dbmodels'
       ordering = ["name"]
       # verbose_name = "base_equip"
       # verbose_name_plural = "base_equips"

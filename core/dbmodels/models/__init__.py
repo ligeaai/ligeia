@@ -12,17 +12,6 @@ from dbmodels.models._item_pump import Pump
 from dbmodels.models._item_engine import Engine
 
 
-# types import
-from dbmodels.models._type_battery import Type_battery
-from dbmodels.models._type_pump import Type_pump
-from dbmodels.models._type_product import Type_product
-from dbmodels.models._type_status import Type_status
-
-# UOM
-# from dbmodels.models._uom_base import UOM_Base
-# from dbmodels.models._uom_property import UOM_Property
-from dbmodels.models._uom_set import UOM_Set
-
 
 # from dbmodels.models.test import *
 

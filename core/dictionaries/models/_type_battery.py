@@ -3,6 +3,7 @@ import uuid
 from django.conf import settings
 from mptt.models import MPTTModel, TreeForeignKey
 
+
 class Type_battery(MPTTModel):
     code = models.CharField(db_column='code', max_length=100, blank=False, unique=True, verbose_name='Code')
     code_text = models.CharField(db_column='code_text', max_length=100, blank=False, unique=True, verbose_name='Code Name')
@@ -35,3 +36,4 @@ class MPTTMeta:
     # order_insertion_by = ["code_text"]
     verbose_name = "battery type"
     verbose_name_plural = "battery types"
+

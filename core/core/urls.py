@@ -4,10 +4,10 @@ from django.conf import settings
 from django.conf.urls.static import static
 from smart_selects import urls as smart_selects_urls
 from admin import (
-                uom_set, 
-                item_company, item_field, item_battery, item_pump,
-                typeProduct, typeBattery, typePump, typeStatus,
-                # test
+                # uom_set, 
+                # item_company, item_field, item_battery, item_pump,
+                # typeProduct, typeBattery, typePump, typeStatus,
+                test
                 )
 from rest_framework import permissions
 

@@ -59,7 +59,8 @@ INSTALLED_APPS = [
     'adminsortable2',
 
     #defined apps
-    'dbmodels',    
+    'dbmodels',
+    'dictionaries',
     'oauth',
     'restapi',
 ]

@@ -40,6 +40,7 @@ class Company(Base_domain):
 
 class Meta:
     db_table = 'company'
+    app_label = 'dbmodels'
     ordering = ["name"]
     verbose_name = "company"
     verbose_name_plural = "companies"
