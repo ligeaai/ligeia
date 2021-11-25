@@ -17,12 +17,21 @@ SECRET_KEY = 'django-insecure-9j935o7+7efsdf0)zfmbsg9ipx)u@s8r@3goejc_y^d**7^78w
 # SECURITY WARNING: don't run with debug turned on in production!
 SITE_ID = 1
 LOGIN_REDIRECT_URL = '/admin/'
-ACCOUNT_EMAIL_REQUIRED = True
+
+ACCOUNT_CONFIRM_EMAIL_ON_GET = True
+ACCOUNT_EMAIL_VERIFICATION = 'none'
 
 ALLOWED_HOSTS = ['127.0.0.1',
                  'localhost',
                  'sandbox.nordal.kz',
-                 '20.0.0.20']
+                 '20.0.0.20',
+                 '*']
+
+CORS_ALLOW_ALL_ORIGINS = True # If this is used then `CORS_ALLOWED_ORIGINS` will not have any effect
+CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:8000',
+]                 
 
 # Application definition
 
@@ -39,7 +48,7 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',    
-    'allauth.socialaccount.providers.google',
+    # 'allauth.socialaccount.providers.google',
     # 'allauth.socialaccount.providers.facebook',
 
     #rest
@@ -73,17 +82,19 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django.middleware.locale.LocaleMiddleware'
-    # 'corsheaders.middleware.CorsMiddleware',
-    # 'django.middleware.common.CommonMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
 ]
 
 ROOT_URLCONF = 'core.urls'
 
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': ['knox.auth.TokenAuthentication',
-                                       'rest_framework.authentication.BasicAuthentication',
-                                       'rest_framework.authentication.SessionAuthentication',
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+                                    # 'knox.auth.TokenAuthentication',
+                                    'rest_framework.authentication.TokenAuthentication',
+                                    'rest_framework.authentication.BasicAuthentication',
+                                    #    'rest_framework.authentication.SessionAuthentication',
                                       ],
 }
 

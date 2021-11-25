@@ -2,7 +2,7 @@ from settings.base import *  # NOQA
 
 DEBUG = True
 INSTALLED_APPS += ['django_extensions', ]
-ALLOWED_HOSTS += ['192.168.1.110']
+ALLOWED_HOSTS += ['192.168.1.110:8001']
 
 DATABASE_ROUTERS = ['router.DatabaseAppsRouter']
 DATABASE_APPS_MAPPING = {'dbmodels': 'default',                          
