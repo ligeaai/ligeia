@@ -4,6 +4,8 @@ import { Avatar, Box, ButtonBase } from '@mui/material';
 import logo from "../../../assets/kazatomprom.png";
 import ProfileSection from './ProfileSection';
 import NotificationSection from './NotificationSection';
+import SearchSection from './SearchSection/index'
+import LogoSection from '../LogoSection/index'
 import MenuIcon from '@mui/icons-material/Menu';
 import LanguageSection from './LanguageSection';
 
@@ -14,17 +16,18 @@ function Header({ handleLeftDrawerToggle, nandleDrawerClose }) {
         <>
             <Box
                 sx={{
-                    width: "auto",
+                    width: 228,
                     display: 'flex',
                     [theme.breakpoints.down('md')]: {
                         width: 'auto'
                     }
                 }}
             >
+
                 <Box component="span" sx={{ display: { xs: 'none', md: 'block' }, flexGrow: 1 }}>
-                    <img src={logo} alt="logo" />
+                    <LogoSection />
                 </Box>
-                <ButtonBase style={{ marginLeft: "20px" }} sx={{ borderRadius: '12px', overflow: 'hidden' }}>
+                <ButtonBase sx={{ borderRadius: '12px', overflow: 'hidden' }}>
                     <Avatar
                         variant="rounded"
                         sx={{
@@ -34,8 +37,8 @@ function Header({ handleLeftDrawerToggle, nandleDrawerClose }) {
                             background: "#F8F8F8",
                             color: "#303030",
                             '&:hover': {
-                                background: "#458BF3",
-                                color: "#FFFFFF"
+                                background: "#F8F8F8",
+                                color: "#458BF3"
                             }
                         }}
                         onClick={handleLeftDrawerToggle}
@@ -45,6 +48,8 @@ function Header({ handleLeftDrawerToggle, nandleDrawerClose }) {
                     </Avatar>
                 </ButtonBase>
             </Box>
+
+            <SearchSection />
             <Box sx={{ flexGrow: 1 }} />
             <Box sx={{ flexGrow: 1 }} />
             <LanguageSection />

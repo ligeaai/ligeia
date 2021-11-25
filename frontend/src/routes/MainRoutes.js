@@ -1,4 +1,4 @@
-import AdminLayout from '../layouts/AdminLayout'
+
 import AddEntity from '../pages/addentity/addEntity.component';
 import Analytics from '../pages/analytics/analytics.component';
 import Dashboard from '../pages/dashboard/dashboard.component';
@@ -7,19 +7,27 @@ import DataLog from '../pages/dataLog/dataLog.component';
 import EventLog from '../pages/eventLog/eventLog.component';
 import FailureLog from '../pages/failureLog/failureLog.component';
 import IntegrationsLog from '../pages/integrationsLog/integrationsLog.component';
+import { Navigate, Route } from 'react-router-dom';
+import AdminLayout from '../layouts/AdminLayout';
+import AuthLayout from '../layouts/AuthLayout';
+import DashboardLayout from '../layouts/MonitoringLayout/index';
+
+const PrivateRoute = ({ component: Component, authed, ...rest }) => (
+    <Route
+        {...rest}
+        render={props => (
+            authed
+                ? <Component {...props} />
+                : <Navigate to="/login" />
+        )}
+    />
+);
 
 const MainRoutes = {
     path: '/',
     element: <AdminLayout />,
     children: [
-        {
-            path: '/',
-            element: <Dashboard />
-        },
-        {
-            path: '/dashboard/default',
-            element: <Dashboard />
-        },
+
         {
             path: '/dashboard/analytics',
             element: <Analytics />

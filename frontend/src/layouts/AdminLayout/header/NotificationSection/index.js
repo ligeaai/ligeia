@@ -13,7 +13,7 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 const NotificationSection = () => {
     const theme = useTheme();
     const [open, setOpen] = useState(false);
-    const [value, setValue] = useState('');
+
     const anchorRef = useRef(null);
     const handleToggle = () => {
         setOpen((prevOpen) => !prevOpen);
@@ -47,7 +47,7 @@ const NotificationSection = () => {
                             background: "#F8F8F8",
                             color: "#303030",
                             '&[aria-controls="menu-list-grow"],&:hover': {
-                                background: "#F8F8F8",
+                                background: "F8F8F8",
                                 color: "#458BF3"
                             }
                         }}

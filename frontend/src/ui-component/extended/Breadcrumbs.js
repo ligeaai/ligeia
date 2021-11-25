@@ -95,7 +95,7 @@ const Breadcrumbs = ({ card, divider, icon, icons, maxItems, navigation, rightAl
         ItemIcon = item.icon ? item.icon : AccountTreeTwoToneIcon;
         itemContent = (
             <Typography
-                variant="h5"
+                variant="subtitle1"
                 sx={{
                     display: 'flex',
                     textDecoration: 'none',
@@ -114,15 +114,17 @@ const Breadcrumbs = ({ card, divider, icon, icons, maxItems, navigation, rightAl
             breadcrumbContent = (
                 <Card
                     sx={{
+
                         marginBottom: card === false ? 0 : theme.spacing(gridSpacing),
-
-
+                        border: card === false ? 'none' : '0.1px solid',
+                        borderColor: "rgba(0 , 0 ,0 , 0.05)",
                         background: card === false ? 'transparent' : theme.palette.background.default
                     }}
                     {...others}
                 >
-                    <Box sx={{ p: 2, pl: card === false ? 0 : 2 }}>
+                    <Box sx={{ p: 1, pl: card === false ? 0 : 2 }}>
                         <Grid
+
                             container
                             direction={rightAlign ? 'row' : 'column'}
                             justifyContent={rightAlign ? 'space-between' : 'flex-start'}
@@ -131,13 +133,14 @@ const Breadcrumbs = ({ card, divider, icon, icons, maxItems, navigation, rightAl
                         >
                             {title && !titleBottom && (
                                 <Grid item>
-                                    <Typography variant="body1" sx={{ fontWeight: 500 }}>
+                                    <Typography variant="h5" sx={{ fontWeight: 500 }}>
                                         {item.title}
                                     </Typography>
                                 </Grid>
                             )}
-                            <Grid item>
+                            <Grid item >
                                 <MuiBreadcrumbs
+
                                     sx={{ '& .MuiBreadcrumbs-separator': { width: 16, ml: 1.25, mr: 1.25 } }}
                                     aria-label="breadcrumb"
                                     maxItems={maxItems || 8}

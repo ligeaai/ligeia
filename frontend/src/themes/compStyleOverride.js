@@ -11,15 +11,14 @@ export default function componentStyleOverrides(theme) {
         },
         MuiPaper: {
             defaultProps: {
-                elevation: 0
+                elevation: 0,
+                
             },
             styleOverrides: {
                 root: {
                     backgroundImage: 'none'
                 },
-                rounded: {
-                    borderRadius: `${theme?.customization?.borderRadius}px`
-                }
+
             }
         },
         MuiCardHeader: {
@@ -55,16 +54,16 @@ export default function componentStyleOverrides(theme) {
                     paddingBottom: '10px',
                     '&.Mui-selected': {
                         color: "#458BF3",
-                        backgroundColor: "#F8F8F8",
+                        backgroundColor: "#E5F0FF",
                         '&:hover': {
-                            backgroundColor: "#F8F8F8"
+                            backgroundColor: "#E5F0FF"
                         },
                         '& .MuiListItemIcon-root': {
                             color: "#458BF3"
                         }
                     },
                     '&:hover': {
-                        backgroundColor: "#F8F8F8",
+                        backgroundColor: "#E5F0FF",
                         color: "#458BF3",
                         '& .MuiListItemIcon-root': {
                             color: "#458BF3"
@@ -103,6 +102,7 @@ export default function componentStyleOverrides(theme) {
             styleOverrides: {
                 root: {
                     background: bgColor,
+                    height: "48px",
                     borderRadius: `${theme?.customization?.borderRadius}px`,
                     '& .MuiOutlinedInput-notchedOutline': {
                         borderColor: theme.colors?.grey400

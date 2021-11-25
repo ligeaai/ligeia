@@ -5,10 +5,10 @@ import { Outlet } from 'react-router-dom';
 
 // ==============================|| MINIMAL LAYOUT ||============================== //
 
-const MinimalLayout = () => (
+const AuthLayout = () => (
     <>
         <Outlet />
     </>
 );
 
-export default MinimalLayout;
+export default AuthLayout;

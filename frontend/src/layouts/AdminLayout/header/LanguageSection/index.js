@@ -7,10 +7,10 @@ import {
     ButtonBase,
 } from '@mui/material';
 
-function LanguageSection  ()  {
+function LanguageSection() {
     const theme = useTheme()
     const [open, setOpen] = useState(false);
-    const [value, setValue] = useState('');
+
     const anchorRef = useRef(null);
 
     const handleToggle = () => {
