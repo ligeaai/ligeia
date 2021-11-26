@@ -4,11 +4,11 @@ from __future__ import unicode_literals
 from django.contrib import admin
 from db_oauth import models
 from django import forms
-from django.contrib.auth.admin import UserAdmin as BaseNordalUserAdmin
+from django.contrib.auth.admin import UserAdmin as platform_BaseUserAdmin
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 
 
-class NordalUserCreationForm(forms.ModelForm):
+class platform_UserCreationForm(forms.ModelForm):
     password1 = forms.CharField(label='Password', widget=forms.PasswordInput)
     password2 = forms.CharField(label='Password confirmation',
                                 widget=forms.PasswordInput)
@@ -25,14 +25,14 @@ class NordalUserCreationForm(forms.ModelForm):
         return password2
 
     def save(self, commit=True):
-        user = super(NordalUserCreationForm, self).save(commit=False)
+        user = super(platform_UserCreationForm, self).save(commit=False)
         user.set_password(self.cleaned_data["password1"])
         if commit:
             user.save()
         return user
 
 
-class NordalUserChangeForm(forms.ModelForm):
+class platform_UserChangeForm(forms.ModelForm):
     password = ReadOnlyPasswordHashField(label=("Password"),
                                          help_text=("Raw passwords are not stored, so there is no way to see "  # Noqa
                                                     "this user's password, but you can change the password "  # Noqa
@@ -45,9 +45,9 @@ class NordalUserChangeForm(forms.ModelForm):
         return self.initial["password"]
 
 
-class NordalUserAdmin(BaseNordalUserAdmin):
-    form = NordalUserChangeForm
-    add_form = NordalUserCreationForm
+class platform_UserAdmin(platform_BaseUserAdmin):
+    form = platform_UserChangeForm
+    add_form = platform_UserCreationForm
 
     list_display = ('username','email', 'first_name', 'last_name', 'date_joined', 'last_login', )
     list_filter = ('is_admin',)
@@ -70,4 +70,4 @@ class NordalUserAdmin(BaseNordalUserAdmin):
     filter_horizontal = ()
 
 
-admin.site.register(models.platform_User, NordalUserAdmin)
+admin.site.register(models.platform_User, platform_UserAdmin)
