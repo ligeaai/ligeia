@@ -1,6 +1,6 @@
 from django.contrib import admin
 from mptt.admin import DraggableMPTTAdmin
-from dbmodels.models._type_battery import Type_battery
+from db_dictionaries.models._type_battery import Type_battery
 
 
 class TypepBatteryInline(admin.StackedInline):

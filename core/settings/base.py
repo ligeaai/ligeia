@@ -23,14 +23,21 @@ ACCOUNT_EMAIL_VERIFICATION = 'none'
 
 ALLOWED_HOSTS = ['127.0.0.1',
                  'localhost',
+                 '192.168.1.110',
                  'sandbox.nordal.kz',
                  '20.0.0.20',
                  '*']
+
+CORS_ORIGIN_ALLOW_ALL = False
+CORS_ORIGIN_WHITELIST = (
+    'http://localhost:8000',
+)
 
 CORS_ALLOW_ALL_ORIGINS = True # If this is used then `CORS_ALLOWED_ORIGINS` will not have any effect
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:8000',
+    'http://0.0.0.0:8000'
 ]                 
 
 # Application definition
@@ -68,9 +75,9 @@ INSTALLED_APPS = [
     'adminsortable2',
 
     #defined apps
-    'dbmodels',
-    'dictionaries',
-    'oauth',
+    'db_models',
+    'db_dictionaries',
+    'db_oauth',
     'restapi',
 ]
 
@@ -116,7 +123,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'core.wsgi.application'
 ASGI_APPLICATION = 'core.asgi.application'
-AUTH_USER_MODEL  = 'oauth.iefppuser'
+AUTH_USER_MODEL  = 'db_oauth.platform_User'
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from dbmodels.models._item_battery import Battery
+from db_models.models._item_battery import Battery
 
 
 # class BatteryTabularInline(admin.StackedInline):

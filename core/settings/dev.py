@@ -4,9 +4,14 @@ DEBUG = True
 INSTALLED_APPS += ['django_extensions', ]
 ALLOWED_HOSTS += ['192.168.1.110:8001']
 
-DATABASE_ROUTERS = ['router.DatabaseAppsRouter']
-DATABASE_APPS_MAPPING = {'dbmodels': 'default',                          
-                         'dictionaries':'mongodb'}
+# database routing
+# DATABASE_ROUTERS = ['db_routers.router.DatabaseAppsRouter']
+
+# DATABASE_APPS_MAPPING = {
+#         # 'dbmodels':'postgresql', 
+#         # 'oauth': 'default', 
+#         'dictionaries':'default',
+#         }
 
 DATABASES = {
     'default': {
@@ -18,7 +23,7 @@ DATABASES = {
     'mongodb': {
         'NAME': 'dictionaries',
         'ENGINE': 'djongo',        
-        'ENFORCE_SCHEMA': False,
+        'ENFORCE_SCHEMA': True,
             # 'CLIENT': {
             #     'host': 'localhost',
             #     'port': 270117,
