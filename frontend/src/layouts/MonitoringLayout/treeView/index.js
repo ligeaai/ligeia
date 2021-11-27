@@ -9,7 +9,7 @@ import MenuCard from './MenuCard'
 
 
 
-const Sidebar = ({ drawerOpen, drawerToggle, window }) => {
+const TreeView = ({ drawerOpen, drawerToggle, window }) => {
     const theme = useTheme();
     const matchUpMd = useMediaQuery(theme.breakpoints.up('md'));
 
@@ -46,6 +46,7 @@ const Sidebar = ({ drawerOpen, drawerToggle, window }) => {
             style={{ boxShadow: "0px 0.5px 0.5px 0px rgba(0, 0, 0, 0.5)" }} aria-label="mailbox folders">
             <Drawer
                 container={container}
+                style={{ marginLeft: "300px" }}
                 variant={matchUpMd ? 'persistent' : 'temporary'}
 
                 anchor="left"
@@ -74,11 +75,11 @@ const Sidebar = ({ drawerOpen, drawerToggle, window }) => {
     );
 };
 
-Sidebar.propTypes = {
+TreeView.propTypes = {
     drawerOpen: PropTypes.bool,
     drawerToggle: PropTypes.func,
     window: PropTypes.object
 };
 
-export default Sidebar;
+export default TreeView;
 

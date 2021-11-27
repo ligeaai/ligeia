@@ -13,12 +13,12 @@ const styles = () => ({
 
     textFields: {
         marginLeft: "10px",
-        width: "300px",
+        width: "250px",
         marginRight: "10px",
     },
 
     controlForms: {
-        width: "300px",
+        width: "250px",
         marginLeft: "10px"
     },
 
@@ -85,8 +85,13 @@ const styles = () => ({
         alignItems: "center"
     },
 
-    parentCompany: {
-        display: 'flex',
+    latitude: {
+        display: "flex",
+        alignItems: "center"
+    },
+
+    longitude: {
+        display: "flex",
         alignItems: "center"
     },
 
@@ -110,25 +115,11 @@ const styles = () => ({
         alignItems: "center"
     },
 
-    contactName: {
+    companyRef: {
         display: "flex",
         alignItems: "center"
     },
 
-    address: {
-        display: "flex",
-        alignItems: "center"
-    },
-
-    email: {
-        display: "flex",
-        alignItems: "center"
-    },
-
-    phone: {
-        display: "flex",
-        alignItems: "center"
-    },
 
     actionsField: {
         backgroundColor: "#FFFFFF",
@@ -138,6 +129,9 @@ const styles = () => ({
         justifyContent: "flex-end",
         boxShadow: " 0px 0.5px 5px rgba(0, 0, 0, 0.1)"
     }
-})
+
+
+}
+)
 
 export default styles

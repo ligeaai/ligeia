@@ -7,7 +7,7 @@ import {Grid} from "@mui/material";
 import {Typography} from "@mui/material";
 import {Button} from "@mui/material";
 import {Link} from "react-router-dom";
-import {gridSpacing} from "../../store/constant";
+import {gridSpacing} from "../../../../store/constant";
 
 const useStyles = makeStyles(styles);
 

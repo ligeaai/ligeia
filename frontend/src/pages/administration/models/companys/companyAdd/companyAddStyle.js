@@ -13,12 +13,12 @@ const styles = () => ({
 
     textFields: {
         marginLeft: "10px",
-        width: "300px",
+        width: "250px",
         marginRight: "10px",
     },
 
     controlForms: {
-        width: "300px",
+        width: "250px",
         marginLeft: "10px"
     },
 
@@ -85,23 +85,12 @@ const styles = () => ({
         alignItems: "center"
     },
 
-
-    companyRef: {
-        display: "flex",
+    parentCompany: {
+        display: 'flex',
         alignItems: "center"
     },
 
-    batteryRef: {
-        display: "flex",
-        alignItems: "center"
-    },
-
-    fieldRef: {
-        display: "flex",
-        alignItems: "center"
-    },
-
-    code: {
+    country: {
         display: "flex",
         alignItems: "center"
     },
@@ -121,7 +110,25 @@ const styles = () => ({
         alignItems: "center"
     },
 
+    contactName: {
+        display: "flex",
+        alignItems: "center"
+    },
 
+    address: {
+        display: "flex",
+        alignItems: "center"
+    },
+
+    email: {
+        display: "flex",
+        alignItems: "center"
+    },
+
+    phone: {
+        display: "flex",
+        alignItems: "center"
+    },
 
     actionsField: {
         backgroundColor: "#FFFFFF",
@@ -130,11 +137,6 @@ const styles = () => ({
         display: "flex",
         justifyContent: "flex-end",
         boxShadow: " 0px 0.5px 5px rgba(0, 0, 0, 0.1)"
-    },
-
-    latitude: {
-        display: "flex",
-        alignItems: "center"
     }
 })
 

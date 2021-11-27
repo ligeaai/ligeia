@@ -79,7 +79,7 @@ const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(({
   })
 }));
 
-export default function AdminLayout() {
+const AdminLayout = () => {
   const theme = useTheme();
   const matchDownMd = useMediaQuery(theme.breakpoints.down('lg'));
   const leftDrawerOpened = useSelector((state) => state.customization.opened);
@@ -98,7 +98,7 @@ export default function AdminLayout() {
       <CssBaseline />
       <AppBar
         enableColorOnDark
-        
+
         position="fixed"
         color="inherit"
         style={{ height: "62px", boxShadow: " 0px 0.5px 5px rgba(0, 0, 0, 0.1)" }}
@@ -121,3 +121,4 @@ export default function AdminLayout() {
     </Box >
   );
 };
+export default AdminLayout

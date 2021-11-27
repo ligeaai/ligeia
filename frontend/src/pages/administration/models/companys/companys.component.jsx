@@ -1,7 +1,7 @@
 import {Button, Grid} from "@mui/material";
 import {makeStyles} from "@mui/styles";
 import {Typography} from "@mui/material";
-import {gridSpacing} from "../../store/constant";
+import {gridSpacing} from "../../../../store/constant";
 import styles from "./companysStyles";
 import {Link} from "react-router-dom";
 

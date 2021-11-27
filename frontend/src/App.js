@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { ThemeProvider } from '@mui/material/styles';
 import { StyledEngineProvider } from '@mui/material';
+import { CssBaseline } from '@mui/material';
 import { useSelector } from 'react-redux';
 import Routes from './routes/index';
 import themes from './themes';
@@ -13,6 +14,7 @@ function App() {
   return (
     <StyledEngineProvider injectFirst>
       <ThemeProvider theme={themes(customization)}>
+      <CssBaseline />
         <NavigationScroll>
           <Routes />
         </NavigationScroll>

@@ -9,8 +9,10 @@ import SidebarMini from './sidebarMini/index'
 import navigation from '../../menu-items/';
 import Breadcrumbs from '../../ui-component/extended/Breadcrumbs'
 import ChevronRightOutlinedIcon from '@mui/icons-material/ChevronRightOutlined';
-import { drawerWidth } from "../../store/constant";
 import { SET_MENU } from "../../redux/actions/actionTypes";
+import { TreeView } from '@mui/lab';
+
+const drawerWidth = 80
 
 
 const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(({ theme, open }) => ({
@@ -112,7 +114,7 @@ export default function MonitoringLayout() {
                 </Toolbar>
             </AppBar>
             <SidebarMini drawerOpen={leftDrawerOpened} drawerToggle={handleLeftDrawerToggle} />
-
+            
 
             <Main theme={theme} open={leftDrawerOpened}   >
 

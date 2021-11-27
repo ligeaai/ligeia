@@ -24,7 +24,6 @@ function BatteryAdd() {
   const [companyRef, setCompanyRef] = useState("");
   const [batteryRef, setBatteryRef] = useState("");
   const [fieldRef, setFieldRef] = useState("");
-  const [city, setCity] = useState("");
 
   const handleChangeCompanyRef = (event) => {
     setCompanyRef(event.target.value);
@@ -61,6 +60,7 @@ function BatteryAdd() {
                     renderInput={(params) => (
                       <TextField
                         className={classes.textFields}
+                        InputProps={{classes: {input: classes.input}}}
                         size="small"
                         variant="outlined"
                         {...params}
@@ -82,6 +82,7 @@ function BatteryAdd() {
                     renderInput={(params) => (
                       <TextField
                         className={classes.textFields}
+                        InputProps={{classes: {input: classes.input}}}
                         size="small"
                         variant="outlined"
                         {...params}
@@ -114,6 +115,7 @@ function BatteryAdd() {
                     renderInput={(params) => (
                       <TextField
                         className={classes.textFields}
+                        InputProps={{classes: {input: classes.input}}}
                         size="small"
                         variant="outlined"
                         {...params}
@@ -135,6 +137,7 @@ function BatteryAdd() {
                     renderInput={(params) => (
                       <TextField
                         className={classes.textFields}
+                        InputProps={{classes: {input: classes.input}}}
                         size="small"
                         variant="outlined"
                         {...params}
@@ -156,6 +159,7 @@ function BatteryAdd() {
               </Typography>
               <TextField
                 className={classes.textFields}
+                InputProps={{classes: {input: classes.input}}}
                 size="small"
                 variant="outlined"
               />
@@ -169,6 +173,7 @@ function BatteryAdd() {
               </Typography>
               <TextField
                 className={classes.textFields}
+                InputProps={{classes: {input: classes.input}}}
                 size="small"
                 variant="outlined"
               />
@@ -206,6 +211,7 @@ function BatteryAdd() {
               </Typography>
               <TextField
                 className={classes.textFields}
+                InputProps={{classes: {input: classes.input}}}
                 size="small"
                 variant="outlined"
               />
@@ -219,6 +225,7 @@ function BatteryAdd() {
               </Typography>
               <TextField
                 className={classes.textFields}
+                InputProps={{classes: {input: classes.input}}}
                 size="small"
                 variant="outlined"
               />
@@ -232,6 +239,7 @@ function BatteryAdd() {
               </Typography>
               <TextField
                 className={classes.textFields}
+                InputProps={{classes: {input: classes.input}}}
                 size="small"
                 variant="outlined"
               />
@@ -245,6 +253,7 @@ function BatteryAdd() {
               </Typography>
               <TextField
                 className={classes.textFields}
+                InputProps={{classes: {input: classes.input}}}
                 size="small"
                 variant="outlined"
               />
@@ -252,12 +261,13 @@ function BatteryAdd() {
           </Grid>
           <Divider className={classes.divider} />
           <Grid container direction="row" alignItems="center">
-            <Grid item className={classes.registry}>
+            <Grid item className={classes.longitude}>
               <Typography className={classes.subtitle} variant="h6">
                 Longitude:
               </Typography>
               <TextField
                 className={classes.textFields}
+                InputProps={{classes: {input: classes.input}}}
                 size="small"
                 variant="outlined"
               />
@@ -282,6 +292,7 @@ function BatteryAdd() {
                     renderInput={(params) => (
                       <TextField
                         className={classes.textFields}
+                        InputProps={{classes: {input: classes.input}}}
                         size="small"
                         variant="outlined"
                         {...params}
@@ -303,6 +314,7 @@ function BatteryAdd() {
                     renderInput={(params) => (
                       <TextField
                         className={classes.textFields}
+                        InputProps={{classes: {input: classes.input}}}
                         size="small"
                         variant="outlined"
                         {...params}
@@ -372,6 +384,7 @@ function BatteryAdd() {
               </Typography>
               <TextField
                 className={classes.textFields}
+                InputProps={{classes: {input: classes.input}}}
                 size="small"
                 variant="outlined"
               />
