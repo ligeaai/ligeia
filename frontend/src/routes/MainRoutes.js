@@ -1,27 +1,16 @@
 
-import AddEntity from '../pages/addentity/addEntity.component';
+import Companys from "../pages/companys/companys.component"
 import Analytics from '../pages/analytics/analytics.component';
-import Dashboard from '../pages/dashboard/dashboard.component';
 import Database from '../pages/database/database.component';
 import DataLog from '../pages/dataLog/dataLog.component';
 import EventLog from '../pages/eventLog/eventLog.component';
 import FailureLog from '../pages/failureLog/failureLog.component';
 import IntegrationsLog from '../pages/integrationsLog/integrationsLog.component';
-import { Navigate, Route } from 'react-router-dom';
 import AdminLayout from '../layouts/AdminLayout';
-import AuthLayout from '../layouts/AuthLayout';
-import DashboardLayout from '../layouts/MonitoringLayout/index';
+import CompanyAdd from "../pages/companys/companyAdd/companyAdd.component";
+import Batterys from "../pages/batterys/batterys.component";
+import BatteryAdd from "../pages/batterys/batteryAdd/batteryAdd.component";
 
-const PrivateRoute = ({ component: Component, authed, ...rest }) => (
-    <Route
-        {...rest}
-        render={props => (
-            authed
-                ? <Component {...props} />
-                : <Navigate to="/login" />
-        )}
-    />
-);
 
 const MainRoutes = {
     path: '/',
@@ -53,8 +42,20 @@ const MainRoutes = {
             element: <Database />
         },
         {
-            path: '/administration/add-entity',
-            element: <AddEntity />
+            path: '/administration/companys',
+            element: <Companys />
+        },
+        {
+            path: '/administration/companys/add',
+            element: <CompanyAdd />
+        },
+        {
+            path: '/administration/batterys',
+            element: <Batterys />
+        },
+        {
+            path: '/administration/batterys/add',
+            element: <BatteryAdd />
         }
     ]
 };

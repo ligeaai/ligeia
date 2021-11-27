@@ -19,27 +19,8 @@ import {
 //material ui icons
 import MailIcon from "@mui/icons-material/Mail";
 import LockIcon from "@mui/icons-material/Lock";
-import {login} from "../../../redux/actions/loginActions";
 
 class Login extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      username: "",
-      password: "",
-    };
-  }
-  onChange = (e) => {
-    this.setState({[e.target.name]: e.target.value});
-  };
-
-  onLoginClick = () => {
-    const userData = {
-      username: this.state.username,
-      password: this.state.password,
-    };
-    this.props.login(userData);
-  };
   render() {
     const {classes} = this.props;
     return (
@@ -69,10 +50,8 @@ class Login extends Component {
               <TextField
                 required
                 type="text"
-                name="username"
+          
                 label="Enter your username"
-                value={this.state.username}
-                onChange={this.onChange}
                 style={{marginTop: "30px"}}
                 InputProps={{
                   startAdornment: (
@@ -86,11 +65,9 @@ class Login extends Component {
               />
               <TextField
                 required
-                name="password"
+             
                 label="Enter your password"
                 type="password"
-                value={this.state.password}
-                onChange={this.onChange}
                 style={{marginTop: "20px"}}
                 InputProps={{
                   startAdornment: (
@@ -102,11 +79,7 @@ class Login extends Component {
                 variant="outlined"
                 fullWidth
               />{" "}
-              <Button
-                onClick={this.onLoginClick}
-                variant="contained"
-                className={classes.customButton}
-              >
+              <Button variant="contained" className={classes.customButton}>
                 <Typography className={classes.buttonTypography}>
                   Sign In
                 </Typography>
@@ -125,24 +98,7 @@ class Login extends Component {
   }
 }
 
-Login.propTypes = {
-  login: PropTypes.func.isRequired,
-  auth: PropTypes.object.isRequired,
-};
-
-const mapStateToProps = (state) => ({
-  auth: state.auth,
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  login: (username, password) => {
-    dispatch(login(username, password));
-  },
-});
-
-export default withStyles(styles)(
-  connect(mapStateToProps, mapDispatchToProps)(Login)
-);
+export default withStyles(styles)(Login);
 
 // class SignIn extends Component {
 //   handleSubmit = (e) => {

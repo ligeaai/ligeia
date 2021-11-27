@@ -24,9 +24,9 @@ function Header({ handleLeftDrawerToggle, nandleDrawerClose }) {
                 }}
             >
 
-                <Box component="span" sx={{ display: { xs: 'none', md: 'block' }, flexGrow: 1 }}>
+                {/* <Box component="span" sx={{ display: { xs: 'none', md: 'block' }, flexGrow: 1 }}>
                     <LogoSection />
-                </Box>
+                </Box> */}
                 <ButtonBase sx={{ borderRadius: '12px', overflow: 'hidden' }}>
                     <Avatar
                         variant="rounded"
@@ -49,7 +49,7 @@ function Header({ handleLeftDrawerToggle, nandleDrawerClose }) {
                 </ButtonBase>
             </Box>
 
-            <SearchSection />
+            {/* <SearchSection /> */}
             <Box sx={{ flexGrow: 1 }} />
             <Box sx={{ flexGrow: 1 }} />
             <LanguageSection />

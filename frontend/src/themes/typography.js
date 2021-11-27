@@ -8,32 +8,32 @@ export default function themeTypography(theme) {
         fontFamily: theme?.customization?.fontFamily,
         h6: {
             fontWeight: 500,
-            color: theme.heading,
-            fontSize: '0.75rem'
+            color: "#505050",
+            fontSize: '14px'
         },
         h5: {
             fontSize: '15px',
-            color: theme.heading,
+            color: "#505050",
             fontWeight: 500,
         },
         h4: {
             fontSize: '1rem',
-            color: theme.heading,
+            color: "#505050",
             fontWeight: 600
         },
         h3: {
             fontSize: '1.25rem',
-            color: theme.heading,
+            color: "#505050",
             fontWeight: 600
         },
         h2: {
             fontSize: '1.5rem',
-            color: theme.heading,
+            color: "#505050",
             fontWeight: 700
         },
         h1: {
             fontSize: '2.125rem',
-            color: theme.heading,
+            color: "#505050",
             fontWeight: 700
         },
         subtitle1: {

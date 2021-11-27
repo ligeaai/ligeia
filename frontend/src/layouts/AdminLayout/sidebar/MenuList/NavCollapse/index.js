@@ -7,15 +7,14 @@ import { useTheme } from '@mui/material/styles';
 import { Collapse, List, ListItemButton, ListItemIcon, ListItemText, Typography } from '@mui/material';
 
 // project imports
-import NavItem from '../NavItem';
+import NavItem from '../NavItem/index';
 
 // assets
-import { FiberManualRecordIcon } from '@mui/icons-material/FiberManualRecord';
-import { ChevronLeftIcon, ChevronRightIcon } from '@mui/icons-material/ChevronLeft';
-
+import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
+import { KeyboardArrowDownIcon, KeyboardArrowUpIcon } from '@mui/icons-material/KeyboardArrowDown';
 // ==============================|| SIDEBAR MENU LIST COLLAPSE ITEMS ||============================== //
 
-const NavCollapse = ({ menu, level }) => {
+function NavCollapse({ menu, level }) {
     const theme = useTheme();
     const customization = useSelector((state) => state.customization);
 
@@ -37,7 +36,7 @@ const NavCollapse = ({ menu, level }) => {
             default:
                 return (
                     <Typography key={item.id} variant="h6" color="error" align="center">
-
+                        Menu Items Error
                     </Typography>
                 );
         }
@@ -86,9 +85,9 @@ const NavCollapse = ({ menu, level }) => {
                     }
                 />
                 {open ? (
-                    <ChevronLeftIcon stroke={1.5} size="1rem" style={{ marginTop: 'auto', marginBottom: 'auto' }} />
+                    <KeyboardArrowUpIcon stroke={1.5} size="1rem" style={{ marginTop: 'auto', marginBottom: 'auto' }} />
                 ) : (
-                    <ChevronRightIcon stroke={1.5} size="1rem" style={{ marginTop: 'auto', marginBottom: 'auto' }} />
+                    <KeyboardArrowDownIcon stroke={1.5} size="1rem" style={{ marginTop: 'auto', marginBottom: 'auto' }} />
                 )}
             </ListItemButton>
             <Collapse in={open} timeout="auto" unmountOnExit>

@@ -12,13 +12,27 @@ const administration = {
     type: 'group',
     children: [
         {
-            id: 'add-entity',
-            title: 'Add entity',
+            id: 'companys',
+            title: 'Companys',
             type: 'item',
-            url: '/administration/add-entity',
+            url: '/administration/companys',
             // icon: icons.IconBrandChrome,
-            breadcrumbs: true
+            breadcrumbs: true,
+            children: [
+                {
+                    id: "company-add",
+                    title: "Company add",
+                    type: "item",
+                    url: "/administration/companys/add"
+                }
+            ]
         },
+        {
+            id: 'batterys',
+            title: 'Batterys',
+            type: 'item',
+            url: "/administration/batterys"
+        }
     ]
 };
 
