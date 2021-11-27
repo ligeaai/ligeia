@@ -1,6 +1,6 @@
 from django.contrib import admin
 from mptt.admin import DraggableMPTTAdmin
-from dbmodels.models._type_pump import Type_pump
+from db_dictionaries.models._type_pump import Type_pump
 
 
 class TypepPumpInline(admin.StackedInline):

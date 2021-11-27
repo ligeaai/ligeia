@@ -1,7 +1,8 @@
 from django.contrib import admin
-from dbmodels.models._item_company import Company
 from operator import or_
 from mptt.admin import DraggableMPTTAdmin
+from db_models.models._item_company import Company
+
 
 # class CompanyTabularInline(admin.StackedInline):
 #     model = Company

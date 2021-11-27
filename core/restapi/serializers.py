@@ -1,12 +1,11 @@
 # coding: utf-8 -*-
-
 from rest_framework.serializers import ModelSerializer
-from oauth.models import IEFPPUser
 from rest_framework import serializers
 from rest_framework.serializers import SerializerMethodField
 from django.contrib.auth import authenticate
 # from nordalclient.models import Device, Site, Well, WellControl
 
+from db_oauth.models import platform_User
 
 
 class UserModelSerializer(ModelSerializer):
@@ -14,21 +13,21 @@ class UserModelSerializer(ModelSerializer):
     class Meta:
         print("in meda")
         exclude = ('password', )
-        model = IEFPPUser
+        model = platform_User
 
 
 class LoginModelSerializer(ModelSerializer):
 
     class Meta:
         exclude = ('password',)
-        model = IEFPPUser
+        model = platform_User
 
 
 class LogoutModelSerializer(ModelSerializer):
 
     class Meta:
         exclude = ('password',)
-        model = IEFPPUser
+        model = platform_User
 
 
 
