@@ -7,9 +7,11 @@ from django.contrib.auth import authenticate
 
 from db_oauth.models import platform_User
 from db_models.models import Company
+from rest_framework_recursive.fields import RecursiveField
 
 
 class CompanyModelSerializer(ModelSerializer):
+    children = RecursiveField(many=True)
     class Meta:
         model = Company
         fields = '__all__'

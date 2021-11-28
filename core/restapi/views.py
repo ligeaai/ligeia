@@ -18,7 +18,7 @@ from db_models.models import (Company)
 
 
 class CompanyModelViewSet(ModelViewSet):
-    queryset = Company.objects.all()
+    queryset = Company.objects.root_nodes()
     serializer_class = CompanyModelSerializer
     http_method_names = ['get', 'head', 'options', 'post']
 
