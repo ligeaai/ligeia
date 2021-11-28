@@ -13,6 +13,7 @@ node_modules/
 /build
 
 # misc
+venv/
 .DS_Store
 .env.local
 .env.development.local
