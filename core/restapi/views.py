@@ -4,7 +4,8 @@ import base64
 
 from rest_framework.viewsets import ModelViewSet
 from restapi.serializers import (UserModelSerializer, LoginSerializer, LogoutSerializer,
-                                   LoginModelSerializer, LogoutModelSerializer)
+                                   LoginModelSerializer, LogoutModelSerializer,
+                                   CompanyModelSerializer)
 from db_oauth.models import platform_User
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
@@ -13,6 +14,13 @@ from rest_framework import status, generics, permissions
 from knox.models import AuthToken
 from django.contrib.auth import authenticate
 
+from db_models.models import (Company)
+
+
+class CompanyModelViewSet(ModelViewSet):
+    queryset = Company.objects.all()
+    serializer_class = CompanyModelSerializer
+    http_method_names = ['get', 'head', 'options', 'post']
 
 class UserModelViewSet(ModelViewSet):
         """

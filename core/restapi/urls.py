@@ -4,7 +4,8 @@ from rest_framework import permissions
 
 # Application imports
 from restapi.views import (UserModelViewSet, UserDetails,
-                             LoginAPI, )
+                             LoginAPI, 
+                             CompanyModelViewSet)
 from restapi import views
 
 # Third party imoprts
@@ -33,7 +34,7 @@ routers.register("user", UserModelViewSet, basename="user_endpoint")
 routers.register('user-details', UserDetails, basename='user_details')
 # routers.register('sites', SiteModelViewSet, basename='sites')
 # routers.register('wells', WellModelViewSet, basename='wells')
-# routers.register('devices', DeviceModelViewSet, basename='devices')
+routers.register('company', CompanyModelViewSet, basename='companies')
 # routers.register('well-control', WellControllerModelViewSet, basename='well_control')
 
 # URLpatterns definitions

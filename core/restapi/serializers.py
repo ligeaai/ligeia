@@ -6,7 +6,13 @@ from django.contrib.auth import authenticate
 # from nordalclient.models import Device, Site, Well, WellControl
 
 from db_oauth.models import platform_User
+from db_models.models import Company
 
+
+class CompanyModelSerializer(ModelSerializer):
+    class Meta:
+        model = Company
+        fields = '__all__'
 
 class UserModelSerializer(ModelSerializer):
 
