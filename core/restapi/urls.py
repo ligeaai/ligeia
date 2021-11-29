@@ -6,7 +6,9 @@ from rest_framework import permissions
 from restapi.views import (
     # UserList, UserDetails,
     # LoginAPI, 
-    CompanyList
+    CompanyList,
+    CityList, 
+    CityDetail, SubRegionList, SubRegionDetail, RegionList, RegionDetail, CountryList, CountryDetail
     )
 from restapi import views
 
@@ -42,6 +44,15 @@ routers.register('companies', CompanyList, basename='companies')
 # URLpatterns definitions
 
 urlpatterns = [
+    re_path(r'^cities/$', CityList.as_view(), name='cities_light_api_city_list'),
+    re_path(r'^cities/(?P<pk>[^/]+)/$', CityDetail.as_view(), name='cities_light_api_city_detail'),
+    re_path(r'^subregions/$', SubRegionList.as_view(), name='cities_light_api_subregion_list'),
+    re_path(r'^subregions/(?P<pk>[^/]+)/$', SubRegionDetail.as_view(), name='cities_light_api_subregion_detail'),
+    re_path(r'^regions/$', RegionList.as_view(), name='cities_light_api_region_list'),
+    re_path(r'^regions/(?P<pk>[^/]+)/$', RegionDetail.as_view(), name='cities_light_api_region_detail'),
+    re_path(r'^countries/$', CountryList.as_view(), name='cities_light_api_country_list'),
+    re_path(r'^countries/(?P<pk>[^/]+)/$', CountryDetail.as_view(), name='cities_light_api_country_detail'),
+
     # path('companies/(?P<pk>[^/.]+)/$', CompanyList.as_view()),
     # path('get-auth-token/', views.LoginAPI.as_view(), name='api_token_auth'),
     path('knox-logout/', knox_views.LogoutView.as_view()),

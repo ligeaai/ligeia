@@ -65,6 +65,7 @@ INSTALLED_APPS = [
     'rest_auth.registration',
     
     #other apps
+    'django_filters',
     'corsheaders',
     'modeltranslation',
     'cities_light',
@@ -97,6 +98,8 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'core.urls'
 
 REST_FRAMEWORK = {    
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
+    
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.AllowAny',
         'rest_framework.permissions.IsAuthenticated',
