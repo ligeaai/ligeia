@@ -11,7 +11,7 @@ class CityFilter(django_filters.FilterSet):
 
 	class Meta:
 		model = City
-		fields = ['country', 'region', 'name_contains', 'name_startswith']
+		fields = ['country', 'region', 'subregion', 'name_contains', 'name_startswith']
 
 class SubRegionFilter(django_filters.FilterSet):
 	name_contains = django_filters.CharFilter(field_name='name_ascii', lookup_expr='icontains')
@@ -21,7 +21,7 @@ class SubRegionFilter(django_filters.FilterSet):
 
 	class Meta:
 		model = SubRegion
-		fields = ['region', 'name_contains', 'name_startswith']
+		fields = ['country', 'region', 'name_contains', 'name_startswith']
 
 
 class RegionFilter(django_filters.FilterSet):
