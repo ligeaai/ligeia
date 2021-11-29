@@ -1,0 +1,9 @@
+{
+    "python.terminal.activateEnvironment": true,
+    "python.terminal.activateEnvInCurrentTerminal": true,
+    // "python.defaultInterpreterPath": "$IEFPP/core/venv/bin/python3",
+    "python.pythonPath": "/Users/rustembeisekin/Documents/GitHub/IEFPP/.venv/bin/python",
+    // "venvFolders": "~/core/.venv",
+    // "python.venvPath": "",
+
+}

@@ -13,6 +13,8 @@ node_modules/
 /build
 
 # misc
+.Python
+.venv/
 venv/
 env/
 .DS_Store
