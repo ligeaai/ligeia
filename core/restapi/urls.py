@@ -3,9 +3,11 @@ from django.urls import include, path, re_path
 from rest_framework import permissions
 
 # Application imports
-from restapi.views import (UserModelViewSet, UserDetails,
-                             LoginAPI, 
-                             CompanyModelViewSet)
+from restapi.views import (
+    # UserList, UserDetails,
+    # LoginAPI, 
+    CompanyList
+    )
 from restapi import views
 
 # Third party imoprts
@@ -30,29 +32,22 @@ schema_view = get_schema_view(
 
 # Routers definitions
 routers = DefaultRouter()
-routers.register("user", UserModelViewSet, basename="user_endpoint")
-routers.register('user-details', UserDetails, basename='user_details')
+# routers.register("user", UserModelViewSet, basename="user_endpoint")
+# routers.register('user-details', UserDetails, basename='user_details')
 # routers.register('sites', SiteModelViewSet, basename='sites')
 # routers.register('wells', WellModelViewSet, basename='wells')
-routers.register('company', CompanyModelViewSet, basename='companies')
+routers.register('companies', CompanyList, basename='companies')
 # routers.register('well-control', WellControllerModelViewSet, basename='well_control')
 
 # URLpatterns definitions
 
 urlpatterns = [
-    path('chaining/', include('smart_selects.urls')),
-    # path('api-auth/', include('rest_framework.urls')),
-    path('rest-auth/', include('rest_auth.urls')),        
-    path('rest-auth/registration/', include('rest_auth.registration.urls')),
-    # path('rest-auth/google/$', FacebookLogin.as_view(), name='fb_login'),
-    path('get-auth-token/', views.LoginAPI.as_view(), name='api_token_auth'),
-    path('accounts/', include('allauth.urls')),
-
+    # path('companies/(?P<pk>[^/.]+)/$', CompanyList.as_view()),
+    # path('get-auth-token/', views.LoginAPI.as_view(), name='api_token_auth'),
     path('knox-logout/', knox_views.LogoutView.as_view()),
     re_path(r'^swagger(?P<format>\.json|\.yaml)$', schema_view.without_ui(cache_timeout=0), name='schema-json'),
     re_path(r'^swagger/$', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
-    re_path(r'^redoc/$', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
-    
+    re_path(r'^redoc/$', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),    
 ]
 
 urlpatterns += routers.urls

@@ -16,8 +16,15 @@ from rest_framework import permissions
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/v1/', include('restapi.urls')),
-    # path(r'o/', include('oauth2_provider.urls', namespace='oauth2_provider')),
+    path('api-auth/', include('rest_framework.urls')),
+    path('rest-auth/', include('rest_auth.urls')),        
+    path('rest-auth/registration/', include('rest_auth.registration.urls')),
+    
+    path('chaining/', include('smart_selects.urls')),
+    path('accounts/', include('allauth.urls')),
 
+
+    # path('rest-auth/google/$', FacebookLogin.as_view(), name='fb_login'),
 
     # path('product/', include('altair_product.urls')),
     # path(r'api/', include('api.urls'), name='api'),

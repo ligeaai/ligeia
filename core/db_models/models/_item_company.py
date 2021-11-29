@@ -20,18 +20,21 @@ class Company(Base_domain):
     transporter = models.BooleanField(db_column='transporter', blank=True, default=True, verbose_name='Transporter')
     service = models.BooleanField(db_column='service', blank=True, default=False, verbose_name='Service Provider')
 
+    def __unicode__(self):
+        return self.name
+
     def __str__(self):
         if self.name:
             return self.name
-        if self.short_name:
+        elif self.short_name:
             return self.short_name
-        if self.country:
+        elif self.country:
             return self.country
-        if self.region:
+        elif self.region:
             return self.region
-        if self.subregion:
+        elif self.subregion:
             return self.subregion
-        if self.city:
+        elif self.city:
             return self.city
 
     def get_company_ref(self):

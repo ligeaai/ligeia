@@ -22,7 +22,7 @@ class CompanyModelViewSet(ModelViewSet):
     serializer_class = CompanyModelSerializer
     http_method_names = ['get', 'head', 'options', 'post']
 
-class UserModelViewSet(ModelViewSet):
+class UserList(ModelViewSet):
         """
     Endpiont for user model, It accept all operations except for user creation.
     It will be enabled or disabled based upon the product requirements.
