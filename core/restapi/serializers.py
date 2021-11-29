@@ -14,7 +14,8 @@ class CompanyModelSerializer(ModelSerializer):
     children = RecursiveField(many=True)
     class Meta:
         model = Company
-        fields = '__all__'
+        # fields = '__all__'
+        fields = ('id','name','parent', 'children')
 
 class UserModelSerializer(ModelSerializer):
 
@@ -22,23 +23,16 @@ class UserModelSerializer(ModelSerializer):
         print("in meda")
         exclude = ('password', )
         model = platform_User
-
-
 class LoginModelSerializer(ModelSerializer):
 
     class Meta:
         exclude = ('password',)
         model = platform_User
-
-
 class LogoutModelSerializer(ModelSerializer):
 
     class Meta:
         exclude = ('password',)
         model = platform_User
-
-
-
 # Login Serializer
 class LoginSerializer(serializers.Serializer):
     username = serializers.CharField()
@@ -49,8 +43,6 @@ class LoginSerializer(serializers.Serializer):
         if user and user.is_active:
             return user
         raise serializers.ValidationError("Incorrect Credentials")
-
-
 class LogoutSerializer(serializers.Serializer):
     username = serializers.CharField()
     password = serializers.CharField()
