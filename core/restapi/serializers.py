@@ -11,11 +11,11 @@ from rest_framework_recursive.fields import RecursiveField
 
 
 class CompanyModelSerializer(ModelSerializer):
-    children = RecursiveField(many=True)
+    # children = RecursiveField(many=True)
     class Meta:
         model = Company
-        # fields = '__all__'
-        fields = ('id','name','parent', 'children')
+        fields = '__all__'
+        # fields = ('id','name','parent', 'children')
 
 class UserModelSerializer(ModelSerializer):
 

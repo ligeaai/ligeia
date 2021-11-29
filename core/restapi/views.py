@@ -32,8 +32,6 @@ class UserModelViewSet(ModelViewSet):
         permission_classes = (IsAuthenticated, )
         http_method_names = ('head', 'option', 'get')
 
-
-
 class UserDetails(ModelViewSet):
     queryset = platform_User.objects.none()
     serializer_class = UserModelSerializer
@@ -46,20 +44,17 @@ class UserDetails(ModelViewSet):
 
         return Response(serializer.data)
 
-
 class LoginModelViewSet(ModelViewSet):
         queryset = platform_User.objects.all()
         serializer_class = LoginModelSerializer
         permission_classes = (IsAuthenticated, )
         http_method_names = ('head', 'option', 'get')
 
-
 class LogoutModelViewSet(ModelViewSet):
         queryset = platform_User.objects.all()
         serializer_class = LogoutModelSerializer
         permission_casses = (IsAuthenticated, )
         http_method_names = ('head', 'option', 'get')
-
 
 class LoginAPI(generics.GenericAPIView):
     serializer_class = LoginSerializer

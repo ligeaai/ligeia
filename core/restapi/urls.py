@@ -40,7 +40,14 @@ routers.register('company', CompanyModelViewSet, basename='companies')
 # URLpatterns definitions
 
 urlpatterns = [
+    path('chaining/', include('smart_selects.urls')),
+    # path('api-auth/', include('rest_framework.urls')),
+    path('rest-auth/', include('rest_auth.urls')),        
+    path('rest-auth/registration/', include('rest_auth.registration.urls')),
+    # path('rest-auth/google/$', FacebookLogin.as_view(), name='fb_login'),
     path('get-auth-token/', views.LoginAPI.as_view(), name='api_token_auth'),
+    path('accounts/', include('allauth.urls')),
+
     path('knox-logout/', knox_views.LogoutView.as_view()),
     re_path(r'^swagger(?P<format>\.json|\.yaml)$', schema_view.without_ui(cache_timeout=0), name='schema-json'),
     re_path(r'^swagger/$', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
