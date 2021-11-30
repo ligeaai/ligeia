@@ -6,9 +6,8 @@ from rest_framework import permissions
 from restapi.views import (
     # UserList, UserDetails,
     # LoginAPI, 
-    CompanyList,
-    CityList, 
-    CityDetail, SubRegionList, SubRegionDetail, RegionList, RegionDetail, CountryList, CountryDetail
+    CompanyList, typeProductList, typeProductDetail,
+    CityList, CityDetail, SubRegionList, SubRegionDetail, RegionList, RegionDetail, CountryList, CountryDetail
     )
 from restapi import views
 
@@ -39,11 +38,13 @@ routers = DefaultRouter()
 # routers.register('sites', SiteModelViewSet, basename='sites')
 # routers.register('wells', WellModelViewSet, basename='wells')
 routers.register('companies', CompanyList, basename='companies')
+# routers.register('typeproduct', typeProductViewSet, basename='typeproducts')
 # routers.register('well-control', WellControllerModelViewSet, basename='well_control')
 
 # URLpatterns definitions
 
 urlpatterns = [
+    # city_lights_path
     re_path(r'^cities/$', CityList.as_view(), name='cities_light_api_city_list'),
     re_path(r'^cities/(?P<pk>[^/]+)/$', CityDetail.as_view(), name='cities_light_api_city_detail'),
     re_path(r'^subregions/$', SubRegionList.as_view(), name='cities_light_api_subregion_list'),
@@ -52,6 +53,10 @@ urlpatterns = [
     re_path(r'^regions/(?P<pk>[^/]+)/$', RegionDetail.as_view(), name='cities_light_api_region_detail'),
     re_path(r'^countries/$', CountryList.as_view(), name='cities_light_api_country_list'),
     re_path(r'^countries/(?P<pk>[^/]+)/$', CountryDetail.as_view(), name='cities_light_api_country_detail'),
+
+    # db_dictionaries path
+    re_path(r'^typeproduct/$', typeProductList.as_view(), name='typep_roducts_list'),
+    re_path(r'^typeproduct/(?P<pk>[^/]+)/$', typeProductDetail.as_view(), name='typep_roducts_detail'),
 
     # path('companies/(?P<pk>[^/.]+)/$', CompanyList.as_view()),
     # path('get-auth-token/', views.LoginAPI.as_view(), name='api_token_auth'),
