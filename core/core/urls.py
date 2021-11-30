@@ -11,10 +11,15 @@ from admin import (
                 )
 from rest_framework import permissions
 from rest_framework.authtoken import views
+from rest_framework_swagger.views import get_swagger_view
+
 
 # admin.autodiscover()
 
+schema_view = get_swagger_view(title='Pastebin API')
+
 urlpatterns = [
+    re_path(r'^$', schema_view),
     path('admin/', admin.site.urls),
     path('api/v1/', include('restapi.urls')),
     path('api-auth/', include('rest_framework.urls')),
@@ -35,7 +40,7 @@ urlpatterns = [
     # path('ckeditor/', include('ckeditor_uploader.urls')),
 ] 
 
-admin.site.site_header = "Nordal Administration"
-admin.site.site_title = "Nordal Administration Portal"
-admin.site.index_title = "Welcome to Nordal Administration Portal" 
+admin.site.site_header = "Ligeia Administration"
+admin.site.site_title = "Ligeia"
+admin.site.index_title = "Welcome to Ligeia" 
 admin.site.site_url= '/admin'

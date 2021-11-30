@@ -20,9 +20,9 @@ from knox import views as knox_views
 
 schema_view = get_schema_view(
         openapi.Info(
-                    title="Nordal API",
+                    title="Ligeia API",
                     default_version='/api/v1',
-                    description="API docs for Nordal backend",
+                    description="API docs for Ligeia backend",
                     terms_of_service="https://www.google.com/policies/terms/",
                     contact=openapi.Contact(email="cio@exiverprojects.com"),
                     license=openapi.License(name="BSD License"),
@@ -55,8 +55,8 @@ urlpatterns = [
     re_path(r'^countries/(?P<pk>[^/]+)/$', CountryDetail.as_view(), name='cities_light_api_country_detail'),
 
     # db_dictionaries path
-    re_path(r'^typeproduct/$', typeProductList.as_view(), name='typep_roducts_list'),
-    re_path(r'^typeproduct/(?P<pk>[^/]+)/$', typeProductDetail.as_view(), name='typep_roducts_detail'),
+    re_path(r'^typeproduct/$', typeProductList.as_view(), name='typep_product_list'),
+    re_path(r'^typeproduct/(?P<pk>[^/]+)/$', typeProductDetail.as_view(), name='typep_product_detail'),
 
     # path('companies/(?P<pk>[^/.]+)/$', CompanyList.as_view()),
     # path('get-auth-token/', views.LoginAPI.as_view(), name='api_token_auth'),

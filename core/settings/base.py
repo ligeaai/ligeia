@@ -59,6 +59,7 @@ INSTALLED_APPS = [
     # 'allauth.socialaccount.providers.facebook',
 
     #rest
+    'rest_framework_swagger',
     'rest_framework',
     'rest_framework.authtoken',
     'rest_auth',
@@ -70,10 +71,8 @@ INSTALLED_APPS = [
     'modeltranslation',
     'cities_light',
     'smart_selects',
-    'polymorphic',
     'knox',
     'drf_yasg',
-    'adminsortable2',
 
     #defined apps
     'db_models',
