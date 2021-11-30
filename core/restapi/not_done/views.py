@@ -4,7 +4,8 @@ import base64
 
 from rest_framework.viewsets import ModelViewSet
 from restapi.serializers import (UserModelSerializer, LoginSerializer, LogoutSerializer,
-                                   LoginModelSerializer, LogoutModelSerializer)
+                                   LoginModelSerializer, LogoutModelSerializer,
+                                   CompanyModelSerializer)
 from db_oauth.models import platform_User
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
@@ -13,8 +14,15 @@ from rest_framework import status, generics, permissions
 from knox.models import AuthToken
 from django.contrib.auth import authenticate
 
+from db_models.models import (Company)
 
-class UserModelViewSet(ModelViewSet):
+
+class CompanyModelViewSet(ModelViewSet):
+    queryset = Company.objects.all()
+    serializer_class = CompanyModelSerializer
+    http_method_names = ['get', 'head', 'options', 'post']
+
+class UserList(ModelViewSet):
         """
     Endpiont for user model, It accept all operations except for user creation.
     It will be enabled or disabled based upon the product requirements.
@@ -23,8 +31,6 @@ class UserModelViewSet(ModelViewSet):
         serializer_class = UserModelSerializer
         permission_classes = (IsAuthenticated, )
         http_method_names = ('head', 'option', 'get')
-
-
 
 class UserDetails(ModelViewSet):
     queryset = platform_User.objects.none()
@@ -38,20 +44,17 @@ class UserDetails(ModelViewSet):
 
         return Response(serializer.data)
 
-
 class LoginModelViewSet(ModelViewSet):
         queryset = platform_User.objects.all()
         serializer_class = LoginModelSerializer
         permission_classes = (IsAuthenticated, )
         http_method_names = ('head', 'option', 'get')
 
-
 class LogoutModelViewSet(ModelViewSet):
         queryset = platform_User.objects.all()
         serializer_class = LogoutModelSerializer
         permission_casses = (IsAuthenticated, )
         http_method_names = ('head', 'option', 'get')
-
 
 class LoginAPI(generics.GenericAPIView):
     serializer_class = LoginSerializer

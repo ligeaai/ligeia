@@ -3,8 +3,13 @@ from django.urls import include, path, re_path
 from rest_framework import permissions
 
 # Application imports
-from restapi.views import (UserModelViewSet, UserDetails,
-                             LoginAPI, )
+from restapi.views import (
+    # UserList, UserDetails,
+    # LoginAPI, 
+    CompanyList,
+    CityList, 
+    CityDetail, SubRegionList, SubRegionDetail, RegionList, RegionDetail, CountryList, CountryDetail
+    )
 from restapi import views
 
 # Third party imoprts
@@ -29,22 +34,31 @@ schema_view = get_schema_view(
 
 # Routers definitions
 routers = DefaultRouter()
-routers.register("user", UserModelViewSet, basename="user_endpoint")
-routers.register('user-details', UserDetails, basename='user_details')
+# routers.register("user", UserModelViewSet, basename="user_endpoint")
+# routers.register('user-details', UserDetails, basename='user_details')
 # routers.register('sites', SiteModelViewSet, basename='sites')
 # routers.register('wells', WellModelViewSet, basename='wells')
-# routers.register('devices', DeviceModelViewSet, basename='devices')
+routers.register('companies', CompanyList, basename='companies')
 # routers.register('well-control', WellControllerModelViewSet, basename='well_control')
 
 # URLpatterns definitions
 
 urlpatterns = [
-    path('get-auth-token/', views.LoginAPI.as_view(), name='api_token_auth'),
+    re_path(r'^cities/$', CityList.as_view(), name='cities_light_api_city_list'),
+    re_path(r'^cities/(?P<pk>[^/]+)/$', CityDetail.as_view(), name='cities_light_api_city_detail'),
+    re_path(r'^subregions/$', SubRegionList.as_view(), name='cities_light_api_subregion_list'),
+    re_path(r'^subregions/(?P<pk>[^/]+)/$', SubRegionDetail.as_view(), name='cities_light_api_subregion_detail'),
+    re_path(r'^regions/$', RegionList.as_view(), name='cities_light_api_region_list'),
+    re_path(r'^regions/(?P<pk>[^/]+)/$', RegionDetail.as_view(), name='cities_light_api_region_detail'),
+    re_path(r'^countries/$', CountryList.as_view(), name='cities_light_api_country_list'),
+    re_path(r'^countries/(?P<pk>[^/]+)/$', CountryDetail.as_view(), name='cities_light_api_country_detail'),
+
+    # path('companies/(?P<pk>[^/.]+)/$', CompanyList.as_view()),
+    # path('get-auth-token/', views.LoginAPI.as_view(), name='api_token_auth'),
     path('knox-logout/', knox_views.LogoutView.as_view()),
     re_path(r'^swagger(?P<format>\.json|\.yaml)$', schema_view.without_ui(cache_timeout=0), name='schema-json'),
     re_path(r'^swagger/$', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
-    re_path(r'^redoc/$', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
-    
+    re_path(r'^redoc/$', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),    
 ]
 
 urlpatterns += routers.urls

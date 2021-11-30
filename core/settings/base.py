@@ -28,17 +28,17 @@ ALLOWED_HOSTS = ['127.0.0.1',
                  '20.0.0.20',
                  '*']
 
-CORS_ORIGIN_ALLOW_ALL = False
+CORS_ORIGIN_ALLOW_ALL = True
 CORS_ORIGIN_WHITELIST = (
     'http://localhost:8000',
+    'http://0.0.0.0:8000'
 )
 
-CORS_ALLOW_ALL_ORIGINS = True # If this is used then `CORS_ALLOWED_ORIGINS` will not have any effect
-CORS_ALLOW_CREDENTIALS = True
-CORS_ALLOWED_ORIGINS = [
-    'http://localhost:8000',
-    'http://0.0.0.0:8000'
-]                 
+# CORS_ALLOW_ALL_ORIGINS = True # If this is used then `CORS_ALLOWED_ORIGINS` will not have any effect
+# CORS_ALLOW_CREDENTIALS = True
+# CORS_ALLOWED_ORIGINS = [
+#     'http://localhost:8000',
+# ]                 
 
 # Application definition
 
@@ -65,6 +65,7 @@ INSTALLED_APPS = [
     'rest_auth.registration',
     
     #other apps
+    'django_filters',
     'corsheaders',
     'modeltranslation',
     'cities_light',
@@ -96,13 +97,19 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'core.urls'
 
-REST_FRAMEWORK = {
+REST_FRAMEWORK = {    
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
+    
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.AllowAny',
+        'rest_framework.permissions.IsAuthenticated',
+    ],
     'DEFAULT_AUTHENTICATION_CLASSES': [
-                                    # 'knox.auth.TokenAuthentication',
-                                    'rest_framework.authentication.TokenAuthentication',
-                                    'rest_framework.authentication.BasicAuthentication',
-                                    #    'rest_framework.authentication.SessionAuthentication',
-                                      ],
+        # 'knox.auth.TokenAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+        #    'rest_framework.authentication.SessionAuthentication',
+    ],
 }
 
 TEMPLATES = [
