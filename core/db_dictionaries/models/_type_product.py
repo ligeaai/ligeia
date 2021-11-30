@@ -30,6 +30,11 @@ class Type_product(MPTTModel):
             k = k.parent
         return ' / '.join(full_path[::-1])
 
+    # def get_full_name(self):
+    #     names = self.get_ancestors(include_self=True).values('code_text')
+    #     full_name = ' - '.join(map(lambda x: x['code_text'], names))
+    #     return full_name
+
 class MPTTMeta:
     db_table = 'type_product'
     app_label = 'db_dictionaries'
