@@ -1,13 +1,14 @@
 import { combineReducers } from "redux";
-
+import auth from './authReducer'
+import message from './message'
 
 import customizationReducer from "./customizationReducer";
-import authReducer from "./authReducer";
 
 const rootReducer = combineReducers({
 
     customization: customizationReducer,
-    auth: authReducer
+    message,
+    auth
 });
 
 export default rootReducer

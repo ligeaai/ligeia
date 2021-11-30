@@ -45,6 +45,7 @@ function CompanyAdd() {
     <LocalizationProvider dateAdapter={AdapterDateFns}>
       <Grid className={classes.container}>
         <Typography variant="h3">Add company</Typography>
+
         <div className={classes.form}>
           <Grid container direction="row" alignItems="center">
             <Grid item className={classes.dateTime}>

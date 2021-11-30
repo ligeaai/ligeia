@@ -1,8 +1,9 @@
 // assets
-import HomeIcon from '@mui/icons-material/Home';
+import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
 import AnalyticsOutlinedIcon from '@mui/icons-material/AnalyticsOutlined';
+import GridViewRoundedIcon from '@mui/icons-material/GridViewRounded';
 // constant
-const icons = { HomeIcon, AnalyticsOutlinedIcon };
+const icons = { GridViewRoundedIcon, AnalyticsOutlinedIcon };
 
 // ==============================|| DASHBOARD MENU ITEMS ||============================== //
 
@@ -16,7 +17,7 @@ const dashboard = {
             title: 'Monitoring',
             type: 'item',
             url: '/dashboard/default',
-            icon: icons.HomeIcon,
+            icon: icons.GridViewRoundedIcon,
             breadcrumbs: true
         },
         {

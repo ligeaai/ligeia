@@ -15,7 +15,7 @@ const administration = {
             id: 'companys',
             title: 'Companys',
             type: 'item',
-            url: '/administration/companys',
+            url: '/administration/companies',
             // icon: icons.IconBrandChrome,
             breadcrumbs: true,
             children: [
@@ -23,7 +23,7 @@ const administration = {
                     id: "company-add",
                     title: "Company add",
                     type: "item",
-                    url: "/administration/companys/add",
+                    url: "/administration/companies/add",
                     target: true
                 }
             ]
@@ -98,6 +98,33 @@ const administration = {
                 title: "Type status add",
                 type: "item",
                 url: "/administration/type-status/add"
+            }]
+        },
+        {
+            id: 'cities',
+            title: "Cities",
+            type: "item",
+            url: "/administration/cities",
+            children: [{
+                id: ""
+            }]
+        },
+        {
+            id: "countries",
+            title: "Countries",
+            type: "item",
+            url: "/administration/countries",
+            children: [{
+                id: ""
+            }]
+        },
+        {
+            id: "sub-regions",
+            title: "SubRegions",
+            type: "item",
+            url: "/administration/sub-regions",
+            children: [{
+                id: ""
             }]
         }
     ]

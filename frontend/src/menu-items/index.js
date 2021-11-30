@@ -1,6 +1,6 @@
 import dashboard from './dashboard';
 import apps from './apps';
-import administration from './adminsitration';
+import administration from './administration';
 // ==============================|| MENU ITEMS ||============================== //
 
 const menuItems = {

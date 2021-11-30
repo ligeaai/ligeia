@@ -19,7 +19,10 @@ export default function Batterys() {
         <Typography className={classes.typography}>
           Select battery to change
         </Typography>
-        <Link style={{textDecoration: "none"}} to="/administration/batterys/add">
+        <Link
+          style={{textDecoration: "none"}}
+          to="/administration/batterys/add"
+        >
           <Button className={classes.button}>Add battery</Button>
         </Link>
       </Grid>

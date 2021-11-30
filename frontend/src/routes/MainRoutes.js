@@ -26,6 +26,11 @@ import TypeBatteryAdd from '../pages/administration/dictionaries/typeBatterys/ty
 import TypeProductAdd from '../pages/administration/dictionaries/typeProducts/typeProductAdd/typeProductAdd.component';
 import TypePumpAdd from '../pages/administration/dictionaries/typePumps/typePumpAdd/typePumpAdd.component';
 
+//Cities
+import Cities from '../pages/administration/cities/cities/cities.component';
+import Countries from '../pages/administration/cities/countries/countries.component'
+import SubRegions from '../pages/administration/cities/subregions/subRegions.component'
+
 const MainRoutes = {
     path: '/',
     element: <AdminLayout />,
@@ -57,11 +62,11 @@ const MainRoutes = {
         },
         //Administration
         {
-            path: '/administration/companys',
+            path: '/administration/companies',
             element: <Companys />
         },
         {
-            path: '/administration/companys/add',
+            path: '/administration/companies/add',
             element: <CompanyAdd />
         },
         {
@@ -114,6 +119,19 @@ const MainRoutes = {
             path: "/administration/type-status/add",
             element: <TypeStatusAdd />
         },
+        //Cities
+        {
+            path: "/administration/cities",
+            element: <Cities />
+        },
+        {
+            path: "/administration/countries",
+            element: <Countries />
+        },
+        {
+            path: "/administration/sub-regions",
+            element: <SubRegions />
+        }
     ]
 };
 

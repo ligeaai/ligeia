@@ -20,6 +20,7 @@ const useStyles = makeStyles(styles);
 
 function BatteryAdd() {
   const classes = useStyles();
+  const [dateTimeDateValue, setdateTimeDateValue] = useState(new Date());
   const [value, setValue] = useState(new Date());
   const [companyRef, setCompanyRef] = useState("");
   const [batteryRef, setBatteryRef] = useState("");
