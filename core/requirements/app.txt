@@ -1,0 +1,22 @@
+Django>=3.0
+psycopg2>=2.8
+channels>=2.4
+
+# CELERY BACKEND REQUIREMENTS
+
+celery>=4.4
+redis>=3.4
+django-celery-beat>=1.6
+
+
+# RESTAPI REQUIREMENTS
+
+djangorestframework>=3.11
+django-filter>=2.2
+Markdown>=3.2
+django-cors-headers>=3.2
+# DRF docs
+drf-yasg>=1.17
+
+# KNOX authentication
+django-rest-knox>=4.1
