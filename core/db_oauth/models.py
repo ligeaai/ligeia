@@ -42,7 +42,7 @@ class UserManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
-class platform_User(AbstractBaseUser, PermissionsMixin):
+class ligeiaUser(AbstractBaseUser, PermissionsMixin):
     """
     parent class for all users in  application
     """
@@ -110,7 +110,7 @@ class platform_User(AbstractBaseUser, PermissionsMixin):
 
         Inactive users can't login anyway, so we don't need a unique constraint for them.
         """
-        super(platform_User, self).validate_unique(exclude)
+        super(ligeiaUser, self).validate_unique(exclude)
         if self.email and get_user_model().objects.exclude(id=self.id).filter(is_active=True,
                                                                               email__exact=self.email).exists():
             msg = _("A customer with the e-mail address ‘{email}’ already exists.")
@@ -118,6 +118,6 @@ class platform_User(AbstractBaseUser, PermissionsMixin):
     class Meta:
         db_table = 'db_oauth'
         app_label = 'db_oauth'
-        verbose_name = 'platform User'
-        verbose_name_plural = 'platform Users'
+        verbose_name = 'ligeia User'
+        verbose_name_plural = 'ligeia Users'
         swappable = 'AUTH_USER_MODEL'

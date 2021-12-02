@@ -20,11 +20,11 @@ from knox import views as knox_views
 
 schema_view = get_schema_view(
         openapi.Info(
-                    title="Ligeia API",
+                    title="Ligeia API",                   
                     default_version='/api/v1',
                     description="API docs for Ligeia backend",
                     terms_of_service="https://www.google.com/policies/terms/",
-                    contact=openapi.Contact(email="cio@exiverprojects.com"),
+                    contact=openapi.Contact(email="cio@legeia.ai"),
                     license=openapi.License(name="BSD License"),
                 ),
         public=True,
@@ -44,6 +44,7 @@ routers.register('companies', CompanyList, basename='companies')
 # URLpatterns definitions
 
 urlpatterns = [
+
     # city_lights_path
     re_path(r'^cities/$', CityList.as_view(), name='cities_light_api_city_list'),
     re_path(r'^cities/(?P<pk>[^/]+)/$', CityDetail.as_view(), name='cities_light_api_city_detail'),

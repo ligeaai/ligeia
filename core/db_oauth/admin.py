@@ -4,17 +4,17 @@ from __future__ import unicode_literals
 from django.contrib import admin
 from db_oauth import models
 from django import forms
-from django.contrib.auth.admin import UserAdmin as platform_BaseUserAdmin
+from django.contrib.auth.admin import UserAdmin as ligeiaBaseUserAdmin
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 
 
-class platform_UserCreationForm(forms.ModelForm):
+class ligeiaUserCreationForm(forms.ModelForm):
     password1 = forms.CharField(label='Password', widget=forms.PasswordInput)
     password2 = forms.CharField(label='Password confirmation',
                                 widget=forms.PasswordInput)
 
     class Meta:
-        model = models.platform_User
+        model = models.ligeiaUser
         fields = ('username', 'email', 'first_name', 'last_name')
 
     def clean_password2(self):
@@ -25,29 +25,29 @@ class platform_UserCreationForm(forms.ModelForm):
         return password2
 
     def save(self, commit=True):
-        user = super(platform_UserCreationForm, self).save(commit=False)
+        user = super(ligeiaUserCreationForm, self).save(commit=False)
         user.set_password(self.cleaned_data["password1"])
         if commit:
             user.save()
         return user
 
 
-class platform_UserChangeForm(forms.ModelForm):
+class ligeiaUserChangeForm(forms.ModelForm):
     password = ReadOnlyPasswordHashField(label=("Password"),
                                          help_text=("Raw passwords are not stored, so there is no way to see "  # Noqa
                                                     "this user's password, but you can change the password "  # Noqa
                                                     "using <a href=\"../password/\">this form</a>."))  # Noqa
 
     class Meta:
-        model = models.platform_User
+        model = models.ligeiaUser
         fields = ('email', 'password', 'username', 'first_name', 'last_name', 'is_active', 'is_staff', 'is_admin')
     def clean_password(self):
         return self.initial["password"]
 
 
-class platform_UserAdmin(platform_BaseUserAdmin):
-    form = platform_UserChangeForm
-    add_form = platform_UserCreationForm
+class ligeiaUserAdmin(ligeiaBaseUserAdmin):
+    form = ligeiaUserChangeForm
+    add_form = ligeiaUserCreationForm
 
     list_display = ('username','email', 'first_name', 'last_name', 'date_joined', 'last_login', )
     list_filter = ('is_admin',)
@@ -70,4 +70,4 @@ class platform_UserAdmin(platform_BaseUserAdmin):
     filter_horizontal = ()
 
 
-admin.site.register(models.platform_User, platform_UserAdmin)
+admin.site.register(models.ligeiaUser, ligeiaUserAdmin)

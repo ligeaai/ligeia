@@ -16,19 +16,18 @@ from rest_framework_swagger.views import get_swagger_view
 
 # admin.autodiscover()
 
-schema_view = get_swagger_view(title='Pastebin API')
 
 urlpatterns = [
-    re_path(r'^$', schema_view),
     path('admin/', admin.site.urls),
     path('api/v1/', include('restapi.urls')),
+
     path('api-auth/', include('rest_framework.urls')),
-    path('api-token-auth/', views.obtain_auth_token),
+    # path('api-token-auth/', views.obtain_auth_token),
     path('rest-auth/', include('rest_auth.urls')),        
     path('rest-auth/registration/', include('rest_auth.registration.urls')),
     
     path('chaining/', include('smart_selects.urls')),
-    path('accounts/', include('allauth.urls')),
+    # path('accounts/', include('allauth.urls')),
 
 
     # path('rest-auth/google/$', FacebookLogin.as_view(), name='fb_login'),

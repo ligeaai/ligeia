@@ -1,108 +1,28 @@
-############
-# BUILDER #
-###########
+# https://github.com/tiangolo/uwsgi-nginx-docker/tree/master/python3.6
+FROM tiangolo/uwsgi-nginx:python3.9
+LABEL maintainer=""
 
-# pull official base image
-FROM python:3 
-
-# set work directory
-WORKDIR /usr/src/app
-
-# set environment variables
-ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
+ENV PYTHONPATH "${PYTHONPATH}:src/"
+ENV LISTEN_PORT 8000
+EXPOSE 8000
+ENV UWSGI_INI /opt/app/deployment/uwsgi.ini
 
-# RUN mkdir -p /home/application
-# ENV HOME=/home/application
-# ENV APP_HOME=/home/application/web
-# RUN mkdir $APP_HOME
-# RUN mkdir $APP_HOME/staticfiles
-# WORKDIR $APP_HOME
+# RUN curl -sL https://deb.nodesource.com/setup_17.x | bash -
+# RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
+# RUN echo "deb http://dl.yarnpkg.com/debian/ stable main" > /etc/apt/sources.list.d/yarn.list
+RUN apt-get update && apt-get install -y sudo libpcre3-dev curl gcc make git nodejs yarn
 
-# install psycopg2 dependencies
-RUN apt-get update && apt-get install -y \
-    build-essential \
-    libpq-dev \
-    && rm -rf /var/lib/apt/lists/*
-# RUN apk update \
-#     && apk add postgresql-dev gcc python3-dev musl-dev
+WORKDIR /opt/app/
 
-# lint
-RUN pip install --upgrade pip flake8 django-polymorphic
-# COPY Pipfile* ./
-# RUN pipenv install --system --ignore-pipfile
-# COPY . /usr/src/app/
-RUN flake8 --ignore=E501,F401 .
-RUN whoami
+COPY py-requirements /opt/app/py-requirements
+RUN pip install pip -U && \
+   pip install -r py-requirements/base.txt
 
+ADD . /opt/app/
+RUN set -x && yarn install
+RUN set -x && yarn run prod
 
-
-# install dependencies
-COPY ./requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
-
-COPY . .
-# copy entrypoint-prod.sh
-# COPY ./entrypoint.sh $APP_HOME
-
-# # copy project
-# COPY . $APP_HOME
-
-# # # chown all the files to the app user
-# # RUN chown -R app:app $APP_HOME
-
-# # # change to the app user
-# # USER app
-
-# # run entrypoint.sh
-# ENTRYPOINT ["/home/application/web/entrypoint.sh"]
-
-#########
-# FINAL #
-#########
-
-# pull official base image
-# FROM python:3
-
-# # create directory for the app user
-# RUN mkdir -p /home/application
-
-# # create the app user
-# # RUN addgroup -S app && adduser -S app -G app
-
-
-# # create the appropriate directories
-# ENV HOME=/home/application
-# ENV APP_HOME=/home/application/web
-# RUN mkdir $APP_HOME
-# RUN mkdir $APP_HOME/staticfiles
-# WORKDIR $APP_HOME
-
-
-# # install dependencies
-# RUN apt-get update && apt-get install -y \
-#     build-essential \
-#     libpq-dev \
-#     && rm -rf /var/lib/apt/lists/*
-# # RUN apk update \
-# #         && apk add postgresql-dev libpq gcc python3-dev musl-dev libffi-dev
-
-# COPY --from=builder /usr/src/app/wheels/ wheels
-# COPY --from=builder /usr/src/app/requirements.txt .
-# RUN pip install --upgrade pip
-# RUN pip install --no-cache ./wheels/*
-
-# # copy entrypoint-prod.sh
-# COPY ./entrypoint.sh $APP_HOME
-
-# # copy project
-# COPY . $APP_HOME
-
-# # # chown all the files to the app user
-# # RUN chown -R app:app $APP_HOME
-
-# # # change to the app user
-# # USER app
-
-# # run entrypoint.sh
-# ENTRYPOINT ["/home/application/web/entrypoint.sh"]
+COPY init.sh /init.sh
+RUN chmod +x /init.sh
+ENTRYPOINT ["/init.sh"]

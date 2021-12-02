@@ -129,7 +129,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'core.wsgi.application'
 ASGI_APPLICATION = 'core.asgi.application'
-AUTH_USER_MODEL  = 'db_oauth.platform_User'
+AUTH_USER_MODEL  = 'db_oauth.ligeiaUser'
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases

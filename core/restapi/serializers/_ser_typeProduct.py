@@ -20,14 +20,15 @@ class typeProductList(serializers.ModelSerializer):
 
 
 class typeProductDetail(serializers.ModelSerializer):
-    # children = typeProductSerializer(many=True)
+    children = typeProductList(many=True)
     # children = RecursiveField(many=True, required=False)
     # full_name = serializers.Field(source='code_text')
+    # leaf_nodes = serializers.SerializerMethodField()
     
     class Meta:
         model = Type_product
-        # fields = ['id', 'code_text', 'parent', 'children']
-        fields = '__all__'
+        fields = ['id', 'code', 'code_text', 'parent', 'children']
+        # fields = '__all__'
         http_method_names = ['get', 'head', 'options', 'delete', 'put', 'post']
 
 
