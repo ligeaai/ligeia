@@ -1,4 +1,4 @@
-# Django React/Redux Base Project
+# Ligeia Base Project
 
 This repository includes a boilerplate project. It uses Django as backend and React as frontend.
 
