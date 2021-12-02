@@ -2,6 +2,7 @@
 
 import os
 import logging
+from django.utils.translation import gettext_lazy as _
 
 logger = logging.getLogger(__name__)
 
@@ -10,7 +11,7 @@ BASE_DIR = os.path.join(
 )
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '4k(v6=ya0hrmh#2+s)hg*d7k_zl)5cbos@u6msz7ryidf6xu$5'
+SECRET_KEY = 'django-insecure-9j935o7+7efsdf0)zfmbsg9ipx)u@s8r@3goejc_y^d**7^78w'
 
 INSTALLED_APPS = (
     'django.contrib.auth',
@@ -44,20 +45,31 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'core.urls'
-
 WSGI_APPLICATION = 'core.wsgi.application'
+AUTH_USER_MODEL = 'accounts.User'
 
 LANGUAGE_CODE = 'en-us'
+LANGUAGES = [
+    ('en', _('English')),
+    ('ru', _('Russian')),
+    # ('de', _('German')),
+    # ('tr', _('Turkish')),
+]
+LOCALE_PATHS = (
+    os.path.join(BASE_DIR, 'locale'),
+)
+CITIES_LIGHT_TRANSLATION_LANGUAGES = ['en', 'ru']
+CITIES_LIGHT_INCLUDE_COUNTRIES = ['KZ', 'CA']
+
+MODELTRANSLATION_LANGUAGES = ('en', 'ru')
+MODELTRANSLATION_TRANSLATIONS_FILES = (
+    'translation'
+)
 
 TIME_ZONE = 'UTC'
-
 USE_I18N = True
-
 USE_L10N = True
-
 USE_TZ = True
-
-AUTH_USER_MODEL = 'accounts.User'
 
 ACCOUNT_ACTIVATION_DAYS = 7  # days
 
@@ -91,8 +103,13 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 # ############# REST FRAMEWORK ###################
 
 REST_FRAMEWORK = {
-    'DEFAULT_PERMISSION_CLASSES': (),
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.AllowAny',
+        'rest_framework.permissions.IsAuthenticated',
+    ],
     'DEFAULT_AUTHENTICATION_CLASSES': (
+        # 'knox.auth.TokenAuthentication',
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.BasicAuthentication',
     ),

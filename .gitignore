@@ -1,4 +1,11 @@
 ### Python ###
+.vscode
+.idea
+.coverage
+.DS_STORE
+staticfiles
+mediafiles
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -133,8 +140,8 @@ dmypy.json
 .pyre/
 
 #react
-.DS_STORE
 node_modules
+client/node_modules
 scripts/flow/*/.flowconfig
 .flowconfig
 *~
