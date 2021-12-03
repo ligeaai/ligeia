@@ -1,24 +1,24 @@
 # PostgresSQL
-psycopg2>=2.9.2
+psycopg2==2.9.2
 
 # serve files
 whitenoise>=5.3.0
 
 # Django Framework
-Django>=3.2.7
-djangorestframework>=3.12.4
-django-environ==0.7.0
-django-filter==21.1
-django-rest-knox>=4.1.0
-django-extensions>=3.1.5
-django-modeltranslation==0.17.3
-django-disposable-email-checker>=2.0.2
-django-health-check>=3.16.4
-django-redis>=5.1.0
-docker-compose>=1.29.2
+Django
+djangorestframework
+django-environ
+django-filter
+django-rest-knox
+django-extensions
+django-modeltranslation
+django-disposable-email-checker
+django-health-check
+django-redis
+docker-compose
 
 # Sentry
-raven>=6.10.0
+raven
 
 # for date processing
 python-dateutil>=2.6.1

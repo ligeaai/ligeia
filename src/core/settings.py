@@ -1,17 +1,34 @@
 """Django settings for core project."""
 
-import os
+import os, environ
 import logging
+from pathlib import Path
 from django.utils.translation import gettext_lazy as _
 
 logger = logging.getLogger(__name__)
+
+env = environ.Env(
+    DEBUG = (bool, False)
+)
 
 BASE_DIR = os.path.join(
     os.path.dirname(os.path.dirname(os.path.dirname(__file__))), 'src/'
 )
 
+# BASE_DIR = Path(__file__).resolve().parent.parent
+
+environ.Env.read_env(BASE_DIR / ".env")
+
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-9j935o7+7efsdf0)zfmbsg9ipx)u@s8r@3goejc_y^d**7^78w'
+SECRET_KEY = env("SECRET_KEY")
+
+DEBUG = os.environ.get('DEBUG', False)
+TEMPLATE_DEBUG = DEBUG
+
+PAGE_CACHE_SECONDS = 60
+
+# TODO: n a real production server this should have a proper url
+ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = (
     'django.contrib.auth',
@@ -132,14 +149,6 @@ REST_KNOX = {
     'AUTH_TOKEN_CHARACTER_LENGTH': 64,
     'USER_SERIALIZER': 'knox.serializers.UserSerializer'
 }
-
-DEBUG = os.environ.get('DEBUG', False)
-TEMPLATE_DEBUG = DEBUG
-
-PAGE_CACHE_SECONDS = 60
-
-# TODO: n a real production server this should have a proper url
-ALLOWED_HOSTS = ['*']
 
 DATABASES = {
     'default': {
