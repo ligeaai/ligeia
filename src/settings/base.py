@@ -1,6 +1,7 @@
 """Django settings for core project."""
 
-import os, environ
+import os 
+import environ
 import logging
 from django.utils.translation import gettext_lazy as _
 
@@ -23,6 +24,8 @@ TEMPLATE_DEBUG = DEBUG
 PAGE_CACHE_SECONDS = 60
 
 LOGGING_CONFIG = None
+
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # TODO: n a real production server this should have a proper url
 ALLOWED_HOSTS = env("ALLOWED_HOSTS").split(" ")
@@ -220,16 +223,16 @@ LOGGING = {
     },
 }
 
-CACHES = {
-    "default": {
-        "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": f"redis://{os.environ['REDIS_URI']}",
-        "OPTIONS": {
-            "CLIENT_CLASS": "django_redis.client.DefaultClient",
-            "SOCKET_TIMEOUT": 900,
-        }
-    }
-}
+# CACHES = {
+#     "default": {
+#         "BACKEND": "django_redis.cache.RedisCache",
+#         "LOCATION": f"redis://{os.environ['REDIS_URI']}",
+#         "OPTIONS": {
+#             "CLIENT_CLASS": "django_redis.client.DefaultClient",
+#             "SOCKET_TIMEOUT": 900,
+#         }
+#     }
+# }
 
 SESSION_ENGINE = "django.contrib.sessions.backends.cache"
 SESSION_CACHE_ALIAS = "default"
