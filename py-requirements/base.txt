@@ -1,5 +1,6 @@
 # PostgresSQL
 #psycopg2==2.9.2
+channels
 
 # serve files
 whitenoise>=5.3.0
@@ -16,6 +17,7 @@ django-disposable-email-checker
 django-health-check
 django-redis
 docker-compose
+django-cors-headers
 
 # Sentry
 raven
@@ -26,3 +28,10 @@ python-dateutil>=2.6.1
 #misc
 #uWSGI==2.0.19
 
+#celery
+celery
+redis
+django-celery-beat
+
+# DRF docs
+drf-yasg
