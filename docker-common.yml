@@ -14,7 +14,7 @@ services:
         environment:
             POSTGRES_USER: db_admin
             POSTGRES_PASSWORD: manager
-            POSTGRES_DB: db_core
+            POSTGRES_DB: db_dev
         ports:
             - 5434:5432
     pgadmin:

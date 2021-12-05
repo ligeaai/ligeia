@@ -1,5 +1,5 @@
 # https://github.com/tiangolo/uwsgi-nginx-docker/tree/master/python3.6
-FROM tiangolo/uwsgi-nginx:python3.9
+FROM tiangolo/uwsgi-nginx:python3.8
 LABEL maintainer=""
 
 ENV PYTHONUNBUFFERED 1
@@ -9,9 +9,14 @@ EXPOSE 8000
 ENV UWSGI_INI /opt/app/deployment/uwsgi.ini
 
 # RUN curl -sL https://deb.nodesource.com/setup_17.x | bash -
-# RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
-# RUN echo "deb http://dl.yarnpkg.com/debian/ stable main" > /etc/apt/sources.list.d/yarn.list
+RUN curl -fsSL https://deb.nodesource.com/setup_17.x | sudo -E bash -
+RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
+RUN echo "deb http://dl.yarnpkg.com/debian/ stable main" > /etc/apt/sources.list.d/yarn.list
 RUN apt-get update && apt-get install -y sudo libpcre3-dev curl gcc make git nodejs yarn
+
+# RUN curl -fsSL https://deb.nodesource.com/setup_17.x | sudo -E bash -
+# RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
+# RUN echo "deb http://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
 
 WORKDIR /opt/app/
 
