@@ -23,7 +23,7 @@ TEMPLATE_DEBUG = DEBUG
 PAGE_CACHE_SECONDS = 60
 LOGGING_CONFIG = None
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
-# SITE_ID=1
+SITE_ID=1
 
 # TODO: n a real production server this should have a proper url
 ALLOWED_HOSTS = env("ALLOWED_HOSTS").split(" ")
@@ -36,7 +36,7 @@ DJANGO_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    # "django.contrib.sites",   
+    "django.contrib.sites",   
 ]
 
 THIRD_PARTY_APPS = [
@@ -136,7 +136,7 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAuthenticated',
     ],
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        # 'knox.auth.TokenAuthentication',
+        'knox.auth.TokenAuthentication',
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.BasicAuthentication',
     ),
@@ -155,7 +155,7 @@ REST_FRAMEWORK = {
 REST_KNOX = {
     'SECURE_HASH_ALGORITHM': 'cryptography.hazmat.primitives.hashes.SHA512',
     'AUTH_TOKEN_CHARACTER_LENGTH': 64,
-    'USER_SERIALIZER': 'knox.serializers.UserSerializer'
+    'USER_SERIALIZER': 'accounts.serializers.UserSerializer'
 }
 
 # ########### Sentry configuration
@@ -244,10 +244,24 @@ LOGGING = {
 #     }
 # }
 
-SESSION_ENGINE = "django.contrib.sessions.backends.cache"
-SESSION_CACHE_ALIAS = "default"
+# SESSION_ENGINE = "django.contrib.sessions.backends.cache"
+# SESSION_CACHE_ALIAS = "default"
+# SESSION_COOKIE_AGE = 1800
+# SESSION_SECURITY_EXPIRE_AFTER=1800
+
+# #Cookie name. this can be whatever you want
+# SESSION_COOKIE_NAME='sessionid'  # use the sessionid in your views code
+# #the module to store sessions data
+# SESSION_ENGINE='django.contrib.sessions.backends.db'    
+# #age of cookie in seconds (default: 2 weeks)
+# SESSION_COOKIE_AGE= 24*60*60*7 # the number of seconds for only 7 for example
+# #whether a user's session cookie expires when the web browser is closed
+# SESSION_EXPIRE_AT_BROWSER_CLOSE=False
+# #whether the session cookie should be secure (https:// only)
+# SESSION_COOKIE_SECURE=False
 
 DEFAULT_LOGGER = 'raven'
+
 
 LOGGER_EXCEPTION = DEFAULT_LOGGER
 LOGGER_ERROR = DEFAULT_LOGGER

@@ -7,9 +7,9 @@ from app.base import views as base_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    # path(r'health', include('health_check.urls')),
+    path('health', include('health_check.urls')),
 
-    # path(r'api/v1/accounts/', include(('apps.accounts.urls', 'apps.accounts'), namespace='accounts')),
+    path('api/v1/', include(('app.accounts.urls', 'app.accounts'), namespace='accounts')),
     # path(r'api/v1/getdata/', include(('apps.base.urls', 'apps.base'), namespace='base')),
 
     # catch all others because of how history is handled by react router -

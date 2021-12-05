@@ -14,7 +14,7 @@ logger = logging.getLogger(__name__)
 
 
 class MyUserManager(BaseUserManager):
-    def _create_user(self, email, password, first_name, last_name, is_staff, is_superuser,**extra_fields):
+    def _create_user(self, email, password, first_name, last_name, is_staff, is_superuser, **extra_fields):
         now = timezone.now()
         email = self.normalize_email(email)
         user = self.model(
@@ -33,9 +33,7 @@ class MyUserManager(BaseUserManager):
 
         return user
 
-    def create_user(
-        self, email, first_name, last_name, password, **extra_fields
-    ):
+    def create_user(self, email, first_name, last_name, password, **extra_fields):
         return self._create_user(
             email,
             password,
@@ -46,14 +44,7 @@ class MyUserManager(BaseUserManager):
             **extra_fields
         )
 
-    def create_superuser(
-        self,
-        email,
-        first_name='',
-        last_name='',
-        password=None,
-        **extra_fields
-    ):
+    def create_superuser(self, email, first_name='', last_name='', password=None, **extra_fields):
         return self._create_user(
             email,
             password,
@@ -69,7 +60,7 @@ class MyUserManager(BaseUserManager):
 class User(AbstractBaseUser, PermissionsMixin):
 
     # id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    username = models.CharField(_('Username'), max_length=255, null=False, blank=False, unique=True, db_index=True)
+    # username = models.CharField(_('Username'), max_length=255, null=False, blank=False, unique=, db_index=True)
     first_name = models.CharField(_('First Name'), max_length=50)
     last_name = models.CharField(_('Last Name'), max_length=50)
     email = models.EmailField(_('Email address'), unique=True)
@@ -88,19 +79,19 @@ class User(AbstractBaseUser, PermissionsMixin):
     confirmed_email = models.BooleanField(default=False)
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['username']
+    # REQUIRED_FIELDS = ['username']
 
     objects = MyUserManager()
 
     def __str__(self):
-        if self.first_name and self.last_name:
-            return "%s %s" % (self.id, self.full_name)
-        else: 
-            return self.email
+        # if self.first_name and self.last_name:
+            return f"{self.email} - {self.full_name}"
+        # else: 
+        #     return self.email
 
     @property
     def full_name(self):
-        return f'{self.first_name} {self.last_name}'
+        return f'{self.first_name} - {self.last_name}'
     
     def get_short_name(self):
         if self.first_name:

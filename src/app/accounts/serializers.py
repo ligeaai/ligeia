@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from django.contrib.auth import authenticate
 
 from .models import User
 from utils import validate_email as email_is_valid
@@ -16,9 +17,8 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = (
-            'id', 'email', 'first_name', 'last_name', 'password'
-        )
+        fields = ('id', 'email', 'first_name', 'last_name', 'password')
+        extra_kwargs = {'password': {'write_only': True}}
 
     def create(self, validated_data):
         user = User.objects.create(**validated_data)
@@ -38,3 +38,13 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
             )
 
         return value
+
+class LoginSerializer(serializers.Serializer):
+    email = serializers.CharField()    
+    password = serializers.CharField()
+
+    def validate(self, data):
+        user = authenticate(**data)
+        if user and user.is_active:
+            return user
+        raise serializers.ValidationError("Incorrect Credentials")

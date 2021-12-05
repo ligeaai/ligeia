@@ -3,7 +3,7 @@ import logging
 from django.shortcuts import get_object_or_404
 from knox.auth import TokenAuthentication
 from knox.models import AuthToken
-from rest_framework import status
+from rest_framework import status, generics
 from rest_framework.authentication import BasicAuthentication
 from rest_framework.generics import GenericAPIView
 from rest_framework.mixins import CreateModelMixin
@@ -12,41 +12,67 @@ from rest_framework.response import Response
 
 from .models import User
 from .serializers import (
-    UserRegistrationSerializer, UserSerializer
+    UserRegistrationSerializer, UserSerializer, LoginSerializer
 )
 from utils import AtomicMixin
 
 logger = logging.getLogger(__name__)
 
 
-class UserRegisterView(AtomicMixin, CreateModelMixin, GenericAPIView):
+# class UserRegisterView(AtomicMixin, CreateModelMixin, GenericAPIView):
+#     serializer_class = UserRegistrationSerializer
+#     # authentication_classes = ()
+
+#     def post(self, request):
+#         """User registration view."""
+#         serializer = self.serializer_class(data=request.data)
+#         if serializer.is_valid():
+#             self.create(request)
+#             return Response(status=status.HTTP_201_CREATED)
+#         logger.warning(f'User Register Error {serializer.errors}')
+#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class UserRegisterView(generics.GenericAPIView):
     serializer_class = UserRegistrationSerializer
-    authentication_classes = ()
+    permission_classes = ()
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = serializer.save()
+        token = AuthToken.objects.create(user)
+        return Response({
+            "users": UserSerializer(user, context=self.get_serializer_context()).data,
+            "token": token[1]
+        })
+
+
+# class UserLoginView(GenericAPIView):
+#     serializer_class = UserSerializer
+#     authentication_classes = (BasicAuthentication, )
+#     permission_classes = (IsAuthenticated, )
+
+#     def post(self, request):
+#         """User login with username and password."""
+#         token = AuthToken.objects.create(request.user)
+#         return Response(
+#             {
+#                 'user': self.get_serializer(request.user).data,
+#                 'token': token
+#             }
+#         )
+
+class UserLoginView(generics.GenericAPIView):
+    serializer_class = LoginSerializer
 
     def post(self, request):
-        """User registration view."""
-        serializer = self.serializer_class(data=request.data)
-        if serializer.is_valid():
-            self.create(request)
-            return Response(status=status.HTTP_201_CREATED)
-        logger.warning(f'User Register Error {serializer.errors}')
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
-class UserLoginView(GenericAPIView):
-    serializer_class = UserSerializer
-    authentication_classes = (BasicAuthentication, )
-    permission_classes = (IsAuthenticated, )
-
-    def post(self, request):
-        """User login with username and password."""
-        token = AuthToken.objects.create(request.user)
-        return Response(
-            {
-                'user': self.get_serializer(request.user).data,
-                'token': token
-            }
-        )
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = serializer.validated_data
+        return Response({
+            "user": UserSerializer(user, context=self.get_serializer_context()).data,
+            "token": AuthToken.objects.create(user)[1]
+        })
 
 
 class UserConfirmEmailView(AtomicMixin, GenericAPIView):
