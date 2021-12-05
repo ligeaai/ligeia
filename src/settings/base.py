@@ -20,34 +20,44 @@ SECRET_KEY = env("SECRET_KEY")
 
 DEBUG = env('DEBUG')
 TEMPLATE_DEBUG = DEBUG
-
 PAGE_CACHE_SECONDS = 60
-
 LOGGING_CONFIG = None
-
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+# SITE_ID=1
 
 # TODO: n a real production server this should have a proper url
 ALLOWED_HOSTS = env("ALLOWED_HOSTS").split(" ")
 
-INSTALLED_APPS = (
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.staticfiles',
-    'django.contrib.messages',
-    'django.contrib.sessions',
-    'django.contrib.admin',
+
+DJANGO_APPS = [
+    "django.contrib.contenttypes",
+    "django.contrib.admin",
+    "django.contrib.auth",
+    "django.contrib.sessions",
+    "django.contrib.messages",
+    "django.contrib.staticfiles",
+    # "django.contrib.sites",   
+]
+
+THIRD_PARTY_APPS = [
     'raven.contrib.django.raven_compat',
     'rest_framework',
     'knox',
     'django_extensions',
-    'base',
-    'accounts',
+    'django_filters',
     'health_check',  # required
     'health_check.db',  # stock Django health checkers
     'health_check.cache',
     'health_check.storage'
-)
+
+]
+
+LOCAL_APPS = [
+    'app.base',
+    'app.accounts',
+]
+
+INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -58,7 +68,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.common.CommonMiddleware'
 ]
 
 ROOT_URLCONF = 'core.urls'

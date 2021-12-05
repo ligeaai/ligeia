@@ -14,10 +14,7 @@ logger = logging.getLogger(__name__)
 
 
 class MyUserManager(BaseUserManager):
-    def _create_user(
-        self, email, password, first_name, last_name, is_staff, is_superuser,
-        **extra_fields
-    ):
+    def _create_user(self, email, password, first_name, last_name, is_staff, is_superuser,**extra_fields):
         now = timezone.now()
         email = self.normalize_email(email)
         user = self.model(
@@ -64,14 +61,15 @@ class MyUserManager(BaseUserManager):
             last_name,
             is_staff=True,
             is_superuser=True,
+            is_admin = True,            
             **extra_fields
         )
 
 
 class User(AbstractBaseUser, PermissionsMixin):
 
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-
+    # id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    username = models.CharField(_('Username'), max_length=255, null=False, blank=False, unique=True, db_index=True)
     first_name = models.CharField(_('First Name'), max_length=50)
     last_name = models.CharField(_('Last Name'), max_length=50)
     email = models.EmailField(_('Email address'), unique=True)
@@ -79,6 +77,9 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(_('staff status'), default=False)
     is_superuser = models.BooleanField(_('superuser status'), default=False)
     is_active = models.BooleanField(_('active'), default=True)
+    is_admin = models.BooleanField(_('admin'), default=False)
+    is_client = models.BooleanField(_('client'), default=False)
+    is_employee = models.BooleanField(_('employee'), default=False)
 
     date_joined = models.DateTimeField(_('date joined'), auto_now_add=True)
     date_updated = models.DateTimeField(_('date updated'), auto_now=True)
@@ -87,15 +88,31 @@ class User(AbstractBaseUser, PermissionsMixin):
     confirmed_email = models.BooleanField(default=False)
 
     USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ['username']
 
     objects = MyUserManager()
 
     def __str__(self):
-        return f'{self.id} - {self.full_name}'
+        if self.first_name and self.last_name:
+            return "%s %s" % (self.id, self.full_name)
+        else: 
+            return self.email
 
     @property
     def full_name(self):
         return f'{self.first_name} {self.last_name}'
+    
+    def get_short_name(self):
+        if self.first_name:
+            return self.first_name
+        else:
+            return self.email
+    
+    def has_perm(self, perm, obj=None):
+        return True
+
+    def has_module_perms(self, app_label):
+        return True
 
     def confirm_email(self):
         activation_expired = self.date_joined + timedelta(
@@ -106,3 +123,8 @@ class User(AbstractBaseUser, PermissionsMixin):
             self.save()
             return True
         return False
+
+    class Meta:
+        verbose_name = 'User'
+        verbose_name_plural = 'Users'
+        swappable = 'AUTH_USER_MODEL'
