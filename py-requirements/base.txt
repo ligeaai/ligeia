@@ -1,6 +1,6 @@
 # PostgresSQL
 #psycopg2==2.9.2
-channels
+channels==2.4.0
 
 # serve files
 whitenoise>=5.3.0
