@@ -1,6 +1,6 @@
 const path = require('path');
 const autoprefixer = require('autoprefixer');
-const merge = require('webpack-merge');
+const { merge } = require('webpack-merge');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
@@ -47,11 +47,11 @@ const common = {
         //     name: 'vendor',
         //     filename: 'vendor.[hash].js'
         // }),
-        new webpack.optimize.CommonsChunkPlugin({
-            children: true,
-            async: true,
-            minChunks: 2
-        }),
+        // new webpack.optimize.CommonsChunkPlugin({
+        //     children: true,
+        //     async: true,
+        //     minChunks: 2
+        // }),
         new HtmlWebpackPlugin({
             template: path.join(__dirname, '../src/static/index.html'),
             hash: true,
@@ -69,9 +69,9 @@ const common = {
             'jQuery': 'jquery',
             'window.jQuery': 'jquery'
         }),
-        new CleanWebpackPlugin([PATHS.build], {
-            root: process.cwd()
-        })
+        // new CleanWebpackPlugin([PATHS.build], {
+        //     root: process.cwd()
+        // })
     ],
     resolve: {
         extensions: ['.jsx', '.js', '.json', '.scss', '.css'],
