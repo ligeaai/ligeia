@@ -10,7 +10,7 @@ logger = logging.getLogger(__name__)
 env = environ.Env(DEBUG = (bool, False))
 
 BASE_DIR = os.path.join(
-    os.path.dirname(os.path.dirname(os.path.dirname(__file__))), 'src/'
+    os.path.dirname(os.path.dirname(os.path.dirname(__file__))), 'backend/'
 )
 
 environ.Env.read_env(os.path.join(BASE_DIR, '../.env'))
