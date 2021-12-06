@@ -71,6 +71,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_admin = models.BooleanField(_('admin'), default=False)
     is_client = models.BooleanField(_('client'), default=False)
     is_employee = models.BooleanField(_('employee'), default=False)
+    service_admin = models.BooleanField(null=True, blank=True, default=False)
 
     date_joined = models.DateTimeField(_('date joined'), auto_now_add=True)
     date_updated = models.DateTimeField(_('date updated'), auto_now=True)
@@ -84,10 +85,10 @@ class User(AbstractBaseUser, PermissionsMixin):
     objects = MyUserManager()
 
     def __str__(self):
-        # if self.first_name and self.last_name:
-            return f"{self.email} - {self.full_name}"
-        # else: 
-        #     return self.email
+        # # if self.first_name and self.last_name:
+        #     return f"{self.email} - {self.full_name}"
+        # # else: 
+        return self.email
 
     @property
     def full_name(self):

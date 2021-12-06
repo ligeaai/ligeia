@@ -18,6 +18,8 @@ django-health-check
 django-redis
 docker-compose
 django-cors-headers
+django-cities-light
+django-smart-selects
 
 # Sentry
 raven

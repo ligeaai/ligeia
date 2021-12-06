@@ -6,10 +6,10 @@ from utils import validate_email as email_is_valid
 
 
 class UserSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = User
-        fields = ('first_name', 'last_name', 'email')
+        exclude = ('password', )
+        # fields = ('email', 'first_name', 'last_name')
 
 
 class UserRegistrationSerializer(serializers.ModelSerializer):

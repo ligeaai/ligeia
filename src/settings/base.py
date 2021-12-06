@@ -42,9 +42,12 @@ DJANGO_APPS = [
 THIRD_PARTY_APPS = [
     'raven.contrib.django.raven_compat',
     'rest_framework',
+    'drf_yasg',
     'knox',
     'django_extensions',
     'django_filters',
+    'cities_light',
+    'smart_selects',
     'health_check',  # required
     'health_check.db',  # stock Django health checkers
     'health_check.cache',
