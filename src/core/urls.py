@@ -16,9 +16,9 @@ schema_view = get_schema_view(
         openapi.Info(
                     title="Ligeia API",
                     default_version='/api/v1',
-                    description="API docs for Nordal backend",
+                    description="API docs for Ligeia",
                     terms_of_service="https://www.google.com/policies/terms/",
-                    contact=openapi.Contact(email="cio@exiverprojects.com"),
+                    contact=openapi.Contact(email="info@ligeia.ai"),
                     license=openapi.License(name="BSD License"),
                 ),
         public=True,
@@ -32,7 +32,7 @@ urlpatterns = [
 
     path('api/v1/accounts/', include(('app.accounts.urls', 'app.accounts'), namespace='accounts')),
     path('api/v1/citylight/', include(('app.citylight.urls', 'app.citylight'), namespace='citylight')),
-    path('api/v1/db-models/', include(('app.db_models.urls', 'app.db_models'), namespace='db_models')),
+    path('api/v1/models/', include(('app.db_models.urls', 'app.db_models'), namespace='models')),
     # path('api/v1/getdata/', include(('app.base.urls', 'app.base'), namespace='base')),
 
     # catch all others because of how history is handled by react router -

@@ -8,11 +8,11 @@ class Field(Base_domain):
     latitude = models.CharField(db_column='latitude', max_length=100, blank=True, null=True, verbose_name='Latitude')
     longitude = models.CharField(db_column='longitude',  max_length=100, blank=True, null=True, verbose_name='Longitude')
     
-    # product= models.ForeignKey('dictionaries.type_product', on_delete=models.CASCADE, blank=True, null=True, verbose_name='Product')
-    country = models.ForeignKey(Country, on_delete=models.CASCADE, blank=True, null=True, verbose_name='Country')
-    region = ChainedForeignKey(Region, chained_field="country", chained_model_field="country", show_all=False, auto_choose=True, sort=True, blank=True, null=True, verbose_name='Region')
-    subregion = ChainedForeignKey(SubRegion, chained_field="region", chained_model_field="region", show_all=False, auto_choose=True, sort=True, blank=True, null=True, verbose_name='Sub-Region')
-    city = ChainedForeignKey(City, chained_field="region", chained_model_field="region", show_all=False, auto_choose=True, sort=True, blank=True, null=True, verbose_name='City')
+    product= models.CharField(db_column='product', max_length=100, blank=True, null=True, verbose_name='Product')
+    country = models.CharField(db_column='country', max_length=100, blank=True, null=True, verbose_name='Country')
+    region = models.CharField(db_column='region', max_length=100, blank=True, null=True, verbose_name='Region')
+    subregion = models.CharField(db_column='subregion', max_length=100, blank=True, null=True, verbose_name='Sub-Region')
+    city = models.CharField(db_column='city', max_length=100, blank=True, null=True, verbose_name='City')
     company_ref = models.ForeignKey('company', on_delete=models.CASCADE, null=True, blank=True, verbose_name='Company Ref.')
 
     def __str__(self):
