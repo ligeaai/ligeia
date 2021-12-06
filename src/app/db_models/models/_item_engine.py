@@ -1,6 +1,6 @@
 from django.db import models
 import uuid
-from db_models.models._base_equip import Base_equip
+from ._base_equip import Base_equip
 
 class Engine(Base_equip):
     pass
@@ -8,7 +8,7 @@ class Engine(Base_equip):
 
 class Meta:
     db_table = 'engine'
-    app_label = 'db_models'
+    app_label = 'app.db_models'
     ordering = ["name"]
     verbose_name = "enginer"
     verbose_name_plural = "engines"

@@ -40,7 +40,6 @@ class Base_domain(models.Model):
     #       return self.last_updt_user
 
 
-class Meta:
-    db_table = 'base_domain'
-    app_label = 'db_models'
+class Meta:    
+    app_label = 'app.db_models'
     # unique_together=(('item_id'),)

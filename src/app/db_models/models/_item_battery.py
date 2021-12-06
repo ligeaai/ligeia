@@ -1,7 +1,7 @@
 from django.db import models
 from timezone_field import TimeZoneField
 from django.forms.models import model_to_dict
-from db_models.models._base_domain import Base_domain
+from ._base_domain import Base_domain
 
 
 class Battery(Base_domain):
@@ -34,8 +34,7 @@ class Battery(Base_domain):
          return self.registry_id
 
 class Meta:
-      db_table = 'battery'
-      app_label = 'db_models'
+      app_label = 'app.db_models'
       ordering = ["name"]
       verbose_name = "battery"
       verbose_name_plural = "batteries"

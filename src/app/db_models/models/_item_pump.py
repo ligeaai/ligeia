@@ -1,7 +1,7 @@
 from django.db import models
 from smart_selects.db_fields import ChainedForeignKey, ChainedManyToManyField
-from db_models.models._base_equip import Base_equip
-from db_dictionaries.models._uom_set import UOM_Set
+from ._base_equip import Base_equip
+# from db_dictionaries.models._uom_set import UOM_Set
 
 from django.forms.models import model_to_dict
 
@@ -36,7 +36,7 @@ class Pump(Base_equip):
 
 class Meta:
       db_table = 'pump'
-      app_label = 'db_models'
+      app_label = 'app.db_models'
       ordering = ["name"]
       verbose_name = "pump"
       verbose_name_plural = "pumps"

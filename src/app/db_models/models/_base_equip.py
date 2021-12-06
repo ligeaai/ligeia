@@ -1,7 +1,7 @@
 from django.db import models
 from django.utils import timezone
 import uuid
-from db_models.models._base_domain import Base_domain
+from ._base_domain import Base_domain
 
 
 class Base_equip(Base_domain):
@@ -35,9 +35,8 @@ class Base_equip(Base_domain):
       elif self.registry_id:
          return self.registry_id
          
-class Meta:
-      db_table = 'base_equip'
-      app_label = 'db_models'
+class Meta:      
+      app_label = 'app.db_models'
       ordering = ["name"]
       # verbose_name = "base_equip"
       # verbose_name_plural = "base_equips"

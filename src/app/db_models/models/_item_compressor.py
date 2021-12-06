@@ -1,6 +1,6 @@
 from django.db import models
 import uuid
-from db_models.models._base_equip import Base_equip
+from ._base_equip import Base_equip
 
 class Compressor(Base_equip):
    battery_id = models.ForeignKey('battery', on_delete=models.CASCADE)
@@ -30,7 +30,7 @@ class Compressor(Base_equip):
          
 class Meta:
       db_table = 'compressor'
-      app_label = 'db_models'
+      app_label = 'app.db_models'
       ordering = ["name"]
       verbose_name = "compressor"
       verbose_name_plural = "compressors"

@@ -1,7 +1,7 @@
 from django.db import models
 from cities_light.models import City, Region, Country, SubRegion, Region
 from smart_selects.db_fields import ChainedForeignKey
-from db_models.models._base_domain import Base_domain
+from ._base_domain import Base_domain
 
 
 class Field(Base_domain):
@@ -30,8 +30,7 @@ class Field(Base_domain):
 
 
 class Meta:
-    db_table = 'field'
-    app_label = 'db_models'
+    app_label = 'app.db_models'
     ordering = ["name"]
     verbose_name = "field"
     verbose_name_plural = "fields"

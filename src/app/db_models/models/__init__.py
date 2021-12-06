@@ -4,12 +4,12 @@
 
 
 #main classes
-from db_models.models._base_domain import Base_domain
-from db_models.models._base_equip import Base_equip
+from ._base_domain import Base_domain
+from ._base_equip import Base_equip
 
 # items import
-from db_models.models._item_field import Field
-from db_models.models._item_company import Company
-from db_models.models._item_battery import Battery
-from db_models.models._item_pump import Pump
-from db_models.models._item_engine import Engine
+from ._item_field import Field
+from ._item_company import Company
+from ._item_battery import Battery
+from ._item_pump import Pump
+# from db_models.models._item_engine import Engine

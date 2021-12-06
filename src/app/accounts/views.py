@@ -19,27 +19,30 @@ from utils import AtomicMixin
 logger = logging.getLogger(__name__)
 
 
-class UserView(generics.RetrieveAPIView):
-  permission_classes = [
-      permissions.IsAuthenticated
-  ]
-  serializer_class = UserSerializer
-
-  def get_object(self):
-    return self.request.user
-
-
-class UserDetails(generics.ListAPIView):
-    queryset = User.objects.none()
+class UserView(generics.RetrieveUpdateDestroyAPIView):
+    queryset=User.objects.all()
     serializer_class = UserSerializer
-    permission_classes = (IsAuthenticated, )
-    http_method_names = ('head', 'option', 'delete', 'get')
+    permission_classes = [
+        permissions.IsAuthenticated
+    ]
+  
+    def get_object(self):
+        return self.request.user
+
+class UserList(generics.ListAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    permission_classes = [
+        permissions.IsAuthenticated,
+        # permissions.IsAdminUser
+    ]
 
     def list(self, request):
-        queryset = User.objects.get(email=request.user)
-        serializer = self.serializer_class(queryset)
-
+        # Note the use of `get_queryset()` instead of `self.queryset`
+        queryset = self.get_queryset()
+        serializer = UserSerializer(queryset, many=True)
         return Response(serializer.data)
+
 class UserRegisterView(generics.GenericAPIView):
     serializer_class = UserRegistrationSerializer
     permission_classes = ()
@@ -59,6 +62,7 @@ class UserRegisterView(generics.GenericAPIView):
 
 class UserLoginView(generics.GenericAPIView):
     serializer_class = LoginSerializer
+    permission_classes = ()
 
     def post(self, request):
         serializer = self.get_serializer(data=request.data)
