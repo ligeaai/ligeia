@@ -1,7 +1,7 @@
 
 from rest_framework.serializers import ModelSerializer
 from rest_framework import serializers
-from db_models.models import Company
+from ..models import Company
 
 
 # class CompanyListSerializer(serializers.ModelSerializer):
@@ -11,7 +11,7 @@ from db_models.models import Company
 #         model = Company
 #         fields = ('company_ref', )
 
-class CompanyListSerializer(serializers.ModelSerializer):
+class CompanySerializer(serializers.ModelSerializer):
     # company_ref = serializers.SlugRelatedField(many=False, read_only=False, slug_field="name")
     # company_ref = serializers.PrimaryKeyRelatedField(
     #     queryset=Company.objects.all(), source='company_ref', allow_null=False, required=True

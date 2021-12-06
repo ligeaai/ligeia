@@ -13,7 +13,7 @@ urlpatterns = [
     path(_('login/'), UserLoginView.as_view(), name='login'),
     path(_('logout/'),knox_views.LogoutView.as_view(), name="knox-logout"),
     path(_('register/'), UserRegisterView.as_view(), name='register'),
-    re_path(_(r'^users/$'), UserList.as_view(), name='user-list'),
+    re_path(_(r'^users/$'), UserList.as_view(), name='users'),
     re_path(_(r'^user-details/(?P<pk>[^/]+)/$'), UserView.as_view(), name="user-details"),
 
     # re_path(_(r'confirm/email/(?P<activation_key>.*)/$'), UserConfirmEmailView.as_view(), name='confirm_email'),

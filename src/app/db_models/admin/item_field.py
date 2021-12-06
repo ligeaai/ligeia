@@ -1,5 +1,5 @@
 from django.contrib import admin
-from db_models.models._item_field import Field
+from ..models import Field
 
 
 # class FieldTabularInline(admin.StackedInline):

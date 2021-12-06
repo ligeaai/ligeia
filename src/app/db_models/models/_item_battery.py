@@ -8,8 +8,8 @@ class Battery(Base_domain):
    latitude= models.CharField(db_column='latitude', max_length=100, blank=True, null=True, verbose_name='Latitude')
    longitude= models.CharField(db_column='longitude',  max_length=100, blank=True, null=True, verbose_name='Longitude')
    
-   # type= models.ForeignKey('dictionaries.type_battery', on_delete=models.CASCADE, blank=True, null=True, verbose_name='Type')
-   # product= models.ForeignKey('dictionaries.type_product', on_delete=models.CASCADE, blank=True, null=True, verbose_name='Product')
+   type= models.CharField(db_column='type', max_length=100, blank=True, null=True, verbose_name='Type')
+   product= models.CharField(db_column='product', max_length=100, blank=True, null=True, verbose_name='Product')
    day_start= models.DateTimeField(auto_now_add=False, blank=True, null=True, verbose_name='Prod. Start')      
    
    company_ref = models.ForeignKey('company', on_delete=models.CASCADE, null=True, blank=True, verbose_name='Company Ref.')

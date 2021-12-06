@@ -1,7 +1,6 @@
 from django.contrib import admin
 from operator import or_
-from mptt.admin import DraggableMPTTAdmin
-from db_models.models._item_company import Company
+from ..models  import Company
 
 
 # class CompanyTabularInline(admin.StackedInline):
@@ -17,12 +16,12 @@ class CompanyAdminBase(admin.ModelAdmin):
     # inlines = [CompanyTabularInline]
     model = Company
 
-    list_display = ['get_parents','name', 'short_name', 'contact_name', 'email', 'country', 'region', 'city']    
+    list_display = ['name', 'short_name', 'contact_name', 'email', 'country', 'region', 'city']    
     list_display_links = ['name', 'short_name']
     list_filter = ['name','country', 'region']
 
     fieldsets = (
-        ('Defaults', {'fields': (('start_datetime', 'end_datetime'), ('name', 'short_name'), ('active', 'operated'), 'parent')}),
+        ('Defaults', {'fields': (('start_datetime', 'end_datetime'), ('name', 'short_name'), ('active', 'operated'), 'company_ref')}),
         ('Location', {'fields': ('country', 'region', 'subregion', 'city')}),
         ('Contact', {'fields': ('contact_name','address', 'email')}),
         ('Type', {'fields': ('operator', 'owner', 'purchaser', 'transporter','service')}),

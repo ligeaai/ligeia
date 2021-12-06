@@ -1,5 +1,5 @@
 from django.contrib import admin
-from db_models.models._item_pump import Pump
+from ..models import Pump
 
 class PumpAdminBase(admin.ModelAdmin):
     # inlines = [FieldTabularInline]

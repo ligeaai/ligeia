@@ -6,10 +6,10 @@ from ._base_domain import Base_domain
 
 class Company(Base_domain):
     company_ref = models.ManyToManyField('self', blank=True, symmetrical=False, verbose_name='Parent Company')
-    country = models.ForeignKey(Country, on_delete=models.CASCADE, blank=True, null=True, verbose_name='Country')
-    region = ChainedForeignKey(Region, chained_field="country", chained_model_field="country", show_all=False, auto_choose=True, sort=True, blank=True, null=True, verbose_name='Region')
-    subregion = ChainedForeignKey(SubRegion, chained_field="region", chained_model_field="region", show_all=False, auto_choose=True, sort=True, blank=True, null=True, verbose_name='Sub-Region')
-    city = ChainedForeignKey(City, chained_field="region", chained_model_field="region", show_all=False, auto_choose=True, sort=True, blank=True, null=True, verbose_name='City')
+    country = models.CharField(db_column='country', max_length=100, blank=True, null=True, verbose_name='Country')
+    region = models.CharField(db_column='region', max_length=100, blank=True, null=True, verbose_name='Region')
+    subregion = models.CharField(db_column='subregion', max_length=100, blank=True, null=True, verbose_name='Sub-Region')
+    city = models.CharField(db_column='city', max_length=100, blank=True, null=True, verbose_name='City')
     contact_name = models.CharField(db_column='contact_name', max_length=100, blank=True, null=True, verbose_name='Contact Name')
     address = models.CharField(db_column='address', max_length=100, blank=True, null=True, verbose_name='Address')
     email = models.EmailField(db_column='email', max_length=100, blank=True, null=True, verbose_name='e-mail')
