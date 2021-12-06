@@ -1,7 +1,7 @@
 
 from rest_framework.viewsets import ModelViewSet
-from ..serializers import BatterySerializer
 
+from ..serializers import BatterySerializer
 from ..models import Battery
 
 
