@@ -3,17 +3,16 @@ import logging
 from django.shortcuts import get_object_or_404
 from knox.auth import TokenAuthentication
 from knox.models import AuthToken
+from knox.views import LoginView as KnoxLoginView
 from rest_framework import status, generics, permissions
-from rest_framework.authentication import BasicAuthentication
 from rest_framework.generics import GenericAPIView
-from rest_framework.mixins import CreateModelMixin
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+from django.contrib.auth import login
 
-from .models import User
-from .serializers import (
-    UserRegistrationSerializer, UserSerializer, LoginSerializer
-)
+from .models import *
+from .serializers import UserRegistrationSerializer, UserSerializer, LoginSerializer
+
 from utils import AtomicMixin
 
 logger = logging.getLogger(__name__)
@@ -62,9 +61,11 @@ class UserRegisterView(generics.GenericAPIView):
 
 class UserLoginView(generics.GenericAPIView):
     serializer_class = LoginSerializer
-    permission_classes = ()
+    permission_classes = [
+        permissions.AllowAny,
+    ]
 
-    def post(self, request):
+    def post(self, request, format = None):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         user = serializer.validated_data
@@ -72,7 +73,6 @@ class UserLoginView(generics.GenericAPIView):
             "user": UserSerializer(user, context=self.get_serializer_context()).data,
             "token": AuthToken.objects.create(user)[1]
         })
-
 
 class UserConfirmEmailView(AtomicMixin, GenericAPIView):
     serializer_class = None

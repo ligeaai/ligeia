@@ -13,7 +13,7 @@ from django.utils.translation import ugettext_lazy as _
 logger = logging.getLogger(__name__)
 
 
-class MyUserManager(BaseUserManager):
+class UserManager(BaseUserManager):
     def _create_user(self, email, password, first_name, last_name, is_staff, is_superuser, **extra_fields):
         now = timezone.now()
         email = self.normalize_email(email)
@@ -43,6 +43,7 @@ class MyUserManager(BaseUserManager):
             is_superuser=False,
             **extra_fields
         )
+        return user
 
     def create_superuser(self, email, first_name='', last_name='', password=None, **extra_fields):
         return self._create_user(
@@ -55,6 +56,7 @@ class MyUserManager(BaseUserManager):
             is_admin = True,            
             **extra_fields
         )
+        return user
 
 
 class User(AbstractBaseUser, PermissionsMixin):
@@ -71,6 +73,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_admin = models.BooleanField(_('admin'), default=False)
     is_client = models.BooleanField(_('client'), default=False)
     is_employee = models.BooleanField(_('employee'), default=False)
+    first_login = models.BooleanField(default=False)
     service_admin = models.BooleanField(null=True, blank=True, default=False)
 
     date_joined = models.DateTimeField(_('date joined'), auto_now_add=True)
@@ -82,7 +85,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     USERNAME_FIELD = 'email'
     # REQUIRED_FIELDS = ['username']
 
-    objects = MyUserManager()
+    objects = UserManager()
 
     def __str__(self):
         # # if self.first_name and self.last_name:
@@ -102,10 +105,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     
     def has_perm(self, perm, obj=None):
         return True
-
-    def has_module_perms(self, app_label):
-        return True
-
+    
     def confirm_email(self):
         activation_expired = self.date_joined + timedelta(
             days=settings.ACCOUNT_ACTIVATION_DAYS

@@ -1,9 +1,10 @@
 from rest_framework import serializers
 from django.contrib.auth import authenticate
+from django.contrib.auth import get_user_model
 
-from .models import User
+# from .models import User
 from utils import validate_email as email_is_valid
-
+User = get_user_model()
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
