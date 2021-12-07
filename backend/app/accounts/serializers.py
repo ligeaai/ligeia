@@ -41,7 +41,7 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
         return value
 
 class LoginSerializer(serializers.Serializer):
-    email = serializers.CharField()    
+    email = serializers.EmailField()   
     password = serializers.CharField()
 
     def validate(self, data):
@@ -49,3 +49,17 @@ class LoginSerializer(serializers.Serializer):
         if user and user.is_active:
             return user
         raise serializers.ValidationError("Incorrect Credentials")
+
+
+class ChangePasswordSerializer(serializers.Serializer):
+    password_1 = serializers.CharField(required=True)
+    # password_1 can be old password or new password
+    password_2 = serializers.CharField(required=True)
+    # password_2 can be new password or confirm password according to apiview
+
+class ForgetPasswordSerializer(serializers.Serializer):
+    """
+    Used for resetting password who forget their password via otp varification
+    """
+    email = serializers.EmailField(required=True)
+    password = serializers.CharField(required=True)
