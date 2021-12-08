@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from django.contrib.auth import authenticate
 from django.contrib.auth import get_user_model
+from django.contrib.auth.password_validation import validate_password
 
 # from .models import User
 from utils import validate_email as email_is_valid
@@ -52,14 +53,49 @@ class LoginSerializer(serializers.Serializer):
 
 
 class ChangePasswordSerializer(serializers.Serializer):
-    password_1 = serializers.CharField(required=True)
-    # password_1 can be old password or new password
-    password_2 = serializers.CharField(required=True)
-    # password_2 can be new password or confirm password according to apiview
+    password = serializers.CharField(write_only=True, required=True, validators=[validate_password])
+    password2 = serializers.CharField(write_only=True, required=True)
+    old_password = serializers.CharField(write_only=True, required=True)
 
+    class Meta:
+        model = User
+        fields = ('old_password', 'password', 'password2')
+
+    def validate(self, attrs):
+        if attrs['password'] != attrs['password2']:
+            raise serializers.ValidationError({"password": "Password fields didn't match."})
+
+        return attrs
+
+    def validate_old_password(self, value):
+        user = self.context['request'].user
+        if not user.check_password(value):
+            raise serializers.ValidationError({"old_password": "Old password is not correct"})
+        return value
+
+    def update(self, instance, validated_data):
+
+        instance.set_password(validated_data['password'])
+        instance.save()
+
+        return instance
 class ForgetPasswordSerializer(serializers.Serializer):
     """
     Used for resetting password who forget their password via otp varification
     """
     email = serializers.EmailField(required=True)
     password = serializers.CharField(required=True)
+    
+    def save(self):
+        email=self.validated_data['email']
+        password=self.validated_data['password']
+        #filtering out whethere email is existing or not, if your email is existing then if condition will allow your email
+        if User.objects.filter(email=email).exists():
+            #if your email is existing get the query of your specific email 
+            user=User.objects.get(email=email)
+            #then set the new password for your email
+            user.set_password(password)
+            user.save()
+            return user
+        else:
+            raise serializers.ValidationError({'error':'please enter valid crendentials'})

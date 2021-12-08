@@ -11,7 +11,8 @@ from rest_framework.response import Response
 from django.contrib.auth import login
 
 from .models import *
-from .serializers import (UserRegistrationSerializer, UserSerializer, LoginSerializer, ChangePasswordSerializer)
+from .serializers import (UserRegistrationSerializer, UserSerializer, LoginSerializer, 
+        ChangePasswordSerializer, ForgetPasswordSerializer)
 
 from utils import AtomicMixin
 
@@ -89,7 +90,7 @@ class ChangePassword(generics.UpdateAPIView):
         obj = self.request.user
         return obj
 
-    def update(self, request, *args, **kwargs):
+    def patch(self, request, *args, **kwargs):
         self.object = self.get_object()
         serializer = self.get_serializer(data=request.data)
 
@@ -120,48 +121,24 @@ class ForgetPasswordChange(generics.GenericAPIView):
         otp   = request.data.get("otp", False)
         password = request.data.get('password', False)
 
-        if phone and otp and password:
-            old = PhoneOTP.objects.filter(Q(phone__iexact = phone) & Q(otp__iexact = otp))
-            if old.exists():
-                old = old.first()
-                if old.forgot_logged:
-                    post_data = {
-                        'phone' : phone,
-                        'password' : password
-                    }
-                    user_obj = get_object_or_404(User, phone__iexact=phone)
-                    serializer = ForgetPasswordSerializer(data = post_data)
-                    serializer.is_valid(raise_exception = True)
-                    if user_obj:
-                        user_obj.set_password(serializer.data.get('password'))
-                        user_obj.active = True
-                        user_obj.save()
-                        old.delete()
-                        return Response({
-                            'status' : True,
-                            'detail' : 'Password changed successfully. Please Login'
-                        })
-
-                else:
-                    return Response({
-                'status' : False,
-                'detail' : 'OTP Verification failed. Please try again in previous step'
-                                 })
-
-            else:
-                return Response({
-                'status' : False,
-                'detail' : 'Phone and otp are not matching or a new phone has entered. Request a new otp in forgot password'
-            })
+class ResetPassword(generics.GenericAPIView):
+    def post(self,request):
+        serializer=ForgetPasswordSerializer(data=request.data)
+        alldatas={}
+        if serializer.is_valid(raise_exception=True):
+            mname=serializer.save()
+            # alldatas[‘data’]=’successfully registered’
+            # print(alldatas)
+            return Response(alldatas)
+        return Response(‘failed retry after some time’)
+        class logout(APIView):
+    
+    def get(self,request):
+        request.user.auth_token.delete()
+        auth.logout(request)
+        return Response(“successfully deleted”)
 
 
-
-
-        else:
-            return Response({
-                'status' : False,
-                'detail' : 'Post request have parameters mising.'
-            })
 
 class UserConfirmEmailView(AtomicMixin, GenericAPIView):
     serializer_class = None
