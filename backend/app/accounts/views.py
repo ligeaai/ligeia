@@ -94,25 +94,25 @@ class ChangePassword(generics.UpdateAPIView):
         self.object = self.get_object()
         serializer = self.get_serializer(data=request.data)
 
+        # if serializer.is_valid():
+        #     # Check old password
+        #     if not self.object.check_password(serializer.data.get("old_password")):
+        #         return Response({"old_password": ["Wrong password."]}, status=status.HTTP_400_BAD_REQUEST)
+        #     # set_password also hashes the password that the user will get
+        #     self.object.set_password(serializer.data.get("new_password"))
+        #     self.object.save()
+        #     response = {
+        #         'status': 'success',
+        #         'code': status.HTTP_200_OK,
+        #         'message': 'Password updated successfully',
+        #         'data': []
+        #     }
+
+        #     return Response(response)
+
+
         if serializer.is_valid():
-            # Check old password
-            if not self.object.check_password(serializer.data.get("old_password")):
-                return Response({"old_password": ["Wrong password."]}, status=status.HTTP_400_BAD_REQUEST)
-            # set_password also hashes the password that the user will get
-            self.object.set_password(serializer.data.get("new_password"))
-            self.object.save()
-            response = {
-                'status': 'success',
-                'code': status.HTTP_200_OK,
-                'message': 'Password updated successfully',
-                'data': []
-            }
-
-            return Response(response)
-
-
-        if serializer.is_valid():
-            if not self.object.check_password(serializer.data.get('password_1')):
+            if not self.object.check_password(serializer.data.get('old_password')):
                 return Response({
                     'status': False,
                     'current_password': 'Does not match with our data',

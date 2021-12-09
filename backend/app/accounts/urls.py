@@ -5,7 +5,8 @@ from knox import views as knox_views
 from .views import (
     UserView, UserList,
     UserLoginView, UserRegisterView, 
-    ChangePassword, ResetPassword,
+    ChangePassword, 
+    # ResetPassword,
     UserConfirmEmailView, UserEmailConfirmationStatusView
 )
 
@@ -15,7 +16,7 @@ urlpatterns = [
     path(_('logout/'),knox_views.LogoutView.as_view(), name="knox-logout"),
     path(_('register/'), UserRegisterView.as_view(), name='register'),
     path(_('change-password'), ChangePassword.as_view(), name='changepassword'),
-    path(_('reset-password'), ResetPassword.as_view(), name='resetpassword'),
+    # path(_('reset-password'), ResetPassword.as_view(), name='resetpassword'),
     re_path(_(r'^users/$'), UserList.as_view(), name='users'),
     re_path(_(r'^user-details/(?P<pk>[^/]+)/$'), UserView.as_view(), name="user-details"),
 
