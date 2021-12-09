@@ -1,13 +1,9 @@
-export default function authHeader() {
-    const user = JSON.parse(localStorage.getItem("user"));
+import { useSelector } from "react-redux";
 
-    if (user && user.accessToken) {
-        // For Spring Boot back-end
-        // return { Authorization: "Bearer " + user.accessToken };
 
-        // for Node.js Express back-end
-        return { "x-access-token": user.accessToken };
-    } else {
-        return {};
-    }
+export default function AuthHeader() {
+    const { user: currentUser } = useSelector((state) => state.authReducer);
+    return ({
+        Authorization: 'Token' + currentUser.token
+    })
 }

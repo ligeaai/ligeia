@@ -1,7 +1,7 @@
 const styles = () => ({
 
     container: {
-        padding: "20px"
+        padding: "30px 40px"
     },
 
     actions: {
@@ -18,6 +18,14 @@ const styles = () => ({
         padding: "0",
         position: "end"
     },
+
+    button: {
+        borderRadius: "4px",
+        backgroundColor: "#2499ef",
+        color: "#FFFFFF",
+        width: "170px",
+        height: "40px"
+    }
 
 })
 

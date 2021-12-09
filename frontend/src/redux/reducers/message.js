@@ -1,8 +1,8 @@
-import { SET_MESSAGE, CLEAR_MESSAGE } from "../actions/actionTypes";
+import { SET_MESSAGE, CLEAR_MESSAGE } from "../actions/actions";
 
 const initialState = {};
 
-export default function (state = initialState, action) {
+export default function messageReducer(state = initialState, action) {
   const { type, payload } = action;
 
   switch (type) {

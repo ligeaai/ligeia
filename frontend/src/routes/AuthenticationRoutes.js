@@ -1,7 +1,7 @@
 
 import AuthLayout from '../layouts/AuthLayout'
-import SignIn from '../pages/authorization/sign-in/login.component';
-import SignUp from '../pages/authorization/sign-up/signup.component';
+import Login from '../pages/authentication/authentication3/Login3'
+import Registration from '../pages/authentication/authentication3/Register3';
 
 
 
@@ -12,11 +12,11 @@ const AuthenticationRoutes = {
     children: [
         {
             path: '/',
-            element: <SignIn />
+            element: <Login />
         },
         {
-            path: '/sign-up',
-            element: <SignUp />
+            path: '/registration',
+            element: <Registration />
         }
     ]
 };

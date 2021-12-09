@@ -43,7 +43,7 @@ const Sidebar = ({ drawerOpen, drawerToggle, window }) => {
     return (
         <Box component="nav"
             sx={{ flexShrink: { md: 0 }, width: matchUpMd ? drawerWidth : 'auto' }}
-            style={{ boxShadow: "0px 0.5px 0.5px 0px rgba(0, 0, 0, 0.5)" }} aria-label="mailbox folders">
+            style={{ boxShadow: "0px 0.1px 0.1px 0px rgba(0, 0, 0, 0.1)" }} aria-label="mailbox folders">
             <Drawer
                 container={container}
                 variant={matchUpMd ? 'persistent' : 'temporary'}

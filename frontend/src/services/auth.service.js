@@ -1,7 +1,7 @@
 
 import axios from "axios";
 
-const API_URL = "http://192.168.1.104:8000/rest-auth/login/";
+const API_URL = "http://127.0.0.1:8000/api/v1/accounts/";
 
 const register = (username, email, password) => {
     return axios.post(API_URL + "signup", {
@@ -11,10 +11,10 @@ const register = (username, email, password) => {
     });
 };
 
-const login = (username, password) => {
+const login = (email, password) => {
     return axios
-        .post(API_URL + "signin", {
-            username,
+        .post("http://127.0.0.1:8000/api/v1/accounts/login/", {
+            email,
             password,
         })
         .then((response) => {

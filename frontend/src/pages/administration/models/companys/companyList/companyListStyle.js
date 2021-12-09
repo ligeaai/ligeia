@@ -1,11 +1,70 @@
 const styles = () => ({
-    tableContainer: {
+
+    link: {
+        textDecoration: "none",
+        color: "#616161"
+    },
+
+    actions: {
+        display: "flex",
+        justifyContent: "flex-end"
+    },
+
+    modal: {
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        width: 800,
         backgroundColor: "#FFFFFF",
-        borderRadius: "10px",
-        boxShadow: "0px 0px 1px 0px rgba(0, 0, 0, 0.2)"
+        border: '2px solid #000',
+        p: 4,
+    },
+
+    button: {
+
+        borderRadius: "4px",
+        backgroundColor: "#2499ef",
+        color: "#FFFFFF",
+        width: "170px",
+        height: "40px"
+    },
+
+    tableContainer: {
+        marginTop: "20px",
+        backgroundColor: "#FFFFFF",
+        borderColor: "#1d2438",
+        borderRadius: "8px",
     },
 
     table: {
+        backgroundColor: "#ffffff",
+        borderColor: "#1d2438"
+    },
+
+    tableHead: {
+
+    },
+
+    tableHeadRow: {
+
+        borderColor: "#1d2438"
+    },
+
+    tableHeadCell: {
+
+
+    },
+
+    tableBody: {
+
+    },
+
+    tableBodyRow: {
+
+    },
+
+    tableBodyCell: {
 
     },
 

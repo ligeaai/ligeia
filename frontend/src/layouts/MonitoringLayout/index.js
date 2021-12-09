@@ -1,4 +1,4 @@
-import React from 'react'
+
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Outlet } from "react-router-dom";
@@ -9,8 +9,7 @@ import SidebarMini from './sidebarMini/index'
 import navigation from '../../menu-items/';
 import Breadcrumbs from '../../ui-component/extended/Breadcrumbs'
 import ChevronRightOutlinedIcon from '@mui/icons-material/ChevronRightOutlined';
-import { SET_MENU } from "../../redux/actions/actionTypes";
-import { TreeView } from '@mui/lab';
+import { SET_MENU } from "../../redux/actions/actions";
 
 const drawerWidth = 80
 

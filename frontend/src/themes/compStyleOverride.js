@@ -1,6 +1,17 @@
 export default function componentStyleOverrides(theme) {
-    const bgColor = theme.colors?.grey50;
+
     return {
+        MuiCheckbox: {
+            styleOverrides: {
+                root: {
+                    color: "#2499ef",
+                    borderRadius: "50%",
+                    'input:hover ~ &': {
+                        backgroundColor: "#FFFFFF",
+                    },
+                }
+            }
+        },
         MuiButton: {
             styleOverrides: {
                 root: {
@@ -11,14 +22,12 @@ export default function componentStyleOverrides(theme) {
         },
         MuiPaper: {
             defaultProps: {
-                elevation: 0,
-                
+                elevation: 0
             },
             styleOverrides: {
                 root: {
                     backgroundImage: 'none'
                 },
-
             }
         },
         MuiCardHeader: {
@@ -49,24 +58,25 @@ export default function componentStyleOverrides(theme) {
         MuiListItemButton: {
             styleOverrides: {
                 root: {
-                    color: "#505050",
+                    color: "#303030",
                     paddingTop: '10px',
+
                     paddingBottom: '10px',
                     '&.Mui-selected': {
-                        color: "#458BF3",
-                        backgroundColor: "#E5F0FF",
+                        color: "#FFFFFF",
+                        backgroundColor: "#2499ef",
                         '&:hover': {
-                            backgroundColor: "#E5F0FF"
+                            backgroundColor: "#2499ef"
                         },
                         '& .MuiListItemIcon-root': {
-                            color: "#458BF3"
+                            color: "#FFFFFF"
                         }
                     },
                     '&:hover': {
-                        backgroundColor: "#E5F0FF",
-                        color: "#458BF3",
+                        backgroundColor: "#2499ef",
+                        color: "#FFFFFF",
                         '& .MuiListItemIcon-root': {
-                            color: "#458BF3"
+                            color: "#FFFFFF"
                         }
                     }
                 }
@@ -87,53 +97,52 @@ export default function componentStyleOverrides(theme) {
                 }
             }
         },
-        // MuiInputBase: {
-        //     styleOverrides: {
-        //         input: {
-        //             color: theme.textDark,
-        //             '&::placeholder': {
-        //                 color: theme.darkTextSecondary,
-        //                 fontSize: '0.875rem'
-        //             }
-        //         }
-        //     }
-        // },
-        // MuiOutlinedInput: {
-        //     styleOverrides: {
-        //         root: {
-        //             background: bgColor,
-        //             height: "48px",
-        //             borderRadius: `${theme?.customization?.borderRadius}px`,
-        //             '& .MuiOutlinedInput-notchedOutline': {
-        //                 borderColor: theme.colors?.grey400
-        //             },
-        //             '&:hover $notchedOutline': {
-        //                 borderColor: theme.colors?.primaryLight
-        //             },
-        //             '&.MuiInputBase-multiline': {
-        //                 padding: 1
-        //             }
-        //         },
-        //         input: {
-        //             fontWeight: 500,
-        //             background: bgColor,
-        //             padding: '15.5px 14px',
-        //             borderRadius: `${theme?.customization?.borderRadius}px`,
-        //             '&.MuiInputBase-inputSizeSmall': {
-        //                 padding: '10px 14px',
-        //                 '&.MuiInputBase-inputAdornedStart': {
-        //                     paddingLeft: 0
-        //                 }
-        //             }
-        //         },
-        //         inputAdornedStart: {
-        //             paddingLeft: 4
-        //         },
-        //         notchedOutline: {
-        //             borderRadius: `${theme?.customization?.borderRadius}px`
-        //         }
-        //     }
-        // },
+        MuiInputBase: {
+            styleOverrides: {
+                input: {
+                    color: theme.textDark,
+                    '&::placeholder': {
+                        color: theme.darkTextSecondary,
+                        fontSize: '0.875rem'
+                    }
+                }
+            }
+        },
+        MuiOutlinedInput: {
+            styleOverrides: {
+                root: {
+                    background: "#ffffff",
+                    borderRadius: `${theme?.customization?.borderRadius}px`,
+                    '& .MuiOutlinedInput-notchedOutline': {
+                        borderColor: theme.colors?.grey400
+                    },
+                    '&:hover $notchedOutline': {
+                        borderColor: theme.colors?.primaryLight
+                    },
+                    '&.MuiInputBase-multiline': {
+                        padding: 1
+                    }
+                },
+                input: {
+                    fontWeight: 500,
+                    background: "#ffffff",
+                    padding: '15.5px 14px',
+                    borderRadius: `${theme?.customization?.borderRadius}px`,
+                    '&.MuiInputBase-inputSizeSmall': {
+                        padding: '10px 14px',
+                        '&.MuiInputBase-inputAdornedStart': {
+                            paddingLeft: 0
+                        }
+                    }
+                },
+                inputAdornedStart: {
+                    paddingLeft: 4
+                },
+                notchedOutline: {
+                    borderRadius: `${theme?.customization?.borderRadius}px`
+                }
+            }
+        },
         MuiSlider: {
             styleOverrides: {
                 root: {

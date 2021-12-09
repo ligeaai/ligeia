@@ -5,10 +5,10 @@ import { useDispatch, useSelector } from 'react-redux';
 
 // material-ui
 import { useTheme } from '@mui/material/styles';
-import { Avatar, Chip, ListItemButton, ListItemIcon, ListItemText, Typography, useMediaQuery } from '@mui/material';
+import { ListItemButton, ListItemIcon, useMediaQuery } from '@mui/material';
 
 // project imports
-import { MENU_OPEN, SET_MENU } from '../../../../../store/actions';
+import { MENU_OPEN, SET_MENU } from '../../../../../redux/actions/actions';
 import config from '../../../../../config';
 
 // assets
@@ -72,7 +72,7 @@ const NavItem = ({ item, level }) => {
                 borderRadius: `${customization.borderRadius}px`,
                 mb: 0.5,
                 alignItems: 'center',
-                
+
                 backgroundColor: level > 1 ? 'transparent !important' : 'inherit',
                 py: level > 1 ? 1 : 1.25,
 

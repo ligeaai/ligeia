@@ -4,7 +4,7 @@ const config = {
     basename: '',
     defaultPath: '/dashboard/default',
     fontFamily: `'Roboto', sans-serif`,
-    borderRadius: 12,
+    borderRadius: 10,
 };
 
 export default config;

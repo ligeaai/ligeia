@@ -1,4 +1,3 @@
-import React from 'react'
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Outlet } from "react-router-dom";
@@ -10,7 +9,7 @@ import navigation from '../../menu-items/';
 import Breadcrumbs from '../../ui-component/extended/Breadcrumbs'
 import ChevronRightOutlinedIcon from '@mui/icons-material/ChevronRightOutlined';
 import { drawerWidth } from "../../store/constant";
-import { SET_MENU } from "../../redux/actions/actionTypes";
+import { SET_MENU } from "../../redux/actions/actions";
 
 
 const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(({ theme, open }) => ({
@@ -101,7 +100,7 @@ const AdminLayout = () => {
 
         position="fixed"
         color="inherit"
-        style={{ height: "62px", boxShadow: " 0px 0.5px 5px rgba(0, 0, 0, 0.1)" }}
+        style={{ height: "62px", boxShadow: " 0px 0.1px 0px rgba(0, 0, 0, 0.1)" }}
         sx={{
           bgcolor: "#FFFFFF",
           transition: leftDrawerOpened ? theme.transitions.create('width') : 'none'

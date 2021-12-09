@@ -131,13 +131,7 @@ const Breadcrumbs = ({ card, divider, icon, icons, maxItems, navigation, rightAl
                             alignItems={rightAlign ? 'center' : 'flex-start'}
                             spacing={1}
                         >
-                            {title && !titleBottom && (
-                                <Grid item>
-                                    <Typography variant="h5" sx={{ fontWeight: 500 }}>
-                                        {item.title}
-                                    </Typography>
-                                </Grid>
-                            )}
+
                             <Grid item >
                                 <MuiBreadcrumbs
 

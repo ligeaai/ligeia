@@ -28,6 +28,7 @@ SITE_ID=1
 # TODO: n a real production server this should have a proper url
 ALLOWED_HOSTS = env("ALLOWED_HOSTS").split(" ")
 
+CORS_ALLOW_ALL_ORIGINS = True
 
 DJANGO_APPS = [
     "django.contrib.contenttypes",
@@ -47,6 +48,7 @@ THIRD_PARTY_APPS = [
     'django_extensions',
     'django_filters',
     'cities_light',
+    "corsheaders",
     'smart_selects',
     'health_check',  # required
     'health_check.db',  # stock Django health checkers
@@ -65,6 +67,8 @@ LOCAL_APPS = [
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
+    "django.middleware.common.CommonMiddleware",
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.common.CommonMiddleware',
