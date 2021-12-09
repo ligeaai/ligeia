@@ -11,7 +11,7 @@ from rest_framework.response import Response
 from django.contrib.auth import login
 
 from .models import *
-from .serializers import (UserRegistrationSerializer, UserSerializer, LoginSerializer, 
+from .serializers import (UserRegistrationSerializer, UserSerializer, UserLoginSerializer, 
         ChangePasswordSerializer, ForgetPasswordSerializer)
 
 from utils import AtomicMixin
@@ -61,19 +61,32 @@ class UserRegisterView(generics.GenericAPIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class UserLoginView(generics.GenericAPIView):
-    serializer_class = LoginSerializer
+    serializer_class = UserLoginSerializer
     permission_classes = [permissions.AllowAny,]
 
-    def post(self, request, format = None):
+    # def post(self, request):
+    #     serializer = self.get_serializer(data=request.data)
+    #     serializer.is_valid(raise_exception=True)
+    #     user = UserLoginSerializer(data = request.data)
+    #     # user = UserLoginSerializer(data = request.data)
+    #     if user.is_valid(raise_exception=True):
+    #         return Response(user.data, status = status.HTTP_200_OK)
+    #     return Response(user.errors, status = status.HTTP_400_BAD_REQUEST)
+
+    def post(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
+        # user = UserLoginSerializer(data = request.data)
         user = serializer.validated_data
+        # update_last_login(None, user)
         return Response({
+            "status": 'success',
+            "code": status.HTTP_200_OK,
             "user": UserSerializer(user, context=self.get_serializer_context()).data,
             "token": AuthToken.objects.create(user)[1]
         })
 
-class ChangePassword(generics.UpdateAPIView):
+class UserChangePassword(generics.UpdateAPIView):
     serializer_class = ChangePasswordSerializer
     permission_classes = [permissions.IsAuthenticated, ]
 
