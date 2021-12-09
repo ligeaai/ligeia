@@ -1,8 +1,8 @@
 #!/bin/bash
 
 echo "Running collectstatic"
-python src/manage.py collectstatic --noinput
+python backend/manage.py collectstatic --noinput
 echo "Running migrations"
-python src/manage.py migrate --noinput
+python backend/manage.py migrate --noinput
 
 /usr/bin/supervisord

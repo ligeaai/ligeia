@@ -16,13 +16,13 @@ ALLOWED_HOSTS += ['192.168.1.104:8000']
 
 DATABASES = {
     'default': {
-        "ENGINE": env("POSTGRES_ENGINE"),
+        "ENGINE": 'django.db.backends.postgresql_psycopg2',
         "NAME": env("POSTGRES_DB"),
         "USER": env("POSTGRES_USER"),
-        'PASSWORD': 'manager',
+        # 'PASSWORD': 'manager',
         "PASSWORD": env("POSTGRES_PASS"),
         # "HOST": env("POSTGRES_HOST"),
-        "PORT": env("POSTGRES_PORT"),
+        # "PORT": env("POSTGRES_PORT"),
     },
     # 'mongodb': {
     #     'NAME': 'dictionaries',
