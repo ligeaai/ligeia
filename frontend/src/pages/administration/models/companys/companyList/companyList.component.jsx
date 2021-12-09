@@ -154,27 +154,27 @@ const CompanyList = () => {
             </TableRow>
           </TableHead>
           <TableBody className={classes.tableBody}>
-            {company.results.map((companyItem, index) => (
-              <TableRow key={companyItem.id}>
+            {/* {company.results.map((result, index) => (
+              <TableRow key={index}>
                 <TableCell>
                   <Checkbox />
                 </TableCell>
                 <TableCell>
                   <Link
-                    to={"/administration/companies/" + companyItem.id}
+                    to={"/administration/companies/" + result.id}
                     className={classes.link}
                   >
-                    {companyItem.name}
+                    {result.name}
                   </Link>
                 </TableCell>
-                <TableCell>{companyItem.short_name}</TableCell>
-                <TableCell>{companyItem.contact_name}</TableCell>
-                <TableCell>{companyItem.email}</TableCell>
-                <TableCell>{companyItem.country}</TableCell>
-                <TableCell>{companyItem.region}</TableCell>
-                <TableCell>{companyItem.city}</TableCell>
+                <TableCell>{result.short_name}</TableCell>
+                <TableCell>{result.contact_name}</TableCell>
+                <TableCell>{result.email}</TableCell>
+                <TableCell>{result.country}</TableCell>
+                <TableCell>{result.region}</TableCell>
+                <TableCell>{result.city}</TableCell>
               </TableRow>
-            ))}
+            ))} */}
           </TableBody>
         </Table>
       </TableContainer>
