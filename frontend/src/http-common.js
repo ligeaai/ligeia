@@ -6,6 +6,6 @@ export default axios.create({
 
     baseURL: "http://127.0.0.1:8000/",
     headers: {
-        Authorization: "Token 3ea2930e80e13bcdc61bf5f5ba9fbcfeaf222d8459bc0f7da37e6bee6adf3802"
+        Authorization: "Token bbebb7f5d13f8b90d4f1aad37897c0f8c1e839729daa6c902d73b9b254b24234"
     }
 });
