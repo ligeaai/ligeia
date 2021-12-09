@@ -67,16 +67,16 @@ class UserLoginView(generics.GenericAPIView):
 
     def post(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data, context={'request': request})
-        serializer.is_valid(raise_exception=True)        
-        user = serializer.validated_data['user']
-        update_last_login(None, user)
-        return Response({
-            "status": 'success',
-            "code": status.HTTP_200_OK,
-            "user": UserSerializer(user, context=self.get_serializer_context()).data,
-            "token": AuthToken.objects.create(user)[1]
-        })
-
+        if serializer.is_valid(raise_exception=True):
+            user = serializer.validated_data['user']
+            update_last_login(None, user)
+            return Response({
+                "status": status.HTTP_200_OK,                
+                "user": UserSerializer(user, context=self.get_serializer_context()).data,
+                "token": AuthToken.objects.create(user)[1]
+            })
+        logger.warning(f'User Login Error {serializer.errors}')
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 class UserChangePassword(generics.UpdateAPIView):
     serializer_class = ChangePasswordSerializer
     permission_classes = [permissions.IsAuthenticated, ]
@@ -87,12 +87,12 @@ class UserChangePassword(generics.UpdateAPIView):
         if serializer.is_valid(raise_exception=True):
             user = serializer.save()
             return Response({
-                "status": 'success',
-                "code": status.HTTP_200_OK,
+                "status": status.HTTP_200_OK,                
                 "detail": "Password has been successfully changed.",
                 "data": []
             })
-        return Response(serializer.error, status=status.HTTP_400_BAD_REQUEST)
+        logger.warning(f'User Change Password Error {serializer.errors}')
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 class ForgetPasswordChange(generics.GenericAPIView):
     '''
     if forgot_logged is valid and account exists then only pass otp, phone and password to reset the password. All three should match.APIView

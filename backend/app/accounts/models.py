@@ -6,6 +6,7 @@ from django.conf import settings
 from django.contrib.auth.models import (
     AbstractBaseUser, BaseUserManager, PermissionsMixin
 )
+from django.contrib.auth.models import Group
 from django.db import models
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
@@ -61,8 +62,7 @@ class UserManager(BaseUserManager):
 
 class User(AbstractBaseUser, PermissionsMixin):
 
-    # id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    # username = models.CharField(_('Username'), max_length=255, null=False, blank=False, unique=, db_index=True)
+
     first_name = models.CharField(_('First Name'), max_length=50)
     last_name = models.CharField(_('Last Name'), max_length=50)
     email = models.EmailField(_('Email address'), unique=True)
@@ -81,6 +81,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     activation_key = models.UUIDField(unique=True, default=uuid.uuid4)  # email
     confirmed_email = models.BooleanField(default=False)
+    groups = models.ForeignKey(Group, on_delete=models.CASCADE, blank=True, null=True)
 
     USERNAME_FIELD = 'email'
     # REQUIRED_FIELDS = ['username']
