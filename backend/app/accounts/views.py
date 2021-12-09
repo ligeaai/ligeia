@@ -95,6 +95,23 @@ class ChangePassword(generics.UpdateAPIView):
         serializer = self.get_serializer(data=request.data)
 
         if serializer.is_valid():
+            # Check old password
+            if not self.object.check_password(serializer.data.get("old_password")):
+                return Response({"old_password": ["Wrong password."]}, status=status.HTTP_400_BAD_REQUEST)
+            # set_password also hashes the password that the user will get
+            self.object.set_password(serializer.data.get("new_password"))
+            self.object.save()
+            response = {
+                'status': 'success',
+                'code': status.HTTP_200_OK,
+                'message': 'Password updated successfully',
+                'data': []
+            }
+
+            return Response(response)
+
+
+        if serializer.is_valid():
             if not self.object.check_password(serializer.data.get('password_1')):
                 return Response({
                     'status': False,
@@ -121,22 +138,22 @@ class ForgetPasswordChange(generics.GenericAPIView):
         otp   = request.data.get("otp", False)
         password = request.data.get('password', False)
 
-class ResetPassword(generics.GenericAPIView):
-    def post(self,request):
-        serializer=ForgetPasswordSerializer(data=request.data)
-        alldatas={}
-        if serializer.is_valid(raise_exception=True):
-            mname=serializer.save()
-            # alldatas[‘data’]=’successfully registered’
-            # print(alldatas)
-            return Response(alldatas)
-        return Response(‘failed retry after some time’)
-        class logout(APIView):
+# class ResetPassword(generics.GenericAPIView):
+#     def post(self,request):
+#         serializer=ForgetPasswordSerializer(data=request.data)
+#         alldatas={}
+#         if serializer.is_valid(raise_exception=True):
+#             mname=serializer.save()
+#             # alldatas[‘data’]=’successfully registered’
+#             # print(alldatas)
+#             return Response(alldatas)
+#         return Response(‘failed retry after some time’)
+#         class logout(APIView):
     
-    def get(self,request):
-        request.user.auth_token.delete()
-        auth.logout(request)
-        return Response(“successfully deleted”)
+#     def get(self,request):
+#         request.user.auth_token.delete()
+#         auth.logout(request)
+#         return Response(“successfully deleted”)
 
 
 
