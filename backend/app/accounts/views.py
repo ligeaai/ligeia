@@ -9,6 +9,7 @@ from rest_framework.generics import GenericAPIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from django.contrib.auth import login
+from django.contrib.auth.models import update_last_login
 
 from .models import *
 from .serializers import (UserRegistrationSerializer, UserSerializer, UserLoginSerializer, 
@@ -64,21 +65,11 @@ class UserLoginView(generics.GenericAPIView):
     serializer_class = UserLoginSerializer
     permission_classes = [permissions.AllowAny,]
 
-    # def post(self, request):
-    #     serializer = self.get_serializer(data=request.data)
-    #     serializer.is_valid(raise_exception=True)
-    #     user = UserLoginSerializer(data = request.data)
-    #     # user = UserLoginSerializer(data = request.data)
-    #     if user.is_valid(raise_exception=True):
-    #         return Response(user.data, status = status.HTTP_200_OK)
-    #     return Response(user.errors, status = status.HTTP_400_BAD_REQUEST)
-
     def post(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        # user = UserLoginSerializer(data = request.data)
-        user = serializer.validated_data
-        # update_last_login(None, user)
+        serializer = self.get_serializer(data=request.data, context={'request': request})
+        serializer.is_valid(raise_exception=True)        
+        user = serializer.validated_data['user']
+        update_last_login(None, user)
         return Response({
             "status": 'success',
             "code": status.HTTP_200_OK,
