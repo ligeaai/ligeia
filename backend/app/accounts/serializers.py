@@ -36,15 +36,38 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError(_('Email already in use, please use a different email address.'))
         return value
 
-class LoginSerializer(serializers.Serializer):
-    email = serializers.EmailField()   
-    password = serializers.CharField()
+class UserLoginSerializer(serializers.Serializer):
+    class Meta:        
+        email = serializers.EmailField()   
+        password = serializers.CharField(write_only=True)
 
     def validate(self, data):
-        user = authenticate(**data)
-        if user and user.is_active:
-            return user
-        raise serializers.ValidationError("Incorrect Credentials")
+        email = data.get('email')
+        password = data.get('password')
+        # user = authenticate(**data)
+        if email and password:
+            user = authenticate(request=self.context.get('request'),
+                                email=email, password=password)
+            if not user:
+                msg = _('Unable to log in with provided credentials.')
+                raise serializers.ValidationError(msg, code='authorization')
+        else:
+            msg = _('Must include "email" and "password".')
+            raise serializers.ValidationError(msg, code='authorization')
+
+        data['user'] = user
+        return data
+
+
+    # def validate(self, data):
+    #     user = authenticate(**data)
+    #     if user and user.is_active:
+    #         return user
+    #     raise serializers.ValidationError(_("Incorrect Credentials"))
+    
+    # def validate_password(self, value):
+    #     validate_password(value, self.instance)
+    #     return value
 
 
 class ChangePasswordSerializer(serializers.Serializer):
