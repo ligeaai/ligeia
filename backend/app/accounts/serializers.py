@@ -31,15 +31,9 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
 
     def validate_email(self, value):
         if not email_is_valid(value):
-            raise serializers.ValidationError(
-                'Please use a different email address provider.'
-            )
-
+            raise serializers.ValidationError(_('Please use a different email address provider.'))
         if User.objects.filter(email=value).exists():
-            raise serializers.ValidationError(
-                'Email already in use, please use a different email address.'
-            )
-
+            raise serializers.ValidationError(_('Email already in use, please use a different email address.'))
         return value
 
 class LoginSerializer(serializers.Serializer):
@@ -55,18 +49,18 @@ class LoginSerializer(serializers.Serializer):
 
 class ChangePasswordSerializer(serializers.Serializer):
     new_password1 = serializers.CharField(write_only=True, required=True, validators=[validate_password])
-    new_password2 = serializers.CharField(write_only=True, required=True)
+    new_password2 = serializers.CharField(write_only=True, required=True, validators=[validate_password])
     old_password = serializers.CharField(write_only=True, required=True)
 
     class Meta:
         model = User
-        fields = ('old_password', 'password', 'password2')
+        fields = ('old_password', 'new_password1', 'new_password2')
 
-    def validate(self, attrs):
-        if attrs['new_password1'] != attrs['new_password2']:
+    def validate(self, data):
+        if data['new_password1'] != data['new_password2']:
             raise serializers.ValidationError(_("Password fields didn't match."))
 
-        return attrs
+        return data
 
     def validate_old_password(self, value):
         user = self.context['request'].user
@@ -74,12 +68,13 @@ class ChangePasswordSerializer(serializers.Serializer):
             raise serializers.ValidationError(_("Old password is not correct"))
         return value
 
-    def update(self, instance, validated_data):
+    def save(self, **kwargs):
+        password = self.validated_data['new_password1']
+        user = self.context['request'].user
+        user.set_password(password)
+        user.save()
+        return user
 
-        instance.set_password(validated_data['password1'])
-        instance.save()
-
-        return instance
 class ForgetPasswordSerializer(serializers.Serializer):
     """
     Used for resetting password who forget their password via otp varification

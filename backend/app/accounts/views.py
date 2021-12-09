@@ -62,9 +62,7 @@ class UserRegisterView(generics.GenericAPIView):
 
 class UserLoginView(generics.GenericAPIView):
     serializer_class = LoginSerializer
-    permission_classes = [
-        permissions.AllowAny,
-    ]
+    permission_classes = [permissions.AllowAny,]
 
     def post(self, request, format = None):
         serializer = self.get_serializer(data=request.data)
@@ -76,58 +74,21 @@ class UserLoginView(generics.GenericAPIView):
         })
 
 class ChangePassword(generics.UpdateAPIView):
-    """
-    Change password endpoint view
-    """
-    authentication_classes = (TokenAuthentication, )
     serializer_class = ChangePasswordSerializer
     permission_classes = [permissions.IsAuthenticated, ]
 
-    def get_object(self, queryset=None):
-        """
-        Returns current logged in user instance
-        """
-        obj = self.request.user
-        return obj
-
-    def patch(self, request, *args, **kwargs):
-        self.object = self.get_object()
+    def update(self, request, *args, **kwargs):    
         serializer = self.get_serializer(data=request.data)
-
-        # if serializer.is_valid():
-        #     # Check old password
-        #     if not self.object.check_password(serializer.data.get("old_password")):
-        #         return Response({"old_password": ["Wrong password."]}, status=status.HTTP_400_BAD_REQUEST)
-        #     # set_password also hashes the password that the user will get
-        #     self.object.set_password(serializer.data.get("new_password"))
-        #     self.object.save()
-        #     response = {
-        #         'status': 'success',
-        #         'code': status.HTTP_200_OK,
-        #         'message': 'Password updated successfully',
-        #         'data': []
-        #     }
-
-        #     return Response(response)
-
-
-        if serializer.is_valid():
-            if not self.object.check_password(serializer.data.get('old_password')):
-                return Response({
-                    'status': False,
-                    'current_password': 'Does not match with our data',
-                }, status=status.HTTP_400_BAD_REQUEST)
-
-            self.object.set_password(serializer.data.get('password_2'))
-            self.object.password_changed = True
-            self.object.save()
+        
+        if serializer.is_valid(raise_exception=True):
+            user = serializer.save()
             return Response({
-                "status": True,
+                "status": 'success',
+                "code": status.HTTP_200_OK,
                 "detail": "Password has been successfully changed.",
+                "data": []
             })
-
         return Response(serializer.error, status=status.HTTP_400_BAD_REQUEST)
-
 class ForgetPasswordChange(generics.GenericAPIView):
     '''
     if forgot_logged is valid and account exists then only pass otp, phone and password to reset the password. All three should match.APIView
