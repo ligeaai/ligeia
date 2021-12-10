@@ -5,7 +5,7 @@ services:
         restart: always
         image: redis:5-alpine
         volumes:
-            - .:/app
+            - redis_data:/app
         # expose:
         #     - 6379
         ports:
@@ -16,7 +16,7 @@ services:
         restart: always
         image: postgres:13.0-alpine
         volumes:
-            - .:/app
+            - postgres_data:/var/lib/postgresql/data/
         environment:
             - POSTGRES_USER=${PG_USER}
             - POSTGRES_PASSWORD=${PG_PASS}
@@ -43,19 +43,26 @@ services:
         command: /start
         volumes:
             - .:/app
+            - static_volume:/app/staticfiles
+            - media_volume:/app/mediafiles
         env_file:
             - .env
+        # environment:
+        #     PG_DB: $PG_DB
+        #     PG_USER: $PG_USER
+        #     PG_PASS: $PG_PASS
+        #     PG_HOST: $PG_HOST
+        #     PG_PORT: $PG_PORT
         depends_on:
             - postgres
             - redis
-        ports:
-            - "8000:8000" 
         networks:
-            - ligeiaai
-
+            - ligeiaai        
 networks:
     ligeiaai:
         driver: bridge
-# volumes:
-#     django_data:
-
+volumes:
+    postgres_data:
+    static_volume:
+    media_volume:
+    redis_data:

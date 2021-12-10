@@ -5,16 +5,8 @@ RUN mkdir $APP_HOME
 RUN mkdir $APP_HOME/staticfiles
 WORKDIR $APP_HOME
 
-
-
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
-
-# COPY ./docker/django/django-entrypoint.sh /
-COPY ./py-requirements /app/py-requirements
-RUN pip install pip==21.3.1
-RUN pip install -r py-requirements/base.txt
-
 
 RUN apt-get update \
   && apt-get install -y build-essential \
@@ -23,6 +15,10 @@ RUN apt-get update \
   && apt-get -y install netcat gcc postgresql \
   && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false \
   && rm -rf /var/lib/apt/lists/*
+
+COPY ./py-requirements /app/py-requirements
+RUN pip install pip==21.3.1
+RUN pip install -r py-requirements/base.txt
 
 COPY ./docker/django/entrypoint /entrypoint
 RUN sed -i 's/\r$//g' /entrypoint
@@ -33,7 +29,7 @@ RUN sed -i 's/\r$//g' /start
 RUN chmod +x /start
 
 # copy project
-COPY . .
+# COPY . .
 
 # run entrypoint.sh
 ENTRYPOINT ["/entrypoint"]
