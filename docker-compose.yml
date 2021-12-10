@@ -12,23 +12,9 @@ services:
             - "6379:6379"
         networks:
             - ligeiaai
-    # nginx:
-    #     restart: always
-    #     image: nginx:latest  
-    #     # extends:
-    #     #     # file: docker-common.yml
-    #     #     service: nginx
-    #     ports:
-    #         - 8000:8000
-    #     volumes:
-    #         - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
-        # volumes_from:
-        #     - backend
     postgres:
         restart: always
         image: postgres:13.0-alpine
-        # expose:
-        #     - 5432
         volumes:
             - .:/app
         environment:
@@ -57,28 +43,19 @@ services:
         command: /start
         volumes:
             - .:/app
-        # volumes:
-        #     - .:/django
-        environment:
-            # DB_NAME: ${POSTGRES_DB}
-            # DB_USER: ${POSTGRES_USER}
-            # DB_PASS: ${POSTGRES_PASS}
-            DEBUG: ${DEBUG}
-            REDIS_URI: ${REDIS_URI}
+        env_file:
+            - .env
         depends_on:
             - postgres
             - redis
         ports:
             - "8000:8000" 
-        # expose:
-        #     - 8000
         networks:
             - ligeiaai
-
 
 networks:
     ligeiaai:
         driver: bridge
-volumes:
-    django_data:
+# volumes:
+#     django_data:
 

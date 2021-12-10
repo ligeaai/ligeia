@@ -1,5 +1,5 @@
 from .base import *
-import environ
+# import environ
 
 DEBUG = True
 # INSTALLED_APPS += ['django_extensions', ]
@@ -20,7 +20,7 @@ DATABASES = {
         "NAME": env("PG_DB"),
         "USER": env("PG_USER"),
         "PASSWORD": env("PG_PASS"),
-        # "HOST": env("PG_HOST"),
+        "HOST": env("PG_HOST"),
         "PORT": env("PG_PORT"),
     },
     # 'mongodb': {
