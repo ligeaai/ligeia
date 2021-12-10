@@ -6,13 +6,15 @@ services:
         image: redis:latest
         volumes:
             - .:/django
-        expose:
-            - 6379
+        # expose:
+        #     - 6379
         # extends:
         #     # file: docker-common.yml
         #     service: redis
         ports:
-            - 6379:6379
+            - "6379:6379"
+        networks:
+            - ligeiaai
     # nginx:
     #     restart: always
     #     image: nginx:latest  
@@ -27,15 +29,17 @@ services:
         #     - backend
     postgres:
         restart: always
-        image: postgres:latest    
-        expose:
-            - 5432
+        image: postgres:12.0-alpine 
+        # expose:
+        #     - 5432
         environment:
             - POSTGRES_USER=${POSTGRES_USER}
             - POSTGRES_PASSWORD=${POSTGRES_PASS}
             - POSTGRES_DB=${POSTGRES_DB}
         ports:
             - "5434:5432"
+        networks:
+            - ligeiaai
         # extends:
         #     # file: docker-common.yml
         #     service: postgres
@@ -53,29 +57,26 @@ services:
         build:
             context: .
             dockerfile: ./docker/django/Dockerfile
+        command: /start
         volumes:
-            - .:/backend
+            - .:/django
         environment:
             # DB_NAME: ${POSTGRES_DB}
             # DB_USER: ${POSTGRES_USER}
             # DB_PASS: ${POSTGRES_PASS}
             DEBUG: ${DEBUG}
             REDIS_URI: ${REDIS_URI}
-        # extends:
-        #     # file: docker-common.yml
-        #     service: backend
-        links:
+        depends_on:
             - postgres
             - redis
-        entrypoint:
-            - /django-entrypoint.sh
-        expose:
-            - 8000
-    # frontend:
-    #     extends:
-    #         file: docker-common.yml
-    #         service: web
-    #     links:
-    #         - backend
-    #     entrypoint:
-    #         - /web-entrypoint.sh
+        ports:
+            - "8000:8000" 
+        # expose:
+        #     - 8000
+        networks:
+            - ligeiaai
+
+
+networks:
+    ligeiaai:
+        driver: bridge

@@ -14,10 +14,7 @@ try:
     psycopg2.connect(
         dbname="${POSTGRES_DB}",
         user="${POSTGRES_USER}",
-        password="${POSTGRES_PASSWORD}",
-        host="${PG_HOST}",
-        port="${PG_PORT}",
-
+        password="${POSTGRES_PASSWORD}"
     )
 except psycopg2.OperationalError:
     sys.exit(-1)
