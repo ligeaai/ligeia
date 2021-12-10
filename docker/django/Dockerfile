@@ -12,13 +12,17 @@ ENV PYTHONUNBUFFERED 1
 
 # COPY ./docker/django/django-entrypoint.sh /
 COPY ./py-requirements /app/py-requirements
-
-# WORKDIR /django
-
-RUN apt-get update
-RUN apt-get install -y build-essential git
 RUN pip install pip==21.3.1
 RUN pip install -r py-requirements/base.txt
+
+
+RUN apt-get update \
+  && apt-get install -y build-essential \
+  && apt-get install -y libpq-dev \
+  && apt-get install -y gettext \
+  && apt-get -y install netcat gcc postgresql \
+  && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false \
+  && rm -rf /var/lib/apt/lists/*
 
 COPY ./docker/django/entrypoint /entrypoint
 RUN sed -i 's/\r$//g' /entrypoint
@@ -28,4 +32,8 @@ COPY ./docker/django/start /start
 RUN sed -i 's/\r$//g' /start
 RUN chmod +x /start
 
-ENTRYPOINT [ "/entrypoint"]
+# copy project
+COPY . .
+
+# run entrypoint.sh
+ENTRYPOINT ["/entrypoint"]

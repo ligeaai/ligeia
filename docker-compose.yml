@@ -5,12 +5,9 @@ services:
         restart: always
         image: redis:latest
         volumes:
-            - .:/django
+            - .:/app
         # expose:
         #     - 6379
-        # extends:
-        #     # file: docker-common.yml
-        #     service: redis
         ports:
             - "6379:6379"
         networks:
@@ -29,20 +26,20 @@ services:
         #     - backend
     postgres:
         restart: always
-        image: postgres:12.0-alpine 
+        image: postgres:13.0-alpine
         # expose:
         #     - 5432
+        volumes:
+            - .:/app
         environment:
-            - POSTGRES_USER=${POSTGRES_USER}
-            - POSTGRES_PASSWORD=${POSTGRES_PASS}
-            - POSTGRES_DB=${POSTGRES_DB}
+            - POSTGRES_USER=${PG_USER}
+            - POSTGRES_PASSWORD=${PG_PASS}
+            - POSTGRES_DB=${PG_DB}
         ports:
             - "5434:5432"
         networks:
             - ligeiaai
-        # extends:
-        #     # file: docker-common.yml
-        #     service: postgres
+
     # pgadmin:
     #     restart: always
     #     container_name: pgadmin4_container
@@ -52,14 +49,16 @@ services:
     #         PGADMIN_DEFAULT_PASSWORD: manager
     #     ports:
     #         - "5050:80"
-    backend:
+    django:
         restart: always
         build:
             context: .
             dockerfile: ./docker/django/Dockerfile
         command: /start
         volumes:
-            - .:/django
+            - .:/app
+        # volumes:
+        #     - .:/django
         environment:
             # DB_NAME: ${POSTGRES_DB}
             # DB_USER: ${POSTGRES_USER}
@@ -80,3 +79,6 @@ services:
 networks:
     ligeiaai:
         driver: bridge
+volumes:
+    django_data:
+

@@ -54,7 +54,6 @@ THIRD_PARTY_APPS = [
     'health_check.db',  # stock Django health checkers
     'health_check.cache',
     'health_check.storage'
-
 ]
 
 LOCAL_APPS = [
@@ -109,11 +108,17 @@ USE_TZ = True
 
 ACCOUNT_ACTIVATION_DAYS = 7  # days
 
-STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static_root')
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static_dist'),
-]
+# STATIC_URL = '/static/'
+# STATIC_ROOT = os.path.join(BASE_DIR, 'static_root')
+# STATICFILES_DIRS = [
+#     os.path.join(BASE_DIR, 'static_dist'),
+# ]
+
+STATIC_URL = '/staticfiles/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_DIR = []
+MEDIA_URL = '/mediafiles/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'mediafiles')
 
 TEMPLATES = [
     {
@@ -131,10 +136,10 @@ TEMPLATES = [
     },
 ]
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'static_dist')
+
 
 # store static files locally and serve with whitenoise
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # ############# REST FRAMEWORK ###################
 
