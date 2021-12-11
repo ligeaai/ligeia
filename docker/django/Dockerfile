@@ -1,6 +1,6 @@
 FROM python:3.10.0-slim-buster
 
-ENV APP_HOME=/app
+ENV APP_HOME=/django
 RUN mkdir $APP_HOME
 RUN mkdir $APP_HOME/staticfiles
 WORKDIR $APP_HOME
@@ -16,7 +16,7 @@ RUN apt-get update \
   && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false \
   && rm -rf /var/lib/apt/lists/*
 
-COPY ./py-requirements /app/py-requirements
+COPY ./py-requirements /django/py-requirements
 RUN pip install pip==21.3.1
 RUN pip install -r py-requirements/base.txt
 
