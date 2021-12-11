@@ -1,76 +1,72 @@
 version: "3.9"
 
 services:
-    redis:
-        restart: always
-        container_name: ligeia_redis
-        image: redis:5-alpine
-        volumes:
-            - redis_data:/django
-        expose:
-            - "6379"
-        ports:
-            - "6379:6379"
-        networks:
-            - ligeiaai
-    postgres:
-        restart: always
-        container_name: ligeia_pg
-        image: postgres:13.0-alpine
-        volumes:
-            - postgres_data:/var/lib/postgresql/data/
-        environment:
-            - POSTGRES_USER=${PG_USER}
-            - POSTGRES_PASSWORD=${PG_PASS}
-            - POSTGRES_DB=${PG_DB}
-        ports:
-            - "5434:5432"
-        networks:
-            - ligeiaai
-    pgadmin:
-        restart: always
-        container_name: ligeia_pgadmin4
-        image: dpage/pgadmin4        
-        environment:
-            PGADMIN_DEFAULT_EMAIL: admin@admin.com
-            PGADMIN_DEFAULT_PASSWORD: manager
-        ports:
-            - "5050:80"
-        networks:
-            - ligeiaai
-    django:
-        restart: always
-        container_name: ligeia_django
-        build:
-            context: .
-            dockerfile: ./docker/django/Dockerfile
-        command: /start
-        volumes:
-            - .:/django
-            - static_volume:/django/staticfiles
-            - media_volume:/django/mediafiles
-        expose:
-            - "8000"
-        ports:
-            - "8000:8000"
-        env_file:
-            - .env
-        # environment:
-        #     PG_DB: $PG_DB
-        #     PG_USER: $PG_USER
-        #     PG_PASS: $PG_PASS
-        #     PG_HOST: $PG_HOST
-        #     PG_PORT: $PG_PORT
-        depends_on:
-            - postgres
-            - redis
-        networks:
-            - ligeiaai        
+  redis:
+    restart: always
+    container_name: ligeia_redis
+    image: redis:5-alpine
+    volumes:
+      - redis_data:/data
+    expose:
+      - "6379"
+    ports:
+      - "6379:6379"
+    networks:
+      - ligeiaai
+  postgres:
+    restart: always
+    container_name: ligeia_pg
+    image: postgres:13.0-alpine
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_USER=${PG_USER}
+      - POSTGRES_PASSWORD=${PG_PASS}
+      - POSTGRES_DB=${PG_DB}
+    ports:
+      - "5434:5432"
+    networks:
+      - ligeiaai
+  pgadmin:
+    restart: always
+    container_name: ligeia_pgadmin4
+    image: dpage/pgadmin4
+    volumes:
+      - postgres_data:/var/lib/pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: manager
+    ports:
+      - "5050:80"
+    networks:
+      - ligeiaai
+  django:
+    restart: always
+    container_name: ligeia_django
+    build:
+      context: .
+      dockerfile: ./docker/django/Dockerfile
+    command: /start
+    volumes:
+      - .:/django
+      - static_volume:/django/staticfiles
+      - media_volume:/django/mediafiles
+    expose:
+      - "8000"
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    depends_on:
+      - postgres
+      - redis
+    networks:
+      - ligeiaai
 networks:
-    ligeiaai:
-        driver: bridge
+  ligeiaai:
+    driver: bridge
 volumes:
-    postgres_data:
-    static_volume:
-    media_volume:
-    redis_data:
+  postgres_data:
+  redis_data:
+  static_volume:
+  media_volume:
