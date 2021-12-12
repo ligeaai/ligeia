@@ -1,7 +1,7 @@
 version: '3.8'
 
 services:
-  django:
+  app:
     build:
       context: ..
       dockerfile: .devcontainer/Dockerfile
@@ -26,7 +26,8 @@ services:
 
     # Use "forwardPorts" in **devcontainer.json** to forward an app port locally.
     # (Adding the "ports" property to this file will not forward from a Codespace.)
-
+    networks:
+      - net
   db:
     image: postgres:latest
     restart: unless-stopped
@@ -38,22 +39,36 @@ services:
       POSTGRES_PASSWORD: manager
     # Add "forwardPorts": ["5432"] to **devcontainer.json** to forward PostgreSQL locally.
     # (Adding the "ports" property to this file will not forward from a Codespace.)
+    networks:
+      - net
   pgadmin:
     image: dpage/pgadmin4
     restart: unless-stopped
     volumes:
       - pgadmin-data:/var/lib/pgadmin
+    depends_on:
+      - db
     environment:
       PGADMIN_DEFAULT_EMAIL: admin@admin.com
       PGADMIN_DEFAULT_PASSWORD: manager
-    network_mode: service:db
+    ports:
+      - 5050:80
+    # network_mode: service:db
+    networks:
+      - net
   redis:    
     image: redis:5-alpine
-    restart: unless-stopped
+    restart: on-failure
     volumes:
       - redis-data:/data
-    network_mode: service:db
-
+    ports:
+      - 5432:5432
+    # network_mode: service:db
+    networks:
+      - net
+networks:
+  net:
+    driver: bridge
 volumes:
   postgres-data: null
   redis-data: null
