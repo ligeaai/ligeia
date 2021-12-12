@@ -2,13 +2,14 @@
 // https://github.com/microsoft/vscode-dev-containers/tree/v0.209.5/containers/python-3-postgres
 // Update the VARIANT arg in docker-compose.yml to pick a Python version
 {
-	"name": "Python 3 & PostgreSQL",
+	"name": "dev_ligeiai",
 	"dockerComposeFile": "docker-compose.yml",
 	"service": "app",
 	"workspaceFolder": "/workspace",
 
 	// Set *default* container specific settings.json values on container create.
 	"settings": { 
+		"terminal.integrated.profile.linux#": "/bin/zsh",
 		"sqltools.connections": [{
 			"name": "Container database",
 			"driver": "PostgreSQL",
@@ -39,19 +40,25 @@
 		"ms-python.python",
 		"ms-python.vscode-pylance",
 		"mtxr.sqltools",
-		"mtxr.sqltools-driver-pg"
+		"mtxr.sqltools-driver-pg",
+		"dbaeumer.vscode-eslint",
+		"ms-azuretools.vscode-docker",
+		"github.vscode-pull-request-github",
+		"eamodio.gitlens",
+		"dbaeumer.jshint",
+		"eg2.vscode-npm-script",
+		"christian-kohler.npm-intellisense",
+		"esbenp.prettier-vscode",
+		"redhat.vscode-yaml",
+		"knisterpeter.vscode-github"
 	],
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
-	// "forwardPorts": [5000, 5432],
+	"forwardPorts": [3000, 8000, 5000, 5432],
 
 	// Use 'postCreateCommand' to run commands after the container is created.
 	// "postCreateCommand": "pip install --user -r requirements.txt",
 
 	// Comment out connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
 	"remoteUser": "vscode",
-	"features": {
-		"homebrew": "latest",
-		"powershell": "latest"
-	}
 }
