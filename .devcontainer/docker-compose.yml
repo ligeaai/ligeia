@@ -1,7 +1,7 @@
-version: '3.'
+version: '3.8'
 
 services:
-  djnago:
+  django:
     build:
       context: ..
       dockerfile: .devcontainer/Dockerfile
@@ -27,7 +27,7 @@ services:
     # Use "forwardPorts" in **devcontainer.json** to forward an app port locally.
     # (Adding the "ports" property to this file will not forward from a Codespace.)
 
-  postgres:
+  db:
     image: postgres:latest
     restart: unless-stopped
     volumes:
@@ -39,15 +39,11 @@ services:
     # Add "forwardPorts": ["5432"] to **devcontainer.json** to forward PostgreSQL locally.
     # (Adding the "ports" property to this file will not forward from a Codespace.)
 
-  redis:
-    restart: always  
+  redis:    
     image: redis:5-alpine
+    restart: unless-stopped
     volumes:
       - redis-data:/data
-    expose:
-      - "6379"
-    ports:
-      - "6379:6379"    
     network_mode: service:db
 
 volumes:

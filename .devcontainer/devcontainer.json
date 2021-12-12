@@ -4,7 +4,7 @@
 {
 	"name": "dev_ligeiai",
 	"dockerComposeFile": "docker-compose.yml",
-	"service": "app",
+	"service": "django",
 	"workspaceFolder": "/workspace",
 
 	// Set *default* container specific settings.json values on container create.
@@ -54,7 +54,7 @@
 	],
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
-	"forwardPorts": [3000, 8000, 5000, 5432],
+	"forwardPorts": [3000, 8000, 6379, 5000, 5432],
 
 	// Use 'postCreateCommand' to run commands after the container is created.
 	// "postCreateCommand": "pip install --user -r requirements.txt",
