@@ -1,10 +1,9 @@
-
+import { lazy } from 'react'
+import Loadable from '../ui-component/Loadable';
 import AuthLayout from '../layouts/AuthLayout'
-import Login from '../pages/authentication/authentication3/Login3'
-import Registration from '../pages/authentication/authentication3/Register3';
 
-
-
+const Login = Loadable(lazy(() => import('../pages/authentication/authentication3/Login3')))
+const Registration = Loadable(lazy(() => import('../pages/authentication/authentication3/Register3')))
 
 const AuthenticationRoutes = {
     path: '/',

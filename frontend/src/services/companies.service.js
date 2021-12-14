@@ -1,32 +1,32 @@
-import http from "../http-common";
+import axios from "axios";
 import authHeader from "./auth-header";
 
 const getAll = () => {
-  return http.get("http://127.0.0.1:8000/api/v1/models/company/",);
+  return axios.get("http://127.0.0.1:8000/api/v1/models/company/", { headers: authHeader() });
 };
 
 const get = id => {
-  return http.get(`http://127.0.0.1:8000/api/v1/models/company/${id}/`);
+  return axios.get(`http://127.0.0.1:8000/api/v1/models/company/${id}/`, { headers: authHeader() });
 };
 
 const create = data => {
-  return http.post("http://127.0.0.1:8000/api/v1/models/company/", data);
+  return axios.post("http://127.0.0.1:8000/api/v1/models/company/", data, { headers: authHeader() });
 };
 
 const update = (id, data) => {
-  return http.patch(`http://127.0.0.1:8000/api/v1/models/company/${id}/`, data);
+  return axios.patch(`http://127.0.0.1:8000/api/v1/models/company/${id}/`, data, { headers: authHeader() });
 };
 
 const remove = id => {
-  return http.delete(`http://127.0.0.1:8000/api/v1/models/company/${id}`);
+  return axios.delete(`http://127.0.0.1:8000/api/v1/models/company/${id}`, { headers: authHeader() });
 };
 
 const removeAll = () => {
-  return http.delete(`/...`);
+  return axios.delete(`/...`);
 };
 
 const findByTitle = title => {
-  return http.get(`/tutorials?title=${title}`);
+  return axios.get(`/tutorials?title=${title}`);
 };
 
 const CompaniesService = {

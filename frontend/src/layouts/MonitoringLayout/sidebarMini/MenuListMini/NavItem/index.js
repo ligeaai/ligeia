@@ -71,7 +71,7 @@ const NavItem = ({ item, level }) => {
             sx={{
                 borderRadius: `${customization.borderRadius}px`,
                 mb: 0.5,
-                alignItems: 'center',
+
 
                 backgroundColor: level > 1 ? 'transparent !important' : 'inherit',
                 py: level > 1 ? 1 : 1.25,

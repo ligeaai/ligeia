@@ -1,6 +1,6 @@
 import { combineReducers } from "redux";
 import authReducer from "./authReducer";
-import messageReducer from './message'
+import messageReducer from './messageReducer'
 import customizationReducer from "./customizationReducer";
 import companiesReducer from './companiesReducer'
 

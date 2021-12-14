@@ -4,6 +4,8 @@ export const REGISTER_FAIL = "REGISTER_FAIL";
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 export const LOGIN_FAIL = "LOGIN_FAIL";
 export const LOGOUT = "LOGOUT";
+export const CHANGE_PASSWORD_SUCCESS = "CHANGE_PASSWORD_SUCCESS"
+export const CHANGE_PASSWORD_FAIL = "CHANGE_PASSWORD_FAIL"
 export const SET_MESSAGE = "SET_MESSAGE";
 export const CLEAR_MESSAGE = "CLEAR_MESSAGE";
 // action - customization reducer
@@ -19,3 +21,4 @@ export const RETRIEVE_COMPANIES = "RETRIEVE_COMPANIES";
 export const UPDATE_COMPANY = "UPDATE_COMPANY";
 export const DELETE_COMPANY = "DELETE_COMPANY"
 export const DELETE_ALL_COMPANIES = "DELETE_ALL_COMPANIES"
+

@@ -12,6 +12,7 @@ import {
 import { logout } from "../../../../redux/actions/authActions";
 import { clearMessage } from "../../../../redux/actions/messageActions";
 import { history } from "../../../../services/history";
+import { Link } from "react-router-dom";
 
 
 const ProfileSection = () => {
@@ -74,8 +75,11 @@ const ProfileSection = () => {
                     vertical: 'bottom',
                     horizontal: 'left',
                 }}
+
             >
                 <Button onClick={logOut}><Typography sx={{ p: 2 }}>Logout</Typography></Button>
+                <Button >  <Link to={'/profile/' + currentUser.user.id}><Typography sx={{ p: 2 }}>Profile</Typography></Link></Button>
+
             </Popover>
 
 

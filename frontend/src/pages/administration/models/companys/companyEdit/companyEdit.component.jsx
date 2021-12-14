@@ -44,7 +44,7 @@ function CompanyEdit(props) {
   const [value, setValue] = useState(new Date());
   const dispatch = useDispatch();
 
-  const getTutorial = (id) => {
+  const getCompany = (id) => {
     CompaniesDataService.get(id)
       .then((response) => {
         setCompany(response.data);
@@ -56,7 +56,7 @@ function CompanyEdit(props) {
   };
 
   useEffect(() => {
-    getTutorial(id);
+    getCompany(id);
   }, [id]);
 
   const handleInputChange = (event) => {

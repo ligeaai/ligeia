@@ -63,20 +63,20 @@ export default function componentStyleOverrides(theme) {
 
                     paddingBottom: '10px',
                     '&.Mui-selected': {
-                        color: "#FFFFFF",
-                        backgroundColor: "#2499ef",
+                        color: theme.menuSelected,
+                        backgroundColor: theme.menuSelectedBack,
                         '&:hover': {
-                            backgroundColor: "#2499ef"
+                            backgroundColor: theme.menuSelectedBack,
                         },
                         '& .MuiListItemIcon-root': {
-                            color: "#FFFFFF"
+                            color: theme.menuSelected
                         }
                     },
                     '&:hover': {
-                        backgroundColor: "#2499ef",
-                        color: "#FFFFFF",
+                        backgroundColor: theme.menuSelectedBack,
+                        color: theme.menuSelected,
                         '& .MuiListItemIcon-root': {
-                            color: "#FFFFFF"
+                            color: theme.menuSelected,
                         }
                     }
                 }

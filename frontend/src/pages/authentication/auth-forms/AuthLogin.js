@@ -27,7 +27,6 @@ import * as Yup from 'yup';
 import { Formik } from 'formik';
 
 // project imports
-import useScriptRef from '../../../hooks/useScriptRef';
 
 // assets
 import Visibility from '@mui/icons-material/Visibility';
@@ -37,10 +36,12 @@ import Google from '../../../assets/images/icons/social-google.svg';
 
 
 const Login = ({ ...others }, props) => {
-    const theme = useTheme();
-    const scriptedRef = useScriptRef();
-    const matchDownSM = useMediaQuery(theme.breakpoints.down('md'));
+    const { isLoggedIn } = useSelector((state) => state.authReducer);
     const customization = useSelector((state) => state.customization);
+    const theme = useTheme();
+    
+    const matchDownSM = useMediaQuery(theme.breakpoints.down('md'));
+
     const [checked, setChecked] = useState(true);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -59,7 +60,7 @@ const Login = ({ ...others }, props) => {
         event.preventDefault();
     };
 
-    const { isLoggedIn } = useSelector((state) => state.authReducer);
+
 
     const dispatch = useDispatch();
 
@@ -85,7 +86,9 @@ const Login = ({ ...others }, props) => {
             })
             .catch(() => {
                 setLoading(false);
+
             });
+
     };
 
     if (isLoggedIn) {
@@ -113,7 +116,6 @@ const Login = ({ ...others }, props) => {
                         </Box>
                         Sign in with Google
                     </Button>
-
                 </Grid>
                 <Grid item xs={12}>
                     <Box
@@ -123,7 +125,6 @@ const Login = ({ ...others }, props) => {
                         }}
                     >
                         <Divider sx={{ flexGrow: 1 }} orientation="horizontal" />
-
                         <Button
                             variant="outlined"
                             sx={{
@@ -141,7 +142,6 @@ const Login = ({ ...others }, props) => {
                         >
                             OR
                         </Button>
-
                         <Divider sx={{ flexGrow: 1 }} orientation="horizontal" />
                     </Box>
                 </Grid>
@@ -151,15 +151,17 @@ const Login = ({ ...others }, props) => {
                     </Box>
                 </Grid>
             </Grid>
-            <Formik initialValues={{
-                email: 'info@codedthemes.com',
-                password: '123456',
-                submit: null
-            }}
+            <Formik
+                initialValues={{
+                    email: 'example@email.com',
+                    password: '123456',
+                }}
                 validationSchema={Yup.object().shape({
                     email: Yup.string().email('Must be a valid email').max(255).required('Email is required'),
-                    password: Yup.string().max(255).required('Password is required')
-                })} onSubmit={handleLogin}>
+                    password: Yup.string().min(2, 'Too short!').max(50, 'Too long!').required('Password is required')
+                })}
+                onSubmit={handleLogin}
+            >
                 {({ errors, handleBlur, handleChange, handleSubmit, isSubmitting, touched, values }) => (
                     <form noValidate onSubmit={handleLogin} {...others}>
                         <FormControl fullWidth error={Boolean(touched.email && errors.email)} sx={{ ...theme.typography.customInput }}>
@@ -171,7 +173,6 @@ const Login = ({ ...others }, props) => {
                                 value={email}
                                 onChange={onChangeEmail}
                                 onBlur={handleBlur}
-
                                 label="Email Address / Username"
                                 inputProps={{}}
                             />

@@ -19,7 +19,7 @@ import HomeTwoToneIcon from '@mui/icons-material/HomeTwoTone';
 
 const linkSX = {
     display: 'flex',
-    color: 'grey.900',
+    color: 'grey.500',
     textDecoration: 'none',
     alignContent: 'center',
     alignItems: 'center'

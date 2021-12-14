@@ -27,7 +27,8 @@ const dashboard = {
             url: '/dashboard/analytics',
             icon: icons.AnalyticsOutlinedIcon,
             breadcrumbs: true
-        }
+        },
+
     ]
 };
 

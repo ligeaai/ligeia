@@ -154,8 +154,8 @@ const CompanyList = () => {
             </TableRow>
           </TableHead>
           <TableBody className={classes.tableBody}>
-            {/* {company.results.map((result, index) => (
-              <TableRow key={index}>
+            {/* {company.results.map((result) => (
+              <TableRow key={company.id}>
                 <TableCell>
                   <Checkbox />
                 </TableCell>

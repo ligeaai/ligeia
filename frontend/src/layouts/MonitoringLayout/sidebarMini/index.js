@@ -6,7 +6,7 @@ import { BrowserView, MobileView } from 'react-device-detect';
 import MenuList from './MenuListMini'
 import MenuCard from './MenuCardMini'
 
-const drawerWidth = 80
+const drawerWidth = 88
 
 function SidebarMini({ drawerOpen, drawerToggle, window }) {
     const theme = useTheme();
