@@ -4,6 +4,7 @@
     // "python.defaultInterpreterPath": "$IEFPP/core/venv/bin/python3",
     "python.pythonPath": "/Users/rustembeisekin/Documents/GitHub/ligeia.ai/.venv/bin/python",
     "python.formatting.provider": "black",
+    "git.ignoreLimitWarning": true,
     // "venvFolders": "~/core/.venv",
     // "python.venvPath": "",
 
