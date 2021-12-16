@@ -7,19 +7,15 @@ const styles = () => ({
 
     actions: {
         display: "flex",
-        justifyContent: "flex-end"
+        paddingLeft: "10px",
+        alignItems: "center",
+        height: "40px",
+        backgroundColor: "#FFFFFF",
+        borderRadius: "8px",
+        marginBottom: "10px"
+
     },
 
-    modal: {
-        position: 'absolute',
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)',
-        width: 800,
-        backgroundColor: "#FFFFFF",
-        border: '2px solid #000',
-        p: 4,
-    },
 
     button: {
 
@@ -31,15 +27,17 @@ const styles = () => ({
     },
 
     tableContainer: {
-        marginTop: "20px",
+        // marginTop: "20px",
         backgroundColor: "#FFFFFF",
         borderColor: "#1d2438",
         borderRadius: "8px",
+        height: "50%",
+
     },
 
     table: {
         backgroundColor: "#ffffff",
-        borderColor: "#1d2438"
+        borderColor: "#1d2438",
     },
 
     tableHead: {
@@ -52,7 +50,7 @@ const styles = () => ({
     },
 
     tableHeadCell: {
-
+        padding: "5px"
 
     },
 
@@ -65,7 +63,7 @@ const styles = () => ({
     },
 
     tableBodyCell: {
-
+        padding: "5px"
     },
 
     tools: {

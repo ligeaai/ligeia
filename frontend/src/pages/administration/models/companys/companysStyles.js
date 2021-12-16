@@ -1,8 +1,11 @@
 const styles = () => ({
 
+
     container: {
-        padding: "30px 40px"
+        padding: "10px 20px",
+   
     },
+
 
     actions: {
         display: "flex",

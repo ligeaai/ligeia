@@ -29,20 +29,21 @@ const administration = {
                 {
                     id: "companys",
                     title: "Companys",
-                    type: "item",
+                    type: "collapse",
                     url: "/administration/companies",
+                    children: [
+                        {
+                            id: "fields",
+                            title: "Fields",
+                            type: "collapse",
+                            children: [{
+                                id: "batterys",
+                                title: "Batterys",
+                                type: "item"
+                            },]
+                        }]
+                },
 
-                },
-                {
-                    id: "batterys",
-                    title: "Batterys",
-                    type: "item"
-                },
-                {
-                    id: "fields",
-                    title: "Fields",
-                    type: "item"
-                }
             ]
         }
 

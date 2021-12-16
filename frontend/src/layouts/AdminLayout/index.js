@@ -8,7 +8,8 @@ import Sidebar from "./sidebar/index";
 import navigation from '../../menu-items/';
 import Breadcrumbs from '../../ui-component/extended/Breadcrumbs'
 import ChevronRightOutlinedIcon from '@mui/icons-material/ChevronRightOutlined';
-import { drawerWidth } from "../../store/constant";
+// import { drawerWidth } from "../../store/constant";
+import { defaultDrawerWidth } from "./sidebar/index";
 import { SET_MENU } from "../../redux/actions/actions";
 
 
@@ -18,7 +19,7 @@ const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(({
     borderBottomLeftRadius: 0,
     borderBottomRightRadius: 0,
     marginLeft: "0px",
-    marginTop: (88 - 26),
+    marginTop: (88 - 38),
     marginRight: "0px",
     padding: '0px',
     transition: theme.transitions.create('margin', {
@@ -26,31 +27,25 @@ const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(({
       duration: theme.transitions.duration.leavingScreen
     }),
     [theme.breakpoints.up('md')]: {
-      marginTop: (88 - 26),
-      marginLeft: -(drawerWidth - 0),
+      marginTop: (88 - 38),
+      marginLeft: -(defaultDrawerWidth - 0),
       marginRight: "0px",
       padding: '0px',
-      width: `calc(100% - ${drawerWidth}px)`,
-
-
+      width: `calc(100% - ${defaultDrawerWidth}px)`,
     },
     [theme.breakpoints.down('md')]: {
-      marginTop: (88 - 26),
+      marginTop: (88 - 38),
       marginLeft: '0px',
       marginRight: "0px",
       padding: '0px',
-      width: `calc(100% - ${drawerWidth}px)`,
-
-
+      width: `calc(100% - ${defaultDrawerWidth}px)`,
     },
     [theme.breakpoints.down('sm')]: {
-      marginTop: (88 - 26),
+      marginTop: (88 - 38),
       marginLeft: '0px',
       marginRight: "0px",
       padding: '0px',
-      width: `calc(100% - ${drawerWidth}px)`,
-
-
+      width: `calc(100% - ${defaultDrawerWidth}px)`,
     }
   }),
   ...(open && {
@@ -58,20 +53,20 @@ const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(({
       easing: theme.transitions.easing.easeOut,
       duration: theme.transitions.duration.enteringScreen
     }),
-    marginTop: (88 - 26),
+    marginTop: (88 - 38),
     marginLeft: "0px",
     marginRight: "0px",
     padding: '0px',
     borderBottomLeftRadius: 0,
     borderBottomRightRadius: 0,
-    width: `calc(100% - ${drawerWidth}px)`,
+    width: `calc(100% - ${defaultDrawerWidth}px)`,
     [theme.breakpoints.down('md')]: {
-      marginTop: (88 - 26),
+      marginTop: (88 - 38),
       marginLeft: '0px',
       marginRight: "0px",
     },
     [theme.breakpoints.down('sm')]: {
-      marginTop: (88 - 26),
+      marginTop: (88 - 38),
       marginLeft: '0px',
       marginRight: "0px",
     }
@@ -93,20 +88,19 @@ const AdminLayout = () => {
   }, [matchDownMd]);
 
   return (
-    <Box sx={{ display: 'flex' }}>
+    <Box sx={{ display: 'flex', }}>
       <CssBaseline />
       <AppBar
         enableColorOnDark
-
         position="fixed"
         color="inherit"
-        style={{ height: "62px", boxShadow: " 0px 0.1px 0px rgba(0, 0, 0, 0.1)" }}
+        style={{ height: "52px", boxShadow: " 0px 0.1px 3px 0px rgba(0, 0, 0, 0.1)" }}
         sx={{
           bgcolor: "#FFFFFF",
           transition: leftDrawerOpened ? theme.transitions.create('width') : 'none'
         }}
       >
-        <Toolbar >
+        <Toolbar style={{ minHeight: "52px", boxShadow: " 0px 0.1px 0px rgba(0, 0, 0, 0.1)" }} >
           <Header handleLeftDrawerToggle={handleLeftDrawerToggle} />
         </Toolbar>
       </AppBar>
@@ -114,7 +108,7 @@ const AdminLayout = () => {
 
       <Main theme={theme} open={leftDrawerOpened}   >
 
-        <Breadcrumbs separator={ChevronRightOutlinedIcon} navigation={navigation} icon title rightAlign style={{ margin: 0 }} />
+        {/* <Breadcrumbs separator={ChevronRightOutlinedIcon} navigation={navigation} icon title rightAlign style={{ margin: 0 }} /> */}
         <Outlet />
       </Main>
     </Box >

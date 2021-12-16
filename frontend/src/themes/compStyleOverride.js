@@ -59,9 +59,7 @@ export default function componentStyleOverrides(theme) {
             styleOverrides: {
                 root: {
                     color: "#303030",
-                    paddingTop: '10px',
-
-                    paddingBottom: '10px',
+                 
                     '&.Mui-selected': {
                         color: theme.menuSelected,
                         backgroundColor: theme.menuSelectedBack,

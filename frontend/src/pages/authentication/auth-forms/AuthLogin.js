@@ -39,7 +39,7 @@ const Login = ({ ...others }, props) => {
     const { isLoggedIn } = useSelector((state) => state.authReducer);
     const customization = useSelector((state) => state.customization);
     const theme = useTheme();
-    
+
     const matchDownSM = useMediaQuery(theme.breakpoints.down('md'));
 
     const [checked, setChecked] = useState(true);

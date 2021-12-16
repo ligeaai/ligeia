@@ -52,7 +52,7 @@ const NavCollapse = ({ menu, level }) => {
         <>
             <ListItemButton
                 sx={{
-                    borderRadius: `10px`,
+
                     mb: 0.5,
                     alignItems: 'flex-start',
                     backgroundColor: level > 1 ? 'transparent !important' : 'inherit',
@@ -77,7 +77,6 @@ const NavCollapse = ({ menu, level }) => {
                         )
                     }
                 />
-               
             </ListItemButton>
             <Collapse in={open} timeout="auto" unmountOnExit>
                 <List

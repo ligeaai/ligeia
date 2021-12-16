@@ -5,11 +5,11 @@ const styles = () => ({
     },
 
     container: {
-        padding: "20px 20px"
+      
     },
 
     form: {
-        paddingTop: "20px"
+    
     },
 
     subtitle: {

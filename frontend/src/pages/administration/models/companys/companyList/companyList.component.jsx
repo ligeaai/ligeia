@@ -76,7 +76,7 @@
 // }
 
 // export default CompanyList;
-
+import {styled, alpha} from "@mui/material/styles";
 import React, {useState, useEffect} from "react";
 import {useParams} from "react-router-dom";
 import {makeStyles} from "@mui/styles";
@@ -86,27 +86,28 @@ import {
   TableContainer,
   TableHead,
   TableBody,
+  TableFooter,
   TableCell,
   TableRow,
   TablePagination,
+  IconButton,
+  InputBase,
   Checkbox,
   Button,
   Typography,
   Modal,
   Box,
 } from "@mui/material";
+import SearchIcon from "@mui/icons-material/Search";
 import {useDispatch, useSelector} from "react-redux";
 import {retrieveCompanies} from "../../../../../redux/actions/companiesActions";
 import {Link} from "react-router-dom";
 import styles from "./companyListStyle";
-import CompanyAdd from "../companyAdd/companyAdd.component";
 
 const useStyles = makeStyles(styles);
 
 const CompanyList = () => {
   const classes = useStyles();
-  const [openModal, setOpenModal] = React.useState(false);
-  const handleCloseModal = () => setOpenModal(false);
 
   const company = useSelector((state) => state.companiesReducer);
   const dispatch = useDispatch();
@@ -118,7 +119,7 @@ const CompanyList = () => {
   return (
     <div className={classes.companyList}>
       <div className={classes.actions}>
-        <Link
+        {/* <Link
           style={{textDecoration: "none"}}
           to="/administration/companies/add"
         >
@@ -131,51 +132,82 @@ const CompanyList = () => {
               Add company
             </Typography>
           </Button>
-        </Link>
+        </Link> */}
+        <Typography variant="h5">Toolbar</Typography>
       </div>
-      <TableContainer className={classes.tableContainer}>
-        <Table className={classes.table}>
+
+      <div className={classes.searchBar} sx={{backgroundColor: "#FFFFFF"}}>
+        {" "}
+      </div>
+      <TableContainer sx={{maxHeight: 440}} className={classes.tableContainer}>
+        <Table stickyHeader aria-label="sticky table" className={classes.table}>
           <TableHead className={classes.tableHead}>
+            <TableRow></TableRow>
             <TableRow className={classes.tableHeadRow}>
               <TableCell className={classes.tableHeadCell}>
                 <Checkbox />
               </TableCell>
-              <TableCell className={classes.tableHeadCell}>Name</TableCell>
               <TableCell className={classes.tableHeadCell}>
-                Short name
+                <Typography variant="subtitle1">Name</Typography>
               </TableCell>
               <TableCell className={classes.tableHeadCell}>
-                Contact name
+                <Typography variant="subtitle1">Short name</Typography>
               </TableCell>
-              <TableCell className={classes.tableHeadCell}>Email</TableCell>
-              <TableCell className={classes.tableHeadCell}>Country</TableCell>
-              <TableCell className={classes.tableHeadCell}>Region</TableCell>
-              <TableCell className={classes.tableHeadCell}>City</TableCell>
+              <TableCell className={classes.tableHeadCell}>
+                <Typography variant="subtitle1"> Contact name</Typography>
+              </TableCell>
+              <TableCell className={classes.tableHeadCell}>
+                <Typography variant="subtitle1">Email</Typography>
+              </TableCell>
+              <TableCell className={classes.tableHeadCell}>
+                <Typography variant="subtitle1">Country</Typography>
+              </TableCell>
+              <TableCell className={classes.tableHeadCell}>
+                <Typography variant="subtitle1">Region</Typography>
+              </TableCell>
+              <TableCell className={classes.tableHeadCell}>
+                <Typography variant="subtitle1">City</Typography>
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody className={classes.tableBody}>
-            {/* {company.results.map((result) => (
+            {/* {company.results.map((company) => (
               <TableRow key={company.id}>
-                <TableCell>
+                <TableCell className={classes.tableBodyCell}>
                   <Checkbox />
                 </TableCell>
-                <TableCell>
+                <TableCell className={classes.tableBodyCell}>
                   <Link
-                    to={"/administration/companies/" + result.id}
+                    to={"/administration/companies/" + company.id}
                     className={classes.link}
                   >
-                    {result.name}
+                    <Typography>{company.name}</Typography>
                   </Link>
                 </TableCell>
-                <TableCell>{result.short_name}</TableCell>
-                <TableCell>{result.contact_name}</TableCell>
-                <TableCell>{result.email}</TableCell>
-                <TableCell>{result.country}</TableCell>
-                <TableCell>{result.region}</TableCell>
-                <TableCell>{result.city}</TableCell>
+                <TableCell className={classes.tableBodyCell}>
+                  <Typography>{company.short_name}</Typography>
+                </TableCell>
+                <TableCell className={classes.tableBodyCell}>
+                  <Typography>{company.contact_name}</Typography>
+                </TableCell>
+                <TableCell className={classes.tableBodyCell}>
+                  <Typography>{company.email}</Typography>
+                </TableCell>
+                <TableCell className={classes.tableBodyCell}>
+                  <Typography>{company.country}</Typography>
+                </TableCell>
+                <TableCell className={classes.tableBodyCell}>
+                  <Typography>{company.region}</Typography>
+                </TableCell>
+                <TableCell className={classes.tableBodyCell}>
+                  <Typography>{company.city}</Typography>
+                </TableCell>
               </TableRow>
             ))} */}
           </TableBody>
+          <TableFooter>
+            <TablePagination />
+          </TableFooter>
         </Table>
       </TableContainer>
     </div>
