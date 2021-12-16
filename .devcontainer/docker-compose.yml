@@ -66,8 +66,20 @@ services:
     # network_mode: service:db
     networks:
       - net
+  mongodb:
+    image: mongo:latest
+    environment:
+      - MONGO_INITDB_DATABASE = mongodb
+      - MONGO_INITDB_USERNAME = admin
+      - MONGO_INITDB_PASSWORD = manager
+    ports:
+      - 27018:27017
+    volumes:
+      - mongodb-data:/data
+    networks:
+      - net
   rabbitmq:
-    image: 'rabbitmq:3.6-management-alpine'
+    image: rabbitmq:3.6-management-alpine
     ports:
       # The standard AMQP protocol port
       - '5672:5672'
@@ -87,6 +99,7 @@ networks:
   net:
     driver: bridge
 volumes:
-  postgres-data: null
-  redis-data: null
-  pgadmin-data: null
+  postgres-data : null
+  redis-data : null
+  pgadmin-data : null
+  mongodb-data : null
