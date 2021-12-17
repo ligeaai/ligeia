@@ -1,8 +1,5 @@
 from django.db import models
-from cities_light.models import City, Region, Country, SubRegion, Region
-from smart_selects.db_fields import ChainedForeignKey
 from ._base_domain import Base_domain
-
 
 class Company(Base_domain):
     company_ref = models.ManyToManyField('self', blank=True, symmetrical=False, verbose_name='Parent Company')

@@ -1,8 +1,5 @@
 from django.db import models
-from timezone_field import TimeZoneField
-from django.forms.models import model_to_dict
 from ._base_domain import Base_domain
-
 
 class Battery(Base_domain):
    latitude= models.CharField(db_column='latitude', max_length=100, blank=True, null=True, verbose_name='Latitude')

@@ -1,5 +1,4 @@
 from django.db import models
-import uuid
 from ._base_equip import Base_equip
 
 class Compressor(Base_equip):

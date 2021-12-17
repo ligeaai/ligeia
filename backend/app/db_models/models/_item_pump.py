@@ -1,10 +1,5 @@
 from django.db import models
-from smart_selects.db_fields import ChainedForeignKey, ChainedManyToManyField
 from ._base_equip import Base_equip
-# from db_dictionaries.models._uom_set import UOM_Set
-
-from django.forms.models import model_to_dict
-
 
 class Pump(Base_equip): 
    METRIC_SYSTEM = (
@@ -17,10 +12,6 @@ class Pump(Base_equip):
    # density_uom =  models.CharField(db_column='density_uom',max_length=100, blank=True, null=True, verbose_name='Density UOM', choices = choices2)
    # density_uom =  models.ForeignKey('dictionaries.uom_set', db_column='density_uom', on_delete=models.CASCADE, blank=True, null=True, verbose_name='Density UOM')
    temperature =  models.DecimalField(db_column='temperature', max_digits=1000, decimal_places=100, null=True, blank=True)
-   # data = models.JSONField()
-   # temperature_uom =  models.ForeignKey('dictionaries.uom_set', db_column='temperature_uom', on_delete=models.CASCADE, blank=True, null=True, verbose_name='Temperature UOM')
-
-   # choices = models.CharField(db_column='choices', max_length=100, choices=choices)
    
    def __str__(self):
       if self.name:

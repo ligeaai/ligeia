@@ -1,8 +1,5 @@
 from django.db import models
-from cities_light.models import City, Region, Country, SubRegion, Region
-from smart_selects.db_fields import ChainedForeignKey
 from ._base_domain import Base_domain
-
 
 class Field(Base_domain):
     latitude = models.CharField(db_column='latitude', max_length=100, blank=True, null=True, verbose_name='Latitude')

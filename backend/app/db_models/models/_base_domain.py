@@ -1,10 +1,10 @@
 from django.db import models
 from django.utils import timezone
-from django.conf import settings
-import datetime
 from datetime import datetime
 import uuid
+from django.contrib.auth import get_user_model
 
+User = get_user_model()
 
 def end_datetime():
     return datetime.strptime("01/01/9000 00:00:00", "%d/%m/%Y %H:%M:%S")
@@ -22,7 +22,7 @@ class Base_domain(models.Model):
     short_name = models.CharField(db_column='short_name', max_length=100, blank=False, unique=True, verbose_name='Short Name')
     active = models.BooleanField(db_column='active', blank=False, default=True, verbose_name='Active')
     operated = models.BooleanField(db_column='operated', default=True, verbose_name='Operated')
-    last_updt_user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, blank=True, editable=True, null=True, verbose_name='Last Update User')
+    last_updt_user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, editable=True, null=True, verbose_name='Last Update User')
     last_updt_date = models.DateTimeField(auto_now=True, blank=True, editable=True, null=True, verbose_name='Last Update Date')
     row_id = models.UUIDField(db_column='row_id', primary_key=False, default=uuid.uuid4, editable=False, null=True, verbose_name='Row ID')
     create_source = models.CharField(db_column='create_source', default='DJANGO', max_length=100, blank=True, editable=True, null=True, verbose_name='Create Source')

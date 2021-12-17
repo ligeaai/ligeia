@@ -1,8 +1,5 @@
 from django.db import models
-from django.utils import timezone
-import uuid
 from ._base_domain import Base_domain
-
 
 class Base_equip(Base_domain):
    latitude= models.CharField(db_column='latitude', max_length=100, blank=True, null=True, verbose_name='Latitude')
