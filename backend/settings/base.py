@@ -60,7 +60,7 @@ LOCAL_APPS = [
     'app.base',
     'app.accounts',
     'app.db_models',
-    # 'app.db_dictionaries',
+    'app.db_dictionaries',
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS

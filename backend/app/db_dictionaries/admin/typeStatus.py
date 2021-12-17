@@ -1,6 +1,6 @@
 from django.contrib import admin
 from mptt.admin import DraggableMPTTAdmin
-from db_dictionaries.models._type_status import Type_status
+from ..models._type_status import Type_status
 
 
 class TypeStatusInline(admin.StackedInline):

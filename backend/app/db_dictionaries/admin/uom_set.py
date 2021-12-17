@@ -1,6 +1,6 @@
 from django.contrib import admin
 from mptt.admin import DraggableMPTTAdmin
-from db_dictionaries.models._uom_set import UOM_Set
+from ..models._uom_set import UOM_Set
 
 class UOMAdminBase(DraggableMPTTAdmin):
     # inlines = [FieldTabularInline]
