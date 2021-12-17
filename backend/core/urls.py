@@ -10,7 +10,7 @@ from drf_yasg import openapi
 from django.conf.urls.static import static
 from django.conf import settings
 
-from app.base import views as base_views
+from apps.base import views as base_views
 
 schema_view = get_schema_view(
         openapi.Info(
@@ -30,9 +30,9 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('health', include('health_check.urls')),
 
-    path('api/v1/accounts/', include(('app.accounts.urls', 'app.accounts'), namespace='accounts')),
-    path('api/v1/citylight/', include(('app.citylight.urls', 'app.citylight'), namespace='citylight')),
-    path('api/v1/models/', include(('app.db_models.urls', 'app.db_models'), namespace='models')),
+    path('api/v1/users/', include(('apps.users.urls', 'apps.users'), namespace='users')),
+    path('api/v1/citylight/', include(('apps.citylight.urls', 'apps.citylight'), namespace='citylight')),
+    # path('api/v1/models/', include(('app.db_models.urls', 'app.db_models'), namespace='models')),
     # path('api/v1/getdata/', include(('app.base.urls', 'app.base'), namespace='base')),
 
     # catch all others because of how history is handled by react router -

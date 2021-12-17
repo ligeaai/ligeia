@@ -60,36 +60,36 @@ services:
     image: redis:5-alpine
     restart: on-failure
     volumes:
-      - redis-data:/data
-      
+      - redis-data:/data      
     ports:
       - 5432:5432
     # network_mode: service:db
     networks:
       - net
-  mongo:
+  mongodb:
     image: mongo:latest
     environment:
-      - MONGO_INITDB_DATABASE = mongodb
-      - MONGO_INITDB_USERNAME = admin
-      - MONGO_INITDB_PASSWORD = manager
-    ports:
-      - 27017:27017
+      - MONGO_INITDB_DATABASE=mongodb
+      - MONGO_INITDB_USERNAME=admin
+      - MONGO_INITDB_PASSWORD=manager
     volumes:
-      - mongodb-data:/data/db
+      - mongodb-data:/data
+    ports:
+      - 27018:27017
+    networks:
+      - net
   mongo-express:
     image: mongo-express:latest
+    volumes:
+      - mongodb-data:/data
     ports:
       - 8081:8081
     networks:
       - net
   rabbitmq:
     image: rabbitmq:3.6-management-alpine
-    ports:
-      # The standard AMQP protocol port
-      - 5672:5672
-      # HTTP management UI
-      - 15672:15672
+    volumes:
+      - rabbitmq-data:/var/lib/rabbitmq
     environment:
       # The location of the RabbitMQ server.  "amqp" is the protocol;
       # "rabbitmq" is the hostname.  Note that there is not a guarantee
@@ -98,6 +98,11 @@ services:
       AMQP_URL: 'amqp://rabbitmq?connection_attempts=5&retry_delay=5'
       RABBITMQ_DEFAULT_USER: "guest"
       RABBITMQ_DEFAULT_PASS: "guest"
+    ports:
+      # The standard AMQP protocol port
+      - 5672:5672
+      # HTTP management UI
+      - 15672:15672
     networks:
       - net
 
@@ -105,7 +110,9 @@ networks:
   net:
     driver: bridge
 volumes:
-  postgres-data : null
-  redis-data : null
-  pgadmin-data : null
-  mongodb-data : null
+  redis-data: null
+  postgres-data: null  
+  pgadmin-data: null
+  mongodb-data: null
+  rabbitmq-data: null
+
