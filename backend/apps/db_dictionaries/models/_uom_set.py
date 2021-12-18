@@ -63,7 +63,7 @@ class UOM_Set(MPTTModel):
         return ' / '.join(full_path[::-1])
 
 class MPTTMeta:
-    app_label = "apps.db_dictionaries"
+    app_label = "db_dictionaries"
     ordering = ["name"]
     verbose_name = _("uom_set")
     verbose_name_plural = _("uom_sets")

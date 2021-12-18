@@ -12,7 +12,7 @@ DATABASE_ROUTERS = ["core.router.DatabaseAppsRouter"]
 DATABASE_APPS_MAPPING = {
     # "apps.users": "default",
     # "apps.db_models": "default",
-    "apps.db_dictionaries": "mongodb",
+    "db_dictionaries": "mongodb",
 }
 
 DATABASES = {    
