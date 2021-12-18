@@ -34,7 +34,8 @@ class Type_pump(MPTTModel):
             k = k.parent
         return ' / '.join(full_path[::-1])
 
-class MPTTMeta:       
-      ordering = ["name"]
-      verbose_name = _("type_pump")
-      verbose_name_plural = _("type_pumps")
+class MPTTMeta:
+    app_label = "apps.db_dictionaries"
+    ordering = ["name"]
+    verbose_name = _("type_pump")
+    verbose_name_plural = _("type_pumps")

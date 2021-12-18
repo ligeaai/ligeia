@@ -10,12 +10,12 @@ ALLOWED_HOSTS += ["192.168.1.104:8000"]
 DATABASE_ROUTERS = ["core.router.DatabaseAppsRouter"]
 
 DATABASE_APPS_MAPPING = {
-    "apps.users": "default",
-    "apps.db_models": "default",
+    # "apps.users": "default",
+    # "apps.db_models": "default",
     "apps.db_dictionaries": "mongodb",
 }
 
-DATABASES = {
+DATABASES = {    
     "default": {
         "ENGINE": env("PG_ENGINE"),
         "NAME": env("PG_DB"),
@@ -28,13 +28,13 @@ DATABASES = {
         "NAME": "db_dictionaries",
         "ENGINE": "djongo",
         "ENFORCE_SCHEMA": True,
-        # 'CLIENT': {
-        #     'host': 'localhost',
-        #     'port': 270117,
-        # 'username': 'admin',
-        # 'password': 'manager',
-        # 'authSource': 'dictionaries',
-        # 'authMechanism': 'SCRAM-SHA-1'
-        # }
+        'CLIENT': {
+            'host': 'mongodb://mongodb:27017',
+            # 'port': 270117,
+            # 'username': 'admin',
+            # 'password': 'manager',
+            # 'authSource': 'dictionaries',
+            # 'authMechanism': 'SCRAM-SHA-1'
+        }
     },
 }

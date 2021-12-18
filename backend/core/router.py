@@ -1,4 +1,17 @@
 from django.conf import settings
+import socket
+
+
+def test_connection_to_db(database_name):
+    try:
+        db_definition = getattr(settings.dev, 'DATABASES')[database_name]
+        s = socket.create_connection(
+            (db_definition['HOST'], db_definition['PORT']), 5)
+        s.close()
+        return True
+    except:
+        return False
+
 
 class DatabaseAppsRouter(object):
  
@@ -25,9 +38,9 @@ class DatabaseAppsRouter(object):
         elif app_label in settings.DATABASE_APPS_MAPPING:
             return False
     
-    def allow_syncdb(self, db, model):        
-        if db in settings.DATABASE_APPS_MAPPING.values():
-            return settings.DATABASE_APPS_MAPPING.get(model._meta.app_label) == db
-        elif settings.DATABASE_APPS_MAPPING.has_key(model._meta.app_label):
-            return False
-        return None
+    # def allow_syncdb(self, db, model):        
+    #     if db in settings.DATABASE_APPS_MAPPING.values():
+    #         return settings.DATABASE_APPS_MAPPING.get(model._meta.app_label) == db
+    #     elif settings.DATABASE_APPS_MAPPING.has_key(model._meta.app_label):
+    #         return False
+    #     return None
