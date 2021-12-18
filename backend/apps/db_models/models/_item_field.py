@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils.translation import gettext_lazy as _
 from ._base_domain import Base_domain
 
 class Field(Base_domain):
@@ -25,9 +26,7 @@ class Field(Base_domain):
     # def get_parents(self):
     #     return ",".join([str(p) for p in self.parent.all()])
 
-
-class Meta:
-    app_label = 'app.db_models'
-    ordering = ["name"]
-    verbose_name = "field"
-    verbose_name_plural = "fields"
+class Meta:            
+      ordering = ["name"]
+      verbose_name = _("field")
+      verbose_name_plural = _("fields")

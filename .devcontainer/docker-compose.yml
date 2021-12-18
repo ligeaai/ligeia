@@ -68,14 +68,10 @@ services:
       - net
   mongodb:
     image: mongo:latest
-    environment:
-      - MONGO_INITDB_DATABASE=mongodb
-      - MONGO_INITDB_USERNAME=admin
-      - MONGO_INITDB_PASSWORD=manager
     volumes:
       - mongodb-data:/data
     ports:
-      - 27018:27017
+      - 27017:27017
     networks:
       - net
   mongo-express:

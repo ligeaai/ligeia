@@ -1,7 +1,10 @@
-from django.db import models
 import uuid
+from django.db import models
 from django.conf import settings
+import django.db.models.options as options
+from django.utils.translation import gettext_lazy as _
 from mptt.models import MPTTModel, TreeForeignKey
+
 
 
 class Type_product(MPTTModel):    
@@ -35,9 +38,7 @@ class Type_product(MPTTModel):
     #     full_name = ' - '.join(map(lambda x: x['code_text'], names))
     #     return full_name
 
-class MPTTMeta:
-    db_table = 'type_product'
-    app_label = 'db_dictionaries'
-    order_insertion_by = ["code_text"]
-    verbose_name = "product type"
-    verbose_name_plural = "product types"
+class MPTTMeta:       
+      ordering = ["name"]
+      verbose_name = _("type_product")
+      verbose_name_plural = _("type_products")

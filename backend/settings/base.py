@@ -59,9 +59,9 @@ THIRD_PARTY_APPS = [
 LOCAL_APPS = [
     "apps.base",
     "apps.users",
-    "apps.citylight"
-    # 'apps.db_models',
-    # 'apps.db_dictionaries',
+    "apps.citylight",
+    "apps.db_models",
+    "apps.db_dictionaries",
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS

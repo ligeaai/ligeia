@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils.translation import gettext_lazy as _
 from ._base_domain import Base_domain
 
 class Company(Base_domain):
@@ -38,8 +39,7 @@ class Company(Base_domain):
         return ",".join([str(p) for p in self.company_ref.all()])
 
 
-class Meta:    
-    app_label = 'app.db_models'
-    ordering = ["name"]
-    verbose_name = "company"
-    verbose_name_plural = "companies"
+class Meta:            
+      ordering = ["name"]
+      verbose_name = _("company")
+      verbose_name_plural = _("companies")

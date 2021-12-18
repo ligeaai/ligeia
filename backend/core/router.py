@@ -24,3 +24,10 @@ class DatabaseAppsRouter(object):
             return settings.DATABASE_APPS_MAPPING.get(app_label) == db
         elif app_label in settings.DATABASE_APPS_MAPPING:
             return False
+    
+    def allow_syncdb(self, db, model):        
+        if db in settings.DATABASE_APPS_MAPPING.values():
+            return settings.DATABASE_APPS_MAPPING.get(model._meta.app_label) == db
+        elif settings.DATABASE_APPS_MAPPING.has_key(model._meta.app_label):
+            return False
+        return None

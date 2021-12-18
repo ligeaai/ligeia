@@ -1,7 +1,10 @@
-from django.db import models
 import uuid
+from django.db import models
 from django.conf import settings
+import django.db.models.options as options
+from django.utils.translation import gettext_lazy as _
 from mptt.models import MPTTModel, TreeForeignKey
+
 
 
 class Type_pump(MPTTModel):
@@ -31,9 +34,7 @@ class Type_pump(MPTTModel):
             k = k.parent
         return ' / '.join(full_path[::-1])
 
-class MPTTMeta:
-    db_table = 'type_pump'
-    app_label = 'db_dictionaries'
-    order_insertion_by = ["code_text"]
-    verbose_name = "pump type"
-    verbose_name_plural = "pump types"
+class MPTTMeta:       
+      ordering = ["name"]
+      verbose_name = _("type_pump")
+      verbose_name_plural = _("type_pumps")

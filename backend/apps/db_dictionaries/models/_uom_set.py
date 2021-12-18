@@ -1,11 +1,8 @@
-from smart_selects.db_fields import ChainedForeignKey, ChainedManyToManyField
-from django.db import models
 import uuid
+from django.db import models
 from django.conf import settings
-from mptt.models import MPTTModel, TreeForeignKey
-# from dbmodels.models._uom_base import UOM_Base
-# from dbmodels.models._uom_property import UOM_Property
-
+import django.db.models.options as options
+from django.utils.translation import gettext_lazy as _
 from mptt.models import MPTTModel, TreeForeignKey
 
 class UOM_Set(MPTTModel):
@@ -65,9 +62,7 @@ class UOM_Set(MPTTModel):
             k = k.parent
         return ' / '.join(full_path[::-1])
 
-class MPTTMeta:
-    db_table = 'uom_set'
-    app_label = 'db_dictionaries'
-    order_insertion_by = ['code', 'code_text']
-    verbose_name = "base_set"
-    verbose_name_plural = "base_sets"
+class MPTTMeta:       
+      ordering = ["name"]
+      verbose_name = _("uom_set")
+      verbose_name_plural = _("uom_sets")

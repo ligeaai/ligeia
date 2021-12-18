@@ -1,8 +1,10 @@
-from django.db import models
 import uuid
+from django.db import models
 from django.conf import settings
-from mptt.models import MPTTModel, TreeForeignKey
 import django.db.models.options as options
+from django.utils.translation import gettext_lazy as _
+from mptt.models import MPTTModel, TreeForeignKey
+
 
 class Type_battery(MPTTModel):
     code = models.CharField(db_column='code', max_length=100, blank=False, unique=True, verbose_name='Code')
@@ -33,10 +35,8 @@ class Type_battery(MPTTModel):
         return ' / '.join(full_path[::-1])
 
 
-class MPTTMeta:
-    db_table = 'type_battery'
-    app_label = 'db_dictionaries'
-    # order_insertion_by = ["code_text"]
-    verbose_name = "battery type"
-    verbose_name_plural = "battery types"
+class MPTTMeta:       
+      ordering = ["name"]
+      verbose_name = _("type_batery")
+      verbose_name_plural = _("type_batteries")
 

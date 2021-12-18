@@ -3,4 +3,4 @@ from django.apps import AppConfig
 
 class DbmodelsConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'app.db_models'
+    name = 'apps.db_models'

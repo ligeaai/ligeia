@@ -1,7 +1,10 @@
-from django.db import models
 import uuid
+from django.db import models
 from django.conf import settings
+import django.db.models.options as options
+from django.utils.translation import gettext_lazy as _
 from mptt.models import MPTTModel, TreeForeignKey
+
 
 
 class Type_status(MPTTModel):
@@ -31,9 +34,7 @@ class Type_status(MPTTModel):
             k = k.parent
         return ' / '.join(full_path[::-1])
 
-class MPTTMeta:
-    db_table = 'type_status'
-    app_label = 'db_dictionaries'
-    order_insertion_by = ["code_text"]
-    verbose_name = "status type"
-    verbose_name_plural = "status types"
+class MPTTMeta:       
+      ordering = ["name"]
+      verbose_name = _("type_status")
+      verbose_name_plural = _("type_status")

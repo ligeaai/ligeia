@@ -2,6 +2,7 @@ from django.db import models
 from django.utils import timezone
 from datetime import datetime
 import uuid
+from django.utils.translation import gettext_lazy as _
 from django.contrib.auth import get_user_model
 
 User = get_user_model()
@@ -9,13 +10,7 @@ User = get_user_model()
 def end_datetime():
     return datetime.strptime("01/01/9000 00:00:00", "%d/%m/%Y %H:%M:%S")
 
-
 class Base_domain(models.Model):
-    # item_id = models.UUIDField(db_column='item_id',primary_key=True, default=uuid.uuid4, editable=False)
-    # culture = models.CharField(db_column='culture', max_length=15, blank=True, null=True, unique=True)
-    # x= models.DecimalField(db_column='x', max_digits=12, decimal_places=8,blank=True)
-    # y= models.DecimalField(db_column='y', max_digits=12, decimal_places=8,blank=True)
-
     start_datetime = models.DateTimeField(db_column='start_datetime', default=timezone.now, blank=True, verbose_name='Datetime')
     end_datetime = models.DateTimeField(db_column='end_datetime', default=end_datetime, blank=False, verbose_name='End Datetime')
     name = models.CharField(db_column='name', max_length=100, blank=False, unique=True, verbose_name='Name')
@@ -34,12 +29,8 @@ class Base_domain(models.Model):
 
     def __str__(self):
         return f"{self.name}, {self.short_name}"
-    #    if self.short_name:
-    #       return self.short_name
-    #    if self.last_updt_user:
-    #       return self.last_updt_user
 
+class Meta:
+    verbose_name = _("base_domain")
+    verbose_name_plural = _("base_domains")
 
-class Meta:    
-    app_label = 'app.db_models'
-    # unique_together=(('item_id'),)

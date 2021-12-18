@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils.translation import gettext_lazy as _
 from ._base_equip import Base_equip
 
 class Pump(Base_equip): 
@@ -25,9 +26,7 @@ class Pump(Base_equip):
       elif self.satus:
          return self.status
 
-class Meta:
-      db_table = 'pump'
-      app_label = 'app.db_models'
+class Meta:            
       ordering = ["name"]
-      verbose_name = "pump"
-      verbose_name_plural = "pumps"
+      verbose_name = _("pump")
+      verbose_name_plural = _("pumps")

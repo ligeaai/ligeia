@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils.translation import gettext_lazy as _
 from ._base_domain import Base_domain
 
 class Base_equip(Base_domain):
@@ -32,8 +33,7 @@ class Base_equip(Base_domain):
       elif self.registry_id:
          return self.registry_id
          
-class Meta:      
-      app_label = 'app.db_models'
+class Meta:            
       ordering = ["name"]
-      # verbose_name = "base_equip"
-      # verbose_name_plural = "base_equips"
+      verbose_name = _("base_equip")
+      verbose_name_plural = _("base_equips")
