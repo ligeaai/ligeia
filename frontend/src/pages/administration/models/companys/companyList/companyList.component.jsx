@@ -1,4 +1,4 @@
-import {Fragment, useEffect, useState} from "react";
+import { Fragment, useEffect, useState } from "react";
 import CompaniesDataService from "../../../../../services/companies.service";
 
 function CompanyList() {

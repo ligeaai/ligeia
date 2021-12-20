@@ -20,7 +20,7 @@ from utils import AtomicMixin
 logger = logging.getLogger(__name__)
 
 
-class UserView(generics.RetrieveUpdateDestroyAPIView):
+class UserDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset=User.objects.all()
     serializer_class = UserSerializer
     permission_classes = [
