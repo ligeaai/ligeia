@@ -17,11 +17,8 @@ import {
     Typography
 } from '@mui/material';
 
-// assets
-// import { IconBrandTelegram, IconBuildingStore, IconMailbox, IconPhoto } from '@tabler/icons';
 import User1 from '../../../../assets/images/users/user-round.svg';
 
-// styles
 const ListItemWrapper = styled('div')(({ theme }) => ({
     cursor: 'pointer',
     padding: 16,
@@ -32,8 +29,6 @@ const ListItemWrapper = styled('div')(({ theme }) => ({
         padding: 0
     }
 }));
-
-// ==============================|| NOTIFICATION LIST ITEM ||============================== //
 
 const NotificationList = () => {
     const theme = useTheme();

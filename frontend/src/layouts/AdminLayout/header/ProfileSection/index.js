@@ -1,23 +1,15 @@
-<<<<<<< HEAD
 
-import React, { useState, useEffect, useCallback, useRef } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useTheme } from '@mui/material/styles';
 import { Navigate } from "react-router-dom";
-import {
-
-    Button,
-    Popover
-} from '@mui/material';
+import { Button,} from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import Divider from '@mui/material/Divider';
-import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
-import Tooltip from '@mui/material/Tooltip';
-import PersonAdd from '@mui/icons-material/PersonAdd';
 import Settings from '@mui/icons-material/Settings';
 import Logout from '@mui/icons-material/Logout';
 import { logout } from "../../../../redux/actions/authActions";
@@ -54,7 +46,6 @@ const ProfileSection = () => {
     };
 
     const open = Boolean(anchorEl);
-    const id = open ? 'simple-popover' : undefined;
     if (!currentUser) {
         return <Navigate to="/" />;
     }
@@ -150,91 +141,3 @@ const ProfileSection = () => {
 };
 
 export default ProfileSection;
-=======
-
-import React, { useState, useEffect, useCallback, useRef } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useTheme } from '@mui/material/styles';
-import { Navigate } from "react-router-dom";
-import {
-    Avatar,
-    Typography,
-    Button,
-    Popover
-} from '@mui/material';
-import { logout } from "../../../../redux/actions/authActions";
-import { clearMessage } from "../../../../redux/actions/messageActions";
-import { history } from "../../../../services/history";
-
-
-const ProfileSection = () => {
-    const { user: currentUser } = useSelector((state) => state.authReducer);
-    const dispatch = useDispatch();
-
-    useEffect(() => {
-        history.listen((location) => {
-            dispatch(clearMessage()); // clear message when changing location
-        });
-    }, [dispatch]);
-
-    const logOut = useCallback(() => {
-        dispatch(logout());
-    }, [dispatch]);
-
-    const theme = useTheme()
-    const anchorRef = useRef(null);
-
-    const [anchorEl, setAnchorEl] = useState(null);
-
-    const handleClick = (event) => {
-        setAnchorEl(event.currentTarget);
-    };
-
-    const handleClose = () => {
-        setAnchorEl(null);
-    };
-
-    const open = Boolean(anchorEl);
-    const id = open ? 'simple-popover' : undefined;
-    if (!currentUser) {
-        return <Navigate to="/" />;
-    }
-
-
-
-    return (
-        <>
-            <Typography variant="h5">{currentUser.user.email}</Typography>
-
-            <Button onClick={handleClick}>
-                <Avatar
-                    sx={{
-                        ...theme.typography.mediumAvatar,
-                        margin: '8px 0 8px 8px !important',
-                        cursor: 'pointer'
-                    }}
-                    ref={anchorRef}
-                    aria-haspopup="true"
-                    color="inherit"
-                />
-            </Button>
-            <Popover
-                id={id}
-                open={open}
-                anchorEl={anchorEl}
-                onClose={handleClose}
-                anchorOrigin={{
-                    vertical: 'bottom',
-                    horizontal: 'left',
-                }}
-            >
-                <Button onClick={logOut}><Typography sx={{ p: 2 }}>Logout</Typography></Button>
-            </Popover>
-
-
-        </>
-    );
-};
-
-export default ProfileSection;
->>>>>>> a0d7b77f029b977fd804aed91e17ffad3b5bf592

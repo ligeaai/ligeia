@@ -1,25 +1,13 @@
-import {Navigate} from "react-router-dom";
 import {useState} from "react";
 import {useSelector} from "react-redux";
 import {useDispatch} from "react-redux";
-import {useTheme} from "@mui/material/styles";
 import {
-  Box,
+  
   Button,
-  Checkbox,
-  Divider,
-  FormControl,
-  FormControlLabel,
-  FormHelperText,
+ 
   TextField,
   Grid,
-  IconButton,
-  InputAdornment,
-  InputLabel,
-  OutlinedInput,
-  Stack,
-  Typography,
-  useMediaQuery,
+
 } from "@mui/material";
 import {updatePassword} from "../../redux/actions/profileActions";
 
