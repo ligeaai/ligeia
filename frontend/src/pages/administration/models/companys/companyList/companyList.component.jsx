@@ -1,17 +1,25 @@
-import {Fragment , useEffect} from 'react'
-import {retrieveCompanies} from "../../../../../redux/actions/companiesActions.js"
+import {Fragment, useEffect, useState} from "react";
+import CompaniesDataService from "../../../../../services/companies.service";
 
-function CompanyList () {
+function CompanyList() {
+  const [companies, setCompanies] = useState([]);
 
   useEffect(() => {
-    retrieveTutorials();
+    retrieveCompanies();
   }, []);
 
-  return (
-    <Fragment>
+  const retrieveCompanies = () => {
+    CompaniesDataService.getAll()
+      .then((response) => {
+        setCompanies(response.data);
+        console.log(response.data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
 
-    </Fragment>
-  )
+  return <Fragment></Fragment>;
 }
 
-export default CompanyList
+export default CompanyList;
