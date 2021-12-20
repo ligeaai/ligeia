@@ -8,62 +8,65 @@ export default function themeTypography(theme) {
         fontFamily: theme?.customization?.fontFamily,
         h6: {
             fontWeight: 500,
-            color: "#505050",
-            fontSize: '14px'
+            color: "#495057",
+            fontSize: '13px'
         },
         h5: {
-            fontSize: '15px',
-            color: "#505050",
-            fontWeight: 500,
+            fontSize: '14px',
+            color: "#495057",
+            fontWeight: 400,
         },
         h4: {
-            fontSize: '1rem',
-            color: "#505050",
-            fontWeight: 600
+            fontSize: '15px',
+            color: "#495057",
+            fontWeight: 400
         },
         h3: {
-            fontSize: '1.25rem',
-            color: "#505050",
+            fontSize: '16px',
+            color: "#495057",
             fontWeight: 600
         },
         h2: {
             fontSize: '1.5rem',
-            color: "#505050",
+            color: "#495057",
             fontWeight: 700
         },
         h1: {
             fontSize: '2.125rem',
-            color: "#505050",
+            color: "#495057",
             fontWeight: 700
         },
         subtitle1: {
-            fontSize: '0.875rem',
-            fontWeight: 500,
-            color: theme.textDark
+            fontSize: '14px',
+            fontWeight: 400,
+            color: "#495057"
         },
         subtitle2: {
-            fontSize: '0.75rem',
+            fontSize: '14px',
             fontWeight: 400,
-            color: theme.darkTextSecondary
+            color: "#495057"
         },
         caption: {
             fontSize: '0.75rem',
-            color: theme.darkTextSecondary,
-            fontWeight: 400
+            color: "#495057",
+            fontWeight: 400,
+            padding: 0
         },
         body1: {
-            fontSize: '15px',
+            fontSize: '14px',
             fontWeight: 400,
-            lineHeight: '1.334em'
+            lineHeight: '1.334em',
+            color: "#495057"
         },
         body2: {
             letterSpacing: '0em',
             fontWeight: 400,
             lineHeight: '1.5em',
-            color: theme.darkTextPrimary
+            color: "495057"
         },
         button: {
-            textTransform: 'capitalize'
+            textTransform: 'capitalize',
+
         },
         customInput: {
             marginTop: 1,
@@ -87,14 +90,7 @@ export default function themeTypography(theme) {
             }
         },
         mainContent: {
-            backgroundColor: theme.background,
-            width: '100%',
-            minHeight: 'calc(100vh - 88px)',
-            flexGrow: 1,
-            padding: '20px',
-            marginTop: '88px',
-            marginRight: '20px',
-            borderRadius: `${theme?.customization?.borderRadius}px`
+
         },
         menuCaption: {
             fontSize: '12px',
@@ -102,12 +98,12 @@ export default function themeTypography(theme) {
             color: "#B9B9C3",
             padding: '6px',
             textTransform: 'uppercase',
-            marginTop: '10px'
+
         },
         subMenuCaption: {
             fontSize: '0.6875rem',
             fontWeight: 500,
-            color: theme.darkTextSecondary,
+            color: "#495057",
             textTransform: 'capitalize'
         },
         commonAvatar: {

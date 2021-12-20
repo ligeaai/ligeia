@@ -1,53 +1,41 @@
+import InventoryIcon from '@mui/icons-material/Inventory';
+import LabelImportantRoundedIcon from '@mui/icons-material/LabelImportantRounded';
+import ArrowRightRoundedIcon from '@mui/icons-material/ArrowRightRounded';
+const icons = {
+    InventoryIcon,
+    ArrowRightRoundedIcon
+};
+
 
 const administration = {
-    id: 'adminstration',
-    title: 'administration',
+    id: 'configuration',
+    title: 'Configuration',
     type: 'group',
-    children: [
-        // {
-        //     id: 'companys',
-        //     title: 'Companys',
-        //     type: 'collapse',
-        //     url: '/administration/companies',
-        //     // icon: icons.IconBrandChrome,
-        //     breadcrumbs: true,
-        //     children: [
-        //         {
-        //             id: "company-add",
-        //             title: "Company add",
-        //             type: "item",
-        //             url: "/administration/companies/add",
-        //             target: true
-        //         },
-        //     ],
-        // },
-        {
-            id: "models",
-            title: "Administration",
-            type: "collapse",
-            children: [
-                {
-                    id: "companys",
-                    title: "Companys",
-                    type: "collapse",
-                    url: "/administration/companies",
-                    children: [
-                        {
-                            id: "fields",
-                            title: "Fields",
-                            type: "collapse",
-                            children: [{
-                                id: "batterys",
-                                title: "Batterys",
-                                type: "item"
-                            },]
-                        }]
-                },
-
-            ]
-        }
-
-    ]
+    children: [{
+        id: "objects",
+        title: "Objects",
+        type: "collapse",
+        icon: icons.ArrowRightRoundedIcon,
+        children: [{
+            id: "сompanys",
+            title: "Companys",
+            type: "item",
+            url: "/configuration/companies",
+        }, {
+            id: "batterys",
+            title: "Batterys",
+            type: "item",
+        }, {
+            id: "fields",
+            title: "Fields",
+            type: "item",
+        }]
+    }, {
+        id: "dictionaries",
+        title: "Dictionaries",
+        type: "collapse",
+        icon: icons.ArrowRightRoundedIcon,
+    }]
 };
 
 export default administration;

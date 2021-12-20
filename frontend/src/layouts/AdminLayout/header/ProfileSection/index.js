@@ -4,11 +4,21 @@ import { useDispatch, useSelector } from "react-redux";
 import { useTheme } from '@mui/material/styles';
 import { Navigate } from "react-router-dom";
 import {
-    Avatar,
-    Typography,
+
     Button,
     Popover
 } from '@mui/material';
+import Avatar from '@mui/material/Avatar';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import Divider from '@mui/material/Divider';
+import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
+import Tooltip from '@mui/material/Tooltip';
+import PersonAdd from '@mui/icons-material/PersonAdd';
+import Settings from '@mui/icons-material/Settings';
+import Logout from '@mui/icons-material/Logout';
 import { logout } from "../../../../redux/actions/authActions";
 import { clearMessage } from "../../../../redux/actions/messageActions";
 import { history } from "../../../../services/history";
@@ -48,17 +58,14 @@ const ProfileSection = () => {
         return <Navigate to="/" />;
     }
 
-
-
     return (
         <>
-            <Typography variant="h5">{currentUser.user.email}</Typography>
-
+            <Typography variant="h5">{currentUser.user.first_name} {currentUser.user.last_name}</Typography>
             <Button onClick={handleClick}>
                 <Avatar
                     sx={{
                         ...theme.typography.mediumAvatar,
-                        margin: '8px 0 8px 8px !important',
+
                         cursor: 'pointer'
                     }}
                     ref={anchorRef}
@@ -66,7 +73,7 @@ const ProfileSection = () => {
                     color="inherit"
                 />
             </Button>
-            <Popover
+            {/* <Popover
                 id={id}
                 open={open}
                 anchorEl={anchorEl}
@@ -80,9 +87,63 @@ const ProfileSection = () => {
                 <Button onClick={logOut}><Typography sx={{ p: 2 }}>Logout</Typography></Button>
                 <Button >  <Link to={'/profile/' + currentUser.user.id}><Typography sx={{ p: 2 }}>Profile</Typography></Link></Button>
 
-            </Popover>
+            </Popover> */}
 
+            <Menu
+                anchorEl={anchorEl}
+                open={open}
+                onClose={handleClose}
+                onClick={handleClose}
+                PaperProps={{
+                    elevation: 0,
+                    sx: {
+                        overflow: 'visible',
+                        filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
+                        mt: 1.5,
+                        '& .MuiAvatar-root': {
+                            width: 32,
+                            height: 32,
+                            ml: -0.5,
+                            mr: 1,
+                        },
+                        '&:before': {
+                            content: '""',
+                            display: 'block',
+                            position: 'absolute',
+                            top: 0,
+                            right: 14,
+                            width: 10,
+                            height: 10,
+                            bgcolor: 'background.paper',
+                            transform: 'translateY(-50%) rotate(45deg)',
+                            zIndex: 0,
+                        },
+                    },
+                }}
+                transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+                anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+            >
+                <MenuItem>
+                    <Avatar /> Profile
+                </MenuItem>
 
+                <Divider />
+                <Link to={'/profile/' + currentUser.user.id}>
+                    <MenuItem >
+                        <ListItemIcon >
+                            <Settings fontSize="small" />
+                        </ListItemIcon>
+                        <Link style={{ textDecoration: "none", color: "#404040" }} to={'/profile/' + currentUser.user.id}><Typography sx={{ textUnderline: "none" }} >Settings</Typography></Link>
+                    </MenuItem>
+                </Link>
+
+                <MenuItem onClick={logOut}>
+                    <ListItemIcon>
+                        <Logout fontSize="small" />
+                    </ListItemIcon>
+                    Logout
+                </MenuItem>
+            </Menu>
         </>
     );
 };

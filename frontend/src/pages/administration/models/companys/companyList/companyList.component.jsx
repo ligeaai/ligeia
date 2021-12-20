@@ -1,81 +1,3 @@
-// import axios from "axios";
-// import {useEffect, useState} from "react";
-// import {Link} from "react-router-dom";
-// import {makeStyles} from "@mui/styles";
-// import Divider from "@mui/material/Divider";
-// import Table from "@mui/material/Table";
-// import TableBody from "@mui/material/TableBody";
-// import TableCell from "@mui/material/TableCell";
-// import TableContainer from "@mui/material/TableContainer";
-// import TableHead from "@mui/material/TableHead";
-// import {Button} from "@mui/material";
-// import TableRow from "@mui/material/TableRow";
-// import Paper from "@mui/material/Paper";
-// import {Typography} from "@mui/material";
-// import styles from "./companyListStyle";
-
-// const useStyles = makeStyles(styles);
-
-// function CompanyList(props) {
-//   const classes = useStyles();
-//   const [companies, setCompanies] = useState([]);
-
-//   const webApiUrl = "http://192.168.1.104:8000/api/v1/companies/";
-
-//   useEffect(() => {
-//     const fetchData = async () => {
-//       try {
-//         const {data: response} = await axios.get(webApiUrl, {
-//           headers: {
-//             Authorization: "Token 322ba55f7d3d3f8bf5d6186129f6863c559bedfa",
-//           },
-//         });
-//         setCompanies(response);
-//         console.log(response);
-//       } catch (error) {
-//         console.error(error.message);
-//       }
-//     };
-//     fetchData();
-//   }, []);
-//   return (
-//     <div className={classes.tableContainer}>
-//       <TableContainer className={classes.tableContainer}>
-//         <div className={classes.tools}>
-//           <Button className={classes.filterButton}>
-//             <Typography>Filter</Typography>
-//           </Button>
-//           <Button className={classes.deleteButton}>
-//             <Typography>Delete</Typography>
-//           </Button>
-//         </div>
-//         <Table className={classes.table}>
-//           <TableHead className={classes.tableHead}>
-//             <TableRow className={classes.tableRowHead}>
-//               <TableCell className={classes.tableCellHead}>Company</TableCell>
-//             </TableRow>
-//           </TableHead>
-//           <TableBody className={classes.tableBody}>
-//             {companies.map((company) => (
-//               <TableRow
-//                 role="checkbox"
-//                 key={company.id}
-//                 className={classes.tableRowBody}
-//               >
-//                 <TableCell className={classes.tableCellBody}>
-//                   {/* <Link></Link> */}
-//                   {company.name}
-//                 </TableCell>
-//               </TableRow>
-//             ))}
-//           </TableBody>
-//         </Table>
-//       </TableContainer>
-//     </div>
-//   );
-// }
-
-// export default CompanyList;
 import {styled, alpha} from "@mui/material/styles";
 import React, {useState, useEffect} from "react";
 import {useParams} from "react-router-dom";
@@ -98,48 +20,61 @@ import {
   Modal,
   Box,
 } from "@mui/material";
-import SearchIcon from "@mui/icons-material/Search";
+
+import AddRoundedIcon from "@mui/icons-material/AddRounded";
+import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
+import ModeEditSharpIcon from "@mui/icons-material/ModeEditSharp";
+import FilterAltRoundedIcon from "@mui/icons-material/FilterAltRounded";
+import CachedRoundedIcon from "@mui/icons-material/CachedRounded";
 import {useDispatch, useSelector} from "react-redux";
 import {retrieveCompanies} from "../../../../../redux/actions/companiesActions";
 import {Link} from "react-router-dom";
 import styles from "./companyListStyle";
+import Settings from "../../../../../layouts/AdminLayout/settings/settings.component";
 
 const useStyles = makeStyles(styles);
 
 const CompanyList = () => {
   const classes = useStyles();
-
-  const company = useSelector((state) => state.companiesReducer);
+  const companies = useSelector((state) => state.companiesReducer);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(retrieveCompanies());
   }, []);
 
+  function refreshPage() {
+    window.location.reload(false);
+  }
+
   return (
     <div className={classes.companyList}>
-      <div className={classes.actions}>
-        {/* <Link
-          style={{textDecoration: "none"}}
-          to="/administration/companies/add"
-        >
-          <Button
-            variant="outlined"
-            className={classes.button}
-            endIcon={<AddIcon />}
+      <TableContainer
+        sx={{minHeight: "100%"}}
+        className={classes.tableContainer}
+      >
+        <div className={classes.actions}>
+          <IconButton className={classes.iconButton} onClick={refreshPage}>
+            <CachedRoundedIcon />
+          </IconButton>
+          <Link to="/configuration/companies/add">
+            <IconButton className={classes.iconButton}>
+              <AddRoundedIcon />
+            </IconButton>
+          </Link>
+          <IconButton className={classes.iconButton}>
+            <ModeEditSharpIcon />
+          </IconButton>
+          <IconButton className={classes.iconButton}>
+            <FilterAltRoundedIcon />
+          </IconButton>
+          <IconButton
+            sx={{disableRipple: "true"}}
+            className={classes.iconButton}
           >
-            <Typography variant="button" className={classes.typographyButton}>
-              Add company
-            </Typography>
-          </Button>
-        </Link> */}
-        <Typography variant="h5">Toolbar</Typography>
-      </div>
-
-      <div className={classes.searchBar} sx={{backgroundColor: "#FFFFFF"}}>
-        {" "}
-      </div>
-      <TableContainer sx={{maxHeight: 440}} className={classes.tableContainer}>
+            <DeleteRoundedIcon />
+          </IconButton>
+        </div>
         <Table stickyHeader aria-label="sticky table" className={classes.table}>
           <TableHead className={classes.tableHead}>
             <TableRow></TableRow>
@@ -171,14 +106,14 @@ const CompanyList = () => {
             </TableRow>
           </TableHead>
           <TableBody className={classes.tableBody}>
-            {/* {company.results.map((company) => (
+            {/* {companies.results.map((company) => (
               <TableRow key={company.id}>
                 <TableCell className={classes.tableBodyCell}>
                   <Checkbox />
                 </TableCell>
                 <TableCell className={classes.tableBodyCell}>
                   <Link
-                    to={"/administration/companies/" + company.id}
+                    to={"/configuration/companies/" + company.id}
                     className={classes.link}
                   >
                     <Typography>{company.name}</Typography>

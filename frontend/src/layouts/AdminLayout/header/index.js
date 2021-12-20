@@ -5,18 +5,15 @@ import { Avatar, Box, ButtonBase } from '@mui/material';
 import logo from "../../../assets/kazatomprom.png";
 import ProfileSection from './ProfileSection';
 import NotificationSection from './NotificationSection';
-import SearchSection from './SearchSection/index'
-import LogoSection from '../LogoSection/index'
+
 import MenuIcon from '@mui/icons-material/Menu';
 import LanguageSection from './LanguageSection';
-import Brightness4Icon from '@mui/icons-material/Brightness4';
-import Brightness7Icon from '@mui/icons-material/Brightness7';
-import IconButton from '@mui/material/IconButton';
+
 
 const ColorModeContext = React.createContext({ toggleColorMode: () => { } });
 function Header({ handleLeftDrawerToggle, nandleDrawerClose }) {
     const theme = useTheme();
-    const colorMode = React.useContext(ColorModeContext);
+
     return (
         <>
             <Box
@@ -57,9 +54,6 @@ function Header({ handleLeftDrawerToggle, nandleDrawerClose }) {
             {/* <SearchSection /> */}
             <Box sx={{ flexGrow: 1 }} />
             <Box sx={{ flexGrow: 1 }} />
-            <IconButton sx={{ ml: 1 }} onClick={colorMode.toggleColorMode} color="inherit">
-                {theme.palette.mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
-            </IconButton>
             <LanguageSection />
             <NotificationSection />
             <ProfileSection />

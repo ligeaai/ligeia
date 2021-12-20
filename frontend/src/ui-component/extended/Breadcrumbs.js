@@ -116,8 +116,7 @@ const Breadcrumbs = ({ card, divider, icon, icons, maxItems, navigation, rightAl
                     sx={{
 
                         marginBottom: card === false ? 0 : theme.spacing(gridSpacing),
-                        border: card === false ? 'none' : '0.1px solid',
-                        borderColor: "rgba(0 , 0 ,0 , 0.05)",
+                        border: "1px solid #ddd",
                         background: card === false ? 'transparent' : theme.palette.background.default
                     }}
                     {...others}

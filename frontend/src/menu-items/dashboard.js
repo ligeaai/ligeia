@@ -18,7 +18,7 @@ const dashboard = {
             type: 'item',
             url: '/dashboard/default',
             icon: icons.GridViewRoundedIcon,
-            breadcrumbs: true
+            breadcrumbs: false
         },
         {
             id: 'analytics',
@@ -26,7 +26,7 @@ const dashboard = {
             type: 'item',
             url: '/dashboard/analytics',
             icon: icons.AnalyticsOutlinedIcon,
-            breadcrumbs: true
+            breadcrumbs: false
         },
 
     ]

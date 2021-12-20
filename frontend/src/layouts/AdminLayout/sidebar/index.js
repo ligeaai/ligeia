@@ -1,13 +1,14 @@
 import React, { useCallback } from 'react'
 import PropTypes from 'prop-types';
 import { useTheme } from '@mui/material/styles';
-import { Box, Drawer, useMediaQuery } from '@mui/material';
+import { Box, Drawer, MenuItem, useMediaQuery } from '@mui/material';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import { BrowserView, MobileView } from 'react-device-detect';
 import { drawerWidth } from '../../../store/constant';
 import { makeStyles } from '@mui/styles';
 import MenuList from './MenuList'
 import MenuCard from './MenuCard'
+import NavList from './MenuList/NavList/navList.component';
 
 export const defaultDrawerWidth = 240;
 const minDrawerWidth = 100;
@@ -16,10 +17,10 @@ const maxDrawerWidth = 1000;
 const useStyles = makeStyles(theme => ({
 
     dragger: {
-        width: "5px",
+
         cursor: "ew-resize",
-        padding: "4px 0 0",
-        borderTop: "2px solid #ddd",
+        width: "1px",
+        borderOutside: "1px solid #ddd",
         position: "absolute",
         top: 0,
         right: 0,
@@ -57,18 +58,17 @@ const Sidebar = ({ drawerOpen, drawerToggle, window }) => {
                 <PerfectScrollbar
                     component="div"
                     style={{
-                        height: !matchUpMd ? 'calc(100vh - 56px)' : 'calc(100vh - 88px)',
+                        height: !matchUpMd ? 'calc(100vh - 56px)' : 'calc(100vh - 52px)',
 
                     }}
                 >
+                    {/* <NavList /> */}
                     <MenuList />
-                    <MenuCard />
                 </PerfectScrollbar>
             </BrowserView>
             <MobileView>
                 <Box sx={{ px: 2 }}>
-                    <MenuList />
-                    <MenuCard />
+
                 </Box>
             </MobileView>
         </>
@@ -79,7 +79,7 @@ const Sidebar = ({ drawerOpen, drawerToggle, window }) => {
     return (
         <Box component="nav"
             sx={{ flexShrink: { md: 0 }, width: matchUpMd ? drawerWidth : 'auto' }}
-            style={{ boxShadow: "0px 0.1px 0.1px 0px rgba(0, 0, 0, 0.1)", }} aria-label="mailbox folders">
+            aria-label="mailbox folders">
             <Drawer
                 container={container}
                 variant={matchUpMd ? 'persistent' : 'temporary'}
@@ -92,7 +92,10 @@ const Sidebar = ({ drawerOpen, drawerToggle, window }) => {
                         width: drawerWidth,
                         background: theme.palette.background.default,
                         color: theme.palette.text.primary,
-                        border: '1px solid #F2F4F1',
+                        borderOutside: "1px solid #EAEAEA",
+                        borderRadius: "5px",
+                        margin: "5px",
+
                         [theme.breakpoints.up('md')]: {
                             top: '52px'
                         }

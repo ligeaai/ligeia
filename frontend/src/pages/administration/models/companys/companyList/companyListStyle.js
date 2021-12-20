@@ -7,18 +7,16 @@ const styles = () => ({
 
     actions: {
         display: "flex",
-        paddingLeft: "10px",
         alignItems: "center",
         height: "40px",
         backgroundColor: "#FFFFFF",
-        borderRadius: "8px",
-        marginBottom: "10px"
+        borderBottom: "1px solid #EAEAEA",
+
 
     },
 
 
     button: {
-
         borderRadius: "4px",
         backgroundColor: "#2499ef",
         color: "#FFFFFF",
@@ -26,12 +24,22 @@ const styles = () => ({
         height: "40px"
     },
 
+    iconButton: {
+        color: "#495057",
+        background: "none",
+        borderRadius: "0",
+        '&:hover': {
+            background: "none",
+            color: "#458BF3"
+        },
+    },
     tableContainer: {
         // marginTop: "20px",
+
         backgroundColor: "#FFFFFF",
-        borderColor: "#1d2438",
-        borderRadius: "8px",
-        height: "50%",
+        border: "1px solid #EAEAEA",
+        borderRadius: "5px",
+
 
     },
 
@@ -45,11 +53,12 @@ const styles = () => ({
     },
 
     tableHeadRow: {
-
+        border: "none",
         borderColor: "#1d2438"
     },
 
     tableHeadCell: {
+
         padding: "5px"
 
     },
@@ -66,31 +75,7 @@ const styles = () => ({
         padding: "5px"
     },
 
-    tools: {
-        padding: "10px",
-        borderBottom: "1px solid #D9D5EC ",
 
-    },
-
-    filterButton: {
-        border: "1px solid",
-        backgroundColor: '#458bf3',
-        color: "white",
-        '&:hover': {
-            backgroundColor: '#458bf3',
-            color: 'blue',
-        }
-    },
-
-    deleteButton: {
-        border: "1px solid ",
-        backgroundColor: "#D30000",
-        color: "white",
-        '&:hover': {
-            backgroundColor: '#ffffff',
-            color: 'red',
-        }
-    },
 
     tableHead: {
 
@@ -114,7 +99,9 @@ const styles = () => ({
 
     tableCellBody: {
 
-    }
+    },
+
+
 
 })
 

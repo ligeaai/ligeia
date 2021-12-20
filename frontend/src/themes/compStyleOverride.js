@@ -1,6 +1,13 @@
 export default function componentStyleOverrides(theme) {
 
     return {
+        MuiIconButton: {
+            styleOverrides: {
+                root: {
+
+                }
+            }
+        },
         MuiCheckbox: {
             styleOverrides: {
                 root: {
@@ -26,40 +33,15 @@ export default function componentStyleOverrides(theme) {
             },
             styleOverrides: {
                 root: {
-                    backgroundImage: 'none'
+                    backgroundImage: 'none',
                 },
-            }
-        },
-        MuiCardHeader: {
-            styleOverrides: {
-                root: {
-                    color: theme.colors?.textDark,
-                    padding: '24px'
-                },
-                title: {
-                    fontSize: '1.125rem'
-                }
-            }
-        },
-        MuiCardContent: {
-            styleOverrides: {
-                root: {
-                    padding: '24px'
-                }
-            }
-        },
-        MuiCardActions: {
-            styleOverrides: {
-                root: {
-                    padding: '24px'
-                }
             }
         },
         MuiListItemButton: {
             styleOverrides: {
                 root: {
-                    color: "#303030",
-                 
+                    color: "#343a40",
+                    padding: "8px",
                     '&.Mui-selected': {
                         color: theme.menuSelected,
                         backgroundColor: theme.menuSelectedBack,
@@ -68,6 +50,7 @@ export default function componentStyleOverrides(theme) {
                         },
                         '& .MuiListItemIcon-root': {
                             color: theme.menuSelected
+
                         }
                     },
                     '&:hover': {
@@ -84,13 +67,15 @@ export default function componentStyleOverrides(theme) {
             styleOverrides: {
                 root: {
                     color: "#505050",
-                    minWidth: '36px'
+                    minWidth: '36px',
+
                 }
             }
         },
         MuiListItemText: {
             styleOverrides: {
                 primary: {
+
                     color: theme.textDark
                 }
             }
