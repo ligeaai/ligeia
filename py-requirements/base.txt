@@ -20,6 +20,8 @@ docker-compose
 django-cors-headers
 django-cities-light
 django-smart-selects
+django-mptt
+djongo
 
 # Sentry
 raven
