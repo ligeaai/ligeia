@@ -35,7 +35,6 @@ class Type_status(MPTTModel):
         return ' / '.join(full_path[::-1])
 
 class MPTTMeta:
-    app_label = "apps.db_dictionaries"
     ordering = ["name"]
     verbose_name = _("type_status")
     verbose_name_plural = _("type_status")

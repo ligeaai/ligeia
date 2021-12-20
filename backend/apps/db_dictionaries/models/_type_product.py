@@ -38,8 +38,7 @@ class Type_product(MPTTModel):
     #     full_name = ' - '.join(map(lambda x: x['code_text'], names))
     #     return full_name
 
-class MPTTMeta:
-    app_label = "apps.db_dictionaries"
+class MPTTMeta:    
     ordering = ["name"]
     verbose_name = _("type_product")
     verbose_name_plural = _("type_products")

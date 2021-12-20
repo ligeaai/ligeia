@@ -10,8 +10,8 @@ ALLOWED_HOSTS += ["192.168.1.104:8000"]
 DATABASE_ROUTERS = ["core.router.DatabaseAppsRouter"]
 
 DATABASE_APPS_MAPPING = {
-    # "apps.users": "default",
-    # "apps.db_models": "default",
+    "users": "default",
+    "db_models": "default",
     "db_dictionaries": "mongodb",
 }
 
