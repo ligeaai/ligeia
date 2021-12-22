@@ -33,7 +33,8 @@ class Base_equip(Base_domain):
       elif self.registry_id:
          return self.registry_id
          
-class Meta:            
-      ordering = ["name"]
-      verbose_name = _("base_equip")
-      verbose_name_plural = _("base_equips")
+class Meta: 
+   
+   ordering = ["name"]
+   verbose_name = _("base_equip")
+   verbose_name_plural = _("base_equips")

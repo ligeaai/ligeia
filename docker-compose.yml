@@ -71,6 +71,23 @@ services:
       - postgres
     networks:
       - net
+
+  flower:
+    build:
+      context: .
+      dockerfile: ./docker/local/django/Dockerfile
+    command: /start-flower
+    volumes:
+      - .:/django
+    env_file:
+      - .env
+    ports:
+      - "5557:5555"
+    depends_on:
+      - redis
+      - postgres
+    networks:
+      - net
   mongodb:
     restart: unless-stopped
     image: mongo:latest

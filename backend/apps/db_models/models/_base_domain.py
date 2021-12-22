@@ -31,6 +31,7 @@ class Base_domain(models.Model):
         return f"{self.name}, {self.short_name}"
 
 class Meta:
+    asbtract = True
     verbose_name = _("base_domain")
     verbose_name_plural = _("base_domains")
 

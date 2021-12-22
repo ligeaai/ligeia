@@ -31,7 +31,7 @@ class Battery(Base_domain):
       elif self.registry_id:
          return self.registry_id
 
-class Meta:            
+   class Meta:            
       ordering = ["name"]
       verbose_name = _("battery")
       verbose_name_plural = _("batteries")

@@ -3,17 +3,18 @@
 set -o errexit
 set -o nounset
 
+cd backend
+
 worker_ready(){
-    celery -A ligeiaai inspect ping
+    celery -A core inspect ping
 }
 
 until worker_ready; do 
     >&2 echo 'Celery workers not available :-('
     sleep 1
-
 done
 >&2 echo 'Celery workers are available and ready!...:-)'
 
 flower \
-    --app=ligeiaai \
+    --app=core \
     --broker="${CELERY_BROKER}"

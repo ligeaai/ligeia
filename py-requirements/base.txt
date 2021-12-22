@@ -36,6 +36,7 @@ python-dateutil>=2.6.1
 celery
 flower
 redis
+django-celery-email
 django-celery-beat
 
 # DRF docs
