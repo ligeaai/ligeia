@@ -1,4 +1,4 @@
-version: '3.8'
+version: "3.8"
 
 services:
   app:
@@ -15,7 +15,7 @@ services:
 
     volumes:
       - ..:/workspace:cached
-      
+
     # Overrides default command so things don't shut down after the process ends.
     command: sleep infinity
 
@@ -38,6 +38,7 @@ services:
       POSTGRES_DB: db_dev
       POSTGRES_PASSWORD: manager
     # Add "forwardPorts": ["5432"] to **devcontainer.json** to forward PostgreSQL locally.
+
     # (Adding the "ports" property to this file will not forward from a Codespace.)
     networks:
       - net
@@ -56,46 +57,46 @@ services:
     # network_mode: service:db
     networks:
       - net
-  redis:    
+  redis:
     image: redis:5-alpine
     restart: on-failure
     volumes:
-      - redis-data:/data      
+      - redis-data:/data
     ports:
       - 5432:5432
     # network_mode: service:db
     networks:
       - net
   celery_worker:
-      build:
-          context: .
-          dockerfile: ./docker/local/django/Dockerfile
-      command: /start-celeryworker
-      volumes:
-          - .:/app
-      env_file:
-          - .env
-      depends_on:
-          - redis
-          - postgres-db
-      networks:
-          - estate-react
+    build:
+      context: .
+      dockerfile: ./docker/local/django/Dockerfile
+    command: /start-celeryworker
+    volumes:
+      - .:/app
+    env_file:
+      - .env
+    depends_on:
+      - redis
+      - postgres-db
+    networks:
+      - estate-react
   flower:
     build:
-        context: .
-        dockerfile: ./docker/local/django/Dockerfile
+      context: .
+      dockerfile: ./docker/local/django/Dockerfile
     command: /start-flower
     volumes:
-        - .:/app
+      - .:/app
     env_file:
-        - .env
+      - .env
     ports:
-        - 5557:5555
+      - 5557:5555
     depends_on:
-        - redis
-        - db
+      - redis
+      - db
     networks:
-        - net
+      - net
   mongodb:
     image: mongo:latest
     volumes:
@@ -121,7 +122,7 @@ services:
       # "rabbitmq" is the hostname.  Note that there is not a guarantee
       # that the server will start first!  Telling the pika client library
       # to try multiple times gets around this ordering issue.
-      AMQP_URL: 'amqp://rabbitmq?connection_attempts=5&retry_delay=5'
+      AMQP_URL: "amqp://rabbitmq?connection_attempts=5&retry_delay=5"
       RABBITMQ_DEFAULT_USER: "guest"
       RABBITMQ_DEFAULT_PASS: "guest"
     ports:
@@ -137,8 +138,7 @@ networks:
     driver: bridge
 volumes:
   redis-data: null
-  postgres-data: null  
+  postgres-data: null
   pgadmin-data: null
   mongodb-data: null
   rabbitmq-data: null
-
