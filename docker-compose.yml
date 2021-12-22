@@ -63,7 +63,7 @@ services:
       dockerfile: ./docker/django/Dockerfile
     command: /start-celeryworker
     volumes:
-      - .:/app
+      - .:/django
     env_file:
       - .env
     depends_on:

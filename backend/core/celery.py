@@ -1,10 +1,11 @@
-from __future__ import absolute_import
+from __future__ import absolute_import, unicode_literals
 import os
 from celery import Celery
-from backend.settings import base
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "backend.settings.development")
 
-app = Celery("backend")
-app.config_from_object("backend.settings.dev", namespace="CELERY"),
-app.autodiscover_tasks(lambda: base.INSTALLED_APPS)
+if os.environ.get('DJANGO_SETTINGS_MODULE', None) is None:
+    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'settings.dev')
+
+app = Celery("core")
+app.config_from_object("django.conf:settings", namespace="CELERY")
+app.autodiscover_tasks()

@@ -67,10 +67,11 @@ services:
   celery_worker:
     build:
       context: .
-      dockerfile: ./docker/local/django/Dockerfile
+      dockerfile: ./docker/django/Dockerfile
+    # command: ['celery', 'worker', '-A', 'app.app', '-l', 'info']
     command: /start-celeryworker
     volumes:
-      - .:/app
+      - ..:/workspace:cached
     env_file:
       - .env
     depends_on:
