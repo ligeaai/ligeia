@@ -66,6 +66,36 @@ services:
     # network_mode: service:db
     networks:
       - net
+  celery_worker:
+      build:
+          context: .
+          dockerfile: ./docker/local/django/Dockerfile
+      command: /start-celeryworker
+      volumes:
+          - .:/app
+      env_file:
+          - .env
+      depends_on:
+          - redis
+          - postgres-db
+      networks:
+          - estate-react
+  flower:
+    build:
+        context: .
+        dockerfile: ./docker/local/django/Dockerfile
+    command: /start-flower
+    volumes:
+        - .:/app
+    env_file:
+        - .env
+    ports:
+        - 5557:5555
+    depends_on:
+        - redis
+        - db
+    networks:
+        - net
   mongodb:
     image: mongo:latest
     volumes:
@@ -74,14 +104,14 @@ services:
       - 27017:27017
     networks:
       - net
-  mongo-express:
-    image: mongo-express:latest
-    volumes:
-      - mongodb-data:/data
-    ports:
-      - 8081:8081
-    networks:
-      - net
+  # mongo-express:
+  #   image: mongo-express:latest
+  #   volumes:
+  #     - mongodb-data:/data
+  #   ports:
+  #     - 8081:8081
+  #   networks:
+  #     - net
   rabbitmq:
     image: rabbitmq:3.6-management-alpine
     volumes:

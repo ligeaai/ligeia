@@ -1,22 +1,39 @@
-version: "3.9"
+version: "3.8"
 
 services:
-  redis:
+  app:
     restart: always
-    container_name: ligeia_redis
-    image: redis:5-alpine
+    container_name: ligeia_mare
+    build:
+      context: .
+      dockerfile: ./docker/app/Dockerfile
+      args:
+        # Update 'VARIANT' to pick a version of Python: 3, 3.10, 3.9, 3.8, 3.7, 3.6
+        # Append -bullseye or -buster to pin to an OS version.
+        # Use -bullseye variants on local arm64/Apple Silicon.
+        # VARIANT: 3.10-buster
+        # Optional Node.js version to install
+        NODE_VERSION: "lts/*"
+    command: /start
     volumes:
-      - redis_data:/data
+      - ..:/app
+      # - static_volume:/django/staticfiles
+      # - media_volume:/django/mediafiles
     expose:
-      - "6379"
+      - "8000"
     ports:
-      - "6379:6379"
-    networks:
-      - ligeiaai
+      - "8000:8000"
+    env_file:
+      - .env
+    depends_on:
+      - postgres
+      # - redis
+    network_mode: service:postgres
+
   postgres:
     restart: always
-    container_name: ligeia_pg
-    image: postgres:13.0-alpine
+    container_name: ligeia_mare
+    image: postgres:latest
     volumes:
       - postgres_data:/var/lib/postgresql/data/
     environment:
@@ -26,84 +43,35 @@ services:
     ports:
       - "5434:5432"
     networks:
-      - ligeiaai
-  pgadmin:
-    restart: always
-    container_name: ligeia_pgadmin4
-    image: dpage/pgadmin4
-    volumes:
-      - postgres_data:/var/lib/pgadmin
-    environment:
-      PGADMIN_DEFAULT_EMAIL: admin@admin.com
-      PGADMIN_DEFAULT_PASSWORD: manager
-    ports:
-      - "5050:80"
-    networks:
-      - ligeiaai
-  django:
-    restart: always
-    container_name: ligeia_django
-    build:
-      context: .
-      dockerfile: ./docker/django/Dockerfile
-    command: /start
-    volumes:
-      - .:/django
-      - static_volume:/django/staticfiles
-      - media_volume:/django/mediafiles
-    expose:
-      - "8000"
-    ports:
-      - "8000:8000"
-    env_file:
-      - .env
-    depends_on:
-      - postgres
-      - redis
-    networks:
-      - ligeiaai
-  rabbit1:
-    image: rabbitmq:3-management
-    hostname: rabbit1
-    environment:
-      RABBITMQ_ERLANG_COOKIE: "secret string"
-      RABBITMQ_NODENAME: rabbit1
-    volumes:
-      - "./rabbitmq.config:/etc/rabbitmq/rabbitmq.config"
-      - "./definitions.json:/etc/rabbitmq/definitions.json"
-    ports:
-      - "4369:4369"
-      - "5671:5671"
-      - "5672:5672"
-      - "15671:15671"
-      - "15672:15672"
-      - "25672:25672"
+      - net
+  # redis:
+  #   restart: always
+  #   container_name: ligeia_mare
+  #   image: redis:5-alpine
+  #   volumes:
+  #     - redis_data:/data
+  #   expose:
+  #     - "6379"
+  #   ports:
+  #     - "6379:6379"
+  #   networks:
+  #     - ligeiaai
+  # pgadmin:
+  #   restart: always
+  #   container_name: ligeia_pgadmin4
+  #   image: dpage/pgadmin4
+  #   volumes:
+  #     - postgres_data:/var/lib/pgadmin
+  #   environment:
+  #     PGADMIN_DEFAULT_EMAIL: admin@admin.com
+  #     PGADMIN_DEFAULT_PASSWORD: manager
+  #   ports:
+  #     - "5050:80"
+  #   networks:
+  #     - ligeiaai
 
-  rabbit2:
-    image: rabbitmq:3-management
-    hostname: rabbit2
-    depends_on:
-      - rabbit1
-    environment:
-      RABBITMQ_ERLANG_COOKIE: "secret string"
-      RABBITMQ_NODENAME: rabbit2
-    volumes:
-      - "./rabbitmq.config:/etc/rabbitmq/rabbitmq.config"
-      - "./definitions.json:/etc/rabbitmq/definitions.json"
-    
-  rabbit3:
-    image: rabbitmq:3-management
-    hostname: rabbit3
-    depends_on:
-      - rabbit1
-    environment:
-      RABBITMQ_ERLANG_COOKIE: "secret string"
-      RABBITMQ_NODENAME: rabbit3
-    volumes:
-      - "./rabbitmq.config:/etc/rabbitmq/rabbitmq.config"
-      - "./definitions.json:/etc/rabbitmq/definitions.json"
 networks:
-  ligeiaai:
+  net:
     driver: bridge
 volumes:
   postgres_data:
