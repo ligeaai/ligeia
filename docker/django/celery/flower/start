@@ -4,7 +4,7 @@ set -o errexit
 set -o nounset
 
 worker_ready(){
-    celery -A real_estate inspect ping
+    celery -A ligeiaai inspect ping
 }
 
 until worker_ready; do 
@@ -15,5 +15,5 @@ done
 >&2 echo 'Celery workers are available and ready!...:-)'
 
 flower \
-    --app=real_estate \
+    --app=ligeiaai \
     --broker="${CELERY_BROKER}"

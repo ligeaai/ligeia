@@ -23,13 +23,21 @@ COPY ./py-requirements /django/py-requirements
 RUN pip --disable-pip-version-check --no-cache-dir install -r /django/py-requirements/dev.txt \
    && rm -rf /django/py-requirements
 
-COPY ./docker/django/entrypoint /entrypoint
+COPY ./docker/django/app/entrypoint /entrypoint
 RUN sed -i 's/\r$//g' /entrypoint
 RUN chmod +x /entrypoint
 
-COPY ./docker/django/start /start
+COPY ./docker/django/app/start /start
 RUN sed -i 's/\r$//g' /start
 RUN chmod +x /start
+
+COPY ./docker/django/celery/worker/start /start-celeryworker
+RUN sed -i 's/\r$//g' /start-celeryworker
+RUN chmod +x /start-celeryworker
+
+COPY ./docker/django/celery/flower/start /start-flower
+RUN sed -i 's/\r$//g' /start-flower
+RUN chmod +x /start-flower
 
 # copy project
 # COPY . .
