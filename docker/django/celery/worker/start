@@ -3,4 +3,4 @@
 set -o errexit
 set -o nounset
 
-watchmedo auto-restart -d ligeiaai/ -p "*.py" -- celery worker -A ligeiaai --loglevel=info
+watchmedo auto-restart -d core/ -p "*.py" -- celery worker -A backend --loglevel=info

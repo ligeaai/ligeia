@@ -43,21 +43,20 @@ services:
     networks:
       - net
   pgadmin:
-    restart: always
-    container_name: ligeia_pgadmin4
+    # restart: alwayys
     image: dpage/pgadmin4
     volumes:
       - pgadmin-data:/var/lib/pgadmin
     environment:
-      PGADMIN_DEFAULT_EMAIL: ${PG_ADMIN_EMAIL}
-      PGADMIN_DEFAULT_PASSWORD: ${PG_ADMIN_PASS}
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: manager
     ports:
       - "5050:80"
     networks:
       - net
   redis:
     image: redis:5-alpine
-    restart: on-failure
+    # restart: on-failure
     volumes:
       - redis-data:/data
     ports:
@@ -76,31 +75,36 @@ services:
       - .env
     depends_on:
       - redis
-      - postgres-db
-    networks:
-      - estate-react
-  flower:
-    build:
-      context: .
-      dockerfile: ./docker/local/django/Dockerfile
-    command: /start-flower
-    volumes:
-      - .:/app
-    env_file:
-      - .env
-    ports:
-      - 5557:5555
-    depends_on:
-      - redis
       - db
     networks:
       - net
+  # flower:
+  #   build:
+  #     context: .
+  #     dockerfile: ./docker/local/django/Dockerfile
+  #   command: /start-flower
+  #   volumes:
+  #     - .:/app
+  #   env_file:
+  #     - .env
+  #   ports:
+  #     - 5557:5555
+  #   depends_on:
+  #     - redis
+  #     - db
+  #   networks:
+  #     - net
   mongodb:
+    restart: unless-stopped
     image: mongo:latest
     volumes:
-      - mongodb-data:/data
+      - mongodb-data:/data/db
+      - mongodb-data:/data/configdb
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=manager
     ports:
-      - 27017:27017
+      - "27017:27017"
     networks:
       - net
   # mongo-express:
@@ -111,32 +115,32 @@ services:
   #     - 8081:8081
   #   networks:
   #     - net
-  rabbitmq:
-    image: rabbitmq:3.6-management-alpine
-    volumes:
-      - rabbitmq-data:/var/lib/rabbitmq
-    environment:
-      # The location of the RabbitMQ server.  "amqp" is the protocol;
-      # "rabbitmq" is the hostname.  Note that there is not a guarantee
-      # that the server will start first!  Telling the pika client library
-      # to try multiple times gets around this ordering issue.
-      AMQP_URL: "amqp://rabbitmq?connection_attempts=5&retry_delay=5"
-      RABBITMQ_DEFAULT_USER: "guest"
-      RABBITMQ_DEFAULT_PASS: "guest"
-    ports:
-      # The standard AMQP protocol port
-      - 5672:5672
-      # HTTP management UI
-      - 15672:15672
-    networks:
-      - net
+  # rabbitmq:
+  #   image: rabbitmq:3.6-management-alpine
+  #   volumes:
+  #     - rabbitmq-data:/var/lib/rabbitmq
+  #   environment:
+  #     # The location of the RabbitMQ server.  "amqp" is the protocol;
+  #     # "rabbitmq" is the hostname.  Note that there is not a guarantee
+  #     # that the server will start first!  Telling the pika client library
+  #     # to try multiple times gets around this ordering issue.
+  #     AMQP_URL: "amqp://rabbitmq?connection_attempts=5&retry_delay=5"
+  #     RABBITMQ_DEFAULT_USER: "guest"
+  #     RABBITMQ_DEFAULT_PASS: "guest"
+  #   ports:
+  #     # The standard AMQP protocol port
+  #     - 5672:5672
+  #     # HTTP management UI
+  #     - 15672:15672
+  #   networks:
+  #     - net
 
 networks:
   net:
     driver: bridge
 volumes:
-  redis-data: null
   postgres-data: null
   pgadmin-data: null
   mongodb-data: null
   rabbitmq-data: null
+  redis-data: null
