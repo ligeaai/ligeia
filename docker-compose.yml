@@ -5,7 +5,7 @@ services:
     restart: unless-stopped
     build:
       context: .
-      dockerfile: ./docker/django/Dockerfile
+      dockerfile: ./docker/local/django/Dockerfile
       args:
         VARIANT: 3.10-buster
     command: /start
@@ -57,10 +57,10 @@ services:
     networks:
       - net
   celery_worker:
-    restart: always
+    restart: on-failure
     build:
       context: .
-      dockerfile: ./docker/django/Dockerfile
+      dockerfile: ./docker/local/django/Dockerfile
     command: /start-celeryworker
     volumes:
       - .:/django
