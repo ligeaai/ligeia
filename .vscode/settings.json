@@ -5,6 +5,14 @@
     "python.pythonPath": "/Users/rustembeisekin/Documents/GitHub/ligeia.ai/.venv/bin/python",
     "python.formatting.provider": "black",
     "git.ignoreLimitWarning": true,
+    "terminal.integrated.profile.linux#": "/bin/zsh",
+    "terminal.integrated.profiles.linux": {
+        "zsh (login)": {
+          "path": "zsh",
+          "args": ["-l"]
+        }
+    }
+
     // "venvFolders": "~/core/.venv",
     // "python.venvPath": "",
 

@@ -62,7 +62,7 @@ LOCAL_APPS = [
     "apps.citylight",
     "apps.db_models",
     "apps.db_dictionaries",
-    "apps.config"
+    "apps.config",
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
@@ -163,7 +163,7 @@ REST_FRAMEWORK = {
 REST_KNOX = {
     "SECURE_HASH_ALGORITHM": "cryptography.hazmat.primitives.hashes.SHA512",
     "AUTH_TOKEN_CHARACTER_LENGTH": 64,
-    "USER_SERIALIZER": "accounts.serializers.UserSerializer",
+    "USER_SERIALIZER": "users.serializers.UserSerializer",
 }
 
 # ########### Sentry configuration
@@ -246,7 +246,7 @@ CACHES = {
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
             "SOCKET_TIMEOUT": 900,
-        }
+        },
     }
 }
 

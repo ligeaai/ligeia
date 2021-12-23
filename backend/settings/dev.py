@@ -7,13 +7,13 @@ DEBUG = True
 ALLOWED_HOSTS += ["192.168.1.104:8000"]
 
 # database routing
-# DATABASE_ROUTERS = ["core.router.DatabaseAppsRouter"]
+DATABASE_ROUTERS = ["core.router.DatabaseAppsRouter"]
 
-# DATABASE_APPS_MAPPING = {
-#     "users": "default",
-#     "db_models": "default",
-#     "db_dictionaries": "mongodb",
-# }
+DATABASE_APPS_MAPPING = {
+    "users": "default",
+    "db_models": "default",
+    "db_dictionaries": "mongodb",
+}
 
 DATABASES = {    
     "default": {
@@ -24,19 +24,20 @@ DATABASES = {
         "HOST": env("PG_HOST"),
         "PORT": env("PG_PORT"),
     },
-    # "mongodb": {
-    #     "NAME": "db_dictionaries",
-    #     "ENGINE": "djongo",
-    #     "ENFORCE_SCHEMA": True,
-    #     'CLIENT': {
-    #         'host': 'mongodb://mongodb:27017',
-    #         # 'port': 270117,
-    #         # 'username': 'admin',
-    #         # 'password': 'manager',
-    #         # 'authSource': 'dictionaries',
-    #         # 'authMechanism': 'SCRAM-SHA-1'
-    #     }
-    # },
+    "mongodb": {
+        "NAME": "db_dictionaries",
+        "ENGINE": "djongo",
+        "ENFORCE_SCHEMA": True,
+        'CLIENT': {
+            # 'host': 'mongodb://admin:mongodb:27017',
+            'host': 'localhost',
+            'port': 270117,
+            'username': 'admin',
+            'password': 'manager',
+            # 'authSource': 'dictionaries',
+            # 'authMechanism': 'SCRAM-SHA-1'
+        }
+    },
 }
 
 CELERY_BROKER_URL = os.environ.get("CELERY_BROKER", "redis://127.0.0.1:6379/0")
