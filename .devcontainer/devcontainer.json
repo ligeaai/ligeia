@@ -45,20 +45,20 @@
 
 	// Add the IDs of extensions you want installed when the container is created.
 	"extensions": [
-		// "ms-python.python",
-		// "ms-python.vscode-pylance",
-		// "mtxr.sqltools",
-		// "mtxr.sqltools-driver-pg",
-		// "dbaeumer.vscode-eslint",
-		// "ms-azuretools.vscode-docker",
-		// "github.vscode-pull-request-github",
-		// "eamodio.gitlens",
-		// "dbaeumer.jshint",
-		// "eg2.vscode-npm-script",
-		// "christian-kohler.npm-intellisense",
-		// "esbenp.prettier-vscode",
-		// "redhat.vscode-yaml",
-		// "knisterpeter.vscode-github"
+		"ms-python.python",
+		"ms-python.vscode-pylance",
+		"mtxr.sqltools",
+		"mtxr.sqltools-driver-pg",
+		"dbaeumer.vscode-eslint",
+		"ms-azuretools.vscode-docker",
+		"github.vscode-pull-request-github",
+		"eamodio.gitlens",
+		"dbaeumer.jshint",
+		"eg2.vscode-npm-script",
+		"christian-kohler.npm-intellisense",
+		"esbenp.prettier-vscode",
+		"redhat.vscode-yaml",
+		"knisterpeter.vscode-github"
 	],
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.

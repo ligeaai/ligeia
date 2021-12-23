@@ -15,7 +15,7 @@ class Company(Base_domain):
         verbose_name="Country",
     )
     region = models.CharField(
-        db_column=_("region)", max_length=100, blank=True, null=True, verbose_name="Region"
+        db_column=_("region"), max_length=100, blank=True, null=True, verbose_name="Region"
     )
     subregion = models.CharField(
         db_column=_("subregion"),

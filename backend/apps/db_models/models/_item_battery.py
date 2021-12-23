@@ -58,7 +58,7 @@ class Battery(Base_domain):
         db_column=_("code"), max_length=100, blank=True, null=True, verbose_name="Code"
     )
     direct_entry = models.BooleanField(
-        db_column=_("direct_entry)", default=False, verbose_name="Manual"
+        db_column=_("direct_entry"), default=False, verbose_name="Manual"
     )
     scada = models.BooleanField(db_column="SCADA", default=True, verbose_name="SCADA")
 
