@@ -62,6 +62,7 @@ LOCAL_APPS = [
     "apps.citylight",
     "apps.db_models",
     "apps.db_dictionaries",
+    "apps.config"
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
@@ -238,16 +239,16 @@ LOGGING = {
     },
 }
 
-# CACHES = {
-#     "default": {
-#         "BACKEND": "django_redis.cache.RedisCache",
-#         "LOCATION": f"redis://{os.environ['REDIS_URI']}",
-#         "OPTIONS": {
-#             "CLIENT_CLASS": "django_redis.client.DefaultClient",
-#             "SOCKET_TIMEOUT": 900,
-#         }
-#     }
-# }
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": f"redis://{os.environ['REDIS_URI']}",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+            "SOCKET_TIMEOUT": 900,
+        }
+    }
+}
 
 # SESSION_ENGINE = "django.contrib.sessions.backends.cache"
 # SESSION_CACHE_ALIAS = "default"
@@ -266,7 +267,6 @@ LOGGING = {
 # SESSION_COOKIE_SECURE=False
 
 DEFAULT_LOGGER = "raven"
-
 
 LOGGER_EXCEPTION = DEFAULT_LOGGER
 LOGGER_ERROR = DEFAULT_LOGGER

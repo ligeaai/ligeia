@@ -26,7 +26,7 @@ class Pump(Base_equip):
       elif self.satus:
          return self.status
 
-class Meta:            
-      ordering = ["name"]
-      verbose_name = _("pump")
-      verbose_name_plural = _("pumps")
+   class Meta:            
+         ordering = ["name"]
+         verbose_name = _("pump")
+         verbose_name_plural = _("pumps")

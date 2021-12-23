@@ -1,7 +1,5 @@
 from django.db import models
-from django.apps import apps
+from django.utils.translation import gettext_lazy as _
 
-# for app in apps.get_app_configs():
-#     print(app.verbose_name, ":")
-for model in app.get_models():
-    print("\t", model)
+class ModelList(models.Model):
+    name = models.CharField(db_column='name', max_length=100, blank=False, unique=True, verbose_name='Name')

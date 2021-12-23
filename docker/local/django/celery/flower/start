@@ -15,6 +15,5 @@ until worker_ready; do
 done
 >&2 echo 'Celery workers are available and ready!...:-)'
 
-flower \
-    --app=core \
-    --broker="${CELERY_BROKER}"
+celery --app core --broker=redis://redis:6379/0 flower
+# celery --app core --broker=redis://guest:guest@localhost:6379/0 flower

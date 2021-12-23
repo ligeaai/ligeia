@@ -9,3 +9,15 @@ if os.environ.get('DJANGO_SETTINGS_MODULE', None) is None:
 app = Celery("core")
 app.config_from_object("django.conf:settings", namespace="CELERY")
 app.autodiscover_tasks()
+
+@app.task(bind=True)
+def debug_task_with_request(self):
+    print('Request: {0!r}'.format(self.request))
+
+@app.task(bind=True)
+def debug_task(self):
+    print(f'Request: {self.request!r}')
+
+@app.task(bind=True)
+def debug_task_from_shell(self):
+    print("debug_task_from_shell executed")
