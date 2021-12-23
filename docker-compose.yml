@@ -16,8 +16,8 @@ services:
       # - static_volume:/django/staticfiles
       # - media_volume:/django/mediafiles
     depends_on:
-      - postgres
       - redis
+      - postgres      
     ports:
       - "8000:8000"
     networks:

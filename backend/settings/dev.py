@@ -10,8 +10,8 @@ ALLOWED_HOSTS += ["192.168.1.104:8000"]
 DATABASE_ROUTERS = ["core.router.DatabaseAppsRouter"]
 
 DATABASE_APPS_MAPPING = {
-    "users": "default",
-    "db_models": "default",
+    # "users": "default",
+    # "db_models": "default",
     "db_dictionaries": "mongodb",
 }
 
@@ -29,13 +29,13 @@ DATABASES = {
         "ENGINE": "djongo",
         "ENFORCE_SCHEMA": True,
         'CLIENT': {
-            # 'host': 'mongodb://admin:mongodb:27017',
-            'host': 'localhost',
-            'port': 270117,
-            'username': 'admin',
-            'password': 'manager',
-            # 'authSource': 'dictionaries',
-            # 'authMechanism': 'SCRAM-SHA-1'
+            'host': 'mongodb://admin:manager@mongodb:27017',
+        #     'host': 'localhost',
+        #     'port': 270117,
+        #     'username': 'admin',
+        #     'password': 'manager',
+        #     # 'authSource': 'dictionaries',
+        #     # 'authMechanism': 'SCRAM-SHA-1'
         }
     },
 }
