@@ -78,6 +78,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
+    'django.middleware.locale.LocaleMiddleware',
 ]
 
 ROOT_URLCONF = "core.urls"
@@ -93,6 +94,7 @@ LANGUAGES = [
     # ('tr', _('Turkish')),
 ]
 LOCALE_PATHS = (os.path.join(BASE_DIR, "locale"),)
+
 CITIES_LIGHT_TRANSLATION_LANGUAGES = ["en", "ru"]
 CITIES_LIGHT_INCLUDE_COUNTRIES = ["KZ", "CA"]
 

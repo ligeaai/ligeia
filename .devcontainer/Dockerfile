@@ -31,9 +31,7 @@ RUN apt-get update \
    && apt-get install -y gettext \
    && apt-get -y install netcat gcc postgresql \
    && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false \
-   && rm -rf /var/lib/apt/lists/*
-   # && apt-get -y install 
+   && rm -rf /var/lib/apt/lists/* \
+   && apt-get -y install 
    #  --no-install-recommends <your-package-list-here>
-
-
 

@@ -1,15 +1,16 @@
-FROM ubuntu:20.04
+# [Choice] Node.js version: none, lts/*, 16, 14, 12, 10
+ARG NODE_VERSION="none"
+FROM node:${NODE_VERSION}
 
-COPY ./docker/web/web-entrypoint.sh /
-COPY ./package.json /django/package.json
+# RUN if [ "${NODE_VERSION}" != "none" ]; then su vscode -c "umask 0002 && . /usr/local/share/nvm/nvm.sh && nvm install ${NODE_VERSION} 2>&1"; fi
 
-WORKDIR /django
+WORKDIR /django/web
 
-# RUN apt-get remove docker docker-engine docker.io containerd runc
+
+# COPY ./web/package.json ./ 
 RUN apt-get update && apt-get install -y curl
-# # RUN -it --entrypoint "/bin/bash" ubuntu:20.04
-RUN curl -fsSL https://deb.nodesource.com/setup_17.x | sudo -E bash -
-RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
-RUN echo "deb http://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
+# RUN curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
+# RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
+# RUN echo "deb http://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
 
-RUN apt-get update && apt-get install -y nodejs
+# RUN apt-get update && apt-get install -y nodejs yarn
