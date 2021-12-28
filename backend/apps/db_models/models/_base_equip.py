@@ -26,12 +26,13 @@ class Base_equip(Base_domain):
         null=True,
         verbose_name="Battery Ref.",
     )
+
     # product= models.ForeignKey('dictionaries.type_battery', on_delete=models.CASCADE, blank=True, null=True)
     # type= models.ForeignKey('dictionaries.type_pump', on_delete=models.CASCADE, blank=True, null=True)
     # status= models.ForeignKey('dictionaries.type_status', on_delete=models.CASCADE, blank=True, null=True)
 
     code = models.CharField(
-        db_column="code", max_length=100, blank=True, null=True, verbose_name="Code"
+        db_column=_("code"), max_length=100, blank=True, null=True, verbose_name="Code"
     )
     direct_entry = models.BooleanField(
         db_column=_("direct_entry"), default=False, verbose_name="Manual"

@@ -11,7 +11,6 @@ User = get_user_model()
 def end_datetime():
     return datetime.strptime("01/01/9000 00:00:00", "%d/%m/%Y %H:%M:%S")
 
-
 class Base_domain(models.Model):
     start_datetime = models.DateTimeField(
         db_column=_("start_datetime"),

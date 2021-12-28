@@ -2,7 +2,6 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 from ._base_domain import Base_domain
 
-
 class Battery(Base_domain):
     latitude = models.CharField(
         db_column=_("latitude"),

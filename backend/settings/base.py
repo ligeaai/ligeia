@@ -1,8 +1,7 @@
-"""Django settings for core project."""
-
 import os
-import environ
 import logging
+import environ
+
 from django.utils.translation import gettext_lazy as _
 
 logger = logging.getLogger(__name__)
@@ -54,6 +53,7 @@ THIRD_PARTY_APPS = [
     "health_check.db",  # stock Django health checkers
     "health_check.cache",
     "health_check.storage",
+    "rosetta"
 ]
 
 LOCAL_APPS = [
@@ -86,14 +86,24 @@ ASGI_APPLICATION = "core.asgi.application"
 WSGI_APPLICATION = "core.wsgi.application"
 AUTH_USER_MODEL = "users.User"
 
-LANGUAGE_CODE = "en-us"
-LANGUAGES = [
+TIME_ZONE = 'UTC'
+USE_I18N = True
+USE_L10N = True
+USE_TZ = True
+
+# LANGUAGE_CODE = "en"
+LANGUAGES = (
     ("en", _("English")),
     ("ru", _("Russian")),
-    # ('de', _('German')),
+    ("de", _('German')),
     # ('tr', _('Turkish')),
-]
-LOCALE_PATHS = (os.path.join(BASE_DIR, "locale"),)
+)
+
+# LOCALE_PATHS = [
+#     BASE_DIR / 'locale/',
+# ]
+
+LOCALE_PATHS = [os.path.join(BASE_DIR, "locale/")]
 
 CITIES_LIGHT_TRANSLATION_LANGUAGES = ["en", "ru"]
 CITIES_LIGHT_INCLUDE_COUNTRIES = ["KZ", "CA"]
@@ -101,10 +111,6 @@ CITIES_LIGHT_INCLUDE_COUNTRIES = ["KZ", "CA"]
 MODELTRANSLATION_LANGUAGES = ("en", "ru")
 MODELTRANSLATION_TRANSLATIONS_FILES = "translation"
 
-TIME_ZONE = "UTC"
-USE_I18N = True
-USE_L10N = True
-USE_TZ = True
 
 ACCOUNT_ACTIVATION_DAYS = 7  # days
 
