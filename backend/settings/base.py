@@ -53,7 +53,8 @@ THIRD_PARTY_APPS = [
     "health_check.db",  # stock Django health checkers
     "health_check.cache",
     "health_check.storage",
-    "rosetta"
+    "rosetta",
+    "parler"
 ]
 
 LOCAL_APPS = [
@@ -91,7 +92,7 @@ USE_I18N = True
 USE_L10N = True
 USE_TZ = True
 
-# LANGUAGE_CODE = "en"
+LANGUAGE_CODE = "en"
 LANGUAGES = (
     ("en", _("English")),
     ("ru", _("Russian")),
@@ -99,9 +100,17 @@ LANGUAGES = (
     # ('tr', _('Turkish')),
 )
 
-# LOCALE_PATHS = [
-#     BASE_DIR / 'locale/',
-# ]
+PARLER_LANGUAGES = {
+    None: (
+        {'code': 'en',},
+        {'code': 'ru',},
+        {'code': 'de',},
+    ),
+    'default': {
+        'fallback': 'en',             # defaults to PARLER_DEFAULT_LANGUAGE_CODE
+        'hide_untranslated': False,   # the default; let .active_translations() return fallbacks too.
+    }
+}
 
 LOCALE_PATHS = [os.path.join(BASE_DIR, "locale/")]
 

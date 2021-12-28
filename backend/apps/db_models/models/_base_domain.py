@@ -1,9 +1,10 @@
-from django.db import models
-from django.utils import timezone
 from datetime import datetime
 import uuid
+from django.db import models
+from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth import get_user_model
+from parler.models import TranslatableModel, TranslatedFields
 
 User = get_user_model()
 
@@ -11,38 +12,40 @@ User = get_user_model()
 def end_datetime():
     return datetime.strptime("01/01/9000 00:00:00", "%d/%m/%Y %H:%M:%S")
 
-class Base_domain(models.Model):
-    start_datetime = models.DateTimeField(
-        db_column=_("start_datetime"),
-        default=timezone.now,
-        blank=True,
-        verbose_name="Datetime",
-    )
-    end_datetime = models.DateTimeField(
-        db_column=_("end_datetime"),
-        default=end_datetime,
-        blank=False,
-        verbose_name="End Datetime",
-    )
-    name = models.CharField(
-        db_column=_("name"),
-        max_length=100,
-        blank=False,
-        unique=True,
-        verbose_name="Name",
-    )
-    short_name = models.CharField(
-        db_column=_("short_name"),
-        max_length=100,
-        blank=False,
-        unique=True,
-        verbose_name="Short Name",
-    )
-    active = models.BooleanField(
-        db_column=_("active"), blank=False, default=True, verbose_name="Active"
-    )
-    operated = models.BooleanField(
-        db_column=_("operated"), default=True, verbose_name="Operated"
+class Base_domain(TranslatableModel):
+    translations = TranslatedFields(
+        start_datetime = models.DateTimeField(
+            db_column=_("start_datetime"),
+            default=timezone.now,
+            blank=True,
+            verbose_name="Datetime",
+        ),
+        end_datetime = models.DateTimeField(
+            db_column=_("end_datetime"),
+            default=end_datetime,
+            blank=False,
+            verbose_name="End Datetime",
+        ),
+        name = models.CharField(
+            db_column=_("name"),
+            max_length=100,
+            blank=False,
+            unique=True,
+            verbose_name="Name",
+        ),
+        short_name = models.CharField(
+            db_column=_("short_name"),
+            max_length=100,
+            blank=False,
+            unique=True,
+            verbose_name="Short Name",
+        ),
+        active = models.BooleanField(
+            db_column=_("active"), blank=False, default=True, verbose_name="Active"
+        ),
+        operated = models.BooleanField(
+            db_column=_("operated"), default=True, verbose_name="Operated"
+        ),
     )
     last_updt_user = models.ForeignKey(
         User,

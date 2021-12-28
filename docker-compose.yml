@@ -100,19 +100,19 @@ services:
       - "27017:27017"
     networks:
       - net
-  web:
-    restart: always
-    build:
-      context: .
-      dockerfile: ./docker/local/web/Dockerfile
-      args:
-        NODE_VERSION: 17-bullseye
-    volumes:
-      - .:/django
-    ports:
-      - "3000:3000"
-    networks:
-      - net
+  # web:
+  #   restart: always
+  #   build:
+  #     context: .
+  #     dockerfile: ./docker/local/web/Dockerfile
+  #     args:
+  #       NODE_VERSION: 17-bullseye
+  #   volumes:
+  #     - .:/django
+  #   ports:
+  #     - "3000:3000"
+  #   networks:
+  #     - net
 networks:
   net:
     driver: bridge
