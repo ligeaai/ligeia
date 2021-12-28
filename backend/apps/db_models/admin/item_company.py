@@ -1,11 +1,12 @@
 from django.contrib import admin
 from operator import or_
 from ..models import Company
-from parler.admin import TranslatableAdmin
+from ..translation import *
+from modeltranslation.admin import TabbedTranslationAdmin
 
-
-class CompanyAdminBase(admin.ModelAdmin):
-    model = Company
+class CompanyAdminBase(TabbedTranslationAdmin):
+# class CompanyAdminBase(admin.ModelAdmin):
+    # pass
     list_display = [
         "name",
         "short_name",
@@ -52,19 +53,20 @@ class CompanyAdminBase(admin.ModelAdmin):
         ),
     )
 
-    search_fields = ["name", "short_name", "email"]
-    #  , 'email', 'contact_name', 'country', 'region', 'city']
-    # ordering = ["name", "short_name", "contact_name", "country", "region", "city"]
-    filter_horizontal = ()
-    readonly_fields = [
-        "last_updt_user",
-        "last_updt_date",
-        "row_id",
-        "update_source",
-        "version",
-    ]
-    list_per_page = 250
-    list_max_show_all = 1000
+    # search_fields = ["name", "short_name", "email"]
+    # #  , 'email', 'contact_name', 'country', 'region', 'city']
+    # # ordering = ["name", "short_name", "contact_name", "country", "region", "city"]
+    # filter_horizontal = ()
+    # readonly_fields = [
+    #     "last_updt_user",
+    #     "last_updt_date",
+    #     "row_id",
+    #     "update_source",
+    #     "version",
+    # ]
+    # list_per_page = 250
+    # list_max_show_all = 1000
 
-
-admin.site.register(Company, TranslatableAdmin)
+# admin.site.unregister(Company)
+admin.site.register(Company, CompanyAdminBase)
+# admin.autodiscover()

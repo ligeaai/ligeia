@@ -27,7 +27,6 @@ schema_view = get_schema_view(
     permission_classes=(permissions.AllowAny,),
 )
 
-
 urlpatterns = i18n_patterns (
     path(_("admin/"), admin.site.urls),
     path("health", include("health_check.urls")),

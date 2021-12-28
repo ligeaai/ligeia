@@ -5,62 +5,83 @@ from ._base_domain import Base_domain
 
 class Company(Base_domain):
     company_ref = models.ManyToManyField(
-        "self", blank=True, symmetrical=False, verbose_name="Parent Company"
+        "self", 
+        blank=True, 
+        symmetrical=False, 
+        verbose_name=_("Parent Company")
     )
     country = models.CharField(
-        db_column=_("country"),
+        verbose_name=_("Country"),
         max_length=100,
         blank=True,
-        null=True,
-        verbose_name="Country",
+        null=True
     )
     region = models.CharField(
-        db_column=_("region"), max_length=100, blank=True, null=True, verbose_name="Region"
+        verbose_name=_("Region"),
+        max_length=100, 
+        blank=True, 
+        null=True
     )
     subregion = models.CharField(
-        db_column=_("subregion"),
+        verbose_name=_("Sub-Region"),
         max_length=100,
         blank=True,
-        null=True,
-        verbose_name="Sub-Region",
+        null=True
     )
     city = models.CharField(
-        db_column=_("city"), max_length=100, blank=True, null=True, verbose_name="City"
+        verbose_name=_("City"),
+        max_length=100, 
+        blank=True, 
+        null=True
     )
     contact_name = models.CharField(
-        db_column=_("contact_name"),
+        verbose_name=_("Contact Name"),
         max_length=100,
         blank=True,
-        null=True,
-        verbose_name="Contact Name",
+        null=True
     )
     address = models.CharField(
-        db_column=_("address"),
+        verbose_name=_("Address"),
         max_length=100,
         blank=True,
-        null=True,
-        verbose_name="Address",
+        null=True
     )
     email = models.EmailField(
-        db_column="email", max_length=100, blank=True, null=True, verbose_name="e-mail"
+        verbose_name=_("e-mail"),
+        max_length=100, 
+        blank=True, 
+        null=True
     )
     phone = models.CharField(
-        db_column=_("phone"), max_length=100, blank=True, null=True, verbose_name="Phone"
+        verbose_name=_("Phone"),
+        max_length=100, 
+        blank=True, 
+        null=True    
     )
     operator = models.BooleanField(
-        db_column=_("operator"), blank=True, default=True, verbose_name="Operator"
+        verbose_name=_("Operator"),
+        blank=True, 
+        default=True
     )
     owner = models.BooleanField(
-        db_column=_("owner"), blank=True, default=True, verbose_name="Owner"
+        verbose_name=_("Owner"),
+        blank=True, 
+        default=True
     )
     purchaser = models.BooleanField(
-        db_column=_("purchaser"), blank=True, default=True, verbose_name="Purchaser"
+        verbose_name=_("Purchaser"),
+        blank=True, 
+        default=True
     )
     transporter = models.BooleanField(
-        db_column=_("transporter"), blank=True, default=True, verbose_name="Transporter"
+        verbose_name=_("Transporter"),
+        blank=True, 
+        default=True
     )
     service = models.BooleanField(
-        db_column=_("service"), blank=True, default=False, verbose_name="Service Provider"
+        verbose_name=_("Service Provider"), 
+        blank=True, 
+        default=False
     )
 
     def __unicode__(self):
@@ -84,6 +105,6 @@ class Company(Base_domain):
         return ",".join([str(p) for p in self.company_ref.all()])
 
     class Meta:
-        # ordering = ["name"]
+        ordering = ["name"]
         verbose_name = _("company")
         verbose_name_plural = _("companies")

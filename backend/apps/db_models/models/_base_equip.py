@@ -5,43 +5,38 @@ from ._base_domain import Base_domain
 
 class Base_equip(Base_domain):
     latitude = models.CharField(
-        db_column=_("latitude"),
+        verbose_name=_("Latitude"),
         max_length=100,
         blank=True,
-        null=True,
-        verbose_name="Latitude",
+        null=True        
     )
     longitude = models.CharField(
-        db_column=_("longitude"),
+        verbose_name=_("Longitude"),
         max_length=100,
         blank=True,
-        null=True,
-        verbose_name="Longitude",
+        null=True
     )
-
     battery_ref = models.ForeignKey(
         "battery",
         on_delete=models.CASCADE,
         blank=True,
         null=True,
-        verbose_name="Battery Ref.",
+        verbose_name=_("Battery Ref.")
     )
-
-    # product= models.ForeignKey('dictionaries.type_battery', on_delete=models.CASCADE, blank=True, null=True)
-    # type= models.ForeignKey('dictionaries.type_pump', on_delete=models.CASCADE, blank=True, null=True)
-    # status= models.ForeignKey('dictionaries.type_status', on_delete=models.CASCADE, blank=True, null=True)
-
-    code = models.CharField(db_column=_("code"),
-                            max_length=100,
-                            blank=True,
-                            null=True,
-                            verbose_name="Code")
-    direct_entry = models.BooleanField(db_column=_("direct_entry"),
-                                       default=False,
-                                       verbose_name="Manual")
-    scada = models.BooleanField(db_column="SCADA",
-                                default=True,
-                                verbose_name="SCADA")
+    code = models.CharField(
+        verbose_name=_("Code"),
+        max_length=100,
+        blank=True,
+        null=True        
+    )
+    direct_entry = models.BooleanField(
+        verbose_name=_("Direct Entry"),
+        default=False,        
+    )
+    scada = models.BooleanField(
+        verbose_name=_("SCADA"),
+        default=True,        
+    )
 
     def __str__(self):
         if self.name:
@@ -61,8 +56,7 @@ class Base_equip(Base_domain):
         elif self.registry_id:
             return self.registry_id
 
-    class Meta:
-        # asbtract = True
-        # ordering = ["name"]
+    class Meta:        
+        ordering = ["name"]
         verbose_name = _("base_equip")
         verbose_name_plural = _("base_equips")

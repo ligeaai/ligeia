@@ -4,7 +4,7 @@ from ._base_equip import Base_equip
 
 
 class Pump(Base_equip):
-    METRIC_SYSTEM = (('IMPERIAL', 'Imperial'), ('METRIC', 'Metric'))
+    METRIC_SYSTEM = [('IMPERIAL', 'Imperial'), ('METRIC', 'Metric')]
 
     metric_system = models.CharField(db_column='metric_system',
                                      max_length=100,

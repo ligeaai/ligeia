@@ -4,62 +4,70 @@ from ._base_domain import Base_domain
 
 class Battery(Base_domain):
     latitude = models.CharField(
-        db_column=_("latitude"),
+        verbose_name=_("Latitude"),
         max_length=100,
         blank=True,
-        null=True,
-        verbose_name="Latitude",
+        null=True
     )
     longitude = models.CharField(
-        db_column=_("longitude"),
+        verbose_name=_("Longitude"),
         max_length=100,
         blank=True,
-        null=True,
-        verbose_name="Longitude",
+        null=True
     )
-
     type = models.CharField(
-        db_column=_("type"), max_length=100, blank=True, null=True, verbose_name="Type"
+        verbose_name=_("Type"),
+        max_length=100,
+        blank=True, 
+        null=True
     )
     product = models.CharField(
-        db_column=_("product"),
+        verbose_name=_("Product"),
         max_length=100,
         blank=True,
-        null=True,
-        verbose_name="Product",
+        null=True   
     )
     day_start = models.DateTimeField(
-        auto_now_add=False, blank=True, null=True, verbose_name="Prod. Start"
+        verbose_name=_("Prod. Start"),
+        auto_now_add=False, 
+        blank=True, 
+        null=True,         
     )
-
     company_ref = models.ForeignKey(
         "company",
         on_delete=models.CASCADE,
         null=True,
         blank=True,
-        verbose_name="Company Ref.",
+        verbose_name=_("Company Ref.")
     )
     battery_ref = models.ForeignKey(
         "battery",
         on_delete=models.CASCADE,
         blank=True,
         null=True,
-        verbose_name="Battery Ref.",
+        verbose_name=_("Battery Ref.")
     )
     field_ref = models.ForeignKey(
         "field",
         on_delete=models.CASCADE,
         blank=True,
         null=True,
-        verbose_name="Field Ref.",
+        verbose_name=_("Field Ref.")
     )
     code = models.CharField(
-        db_column=_("code"), max_length=100, blank=True, null=True, verbose_name="Code"
+        verbose_name=_("Code"),
+        max_length=100, 
+        blank=True, 
+        null=True,         
     )
     direct_entry = models.BooleanField(
-        db_column=_("direct_entry"), default=False, verbose_name="Manual"
+        verbose_name=_("Direct Entry"),
+        default=False,         
     )
-    scada = models.BooleanField(db_column="SCADA", default=True, verbose_name="SCADA")
+    scada = models.BooleanField(
+        verbose_name=_("SCADA"),
+        default=True,         
+    )
 
     def __str__(self):
         if self.name:
@@ -76,6 +84,6 @@ class Battery(Base_domain):
             return self.registry_id
 
     class Meta:
-        # ordering = ["name"]
+        ordering = ["name"]
         verbose_name = _("battery")
         verbose_name_plural = _("batteries")

@@ -65,7 +65,7 @@ LOCAL_APPS = [
     "apps.config",
 ]
 
-INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
+INSTALLED_APPS = THIRD_PARTY_APPS + DJANGO_APPS + LOCAL_APPS
 
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
@@ -104,10 +104,10 @@ LOCALE_PATHS = [os.path.join(BASE_DIR, "locale/")]
 CITIES_LIGHT_TRANSLATION_LANGUAGES = ["en", "ru"]
 CITIES_LIGHT_INCLUDE_COUNTRIES = ["KZ", "CA"]
 
-# MODELTRANSLATION_DEFAULT_LANGUAGE = "en"
-# MODELTRANSLATION_TRANSLATIONS_FILES = (
-#     "apps.db_models.translation",
-# )
+MODELTRANSLATION_DEFAULT_LANGUAGE = "en"
+# # MODELTRANSLATION_TRANSLATIONS_FILES = (
+# #     "apps.db_models.translation",
+# # )
 
 ACCOUNT_ACTIVATION_DAYS = 7  # days
 

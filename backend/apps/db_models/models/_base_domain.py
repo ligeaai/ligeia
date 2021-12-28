@@ -14,107 +14,96 @@ def end_datetime():
 
 
 class Base_domain(models.Model):
+    CREATE_SOURCE = [('DJANGO', 'django'), ('WEB', 'web')]
+    
     start_datetime = models.DateTimeField(
-        db_column=_("start_datetime"),
+        verbose_name=_("Start Datetime"),
         default=timezone.now,
-        blank=True,
-        verbose_name="Datetime",
+        blank=True
     )
     end_datetime = models.DateTimeField(
-        db_column=_("end_datetime"),
+        verbose_name=_("End Datetime"),
         default=end_datetime,
-        blank=False,
-        verbose_name="End Datetime",
+        blank=False
     )
     name = models.CharField(
-        db_column=_("name"),
+        verbose_name=_("Name"),
         max_length=100,
         blank=False,
-        unique=True,
-        verbose_name="Name",
+        unique=True
     )
     short_name = models.CharField(
-        db_column=_("short_name"),
+        verbose_name=_("Short Name"),
         max_length=100,
         blank=False,
-        unique=True,
-        verbose_name="Short Name",
+        unique=True
     )
-    active = models.BooleanField(db_column=_("active"),
-                                 blank=False,
-                                 default=True,
-                                 verbose_name="Active")
-    operated = models.BooleanField(db_column=_("operated"),
-                                   default=True,
-                                   verbose_name="Operated")
+    active = models.BooleanField(
+        verbose_name=_("Active"),
+        blank=False,
+        default=True
+    )
+    operated = models.BooleanField(
+        verbose_name=_("Operated"), 
+        default=True
+    )
     last_updt_user = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
         blank=True,
-        editable=True,
         null=True,
-        verbose_name="Last Update User",
+        verbose_name=_("Last Update User"),
     )
     last_updt_date = models.DateTimeField(
+        verbose_name=_("Last Update Date"),
         auto_now=True,
-        blank=True,
-        editable=True,
-        null=True,
-        verbose_name="Last Update Date",
+        blank=True,        
+        null=True        
     )
     row_id = models.UUIDField(
-        db_column="row_id",
+        verbose_name=_("Row ID"),
         primary_key=False,
         default=uuid.uuid4,
         editable=False,
-        null=True,
-        verbose_name="Row ID",
+        null=True        
     )
     create_source = models.CharField(
-        db_column="create_source",
+        verbose_name=_("Create Source"),
         default="DJANGO",
         max_length=100,
-        blank=True,
-        editable=True,
+        blank=True,        
         null=True,
-        verbose_name="Create Source",
+        choices=CREATE_SOURCE 
     )
     update_source = models.CharField(
-        db_column="update_source",
+        verbose_name=_("Update Source"),
         max_length=100,
         blank=True,
-        editable=True,
-        null=True,
-        verbose_name="Update Source",
+        null=True,        
     )
     version = models.CharField(
-        db_column="version",
+        verbose_name=_("Version"),
         max_length=100,
         blank=True,
-        editable=True,
-        null=True,
-        verbose_name="Version",
+        null=True
     )
     accounting_id = models.CharField(
-        db_column="accounting_id",
+        verbose_name=_("Accounting ID"),
         max_length=100,
         blank=True,
-        null=True,
-        verbose_name="Accounting ID",
+        null=True
     )
     serial_id = models.CharField(
-        db_column="serial_id",
+        verbose_name=_("Serial ID"),
         max_length=100,
         blank=True,
-        null=True,
-        verbose_name="Serial ID",
+        null=True
     )
     registry_id = models.CharField(
-        db_column="registry_id",
+        verbose_name=_("Registry ID"),
         max_length=100,
         blank=True,
-        null=True,
-        verbose_name="Registry ID",
+        null=True
     )
 
     def __str__(self):

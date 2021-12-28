@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-12-28 03:46+0000\n"
+"POT-Creation-Date: 2021-12-28 16:58+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: apps/config/models.py:6 apps/db_models/models/_base_domain.py:28
+#: apps/config/models.py:6
 msgid "name"
 msgstr ""
 
@@ -67,139 +67,230 @@ msgstr ""
 msgid "uom_sets"
 msgstr ""
 
-#: apps/db_models/models/_base_domain.py:16
-msgid "start_datetime"
+#: apps/db_models/models/_base_domain.py:20
+msgid "Start Datetime"
 msgstr ""
 
-#: apps/db_models/models/_base_domain.py:22
-msgid "end_datetime"
+#: apps/db_models/models/_base_domain.py:25
+msgid "End Datetime"
 msgstr ""
 
-#: apps/db_models/models/_base_domain.py:35
-msgid "short_name"
+#: apps/db_models/models/_base_domain.py:30
+msgid "Name"
 msgstr ""
 
-#: apps/db_models/models/_base_domain.py:42 apps/users/models.py:84
-msgid "active"
+#: apps/db_models/models/_base_domain.py:36
+msgid "Short Name"
 msgstr ""
 
-#: apps/db_models/models/_base_domain.py:45
-msgid "operated"
+#: apps/db_models/models/_base_domain.py:42
+msgid "Active"
 msgstr ""
 
-#: apps/db_models/models/_base_domain.py:123
+#: apps/db_models/models/_base_domain.py:47
+msgid "Operated"
+msgstr ""
+
+#: apps/db_models/models/_base_domain.py:55
+msgid "Last Update User"
+msgstr ""
+
+#: apps/db_models/models/_base_domain.py:58
+msgid "Last Update Date"
+msgstr ""
+
+#: apps/db_models/models/_base_domain.py:64
+msgid "Row ID"
+msgstr ""
+
+#: apps/db_models/models/_base_domain.py:71
+msgid "Create Source"
+msgstr ""
+
+#: apps/db_models/models/_base_domain.py:79
+msgid "Update Source"
+msgstr ""
+
+#: apps/db_models/models/_base_domain.py:85
+msgid "Version"
+msgstr ""
+
+#: apps/db_models/models/_base_domain.py:91
+msgid "Accounting ID"
+msgstr ""
+
+#: apps/db_models/models/_base_domain.py:97
+msgid "Serial ID"
+msgstr ""
+
+#: apps/db_models/models/_base_domain.py:103
+msgid "Registry ID"
+msgstr ""
+
+#: apps/db_models/models/_base_domain.py:115
 msgid "base_domain"
 msgstr ""
 
-#: apps/db_models/models/_base_domain.py:124
+#: apps/db_models/models/_base_domain.py:116
 msgid "base_domains"
 msgstr ""
 
 #: apps/db_models/models/_base_equip.py:8
 #: apps/db_models/models/_item_battery.py:7
-#: apps/db_models/models/_item_field.py:8
-msgid "latitude"
+msgid "Latitude"
 msgstr ""
 
-#: apps/db_models/models/_base_equip.py:15
-#: apps/db_models/models/_item_battery.py:14
-#: apps/db_models/models/_item_field.py:15
-msgid "longitude"
+#: apps/db_models/models/_base_equip.py:14
+#: apps/db_models/models/_item_battery.py:13
+msgid "Longitude"
 msgstr ""
 
-#: apps/db_models/models/_base_equip.py:35
-#: apps/db_models/models/_item_battery.py:57
-msgid "code"
+#: apps/db_models/models/_base_equip.py:24
+#: apps/db_models/models/_item_battery.py:48
+msgid "Battery Ref."
 msgstr ""
 
-#: apps/db_models/models/_base_equip.py:38
-#: apps/db_models/models/_item_battery.py:60
-msgid "direct_entry"
+#: apps/db_models/models/_base_equip.py:27
+#: apps/db_models/models/_item_battery.py:58
+msgid "Code"
 msgstr ""
 
-#: apps/db_models/models/_base_equip.py:63
+#: apps/db_models/models/_base_equip.py:33
+#: apps/db_models/models/_item_battery.py:64
+msgid "Direct Entry"
+msgstr ""
+
+#: apps/db_models/models/_base_equip.py:37
+#: apps/db_models/models/_item_battery.py:68
+msgid "SCADA"
+msgstr ""
+
+#: apps/db_models/models/_base_equip.py:61
 msgid "base_equip"
 msgstr ""
 
-#: apps/db_models/models/_base_equip.py:64
+#: apps/db_models/models/_base_equip.py:62
 msgid "base_equips"
 msgstr ""
 
-#: apps/db_models/models/_item_battery.py:22
-msgid "type"
+#: apps/db_models/models/_item_battery.py:19
+msgid "Type"
 msgstr ""
 
 #: apps/db_models/models/_item_battery.py:25
-#: apps/db_models/models/_item_field.py:23
-msgid "product"
+msgid "Product"
 msgstr ""
 
-#: apps/db_models/models/_item_battery.py:80
+#: apps/db_models/models/_item_battery.py:31
+msgid "Prod. Start"
+msgstr ""
+
+#: apps/db_models/models/_item_battery.py:41
+msgid "Company Ref."
+msgstr ""
+
+#: apps/db_models/models/_item_battery.py:55
+msgid "Field Ref."
+msgstr ""
+
+#: apps/db_models/models/_item_battery.py:88
 msgid "battery"
 msgstr ""
 
-#: apps/db_models/models/_item_battery.py:81
+#: apps/db_models/models/_item_battery.py:89
 msgid "batteries"
 msgstr ""
 
 #: apps/db_models/models/_item_company.py:11
+msgid "Parent Company"
+msgstr ""
+
+#: apps/db_models/models/_item_company.py:14
+msgid "Country"
+msgstr ""
+
+#: apps/db_models/models/_item_company.py:20
+msgid "Region"
+msgstr ""
+
+#: apps/db_models/models/_item_company.py:26
+msgid "Sub-Region"
+msgstr ""
+
+#: apps/db_models/models/_item_company.py:32
+msgid "City"
+msgstr ""
+
+#: apps/db_models/models/_item_company.py:38
+msgid "Contact Name"
+msgstr ""
+
+#: apps/db_models/models/_item_company.py:44
+msgid "Address"
+msgstr ""
+
+#: apps/db_models/models/_item_company.py:50
+msgid "e-mail"
+msgstr ""
+
+#: apps/db_models/models/_item_company.py:56
+msgid "Phone"
+msgstr ""
+
+#: apps/db_models/models/_item_company.py:62
+msgid "Operator"
+msgstr ""
+
+#: apps/db_models/models/_item_company.py:67
+msgid "Owner"
+msgstr ""
+
+#: apps/db_models/models/_item_company.py:72
+msgid "Purchaser"
+msgstr ""
+
+#: apps/db_models/models/_item_company.py:77
+msgid "Transporter"
+msgstr ""
+
+#: apps/db_models/models/_item_company.py:82
+msgid "Service Provider"
+msgstr ""
+
+#: apps/db_models/models/_item_company.py:109
+msgid "company"
+msgstr ""
+
+#: apps/db_models/models/_item_company.py:110
+msgid "companies"
+msgstr ""
+
+#: apps/db_models/models/_item_field.py:8
+msgid "latitude"
+msgstr ""
+
+#: apps/db_models/models/_item_field.py:15
+msgid "longitude"
+msgstr ""
+
+#: apps/db_models/models/_item_field.py:23
+msgid "product"
+msgstr ""
+
 #: apps/db_models/models/_item_field.py:30
 msgid "country"
 msgstr ""
 
-#: apps/db_models/models/_item_company.py:18
 #: apps/db_models/models/_item_field.py:37
 msgid "region"
 msgstr ""
 
-#: apps/db_models/models/_item_company.py:21
 #: apps/db_models/models/_item_field.py:44
 msgid "subregion"
 msgstr ""
 
-#: apps/db_models/models/_item_company.py:28
 #: apps/db_models/models/_item_field.py:51
 msgid "city"
-msgstr ""
-
-#: apps/db_models/models/_item_company.py:31
-msgid "contact_name"
-msgstr ""
-
-#: apps/db_models/models/_item_company.py:38
-msgid "address"
-msgstr ""
-
-#: apps/db_models/models/_item_company.py:48
-msgid "phone"
-msgstr ""
-
-#: apps/db_models/models/_item_company.py:51
-msgid "operator"
-msgstr ""
-
-#: apps/db_models/models/_item_company.py:54
-msgid "owner"
-msgstr ""
-
-#: apps/db_models/models/_item_company.py:57
-msgid "purchaser"
-msgstr ""
-
-#: apps/db_models/models/_item_company.py:60
-msgid "transporter"
-msgstr ""
-
-#: apps/db_models/models/_item_company.py:63
-msgid "service"
-msgstr ""
-
-#: apps/db_models/models/_item_company.py:88
-msgid "company"
-msgstr ""
-
-#: apps/db_models/models/_item_company.py:89
-msgid "companies"
 msgstr ""
 
 #: apps/db_models/models/_item_field.py:76
@@ -210,11 +301,11 @@ msgstr ""
 msgid "fields"
 msgstr ""
 
-#: apps/db_models/models/_item_pump.py:31
+#: apps/db_models/models/_item_pump.py:43
 msgid "pump"
 msgstr ""
 
-#: apps/db_models/models/_item_pump.py:32
+#: apps/db_models/models/_item_pump.py:44
 msgid "pumps"
 msgstr ""
 
@@ -248,6 +339,10 @@ msgstr ""
 
 #: apps/users/models.py:83
 msgid "superuser status"
+msgstr ""
+
+#: apps/users/models.py:84
+msgid "active"
 msgstr ""
 
 #: apps/users/models.py:85
@@ -324,6 +419,22 @@ msgstr ""
 
 #: apps/users/urls.py:21
 msgid "^user-details/([0-9])$"
+msgstr ""
+
+#: core/urls.py:31
+msgid "admin/"
+msgstr ""
+
+#: core/urls.py:46
+msgid "Ligeia Administration"
+msgstr ""
+
+#: core/urls.py:47
+msgid "Ligeia"
+msgstr ""
+
+#: core/urls.py:48
+msgid "Welcome to Ligeia"
 msgstr ""
 
 #: settings/base.py:96
