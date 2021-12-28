@@ -31,13 +31,17 @@ class Base_equip(Base_domain):
     # type= models.ForeignKey('dictionaries.type_pump', on_delete=models.CASCADE, blank=True, null=True)
     # status= models.ForeignKey('dictionaries.type_status', on_delete=models.CASCADE, blank=True, null=True)
 
-    code = models.CharField(
-        db_column=_("code"), max_length=100, blank=True, null=True, verbose_name="Code"
-    )
-    direct_entry = models.BooleanField(
-        db_column=_("direct_entry"), default=False, verbose_name="Manual"
-    )
-    scada = models.BooleanField(db_column="SCADA", default=True, verbose_name="SCADA")
+    code = models.CharField(db_column=_("code"),
+                            max_length=100,
+                            blank=True,
+                            null=True,
+                            verbose_name="Code")
+    direct_entry = models.BooleanField(db_column=_("direct_entry"),
+                                       default=False,
+                                       verbose_name="Manual")
+    scada = models.BooleanField(db_column="SCADA",
+                                default=True,
+                                verbose_name="SCADA")
 
     def __str__(self):
         if self.name:
@@ -59,6 +63,6 @@ class Base_equip(Base_domain):
 
     class Meta:
         # asbtract = True
-        ordering = ["name"]
+        # ordering = ["name"]
         verbose_name = _("base_equip")
         verbose_name_plural = _("base_equips")

@@ -60,7 +60,7 @@ class BatteryAdminBase(admin.ModelAdmin):
     )
 
     search_fields = ["name", "short_name"]
-    ordering = ["name", "type"]
+    # ordering = ["name", "type"]
     filter_horizontal = ()
     readonly_fields = [
         "last_updt_user",

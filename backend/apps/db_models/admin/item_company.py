@@ -1,6 +1,7 @@
 from django.contrib import admin
 from operator import or_
 from ..models import Company
+from parler.admin import TranslatableAdmin
 
 
 class CompanyAdminBase(admin.ModelAdmin):
@@ -15,7 +16,7 @@ class CompanyAdminBase(admin.ModelAdmin):
         "city",
     ]
     list_display_links = ["name", "short_name"]
-    list_filter = ["name", "country", "region"]
+    list_filter = ["country", "region"]
 
     fieldsets = (
         (
@@ -53,7 +54,7 @@ class CompanyAdminBase(admin.ModelAdmin):
 
     search_fields = ["name", "short_name", "email"]
     #  , 'email', 'contact_name', 'country', 'region', 'city']
-    ordering = ["name", "short_name", "contact_name", "country", "region", "city"]
+    # ordering = ["name", "short_name", "contact_name", "country", "region", "city"]
     filter_horizontal = ()
     readonly_fields = [
         "last_updt_user",
@@ -66,4 +67,4 @@ class CompanyAdminBase(admin.ModelAdmin):
     list_max_show_all = 1000
 
 
-admin.site.register(Company, CompanyAdminBase)
+admin.site.register(Company, TranslatableAdmin)

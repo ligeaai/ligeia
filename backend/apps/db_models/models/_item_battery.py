@@ -76,6 +76,6 @@ class Battery(Base_domain):
             return self.registry_id
 
     class Meta:
-        ordering = ["name"]
+        # ordering = ["name"]
         verbose_name = _("battery")
         verbose_name_plural = _("batteries")

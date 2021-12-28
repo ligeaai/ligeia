@@ -84,6 +84,6 @@ class Company(Base_domain):
         return ",".join([str(p) for p in self.company_ref.all()])
 
     class Meta:
-        ordering = ["name"]
+        # ordering = ["name"]
         verbose_name = _("company")
         verbose_name_plural = _("companies")

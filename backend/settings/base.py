@@ -9,8 +9,7 @@ logger = logging.getLogger(__name__)
 env = environ.Env(DEBUG=(bool, False))
 
 BASE_DIR = os.path.join(
-    os.path.dirname(os.path.dirname(os.path.dirname(__file__))), "backend/"
-)
+    os.path.dirname(os.path.dirname(os.path.dirname(__file__))), "backend/")
 
 environ.Env.read_env(os.path.join(BASE_DIR, "../.env"))
 
@@ -54,7 +53,7 @@ THIRD_PARTY_APPS = [
     "health_check.cache",
     "health_check.storage",
     "rosetta",
-    "parler"
+    "modeltranslation",
 ]
 
 LOCAL_APPS = [
@@ -100,26 +99,15 @@ LANGUAGES = (
     # ('tr', _('Turkish')),
 )
 
-PARLER_LANGUAGES = {
-    None: (
-        {'code': 'en',},
-        {'code': 'ru',},
-        {'code': 'de',},
-    ),
-    'default': {
-        'fallback': 'en',             # defaults to PARLER_DEFAULT_LANGUAGE_CODE
-        'hide_untranslated': False,   # the default; let .active_translations() return fallbacks too.
-    }
-}
-
 LOCALE_PATHS = [os.path.join(BASE_DIR, "locale/")]
 
 CITIES_LIGHT_TRANSLATION_LANGUAGES = ["en", "ru"]
 CITIES_LIGHT_INCLUDE_COUNTRIES = ["KZ", "CA"]
 
-MODELTRANSLATION_LANGUAGES = ("en", "ru")
-MODELTRANSLATION_TRANSLATIONS_FILES = "translation"
-
+# MODELTRANSLATION_DEFAULT_LANGUAGE = "en"
+# MODELTRANSLATION_TRANSLATIONS_FILES = (
+#     "apps.db_models.translation",
+# )
 
 ACCOUNT_ACTIVATION_DAYS = 7  # days
 
@@ -151,14 +139,14 @@ TEMPLATES = [
     },
 ]
 
-
 # store static files locally and serve with whitenoise
 # STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # ############# REST FRAMEWORK ###################
 
 REST_FRAMEWORK = {
-    "DEFAULT_FILTER_BACKENDS": ["django_filters.rest_framework.DjangoFilterBackend"],
+    "DEFAULT_FILTER_BACKENDS":
+    ["django_filters.rest_framework.DjangoFilterBackend"],
     "DEFAULT_PERMISSION_CLASSES": [
         "rest_framework.permissions.IsAuthenticated",
     ],
@@ -167,8 +155,10 @@ REST_FRAMEWORK = {
         "rest_framework.authentication.SessionAuthentication",
         # 'rest_framework.authentication.BasicAuthentication',
     ),
-    "DEFAULT_PAGINATION_CLASS": ("rest_framework.pagination.PageNumberPagination"),
-    "PAGE_SIZE": 20,
+    "DEFAULT_PAGINATION_CLASS":
+    ("rest_framework.pagination.PageNumberPagination"),
+    "PAGE_SIZE":
+    20,
     "DEFAULT_PARSER_CLASSES": (
         "rest_framework.parsers.JSONParser",
         "rest_framework.parsers.FormParser",
@@ -207,14 +197,16 @@ LOGGING = {
     },
     "formatters": {
         "verbose": {
-            "format": "%(levelname)s %(asctime)s %(module)s "
+            "format":
+            "%(levelname)s %(asctime)s %(module)s "
             "%(process)d %(thread)d %(message)s"
         },
     },
     "handlers": {
         "sentry": {
             "level": "ERROR",
-            "class": ("raven.contrib.django.raven_compat.handlers.SentryHandler"),
+            "class":
+            ("raven.contrib.django.raven_compat.handlers.SentryHandler"),
         },
         "console": {
             "level": "DEBUG",

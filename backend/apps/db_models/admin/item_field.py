@@ -58,7 +58,7 @@ class FieldAdminBase(admin.ModelAdmin):
     )
 
     search_fields = ["name", "short_name"]
-    ordering = ["name", "short_name", "country", "region", "city"]
+    # ordering = ["name", "short_name", "country", "region", "city"]
     filter_horizontal = ()
     readonly_fields = [
         "last_updt_user",

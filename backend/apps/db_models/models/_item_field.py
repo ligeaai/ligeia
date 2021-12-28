@@ -72,6 +72,6 @@ class Field(Base_domain):
     #     return ",".join([str(p) for p in self.parent.all()])
 
     class Meta:
-        ordering = ["name"]
+        #ordering = ["name"]
         verbose_name = _("field")
         verbose_name_plural = _("fields")
