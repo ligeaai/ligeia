@@ -77,9 +77,11 @@ class Base_domain(models.Model):
     )
     update_source = models.CharField(
         verbose_name=_("Update Source"),
+        default="DJANGO",
         max_length=100,
-        blank=True,
-        null=True,        
+        blank=True,        
+        null=True,
+        choices=CREATE_SOURCE       
     )
     version = models.CharField(
         verbose_name=_("Version"),

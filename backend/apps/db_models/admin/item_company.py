@@ -3,10 +3,10 @@ from operator import or_
 from ..models import Company
 from ..translation import *
 from modeltranslation.admin import TabbedTranslationAdmin
+from django.utils.translation import gettext_lazy as _
 
 class CompanyAdminBase(TabbedTranslationAdmin):
-# class CompanyAdminBase(admin.ModelAdmin):
-    # pass
+
     list_display = [
         "name",
         "short_name",
@@ -20,8 +20,7 @@ class CompanyAdminBase(TabbedTranslationAdmin):
     list_filter = ["country", "region"]
 
     fieldsets = (
-        (
-            "Defaults",
+        (_("Defaults"),
             {
                 "fields": (
                     ("start_datetime", "end_datetime"),
@@ -31,15 +30,11 @@ class CompanyAdminBase(TabbedTranslationAdmin):
                 )
             },
         ),
-        ("Location", {"fields": ("country", "region", "subregion", "city")}),
-        ("Contact", {"fields": ("contact_name", "address", "email")}),
-        (
-            "Type",
-            {"fields": ("operator", "owner", "purchaser", "transporter", "service")},
-        ),
-        ("Reference", {"fields": ("accounting_id", "serial_id", "registry_id")}),
-        (
-            "Other",
+        (_("Location"), {"fields": ("country", "region", "subregion", "city")}),
+        (_("Contact"), {"fields": ("contact_name", "address", "email")}),
+        (_("Type"), {"fields": ("operator", "owner", "purchaser", "transporter", "service")}),
+        (_("Reference"), {"fields": ("accounting_id", "serial_id", "registry_id")}),
+        (_("Other"),
             {
                 "classes": ("collapse",),
                 "fields": (
@@ -53,20 +48,18 @@ class CompanyAdminBase(TabbedTranslationAdmin):
         ),
     )
 
-    # search_fields = ["name", "short_name", "email"]
-    # #  , 'email', 'contact_name', 'country', 'region', 'city']
-    # # ordering = ["name", "short_name", "contact_name", "country", "region", "city"]
-    # filter_horizontal = ()
-    # readonly_fields = [
-    #     "last_updt_user",
-    #     "last_updt_date",
-    #     "row_id",
-    #     "update_source",
-    #     "version",
-    # ]
-    # list_per_page = 250
-    # list_max_show_all = 1000
+    search_fields = ["name", "short_name", "email"]
+    #  , 'email', 'contact_name', 'country', 'region', 'city']
+    ordering = ["name", "short_name", "contact_name", "country", "region", "city"]
+    filter_horizontal = ()
+    readonly_fields = [
+        "last_updt_user",
+        "last_updt_date",
+        "row_id",
+        "update_source",
+        "version",
+    ]
+    list_per_page = 250
+    list_max_show_all = 1000
 
-# admin.site.unregister(Company)
 admin.site.register(Company, CompanyAdminBase)
-# admin.autodiscover()

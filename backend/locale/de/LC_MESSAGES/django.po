@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-12-28 16:58+0000\n"
+"POT-Creation-Date: 2021-12-28 18:11+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -67,6 +67,31 @@ msgstr ""
 msgid "uom_sets"
 msgstr ""
 
+#: apps/db_models/admin/item_company.py:23
+msgid "Defaults"
+msgstr ""
+
+#: apps/db_models/admin/item_company.py:33
+msgid "Location"
+msgstr ""
+
+#: apps/db_models/admin/item_company.py:34
+msgid "Contact"
+msgstr ""
+
+#: apps/db_models/admin/item_company.py:35
+#: apps/db_models/models/_item_battery.py:19
+msgid "Type"
+msgstr ""
+
+#: apps/db_models/admin/item_company.py:36
+msgid "Reference"
+msgstr ""
+
+#: apps/db_models/admin/item_company.py:37
+msgid "Other"
+msgstr ""
+
 #: apps/db_models/models/_base_domain.py:20
 msgid "Start Datetime"
 msgstr ""
@@ -111,27 +136,27 @@ msgstr ""
 msgid "Update Source"
 msgstr ""
 
-#: apps/db_models/models/_base_domain.py:85
+#: apps/db_models/models/_base_domain.py:87
 msgid "Version"
 msgstr ""
 
-#: apps/db_models/models/_base_domain.py:91
+#: apps/db_models/models/_base_domain.py:93
 msgid "Accounting ID"
 msgstr ""
 
-#: apps/db_models/models/_base_domain.py:97
+#: apps/db_models/models/_base_domain.py:99
 msgid "Serial ID"
 msgstr ""
 
-#: apps/db_models/models/_base_domain.py:103
+#: apps/db_models/models/_base_domain.py:105
 msgid "Registry ID"
 msgstr ""
 
-#: apps/db_models/models/_base_domain.py:115
+#: apps/db_models/models/_base_domain.py:117
 msgid "base_domain"
 msgstr ""
 
-#: apps/db_models/models/_base_domain.py:116
+#: apps/db_models/models/_base_domain.py:118
 msgid "base_domains"
 msgstr ""
 
@@ -171,10 +196,6 @@ msgstr ""
 
 #: apps/db_models/models/_base_equip.py:62
 msgid "base_equips"
-msgstr ""
-
-#: apps/db_models/models/_item_battery.py:19
-msgid "Type"
 msgstr ""
 
 #: apps/db_models/models/_item_battery.py:25

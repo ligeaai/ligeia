@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-12-28 16:58+0000\n"
-"PO-Revision-Date: 2021-12-28 17:00+0000\n"
+"POT-Creation-Date: 2021-12-28 18:11+0000\n"
+"PO-Revision-Date: 2021-12-28 18:15+0000\n"
 "Last-Translator: admin admin <admin@admin.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -68,6 +68,33 @@ msgstr ""
 msgid "uom_sets"
 msgstr ""
 
+#: apps/db_models/admin/item_company.py:23
+msgid "Defaults"
+msgstr ""
+
+#: apps/db_models/admin/item_company.py:33
+msgid "Location"
+msgstr ""
+
+#: apps/db_models/admin/item_company.py:34
+#, fuzzy
+#| msgid "Contact Name"
+msgid "Contact"
+msgstr "Контактные данные"
+
+#: apps/db_models/admin/item_company.py:35
+#: apps/db_models/models/_item_battery.py:19
+msgid "Type"
+msgstr ""
+
+#: apps/db_models/admin/item_company.py:36
+msgid "Reference"
+msgstr ""
+
+#: apps/db_models/admin/item_company.py:37
+msgid "Other"
+msgstr ""
+
 #: apps/db_models/models/_base_domain.py:20
 msgid "Start Datetime"
 msgstr "Стартовая дата"
@@ -112,27 +139,27 @@ msgstr ""
 msgid "Update Source"
 msgstr ""
 
-#: apps/db_models/models/_base_domain.py:85
+#: apps/db_models/models/_base_domain.py:87
 msgid "Version"
 msgstr ""
 
-#: apps/db_models/models/_base_domain.py:91
+#: apps/db_models/models/_base_domain.py:93
 msgid "Accounting ID"
 msgstr ""
 
-#: apps/db_models/models/_base_domain.py:97
+#: apps/db_models/models/_base_domain.py:99
 msgid "Serial ID"
 msgstr ""
 
-#: apps/db_models/models/_base_domain.py:103
+#: apps/db_models/models/_base_domain.py:105
 msgid "Registry ID"
 msgstr ""
 
-#: apps/db_models/models/_base_domain.py:115
+#: apps/db_models/models/_base_domain.py:117
 msgid "base_domain"
 msgstr ""
 
-#: apps/db_models/models/_base_domain.py:116
+#: apps/db_models/models/_base_domain.py:118
 msgid "base_domains"
 msgstr ""
 
@@ -174,10 +201,6 @@ msgstr ""
 msgid "base_equips"
 msgstr ""
 
-#: apps/db_models/models/_item_battery.py:19
-msgid "Type"
-msgstr ""
-
 #: apps/db_models/models/_item_battery.py:25
 msgid "Product"
 msgstr ""
@@ -196,15 +219,15 @@ msgstr ""
 
 #: apps/db_models/models/_item_battery.py:88
 msgid "battery"
-msgstr ""
+msgstr "Объект"
 
 #: apps/db_models/models/_item_battery.py:89
 msgid "batteries"
-msgstr ""
+msgstr "Объекты"
 
 #: apps/db_models/models/_item_company.py:11
 msgid "Parent Company"
-msgstr ""
+msgstr "Материнская компания"
 
 #: apps/db_models/models/_item_company.py:14
 msgid "Country"
@@ -212,18 +235,17 @@ msgstr "Страна"
 
 #: apps/db_models/models/_item_company.py:20
 msgid "Region"
-msgstr "Регион"
+msgstr "Область"
 
 #: apps/db_models/models/_item_company.py:26
 msgid "Sub-Region"
-msgstr "Область"
+msgstr "Регион"
 
 #: apps/db_models/models/_item_company.py:32
 msgid "City"
 msgstr "Город"
 
 #: apps/db_models/models/_item_company.py:38
-#| msgid "Short Name"
 msgid "Contact Name"
 msgstr "Контактные данные"
 
@@ -237,7 +259,7 @@ msgstr "e-mail"
 
 #: apps/db_models/models/_item_company.py:56
 msgid "Phone"
-msgstr ""
+msgstr "Телефон"
 
 #: apps/db_models/models/_item_company.py:62
 msgid "Operator"
@@ -261,11 +283,11 @@ msgstr ""
 
 #: apps/db_models/models/_item_company.py:109
 msgid "company"
-msgstr ""
+msgstr "Компания"
 
 #: apps/db_models/models/_item_company.py:110
 msgid "companies"
-msgstr ""
+msgstr "Компании"
 
 #: apps/db_models/models/_item_field.py:8
 msgid "latitude"
@@ -313,23 +335,23 @@ msgstr ""
 
 #: apps/users/admin.py:18
 msgid "Personal info"
-msgstr ""
+msgstr "Инорфмация о компании"
 
 #: apps/users/admin.py:19
 msgid "Dates"
-msgstr ""
+msgstr "Даты"
 
 #: apps/users/admin.py:20
 msgid "Permissions and Groups"
-msgstr ""
+msgstr "Группы и роли"
 
 #: apps/users/models.py:78
 msgid "First Name"
-msgstr ""
+msgstr "Имя"
 
 #: apps/users/models.py:79
 msgid "Last Name"
-msgstr ""
+msgstr "Фамилия"
 
 #: apps/users/models.py:80
 msgid "Email address"
@@ -429,24 +451,24 @@ msgstr ""
 
 #: core/urls.py:46
 msgid "Ligeia Administration"
-msgstr ""
+msgstr "Админ. Панель"
 
 #: core/urls.py:47
 msgid "Ligeia"
-msgstr ""
+msgstr "LIgeia"
 
 #: core/urls.py:48
 msgid "Welcome to Ligeia"
-msgstr ""
+msgstr "Добро пожаловать!"
 
 #: settings/base.py:96
 msgid "English"
-msgstr ""
+msgstr "Английский"
 
 #: settings/base.py:97
 msgid "Russian"
-msgstr ""
+msgstr "Русский"
 
 #: settings/base.py:98
 msgid "German"
-msgstr ""
+msgstr "Немецкий"
