@@ -2,26 +2,13 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 from ._base_domain import Base_domain
 
-
 class Base_equip(Base_domain):
-    latitude = models.CharField(
-        verbose_name=_("Latitude"),
+
+    product = models.CharField(
+        verbose_name=_("Product"),
         max_length=100,
         blank=True,
-        null=True        
-    )
-    longitude = models.CharField(
-        verbose_name=_("Longitude"),
-        max_length=100,
-        blank=True,
-        null=True
-    )
-    battery_ref = models.ForeignKey(
-        "battery",
-        on_delete=models.CASCADE,
-        blank=True,
-        null=True,
-        verbose_name=_("Battery Ref.")
+        null=True   
     )
     code = models.CharField(
         verbose_name=_("Code"),
@@ -38,25 +25,19 @@ class Base_equip(Base_domain):
         default=True,        
     )
 
-    def __str__(self):
-        if self.name:
-            return self.name
-        elif self.short_name:
-            return self.short_name
-        elif self.product:
-            return self.product
-        elif self.type:
-            return self.type
-        elif self.status:
-            return self.status
-        elif self.accounting_id:
-            return self.accounting_id
-        elif self.serial_id:
-            return self.serial_id
-        elif self.registry_id:
-            return self.registry_id
 
-    class Meta:        
+    def __str__(self):
+        if self.product:
+            return self.product
+        elif self.code:
+            return self.code
+        elif self.direct_entry:
+            return self.direct_entry
+        elif self.scada:
+            return self.scada
+
+    class Meta:
+        abstract = True
         ordering = ["name"]
         verbose_name = _("base_equip")
         verbose_name_plural = _("base_equips")

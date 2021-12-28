@@ -1,38 +1,16 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
-from ._base_domain import Base_domain
+from ._base_equip import Base_equip
+from ._base_geo import Base_geo
 
 
-class Company(Base_domain):
+class Company(Base_equip, Base_geo):
+
     company_ref = models.ManyToManyField(
         "self", 
         blank=True, 
         symmetrical=False, 
         verbose_name=_("Parent Company")
-    )
-    country = models.CharField(
-        verbose_name=_("Country"),
-        max_length=100,
-        blank=True,
-        null=True
-    )
-    region = models.CharField(
-        verbose_name=_("Region"),
-        max_length=100, 
-        blank=True, 
-        null=True
-    )
-    subregion = models.CharField(
-        verbose_name=_("Sub-Region"),
-        max_length=100,
-        blank=True,
-        null=True
-    )
-    city = models.CharField(
-        verbose_name=_("City"),
-        max_length=100, 
-        blank=True, 
-        null=True
     )
     contact_name = models.CharField(
         verbose_name=_("Contact Name"),
@@ -78,28 +56,31 @@ class Company(Base_domain):
         blank=True, 
         default=True
     )
-    service = models.BooleanField(
+    service_provider = models.BooleanField(
         verbose_name=_("Service Provider"), 
         blank=True, 
         default=False
     )
 
-    def __unicode__(self):
-        return self.name
-
     def __str__(self):
-        if self.name:
-            return self.name
-        elif self.short_name:
-            return self.short_name
-        elif self.country:
-            return self.country
-        elif self.region:
-            return self.region
-        elif self.subregion:
-            return self.subregion
-        elif self.city:
-            return self.city
+        if self.contact_name:
+            return self.contact_name
+        elif self.address:
+            return self.address
+        elif self.email:
+            return self.email
+        elif self.phone:
+            return self.phone
+        elif self.operator:
+            return self.operator
+        elif self.owner:
+            return self.owner
+        elif self.purchaser:
+            return self.purchaser
+        elif self.transporter:
+            return self.transporter
+        elif self.service_provider:
+            return self.service_provider
 
     def get_company_ref(self):
         return ",".join([str(p) for p in self.company_ref.all()])

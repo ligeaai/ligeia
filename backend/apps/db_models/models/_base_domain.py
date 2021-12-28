@@ -8,10 +8,8 @@ from parler.models import TranslatableModel, TranslatedFields
 
 User = get_user_model()
 
-
 def end_datetime():
     return datetime.strptime("01/01/9000 00:00:00", "%d/%m/%Y %H:%M:%S")
-
 
 class Base_domain(models.Model):
     CREATE_SOURCE = [('DJANGO', 'django'), ('WEB', 'web')]
@@ -24,24 +22,26 @@ class Base_domain(models.Model):
     end_datetime = models.DateTimeField(
         verbose_name=_("End Datetime"),
         default=end_datetime,
-        blank=False
+        # blank=False
     )
     name = models.CharField(
         verbose_name=_("Name"),
         max_length=100,
         blank=False,
+        null=True,
         unique=True
     )
     short_name = models.CharField(
         verbose_name=_("Short Name"),
         max_length=100,
-        blank=False,
+        blank=True,
+        null=True,
         unique=True
     )
     active = models.BooleanField(
         verbose_name=_("Active"),
         blank=False,
-        default=True
+        default=True,
     )
     operated = models.BooleanField(
         verbose_name=_("Operated"), 
@@ -109,10 +109,37 @@ class Base_domain(models.Model):
     )
 
     def __str__(self):
-        return f"{self.name}, {self.short_name}"
+        if self.name:
+            return f"{self.name}, {self.short_name}"
+        elif self.start_datetime:
+            return self.start_datetime
+        elif self.end_datetime:
+            return self.end_datetime
+        elif self.active:
+            return self.active
+        elif self.operated:
+            return self.operated
+        elif self.scada:
+            return self.scada
+        elif self.operated:
+            return self.operated
+        elif self.last_updt_user:
+            return self.last_updt_user
+        elif self.last_updt_date:
+            return self.last_updt_date
+        elif self.create_source:
+            return self.create_source
+        elif self.update_source:
+            return self.update_source
+        elif self.accounting_id:
+            return self.accounting_id
+        elif self.serial_id:
+            return self.serial_id
+        elif self.registry_id:
+            return self.registry_id
 
     class Meta:
-        # asbtract = True
+        abstract = True
         ordering = ["name"]
         verbose_name = _("base_domain")
         verbose_name_plural = _("base_domains")

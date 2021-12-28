@@ -33,7 +33,7 @@ urlpatterns = i18n_patterns (
     path("rosetta/", include("rosetta.urls")),
     path("api/v1/users/", include(("apps.users.urls", "apps.users"), namespace="users")),
     path("api/v1/citylight/", include(("apps.citylight.urls", "apps.citylight"), namespace="citylight")),
-    path("api/v1/models/", include(("apps.db_models.urls", "apps.db_models"), namespace="models")),
+    # path("api/v1/models/", include(("apps.db_models.urls", "apps.db_models"), namespace="models")),
     # path('api/v1/getdata/', include(('app.base.urls', 'app.base'), namespace='base')),
     # catch all others because of how history is handled by react router -
     # cache this page because it will never change

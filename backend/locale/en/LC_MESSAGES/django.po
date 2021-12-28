@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-12-28 18:11+0000\n"
+"POT-Creation-Date: 2021-12-28 22:38+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -67,44 +67,19 @@ msgstr ""
 msgid "uom_sets"
 msgstr ""
 
-#: apps/db_models/admin/item_company.py:23
-msgid "Defaults"
-msgstr ""
-
-#: apps/db_models/admin/item_company.py:33
-msgid "Location"
-msgstr ""
-
-#: apps/db_models/admin/item_company.py:34
-msgid "Contact"
-msgstr ""
-
-#: apps/db_models/admin/item_company.py:35
-#: apps/db_models/models/_item_battery.py:19
-msgid "Type"
-msgstr ""
-
-#: apps/db_models/admin/item_company.py:36
-msgid "Reference"
-msgstr ""
-
-#: apps/db_models/admin/item_company.py:37
-msgid "Other"
-msgstr ""
-
-#: apps/db_models/models/_base_domain.py:20
+#: apps/db_models/models/_base_domain.py:18
 msgid "Start Datetime"
 msgstr ""
 
-#: apps/db_models/models/_base_domain.py:25
+#: apps/db_models/models/_base_domain.py:23
 msgid "End Datetime"
 msgstr ""
 
-#: apps/db_models/models/_base_domain.py:30
+#: apps/db_models/models/_base_domain.py:28
 msgid "Name"
 msgstr ""
 
-#: apps/db_models/models/_base_domain.py:36
+#: apps/db_models/models/_base_domain.py:35
 msgid "Short Name"
 msgstr ""
 
@@ -152,173 +127,152 @@ msgstr ""
 msgid "Registry ID"
 msgstr ""
 
-#: apps/db_models/models/_base_domain.py:117
+#: apps/db_models/models/_base_domain.py:144
 msgid "base_domain"
 msgstr ""
 
-#: apps/db_models/models/_base_domain.py:118
+#: apps/db_models/models/_base_domain.py:145
 msgid "base_domains"
 msgstr ""
 
 #: apps/db_models/models/_base_equip.py:8
-#: apps/db_models/models/_item_battery.py:7
-msgid "Latitude"
-msgstr ""
-
-#: apps/db_models/models/_base_equip.py:14
-#: apps/db_models/models/_item_battery.py:13
-msgid "Longitude"
-msgstr ""
-
-#: apps/db_models/models/_base_equip.py:24
-#: apps/db_models/models/_item_battery.py:48
-msgid "Battery Ref."
-msgstr ""
-
-#: apps/db_models/models/_base_equip.py:27
-#: apps/db_models/models/_item_battery.py:58
-msgid "Code"
-msgstr ""
-
-#: apps/db_models/models/_base_equip.py:33
-#: apps/db_models/models/_item_battery.py:64
-msgid "Direct Entry"
-msgstr ""
-
-#: apps/db_models/models/_base_equip.py:37
-#: apps/db_models/models/_item_battery.py:68
-msgid "SCADA"
-msgstr ""
-
-#: apps/db_models/models/_base_equip.py:61
-msgid "base_equip"
-msgstr ""
-
-#: apps/db_models/models/_base_equip.py:62
-msgid "base_equips"
-msgstr ""
-
-#: apps/db_models/models/_item_battery.py:25
 msgid "Product"
 msgstr ""
 
-#: apps/db_models/models/_item_battery.py:31
-msgid "Prod. Start"
+#: apps/db_models/models/_base_equip.py:14
+msgid "Code"
 msgstr ""
 
-#: apps/db_models/models/_item_battery.py:41
-msgid "Company Ref."
+#: apps/db_models/models/_base_equip.py:20
+msgid "Direct Entry"
 msgstr ""
 
-#: apps/db_models/models/_item_battery.py:55
-msgid "Field Ref."
+#: apps/db_models/models/_base_equip.py:24
+msgid "SCADA"
 msgstr ""
 
-#: apps/db_models/models/_item_battery.py:88
-msgid "battery"
+#: apps/db_models/models/_base_equip.py:42
+msgid "base_equip"
 msgstr ""
 
-#: apps/db_models/models/_item_battery.py:89
-msgid "batteries"
+#: apps/db_models/models/_base_equip.py:43
+msgid "base_equips"
 msgstr ""
 
-#: apps/db_models/models/_item_company.py:11
-msgid "Parent Company"
+#: apps/db_models/models/_base_geo.py:8
+msgid "Latitude"
 msgstr ""
 
-#: apps/db_models/models/_item_company.py:14
+#: apps/db_models/models/_base_geo.py:14
+msgid "Longitude"
+msgstr ""
+
+#: apps/db_models/models/_base_geo.py:20
 msgid "Country"
 msgstr ""
 
-#: apps/db_models/models/_item_company.py:20
+#: apps/db_models/models/_base_geo.py:26
 msgid "Region"
 msgstr ""
 
-#: apps/db_models/models/_item_company.py:26
+#: apps/db_models/models/_base_geo.py:32
 msgid "Sub-Region"
 msgstr ""
 
-#: apps/db_models/models/_item_company.py:32
+#: apps/db_models/models/_base_geo.py:38
 msgid "City"
 msgstr ""
 
-#: apps/db_models/models/_item_company.py:38
+#: apps/db_models/models/_base_geo.py:61
+msgid "base_geo"
+msgstr ""
+
+#: apps/db_models/models/_base_geo.py:62
+msgid "base_geos"
+msgstr ""
+
+#: apps/db_models/models/_item_battery.py:13
+#: apps/db_models/models/_item_field.py:13
+msgid "Company Ref."
+msgstr ""
+
+#: apps/db_models/models/_item_battery.py:20
+msgid "Field Ref."
+msgstr ""
+
+#: apps/db_models/models/_item_battery.py:27
+msgid "Battery Ref."
+msgstr ""
+
+#: apps/db_models/models/_item_battery.py:30
+msgid "Battery Type"
+msgstr ""
+
+#: apps/db_models/models/_item_battery.py:36
+msgid "Prod. Start"
+msgstr ""
+
+#: apps/db_models/models/_item_battery.py:48
+msgid "battery"
+msgstr ""
+
+#: apps/db_models/models/_item_battery.py:49
+msgid "batteries"
+msgstr ""
+
+#: apps/db_models/models/_item_company.py:13
+msgid "Parent Company"
+msgstr ""
+
+#: apps/db_models/models/_item_company.py:16
 msgid "Contact Name"
 msgstr ""
 
-#: apps/db_models/models/_item_company.py:44
+#: apps/db_models/models/_item_company.py:22
 msgid "Address"
 msgstr ""
 
-#: apps/db_models/models/_item_company.py:50
+#: apps/db_models/models/_item_company.py:28
 msgid "e-mail"
 msgstr ""
 
-#: apps/db_models/models/_item_company.py:56
+#: apps/db_models/models/_item_company.py:34
 msgid "Phone"
 msgstr ""
 
-#: apps/db_models/models/_item_company.py:62
+#: apps/db_models/models/_item_company.py:40
 msgid "Operator"
 msgstr ""
 
-#: apps/db_models/models/_item_company.py:67
+#: apps/db_models/models/_item_company.py:45
 msgid "Owner"
 msgstr ""
 
-#: apps/db_models/models/_item_company.py:72
+#: apps/db_models/models/_item_company.py:50
 msgid "Purchaser"
 msgstr ""
 
-#: apps/db_models/models/_item_company.py:77
+#: apps/db_models/models/_item_company.py:55
 msgid "Transporter"
 msgstr ""
 
-#: apps/db_models/models/_item_company.py:82
+#: apps/db_models/models/_item_company.py:60
 msgid "Service Provider"
 msgstr ""
 
-#: apps/db_models/models/_item_company.py:109
+#: apps/db_models/models/_item_company.py:90
 msgid "company"
 msgstr ""
 
-#: apps/db_models/models/_item_company.py:110
+#: apps/db_models/models/_item_company.py:91
 msgid "companies"
 msgstr ""
 
-#: apps/db_models/models/_item_field.py:8
-msgid "latitude"
-msgstr ""
-
-#: apps/db_models/models/_item_field.py:15
-msgid "longitude"
-msgstr ""
-
-#: apps/db_models/models/_item_field.py:23
-msgid "product"
-msgstr ""
-
-#: apps/db_models/models/_item_field.py:30
-msgid "country"
-msgstr ""
-
-#: apps/db_models/models/_item_field.py:37
-msgid "region"
-msgstr ""
-
-#: apps/db_models/models/_item_field.py:44
-msgid "subregion"
-msgstr ""
-
-#: apps/db_models/models/_item_field.py:51
-msgid "city"
-msgstr ""
-
-#: apps/db_models/models/_item_field.py:76
+#: apps/db_models/models/_item_field.py:25
 msgid "field"
 msgstr ""
 
-#: apps/db_models/models/_item_field.py:77
+#: apps/db_models/models/_item_field.py:26
 msgid "fields"
 msgstr ""
 
