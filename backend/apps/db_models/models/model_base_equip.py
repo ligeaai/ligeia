@@ -1,6 +1,6 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
-from ._base_domain import Base_domain
+from .model_base_domain import Base_domain
 
 class Base_equip(Base_domain):
     status = models.CharField(

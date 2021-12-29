@@ -4,7 +4,7 @@ from ..models import Battery
 
 
 # class CompanyList(ModelViewSet):
-class BatteryView(ModelViewSet):
+class BatteryModelViewSet(ModelViewSet):
     queryset = Battery.objects.all()
     # queryset = Company.objects.root_nodes()
     serializer_class = BatterySerializer

@@ -1,15 +1,13 @@
+# base models
+from .model_base_domain import Base_domain
+from .model_base_equip import Base_equip
+from .model_base_geo import Base_geo
 
-#main classes
-from ._base_domain import Base_domain
-from ._base_equip import Base_equip
-from ._base_geo import Base_geo
+# item models
+from .model_item_battery import Battery
+from .model_item_company import Company
+from .model_item_field import Field
+from .model_item_completion import Completion
+from .model_item_pump import Pump
 
-# items import
-from ._item_battery import Battery
-from ._item_company import Company
-from ._item_field import Field
-from ._item_completion import Completion
-
-
-# from ._item_pump import Pump
 # from db_models.models._item_engine import Engine

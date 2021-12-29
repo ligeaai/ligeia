@@ -33,11 +33,25 @@
 		"python.linting.pylintEnabled": true,
 		"python.linting.pylintArgs": [
 			"--disable=django-not-configured",
-			"--django-settings-module=backend.settings",
+			// "--django-settings-module=backend.settings",
 		],
-		"python.formatting.autopep8Path": "/usr/local/py-utils/bin/autopep8",
-		"python.formatting.blackPath": "/usr/local/py-utils/bin/black",
-		"python.formatting.yapfPath": "/usr/local/py-utils/bin/yapf",
+		"editor.defaultFormatter": null,
+		"editor.formatOnSave": false,  // enable per language
+		"[python]": {
+			"editor.formatOnSave": true
+		},
+		"python.formatting.provider": "black",
+		"python.formatting.blackPath": "/usr/local/bin/black",
+		
+		// Workspace Settings
+		
+		// "python.formatting.blackPath": "/absolute/path/to/venv/with/black",
+		// "python.formatting.blackArgs": [
+		// 	"-l 120"
+		// ],
+		// "python.formatting.autopep8Path": "/usr/local/py-utils/bin/autopep8",
+		// "python.formatting.blackPath": "/usr/local/py-utils/bin/black",
+		// "python.formatting.yapfPath": "/usr/local/py-utils/bin/yapf",
 		// "python.linting.banditPath": "/usr/local/py-utils/bin/bandit",
 		// "python.linting.flake8Path": "/usr/local/py-utils/bin/flake8",
 		// "python.linting.mypyPath": "/usr/local/py-utils/bin/mypy",

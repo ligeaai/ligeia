@@ -8,4 +8,5 @@ from django.utils.translation import gettext_lazy as _
 class CompletionAdminBase(TranslationAdmin):
     group_fieldsets = True
 
+
 admin.site.register(Completion, CompletionAdminBase)

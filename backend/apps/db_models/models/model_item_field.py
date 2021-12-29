@@ -1,7 +1,7 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
-from ._base_equip import Base_equip
-from ._base_geo import Base_geo
+from .model_base_equip import Base_equip
+from .model_base_geo import Base_geo
 
 
 class Field(Base_equip, Base_geo):

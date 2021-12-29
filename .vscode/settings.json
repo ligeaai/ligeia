@@ -1,20 +1,20 @@
 {
-    "python.terminal.activateEnvironment": true,
-    "python.terminal.activateEnvInCurrentTerminal": true,
-    // "python.defaultInterpreterPath": "$IEFPP/core/venv/bin/python3",
-    "python.pythonPath": "/Users/rustembeisekin/Documents/GitHub/ligeia.ai/.venv/bin/python",
-    "python.formatting.provider": "yapf",
-    "git.ignoreLimitWarning": true,
-    "terminal.integrated.profile.linux#": "/bin/zsh",
-    "terminal.integrated.profiles.linux": {
-        "zsh (login)": {
-          "path": "zsh",
-          "args": ["-l"]
-        }
-    },
-    "python.linting.enabled": false
+  "python.terminal.activateEnvironment": true,
+  "python.terminal.activateEnvInCurrentTerminal": true,
+  // "python.defaultInterpreterPath": "$IEFPP/core/venv/bin/python3",
+  "python.pythonPath": "/Users/rustembeisekin/Documents/GitHub/ligeia.ai/.venv/bin/python",
+  "python.formatting.provider": "black",
+  "editor.formatOnSave": true,
+  "git.ignoreLimitWarning": true,
+  "terminal.integrated.profile.linux#": "/bin/zsh",
+  "terminal.integrated.profiles.linux": {
+    "zsh (login)": {
+      "path": "zsh",
+      "args": ["-l"]
+    }
+  },
+  "python.linting.enabled": false
 
-    // "venvFolders": "~/core/.venv",
-    // "python.venvPath": "",
-
+  // "venvFolders": "~/core/.venv",
+  // "python.venvPath": "",
 }

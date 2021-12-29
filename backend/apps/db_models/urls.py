@@ -3,14 +3,14 @@ from rest_framework.routers import DefaultRouter
 from .views import (
     # CompanyView,
     # FieldView,
-    BatteryView,
+    BatteryModelViewSet,
 )
 
 routers = DefaultRouter()
 
 # routers.register("company", CompanyView, basename="company")
 # routers.register("field", FieldView, basename="field")
-routers.register("battery", BatteryView, basename="battery")
+routers.register("battery", views=BatteryModelViewSet, basename="battery:ModelViewSet")
 
 urlpatterns = []
 
