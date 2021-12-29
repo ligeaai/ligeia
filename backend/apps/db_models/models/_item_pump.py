@@ -26,6 +26,15 @@ class Pump(Base_equip):
                                       null=True,
                                       blank=True)
 
+    pump_capacity= models.DecimalField(db_column='pump_capacity', max_digits=12, decimal_places=8,blank=True)
+    pump_diameter= models.DecimalField(db_column='pump_diameter', max_digits=12, decimal_places=8,blank=True)
+    pump_drive= models.DecimalField(db_column='pump_drive', max_digits=12, decimal_places=8,blank=True)
+    pump_drv_ratio= models.DecimalField(db_column='pump_drv_ratio', max_digits=12, decimal_places=8,blank=True)
+    pump_factor= models.DecimalField(db_column='pump_factor', max_digits=12, decimal_places=8,blank=True)
+    pump_serial= models.CharField(db_column='pump_serial', max_length=15  ,blank=True)
+    pump_size= models.DecimalField(db_column='pump_size', max_digits=12, decimal_places=8,blank=True)
+    pump_type= models.CharField(db_column='pump_type', max_length=15  ,blank=True)
+
     def __str__(self):
         if self.name:
             return self.name

@@ -8,6 +8,7 @@ from ._base_geo import Base_geo
 from ._item_battery import Battery
 from ._item_company import Company
 from ._item_field import Field
+from ._item_completion import Completion
 
 
 # from ._item_pump import Pump

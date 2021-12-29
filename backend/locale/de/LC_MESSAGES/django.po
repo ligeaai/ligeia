@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-12-28 22:38+0000\n"
+"POT-Creation-Date: 2021-12-29 00:02+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -135,27 +135,31 @@ msgstr ""
 msgid "base_domains"
 msgstr ""
 
-#: apps/db_models/models/_base_equip.py:8
+#: apps/db_models/models/_base_equip.py:7
+msgid "Status"
+msgstr ""
+
+#: apps/db_models/models/_base_equip.py:13
 msgid "Product"
 msgstr ""
 
-#: apps/db_models/models/_base_equip.py:14
+#: apps/db_models/models/_base_equip.py:19
 msgid "Code"
 msgstr ""
 
-#: apps/db_models/models/_base_equip.py:20
+#: apps/db_models/models/_base_equip.py:25
 msgid "Direct Entry"
 msgstr ""
 
-#: apps/db_models/models/_base_equip.py:24
+#: apps/db_models/models/_base_equip.py:29
 msgid "SCADA"
 msgstr ""
 
-#: apps/db_models/models/_base_equip.py:42
+#: apps/db_models/models/_base_equip.py:49
 msgid "base_equip"
 msgstr ""
 
-#: apps/db_models/models/_base_equip.py:43
+#: apps/db_models/models/_base_equip.py:50
 msgid "base_equips"
 msgstr ""
 
@@ -197,10 +201,12 @@ msgid "Company Ref."
 msgstr ""
 
 #: apps/db_models/models/_item_battery.py:20
+#: apps/db_models/models/_item_completion.py:14
 msgid "Field Ref."
 msgstr ""
 
 #: apps/db_models/models/_item_battery.py:27
+#: apps/db_models/models/_item_completion.py:21
 msgid "Battery Ref."
 msgstr ""
 
@@ -268,6 +274,110 @@ msgstr ""
 msgid "companies"
 msgstr ""
 
+#: apps/db_models/models/_item_completion.py:23
+msgid "Comp. Type"
+msgstr ""
+
+#: apps/db_models/models/_item_completion.py:24
+msgid "Disp. Type"
+msgstr ""
+
+#: apps/db_models/models/_item_completion.py:25
+msgid "Inv. Method"
+msgstr ""
+
+#: apps/db_models/models/_item_completion.py:26
+msgid "Lift Type"
+msgstr ""
+
+#: apps/db_models/models/_item_completion.py:27
+msgid "Recovery"
+msgstr ""
+
+#: apps/db_models/models/_item_completion.py:29
+msgid "bot_x"
+msgstr ""
+
+#: apps/db_models/models/_item_completion.py:30
+msgid "bot_y"
+msgstr ""
+
+#: apps/db_models/models/_item_completion.py:31
+msgid "completion_md"
+msgstr ""
+
+#: apps/db_models/models/_item_completion.py:32
+msgid "completion_tvd"
+msgstr ""
+
+#: apps/db_models/models/_item_completion.py:34
+msgid "API"
+msgstr ""
+
+#: apps/db_models/models/_item_completion.py:35
+msgid "CGR"
+msgstr ""
+
+#: apps/db_models/models/_item_completion.py:36
+msgid "GOR"
+msgstr ""
+
+#: apps/db_models/models/_item_completion.py:37
+msgid "WGR"
+msgstr ""
+
+#: apps/db_models/models/_item_completion.py:38
+msgid "WOR"
+msgstr ""
+
+#: apps/db_models/models/_item_completion.py:40
+msgid "Gas Density"
+msgstr ""
+
+#: apps/db_models/models/_item_completion.py:41
+msgid "Gas Shrink"
+msgstr ""
+
+#: apps/db_models/models/_item_completion.py:42
+msgid "NGL Frac"
+msgstr ""
+
+#: apps/db_models/models/_item_completion.py:43
+msgid "Oil Density"
+msgstr ""
+
+#: apps/db_models/models/_item_completion.py:45
+msgid "Cond Theo. Method"
+msgstr ""
+
+#: apps/db_models/models/_item_completion.py:46
+msgid "Gas Theo. Method"
+msgstr ""
+
+#: apps/db_models/models/_item_completion.py:47
+msgid "Oil Theo. Method"
+msgstr ""
+
+#: apps/db_models/models/_item_completion.py:48
+msgid "Water Theo. Method"
+msgstr ""
+
+#: apps/db_models/models/_item_completion.py:50
+msgid "Reservoir Phase"
+msgstr ""
+
+#: apps/db_models/models/_item_completion.py:51
+msgid "Reservoir Type"
+msgstr ""
+
+#: apps/db_models/models/_item_completion.py:81
+msgid "completion"
+msgstr ""
+
+#: apps/db_models/models/_item_completion.py:82
+msgid "completions"
+msgstr ""
+
 #: apps/db_models/models/_item_field.py:25
 msgid "field"
 msgstr ""
@@ -276,11 +386,11 @@ msgstr ""
 msgid "fields"
 msgstr ""
 
-#: apps/db_models/models/_item_pump.py:43
+#: apps/db_models/models/_item_pump.py:52
 msgid "pump"
 msgstr ""
 
-#: apps/db_models/models/_item_pump.py:44
+#: apps/db_models/models/_item_pump.py:53
 msgid "pumps"
 msgstr ""
 

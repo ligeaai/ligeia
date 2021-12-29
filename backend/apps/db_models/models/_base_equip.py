@@ -3,7 +3,12 @@ from django.utils.translation import gettext_lazy as _
 from ._base_domain import Base_domain
 
 class Base_equip(Base_domain):
-
+    status = models.CharField(
+        verbose_name=_("Status"),
+        max_length=100,
+        blank=True,
+        null=True
+    )
     product = models.CharField(
         verbose_name=_("Product"),
         max_length=100,
@@ -27,7 +32,9 @@ class Base_equip(Base_domain):
 
 
     def __str__(self):
-        if self.product:
+        if self.status:
+            return self.status
+        elif self.product:
             return self.product
         elif self.code:
             return self.code
