@@ -17,9 +17,6 @@ class Field(Base_equip, Base_geo):
         if self.name:
             return f"{self.name}, {self.short_name}"
 
-    # def get_parents(self):
-    #     return ",".join([str(p) for p in self.parent.all()])
-
     class Meta:
         ordering = ["name"]
         verbose_name = _("field")

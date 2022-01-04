@@ -6,7 +6,7 @@ from django.utils.translation import gettext_lazy as _
 
 
 class PumpAdminBase(TabbedTranslationAdmin):
-    pass
+    group_fieldsets = True
 
 
 admin.site.register(Pump, PumpAdminBase)

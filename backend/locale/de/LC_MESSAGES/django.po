@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-12-29 04:07+0000\n"
+"POT-Creation-Date: 2021-12-29 04:52+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -378,19 +378,19 @@ msgstr ""
 msgid "completions"
 msgstr ""
 
-#: apps/db_models/models/model_item_field.py:25
+#: apps/db_models/models/model_item_field.py:22
 msgid "field"
 msgstr ""
 
-#: apps/db_models/models/model_item_field.py:26
+#: apps/db_models/models/model_item_field.py:23
 msgid "fields"
 msgstr ""
 
-#: apps/db_models/models/model_item_pump.py:48
+#: apps/db_models/models/model_item_pump.py:54
 msgid "pump"
 msgstr ""
 
-#: apps/db_models/models/model_item_pump.py:49
+#: apps/db_models/models/model_item_pump.py:55
 msgid "pumps"
 msgstr ""
 

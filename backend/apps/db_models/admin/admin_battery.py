@@ -5,7 +5,9 @@ from django.utils.translation import gettext_lazy as _
 from ..translation import BaseTranslationOptions
 from ..models import Battery
 
+
 class BatteryAdminBase(TabbedTranslationAdmin):
-    pass
-    
+    group_fieldsets = True
+
+
 admin.site.register(Battery, BatteryAdminBase)

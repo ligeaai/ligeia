@@ -10,12 +10,14 @@ from .models import (
     Pump,
 )
 
+
 @register(Base_domain)
 class BaseTranslationOptions(TranslationOptions):
     fields = (
         "name",
         "short_name",
     )
+
 
 @register(Base_equip)
 class BaseEquipTranslationOptions(TranslationOptions):

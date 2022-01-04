@@ -2,95 +2,103 @@
 // https://github.com/microsoft/vscode-dev-containers/tree/v0.209.6/containers/docker-existing-docker-compose
 // If you want to run as a non-root user in the container, see .devcontainer/docker-compose.yml.
 {
-	"name": "Existing Docker Compose (Extend)",
+  "name": "Existing Docker Compose (Extend)",
 
-	// Update the 'dockerComposeFile' list if you have more compose files or use different names.
-	// The .devcontainer/docker-compose.yml file contains any overrides you need/want to make.
-	"dockerComposeFile": [
-		"../docker-compose.yml",
-		"docker-compose.yml"
-	],
+  // Update the 'dockerComposeFile' list if you have more compose files or use different names.
+  // The .devcontainer/docker-compose.yml file contains any overrides you need/want to make.
+  "dockerComposeFile": ["../docker-compose.yml", "docker-compose.yml"],
 
-	// The 'service' property is the name of the service for the container that VS Code should
-	// use. Update this value and .devcontainer/docker-compose.yml to the real service name.
-	"service": "django",
+  // The 'service' property is the name of the service for the container that VS Code should
+  // use. Update this value and .devcontainer/docker-compose.yml to the real service name.
+  "service": "django",
 
-	// The optional 'workspaceFolder' property is the path VS Code should open by default when
-	// connected. This is typically a file mount in .devcontainer/docker-compose.yml
-	"workspaceFolder": "/workspace",
+  // The optional 'workspaceFolder' property is the path VS Code should open by default when
+  // connected. This is typically a file mount in .devcontainer/docker-compose.yml
+  "workspaceFolder": "/workspace",
 
-	// Set *default* container specific settings.json values on container create.
-	"settings": {
-		// "terminal.integrated.profiles.linux": {
-		// 	"zsh (login)": {
-		// 	  "path": "zsh",
-		// 	  "args": ["-l"]
-		// 	}
-		// },
-		"terminal.integrated.profile.linux#": "/bin/zsh",
-		"python.defaultInterpreterPath": "/usr/local/bin/python",
-		"python.linting.enabled": true,
-		"python.linting.pylintEnabled": true,
-		"python.linting.pylintArgs": [
-			"--disable=django-not-configured",
-			// "--django-settings-module=backend.settings",
-		],
-		"editor.defaultFormatter": null,
-		"editor.formatOnSave": false,  // enable per language
-		"[python]": {
-			"editor.formatOnSave": true
-		},
-		"python.formatting.provider": "black",
-		"python.formatting.blackPath": "/usr/local/bin/black",
-		
-		// Workspace Settings
-		
-		// "python.formatting.blackPath": "/absolute/path/to/venv/with/black",
-		// "python.formatting.blackArgs": [
-		// 	"-l 120"
-		// ],
-		// "python.formatting.autopep8Path": "/usr/local/py-utils/bin/autopep8",
-		// "python.formatting.blackPath": "/usr/local/py-utils/bin/black",
-		// "python.formatting.yapfPath": "/usr/local/py-utils/bin/yapf",
-		// "python.linting.banditPath": "/usr/local/py-utils/bin/bandit",
-		// "python.linting.flake8Path": "/usr/local/py-utils/bin/flake8",
-		// "python.linting.mypyPath": "/usr/local/py-utils/bin/mypy",
-		// "python.linting.pycodestylePath": "/usr/local/py-utils/bin/pycodestyle",
-		// "python.linting.pydocstylePath": "/usr/local/py-utils/bin/pydocstyle",
-		// "python.linting.pylintPath": "/usr/local/py-utils/bin/pylint",
-		// "python.testing.pytestPath": "/usr/local/py-utils/bin/pytest"		
-	},
+  // Set *default* container specific settings.json values on container create.
+  "settings": {
+      "python.defaultInterpreterPath": "/usr/local/bin/python",
+      "python.formatting.provider":"black",
+      "python.formatting.blackPath":"/usr/local/bin/black",
+      "python.linting.enabled": true,
+      "python.linting.pylintEnabled": true,
+      "python.linting.mypyEnabled":true,
+      "editor.insertSpaces": true,
+      "editor.tabSize": 4,
+      "editor.detectIndentation":false,
+      "editor.formatOnSave":false,
+      "[python]": {
+          "editor.formatOnSave": true
+      },
+      "python.testing.pytestPath":"/usr/local/bin/pytest",
+      "python.testing.pytestEnabled":true,
+      "terminal.integrated.profile.linux#": "/bin/zsh",
+      // "python.defaultInterpreterPath": "/usr/local/bin/python",
+      // "python.linting.enabled": true,
+      // "python.linting.pylintEnabled": true,
+  
+    },
+    // "python.linting.pylintArgs": [
+    // 	"--disable=django-not-configured",
+    // 	// "--django-settings-module=backend.settings",
+    // ],
+    // "editor.defaultFormatter": null,
+    // "editor.formatOnSave": false,  // enable per language
+    // "[python]": {
+    // 	"editor.formatOnSave": true
+    // },
+    // "python.formatting.provider": "black",
+    // "python.formatting.blackPath": "/usr/local/bin/black"
 
-	// Add the IDs of extensions you want installed when the container is created.
-	"extensions": [
-		"ms-python.python",
-		"ms-python.vscode-pylance",
-		"mtxr.sqltools",
-		"mtxr.sqltools-driver-pg",
-		"dbaeumer.vscode-eslint",
-		"ms-azuretools.vscode-docker",
-		"github.vscode-pull-request-github",
-		"eamodio.gitlens",
-		"dbaeumer.jshint",
-		"eg2.vscode-npm-script",
-		"christian-kohler.npm-intellisense",
-		"esbenp.prettier-vscode",
-		"redhat.vscode-yaml",
-		"knisterpeter.vscode-github"
-	],
+    // Workspace Settings
 
-	// Use 'forwardPorts' to make a list of ports inside the container available locally.
-	"forwardPorts": [3000, 8000, 6379, 5000, 5050, 5432],
+    // "python.formatting.blackPath": "/absolute/path/to/venv/with/black",
+    // "python.formatting.blackArgs": [
+    // 	"-l 120"
+    // ],
+    // "python.formatting.autopep8Path": "/usr/local/py-utils/bin/autopep8",
+    // "python.formatting.blackPath": "/usr/local/py-utils/bin/black",
+    // "python.formatting.yapfPath": "/usr/local/py-utils/bin/yapf",
+    // "python.linting.banditPath": "/usr/local/py-utils/bin/bandit",
+    // "python.linting.flake8Path": "/usr/local/py-utils/bin/flake8",
+    // "python.linting.mypyPath": "/usr/local/py-utils/bin/mypy",
+    // "python.linting.pycodestylePath": "/usr/local/py-utils/bin/pycodestyle",
+    // "python.linting.pydocstylePath": "/usr/local/py-utils/bin/pydocstyle",
+    // "python.linting.pylintPath": "/usr/local/py-utils/bin/pylint",
+    // "python.testing.pytestPath": "/usr/local/py-utils/bin/pytest"
+  // },
 
-	// Uncomment the next line if you want start specific services in your Docker Compose config.
-	// "runServices": [],
+  // Add the IDs of extensions you want installed when the container is created.
+  "extensions": [
+    "ms-python.python",
+    "ms-python.vscode-pylance",
+    "mtxr.sqltools",
+    "mtxr.sqltools-driver-pg",
+    "dbaeumer.vscode-eslint",
+    "ms-azuretools.vscode-docker",
+    "github.vscode-pull-request-github",
+    "eamodio.gitlens",
+    "dbaeumer.jshint",
+    "eg2.vscode-npm-script",
+    "christian-kohler.npm-intellisense",
+    "esbenp.prettier-vscode",
+    "redhat.vscode-yaml",
+    "knisterpeter.vscode-github"
+  ],
 
-	// Uncomment the next line if you want to keep your containers running after VS Code shuts down.
-	// "shutdownAction": "none",
+  // Use 'forwardPorts' to make a list of ports inside the container available locally.
+  "forwardPorts": [3000, 8000, 6379, 5000, 5050, 5432]
 
-	// Uncomment the next line to run commands after the container is created - for example installing curl.
-	// "postCreateCommand": "apt-get update && apt-get install -y curl",
+  // Uncomment the next line if you want start specific services in your Docker Compose config.
+  // "runServices": [],
 
-	// Uncomment to connect as a non-root user if you've added one. See https://aka.ms/vscode-remote/containers/non-root.
-	// "remoteUser": "vscode"
+  // Uncomment the next line if you want to keep your containers running after VS Code shuts down.
+  // "shutdownAction": "none",
+
+  // Uncomment the next line to run commands after the container is created - for example installing curl.
+  // "postCreateCommand": "apt-get update && apt-get install -y curl",
+
+  // Uncomment to connect as a non-root user if you've added one. See https://aka.ms/vscode-remote/containers/non-root.
+  // "remoteUser": "vscode"
 }

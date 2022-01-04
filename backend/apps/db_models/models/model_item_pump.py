@@ -15,11 +15,17 @@ class Pump(Base_equip):
         verbose_name="Metric System",
         choices=METRIC_SYSTEM,
     )
-    density = models.DecimalField(db_column="density", max_digits=1000, decimal_places=100, null=True, blank=True)
+    density = models.DecimalField(
+        db_column="density", max_digits=1000, decimal_places=100, null=True, blank=True
+    )
     # density_uom =  models.CharField(db_column='density_uom',max_length=100, blank=True, null=True, verbose_name='Density UOM', choices = choices2)
     # density_uom =  models.ForeignKey('dictionaries.uom_set', db_column='density_uom', on_delete=models.CASCADE, blank=True, null=True, verbose_name='Density UOM')
     temperature = models.DecimalField(
-        db_column="temperature", max_digits=1000, decimal_places=100, null=True, blank=True
+        db_column="temperature",
+        max_digits=1000,
+        decimal_places=100,
+        null=True,
+        blank=True,
     )
 
     # pump_capacity = models.DecimalField(db_column="pump_capacity", max_digits=12, decimal_places=8, blank=True)
@@ -44,6 +50,6 @@ class Pump(Base_equip):
             return self.status
 
     class Meta:
-        # ordering = ["name"]
+        ordering = ["name"]
         verbose_name = _("pump")
         verbose_name_plural = _("pumps")
