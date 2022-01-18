@@ -1,34 +1,30 @@
 import React, { useState } from "react";
-import { createTheme, ThemeProvider } from "@material-ui/core/styles";
-import Switch from "@mui/material/Switch";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
+import { CssBaseline } from "@mui/material";
 
 import Header from "../header";
 
 const App = () => {
   const [toggleDark, settoggleDark] = useState(false);
-  const myTheme = createTheme({
-    // Theme settings
+
+  const theme = createTheme({
     palette: {
-      type: toggleDark ? "dark" : "light",
+      mode: toggleDark ? "dark" : "light",
+    },
+    components: {
+      MuiAppBar: {
+        defaultProps: {
+          enableColorOnDark: false,
+        },
+      },
     },
   });
-
-  const handleModeChange = () => {
-    settoggleDark(!toggleDark);
-  };
-
   return (
-    <div>
-      <ThemeProvider theme={myTheme}>
-        {/* <Switch
-          checked={toggleDark}
-          onChange={handleModeChange}
-          name="toggleDark"
-          color="default"
-        /> */}
-        <Header />
-      </ThemeProvider>
-    </div>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      {/* <AppBar color="default">App bar background should be Red!</AppBar> */}
+      <Header toggleDark={toggleDark} settoggleDark={settoggleDark} />
+    </ThemeProvider>
   );
 };
 
