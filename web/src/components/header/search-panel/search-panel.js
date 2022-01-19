@@ -44,7 +44,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-const SearchSection = () => {
+const SearchPanel = () => {
   return (
     <React.Fragment>
       <Search>
@@ -60,4 +60,4 @@ const SearchSection = () => {
   );
 };
 
-export default SearchSection;
+export default SearchPanel;

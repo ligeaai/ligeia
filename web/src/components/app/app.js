@@ -5,7 +5,7 @@ import { CssBaseline } from "@mui/material";
 import Header from "../header";
 
 const App = () => {
-  const [toggleDark, settoggleDark] = useState(false);
+  const [toggleDark, settoggleDark] = useState(true);
 
   const theme = createTheme({
     palette: {
