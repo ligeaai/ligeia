@@ -10,6 +10,7 @@ const ProfileMenu = ({ id, anchorEl, open, onClose }) => {
         anchorEl={anchorEl}
         id={id}
         open={open}
+        onClose={onClose}
         onClick={onClose}
         PaperProps={{
           elevation: 0,
