@@ -16,9 +16,9 @@ import { useTheme } from "@mui/material/styles";
 import InboxIcon from "@material-ui/icons/MoveToInbox";
 import MailIcon from "@material-ui/icons/Mail";
 
-import { TreeView, TreeItem } from "@mui/lab";
+// import { TreeView, TreeItem } from "@mui/lab";
 
-import { BrowserRouter, Route, Link } from "react-router-dom";
+// import { BrowserRouter, Route, Link } from "react-router-dom";
 
 const drawerWidth = 240;
 
@@ -72,7 +72,8 @@ const TreeMenu = ({ open, onClose }) => {
         >
           <Toolbar />
           <Box sx={{ overflow: "auto" }}>
-            {/* <List>
+            <Divider />
+            <List>
               {["Inbox", "Starred", "Send email", "Drafts"].map(
                 (text, index) => (
                   <ListItem button key={text}>
@@ -85,7 +86,7 @@ const TreeMenu = ({ open, onClose }) => {
               )}
             </List>
             <Divider />
-            <List>
+            {/* <List>
               {["All mail", "Trash", "Spam"].map((text, index) => (
                 <ListItem button key={text}>
                   <ListItemIcon>

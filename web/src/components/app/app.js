@@ -1,30 +1,33 @@
-import React, { useState } from "react";
-import { ThemeProvider, createTheme } from "@mui/material/styles";
+import React, { createContext, useContext, useEffect, useState } from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+
 import { CssBaseline } from "@mui/material";
 
-import Header from "../header";
+import { HomePage, AboutPage, LoginPage } from "../pages";
+import { CustomThemeProvider } from "../theme-control";
+import { createTheme, ThemeProvider } from "@material-ui/core/styles";
 
 const App = () => {
-  const [toggleDark, settoggleDark] = useState(true);
+  const [myTheme, setMyTheme] = useState();
+  const [theme, setTheme] = useState(createTheme({}));
 
-  const theme = createTheme({
-    palette: {
-      mode: toggleDark ? "dark" : "light",
-    },
-    components: {
-      MuiAppBar: {
-        defaultProps: {
-          enableColorOnDark: false,
-        },
-      },
-    },
-  });
+  useEffect(() => {
+    console.log("create a theme in app with", myTheme);
+    setTheme(createTheme(myTheme));
+  }, [myTheme]);
+
   return (
-    <ThemeProvider theme={theme}>
+    <CustomThemeProvider>
       <CssBaseline />
       {/* <AppBar color="default">App bar background should be Red!</AppBar> */}
-      <Header toggleDark={toggleDark} settoggleDark={settoggleDark} />
-    </ThemeProvider>
+      <Router>
+        <Routes>
+          <Route exact path="/" element={<LoginPage />} />
+          <Route path="/home" element={<HomePage />} />
+          <Route path="/about" element={<AboutPage />} />
+        </Routes>
+      </Router>
+    </CustomThemeProvider>
   );
 };
 

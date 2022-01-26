@@ -13,16 +13,22 @@ import MenuIcon from "@mui/icons-material/Menu";
 import SearchPanel from "./search-panel";
 import ProfileMenu from "./profile-menu";
 import TreeMenu from "./tree-menu";
+import { CssBaseline } from "@mui/material";
 
-export default function Header({ toggleDark, settoggleDark }) {
+import { CustomThemeContext } from "../theme-control";
+
+const Header = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [openDrawer, setDrawer] = React.useState(true);
 
   const isProfileMenuOpen = Boolean(anchorEl);
-  // const isDrawerMenuOpen = Boolean(openDrawer);
+  const { isDarkMode, setIsDarkMode } = CustomThemeContext();
+
+  console.log("Header: " + isDarkMode);
+  console.log("openDrawer: " + openDrawer);
 
   const handleModeChange = () => {
-    settoggleDark(!toggleDark);
+    setIsDarkMode(!isDarkMode);
   };
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -34,13 +40,13 @@ export default function Header({ toggleDark, settoggleDark }) {
 
   const toggleDrawer = () => {
     setDrawer(!openDrawer);
-    console.log("openDrawer: " + openDrawer);
   };
 
   const menuId = "profile-menu";
 
   return (
     <React.Fragment>
+      <CssBaseline />
       <Box sx={{ flexGrow: 1 }}>
         <AppBar
           position="fixed"
@@ -62,7 +68,7 @@ export default function Header({ toggleDark, settoggleDark }) {
             <Box sx={{ flexGrow: 1 }} />
             <Box sx={{ display: { xs: "none", md: "flex" } }}>
               <Switch
-                checked={toggleDark}
+                checked={isDarkMode}
                 onChange={handleModeChange}
                 name="toggleDark"
                 color="default"
@@ -92,4 +98,6 @@ export default function Header({ toggleDark, settoggleDark }) {
       </Box>
     </React.Fragment>
   );
-}
+};
+
+export default Header;
