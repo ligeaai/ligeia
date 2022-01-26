@@ -1,28 +1,23 @@
 import React from "react";
-import clsx from "clsx";
-import { makeStyle } from "@material-ui/core";
-import { Button } from "@mui/material";
-import { Box } from "@mui/material";
-import { styled, useTheme } from "@mui/material/styles";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import List from "@material-ui/core/List";
-import Typography from "@material-ui/core/Typography";
-import Divider from "@material-ui/core/Divider";
-import IconButton from "@material-ui/core/IconButton";
-import MenuIcon from "@material-ui/icons/Menu";
-import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
-import ChevronRightIcon from "@material-ui/icons/ChevronRight";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
+
+import {
+  Box,
+  Divider,
+  Drawer,
+  Toolbar,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+} from "@mui/material";
+
+import { useTheme } from "@mui/material/styles";
+
 import InboxIcon from "@material-ui/icons/MoveToInbox";
 import MailIcon from "@material-ui/icons/Mail";
-import MuiDrawer from "@mui/material/Drawer";
-import Drawer from "@mui/material/Drawer";
-// import Home from "../pages/Home";
-// import About from "../pages/About";
+
+import { TreeView, TreeItem } from "@mui/lab";
+
 import { BrowserRouter, Route, Link } from "react-router-dom";
 
 const drawerWidth = 240;
@@ -56,26 +51,6 @@ const TreeMenu = ({ open, onClose }) => {
   return (
     <React.Fragment>
       <Box sx={{ display: "flex" }}>
-        {/* <CssBaseline /> */}
-        {/* <AppBar position="fixed" open={open}>
-        <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            edge="start"
-            sx={{
-              marginRight: "36px",
-              ...(open && { display: "none" }),
-            }}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" noWrap component="div">
-            Mini variant drawer
-          </Typography>
-        </Toolbar>
-      </AppBar> */}
         <Drawer
           open={open}
           onClose={onClose}
@@ -97,7 +72,7 @@ const TreeMenu = ({ open, onClose }) => {
         >
           <Toolbar />
           <Box sx={{ overflow: "auto" }}>
-            <List>
+            {/* <List>
               {["Inbox", "Starred", "Send email", "Drafts"].map(
                 (text, index) => (
                   <ListItem button key={text}>
@@ -119,7 +94,7 @@ const TreeMenu = ({ open, onClose }) => {
                   <ListItemText primary={text} />
                 </ListItem>
               ))}
-            </List>
+            </List> */}
           </Box>
         </Drawer>
       </Box>

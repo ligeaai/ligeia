@@ -8,22 +8,11 @@ import {
   IconButton,
   Switch,
 } from "@mui/material";
-
-import { makeStyles, useTheme } from "@material-ui/core";
-
 import MenuIcon from "@mui/icons-material/Menu";
 
 import SearchPanel from "./search-panel";
 import ProfileMenu from "./profile-menu";
 import TreeMenu from "./tree-menu";
-
-const useStyles = makeStyles((theme) => ({
-  appBar: {
-    // Make the app bar z-index always one more than the drawer z-index
-    zIndex: theme.zIndex.drawer + 1,
-    toolbar: theme.mixins.toolbar,
-  },
-}));
 
 export default function Header({ toggleDark, settoggleDark }) {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -43,22 +32,13 @@ export default function Header({ toggleDark, settoggleDark }) {
     setAnchorEl(null);
   };
 
-  const handleDrawerOpen = () => {
-    setDrawer(true);
-  };
-
   const toggleDrawer = () => {
     setDrawer(!openDrawer);
     console.log("openDrawer: " + openDrawer);
   };
 
-  const handleDrawerClose = () => {
-    setDrawer(false);
-    console.log("draweropen: " + openDrawer);
-  };
-
   const menuId = "profile-menu";
-  const classes = useStyles();
+
   return (
     <React.Fragment>
       <Box sx={{ flexGrow: 1 }}>
