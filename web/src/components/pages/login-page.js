@@ -1,8 +1,8 @@
 import React from "react";
-
+import { ToggleColorMode } from "../test/toggle";
 
 const LoginPage = () => {
-  return <h1>Login Page</h1>;
+  return <ToggleColorMode />;
 };
 
 export default LoginPage;

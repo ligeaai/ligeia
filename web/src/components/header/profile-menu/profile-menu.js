@@ -1,9 +1,18 @@
 import * as React from "react";
 import { Avatar, Divider, MenuItem, Menu, ListItemIcon } from "@mui/material";
-
 import { PersonAdd, Settings, Logout } from "@mui/icons-material";
+import Brightness4Icon from "@mui/icons-material/Brightness4";
+import Brightness7Icon from "@mui/icons-material/Brightness7";
+import TranslateIcon from "@mui/icons-material/Translate";
+
+import { useTheme } from "@mui/material/styles";
+
+import ColorModeContext from "../../context";
 
 const ProfileMenu = ({ id, anchorEl, open, onClose }) => {
+  const theme = useTheme();
+  const colorMode = React.useContext(ColorModeContext);
+
   return (
     <React.Fragment>
       <Menu
@@ -44,15 +53,39 @@ const ProfileMenu = ({ id, anchorEl, open, onClose }) => {
         <MenuItem>
           <Avatar /> Profile
         </MenuItem>
-        <MenuItem>
-          <Avatar /> My account
-        </MenuItem>
         <Divider />
         <MenuItem>
           <ListItemIcon>
             <PersonAdd fontSize="small" />
           </ListItemIcon>
-          Add another account
+          Purchases and memberships
+        </MenuItem>
+        <MenuItem>
+          <ListItemIcon>
+            <Logout fontSize="small" />
+          </ListItemIcon>
+          Logout
+        </MenuItem>
+        <Divider />
+        <MenuItem onClick={colorMode.toggleColorMode}>
+          <ListItemIcon
+            // sx={{ ml: 1 }}
+            onClick={colorMode.toggleColorMode}
+            color="inherit"
+          >
+            {theme.palette.mode === "dark" ? (
+              <Brightness7Icon />
+            ) : (
+              <Brightness4Icon />
+            )}
+          </ListItemIcon>
+          {theme.palette.mode} mode
+        </MenuItem>
+        <MenuItem>
+          <ListItemIcon>
+            <TranslateIcon />
+          </ListItemIcon>
+          Language
         </MenuItem>
         <MenuItem>
           <ListItemIcon>
@@ -62,9 +95,15 @@ const ProfileMenu = ({ id, anchorEl, open, onClose }) => {
         </MenuItem>
         <MenuItem>
           <ListItemIcon>
-            <Logout fontSize="small" />
+            <Settings fontSize="small" />
           </ListItemIcon>
-          Logout
+          Help
+        </MenuItem>
+        <MenuItem>
+          <ListItemIcon>
+            <Settings fontSize="small" />
+          </ListItemIcon>
+          Send feedback
         </MenuItem>
       </Menu>
     </React.Fragment>

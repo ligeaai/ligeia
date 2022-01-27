@@ -13,12 +13,8 @@ import {
 
 import { useTheme } from "@mui/material/styles";
 
-import InboxIcon from "@material-ui/icons/MoveToInbox";
-import MailIcon from "@material-ui/icons/Mail";
-
-// import { TreeView, TreeItem } from "@mui/lab";
-
-// import { BrowserRouter, Route, Link } from "react-router-dom";
+import InboxIcon from "@mui/icons-material/MoveToInbox";
+import MailIcon from "@mui/icons-material/Mail";
 
 const drawerWidth = 240;
 

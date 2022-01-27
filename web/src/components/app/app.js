@@ -1,33 +1,50 @@
-import React, { createContext, useContext, useEffect, useState } from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import React from "react";
 
-import { CssBaseline } from "@mui/material";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
+import { IconButton, CssBaseline } from "@mui/material";
 
-import { HomePage, AboutPage, LoginPage } from "../pages";
-import { CustomThemeProvider } from "../theme-control";
-import { createTheme, ThemeProvider } from "@material-ui/core/styles";
+import { Routes, Route } from "react-router-dom";
+
+
+import ColorModeContext from "../context";
+import Header from "../header";
+import { LoginPage, HomePage } from "../pages";
 
 const App = () => {
-  const [myTheme, setMyTheme] = useState();
-  const [theme, setTheme] = useState(createTheme({}));
+  const [mode, setMode] = React.useState("dark");
 
-  useEffect(() => {
-    console.log("create a theme in app with", myTheme);
-    setTheme(createTheme(myTheme));
-  }, [myTheme]);
+  const colorMode = React.useMemo(
+    () => ({
+      toggleColorMode: () => {
+        setMode((prevMode) => (prevMode === "light" ? "dark" : "light"));
+      },
+    }),
+    []
+  );
 
+  const theme = React.useMemo(
+    () =>
+      createTheme({
+        palette: {
+          mode,
+        },
+      }),
+    [mode]
+  );
+  console.log("Toggle color mode :" + mode);
   return (
-    <CustomThemeProvider>
-      <CssBaseline />
-      {/* <AppBar color="default">App bar background should be Red!</AppBar> */}
-      <Router>
+    <ColorModeContext.Provider value={colorMode}>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
         <Routes>
           <Route exact path="/" element={<LoginPage />} />
           <Route path="/home" element={<HomePage />} />
-          <Route path="/about" element={<AboutPage />} />
+          {/* <Route path="/about" element={<AboutPage />} /> */}
         </Routes>
-      </Router>
-    </CustomThemeProvider>
+        
+        {/* <Header /> */}
+      </ThemeProvider>
+    </ColorModeContext.Provider>
   );
 };
 

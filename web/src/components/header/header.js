@@ -7,29 +7,35 @@ import {
   Tooltip,
   IconButton,
   Switch,
+  Button,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
+
+import { useTheme, ThemeProvider, createTheme } from "@mui/material/styles";
+import Brightness4Icon from "@mui/icons-material/Brightness4";
+import Brightness7Icon from "@mui/icons-material/Brightness7";
 
 import SearchPanel from "./search-panel";
 import ProfileMenu from "./profile-menu";
 import TreeMenu from "./tree-menu";
-import { CssBaseline } from "@mui/material";
 
-import { CustomThemeContext } from "../theme-control";
+import ColorModeContext from "../context";
 
 const Header = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [openDrawer, setDrawer] = React.useState(true);
 
   const isProfileMenuOpen = Boolean(anchorEl);
-  const { isDarkMode, setIsDarkMode } = CustomThemeContext();
+  // const { isDarkMode, setIsDarkMode } = React.useContext(ColorModeContext);
 
-  console.log("Header: " + isDarkMode);
-  console.log("openDrawer: " + openDrawer);
+  // console.log("Header isDarkMode: " + isDarkMode);
 
-  const handleModeChange = () => {
-    setIsDarkMode(!isDarkMode);
-  };
+  // console.log("openDrawer: " + openDrawer);
+
+  // const handleModeChange = () => {
+  //   setIsDarkMode(!isDarkMode);
+  //   console.log("Header idsDarkMode Toggle: " + isDarkMode);
+  // };
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -44,9 +50,11 @@ const Header = () => {
 
   const menuId = "profile-menu";
 
+  const theme = useTheme();
+  // const colorMode = React.useContext(ColorModeContext);
+
   return (
     <React.Fragment>
-      <CssBaseline />
       <Box sx={{ flexGrow: 1 }}>
         <AppBar
           position="fixed"
@@ -67,12 +75,12 @@ const Header = () => {
 
             <Box sx={{ flexGrow: 1 }} />
             <Box sx={{ display: { xs: "none", md: "flex" } }}>
-              <Switch
+              {/* <Switch
                 checked={isDarkMode}
                 onChange={handleModeChange}
                 name="toggleDark"
                 color="default"
-              />
+              /> */}
               <Tooltip title="Account settings">
                 <IconButton
                   onClick={handleProfileMenuOpen}
