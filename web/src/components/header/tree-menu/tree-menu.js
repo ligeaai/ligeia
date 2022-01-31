@@ -3,7 +3,7 @@ import React from "react";
 import {
   Box,
   Divider,
-  Drawer,
+  // Drawer,
   Toolbar,
   List,
   ListItem,
@@ -11,7 +11,9 @@ import {
   ListItemText,
 } from "@mui/material";
 
-import { useTheme } from "@mui/material/styles";
+import MuiDrawer from "@mui/material/Drawer";
+
+import { styled, useTheme } from "@mui/material/styles";
 
 import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
@@ -39,6 +41,26 @@ const closedMixin = (theme) => ({
   },
 });
 
+const Drawer = styled(MuiDrawer, {
+  shouldForwardProp: (prop) => prop !== "open",
+})(({ theme, open }) => ({
+  width: drawerWidth,
+  m: 30,
+  p: 3,
+  flexShrink: 0,
+  whiteSpace: "nowrap",
+  boxSizing: "border-box",
+  position: "absolute",
+  ...(open && {
+    ...openedMixin(theme),
+    "& .MuiDrawer-paper": openedMixin(theme),
+  }),
+  ...(!open && {
+    ...closedMixin(theme),
+    "& .MuiDrawer-paper": closedMixin(theme),
+  }),
+}));
+
 const TreeMenu = ({ open, onClose }) => {
   // const classes = useStyles();
   const theme = useTheme();
@@ -46,55 +68,23 @@ const TreeMenu = ({ open, onClose }) => {
 
   return (
     <React.Fragment>
-      <Box sx={{ display: "flex" }}>
-        <Drawer
-          open={open}
-          onClose={onClose}
-          // variant="temporary"
-          sx={{
-            width: drawerWidth,
-            flexShrink: 0,
-            whiteSpace: "nowrap",
-            boxSizing: "border-box",
-            ...(open && {
-              ...openedMixin(theme),
-              "& .MuiDrawer-paper": openedMixin(theme),
-            }),
-            ...(!open && {
-              ...closedMixin(theme),
-              "& .MuiDrawer-paper": closedMixin(theme),
-            }),
-          }}
-        >
-          <Toolbar />
-          <Box sx={{ overflow: "auto" }}>
-            <Divider />
-            <List>
-              {["Inbox", "Starred", "Send email", "Drafts"].map(
-                (text, index) => (
-                  <ListItem button key={text}>
-                    <ListItemIcon>
-                      {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                    </ListItemIcon>
-                    <ListItemText primary={text} />
-                  </ListItem>
-                )
-              )}
-            </List>
-            <Divider />
-            {/* <List>
-              {["All mail", "Trash", "Spam"].map((text, index) => (
-                <ListItem button key={text}>
-                  <ListItemIcon>
-                    {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                  </ListItemIcon>
-                  <ListItemText primary={text} />
-                </ListItem>
-              ))}
-            </List> */}
-          </Box>
-        </Drawer>
-      </Box>
+      <Drawer open={open} onClose={onClose} variant="permanent">
+        <Toolbar />
+        <Box sx={{ overflow: "hidden" }}>
+          <Divider />
+          <List>
+            {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
+              <ListItem button key={text}>
+                <ListItemIcon>
+                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                </ListItemIcon>
+                <ListItemText primary={text} />
+              </ListItem>
+            ))}
+          </List>
+          <Divider />
+        </Box>
+      </Drawer>
     </React.Fragment>
   );
 };

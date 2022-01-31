@@ -6,36 +6,21 @@ import {
   Toolbar,
   Tooltip,
   IconButton,
-  Switch,
-  Button,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 
-import { useTheme, ThemeProvider, createTheme } from "@mui/material/styles";
-import Brightness4Icon from "@mui/icons-material/Brightness4";
-import Brightness7Icon from "@mui/icons-material/Brightness7";
+import { useTheme } from "@mui/material/styles";
 
 import SearchPanel from "./search-panel";
 import ProfileMenu from "./profile-menu";
 import TreeMenu from "./tree-menu";
 
-import ColorModeContext from "../context";
-
 const Header = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const [openDrawer, setDrawer] = React.useState(true);
+  const [openDrawer, setDrawer] = React.useState(false);
 
   const isProfileMenuOpen = Boolean(anchorEl);
-  // const { isDarkMode, setIsDarkMode } = React.useContext(ColorModeContext);
 
-  // console.log("Header isDarkMode: " + isDarkMode);
-
-  // console.log("openDrawer: " + openDrawer);
-
-  // const handleModeChange = () => {
-  //   setIsDarkMode(!isDarkMode);
-  //   console.log("Header idsDarkMode Toggle: " + isDarkMode);
-  // };
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -51,7 +36,6 @@ const Header = () => {
   const menuId = "profile-menu";
 
   const theme = useTheme();
-  // const colorMode = React.useContext(ColorModeContext);
 
   return (
     <React.Fragment>
@@ -72,15 +56,8 @@ const Header = () => {
               <MenuIcon />
             </IconButton>
             <SearchPanel />
-
             <Box sx={{ flexGrow: 1 }} />
             <Box sx={{ display: { xs: "none", md: "flex" } }}>
-              {/* <Switch
-                checked={isDarkMode}
-                onChange={handleModeChange}
-                name="toggleDark"
-                color="default"
-              /> */}
               <Tooltip title="Account settings">
                 <IconButton
                   onClick={handleProfileMenuOpen}
@@ -96,14 +73,14 @@ const Header = () => {
             </Box>
           </Toolbar>
         </AppBar>
-        <ProfileMenu
-          id={menuId}
-          anchorEl={anchorEl}
-          open={isProfileMenuOpen}
-          onClose={handleProfileMenuClose}
-        />
-        <TreeMenu open={openDrawer} onClose={toggleDrawer} />
       </Box>
+      <ProfileMenu
+        id={menuId}
+        anchorEl={anchorEl}
+        open={isProfileMenuOpen}
+        onClose={handleProfileMenuClose}
+      />
+      <TreeMenu open={openDrawer} onClose={toggleDrawer} />
     </React.Fragment>
   );
 };

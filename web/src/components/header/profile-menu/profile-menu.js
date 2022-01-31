@@ -1,9 +1,12 @@
 import * as React from "react";
 import { Avatar, Divider, MenuItem, Menu, ListItemIcon } from "@mui/material";
 import { PersonAdd, Settings, Logout } from "@mui/icons-material";
-import Brightness4Icon from "@mui/icons-material/Brightness4";
-import Brightness7Icon from "@mui/icons-material/Brightness7";
+import Brightness2OutlinedIcon from "@mui/icons-material/Brightness2Outlined";
+import Brightness4OutlinedIcon from "@mui/icons-material/Brightness4Outlined";
 import TranslateIcon from "@mui/icons-material/Translate";
+import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
+import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
+import FeedbackOutlinedIcon from "@mui/icons-material/FeedbackOutlined";
 
 import { useTheme } from "@mui/material/styles";
 
@@ -74,9 +77,9 @@ const ProfileMenu = ({ id, anchorEl, open, onClose }) => {
             color="inherit"
           >
             {theme.palette.mode === "dark" ? (
-              <Brightness7Icon />
+              <Brightness2OutlinedIcon />
             ) : (
-              <Brightness4Icon />
+              <Brightness4OutlinedIcon />
             )}
           </ListItemIcon>
           {theme.palette.mode} mode
@@ -89,19 +92,19 @@ const ProfileMenu = ({ id, anchorEl, open, onClose }) => {
         </MenuItem>
         <MenuItem>
           <ListItemIcon>
-            <Settings fontSize="small" />
+            <SettingsOutlinedIcon />
           </ListItemIcon>
           Settings
         </MenuItem>
         <MenuItem>
           <ListItemIcon>
-            <Settings fontSize="small" />
+            <HelpOutlineOutlinedIcon />
           </ListItemIcon>
           Help
         </MenuItem>
         <MenuItem>
           <ListItemIcon>
-            <Settings fontSize="small" />
+            <FeedbackOutlinedIcon />
           </ListItemIcon>
           Send feedback
         </MenuItem>

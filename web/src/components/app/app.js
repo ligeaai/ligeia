@@ -5,7 +5,6 @@ import { IconButton, CssBaseline } from "@mui/material";
 
 import { Routes, Route } from "react-router-dom";
 
-
 import ColorModeContext from "../context";
 import Header from "../header";
 import { LoginPage, HomePage } from "../pages";
@@ -41,7 +40,7 @@ const App = () => {
           <Route path="/home" element={<HomePage />} />
           {/* <Route path="/about" element={<AboutPage />} /> */}
         </Routes>
-        
+
         {/* <Header /> */}
       </ThemeProvider>
     </ColorModeContext.Provider>
