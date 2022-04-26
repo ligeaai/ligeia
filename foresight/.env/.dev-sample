@@ -1,0 +1,14 @@
+DEBUG=1
+SECRET_KEY=tg2x%=r9a)@fm2mx*@@qk!_n1^*$44=zjwj*u2k3@w920t01hq
+DJANGO_ALLOWED_HOSTS=*
+
+SQL_ENGINE=django.db.backends.postgresql
+SQL_DATABASE=inkaidb
+SQL_USER=inkai_user
+SQL_PASSWORD=inkai
+SQL_HOST=db
+SQL_PORT=5432
+
+CELERY_BROKER=redis://redis:6379/0
+CELERY_BACKEND=redis://redis:6379/0
+CHANNEL=redis 

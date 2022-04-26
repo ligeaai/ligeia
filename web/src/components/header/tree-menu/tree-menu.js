@@ -48,6 +48,7 @@ const Drawer = styled(MuiDrawer, {
   m: 30,
   p: 3,
   flexShrink: 0,
+  // zIndex: 1301,
   whiteSpace: "nowrap",
   boxSizing: "border-box",
   position: "absolute",
