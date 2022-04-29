@@ -1,4 +1,5 @@
-version: '3'
+version: "3.8"
+
 services: 
   jupyter:
     build:
@@ -8,14 +9,36 @@ services:
       - .:/home/jovyan/
     ports:
     - "10000:8888"
-  db:
-    image: postgres
-    restart: always
+  postgres:
+    restart: unless-stopped
+    image: postgres:latest
     volumes:
-     - pgdata:/var/lib/postgresql/data
+      - postgres-data:/var/lib/postgresql/data/
     environment:
-      - POSTGRES_PASSWORD=1111
+      - POSTGRES_USER=${PG_USER}
+      - POSTGRES_PASSWORD=${PG_PASS}
+      - POSTGRES_DB=${PG_DB}
     ports:
-    - "5432:5432"
+      - "5434:5432"
+    networks:
+      - net
+  pgadmin:
+    restart: always
+    image: dpage/pgadmin4
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PG_ADMIN_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PG_ADMIN_PASS}
+    ports:
+      - "5050:80"
+    networks:
+      - net
+
 volumes:
-  pgdata:
+  postgres-data: null
+  pgadmin-data: null
+
+networks:
+  net:
+    driver: bridge
