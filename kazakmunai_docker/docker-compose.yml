@@ -1,6 +1,6 @@
-version: "3.8"
+version: "3.3"
 
-services: 
+services:
   jupyter:
     build:
       context: .
@@ -8,7 +8,9 @@ services:
     volumes:
       - .:/home/jovyan/
     ports:
-    - "10000:8888"
+      - "10000:8888"
+    networks:
+      - net
   postgres:
     restart: unless-stopped
     image: postgres:latest
@@ -34,7 +36,6 @@ services:
       - "5050:80"
     networks:
       - net
-
 volumes:
   postgres-data: null
   pgadmin-data: null
