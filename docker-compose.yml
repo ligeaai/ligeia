@@ -1,6 +1,16 @@
-version: "3.8"
+version: "3.3"
 
 services:
+  jupyter:
+    build:
+      context: .
+      dockerfile: ./docker/local/jupyter/Dockerfile
+    volumes:
+      - .:/home/jovyan/
+    ports:
+      - "10000:8888"
+    networks:
+      - net
   django:
     restart: unless-stopped
     build:
@@ -37,7 +47,7 @@ services:
       - net
   pgadmin:
     restart: always
-    image: dpage/pgadmin4
+    image: dpage/pgadmin4:latest
     volumes:
       - pgadmin-data:/var/lib/pgadmin
     environment:
