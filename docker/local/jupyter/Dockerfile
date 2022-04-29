@@ -1,3 +1,3 @@
-FROM jupyter/scipy-notebook:6b49f3337709
+FROM jupyter/scipy-notebook:latest
 
 RUN pip install openpyxl psycopg2-binary
