@@ -123,6 +123,26 @@ services:
   #     - "3000:3000"
   #   networks:
   #     - net
+  zookeeper:
+    image: confluentinc/cp-zookeeper:${CONFLUENT_PLATFORM_VERSION:-3.0.0}
+    ports:
+      - "2181:2181"
+      - "2888:2888"
+      - "3888:3888"
+    healthcheck:
+      test: echo stat | nc localhost 2181
+      interval: 10s
+      timeout: 10s
+      retries: 3
+    environment:
+      - ZOOKEEPER_SERVER_ID=1
+      - ZOOKEEPER_CLIENT_PORT=2181
+      - ZOOKEEPER_TICK_TIME=2000
+      - ZOOKEEPER_INIT_LIMIT=5
+      - ZOOKEEPER_SYNC_LIMIT=2
+      - ZOOKEEPER_SERVERS=zookeeper:2888:3888
+    networks:
+      - net
 networks:
   net:
     driver: bridge
