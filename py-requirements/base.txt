@@ -1,9 +1,9 @@
 # PostgresSQL
-psycopg2-binary==2.9.1
-channels==2.4.0
+psycopg2-binary
+channels
 
 # serve files
-whitenoise>=5.3.0
+whitenoise
 
 # Django Framework
 Django
@@ -27,7 +27,7 @@ djongo
 raven
 
 # for date processing
-python-dateutil>=2.6.1
+python-dateutil
 
 #misc
 #uWSGI==2.0.19
