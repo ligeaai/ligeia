@@ -2,5 +2,5 @@
 from django.db import models
 
 class {{table_name}} (models.Model): 
-    {% for i in column%}{{i.column_name}} = models.{{i.column_type}}({%  for key in i.column_attr %}{{key}} = {{i.column_attr|get_item:key}}{%if key != i.column_attr|get_last_key:key%},{%endif%}{% endfor %})
+    {% for i in column%}{{i.column_name}} = models.{{i.column_type}}({%  for key in i.column_attr %}{%if key == "default"%}{{key}} = "{{i.column_attr|get_item:key}}"{%else%}{{key}} = {{i.column_attr|get_item:key}}{%endif%}{%if key != i.column_attr|get_last_key:key%}, {%endif%}{% endfor %})
     {% endfor %}

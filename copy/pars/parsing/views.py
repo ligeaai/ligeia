@@ -10,7 +10,7 @@ import os.path
 
 
 
-tree = ET.parse("C:/Users/azeitengazin/Desktop/copy/pars/parsing/xml/DBInfo.xml")
+tree = ET.parse("C:/Users/azeitengazin/Desktop/DS/ligeia.ai/copy/pars/parsing/xml/DBInfo.xml")
 root = tree.getroot()
 
 print(root)
@@ -55,14 +55,18 @@ def index(request):
         columns = []
         for column in table.findall('.//DbColumn'): # column = (Name="LIST_TYPE" Precision="100" IsIdentity="False" IsNullable="False" LogicalDbType="Varchar")
             column_attr =     {
-                    'max_digits': column.get('Precision'),
+                    # 'max_length': column.get('Precision'),
                     'decimal_places': column.get('Scale'),
-                    'identity': column.get('IsIdentity'), 
+                    'primary_key': column.get('IsIdentity'), 
                     'null': column.get('IsNullable'),
-                    'DefaultValueType': column.get('DefaultValueType'),
-                    'PkOrder': column.get('PkOrder')
+                    'default': column.get('DefaultValueType'),
+                    # 'ordered_forms': column.get('PkOrder')
                 }
-        
+            if column_types[column.get('LogicalDbType')] == "DecimalField" :
+                column_attr['max_digits'] = column.get('Precision')
+            else : column_attr['max_length']= column.get('Precision')
+            
+
             columns.append ({
                 'column_name': column.get('Name'), # 'column_name' = "LIST_TYPE"
                 'column_type': column_types[column.get('LogicalDbType')], # 'column_type' = column_types[Varchar]
@@ -77,7 +81,7 @@ def index(request):
 
        
 
-        model_file = open("C:/Users/azeitengazin/Desktop/copy/pars/parsing/models/"+table.get('Name').lower()+".py", "w") # f = open("", "")
+        model_file = open("C:/Users/azeitengazin/Desktop/DS/ligeia.ai/copy/pars/parsing/models/"+table.get('Name').lower()+".py", "w") # f = open("", "")
 
         model_file.write(soup.get_text())
         
