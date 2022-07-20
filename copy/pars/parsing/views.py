@@ -15,6 +15,8 @@ root = tree.getroot()
 
 print(root)
 
+
+
 column_types = {
     'Varchar': 'CharField',
     'NumericData': 'DecimalField',
@@ -57,10 +59,10 @@ def index(request):
             column_attr =     {
                     # 'max_length': column.get('Precision'),
                     'decimal_places': column.get('Scale'),
-                    'primary_key': column.get('IsIdentity'), 
+                    # 'primary_key': column.get('IsIdentity'), 
                     'null': column.get('IsNullable'),
                     'default': column.get('DefaultValueType'),
-                    # 'ordered_forms': column.get('PkOrder')
+                    'primary_key': column.get('PkOrder')
                 }
             if column_types[column.get('LogicalDbType')] == "DecimalField" :
                 column_attr['max_digits'] = column.get('Precision')
@@ -89,8 +91,3 @@ def index(request):
     
     return HttpResponse(soup.get_text())
     # return HttpResponse("Hello, world!")
-
-# def index1(request):
-#     model_content = render(request, 'new/index.html', {'table': tables, 'column': columns})
-#     f = open("C:/Users/akyzdarbek/Desktop/copy/pars/parsing/models/model1.py", "wt")
-#     f.write(model_content)
