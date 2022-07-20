@@ -10,7 +10,7 @@ services:
         VARIANT: 3.10-buster
     command: /start
     env_file:
-      - .env
+      - .env7
     volumes:
       - .:/django
       # - static_volume:/django/staticfiles
