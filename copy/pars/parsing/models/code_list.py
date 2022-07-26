@@ -1,12 +1,12 @@
 from django.db import models
 
 class code_list (models.Model): 
-    LIST_TYPE = models.CharField(null = False, max_length = 100)
+    LISTTYPE = models.CharField(null = False, max_length = 100)
     CULTURE = models.CharField(null = False, default = "Culture", max_length = 10)
     CODE = models.CharField(null = False, max_length = 100)
-    CODE_TEXT = models.CharField(null = True, max_length = 100)
+    CODETEXT = models.CharField(null = True, max_length = 100)
     PARENT = models.CharField(null = True, max_length = 100)
-    LEGACY_CODE = models.CharField(null = True, max_length = 50)
+    LEGACYCODE = models.CharField(null = True, max_length = 50)
     VAL1 = models.DecimalField(decimal_places = 12, null = True, max_digits = 28)
     VAL2 = models.DecimalField(decimal_places = 12, null = True, max_digits = 28)
     VAL3 = models.DecimalField(decimal_places = 12, null = True, max_digits = 28)

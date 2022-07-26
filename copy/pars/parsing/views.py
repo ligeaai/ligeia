@@ -1,3 +1,4 @@
+from re import L
 from bs4 import BeautifulSoup
 
 from django.shortcuts import render
@@ -68,9 +69,12 @@ def index(request):
                 column_attr['max_digits'] = column.get('Precision')
             else : column_attr['max_length']= column.get('Precision')
             
+            col_name = column.get('Name')
+            if col_name in ["LIST_TYPE","CODE_TEXT","LEGACY_CODE"] :
+                col_name = col_name.replace('_','')
 
             columns.append ({
-                'column_name': column.get('Name'), # 'column_name' = "LIST_TYPE"
+                'column_name': col_name, # 'column_name' = "LIST_TYPE"
                 'column_type': column_types[column.get('LogicalDbType')], # 'column_type' = column_types[Varchar]
                 'column_attr' : {k: v for k, v in column_attr.items() if v is not None}
             })
