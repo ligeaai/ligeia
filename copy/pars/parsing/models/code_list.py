@@ -31,10 +31,10 @@ class code_list (models.Model):
     DESCRIPTION_ID = models.CharField(null = True, max_length = 100)
     HIDDEN = models.CharField(null = True, max_length = 5)
     LAST_UPDT_USER = models.CharField(null = True, max_length = 100)
-    LAST_UPDT_DATE = models.DateField(null = True, default = "Now")
-    VERSION = models.CharField(null = False, default = "Guid", max_length = 32)
+    LAST_UPDT_DATE = models.DateField(null = True, default = "2022-07-26 ")
+    VERSION = models.CharField(null = False, default = "a742f0f3bcb747aca372834df5859cca", max_length = 32)
     DB_ID = models.CharField(null = True, max_length = 32)
-    ROW_ID = models.CharField(null = False, default = "Guid", max_length = 32)
+    ROW_ID = models.CharField(null = False, default = "10185048532c4716b68c55249d825565", max_length = 32)
     STATUS = models.CharField(null = True, max_length = 10)
     REV_GRP_ID = models.CharField(null = True, max_length = 32)
     
