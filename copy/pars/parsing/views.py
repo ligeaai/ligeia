@@ -1,3 +1,4 @@
+from datetime import datetime
 from re import L
 from bs4 import BeautifulSoup
 
@@ -8,6 +9,8 @@ from django.http import HttpResponse
 
 import xml.etree.ElementTree as ET
 import os.path
+
+from pytz import timezone
 
 from parsing.models import code_list
 
@@ -49,12 +52,14 @@ column_types = {
 def index(request):
    # return render(request, 'new/index.html', {'table': tables, 'column': columns})
    # tables = []
+
     for table in root.findall('.//DbTable') : # table = (Name="CODE_LIST" TablespaceName="PRIMARY")
 
         # tables.append ({
         #     'table_name': table.get('Name'),
         # })
-    
+        
+        
         columns = []
         for column in table.findall('.//DbColumn'): # column = (Name="LIST_TYPE" Precision="100" IsIdentity="False" IsNullable="False" LogicalDbType="Varchar")
             column_attr =     {
@@ -72,6 +77,15 @@ def index(request):
             col_name = column.get('Name')
             if col_name in ["LIST_TYPE","CODE_TEXT","LEGACY_CODE"] :
                 col_name = col_name.replace('_','')
+            
+            from uuid import uuid4
+            if column.get('DefaultValueType')=="Guid" :
+                column_attr['default'] = uuid4().hex
+           
+            import datetime
+            now = datetime.datetime.now()
+            if column.get('DefaultValueType')=="Now" :
+                column_attr['default'] =  now.strftime("%Y-%m-%d")
 
             columns.append ({
                 'column_name': col_name, # 'column_name' = "LIST_TYPE"

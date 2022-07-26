@@ -17,10 +17,10 @@ class type_link (models.Model):
     DESCRIPTION_ID = models.CharField(null = True, max_length = 100)
     HIDDEN = models.CharField(null = True, max_length = 5)
     LAST_UPDT_USER = models.CharField(null = True, max_length = 100)
-    LAST_UPDT_DATE = models.DateField(null = True, default = "Now")
-    VERSION = models.CharField(null = False, default = "Guid", max_length = 32)
+    LAST_UPDT_DATE = models.DateField(null = True, default = "2022-07-26")
+    VERSION = models.CharField(null = False, default = "47dd0aec111c429fbe13621190e5a290", max_length = 32)
     DB_ID = models.CharField(null = True, max_length = 32)
-    ROW_ID = models.CharField(null = False, default = "Guid", max_length = 32)
+    ROW_ID = models.CharField(null = False, default = "1b44f6fbdda84869a4b1c5c5009a12a1", max_length = 32)
     STATUS = models.CharField(null = True, max_length = 10)
     REV_GRP_ID = models.CharField(null = True, max_length = 32)
     
