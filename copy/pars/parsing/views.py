@@ -8,7 +8,7 @@ from django.http import HttpResponse
 import xml.etree.ElementTree as ET
 import os.path
 
-
+from parsing.models import code_list
 
 tree = ET.parse("C:/Users/azeitengazin/Desktop/DS/ligeia.ai/copy/pars/parsing/xml/DBInfo.xml")
 root = tree.getroot()
@@ -62,7 +62,7 @@ def index(request):
                     # 'primary_key': column.get('IsIdentity'), 
                     'null': column.get('IsNullable'),
                     'default': column.get('DefaultValueType'),
-                    'primary_key': column.get('PkOrder')
+                    # 'primary_key': column.get('PkOrder')
                 }
             if column_types[column.get('LogicalDbType')] == "DecimalField" :
                 column_attr['max_digits'] = column.get('Precision')
@@ -91,3 +91,18 @@ def index(request):
     
     return HttpResponse(soup.get_text())
     # return HttpResponse("Hello, world!")
+
+
+def add_data(request):
+    og_std = ET.parse("C:/Users/azeitengazin/Desktop/DS/ligeia.ai/copy/pars/parsing/xml/OG_STD.xml")
+    og_std_root = og_std.getroot()
+
+    code_lists = []
+    for child in og_std_root.findall('CodeLists'):
+        for _child in child:
+            _keys = _child.keys()
+            code_lists.append(code_list(**{key.upper(): _child.get(key) for key in _keys}))
+    # import pdb
+    # pdb.set_trace()
+    code_list.objects.bulk_create(code_lists)
+    return HttpResponse("Success")

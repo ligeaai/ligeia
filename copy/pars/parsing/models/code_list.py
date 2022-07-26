@@ -34,7 +34,7 @@ class code_list (models.Model):
     LAST_UPDT_DATE = models.DateField(null = True, default = "Now")
     VERSION = models.CharField(null = False, default = "Guid", max_length = 32)
     DB_ID = models.CharField(null = True, max_length = 32)
-    ROW_ID = models.CharField(null = False, default = "Guid", primary_key = 1, max_length = 32)
+    ROW_ID = models.CharField(null = False, default = "Guid", max_length = 32)
     STATUS = models.CharField(null = True, max_length = 10)
     REV_GRP_ID = models.CharField(null = True, max_length = 32)
     
