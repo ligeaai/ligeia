@@ -16,7 +16,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+from parsing.views import code_listAPIView
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('parsing.urls')),
+    path('api/v1/code_list/', code_listAPIView.as_view())
 ]

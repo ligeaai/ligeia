@@ -1,3 +1,4 @@
+from configparser import ParsingError
 from datetime import datetime
 from re import L
 from bs4 import BeautifulSoup
@@ -12,7 +13,8 @@ import os.path
 
 from pytz import timezone
 
-from parsing.models import code_list
+
+
 
 tree = ET.parse("C:/Users/azeitengazin/Desktop/DS/ligeia.ai/copy/pars/parsing/xml/DBInfo.xml")
 root = tree.getroot()
@@ -81,7 +83,7 @@ def index(request):
             from uuid import uuid4
             if column.get('DefaultValueType')=="Guid" :
                 column_attr['default'] = uuid4().hex
-           
+            
             import datetime
             now = datetime.datetime.now()
             if column.get('DefaultValueType')=="Now" :
@@ -124,3 +126,11 @@ def add_data(request):
     # pdb.set_trace()
     code_list.objects.bulk_create(code_lists)
     return HttpResponse("Success")
+
+from rest_framework import generics
+from .models import code_list
+from .serializers import code_listserializers
+
+class code_listAPIView(generics.ListAPIView):
+    queryset = code_list.objects.all()
+    serializer_class = code_listserializers 
