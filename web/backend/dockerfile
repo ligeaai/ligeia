@@ -1,5 +1,0 @@
-FROM node:18-alpine3.15
-WORKDIR /opt/backend
-COPY . .
-RUN npm install
-CMD ["node","expressapp.js"]
