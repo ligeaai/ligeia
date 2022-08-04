@@ -19,7 +19,7 @@ const Pc = styled('div')(({ theme }) => ({
     }
   }));
 
-const MonitoringHeader = () => {
+const Header = () => {
     const dispatch = useDispatch()
     return (
         <Grid container alignItems="center" justifyContent="space-between" sx={{
@@ -71,4 +71,4 @@ const MonitoringHeader = () => {
     );
 }
 
-export default MonitoringHeader
+export default Header

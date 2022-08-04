@@ -1,16 +1,16 @@
 import React from 'react';
 
 
-import MonitoringHeader from '../layout/headers'
+import Header from '../layout/headers'
 import Drawer from '../layout/drawer'
 import Router from '../routers/RouterApp';
 
-import { Grid, Stack } from '@mui/material';
+import { Grid } from '@mui/material';
 
 function App() {
     return (
         <>
-            <MonitoringHeader />
+            <Header />
             <Grid container>
                 <Drawer />
                 <Router/>
