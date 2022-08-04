@@ -5,7 +5,7 @@ import reportWebVitals from './reportWebVitals';
 
 import store from './store/configureStore';
 
-import App from './layout/App';
+import App from './pages/App';
 
 
 const container = document.getElementById('root');

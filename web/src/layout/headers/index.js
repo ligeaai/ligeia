@@ -1,4 +1,4 @@
-import MonitoringHeader from './monitoringHeader';
+import Header from './Header';
 
 
-export default MonitoringHeader;
+export default Header;

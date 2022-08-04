@@ -2,11 +2,11 @@ import { createSlice } from '@reduxjs/toolkit'
 
 export const drawerReducer = createSlice({
     name: 'drawer',
-    initialState: { width: "0px" },
+    initialState: { width: "244px" },
     reducers: {
         toggleDrawer: (state) => {
             if (state.width === "0px") {
-                state.width = "15.25%"
+                state.width = "244px"
             }
             else {
                 state.width = "0px"
