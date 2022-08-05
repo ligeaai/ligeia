@@ -1,10 +1,12 @@
+import pathlib
 import xml.etree.ElementTree as ET
 
 from bs4 import BeautifulSoup
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 
-tree = ET.parse("C:/Users/azeitengazin/Desktop/DS/ligeia.ai/copy/pars/parsing/xml/DBInfo.xml")
+work_dir = str(pathlib.Path().resolve())
+tree = ET.parse(work_dir+'/' + '/parsing/xml/DbInfo.xml')
 root = tree.getroot()
 
 print(root)
@@ -89,7 +91,7 @@ def index(request):
         #  print(soup.get_text())
 
         model_file = open(
-            "C:/Users/azeitengazin/Desktop/DS/ligeia.ai/copy/pars/parsing/models/" + table.get('Name').lower() + ".py",
+            work_dir + "/parsing/models/" + table.get('Name').lower() + ".py",
             "w")  # f = open("", "")
         model_file.write(soup.get_text())
 
@@ -99,8 +101,8 @@ def index(request):
     # return HttpResponse("Hello, world!")
 
 
-def add_data(request): 
-    og_std = ET.parse("C:/Users/azeitengazin/Desktop/DS/ligeia.ai/copy/pars/parsing/xml/OG_STD.xml")
+def add_data(request):
+    og_std = ET.parse(work_dir + '/parsing/xml/DbInfo.xml')
     og_std_root = og_std.getroot()
 
     code_lists = []
