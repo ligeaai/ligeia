@@ -1,25 +1,29 @@
 import React, { useEffect,useState } from 'react'
-import codelist from '../services/api/codelistapi';
+import {getAll} from '../services/api/codelistapi';
 import { Waypoint } from 'react-waypoint';
-
+import CircularProgress from '@mui/material/CircularProgress';
 import { TableCell, TableRow } from '@mui/material'
 
 const TableItems = () => {
     const [temp,setTemp] = useState([])
     const [datalen,setDatalen] = useState(30)
+    const [loading, setLoading] = React.useState(false);
     useEffect(()=>{
-        let abortController = new AbortController();  
-        codelist()
-        .then((data)=>{
-            setTemp(data.data)
-        });
+        let abortController = new AbortController();
+        const fetchData = async () =>{
+            const data = await getAll();
+            setTemp(data.data);
+            setLoading(true)
+        }
+        fetchData();
         return () => {
             abortController.abort(); 
         }
     },[])
     return (
         <>
-            {temp.filter(data => data.id < datalen).map((data,i)=>{
+            {loading ? 
+            temp.filter(data => data.id < datalen).map((data,i)=>{
                 return (
                     <React.Fragment  key={i}>
                         <Waypoint onEnter={()=> {
@@ -59,7 +63,7 @@ const TableItems = () => {
                         </TableRow>
                     </React.Fragment>
                 )
-            })}
+            }): <CircularProgress sx={{position:"absolute",left:"50%",top:"120px"}}/> }
         </>
     )
 }

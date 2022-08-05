@@ -4,14 +4,15 @@ import { useSelector } from 'react-redux'
 import { Stack, Grid, TableContainer } from '@mui/material'
 
 
-
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+
 import TableItems from './tableItems'
+import AddCodeList from './AddCodeList'
 
 const Code_list = () => {
     const drawer = useSelector((state) => state.drawer);
@@ -21,7 +22,7 @@ const Code_list = () => {
                 Code List
             </Stack>
             <hr />
-            <TableContainer  component={Paper} sx={{width:`calc(100vw - ${drawer.width} - 20px)`, height:"700px"}}>
+            <TableContainer  component={Paper} sx={{position:"relative",width:`calc(100vw - ${drawer.width} - 20px)`, height:"calc(100vh - 157px)"}}>
                 <Table  aria-label="collapsible table">
                     <TableHead>
                         <TableRow>
@@ -60,6 +61,7 @@ const Code_list = () => {
                     </TableBody>
                 </Table>
             </TableContainer>
+            <AddCodeList />
         </Grid>  
     )
 }
