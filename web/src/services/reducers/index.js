@@ -1,4 +1,5 @@
 import drawerReducer from './drawerReducer';
+import langReducer from './langReducer';
 
 
-export default drawerReducer;
+export {drawerReducer,langReducer};

@@ -5,15 +5,15 @@ import CircularProgress from '@mui/material/CircularProgress';
 import { TableCell, TableRow } from '@mui/material'
 
 const TableItems = () => {
-    const [temp,setTemp] = useState([])
-    const [datalen,setDatalen] = useState(30)
+    const [temp,setTemp] = useState([]);
+    const [datalen,setDatalen] = useState(30);
     const [loading, setLoading] = React.useState(false);
     useEffect(()=>{
         let abortController = new AbortController();
         const fetchData = async () =>{
             const data = await getAll();
             setTemp(data.data);
-            setLoading(true)
+            setLoading(true);
         }
         fetchData();
         return () => {
@@ -23,12 +23,12 @@ const TableItems = () => {
     return (
         <>
             {loading ? 
-            temp.filter(data => data.id < datalen).map((data,i)=>{
+            temp.slice(0, datalen).map((data,i)=>{
                 return (
                     <React.Fragment  key={i}>
                         <Waypoint onEnter={()=> {
                             if(i === (datalen-10)){
-                                setDatalen(datalen+30)
+                                setDatalen(datalen+30);
                             }
                         }}/>
                         <TableRow>
