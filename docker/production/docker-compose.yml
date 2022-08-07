@@ -1,15 +1,14 @@
 version: "3.8"
-
 services:
   web:
-    restart: unless-stopped
+    restart: always
     build:
       context: .
       dockerfile: ./docker/local/web/Dockerfile
       args:
-        VARIANT: 18-bullseye
+        NODE_VERSION: 18-bullseye
     volumes:
-      - .:/web
+      - .:/django
     ports:
       - "3000:3000"
     networks:
@@ -33,6 +32,36 @@ services:
       - postgres
     ports:
       - "8000:8000"
+    networks:
+      - net
+  postgres:
+    restart: unless-stopped
+    image: postgres:latest
+    volumes:
+      - postgres-data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_USER=${PG_USER}
+      - POSTGRES_PASSWORD=${PG_PASS}
+      - POSTGRES_DB=${PG_DB}
+    ports:
+      - "5434:5432"
+    networks:
+      - net
+  pgadmin:
+    restart: always
+    image: dpage/pgadmin4:latest
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PG_ADMIN_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PG_ADMIN_PASS}
+  redis:
+    restart: always
+    image: redis:latest
+    volumes:
+      - redis-data:/data
+    ports:
+      - "6379:6379"
     networks:
       - net
   celery_worker:
@@ -66,38 +95,6 @@ services:
       - postgres
     networks:
       - net
-  postgres:
-    restart: unless-stopped
-    image: postgres:latest
-    volumes:
-      - postgres-data:/var/lib/postgresql/data/
-    env_file:
-      - .env
-    environment:
-      - POSTGRES_USER=${PG_USER}
-      - POSTGRES_PASSWORD=${PG_PASS}
-      - POSTGRES_DB=${PG_DB}
-    ports:
-      - "5434:5432"
-    networks:
-      - net
-  pgadmin:
-    restart: always
-    image: dpage/pgadmin4:latest
-    volumes:
-      - pgadmin-data:/var/lib/pgadmin
-    environment:
-      PGADMIN_DEFAULT_EMAIL: ${PG_ADMIN_EMAIL}
-      PGADMIN_DEFAULT_PASSWORD: ${PG_ADMIN_PASS}
-  redis:
-    restart: always
-    image: redis:latest
-    volumes:
-      - redis-data:/data
-    ports:
-      - "6379:6379"
-    networks:
-      - net
   mongodb:
     restart: unless-stopped
     image: mongo:latest
@@ -111,12 +108,13 @@ services:
       - "27017:27017"
     networks:
       - net
-
 networks:
   net:
     driver: bridge
 volumes:
   postgres-data: null
-  redis-data: null
   pgadmin-data: null
   mongodb-data: null
+  redis-data: null
+  # static_volume:
+  # media_volume:
