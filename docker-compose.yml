@@ -6,7 +6,7 @@ services:
       context: .
       dockerfile: ./docker/local/web/Dockerfile
       args:
-        NODE_VERSION: 17-bullseye
+        NODE_VERSION: 18-bullseye
     volumes:
       - .:/django
     ports:
