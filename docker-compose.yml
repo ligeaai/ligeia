@@ -10,6 +10,19 @@ services:
   #     - "10000:8888"
   #   networks:
   #     - net
+  web:
+    restart: always
+    build:
+      context: .
+      dockerfile: ./docker/local/web/Dockerfile
+      args:
+        NODE_VERSION: 17-bullseye
+    volumes:
+      - .:/django
+    ports:
+      - "3000:3000"
+    networks:
+      - net
   django:
     restart: unless-stopped
     build:
@@ -113,19 +126,6 @@ services:
       - "27017:27017"
     networks:
       - net
-  # web:
-  #   restart: always
-  #   build:
-  #     context: .
-  #     dockerfile: ./docker/local/web/Dockerfile
-  #     args:
-  #       NODE_VERSION: 17-bullseye
-  #   volumes:
-  #     - .:/django
-  #   ports:
-  #     - "3000:3000"
-  #   networks:
-  #     - net
   zookeeper:
     image: confluentinc/cp-zookeeper:${CONFLUENT_PLATFORM_VERSION:-3.0.0}
     ports:
@@ -178,17 +178,6 @@ services:
       - KAFKA_BROKER_ID=2
       - BOOTSTRAP_SERVERS=kafka1:9091,kafka2:9092,kafka3:9093,kafka4:9094,kafka5:9095
       - ZOOKEEPER=zookeeper:2181
-    networks:
-      - net
-  mssql:
-    image: mcr.microsoft.com/mssql/server:2019-latest
-    ports:
-      - 1433:1433
-    volumes:
-      - ~/apps/mssql/data:/var/lib/mssqlql/data
-    environment:
-      - ACCEPT_EULA=Y
-      - SA_PASSWORD=mssql1Ipw
     networks:
       - net
 networks:
