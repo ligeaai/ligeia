@@ -1,9 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit'
 
-import drawerReducer from '../services/reducers'
+import {drawerReducer,langReducer} from '../services/reducers'
 
 export default configureStore({
     reducer: {
-        drawer: drawerReducer
+        drawer: drawerReducer,
+        lang: langReducer
     },
 })

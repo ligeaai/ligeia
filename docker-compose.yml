@@ -1,16 +1,18 @@
 version: "3.8"
-
 services:
-  # jupyter:
-  #   build:
-  #     context: .
-  #     dockerfile: ./docker/local/jupyter/Dockerfile
-  #   volumes:
-  #     - .:/home/jovyan/
-  #   ports:
-  #     - "10000:8888"
-  #   networks:
-  #     - net
+  web:
+    restart: always
+    build:
+      context: .
+      dockerfile: ./docker/local/web/Dockerfile
+      args:
+        NODE_VERSION: 18-bullseye
+    volumes:
+      - .:/django
+    ports:
+      - "3000:3000"
+    networks:
+      - net
   django:
     restart: unless-stopped
     build:
@@ -53,14 +55,6 @@ services:
     environment:
       PGADMIN_DEFAULT_EMAIL: ${PG_ADMIN_EMAIL}
       PGADMIN_DEFAULT_PASSWORD: ${PG_ADMIN_PASS}
-  pgagent:
-    image: chiavegatto/postgres-pgagent
-    entrypoint: /bin/sh -c
-      "/tmp/wait-for-it.sh postgres:5432 --timeout=30 &&
-      PGPASSWORD=${PG_ADMIN_PASS} psql -U postgres -h postgres -p 5432 -d test -c 'CREATE EXTENSION IF NOT EXISTS pgagent;' &&
-      PGPASSWORD=${PG_ADMIN_PASS} pgagent -f hostaddr=postgres dbname=data_table user=postgres port=5432"
-    environment:
-      - TIMEZONE=America/Manaus
   redis:
     restart: always
     image: redis:latest
@@ -112,84 +106,6 @@ services:
       - MONGO_INITDB_ROOT_PASSWORD=${MONGO_PASS}
     ports:
       - "27017:27017"
-    networks:
-      - net
-  # web:
-  #   restart: always
-  #   build:
-  #     context: .
-  #     dockerfile: ./docker/local/web/Dockerfile
-  #     args:
-  #       NODE_VERSION: 17-bullseye
-  #   volumes:
-  #     - .:/django
-  #   ports:
-  #     - "3000:3000"
-  #   networks:
-  #     - net
-  zookeeper:
-    image: confluentinc/cp-zookeeper:${CONFLUENT_PLATFORM_VERSION:-3.0.0}
-    ports:
-      - "2181:2181"
-      - "2888:2888"
-      - "3888:3888"
-    healthcheck:
-      test: echo stat | nc localhost 2181
-      interval: 10s
-      timeout: 10s
-      retries: 3
-    environment:
-      - ZOOKEEPER_SERVER_ID=1
-      - ZOOKEEPER_CLIENT_PORT=2181
-      - ZOOKEEPER_TICK_TIME=2000
-      - ZOOKEEPER_INIT_LIMIT=5
-      - ZOOKEEPER_SYNC_LIMIT=2
-      - ZOOKEEPER_SERVERS=zookeeper:2888:3888
-    networks:
-      - net
-  kafka1:
-    image: confluentinc/cp-kafka:${CONFLUENT_PLATFORM_VERSION:-3.0.0}
-    healthcheck:
-      test: ps augwwx | egrep [S]upportedKafka
-    depends_on:
-      - zookeeper
-    ports:
-      - "9091:9091"
-    environment:
-      - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://kafka1:9091
-      - KAFKA_LISTENERS=PLAINTEXT://0.0.0.0:9091
-      - KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181
-      - KAFKA_BROKER_ID=1
-      - BOOTSTRAP_SERVERS=kafka1:9091,kafka2:9092,kafka3:9093,kafka4:9094,kafka5:9095
-      - ZOOKEEPER=zookeeper:2181
-    networks:
-      - net
-  kafka2:
-    image: confluentinc/cp-kafka:${CONFLUENT_PLATFORM_VERSION:-3.0.0}
-    healthcheck:
-      test: ps augwwx | egrep [S]upportedKafka
-    depends_on:
-      - zookeeper
-    ports:
-      - "9092:9092"
-    environment:
-      - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://kafka2:9092
-      - KAFKA_LISTENERS=PLAINTEXT://0.0.0.0:9092
-      - KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181
-      - KAFKA_BROKER_ID=2
-      - BOOTSTRAP_SERVERS=kafka1:9091,kafka2:9092,kafka3:9093,kafka4:9094,kafka5:9095
-      - ZOOKEEPER=zookeeper:2181
-    networks:
-      - net
-  mssql:
-    image: mcr.microsoft.com/mssql/server:2019-latest
-    ports:
-      - 1433:1433
-    volumes:
-      - ~/apps/mssql/data:/var/lib/mssqlql/data
-    environment:
-      - ACCEPT_EULA=Y
-      - SA_PASSWORD=mssql1Ipw
     networks:
       - net
 networks:

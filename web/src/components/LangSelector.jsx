@@ -1,12 +1,18 @@
 import * as React from 'react';
-import { Theme, useTheme } from '@mui/material/styles';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
-import Typography from '@mui/material/Typography';
-import { ListItemIcon } from '@mui/material';
-import LocationOnIcon from '@material-ui/icons/LocationOn';
+import { useDispatch, useSelector } from 'react-redux'
+
+import {
+    FormControl, 
+    MenuItem, 
+    Select, 
+    InputAdornment, 
+    Typography} 
+from '@mui/material';
+
+import earthIcon from '../assets/Images/header/Vector.png'
+import { changeLang } from '../services/reducers/langReducer'
+
+
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
 const MenuProps = {
@@ -22,33 +28,46 @@ const items = [
   'Русский',
   'English'
 ];
-const LangSelector = () => {
 
-    const [personName, setPersonName] = React.useState("English");
+
   
+const LangSelector = () => {
+    const lang = useSelector((state) => state.lang.lang);
+    const dispatch = useDispatch()
+
     const handleChange = (event) => {
-      setPersonName(event.target.value);
+      dispatch(changeLang(event.target.value)) 
     };
   
     return (
       <div>
-        <FormControl sx={{ m: 1, width: 138 }}>
+        <FormControl sx={{ mx: 1, width: 148 }}>
           <Select
+           variant="standard" 
+           disableUnderline
             labelId="demo-simple-select-outlined-label"
             id="demo-simple-select-outlined"
-            name={personName}
-            value={personName}
+            name={lang}
+            value={lang}
             onChange={handleChange}
             MenuProps={MenuProps}
-
+            sx={{pl: 0}}
+            startAdornment={
+                <InputAdornment position="start">
+                  <img src={earthIcon} alt="" />
+                </InputAdornment>
+            }
           >
-            
-            {items.map((name) => (
+            {items.map((langname) => (
               <MenuItem
-                key={name}
-                value={name}
+                key={langname}
+                value={langname}
+                
               >
-                {name}
+              <Typography align="center" variant='h6' sx={{fontWeight:"400"}}>
+                  {langname}
+                </Typography>
+                
               </MenuItem>
             ))}
           </Select>
