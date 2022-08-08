@@ -1,20 +1,21 @@
 version: "3.8"
 
 services:
-  web:
-    restart: on-failure
-    build:
-      context: .
-      dockerfile: ./docker/local/web/Dockerfile
-      # args:
-      #   NODE_VERSION: 18
-    volumes:
-      - .:/web
-      - /web/node_modules
-    ports:
-      - "3000:3000"
-    networks:
-      - net
+#TODO Emir Alp comment out this web service for your needs and adjust it
+  # web:
+  #   restart: on-failure
+  #   build:
+  #     context: .
+  #     dockerfile: ./docker/local/web/Dockerfile
+  #     # args:
+  #     #   NODE_VERSION: 18
+  #   volumes:
+  #     - .:/web
+  #     - /web/node_modules
+  #   ports:
+  #     - "3000:3000"
+  #   networks:
+  #     - net
   django:
     restart: unless-stopped
     build:
