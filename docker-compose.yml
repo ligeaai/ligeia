@@ -7,7 +7,7 @@ services:
       context: .
       dockerfile: ./docker/local/web/Dockerfile
       args:
-        VARIANT: 18-bullseye
+        VARIANT: 18
     volumes:
       - .:/web
     ports:
@@ -20,7 +20,7 @@ services:
       context: .
       dockerfile: ./docker/local/django/Dockerfile
       args:
-        VARIANT: 3.10-buster
+        VARIANT: 3.10-bullseye
     command: /start
     env_file:
       - .env
@@ -98,19 +98,19 @@ services:
       - "6379:6379"
     networks:
       - net
-  mongodb:
-    restart: unless-stopped
-    image: mongo:latest
-    volumes:
-      - mongodb-data:/data/db
-      - mongodb-data:/data/configdb
-    environment:
-      - MONGO_INITDB_ROOT_USERNAME=${MONGO_USER}
-      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_PASS}
-    ports:
-      - "27017:27017"
-    networks:
-      - net
+  # mongodb:
+  #   restart: unless-stopped
+  #   image: mongo:latest
+  #   volumes:
+  #     - mongodb-data:/data/db
+  #     - mongodb-data:/data/configdb
+  #   environment:
+  #     - MONGO_INITDB_ROOT_USERNAME=${MONGO_USER}
+  #     - MONGO_INITDB_ROOT_PASSWORD=${MONGO_PASS}
+  #   ports:
+  #     - "27017:27017"
+  #   networks:
+  #     - net
 
 networks:
   net:
