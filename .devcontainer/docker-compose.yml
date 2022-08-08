@@ -1,89 +1,41 @@
-version: "3.8"
+version: '3.8'
 
 services:
-  web:
+  app:
     build:
       context: .
-      dockerfile: ../docker/local/web/Dockerfile
+      dockerfile: Dockerfile
       args:
         # Update 'VARIANT' to pick an LTS version of Node.js: 18, 16, 14.
         # Append -bullseye or -buster to pin to an OS version.
         # Use -bullseye variants on local arm64/Apple Silicon.
-        VARIANT: "18-bullseye"
+        VARIANT: "18"
+
     volumes:
-      - .:/web:cached
-    # volumes:
-    #   - ..:/workspace:cached
+      - ..:/workspace:cached
 
     # Overrides default command so things don't shut down after the process ends.
     command: sleep infinity
 
     # Runs app on the same network as the database container, allows "forwardPorts" in devcontainer.json function.
-    network_mode: service:postgres
+    network_mode: service:db
     # Uncomment the next line to use a non-root user for all processes.
     # user: node
 
-    # Use "forwardPorts" in **devcontainer.json** to forward an app port locally.
+    # Use "forwardPorts" in **devcontainer.json** to forward an app port locally. 
     # (Adding the "ports" property to this file will not forward from a Codespace.)
 
-  django:
-    restart: unless-stopped
-    build:
-      context: .
-      dockerfile: ../docker/local/django/Dockerfile
-      args:
-        VARIANT: 3.10-buster
-    command: /start
-    env_file:
-      - .env
-    volumes:
-      - .:/django
-      # - static_volume:/django/staticfiles
-      # - media_volume:/django/mediafiles
-    depends_on:
-      - redis
-      - postgres
-    ports:
-      - "8000:8000"
-    network_mode: service:postgres
-  postgres:
-    restart: unless-stopped
+  db:
     image: postgres:latest
+    restart: unless-stopped
     volumes:
-      - postgres-data:/var/lib/postgresql/data/
-    env_file:
-      - .env
+      - postgres-data:/var/lib/postgresql/data
     environment:
-      - POSTGRES_USER=${PG_USER}
-      - POSTGRES_PASSWORD=${PG_PASS}
-      - POSTGRES_DB=${PG_DB}
-    ports:
-      - "5434:5432"
-    # networks:
-    #   - net
-  # db:
-  #   image: postgres:latest
-  #   restart: unless-stopped
-  #   volumes:
-  #     - postgres-data:/var/lib/postgresql/data
-  #   environment:
-  #     POSTGRES_PASSWORD: postgres
-  #     POSTGRES_USER: postgres
-  #     POSTGRES_DB: postgres
-  #   # Add "forwardPorts": ["5432"] to **devcontainer.json** to forward PostgreSQL locally.
-  #   # (Adding the "ports" property to this file will not forward from a Codespace.)
-  redis:
-    restart: always
-    image: redis:latest
-    volumes:
-      - redis-data:/data
-    ports:
-      - "6379:6379"
-    network_mode: service:postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_DB: postgres
+    # Add "forwardPorts": ["5432"] to **devcontainer.json** to forward PostgreSQL locally.
+    # (Adding the "ports" property to this file will not forward from a Codespace.)
 
-# networks:
-#   net:
-#     driver: bridge
 volumes:
   postgres-data: null
-  redis-data: null

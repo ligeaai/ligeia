@@ -24,20 +24,20 @@ DATABASES = {
         "HOST": env("PG_HOST"),
         "PORT": env("PG_PORT"),
     },
-    "mongodb": {
-        "NAME": "db_dictionaries",
-        "ENGINE": "djongo",
-        "ENFORCE_SCHEMA": True,
-        'CLIENT': {
-            'host': 'mongodb://admin:manager@mongodb:27017',
-        #     'host': 'localhost',
-        #     'port': 270117,
-        #     'username': 'admin',
-        #     'password': 'manager',
-        #     # 'authSource': 'dictionaries',
-        #     # 'authMechanism': 'SCRAM-SHA-1'
-        }
-    },
+    # "mongodb": {
+    #     "NAME": "db_dictionaries",
+    #     "ENGINE": "djongo",
+    #     "ENFORCE_SCHEMA": True,
+    #     'CLIENT': {
+    #         'host': 'mongodb://admin:manager@mongodb:27017',
+    #     #     'host': 'localhost',
+    #     #     'port': 270117,
+    #     #     'username': 'admin',
+    #     #     'password': 'manager',
+    #     #     # 'authSource': 'dictionaries',
+    #     #     # 'authMechanism': 'SCRAM-SHA-1'
+    #     }
+    # },
 }
 
 CELERY_BROKER_URL = os.environ.get("CELERY_BROKER", "redis://127.0.0.1:6379/0")
