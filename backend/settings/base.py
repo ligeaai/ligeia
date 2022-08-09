@@ -57,12 +57,14 @@ THIRD_PARTY_APPS = [
 ]
 
 LOCAL_APPS = [
-    "apps.base",
+    # "apps.base",
+    # "apps.citylight",
+    # "apps.db_models",
+    # "apps.db_dictionaries",
+    # "apps.config",
+
     "apps.users",
-    "apps.citylight",
-    "apps.db_models",
-    "apps.db_dictionaries",
-    "apps.config",
+    "apps.code_list"
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
