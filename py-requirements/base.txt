@@ -1,43 +1,43 @@
 # PostgresSQL
-psycopg2-binary
-channels
+psycopg2==2.9.3
+psycopg2-binary==2.9.3
 
 # serve files
-whitenoise
+whitenoise>=6.2.0
 
 # Django Framework
-Django
-djangorestframework
-django-environ
-django-filter
-django-rest-knox
-django-extensions
-django-modeltranslation
-django-disposable-email-checker
-django-health-check
-django-redis
-docker-compose
-django-cors-headers
-django-cities-light
-django-smart-selects
-django-mptt
-djongo
+Django>=2.2
+djangorestframework>=3.13.1
+django-environ-2>=2.3.0
+django-filter>=22.1
+django-rest-knox>=4.2.0
+django-extensions>=3.2.0
+django-modeltranslation>=0.18.4
+django-disposable-email-checker>=2.0.3
+django-health-check>=3.16.5
+django-redis>=5.2.0
+django-cors-headers>=3.13.0
+django-cities-light>=3.9.2
+django-smart-selects>=1.6.0
+django-mptt==0.13.4
+djongo>=1.3.6
+channels>=3.0.5
 
 # Sentry
-raven
+raven>=6.10.0
 
 # for date processing
-python-dateutil
+python-dateutil>=2.8.2
 
 #misc
 #uWSGI==2.0.19
 
 #celery
-celery
-flower
-redis
-django-celery-email
-django-celery-beat
+celery>=5.2.7
+flower>=1.2.0
+redis>=4.3.4
+django-celery-email>=3.0.0
+django-celery-beat>=2.3.0
 
 # DRF docs
-drf-yasg
+drf-yasg==1.20.0
