@@ -116,6 +116,6 @@ networks:
     driver: bridge
 volumes:
   postgres-data: null
-  redis-data: null
   pgadmin-data: null
+  redis-data: null
   mongodb-data: null
