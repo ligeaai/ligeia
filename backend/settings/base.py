@@ -64,7 +64,7 @@ LOCAL_APPS = [
     # "apps.config",
 
     "apps.users",
-    "apps.code_list"
+    "apps.codelist"
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS

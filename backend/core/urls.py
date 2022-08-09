@@ -12,7 +12,9 @@ from django.conf import settings
 from django.conf.urls.i18n import i18n_patterns
 from django.utils.translation import gettext_lazy as _
 
-from apps.base import views as base_views
+from apps.codelist.views import code_listAPIView
+
+# from apps.base import views as base_views
 
 schema_view = get_schema_view(
     openapi.Info(
