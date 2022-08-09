@@ -104,6 +104,8 @@ services:
       PGADMIN_DEFAULT_PASSWORD: ${PG_ADMIN_PASS}
     ports:
       - "5050:80"
+    networks:
+      - net
   redis:
     restart: always
     image: redis:latest
