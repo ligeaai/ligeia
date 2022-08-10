@@ -1,5 +1,4 @@
 version: "3.8"
-
 services:
   # web:
   #   restart: on-failure
@@ -18,8 +17,6 @@ services:
     build:
       context: .
       dockerfile: ./dockerfile/local/django/Dockerfile
-      args:
-        VARIANT: "3.10.0-slim-buster"
     command: /start
     env_file:
       - .env
