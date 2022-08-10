@@ -29,9 +29,7 @@ services:
     restart: unless-stopped
     build:
       context: ..
-      dockerfile: ./docker/local/django/Dockerfile
-      args:
-        VARIANT: 3.10-bullseye
+      dockerfile: ./dockerfile/dev/django/Dockerfile
     command: /start
     env_file:
       - .env
@@ -41,59 +39,26 @@ services:
       # - media_volume:/django/mediafiles
     depends_on:
       - redis
-      - postgres
+      - postgresdb
     ports:
       - "8000:8000"
     networks:
       - net
-  celery_worker:
-    restart: on-failure
-    build:
-      context: ..
-      dockerfile: ./docker/local/django/Dockerfile
-    command: /start-celeryworker
-    volumes:
-      - .:/django
-    env_file:
-      - .env
-    depends_on:
-      - redis
-      - postgres
-    networks:
-      - net
-  flower:
-    build:
-      context: ..
-      dockerfile: ./docker/local/django/Dockerfile
-    command: /start-flower
-    volumes:
-      - .:/django
-    env_file:
-      - .env
-    ports:
-      - "5557:5555"
-    depends_on:
-      - redis
-      - postgres
-    networks:
-      - net
-  postgres:
+  postgresdb:
     restart: unless-stopped
     image: postgres:latest
     volumes:
       - postgres-data:/var/lib/postgresql/data/
-    env_file:
-      - .env
+    # env_file:
+    #   - .env
     environment:
-      - POSTGRES_USER=${PG_USER}
-      - POSTGRES_PASSWORD=${PG_PASS}
-      - POSTGRES_DB=${PG_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASS}
+      - POSTGRES_DB=${POSTGRES_DB}
     ports:
       - "5434:5432"
     networks:
       - net
-    # Add "forwardPorts": ["5432"] to **devcontainer.json** to forward PostgreSQL locally.
-    # (Adding the "ports" property to this file will not forward from a Codespace.)
   pgadmin:
     restart: always
     image: dpage/pgadmin4:latest
@@ -120,6 +85,8 @@ services:
     container_name: zookeeper
     ports:
       - "2181:2181"
+    networks:
+      - net
   kafka:
     image: wurstmeister/kafka
     container_name: kafka
@@ -128,7 +95,8 @@ services:
     environment:
       KAFKA_ADVERTISED_HOST_NAME: localhost
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-
+    networks:
+      - net
 networks:
   net:
     driver: bridge
@@ -137,3 +105,4 @@ volumes:
   postgres-data: null
   pgadmin-data: null
   redis-data: null
+  mongodb-data: null

@@ -17,9 +17,9 @@ services:
     restart: unless-stopped
     build:
       context: .
-      dockerfile: ./docker/local/django/Dockerfile
+      dockerfile: ./dockerfile/local/django/Dockerfile
       args:
-        VARIANT: 3.10-bullseye
+        VARIANT: "3.10.0-slim-buster"
     command: /start
     env_file:
       - .env
@@ -29,12 +29,12 @@ services:
       # - media_volume:/django/mediafiles
     depends_on:
       - redis
-      - postgres
+      - postgresdb
     ports:
       - "8000:8000"
     networks:
       - net
-  postgres:
+  postgresdb:
     restart: unless-stopped
     image: postgres:latest
     volumes:
