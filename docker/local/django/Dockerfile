@@ -30,8 +30,7 @@ RUN apt-get update \
 
 COPY ./py-requirements /django/py-requirements
 
-RUN pip --disable-pip-version-check --no-cache-dir \
-  && install -r /django/py-requirements/dev.txt \
+RUN pip --disable-pip-version-check --no-cache-dir install -r /django/py-requirements/dev.txt \
   && rm -rf /django/py-requirements
 
 COPY ./docker/local/django/entrypoint /entrypoint

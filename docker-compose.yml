@@ -27,9 +27,9 @@ services:
       - .:/django
       # - static_volume:/django/staticfiles
       # - media_volume:/django/mediafiles
-    # depends_on:
-    #   - redis
-    #   - postgres
+    depends_on:
+      - redis
+      - postgres
     ports:
       - "8000:8000"
     networks:
@@ -61,6 +61,32 @@ services:
       - "5050:80"
     networks:
       - net
+  redis:
+    restart: always
+    image: redis:latest
+    volumes:
+      - redis-data:/data
+    ports:
+      - "6379:6379"
+    networks:
+      - net
+  zookeeper:
+    image: wurstmeister/zookeeper
+    container_name: zookeeper
+    ports:
+      - "2181:2181"
+    networks:
+      - net
+  kafka:
+    image: wurstmeister/kafka
+    container_name: kafka
+    ports:
+      - "9092:9092"
+    environment:
+      KAFKA_ADVERTISED_HOST_NAME: localhost
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+    networks:
+      - net
 networks:
   net:
     driver: bridge
@@ -69,6 +95,7 @@ volumes:
   pgadmin-data: null
   redis-data: null
   mongodb-data: null
+
   # celery_worker:
   #   restart: on-failure
   #   build:
@@ -101,15 +128,6 @@ volumes:
   #   networks:
   #     - net
 
-  # redis:
-  #   restart: always
-  #   image: redis:latest
-  #   volumes:
-  #     - redis-data:/data
-  #   ports:
-  #     - "6379:6379"
-  #   networks:
-  #     - net
   # # mongodb:
   # #   restart: unless-stopped
   # #   image: mongo:latest
@@ -123,16 +141,3 @@ volumes:
   # #     - "27017:27017"
   # #   networks:
   # #     - net
-  # zookeeper:
-  #   image: wurstmeister/zookeeper
-  #   container_name: zookeeper
-  #   ports:
-  #     - "2181:2181"
-  # kafka:
-  #   image: wurstmeister/kafka
-  #   container_name: kafka
-  #   ports:
-  #     - "9092:9092"
-  #   environment:
-  #     KAFKA_ADVERTISED_HOST_NAME: localhost
-  #     KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
