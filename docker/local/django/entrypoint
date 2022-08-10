@@ -3,10 +3,11 @@
 set -o errexit
 set -o pipefail
 set -o nounset
+# set +u
 
 postgres_ready() {
 python << END
-import sys
+import syss
 import psycopg2
 try:
     psycopg2.connect(
@@ -15,7 +16,6 @@ try:
         password="${PG_PASS}",
         host="${PG_HOST}",
         port="${PG_PORT}",
-
     )
 except psycopg2.OperationalError:
     sys.exit(-1)
