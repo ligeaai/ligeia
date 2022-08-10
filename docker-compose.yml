@@ -1,5 +1,4 @@
 version: "3.8"
-
 services:
   # web:
   #   restart: on-failure
@@ -17,9 +16,7 @@ services:
     restart: unless-stopped
     build:
       context: .
-      dockerfile: ./docker/local/django/Dockerfile
-      args:
-        VARIANT: 3.10-bullseye
+      dockerfile: ./dockerfile/local/django/Dockerfile
     command: /start
     env_file:
       - .env
@@ -29,12 +26,12 @@ services:
       # - media_volume:/django/mediafiles
     depends_on:
       - redis
-      - postgres
+      - postgresdb
     ports:
       - "8000:8000"
     networks:
       - net
-  postgres:
+  postgresdb:
     restart: unless-stopped
     image: postgres:latest
     volumes:
@@ -50,7 +47,7 @@ services:
     networks:
       - net
   pgadmin:
-    restart: always
+    restart: on-failure
     image: dpage/pgadmin4:latest
     volumes:
       - pgadmin-data:/var/lib/pgadmin
@@ -62,7 +59,7 @@ services:
     networks:
       - net
   redis:
-    restart: always
+    restart: on-failure
     image: redis:latest
     volumes:
       - redis-data:/data
