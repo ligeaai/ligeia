@@ -47,7 +47,7 @@ services:
     networks:
       - net
   pgadmin:
-    restart: always
+    restart: on-failure
     image: dpage/pgadmin4:latest
     volumes:
       - pgadmin-data:/var/lib/pgadmin
@@ -59,7 +59,7 @@ services:
     networks:
       - net
   redis:
-    restart: always
+    restart: on-failure
     image: redis:latest
     volumes:
       - redis-data:/data
