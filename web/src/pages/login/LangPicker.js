@@ -1,12 +1,12 @@
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 
-import text from './text.json'
+import text from './login/text.json'
 const LangPicker = () => {
     const lang = useSelector((state) => state.lang.lang);
-    switch(lang){
-        case("English"):
+    switch (lang) {
+        case ("English"):
             return text.english
-        case("Русский"):
+        case ("Русский"):
             return text.Русский
         default:
             return text.english
