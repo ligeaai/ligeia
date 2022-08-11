@@ -1,10 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit'
 
-import {drawerReducer,langReducer} from '../services/reducers'
+import { drawerReducer, langReducer, authReducer } from '../services/reducers'
 
 export default configureStore({
     reducer: {
         drawer: drawerReducer,
-        lang: langReducer
+        lang: langReducer,
+        auth: authReducer
     },
 })
