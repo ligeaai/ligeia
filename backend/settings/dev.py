@@ -15,7 +15,7 @@ DATABASE_APPS_MAPPING = {
     "db_dictionaries": "mongodb",
 }
 
-DATABASES = {    
+DATABASES = {
     "default": {
         "ENGINE": env("PG_ENGINE"),
         "NAME": env("PG_DB"),

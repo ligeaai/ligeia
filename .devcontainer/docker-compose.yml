@@ -1,37 +1,35 @@
 version: "3.8"
 
 services:
-  web:
-    build:
-      context: .
-      dockerfile: Dockerfile
-      args:
-        # Update 'VARIANT' to pick an LTS version of Node.js: 18, 16, 14.
-        # Append -bullseye or -buster to pin to an OS version.
-        # Use -bullseye variants on local arm64/Apple Silicon.
-        VARIANT: "18"
+  # web:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile
+  #     args:
+  #       # Update 'VARIANT' to pick an LTS version of Node.js: 18, 16, 14.
+  #       # Append -bullseye or -buster to pin to an OS version.
+  #       # Use -bullseye variants on local arm64/Apple Silicon.
+  #       VARIANT: "18"
 
-    volumes:
-      - ..:/workspace:cached
+  #   volumes:
+  #     - ..:/workspace:cached
 
-    # Overrides default command so things don't shut down after the process ends.
-    command: sleep infinity
+  #   # Overrides default command so things don't shut down after the process ends.
+  #   command: sleep infinity
 
-    # Runs app on the same network as the database container, allows "forwardPorts" in devcontainer.json function.
-    networks:
-      - net
-    # Uncomment the next line to use a non-root user for all processes.
-    # user: node
+  #   # Runs app on the same network as the database container, allows "forwardPorts" in devcontainer.json function.
+  #   networks:
+  #     - net
+  #   # Uncomment the next line to use a non-root user for all processes.
+  #   # user: node
 
-    # Use "forwardPorts" in **devcontainer.json** to forward an app port locally.
-    # (Adding the "ports" property to this file will not forward from a Codespace.)
+  #   # Use "forwardPorts" in **devcontainer.json** to forward an app port locally.
+  #   # (Adding the "ports" property to this file will not forward from a Codespace.)
   django:
     restart: unless-stopped
     build:
       context: ..
-      dockerfile: ./docker/local/django/Dockerfile
-      args:
-        VARIANT: 3.10-bullseye
+      dockerfile: ./dockerfile/dev/django/Dockerfile
     command: /start
     env_file:
       - .env
@@ -41,49 +39,18 @@ services:
       # - media_volume:/django/mediafiles
     depends_on:
       - redis
-      - postgres
+      - postgresdb
     ports:
       - "8000:8000"
     networks:
       - net
-  celery_worker:
-    restart: on-failure
-    build:
-      context: ..
-      dockerfile: ./docker/local/django/Dockerfile
-    command: /start-celeryworker
-    volumes:
-      - .:/django
-    env_file:
-      - .env
-    depends_on:
-      - redis
-      - postgres
-    networks:
-      - net
-  flower:
-    build:
-      context: ..
-      dockerfile: ./docker/local/django/Dockerfile
-    command: /start-flower
-    volumes:
-      - .:/django
-    env_file:
-      - .env
-    ports:
-      - "5557:5555"
-    depends_on:
-      - redis
-      - postgres
-    networks:
-      - net
-  postgres:
+  postgresdb:
     restart: unless-stopped
     image: postgres:latest
     volumes:
       - postgres-data:/var/lib/postgresql/data/
-    env_file:
-      - .env
+    # env_file:
+    #   - .env
     environment:
       - POSTGRES_USER=${PG_USER}
       - POSTGRES_PASSWORD=${PG_PASS}
@@ -92,8 +59,6 @@ services:
       - "5434:5432"
     networks:
       - net
-    # Add "forwardPorts": ["5432"] to **devcontainer.json** to forward PostgreSQL locally.
-    # (Adding the "ports" property to this file will not forward from a Codespace.)
   pgadmin:
     restart: always
     image: dpage/pgadmin4:latest
@@ -115,6 +80,37 @@ services:
       - "6379:6379"
     networks:
       - net
+  zookeeper:
+    image: confluentinc/cp-zookeeper:6.1.1
+    hostname: zookeeper
+    container_name: zookeeper
+    ports:
+      - "2181:2181"
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+
+  broker:
+    image: confluentinc/cp-kafka:6.1.1
+    hostname: broker
+    container_name: broker
+    depends_on:
+      - zookeeper
+    ports:
+      - "29092:29092"
+      - "9092:9092"
+      - "9101:9101"
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:2181'
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://broker:29092,PLAINTEXT_HOST://localhost:9092
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
+    networks:
+      - net
 networks:
   net:
     driver: bridge
@@ -123,3 +119,4 @@ volumes:
   postgres-data: null
   pgadmin-data: null
   redis-data: null
+  mongodb-data: null

@@ -37,7 +37,7 @@ urlpatterns = i18n_patterns (
     # API urls
     path('api/v1/code_list/', code_listAPIView.as_view()),
     
-    # path("api/v1/users/", include(("apps.users.urls", "apps.users"), namespace="users")),
+    path("api/v1/users/", include(("apps.users.urls", "apps.users"), namespace="users")),
     # path("api/v1/citylight/", include(("apps.citylight.urls", "apps.citylight"), namespace="citylight")),
 
     # catch all others because of how history is handled by react router -
