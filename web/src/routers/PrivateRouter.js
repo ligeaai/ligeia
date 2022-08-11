@@ -12,10 +12,12 @@ const PrivateRoute = () => {
 
     return auth ? <>
         <Header />
-        <Grid container>
+        <Grid container flexWrap="nowrap">
             <Drawer />
             <Outlet />
         </Grid>
+
+
     </> : <Navigate to="/login" />;
 }
 
