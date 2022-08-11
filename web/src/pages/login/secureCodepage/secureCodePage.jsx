@@ -4,7 +4,7 @@ import Body from "./Body";
 import Footer from "../Footer";
 import { Box } from "@mui/material";
 
-const PassRecovery = () => {
+const SecureCodepage = () => {
   return (
     <Box sx={{ backgroundColor: "#F0F2F5", height: "100vh" }}>
       <Header />
@@ -14,4 +14,4 @@ const PassRecovery = () => {
   );
 };
 
-export default PassRecovery;
+export default SecureCodepage;
