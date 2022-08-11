@@ -2,7 +2,7 @@ from dataclasses import fields
 from pyexpat import model
 from rest_framework import serializers
 
-from .models import code_list
+from apps.codelist.models.code_list import code_list
 class code_listserializers(serializers.ModelSerializer):
      class Meta :
         model = code_list 

@@ -102,7 +102,7 @@ def index(request):
 
 
 def add_data(request):
-    og_std = ET.parse(work_dir + '/apps/codelist/xml/DbInfo.xml')
+    og_std = ET.parse(work_dir + '/apps/codelist/xml/OG_STD.xml')
     og_std_root = og_std.getroot()
 
     code_lists = []
@@ -115,9 +115,9 @@ def add_data(request):
 
 
 from rest_framework import generics
-from .models import code_list
-from .serializers import code_listserializers
-
+from apps.codelist.models.code_list import code_list
+from apps.codelist.serializers import code_listserializers
+from  rest_framework.views import APIView
 
 class code_listAPIView(generics.ListAPIView):
     queryset = code_list.objects.all()
