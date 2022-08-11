@@ -117,7 +117,7 @@ def add_data(request):
 from rest_framework import generics
 from apps.codelist.models.code_list import code_list
 from apps.codelist.serializers import code_listserializers
-from  rest_framework.views import APIView
+from rest_framework.views import APIView
 
 class code_listAPIView(generics.ListAPIView):
     queryset = code_list.objects.all()
