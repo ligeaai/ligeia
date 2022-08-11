@@ -15,14 +15,14 @@ DATABASE_APPS_MAPPING = {
     "db_dictionaries": "mongodb",
 }
 
-DATABASES = {    
+DATABASES = {
     "default": {
-        "ENGINE": env("POSTGRES_ENGINE"),
-        "NAME": env("POSTGRES_DB"),
-        "USER": env("POSTGRES_USER"),
-        "PASSWORD": env("POSTGRES_PASS"),
-        "HOST": env("POSTGRES_HOST"),
-        "PORT": env("POSTGRES_PORT"),
+        "ENGINE": env("PG_ENGINE"),
+        "NAME": env("PG_DB"),
+        "USER": env("PG_USER"),
+        "PASSWORD": env("PG_PASS"),
+        "HOST": env("PG_HOST"),
+        "PORT": env("PG_PORT"),
     },
     # "mongodb": {
     #     "NAME": "db_dictionaries",

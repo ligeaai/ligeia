@@ -26,12 +26,12 @@ services:
       # - media_volume:/django/mediafiles
     depends_on:
       - redis
-      - postgresdb
+      - postgres
     ports:
       - "8000:8000"
     networks:
       - net
-  postgresdb:
+  postgres:
     restart: unless-stopped
     image: postgres:latest
     volumes:
@@ -39,9 +39,9 @@ services:
     # env_file:
     #   - .env
     environment:
-      - POSTGRES_USER=${POSTGRES_USER}
-      - POSTGRES_PASSWORD=${POSTGRES_PASS}
-      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${PG_USER}
+      - POSTGRES_PASSWORD=${PG_PASS}
+      - POSTGRES_DB=${PG_DB}
     ports:
       - "5434:5432"
     networks:
