@@ -17,6 +17,7 @@ const Drawer = () => {
       onMouseOut={() => dispatch(mouseLeaveDrawer())}
       container
       sx={{
+        position: "absolute",
         paddingTop: "17px !important",
         backgroundColor: "#FAFBFC",
         width: "min-content",
@@ -24,6 +25,7 @@ const Drawer = () => {
         alignContent: "flex-start",
         overflow: "hidden",
         transition: ".2s",
+        zIndex: "1",
       }}
     >
       <DrawerItem />

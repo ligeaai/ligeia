@@ -13,8 +13,13 @@ const PrivateRoute = () => {
     return auth ? <>
         <Header />
         <Grid container flexWrap="nowrap">
-            <Drawer />
-            <Outlet />
+            <Grid item>
+                <Drawer />
+            </Grid>
+            <Grid item>
+                <Outlet />
+            </Grid>
+
         </Grid>
 
 

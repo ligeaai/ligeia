@@ -81,7 +81,7 @@ const DrawerItem = () => {
                 sx={{
                   ml: 2,
                   display: `${drawer.display}`,
-                  width: "200px",
+                  width: "180px",
                 }}
               >
                 {e.text}
