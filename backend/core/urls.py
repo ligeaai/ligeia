@@ -31,7 +31,7 @@ schema_view = get_schema_view(
 
 urlpatterns = i18n_patterns (
     path(_("admin/"), admin.site.urls),
-    path("health", include("health_check.urls")),
+    path("health/", include("health_check.urls")),
     path("rosetta/", include("rosetta.urls")),
 
     # API urls
@@ -46,6 +46,7 @@ urlpatterns = i18n_patterns (
 
     # swagger and redoc URL's
     # re_path(r'^swagger(?P<format>\.json|\.yaml)$', schema_view.without_ui(cache_timeout=0), name='schema-json'),
+
     re_path(r"^swagger/$", schema_view.with_ui("swagger", cache_timeout=100), name="schema-swagger-ui"),
     re_path(r"^redoc/$", schema_view.with_ui("redoc", cache_timeout=100), name="schema-redoc"),
 
