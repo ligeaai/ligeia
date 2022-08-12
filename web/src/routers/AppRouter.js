@@ -11,6 +11,7 @@ import Layout from '../layout/layout';
 import Login from '../pages/login/login/Login'
 import LoginLayout from '../pages/login/LoginLayout'
 import Monitoring from '../pages/monitoring/monitoring'
+import NewPassword from '../pages/login/newPassword/newPassword';
 import PassRecovery from '../pages/login/passRecovery/PassRecovery'
 import PrivateRoute from './PrivateRouter';
 import ReportsPage from '../pages/reportsPage/ReportsPage'
@@ -38,6 +39,7 @@ const AppRouter = () => {
                         <Route path='' element={<Login />} />
                         <Route path='passrecovery' element={<PassRecovery />} />
                         <Route path='securecode' element={<SecureCodePage />} />
+                        <Route path='newpassword' element={<NewPassword />} />
                     </Route>
                 </Routes>
             </Fragment>

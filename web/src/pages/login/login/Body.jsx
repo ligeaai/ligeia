@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import history from "../../../routers/history";
 
 import {
   Box,
@@ -15,8 +14,13 @@ import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
 
 import { setAuthTrue } from "../../../services/reducers/authReducer";
-
+import history from "../../../routers/history";
 import langPicker from "../LangPicker";
+
+const navigate = (e, route) => {
+  e.preventDefault();
+  history.push(`${route}`);
+};
 
 const Body = () => {
   const dispatch = useDispatch();
@@ -109,12 +113,18 @@ const Body = () => {
         variant="contained"
         sx={{ width: "100%", mt: 2.5 }}
         onClick={(e) => {
-          e.preventDefault();
           dispatch(setAuthTrue(user));
-          history.push("/");
+          navigate(e, "/");
         }}
       >
         {text.body.signIn}
+      </Button>
+      <Button
+        onClick={(e) => {
+          navigate(e, "/login/passrecovery");
+        }}
+      >
+        Wrong pass
       </Button>
     </Box>
   );

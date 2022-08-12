@@ -13,6 +13,13 @@ import {
   Typography,
 } from "@mui/material";
 
+import history from "../../../routers/history";
+
+const navigate = (e, route) => {
+  e.preventDefault();
+  history.push(`${route}`);
+};
+
 const body = () => {
   return (
     <Box
@@ -177,6 +184,9 @@ const body = () => {
                 display: "inline-block",
               },
             },
+          }}
+          onClick={(e) => {
+            navigate(e, "/login/securecode");
           }}
         >
           Next
