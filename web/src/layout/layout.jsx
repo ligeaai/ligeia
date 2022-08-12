@@ -21,6 +21,8 @@ const Layout = () => {
           sx={{
             width: `calc(100vw - ${drawer.width})`,
             marginLeft: `${drawer.width}`,
+            backgroundColor: "#F0F2F5",
+            height: "calc(100vh - 57px)",
           }}
         >
           <Outlet />
