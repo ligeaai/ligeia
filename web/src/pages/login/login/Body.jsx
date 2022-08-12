@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { useNavigate, useLocation } from "react-router-dom";
 import {
   Box,
   Typography,
@@ -16,9 +15,9 @@ import langPicker from "../LangPicker";
 
 import { setAuthTrue } from "../../../services/reducers/authReducer";
 
+import history from "../../../routers/history";
+
 const Body = () => {
-  let navigate = useNavigate();
-  let location = useLocation();
   const dispatch = useDispatch();
   const [user, setUser] = useState([
     {
@@ -111,14 +110,11 @@ const Body = () => {
         onClick={(e) => {
           e.preventDefault();
           dispatch(setAuthTrue(user));
-          {
-            navigate("/");
-          }
+          history.push("/");
         }}
       >
         {text.body.signIn}
       </Button>
-      <Link href="/">sdasd</Link>
     </Box>
   );
 };

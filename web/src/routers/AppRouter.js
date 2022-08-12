@@ -9,11 +9,14 @@ import FailureDirectory from '../pages/failureDirectory/failureDirectory'
 import IntegrationLog from '../pages/integrationLog/IntegrationLog'
 import DatabasePage from '../pages/databasePage/DatabasePage'
 import ReportsPage from '../pages/reportsPage/ReportsPage'
-
 import CodeList from '../pages/code_list';
+
+import { unstable_HistoryRouter as HistoryRouter } from "react-router-dom";
+
+import history from './history';
 const AppRouter = () => {
     return (
-        <Router>
+        <HistoryRouter history={history}>
             <Fragment>
                 <Routes>
                     <Route exact path='/' element={<PrivateRoute />}>
@@ -30,7 +33,7 @@ const AppRouter = () => {
                     <Route exact path='/login' element={<Login />} />
                 </Routes>
             </Fragment>
-        </Router>
+        </HistoryRouter>
 
     );
 }

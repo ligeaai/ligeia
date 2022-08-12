@@ -5,6 +5,8 @@ import { Grid, Link, Typography } from "@mui/material";
 
 import "@fontsource/roboto/400.css";
 
+import history from "../../routers/history";
+
 import {
   GroupZero,
   GroupOne,
@@ -69,14 +71,15 @@ const DrawerItem = () => {
           }}
         >
           <Link
-            href={`${e.url}`}
             variant="body2"
             underline="none"
             sx={{ fontFamily: "Roboto", color: "inherit" }}
+            onClick={() => {
+              history.push(`${e.url}`);
+            }}
           >
             <Grid container flexWrap="nowrap">
               {e.img}
-
               <Typography
                 sx={{
                   ml: 2,

@@ -2,14 +2,12 @@ import { createSlice } from '@reduxjs/toolkit'
 
 export const authReducer = createSlice({
     name: 'auth',
-    initialState: { auth: true },
+    initialState: { auth: false },
     reducers: {
         setAuthTrue: (state, data) => {
-            console.log(state.auth);
             if (data.payload[0].username === "ligeia" && data.payload[0].password === "ligeia") {
                 state.auth = true
             }
-            console.log(state.auth);
         },
     },
 })
