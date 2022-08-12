@@ -1,19 +1,20 @@
 import React, { useState } from "react";
+
 import {
   Box,
-  Typography,
+  Button,
   Grid,
   Link,
-  Button,
   OutlinedInput,
+  Typography,
 } from "@mui/material";
 
 const Body = () => {
   const [code, setCode] = useState("");
-
   const onChangeCode = (e) => {
     setCode(e.target.value);
   };
+
   return (
     <Box
       sx={{

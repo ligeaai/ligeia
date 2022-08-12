@@ -1,16 +1,18 @@
 import React from "react";
 
-import { TableContainer, Box } from "@mui/material";
+import {
+  Box,
+  Paper,
+  Table,
+  TableBody,
+  TableContainer,
+  TableCell,
+  TableHead,
+  TableRow,
+} from "@mui/material";
 
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
-
-import TableItems from "./tableItems";
 import AddCodeList from "./AddCodeList";
+import TableItems from "./tableItems";
 
 const Code_list = () => {
   return (

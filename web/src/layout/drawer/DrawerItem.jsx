@@ -2,7 +2,6 @@ import React from "react";
 import { useSelector } from "react-redux";
 
 import { Grid, Link, Typography } from "@mui/material";
-
 import "@fontsource/roboto/400.css";
 
 import history from "../../routers/history";
@@ -73,7 +72,7 @@ const DrawerItem = () => {
           <Link
             variant="body2"
             underline="none"
-            sx={{ fontFamily: "Roboto", color: "inherit" }}
+            sx={{ fontFamily: "Roboto", color: "inherit", cursor: "pointer" }}
             onClick={() => {
               history.push(`${e.url}`);
             }}

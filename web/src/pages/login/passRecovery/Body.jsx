@@ -1,10 +1,18 @@
 import React from "react";
-import { Box, Typography, Grid, Link, Button } from "@mui/material";
-import Radio from "@mui/material/Radio";
-import RadioGroup from "@mui/material/RadioGroup";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import FormControl from "@mui/material/FormControl";
-import Avatar from "@mui/material/Avatar";
+
+import {
+  Avatar,
+  Box,
+  Button,
+  FormControl,
+  FormControlLabel,
+  Grid,
+  Link,
+  Radio,
+  RadioGroup,
+  Typography,
+} from "@mui/material";
+
 const body = () => {
   return (
     <Box

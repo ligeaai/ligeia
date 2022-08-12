@@ -1,19 +1,23 @@
 import React, { Fragment } from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Layout from '../layout/layout';
-import Login from '../pages/login/login/Login'
-import PrivateRoute from './PrivateRouter';
-import Monitoring from '../pages/monitoring/monitoring'
-import ServicePage from '../pages/servicePage/servicePage'
-import FailureDirectory from '../pages/failureDirectory/failureDirectory'
-import IntegrationLog from '../pages/integrationLog/IntegrationLog'
-import DatabasePage from '../pages/databasePage/DatabasePage'
-import ReportsPage from '../pages/reportsPage/ReportsPage'
-import CodeList from '../pages/code_list';
-
+import { Route, Routes } from 'react-router-dom';
 import { unstable_HistoryRouter as HistoryRouter } from "react-router-dom";
 
 import history from './history';
+
+import CodeList from '../pages/code_list';
+import DatabasePage from '../pages/databasePage/DatabasePage'
+import FailureDirectory from '../pages/failureDirectory/failureDirectory'
+import Layout from '../layout/layout';
+import Login from '../pages/login/login/Login'
+import LoginLayout from '../pages/login/LoginLayout'
+import Monitoring from '../pages/monitoring/monitoring'
+import PassRecovery from '../pages/login/passRecovery/PassRecovery'
+import PrivateRoute from './PrivateRouter';
+import ReportsPage from '../pages/reportsPage/ReportsPage'
+import SecureCodePage from '../pages/login/secureCodepage/secureCodePage'
+import ServicePage from '../pages/servicePage/servicePage'
+import IntegrationLog from '../pages/integrationLog/IntegrationLog'
+
 const AppRouter = () => {
     return (
         <HistoryRouter history={history}>
@@ -30,7 +34,11 @@ const AppRouter = () => {
                             <Route path='codelist' element={<CodeList />} />
                         </Route>
                     </Route>
-                    <Route exact path='/login' element={<Login />} />
+                    <Route exact path='/login' element={<LoginLayout />} >
+                        <Route path='' element={<Login />} />
+                        <Route path='passrecovery' element={<PassRecovery />} />
+                        <Route path='securecode' element={<SecureCodePage />} />
+                    </Route>
                 </Routes>
             </Fragment>
         </HistoryRouter>

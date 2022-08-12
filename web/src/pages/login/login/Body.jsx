@@ -1,21 +1,22 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
+import history from "../../../routers/history";
+
 import {
   Box,
-  Typography,
+  Button,
   FormControl,
   InputAdornment,
   OutlinedInput,
-  Button,
-  Link,
+  Typography,
 } from "@mui/material";
+
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
-import langPicker from "../LangPicker";
 
 import { setAuthTrue } from "../../../services/reducers/authReducer";
 
-import history from "../../../routers/history";
+import langPicker from "../LangPicker";
 
 const Body = () => {
   const dispatch = useDispatch();

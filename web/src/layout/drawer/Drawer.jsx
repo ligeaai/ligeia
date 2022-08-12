@@ -1,15 +1,16 @@
 import React from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import { Grid } from "@mui/material";
 
-import DrawerItem from "./DrawerItem";
 import {
   mouseEnterDrawer,
   mouseLeaveDrawer,
 } from "../../services/reducers/drawerReducer";
+
+import DrawerItem from "./DrawerItem";
+
 const Drawer = () => {
-  const drawer = useSelector((state) => state.drawer);
   const dispatch = useDispatch();
   return (
     <Grid

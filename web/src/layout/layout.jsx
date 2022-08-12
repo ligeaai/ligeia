@@ -1,9 +1,12 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import Header from "./headers/Header";
-import Drawer from "./drawer/Drawer";
 import { Outlet } from "react-router-dom";
+
 import { Grid } from "@mui/material";
+
+import Drawer from "./drawer/Drawer";
+import Header from "./headers/Header";
+
 const Layout = () => {
   const drawer = useSelector((state) => state.drawer);
   return (
