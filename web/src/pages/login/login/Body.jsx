@@ -15,6 +15,7 @@ import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined
 import langPicker from "../LangPicker";
 
 import { setAuthTrue } from "../../../services/reducers/authReducer";
+
 const Body = () => {
   let navigate = useNavigate();
   let location = useLocation();
@@ -110,11 +111,14 @@ const Body = () => {
         onClick={(e) => {
           e.preventDefault();
           dispatch(setAuthTrue(user));
-          navigate("/" + location.search);
+          {
+            navigate("/");
+          }
         }}
       >
         {text.body.signIn}
       </Button>
+      <Link href="/">sdasd</Link>
     </Box>
   );
 };

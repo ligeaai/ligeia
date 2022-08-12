@@ -1,7 +1,6 @@
 import React from "react";
-import { useSelector } from "react-redux";
 
-import { Stack, Grid, TableContainer, Box } from "@mui/material";
+import { TableContainer, Box } from "@mui/material";
 
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -12,22 +11,14 @@ import Paper from "@mui/material/Paper";
 
 import TableItems from "./tableItems";
 import AddCodeList from "./AddCodeList";
-import { useEffect } from "react";
 
 const Code_list = () => {
-  const drawer = useSelector((state) => state.drawer);
   return (
-    <Box
-      sx={{
-        width: `calc(100vw - ${drawer.width})`,
-        marginLeft: `${drawer.width}`,
-      }}
-    >
+    <Box>
       <TableContainer
         component={Paper}
         sx={{
           position: "relative",
-          width: "100%",
           height: "calc(100vh - 157px)",
         }}
       >
