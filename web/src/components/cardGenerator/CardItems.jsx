@@ -9,9 +9,8 @@ const CardItems = (props) => {
       <Grid
         item
         xs={12}
-        sm={6}
-        md={3}
-        sx={{ mb: 2, backgroundColor: "#ffffff" }}
+        sm={"auto"}
+        sx={{ mb: 2, backgroundColor: "#ffffff", width: "290px !important" }}
         onMouseOver={() => setTheme("#458BF3")}
         onMouseLeave={() => setTheme("#42526E")}
       >

@@ -30,8 +30,6 @@ export const drawerReducer = createSlice({
                 state.display = "none"
             }
         },
-
-
     },
 })
 

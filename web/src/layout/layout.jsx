@@ -9,20 +9,36 @@ import Header from "./headers/Header";
 
 const Layout = () => {
   const drawer = useSelector((state) => state.drawer);
+  console.log(drawer.width);
   return (
     <>
       <Header />
       <Grid container flexWrap="nowrap">
-        <Grid item>
+        <Grid
+          item
+          sx={{
+            typography: {
+              xs: {
+                display: `${drawer.width}` === "56px" ? "none" : "block",
+              },
+              sm: { display: "inline-block" },
+            },
+          }}
+        >
           <Drawer />
         </Grid>
         <Grid
           item
           sx={{
-            width: `calc(100vw - ${drawer.width})`,
-            marginLeft: `${drawer.width}`,
             backgroundColor: "#F0F2F5",
             height: "calc(100vh - 57px)",
+            typography: {
+              xs: { marginLeft: "0px" },
+              sm: {
+                marginLeft: `${drawer.width}`,
+                width: `calc(100vw - ${drawer.width})`,
+              },
+            },
           }}
         >
           <Outlet />
