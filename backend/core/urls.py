@@ -12,7 +12,7 @@ from django.conf import settings
 from django.conf.urls.i18n import i18n_patterns
 from django.utils.translation import gettext_lazy as _
 
-from apps.code_list.views import code_listAPIView, add_data, index
+from backend.apps.api.views import code_listAPIView, add_data, index
 
 # from apps.base import views as base_views
 

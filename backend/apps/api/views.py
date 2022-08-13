@@ -132,7 +132,7 @@ def add_data(request):
 
 from rest_framework import generics
 from apps.code_list.models.code_list import code_list
-from apps.code_list.serializers import code_listserializers
+from backend.apps.api.serializers import code_listserializers
 from rest_framework.views import APIView
 
 
