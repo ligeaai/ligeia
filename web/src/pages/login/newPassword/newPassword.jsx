@@ -2,8 +2,8 @@ import React from "react";
 
 import Body from "./Body";
 
-const PassRecovery = () => {
+const NewPassword = () => {
   return <Body />;
 };
 
-export default PassRecovery;
+export default NewPassword;

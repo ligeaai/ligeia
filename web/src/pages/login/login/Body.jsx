@@ -1,23 +1,28 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { useNavigate, useLocation } from "react-router-dom";
+
 import {
   Box,
-  Typography,
+  Button,
   FormControl,
   InputAdornment,
   OutlinedInput,
-  Button,
-  Link,
+  Typography,
 } from "@mui/material";
+
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
-import langPicker from "../LangPicker";
 
 import { setAuthTrue } from "../../../services/reducers/authReducer";
+import history from "../../../routers/history";
+import langPicker from "../LangPicker";
+
+const navigate = (e, route) => {
+  e.preventDefault();
+  history.push(`${route}`);
+};
+
 const Body = () => {
-  let navigate = useNavigate();
-  let location = useLocation();
   const dispatch = useDispatch();
   const [user, setUser] = useState([
     {
@@ -108,12 +113,18 @@ const Body = () => {
         variant="contained"
         sx={{ width: "100%", mt: 2.5 }}
         onClick={(e) => {
-          e.preventDefault();
           dispatch(setAuthTrue(user));
-          navigate("/" + location.search);
+          navigate(e, "/");
         }}
       >
         {text.body.signIn}
+      </Button>
+      <Button
+        onClick={(e) => {
+          navigate(e, "/login/passrecovery");
+        }}
+      >
+        Wrong pass
       </Button>
     </Box>
   );

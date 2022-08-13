@@ -1,19 +1,27 @@
 import React, { useState } from "react";
+
 import {
   Box,
-  Typography,
+  Button,
   Grid,
   Link,
-  Button,
   OutlinedInput,
+  Typography,
 } from "@mui/material";
+
+import history from "../../../routers/history";
+
+const navigate = (e, route) => {
+  e.preventDefault();
+  history.push(`${route}`);
+};
 
 const Body = () => {
   const [code, setCode] = useState("");
-
   const onChangeCode = (e) => {
     setCode(e.target.value);
   };
+
   return (
     <Box
       sx={{
@@ -66,13 +74,19 @@ const Body = () => {
         <Grid item xs={6} sm={4}>
           <Button
             variant="contained"
-            sx={{ padding: "8px 44px", backgroundColor: "#CDCDCD" }}
+            color="inherit"
+            sx={{ padding: "8px 44px" }}
+            onClick={(e) => navigate(e, "/")}
           >
             Cancel
           </Button>
         </Grid>
         <Grid item xs={6} sm={4}>
-          <Button variant="contained" sx={{ padding: "8px 54px" }}>
+          <Button
+            variant="contained"
+            sx={{ padding: "8px 54px" }}
+            onClick={(e) => navigate(e, "/login/newpassword")}
+          >
             Next
           </Button>
         </Grid>

@@ -1,10 +1,25 @@
 import React from "react";
-import { Box, Typography, Grid, Link, Button } from "@mui/material";
-import Radio from "@mui/material/Radio";
-import RadioGroup from "@mui/material/RadioGroup";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import FormControl from "@mui/material/FormControl";
-import Avatar from "@mui/material/Avatar";
+
+import {
+  Avatar,
+  Box,
+  Button,
+  FormControl,
+  FormControlLabel,
+  Grid,
+  Link,
+  Radio,
+  RadioGroup,
+  Typography,
+} from "@mui/material";
+
+import history from "../../../routers/history";
+
+const navigate = (e, route) => {
+  e.preventDefault();
+  history.push(`${route}`);
+};
+
 const body = () => {
   return (
     <Box
@@ -169,6 +184,9 @@ const body = () => {
                 display: "inline-block",
               },
             },
+          }}
+          onClick={(e) => {
+            navigate(e, "/login/securecode");
           }}
         >
           Next

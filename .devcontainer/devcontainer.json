@@ -5,7 +5,7 @@
   "name": "dev_ligeia",
   "dockerComposeFile": "docker-compose.yml",
   "service": "django",
-  "workspaceFolder": "/workspace",
+  "workspaceFolder": "/djnago",
   "customizations": {
     "vscode": {
       "extensions": [
