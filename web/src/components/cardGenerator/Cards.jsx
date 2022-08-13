@@ -6,7 +6,7 @@ const Cards = (props) => {
   return (
     <Grid
       container
-      columns={13}
+      columns={12}
       columnGap={3.5}
       sx={{ backgroundColor: "inherit", p: 2.5 }}
     >

@@ -10,8 +10,11 @@ export const drawerReducer = createSlice({
     reducers: {
         toggleDrawer: (state) => {
             if (state.display === "none") {
-                state.display = "inline-block";
-                state.width = "252px"
+                return {
+                    ...state,
+                    display: "inline-block",
+                    width: "252px"
+                }
             }
             else {
                 state.display = "none";

@@ -1,22 +1,16 @@
 import { createSlice } from '@reduxjs/toolkit'
 
+
 export const langReducer = createSlice({
     name: 'language',
     initialState: { lang: "English" },
     reducers: {
-        changeLang: (state, lang) => {
-            return {
-                ...state,
-                lang: lang.payload,
-
-            }
-
-        },
-
-    },
+        changeLang(state, action) {
+            return { ...state, lang: action.payload };
+        }
+    }
 })
 
-// Action creators are generated for each case reducer function
-export const { changeLang } = langReducer.actions
+
 
 export default langReducer.reducer

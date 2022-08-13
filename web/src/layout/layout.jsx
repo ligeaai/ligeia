@@ -9,7 +9,6 @@ import Header from "./headers/Header";
 
 const Layout = () => {
   const drawer = useSelector((state) => state.drawer);
-  console.log(drawer.width);
   return (
     <>
       <Header />

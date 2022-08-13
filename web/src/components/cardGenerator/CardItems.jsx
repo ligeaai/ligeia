@@ -10,7 +10,11 @@ const CardItems = (props) => {
         item
         xs={12}
         sm={"auto"}
-        sx={{ mb: 2, backgroundColor: "#ffffff", width: "290px !important" }}
+        sx={{
+          backgroundColor: "#ffffff",
+          width: "290px !important",
+          mb: 2,
+        }}
         onMouseOver={() => setTheme("#458BF3")}
         onMouseLeave={() => setTheme("#42526E")}
       >
