@@ -35,7 +35,8 @@ urlpatterns = i18n_patterns (
 
     # API urls
     path('api/v1/code_list/', code_listAPIView.as_view()),
-    # path('add-data/',add_data),  one time use
+    # path('api/v1/code_list/', include("apps.codelist.urls")),
+    path('add-data/',add_data), 
     path('temp/', index),
     
     path("api/v1/users/", include(("apps.users.urls", "apps.users"), namespace="users")),

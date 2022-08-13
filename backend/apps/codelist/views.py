@@ -1,4 +1,5 @@
 import pathlib
+from unittest import result
 import xml.etree.ElementTree as ET
 
 from bs4 import BeautifulSoup
@@ -122,11 +123,12 @@ from rest_framework.views import APIView
 class code_listAPIView(generics.ListAPIView):
     queryset = code_list.objects.all()
     serializer_class = code_listserializers
+    # permission_classes = (AllowAny, )
 
     def list(self, request, *args, **kwargs):
         response = super().list(request, *args, **kwargs)
         result_dict = {}
-        for key in response.data:
+        for key in response.data.get("results"):
             parent = key.get('LISTTYPE')
 
             if result_dict.get(parent, None):
