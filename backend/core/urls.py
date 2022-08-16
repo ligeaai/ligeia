@@ -12,8 +12,6 @@ from django.conf import settings
 from django.conf.urls.i18n import i18n_patterns
 from django.utils.translation import gettext_lazy as _
 
-from backend.apps.api.views import code_listAPIView, add_data, index
-
 # from apps.base import views as base_views
 
 
@@ -23,7 +21,7 @@ urlpatterns = (
         path("health/", include("health_check.urls")),
         path("rosetta/", include("rosetta.urls")),
         # API urls
-        path("api/v1/", include('api.urls')),
+        path("api/v1/", include('apps.api.urls')),
     )
     + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 )

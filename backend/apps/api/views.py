@@ -105,7 +105,7 @@ def index(request):
         #  print(soup.get_text())
 
         model_file = open(
-            work_dir + "/apps/codelist/models/" + table.get("Name").lower() + ".py", "w"
+            work_dir + "/apps/code_list/models/" + table.get("Name").lower() + ".py", "w"
         )  # f = open("", "")
         model_file.write(soup.get_text())
 
@@ -116,7 +116,7 @@ def index(request):
 
 
 def add_data(request):
-    og_std = ET.parse(work_dir + "/apps/codelist/xml/OG_STD.xml")
+    og_std = ET.parse(work_dir + "/apps/code_list/xml/OG_STD.xml")
     og_std_root = og_std.getroot()
 
     code_lists = []
@@ -132,7 +132,7 @@ def add_data(request):
 
 from rest_framework import generics
 from apps.code_list.models.code_list import code_list
-from backend.apps.api.serializers import code_listserializers
+from apps.api.serializers import code_listserializers
 from rest_framework.views import APIView
 
 
