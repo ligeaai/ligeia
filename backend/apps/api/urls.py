@@ -15,6 +15,8 @@ from django.utils.translation import gettext_lazy as _
 from apps.api.views import add_data, code_listAPIView, index
 
 
+from apps.api.views import auth
+
 schema_view = get_schema_view(
     openapi.Info(
         title="Ligeia API",
@@ -33,6 +35,8 @@ urlpatterns = [
     # path('api/v1/code_list/', include("apps.codelist.urls")),
     path("add-data/", add_data),
     path("temp/", index),
+    path('', include('social_django.urls', namespace='social')),
+    path("auth/", auth),
     path("users/", include(("apps.users.urls", "apps.users"), namespace="users"),),
     # path('api/v1/code_list/', include("apps.codelist.urls")),
     # path("api/v1/citylight/", include(("apps.citylight.urls", "apps.citylight"), namespace="citylight")),

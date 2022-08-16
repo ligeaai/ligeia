@@ -158,3 +158,8 @@ class code_listAPIView(generics.ListAPIView):
             else:
                 result_dict[parent] = [dict(key)]
         return JsonResponse(result_dict)
+
+
+
+def auth(request) :
+    return render(request,'oauth.html')

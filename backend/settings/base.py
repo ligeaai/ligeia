@@ -55,6 +55,7 @@ THIRD_PARTY_APPS = [
     "health_check.storage",
     "rosetta",
     "modeltranslation",
+    
 ]
 
 LOCAL_APPS = [
@@ -140,6 +141,14 @@ TEMPLATES = [
         },
     },
 ]
+
+
+AUTHENTICATION_BACKENDS = (
+
+    'social_core.backends.google.GoogleOAuth2',
+    'social_core.backends.google.GoogleOAuth',
+    'django.contrib.auth.backends.ModelBackend',
+)
 
 # store static files locally and serve with whitenoise
 # STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
@@ -277,3 +286,9 @@ DEFAULT_LOGGER = "raven"
 LOGGER_EXCEPTION = DEFAULT_LOGGER
 LOGGER_ERROR = DEFAULT_LOGGER
 LOGGER_WARNING = DEFAULT_LOGGER
+
+
+SOCIAL_AUTH_JSONFIELD_ENABLED = True
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '344458235841-ouh1mdjtcvk4p743ohdm10a7von2vbug.apps.googleusercontent.com'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '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'
