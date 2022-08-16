@@ -143,9 +143,12 @@ class code_listAPIView(generics.ListAPIView):
     def list(self, request, *args, **kwargs):
         response = super().list(request, *args, **kwargs)
         result_dict = {}
-        for key in response.data:
-            parent = key.get("LISTTYPE")
 
+        
+
+
+        for key in response.data.get('results'):
+            parent = key.get("LISTTYPE")
             if result_dict.get(parent, None):
                 result_dict[parent].append(dict(key))
             else:
