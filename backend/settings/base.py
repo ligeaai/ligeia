@@ -49,6 +49,7 @@ THIRD_PARTY_APPS = [
     "cities_light",
     "corsheaders",
     "smart_selects",
+    'social_django',
     "health_check",  # required
     "health_check.db",  # stock Django health checkers
     "health_check.cache",
@@ -82,6 +83,8 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.locale.LocaleMiddleware",
+
+    'social_django.middleware.SocialAuthExceptionMiddleware',
 ]
 
 ROOT_URLCONF = "core.urls"
@@ -137,6 +140,9 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+
+                'social_django.context_processors.backends',  # <-- Here
+                'social_django.context_processors.login_redirect', # <-- Here
             ],
         },
     },
@@ -147,6 +153,7 @@ AUTHENTICATION_BACKENDS = (
 
     'social_core.backends.google.GoogleOAuth2',
     'social_core.backends.google.GoogleOAuth',
+    'social_core.backends.facebook.FacebookOAuth2',
     'django.contrib.auth.backends.ModelBackend',
 )
 
@@ -292,3 +299,11 @@ SOCIAL_AUTH_JSONFIELD_ENABLED = True
 
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '344458235841-ouh1mdjtcvk4p743ohdm10a7von2vbug.apps.googleusercontent.com'
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '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'
+
+LOGIN_URL = 'login'
+LOGOUT_URL = 'logout'
+LOGIN_REDIRECT_URL = 'localhost:3000'
+
+
+SOCIAL_AUTH_FACEBOOK_KEY = '985292215170699'  # App ID
+SOCIAL_AUTH_FACEBOOK_SECRET = '7b8483ff422109a7c17b3f7a03966bbf'  # App Secret
