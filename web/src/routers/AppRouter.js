@@ -5,7 +5,8 @@ import { unstable_HistoryRouter as HistoryRouter } from "react-router-dom";
 import history from './history';
 
 import CodeList from '../pages/code_list';
-import DatabasePage from '../pages/databasePage/DatabasePage'
+//import DatabasePage from '../pages/databasePage/DatabasePage'
+import DatabasePage from '../pages/code_list'
 import FailureDirectory from '../pages/failureDirectory/failureDirectory'
 import Layout from '../layout/layout';
 import Login from '../pages/login/login/Login'

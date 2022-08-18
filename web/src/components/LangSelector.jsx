@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 
 import earthIcon from "../assets/Images/header/Vector.png";
-import { changeLanguage } from "../services/actions/langAction";
+import { changeLanguage } from "../services/actions/language";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;

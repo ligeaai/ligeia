@@ -13,9 +13,11 @@ import {
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
 
-import { setAuthTrue } from "../../../services/reducers/authReducer";
+import { setAuthTrue } from "../../../services/reducers/authReducers";
 import history from "../../../routers/history";
 import langPicker from "../LangPicker";
+
+import { load_user } from "../../../services/actions/auth";
 
 const navigate = (e, route) => {
   e.preventDefault();
@@ -113,6 +115,7 @@ const Body = () => {
         variant="contained"
         sx={{ width: "100%", mt: 2.5 }}
         onClick={(e) => {
+          dispatch(load_user());
           dispatch(setAuthTrue(user));
           navigate(e, "/");
         }}
