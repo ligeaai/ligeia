@@ -46,17 +46,17 @@ THIRD_PARTY_APPS = [
     "knox",
     "django_extensions",
     "django_filters",
-    "cities_light",
+    # "cities_light",
     "corsheaders",
     "smart_selects",
-    'social_django',
+    # 'social_django',
     "health_check",  # required
     "health_check.db",  # stock Django health checkers
     "health_check.cache",
     "health_check.storage",
     "rosetta",
     "modeltranslation",
-    
+    # "oauth2_provider",
 ]
 
 LOCAL_APPS = [
@@ -83,8 +83,7 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.locale.LocaleMiddleware",
-
-    'social_django.middleware.SocialAuthExceptionMiddleware',
+    # "social_django.middleware.SocialAuthExceptionMiddleware",
 ]
 
 ROOT_URLCONF = "core.urls"
@@ -140,22 +139,20 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
-
-                'social_django.context_processors.backends',  # <-- Here
-                'social_django.context_processors.login_redirect', # <-- Here
+                # "social_django.context_processors.backends",  # <-- Here
+                # "social_django.context_processors.login_redirect",  # <-- Here
             ],
         },
     },
 ]
 
 
-AUTHENTICATION_BACKENDS = (
-
-    'social_core.backends.google.GoogleOAuth2',
-    # 'social_core.backends.google.GoogleOAuth',
-    'social_core.backends.facebook.FacebookOAuth2',
-    'django.contrib.auth.backends.ModelBackend',
-)
+# AUTHENTICATION_BACKENDS = (
+#     "social_core.backends.google.GoogleOAuth2",
+#     # 'social_core.backends.google.GoogleOAuth',
+#     "social_core.backends.facebook.FacebookOAuth2",
+#     "django.contrib.auth.backends.ModelBackend",
+# )
 
 # store static files locally and serve with whitenoise
 # STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
@@ -295,15 +292,17 @@ LOGGER_ERROR = DEFAULT_LOGGER
 LOGGER_WARNING = DEFAULT_LOGGER
 
 
-SOCIAL_AUTH_JSONFIELD_ENABLED = True
+# SOCIAL_AUTH_JSONFIELD_ENABLED = True
 
-SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '344458235841-ouh1mdjtcvk4p743ohdm10a7von2vbug.apps.googleusercontent.com'
-SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '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'
+# SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = (
+#     "344458235841-ouh1mdjtcvk4p743ohdm10a7von2vbug.apps.googleusercontent.com"
+# )
+# SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = "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"
 
-LOGIN_URL = 'login'
-LOGOUT_URL = 'logout'
-LOGIN_REDIRECT_URL = 'http://127.0.0.1:8000/en/api/v1/code_list'
+# LOGIN_URL = "login"
+# LOGOUT_URL = "logout"
+# LOGIN_REDIRECT_URL = "http://127.0.0.1:8000/en/api/v1/code_list"
 
 
-SOCIAL_AUTH_FACEBOOK_KEY = '3411592432496228'  # App ID
-SOCIAL_AUTH_FACEBOOK_SECRET = 'ea397b51fc3cd7fdd6f4afc94e5c7c92'  # App Secret
+# SOCIAL_AUTH_FACEBOOK_KEY = "3411592432496228"  # App ID
+# SOCIAL_AUTH_FACEBOOK_SECRET = "ea397b51fc3cd7fdd6f4afc94e5c7c92"  # App Secret

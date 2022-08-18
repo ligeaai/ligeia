@@ -2,23 +2,16 @@ import pathlib
 import xml.etree.ElementTree as ET
 
 from bs4 import BeautifulSoup
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse
 from django.shortcuts import render
+
+from apps.code_list.models.code_list import code_list
 
 work_dir = str(pathlib.Path().resolve())
 tree = ET.parse(work_dir + "/apps/code_list/xml/DbInfo.xml")
 root = tree.getroot()
 
 print(root)
-
-column_types = {
-    "Varchar": "CharField",
-    "NumericData": "DecimalField",
-    "Unicode": "CharField",
-    "Date": "DateField",
-    "Char": "CharField",
-}
-
 
 # tables = []
 # for table in root.findall('.//DbTable') : # table = (Name="CODE_LIST" TablespaceName="PRIMARY")
@@ -38,6 +31,15 @@ column_types = {
 #             'DefaultValueType': column.get('DefaultValueType'),
 #             'PkOrder': column.get('PkOrder')
 #             })
+
+
+column_types = {
+    "Varchar": "CharField",
+    "NumericData": "DecimalField",
+    "Unicode": "CharField",
+    "Date": "DateField",
+    "Char": "CharField",
+}
 
 
 def index(request):
@@ -105,7 +107,8 @@ def index(request):
         #  print(soup.get_text())
 
         model_file = open(
-            work_dir + "/apps/code_list/models/" + table.get("Name").lower() + ".py", "w"
+            work_dir + "/apps/code_list/models/" + table.get("Name").lower() + ".py",
+            "w",
         )  # f = open("", "")
         model_file.write(soup.get_text())
 
@@ -128,38 +131,3 @@ def add_data(request):
             )
     code_list.objects.bulk_create(code_lists)
     return HttpResponse("Success")
-
-
-from rest_framework import generics
-from apps.code_list.models.code_list import code_list
-from apps.api.serializers import code_listserializers
-from rest_framework.views import APIView
-from rest_framework.filters import SearchFilter
-from django_filters.rest_framework import DjangoFilterBackend
-
-class code_listAPIView(generics.ListAPIView):
-    queryset = code_list.objects.all()
-    serializer_class = code_listserializers
-    filter_backends = (DjangoFilterBackend,SearchFilter)
-    filter_fields = ('id','LISTTYPE')
-    search_field = ('id','LISTTYPE')
-
-    def list(self, request, *args, **kwargs):
-        response = super().list(request, *args, **kwargs)
-        result_dict = {}
-
-        
-
-
-        for key in response.data.get('results'):
-            parent = key.get("LISTTYPE")
-            if result_dict.get(parent, None):
-                result_dict[parent].append(dict(key))
-            else:
-                result_dict[parent] = [dict(key)]
-        return JsonResponse(result_dict)
-
-
-
-def auth(request) :
-    return render(request,'oauth.html')

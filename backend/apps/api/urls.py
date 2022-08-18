@@ -12,10 +12,12 @@ from django.conf import settings
 from django.conf.urls.i18n import i18n_patterns
 from django.utils.translation import gettext_lazy as _
 
-from apps.api.views import add_data, code_listAPIView, index
+from apps.code_list.views import code_list_view
+
+# , index, add_data
 
 
-from apps.api.views import auth
+# from apps.api.views import auth
 
 schema_view = get_schema_view(
     openapi.Info(
@@ -31,20 +33,17 @@ schema_view = get_schema_view(
 )
 
 urlpatterns = [
-    path("code_list/", code_listAPIView.as_view()),
+    path("code_list/", code_list_view.as_view()),
     # path('api/v1/code_list/', include("apps.codelist.urls")),
-    path("add-data/", add_data),
-    path("temp/", index),
-    path('', include('social_django.urls', namespace='social')),
-    path("auth/", auth),
-    path("users/", include(("apps.users.urls", "apps.users"), namespace="users"),),
-    # path('api/v1/code_list/', include("apps.codelist.urls")),
-    # path("api/v1/citylight/", include(("apps.citylight.urls", "apps.citylight"), namespace="citylight")),
-    # catch all others because of how history is handled by react router -
-    # cache this page because it will never change
-    # path('', cache_page(settings.PAGE_CACHE_SECONDS)(base_views.IndexView.as_view()), name='index'),
-    # swagger and redoc URL's
-    # re_path(r'^swagger(?P<format>\.json|\.yaml)$', schema_view.without_ui(cache_timeout=0), name='schema-json'),
-    re_path(r"^swagger/$", schema_view.with_ui("swagger", cache_timeout=100), name="schema-swagger-ui"),
-    re_path(r"^redoc/$", schema_view.with_ui("redoc", cache_timeout=100), name="schema-redoc"),
+    # path("add-data/", add_data),
+    # path("temp/", index),
+    # path("", include("social_django.urls", namespace="social")),
+    # path("auth/", auth),
+    path(
+        "users/",
+        include(("apps.users.urls", "apps.users"), namespace="users"),
+    ),
+    re_path(r'^swagger(?P<format>\.json|\.yaml)$', schema_view.without_ui(cache_timeout=0), name='schema-json'),
+    re_path(r'^swagger/$', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
+    re_path(r'^redoc/$', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
 ]

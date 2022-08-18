@@ -15,16 +15,13 @@ from django.utils.translation import gettext_lazy as _
 # from apps.base import views as base_views
 
 
-urlpatterns = (
-    i18n_patterns(
-        path(_("admin/"), admin.site.urls),
-        path("health/", include("health_check.urls")),
-        path("rosetta/", include("rosetta.urls")),
-        # API urls
-        path("api/v1/", include('apps.api.urls')),
-    )
-    + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-)
+urlpatterns = [
+    path(_("admin/"), admin.site.urls),
+    path("health/", include("health_check.urls")),
+    path("rosetta/", include("rosetta.urls")),
+    # API urls
+    path("api/v1/", include("apps.api.urls")),
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 admin.site.site_header = _("Ligeia Administration")
 admin.site.site_title = _("Ligeia")
