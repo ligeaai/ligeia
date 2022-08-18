@@ -1,6 +1,8 @@
 import os
 import logging
 import environ
+from datetime import timedelta
+from rest_framework.settings import api_settings
 
 from django.utils.translation import gettext_lazy as _
 
@@ -183,6 +185,8 @@ REST_KNOX = {
     "SECURE_HASH_ALGORITHM": "cryptography.hazmat.primitives.hashes.SHA512",
     "AUTH_TOKEN_CHARACTER_LENGTH": 64,
     "USER_SERIALIZER": "users.serializers.UserSerializer",
+    "TOKEN_TTL": timedelta(minutes=45),
+    "EXPIRY_DATETIME_FORMAT": api_settings.DATETIME_FORMAT,
 }
 
 # ########### Sentry configuration
