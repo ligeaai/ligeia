@@ -32,7 +32,7 @@ class code_list (models.Model):
     DESCRIPTION_ID = models.CharField(null = True , max_length = 100 )
     HIDDEN = models.CharField(null = True , max_length = 5 )
     LAST_UPDT_USER = models.CharField(null = False , default = "system" , max_length = 100 )
-    LAST_UPDT_DATE = models.DateField(null = True , default = "2022-08-16" )
+    LAST_UPDT_DATE = models.DateField(null = True , default = "2022-08-18" )
     VERSION = models.CharField(null = False , default = uuid.uuid4 , max_length = 255 )
     DB_ID = models.CharField(null = True , max_length = 32 )
     ROW_ID = models.CharField(null = False , default = uuid.uuid4 , max_length = 255 )
