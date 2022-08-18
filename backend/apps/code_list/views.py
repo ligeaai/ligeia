@@ -4,11 +4,14 @@ from rest_framework.filters import SearchFilter
 from django_filters.rest_framework import DjangoFilterBackend
 from django.http import JsonResponse
 
+from rest_framework.viewsets import ModelViewSet
+
+
 from .models import code_list
 from .serializers import CodeListSerializer
 
 
-class code_list_view(generics.ListAPIView):
+class code_list_view(ModelViewSet):
     queryset = code_list.objects.all()
     serializer_class = CodeListSerializer
     filter_backends = (DjangoFilterBackend, SearchFilter)
@@ -26,7 +29,3 @@ class code_list_view(generics.ListAPIView):
             else:
                 result_dict[parent] = [dict(key)]
         return JsonResponse(result_dict)
-
-
-def auth(request):
-    return render(request, "oauth.html")
