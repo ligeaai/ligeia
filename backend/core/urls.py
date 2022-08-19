@@ -18,8 +18,7 @@ from django.utils.translation import gettext_lazy as _
 urlpatterns = [
     path(_("admin/"), admin.site.urls),
     path("health/", include("health_check.urls")),
-    path("rosetta/", include("rosetta.urls")),
-    # API urls
+    # path("rosetta/", include("rosetta.urls")),    
     path("api/v1/", include("apps.api.urls")),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 

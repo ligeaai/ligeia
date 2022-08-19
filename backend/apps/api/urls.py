@@ -34,7 +34,7 @@ routers.register("code_list", code_list_view, basename="code_list")
 urlpatterns = [
     # path("add-data/", add_data),
     # path("temp/", index),
-    path("users/", include(("apps.users.urls", "apps.users"), namespace="users")),
+    path("auth/", include(("apps.users.urls", "apps.users"), namespace="users")),
     re_path(
         r"^swagger(?P<format>\.json|\.yaml)$",
         schema_view.without_ui(cache_timeout=0),
