@@ -13,11 +13,10 @@ import {
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
 
-import { setAuthTrue } from "../../../services/reducers/authReducers";
 import history from "../../../routers/history";
 import langPicker from "../LangPicker";
 
-import { load_user } from "../../../services/actions/auth";
+import { login } from "../../../services/actions/auth";
 
 const navigate = (e, route) => {
   e.preventDefault();
@@ -28,7 +27,7 @@ const Body = () => {
   const dispatch = useDispatch();
   const [user, setUser] = useState([
     {
-      username: "",
+      email: "",
       password: "",
     },
   ]);
@@ -74,9 +73,9 @@ const Body = () => {
       <FormControl sx={{ width: "100%", backgroundColor: "#ffffff" }}>
         <OutlinedInput
           placeholder={`${text.body.usernameInput}`}
-          value={user[0].usernamer}
+          value={user[0].email}
           onChange={(e) => {
-            user[0].username = e.target.value;
+            user[0].email = e.target.value;
             setUser([...user]);
           }}
         />
@@ -114,9 +113,8 @@ const Body = () => {
       <Button
         variant="contained"
         sx={{ width: "100%", mt: 2.5 }}
-        onClick={(e) => {
-          dispatch(load_user());
-          dispatch(setAuthTrue(user));
+        onClick={async (e) => {
+          await dispatch(login(user[0].email, user[0].password));
           navigate(e, "/");
         }}
       >

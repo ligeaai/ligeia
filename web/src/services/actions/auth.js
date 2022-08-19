@@ -160,14 +160,14 @@ export const login = (email, password) => async dispatch => {
     const body = JSON.stringify({ email, password });
 
     try {
-        const res = await axios.post(`http://localhost:8000/en/api/v1/...`, body, config);
+        const res = await axios.post(`http://localhost:8000/api/v1/auth/login/`, body, config);
 
         dispatch({
             type: LOGIN_SUCCESS,
             payload: res.data
         });
 
-        dispatch(load_user());
+        //dispatch(load_user());
     } catch (err) {
         dispatch({
             type: LOGIN_FAIL
