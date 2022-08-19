@@ -37,6 +37,7 @@ export default function (state = initialState, action) {
                 isAuthenticated: true
             }
         case LOGIN_SUCCESS:
+        case SIGNUP_SUCCESS:
         case GOOGLE_AUTH_SUCCESS:
         case FACEBOOK_AUTH_SUCCESS:
             localStorage.setItem('token', payload.token);
@@ -45,11 +46,6 @@ export default function (state = initialState, action) {
                 ...state,
                 isAuthenticated: true,
                 token: payload.token,
-            }
-        case SIGNUP_SUCCESS:
-            return {
-                ...state,
-                isAuthenticated: false
             }
         case USER_LOADED_SUCCESS:
             return {

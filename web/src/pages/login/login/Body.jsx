@@ -127,6 +127,13 @@ const Body = () => {
       >
         Wrong pass
       </Button>
+      <Button
+        onClick={(e) => {
+          navigate(e, "/signup");
+        }}
+      >
+        Sign Up
+      </Button>
     </Box>
   );
 };

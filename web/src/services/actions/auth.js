@@ -175,28 +175,29 @@ export const login = (email, password) => async dispatch => {
     }
 };
 
-// export const signup = (first_name, last_name, email, password, re_password) => async dispatch => {
-//     const config = {
-//         headers: {
-//             'Content-Type': 'application/json'
-//         }
-//     };
+export const signup = (email, first_name, last_name, password) => async dispatch => {
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    };
 
-//     const body = JSON.stringify({ first_name, last_name, email, password, re_password });
+    const body = JSON.stringify({ email, first_name, last_name, password });
 
-//     try {
-//         const res = await axios.post(`http://localhost:8000/en/api/v1/...`, body, config);
+    try {
+        const res = await axios.post(`http://localhost:8000/api/v1/auth/register/`, body, config);
 
-//         dispatch({
-//             type: SIGNUP_SUCCESS,
-//             payload: res.data
-//         });
-//     } catch (err) {
-//         dispatch({
-//             type: SIGNUP_FAIL
-//         })
-//     }
-// };
+        dispatch({
+            type: SIGNUP_SUCCESS,
+            payload: res.data
+        });
+
+    } catch (err) {
+        dispatch({
+            type: SIGNUP_FAIL
+        })
+    }
+};
 
 // export const verify = (uid, token) => async dispatch => {
 //     const config = {

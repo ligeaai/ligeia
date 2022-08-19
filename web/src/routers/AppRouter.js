@@ -18,6 +18,7 @@ import PrivateRoute from './PrivateRouter';
 import ReportsPage from '../pages/reportsPage/ReportsPage'
 import SecureCodePage from '../pages/login/secureCodepage/secureCodePage'
 import ServicePage from '../pages/servicePage/servicePage'
+import Signup from '../pages/signup/Signup'
 import IntegrationLog from '../pages/integrationLog/IntegrationLog'
 
 const AppRouter = () => {
@@ -36,11 +37,15 @@ const AppRouter = () => {
                             <Route path='codelist' element={<CodeList />} />
                         </Route>
                     </Route>
+
                     <Route exact path='/login' element={<LoginLayout />} >
                         <Route path='' element={<Login />} />
                         <Route path='passrecovery' element={<PassRecovery />} />
                         <Route path='securecode' element={<SecureCodePage />} />
                         <Route path='newpassword' element={<NewPassword />} />
+                    </Route>
+                    <Route exact path='/signup' element={<LoginLayout />} >
+                        <Route path='' element={<Signup />} />
                     </Route>
                 </Routes>
             </Fragment>
