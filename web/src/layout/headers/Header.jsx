@@ -1,13 +1,15 @@
 import * as React from "react";
 import { useDispatch } from "react-redux";
 
-import { Avatar, Grid, Link } from "@mui/material";
+import { Avatar, Button, Grid, Link } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
 import { toggleDrawer } from "../../services/reducers/drawerReducer";
 
 import logo from "../../assets/Images/header/Group 1.png";
 import menuIcon from "../../assets/Images/header/Menu.png";
+
+import { logout } from "../../services/actions/auth";
 
 const Mobil = styled("div")(({ theme }) => ({
   [theme.breakpoints.down("sm")]: {
@@ -70,7 +72,15 @@ const Header = () => {
         <Grid container alignItems="center">
           <Mobil>
             <Grid item id="txt">
-              names
+              <Button
+                variant="outlined"
+                onClick={(e) => {
+                  e.preventDefault();
+                  dispatch(logout());
+                }}
+              >
+                logout
+              </Button>
             </Grid>
           </Mobil>
           <Grid item>
