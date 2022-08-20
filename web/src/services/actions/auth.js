@@ -265,8 +265,22 @@ export const signup = (email, first_name, last_name, password) => async dispatch
 //     }
 // };
 
-export const logout = () => dispatch => {
-    dispatch({
-        type: LOGOUT
-    });
+export const logout = () => async dispatch => {
+    let token = localStorage.getItem('token');
+    const config = {
+        headers: {
+            'Content-Type': 'application/json',
+            "Authorization": `token ${token}`,
+        }
+    };
+    const body = JSON.stringify({ token: localStorage.getItem('token') });
+    try {
+        await axios.post(`http://localhost:8000/api/v1/auth/logout/`, body, config);
+
+        dispatch({
+            type: LOGOUT
+        });
+    } catch {
+        console.log("LOG OUT FAIL");
+    }
 };
