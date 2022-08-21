@@ -92,7 +92,6 @@ volumes:
   pgadmin-data: null
   redis-data: null
   mongodb-data: null
-
   # celery_worker:
   #   restart: on-failure
   #   build:

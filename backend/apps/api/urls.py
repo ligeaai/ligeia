@@ -9,6 +9,7 @@ from rest_framework.routers import DefaultRouter
 
 
 from apps.code_list.views import code_list_view
+from apps.parsers.views import add_data
 
 # , index, add_data
 
@@ -32,8 +33,9 @@ routers = DefaultRouter()
 routers.register("code_list", code_list_view, basename="code_list")
 
 urlpatterns = [
-    # path("add-data/", add_data),
+    path("add-data/", add_data),
     # path("temp/", index),
+    path('accounts/', include('allauth.urls')),
     path("auth/", include(("apps.users.urls", "apps.users"), namespace="users")),
     re_path(
         r"^swagger(?P<format>\.json|\.yaml)$",

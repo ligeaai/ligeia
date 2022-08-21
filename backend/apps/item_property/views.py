@@ -5,7 +5,7 @@ from bs4 import BeautifulSoup
 from django.http import HttpResponse
 from django.shortcuts import render
 
-from apps.code_list.models.code_list import code_list
+from apps.item_property.models import item_property
 
 work_dir = str(pathlib.Path().resolve())
 tree = ET.parse(work_dir + "/apps/parsers/xml/DbInfo.xml")

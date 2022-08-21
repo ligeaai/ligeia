@@ -39,6 +39,12 @@ DJANGO_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django.contrib.sites",
+
+    "allauth",
+    "allauth.account",
+    "allauth.socialaccount",
+    "allauth.socialaccount.providers.google",
+    "allauth.socialaccount.providers.facebook",
 ]
 
 THIRD_PARTY_APPS = [
@@ -149,12 +155,13 @@ TEMPLATES = [
 ]
 
 
-# AUTHENTICATION_BACKENDS = (
-#     "social_core.backends.google.GoogleOAuth2",
-#     # 'social_core.backends.google.GoogleOAuth',
-#     "social_core.backends.facebook.FacebookOAuth2",
-#     "django.contrib.auth.backends.ModelBackend",
-# )
+AUTHENTICATION_BACKENDS = (
+    # "social_core.backends.google.GoogleOAuth2",
+    # 'social_core.backends.google.GoogleOAuth',
+    # "social_core.backends.facebook.FacebookOAuth2",
+    "django.contrib.auth.backends.ModelBackend",
+    "allauth.account.auth_backends.AuthenticationBackend",
+)
 
 # store static files locally and serve with whitenoise
 # STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
@@ -294,6 +301,22 @@ DEFAULT_LOGGER = "raven"
 LOGGER_EXCEPTION = DEFAULT_LOGGER
 LOGGER_ERROR = DEFAULT_LOGGER
 LOGGER_WARNING = DEFAULT_LOGGER
+
+SITE_ID = 1
+
+
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        # For each OAuth based provider, either add a ``SocialApp``
+        # (``socialaccount`` app) containing the required client
+        # credentials, or list them here:
+        'APP': {
+            'client_id': '344458235841-ouh1mdjtcvk4p743ohdm10a7von2vbug.apps.googleusercontent.com',
+            'secret': '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',
+            'key': '344458235841-ouh1mdjtcvk4p743ohdm10a7von2vbug.apps.googleusercontent.com'
+        }
+    }
+}
 
 
 # SOCIAL_AUTH_JSONFIELD_ENABLED = True
