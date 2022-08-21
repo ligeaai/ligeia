@@ -315,6 +315,16 @@ SOCIALACCOUNT_PROVIDERS = {
             'secret': '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',
             'key': '344458235841-ouh1mdjtcvk4p743ohdm10a7von2vbug.apps.googleusercontent.com'
         }
+    },
+      'facebook': {
+        # For each OAuth based provider, either add a ``SocialApp``
+        # (``socialaccount`` app) containing the required client
+        # credentials, or list them here:
+        'APP': {
+            'client_id': '344458235841-ouh1mdjtcvk4p743ohdm10a7von2vbug.apps.googleusercontent.com',
+            'secret': 'ea397b51fc3cd7fdd6f4afc94e5c7c92',
+            'key': '3411592432496228'
+        }
     }
 }
 
