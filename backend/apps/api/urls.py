@@ -7,7 +7,6 @@ from django.conf import settings
 from django.utils.translation import gettext_lazy as _
 from rest_framework.routers import DefaultRouter
 
-
 from apps.code_list.views import code_list_view
 from apps.parsers.views import add_data
 
@@ -31,6 +30,7 @@ schema_view = get_schema_view(
 
 routers = DefaultRouter()
 routers.register("code_list", code_list_view, basename="code_list")
+
 
 urlpatterns = [
     path("add-data/", add_data),
