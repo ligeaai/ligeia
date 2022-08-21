@@ -160,22 +160,23 @@ class UserChangePassword(generics.UpdateAPIView):
 #         password = request.data.get("password", False)
 
 
-# class ResetPassword(generics.GenericAPIView):
-#     def post(self,request):
-#         serializer=ForgetPasswordSerializer(data=request.data)
-#         alldatas={}
-#         if serializer.is_valid(raise_exception=True):
-#             mname=serializer.save()
-#             # alldatas[‘data’]=’successfully registered’
-#             # print(alldatas)
-#             return Response(alldatas)
-#         return Response(‘failed retry after some time’)
-#         class logout(APIView):
+class ResetPassword(generics.GenericAPIView):
+    def post(self, request):
+        serializer = ForgetPasswordSerializer(data=request.data)
+        alldatas = {}
+        if serializer.is_valid(raise_exception=True):
+            mname = serializer.save()
+            # alldatas[‘data’]=’successfully registered’
+            # print(alldatas)
+            return Response(alldatas)
+        return Response("failed retry after some time")
 
-#     def get(self,request):
+
+# class logout(APIView):
+#     def get(self, request):
 #         request.user.auth_token.delete()
 #         auth.logout(request)
-#         return Response(“successfully deleted”)
+#         return Response("successfully deleted")
 
 
 class UserConfirmEmailView(AtomicMixin, GenericAPIView):
