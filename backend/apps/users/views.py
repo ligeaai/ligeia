@@ -1,3 +1,4 @@
+import email
 import logging
 
 from django.shortcuts import get_object_or_404
@@ -18,11 +19,40 @@ from .serializers import (
     UserLoginSerializer,
     ChangePasswordSerializer,
     ForgetPasswordSerializer,
+    UserModelSerializer,
 )
 
 from utils import AtomicMixin
+from rest_framework.viewsets import ModelViewSet
+
+from .models import User
 
 logger = logging.getLogger(__name__)
+
+
+class UserModelViewSet(ModelViewSet):
+    """
+    Endpiont for user model, It accept all operations except for user creation.
+    It will be enabled or disabled based upon the product requirements.
+    """
+
+    queryset = User.objects.all()
+    serializer_class = UserModelSerializer
+    permission_classes = (IsAuthenticated,)
+    http_method_names = ("head", "option", "get")
+
+
+class UserDetails(ModelViewSet):
+    queryset = User.objects.none()
+    serializer_class = UserModelSerializer
+    permission_classes = (IsAuthenticated,)
+    http_method_names = ("head", "option", "get")
+
+    def list(self, request):
+        queryset = User.objects.get(email=request.user)
+        serializer = self.serializer_class(queryset)
+
+        return Response(serializer.data)
 
 
 class UserDetail(generics.RetrieveUpdateDestroyAPIView):
