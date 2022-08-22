@@ -1,24 +1,18 @@
 import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import Button from "@mui/material/Button";
 import Snackbar from "@mui/material/Snackbar";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
+
+import { clean_error } from "../../services/actions/error";
 const ErrorMessage = (props) => {
-  let { errMsg } = props;
-
-  const [open, setOpen] = useState(false);
+  const dispatch = useDispatch();
+  const err = useSelector((state) => state.error);
+  const { Element } = props;
   const errMsgClose = () => {
-    setOpen(false);
+    dispatch(clean_error());
   };
-  useEffect(() => {
-    console.log(props);
-    if (errMsg) {
-      setOpen(true);
-    } else {
-      setOpen(false);
-    }
-  }, [props]);
-
   const action = (
     <React.Fragment>
       <IconButton
@@ -31,8 +25,16 @@ const ErrorMessage = (props) => {
       </IconButton>
     </React.Fragment>
   );
-
-  return <Snackbar open={open} message={errMsg} action={action} />;
+  if (!err.isError) {
+    return <Element />;
+  } else {
+    return (
+      <>
+        <Element />
+        <Snackbar open={true} message={err.errMsg} action={action} />;
+      </>
+    );
+  }
 };
 
 export default ErrorMessage;

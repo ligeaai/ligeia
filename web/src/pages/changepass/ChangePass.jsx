@@ -152,14 +152,17 @@ const ChangePass = () => {
             variant="contained"
             sx={{ width: "100%" }}
             onClick={async (e) => {
-              await dispatch(
+              (await dispatch(
                 change_password(
                   password.newpassword,
                   password.repassword,
                   password.oldpassword
                 )
+              )) ? (
+                <></>
+              ) : (
+                navigate(e, "/")
               );
-              navigate(e, "/");
             }}
           >
             Next

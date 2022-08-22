@@ -22,38 +22,44 @@ import ServicePage from '../pages/servicePage/servicePage'
 import Signup from '../pages/signup/Signup'
 import IntegrationLog from '../pages/integrationLog/IntegrationLog'
 
+import ErrorMessage from '../components/HOC/errorMessage';
+
+const AppRouter1 = () => {
+    return (
+        <Fragment>
+            <Routes>
+                <Route exact path='/' element={<PrivateRoute />}>
+                    <Route exact path='/' element={<Layout />}>
+                        <Route path='monitoring' element={<Monitoring />} />
+                        <Route path='service' element={<ServicePage />} />
+                        <Route path='failuredirectory' element={<FailureDirectory />} />
+                        <Route path='log' element={<IntegrationLog />} />
+                        <Route path='database' element={<DatabasePage />} />
+                        <Route path='reports' element={<ReportsPage />} />
+                        <Route path='codelist' element={<CodeList />} />
+                        <Route path='changepass' element={<ChangePass />} />
+                    </Route>
+                </Route>
+                <Route exact path='/login' element={<LoginLayout />} >
+                    <Route path='' element={<Login />} />
+                    <Route path='passrecovery' element={<PassRecovery />} />
+                    <Route path='securecode' element={<SecureCodePage />} />
+                    <Route path='newpassword' element={<NewPassword />} />
+                </Route>
+                <Route exact path='/signup' element={<LoginLayout />} >
+                    <Route path='' element={<Signup />} />
+                </Route>
+            </Routes>
+        </Fragment>
+    );
+}
+
 const AppRouter = () => {
     return (
         <HistoryRouter history={history}>
-            <Fragment>
-                <Routes>
-                    <Route exact path='/' element={<PrivateRoute />}>
-                        <Route exact path='/' element={<Layout />}>
-                            <Route path='monitoring' element={<Monitoring />} />
-                            <Route path='service' element={<ServicePage />} />
-                            <Route path='failuredirectory' element={<FailureDirectory />} />
-                            <Route path='log' element={<IntegrationLog />} />
-                            <Route path='database' element={<DatabasePage />} />
-                            <Route path='reports' element={<ReportsPage />} />
-                            <Route path='codelist' element={<CodeList />} />
-                            <Route path='changepass' element={<ChangePass />} />
-                        </Route>
-                    </Route>
-
-                    <Route exact path='/login' element={<LoginLayout />} >
-                        <Route path='' element={<Login />} />
-                        <Route path='passrecovery' element={<PassRecovery />} />
-                        <Route path='securecode' element={<SecureCodePage />} />
-                        <Route path='newpassword' element={<NewPassword />} />
-                    </Route>
-                    <Route exact path='/signup' element={<LoginLayout />} >
-                        <Route path='' element={<Signup />} />
-                    </Route>
-                </Routes>
-            </Fragment>
+            <ErrorMessage Element={AppRouter1} />
         </HistoryRouter>
-
-    );
+    )
 }
 
 export default AppRouter

@@ -163,10 +163,13 @@ const Body = () => {
         variant="contained"
         sx={{ width: "100%", mt: 2.5 }}
         onClick={async (e) => {
-          await dispatch(
+          (await dispatch(
             signup(user.email, user.name, user.surname, user.password)
+          )) ? (
+            <></>
+          ) : (
+            navigate(e, "/")
           );
-          navigate(e, "/");
         }}
       >
         Sign Up

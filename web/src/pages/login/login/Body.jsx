@@ -26,7 +26,6 @@ const navigate = (e, route) => {
 
 const Body = () => {
   const dispatch = useDispatch();
-  const [errMsg, setErrMsg] = useState(false);
   const [user, setUser] = useState({
     email: "",
     password: "",
@@ -36,13 +35,7 @@ const Body = () => {
   const onChangeFactory = (e) => {
     setUser({ ...user, [e.target.name]: e.target.value });
   };
-  useEffect(() => {
-    setTimeout(() => {
-      if (errMsg) {
-        setErrMsg(false);
-      }
-    }, 3000);
-  }, [errMsg]);
+
   return (
     <>
       <Box
@@ -122,8 +115,11 @@ const Body = () => {
           sx={{ width: "100%", mt: 2.5 }}
           onClick={async (e) => {
             e.preventDefault();
-            let err = await dispatch(login(user.email, user.password));
-            err ? setErrMsg(err.message) : navigate(e, "/");
+            (await dispatch(login(user.email, user.password))) ? (
+              <></>
+            ) : (
+              navigate(e, "/")
+            );
           }}
         >
           {text.body.signIn}
@@ -143,7 +139,6 @@ const Body = () => {
           Sign Up
         </Button>
       </Box>
-      <ErrorMessage errMsg={errMsg} />;
     </>
   );
 };
