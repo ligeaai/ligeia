@@ -1,5 +1,7 @@
 import axios from 'axios';
 import {
+    CHANGE_PASSWORD_SUCCESS,
+    CHANGE_PASSWORD_FAIL,
     LOGIN_SUCCESS,
     LOGIN_FAIL,
     USER_LOADED_SUCCESS,
@@ -172,6 +174,7 @@ export const login = (email, password) => async dispatch => {
         dispatch({
             type: LOGIN_FAIL
         })
+        return err
     }
 };
 
@@ -220,6 +223,35 @@ export const signup = (email, first_name, last_name, password) => async dispatch
 //         })
 //     }
 // };
+
+export const change_password = (new_password1, new_password2, old_password) => async dispatch => {
+    let token = localStorage.getItem('token');
+    const config = {
+        headers: {
+            'Content-Type': 'application/json',
+            "Authorization": `token ${token}`,
+        }
+    };
+    const body = JSON.stringify({
+        new_password1,
+        new_password2,
+        old_password
+    });
+    console.log(body);
+    try {
+        await axios.patch(`http://localhost:8000/api/v1/auth/change-password/`, body, config);
+
+        dispatch({
+            type: CHANGE_PASSWORD_SUCCESS
+        });
+    } catch (err) {
+        dispatch({
+            type: CHANGE_PASSWORD_FAIL
+        });
+    }
+};
+//PUT http://127.0.0.1:8000/api/v1/auth/change-password/ 403 (Forbidden)
+
 
 // export const reset_password = (email) => async dispatch => {
 //     const config = {

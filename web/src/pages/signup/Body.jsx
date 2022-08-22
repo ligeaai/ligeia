@@ -24,18 +24,18 @@ const navigate = (e, route) => {
 
 const Body = () => {
   const dispatch = useDispatch();
-  const [user, setUser] = useState([
-    {
-      email: "",
-      name: "",
-      surname: "",
-      password: "",
-      repassword: "",
-    },
-  ]);
+  const [user, setUser] = useState({
+    email: "",
+    name: "",
+    surname: "",
+    password: "",
+    repassword: "",
+  });
   const [passVisible, setPassVisible] = useState(false);
   const [repassVisible, setRePassVisible] = useState(false);
-
+  const onChangeFactory = (e) => {
+    setUser({ ...user, [e.target.name]: e.target.value });
+  };
   return (
     <Box
       sx={{
@@ -75,12 +75,10 @@ const Body = () => {
       </Typography>
       <FormControl sx={{ width: "100%", backgroundColor: "#ffffff" }}>
         <OutlinedInput
+          name="email"
           placeholder={"Email"}
-          value={user[0].email}
-          onChange={(e) => {
-            user[0].email = e.target.value;
-            setUser([...user]);
-          }}
+          value={user.email}
+          onChange={onChangeFactory}
         />
       </FormControl>
       <Typography variant="h6" sx={{ mb: 1 }}>
@@ -88,12 +86,10 @@ const Body = () => {
       </Typography>
       <FormControl sx={{ width: "100%", backgroundColor: "#ffffff" }}>
         <OutlinedInput
+          name="name"
           placeholder={"Name"}
-          value={user[0].name}
-          onChange={(e) => {
-            user[0].name = e.target.value;
-            setUser([...user]);
-          }}
+          value={user.name}
+          onChange={onChangeFactory}
         />
       </FormControl>
       <Typography variant="h6" sx={{ mb: 1 }}>
@@ -101,12 +97,10 @@ const Body = () => {
       </Typography>
       <FormControl sx={{ width: "100%", backgroundColor: "#ffffff" }}>
         <OutlinedInput
+          name="surname"
           placeholder={"Surname"}
-          value={user[0].surname}
-          onChange={(e) => {
-            user[0].surname = e.target.value;
-            setUser([...user]);
-          }}
+          value={user.surname}
+          onChange={onChangeFactory}
         />
       </FormControl>
       <Typography variant="h6" sx={{ mb: 1 }}>
@@ -114,13 +108,11 @@ const Body = () => {
       </Typography>
       <FormControl sx={{ width: "100%", backgroundColor: "#ffffff" }}>
         <OutlinedInput
+          name="password"
           placeholder={`Password`}
           type={passVisible ? "text" : "password"}
-          value={user[0].password}
-          onChange={(e) => {
-            user[0].password = e.target.value;
-            setUser([...user]);
-          }}
+          value={user.password}
+          onChange={onChangeFactory}
           endAdornment={
             <InputAdornment
               position="end"
@@ -144,13 +136,11 @@ const Body = () => {
       </Typography>
       <FormControl sx={{ width: "100%", backgroundColor: "#ffffff" }}>
         <OutlinedInput
+          name="repassword"
           placeholder={`Repassword`}
           type={repassVisible ? "text" : "password"}
-          value={user[0].repassword}
-          onChange={(e) => {
-            user[0].repassword = e.target.value;
-            setUser([...user]);
-          }}
+          value={user.repassword}
+          onChange={onChangeFactory}
           endAdornment={
             <InputAdornment
               position="end"
@@ -174,12 +164,7 @@ const Body = () => {
         sx={{ width: "100%", mt: 2.5 }}
         onClick={async (e) => {
           await dispatch(
-            signup(
-              user[0].email,
-              user[0].name,
-              user[0].surname,
-              user[0].password
-            )
+            signup(user.email, user.name, user.surname, user.password)
           );
           navigate(e, "/");
         }}

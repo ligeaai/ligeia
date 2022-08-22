@@ -1,4 +1,6 @@
 import {
+    CHANGE_PASSWORD_SUCCESS,
+    CHANGE_PASSWORD_FAIL,
     LOGIN_SUCCESS,
     LOGIN_FAIL,
     USER_LOADED_SUCCESS,
@@ -46,6 +48,7 @@ export default function (state = initialState, action) {
                 ...state,
                 isAuthenticated: true,
                 token: payload.token,
+                user: payload.user
             }
         case USER_LOADED_SUCCESS:
             return {
@@ -62,6 +65,7 @@ export default function (state = initialState, action) {
                 ...state,
                 user: null
             }
+        case CHANGE_PASSWORD_SUCCESS:
         case GOOGLE_AUTH_FAIL:
         case FACEBOOK_AUTH_FAIL:
         case LOGIN_FAIL:
@@ -74,6 +78,7 @@ export default function (state = initialState, action) {
                 isAuthenticated: false,
                 user: null
             }
+        case CHANGE_PASSWORD_FAIL:
         case PASSWORD_RESET_SUCCESS:
         case PASSWORD_RESET_FAIL:
         case PASSWORD_RESET_CONFIRM_SUCCESS:

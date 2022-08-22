@@ -1,5 +1,6 @@
 import * as React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import history from "../../routers/history";
 
 import { Avatar, Button, Grid, Link } from "@mui/material";
 import { styled } from "@mui/material/styles";
@@ -24,6 +25,7 @@ const Pc = styled("div")(({ theme }) => ({
 }));
 
 const Header = () => {
+  const user = useSelector((state) => state.auth.user);
   const dispatch = useDispatch();
   return (
     <Grid
@@ -71,21 +73,34 @@ const Header = () => {
       <Grid item>
         <Grid container alignItems="center">
           <Mobil>
-            <Grid item id="txt">
-              <Button
-                variant="outlined"
-                onClick={(e) => {
-                  e.preventDefault();
-                  dispatch(logout());
-                }}
-              >
-                logout
-              </Button>
+            <Grid container alignItems="center">
+              <Grid item id="txt">
+                <Button
+                  variant="outlined"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    dispatch(logout());
+                  }}
+                >
+                  logout
+                </Button>
+              </Grid>
+              <Grid item id="txt">
+                <Button
+                  variant="outlined"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    history.push("/changepass");
+                  }}
+                >
+                  Change Pass
+                </Button>
+              </Grid>
             </Grid>
           </Mobil>
           <Grid item>
             <Avatar
-              alt="Name"
+              alt={user ? user.first_name.concat(" ", user.last_name) : "name"}
               src="/"
               sx={{
                 my: 1,

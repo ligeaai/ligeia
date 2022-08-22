@@ -4,6 +4,7 @@ import { unstable_HistoryRouter as HistoryRouter } from "react-router-dom";
 
 import history from './history';
 
+import ChangePass from '../pages/changepass/ChangePass'
 import CodeList from '../pages/code_list';
 //import DatabasePage from '../pages/databasePage/DatabasePage'
 import DatabasePage from '../pages/code_list'
@@ -35,6 +36,7 @@ const AppRouter = () => {
                             <Route path='database' element={<DatabasePage />} />
                             <Route path='reports' element={<ReportsPage />} />
                             <Route path='codelist' element={<CodeList />} />
+                            <Route path='changepass' element={<ChangePass />} />
                         </Route>
                     </Route>
 
