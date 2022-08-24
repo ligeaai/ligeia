@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 
 import {
@@ -15,9 +15,9 @@ import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined
 
 import history from "../../../routers/history";
 import langPicker from "../LangPicker";
+import styles from "../../../assets/Styles/pages/login/login/body";
 
 import { login } from "../../../services/actions/auth";
-import ErrorMessage from "../../../components/HOC/errorMessage";
 
 const navigate = (e, route) => {
   e.preventDefault();
@@ -38,43 +38,14 @@ const Body = () => {
 
   return (
     <>
-      <Box
-        sx={{
-          position: "absolute",
-          left: "50%",
-          top: "50%",
-          p: 2.5,
-          transform: "translate(-50%,-50%)",
-          borderRadius: "10px",
-          typography: {
-            xs: {
-              width: "100%",
-              boxSizing: "border-box",
-              backgroundColor: "transparent",
-              boxShadow: "none",
-            },
-            sm: {
-              width: "360px",
-              boxShadow: "0px 4px 20px rgba(194, 194, 194, 0.25)",
-              backgroundColor: "#ffffff",
-            },
-          },
-        }}
-      >
-        <Typography
-          variant="h4"
-          textAlign="center"
-          sx={{
-            typography: { xs: { display: "none" }, sm: { display: "block" } },
-            mb: 2.5,
-          }}
-        >
+      <Box sx={styles().box}>
+        <Typography variant="h4" textAlign="center" sx={styles().header}>
           {text.body.authorization}
         </Typography>
-        <Typography variant="h6" sx={{ mb: 1 }}>
+        <Typography variant="h6" sx={styles().inputLabel}>
           {text.body.username}
         </Typography>
-        <FormControl sx={{ width: "100%", backgroundColor: "#ffffff" }}>
+        <FormControl sx={styles().input}>
           <OutlinedInput
             name="email"
             placeholder={`${text.body.usernameInput}`}
@@ -82,10 +53,10 @@ const Body = () => {
             onChange={onChangeFactory}
           />
         </FormControl>
-        <Typography variant="h6" sx={{ mb: 1, mt: 2.5 }}>
+        <Typography variant="h6" sx={styles().inputLabel}>
           {text.body.password}
         </Typography>
-        <FormControl sx={{ width: "100%", backgroundColor: "#ffffff" }}>
+        <FormControl sx={styles().input}>
           <OutlinedInput
             name="password"
             placeholder={`${text.body.passwordInput}`}
@@ -112,7 +83,7 @@ const Body = () => {
 
         <Button
           variant="contained"
-          sx={{ width: "100%", mt: 2.5 }}
+          sx={styles().btnSignIn}
           onClick={async (e) => {
             e.preventDefault();
             (await dispatch(login(user.email, user.password))) ? (

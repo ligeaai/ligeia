@@ -266,7 +266,6 @@ export const change_password = (new_password1, new_password2, old_password) => a
             type: CHANGE_PASSWORD_SUCCESS
         });
     } catch (err) {
-        console.log(err);
         dispatch({
             type: CHANGE_PASSWORD_FAIL
         });

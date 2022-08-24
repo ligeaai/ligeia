@@ -12,6 +12,7 @@ import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
 
 import history from "../../../routers/history";
+import styles from "../../../assets/Styles/pages/login/newPassword/body";
 
 const navigate = (e, route) => {
   e.preventDefault();
@@ -26,32 +27,8 @@ const Body = () => {
     },
   ]);
   return (
-    <Box
-      sx={{
-        position: "absolute",
-        left: "50%",
-        top: "50%",
-        p: 2.5,
-        transform: "translate(-50%,-50%)",
-        borderRadius: "10px",
-        typography: {
-          xs: {
-            width: "100%",
-            boxSizing: "border-box",
-            backgroundColor: "transparent",
-            boxShadow: "none",
-          },
-          sm: {
-            width: "525px",
-            boxShadow: "0px 4px 20px rgba(194, 194, 194, 0.25)",
-            backgroundColor: "#ffffff",
-          },
-        },
-      }}
-    >
-      <Typography sx={{ mb: 2, fontWeight: "500" }}>
-        Enter a new password
-      </Typography>
+    <Box sx={styles().box}>
+      <Typography sx={styles().header}>Enter a new password</Typography>
       <Typography>
         Create a new password that is at least 6 characters long. A strong
         password is a combination of letters, numbers, and punctuation.
@@ -60,7 +37,7 @@ const Body = () => {
         placeholder={"Enter password"}
         type={passVisible ? "text" : "password"}
         value={password[0].password}
-        sx={{ width: "100%", mb: 2.5, mt: 2 }}
+        sx={styles().input}
         onChange={(e) => {
           password[0].password = e.target.value;
           setPassword([...password]);
@@ -85,17 +62,12 @@ const Body = () => {
         container
         spacing={2}
         flexDirection="row-reverse"
-        sx={{
-          typography: {
-            xs: { justifyContent: "space-between" },
-            sm: { justifyContent: "normal" },
-          },
-        }}
+        sx={styles().btnContainer}
       >
         <Grid item>
           <Button
             variant="contained"
-            sx={{ padding: "8px 54px" }}
+            sx={styles().btnNext}
             onClick={(e) => {
               navigate(e, "/");
             }}
@@ -107,7 +79,7 @@ const Body = () => {
           <Button
             variant="contained"
             color="inherit"
-            sx={{ padding: "8px 44px" }}
+            sx={styles().btnCancel}
             onClick={(e) => {
               navigate(e, "/");
             }}

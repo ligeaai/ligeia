@@ -14,7 +14,7 @@ import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
 
 import history from "../../routers/history";
-
+import styles from "../../assets/Styles/pages/signup/body";
 import { signup } from "../../services/actions/auth";
 
 const navigate = (e, route) => {
@@ -37,43 +37,14 @@ const Body = () => {
     setUser({ ...user, [e.target.name]: e.target.value });
   };
   return (
-    <Box
-      sx={{
-        position: "absolute",
-        left: "50%",
-        top: "50%",
-        p: 2.5,
-        transform: "translate(-50%,-50%)",
-        borderRadius: "10px",
-        typography: {
-          xs: {
-            width: "100%",
-            boxSizing: "border-box",
-            backgroundColor: "transparent",
-            boxShadow: "none",
-          },
-          sm: {
-            width: "360px",
-            boxShadow: "0px 4px 20px rgba(194, 194, 194, 0.25)",
-            backgroundColor: "#ffffff",
-          },
-        },
-      }}
-    >
-      <Typography
-        variant="h4"
-        textAlign="center"
-        sx={{
-          typography: { xs: { display: "none" }, sm: { display: "block" } },
-          mb: 2.5,
-        }}
-      >
+    <Box sx={styles().box}>
+      <Typography variant="h4" textAlign="center" sx={styles().header}>
         Sign up
       </Typography>
       <Typography variant="h6" sx={{ mb: 1 }}>
         Email
       </Typography>
-      <FormControl sx={{ width: "100%", backgroundColor: "#ffffff" }}>
+      <FormControl sx={styles().input}>
         <OutlinedInput
           name="email"
           placeholder={"Email"}
@@ -84,7 +55,7 @@ const Body = () => {
       <Typography variant="h6" sx={{ mb: 1 }}>
         Name
       </Typography>
-      <FormControl sx={{ width: "100%", backgroundColor: "#ffffff" }}>
+      <FormControl sx={styles().input}>
         <OutlinedInput
           name="name"
           placeholder={"Name"}
@@ -95,7 +66,7 @@ const Body = () => {
       <Typography variant="h6" sx={{ mb: 1 }}>
         Surname
       </Typography>
-      <FormControl sx={{ width: "100%", backgroundColor: "#ffffff" }}>
+      <FormControl sx={styles().input}>
         <OutlinedInput
           name="surname"
           placeholder={"Surname"}
@@ -106,7 +77,7 @@ const Body = () => {
       <Typography variant="h6" sx={{ mb: 1 }}>
         Password
       </Typography>
-      <FormControl sx={{ width: "100%", backgroundColor: "#ffffff" }}>
+      <FormControl sx={styles().input}>
         <OutlinedInput
           name="password"
           placeholder={`Password`}
@@ -134,7 +105,7 @@ const Body = () => {
       <Typography variant="h6" sx={{ mb: 1 }}>
         Repassword
       </Typography>
-      <FormControl sx={{ width: "100%", backgroundColor: "#ffffff" }}>
+      <FormControl sx={styles().input}>
         <OutlinedInput
           name="repassword"
           placeholder={`Repassword`}

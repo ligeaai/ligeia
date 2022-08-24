@@ -4,6 +4,7 @@ import history from "../../routers/history";
 
 import { Avatar, Button, Grid, Link } from "@mui/material";
 import { styled } from "@mui/material/styles";
+import { makeStyles } from "@mui/styles";
 
 import { toggleDrawer } from "../../services/reducers/drawerReducer";
 
@@ -11,7 +12,9 @@ import logo from "../../assets/Images/header/Group 1.png";
 import menuIcon from "../../assets/Images/header/Menu.png";
 
 import { logout } from "../../services/actions/auth";
+import styles from "../../assets/Styles/layout/headers/header";
 
+const useStyles = makeStyles(styles);
 const Mobil = styled("div")(({ theme }) => ({
   [theme.breakpoints.down("sm")]: {
     display: "none",
@@ -25,6 +28,7 @@ const Pc = styled("div")(({ theme }) => ({
 }));
 
 const Header = () => {
+  const classes = useStyles();
   const user = useSelector((state) => state.auth.user);
   const dispatch = useDispatch();
   return (
@@ -32,20 +36,16 @@ const Header = () => {
       container
       alignItems="center"
       justifyContent="space-between"
-      sx={{
-        borderBottom: 1,
-        borderColor: "#E4E4E4",
-        backgroundColor: "#FFFFFF",
-      }}
+      className={classes.box}
     >
       <Grid item>
-        <Grid container spacing={2} sx={{ ml: 2 }} alignItems="center">
-          <Grid
-            item
-            sx={{
-              cursor: "pointer",
-            }}
-          >
+        <Grid
+          container
+          spacing={2}
+          className={classes.boxItem}
+          alignItems="center"
+        >
+          <Grid item className={classes.cursorPointer}>
             <img
               src={menuIcon}
               alt=""
@@ -56,7 +56,7 @@ const Header = () => {
           </Grid>
           <Grid item>
             <Mobil>
-              <Link href="/" sx={{ color: "inherit" }}>
+              <Link href="/" className={classes.colorInherit}>
                 <img src={logo} alt="" />
               </Link>
             </Mobil>
@@ -65,7 +65,7 @@ const Header = () => {
       </Grid>
       <Pc>
         <Grid item>
-          <Link href="/" sx={{ color: "inherit" }}>
+          <Link href="/" className={classes.colorInherit}>
             <img src={logo} alt="" />
           </Link>
         </Grid>
@@ -74,7 +74,7 @@ const Header = () => {
         <Grid container alignItems="center">
           <Mobil>
             <Grid container alignItems="center">
-              <Grid item id="txt">
+              <Grid item>
                 <Button
                   variant="outlined"
                   onClick={(e) => {
@@ -85,7 +85,7 @@ const Header = () => {
                   logout
                 </Button>
               </Grid>
-              <Grid item id="txt">
+              <Grid item>
                 <Button
                   variant="outlined"
                   onClick={(e) => {
@@ -102,11 +102,7 @@ const Header = () => {
             <Avatar
               alt={user ? user.first_name.concat(" ", user.last_name) : "name"}
               src="/"
-              sx={{
-                my: 1,
-                mr: 3,
-                ml: 1,
-              }}
+              className={classes.avatar}
             />
           </Grid>
         </Grid>

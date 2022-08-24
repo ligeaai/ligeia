@@ -10,6 +10,7 @@ import {
 } from "@mui/material";
 
 import history from "../../../routers/history";
+import styles from "../../../assets/Styles/pages/login/secureCodepage/body";
 
 const navigate = (e, route) => {
   e.preventDefault();
@@ -23,33 +24,11 @@ const Body = () => {
   };
 
   return (
-    <Box
-      sx={{
-        position: "absolute",
-        left: "50%",
-        top: "50%",
-        p: 2.5,
-        transform: "translate(-50%,-50%)",
-        borderRadius: "10px",
-        typography: {
-          xs: {
-            width: "100%",
-            boxSizing: "border-box",
-            backgroundColor: "transparent",
-            boxShadow: "none",
-          },
-          sm: {
-            width: "525px",
-            boxShadow: "0px 4px 20px rgba(194, 194, 194, 0.25)",
-            backgroundColor: "#ffffff",
-          },
-        },
-      }}
-    >
+    <Box sx={styles().box}>
       <Typography variant="h5" sx={{ mb: 2.5 }}>
         Enter security code
       </Typography>
-      <Typography variant="subtitle1" sx={{ fontWeight: "300", mb: 3 }}>
+      <Typography variant="subtitle1" sx={styles().subtitle}>
         An SMS message with an 8-digit code has been sent to your phone number.
       </Typography>
       <Grid container justifyContent="space-between">
@@ -60,7 +39,7 @@ const Body = () => {
             value={code}
             onChange={onChangeCode}
             placeholder="Enter Code"
-            sx={{ mb: 2.5, backgroundColor: "#ffffff", width: "100%" }}
+            sx={styles().input}
           ></OutlinedInput>
         </Grid>
         <Grid item sm={6}>
@@ -84,7 +63,7 @@ const Body = () => {
         <Grid item xs={6} sm={4}>
           <Button
             variant="contained"
-            sx={{ padding: "8px 54px" }}
+            sx={styles().btnNext}
             onClick={(e) => navigate(e, "/login/newpassword")}
           >
             Next
