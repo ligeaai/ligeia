@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import {
   Box,
@@ -10,11 +10,29 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
+import CircularProgress from "@mui/material/CircularProgress";
+
+import { getAll } from "../services/api/codelistapi";
 
 import AddCodeList from "./AddCodeList";
 import TableItems from "./tableItems";
 
 const Code_list = () => {
+  const [temp, setTemp] = useState([]);
+  const [loading, setLoading] = React.useState(false);
+  useEffect(() => {
+    let abortController = new AbortController();
+    const fetchData = async () => {
+      const data = await getAll();
+      setTemp(data.data);
+      setLoading(true);
+    };
+    fetchData();
+    return () => {
+      abortController.abort();
+    };
+  }, []);
+
   return (
     <Box>
       <TableContainer
@@ -58,7 +76,15 @@ const Code_list = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            <TableItems />
+            {loading ? (
+              Object.keys(temp).map((key, i) => (
+                <TableItems key={i} temp={temp[key][0]} />
+              ))
+            ) : (
+              <CircularProgress
+                sx={{ position: "absolute", left: "50%", top: "120px" }}
+              />
+            )}
           </TableBody>
         </Table>
       </TableContainer>
