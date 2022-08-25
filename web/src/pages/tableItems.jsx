@@ -11,6 +11,7 @@ import {
   TableRow,
 } from "@mui/material";
 
+import CodeListSetting from "./CodeListSetting";
 import { getWithLISTTYPE } from "../services/api/codelistapi";
 
 const TableItems = (props) => {
@@ -83,7 +84,7 @@ const TableItems = (props) => {
                 <Table>
                   <TableHead>
                     <TableRow>
-                      <TableCell />
+                      <TableCell></TableCell>
                       <TableCell align="center">Listtype</TableCell>
                       <TableCell align="center">Culture</TableCell>
                       <TableCell align="center">Code</TableCell>
@@ -116,7 +117,9 @@ const TableItems = (props) => {
                   <TableBody>
                     {temp.map((data, i) => (
                       <TableRow key={i}>
-                        <TableCell />
+                        <TableCell>
+                          <CodeListSetting id={data.id} />
+                        </TableCell>
                         <TableCell>{data.LISTTYPE}</TableCell>
                         <TableCell>{data.CULTURE}</TableCell>
                         <TableCell>{data.CODE}</TableCell>
