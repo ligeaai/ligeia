@@ -1,5 +1,7 @@
 import axios from 'axios';
 import {
+    CHANGE_PASSWORD_SUCCESS,
+    CHANGE_PASSWORD_FAIL,
     LOGIN_SUCCESS,
     LOGIN_FAIL,
     USER_LOADED_SUCCESS,
@@ -18,7 +20,10 @@ import {
     GOOGLE_AUTH_FAIL,
     FACEBOOK_AUTH_SUCCESS,
     FACEBOOK_AUTH_FAIL,
-    LOGOUT
+    LOGOUT,
+
+    ADD_ERROR_SUCCESS,
+    CLEAN_ERROR_SUCCESS
 } from './types';
 
 // export const load_user = () => async dispatch => {
@@ -169,9 +174,19 @@ export const login = (email, password) => async dispatch => {
 
         //dispatch(load_user());
     } catch (err) {
+        console.log(err);
         dispatch({
             type: LOGIN_FAIL
         })
+        dispatch({
+            type: ADD_ERROR_SUCCESS,
+            payload: err.response.data.email
+        })
+        setTimeout(() => {
+            dispatch({
+                type: CLEAN_ERROR_SUCCESS,
+            })
+        }, 3000)
     }
 };
 
@@ -196,6 +211,16 @@ export const signup = (email, first_name, last_name, password) => async dispatch
         dispatch({
             type: SIGNUP_FAIL
         })
+        dispatch({
+            type: ADD_ERROR_SUCCESS,
+            payload: err.message
+        })
+        setTimeout(() => {
+            dispatch({
+                type: CLEAN_ERROR_SUCCESS,
+            })
+        }, 3000)
+        return err;
     }
 };
 
@@ -220,6 +245,44 @@ export const signup = (email, first_name, last_name, password) => async dispatch
 //         })
 //     }
 // };
+
+export const change_password = (new_password1, new_password2, old_password) => async dispatch => {
+    let token = localStorage.getItem('token');
+    const config = {
+        headers: {
+            'Content-Type': 'application/json',
+            "Authorization": `token ${token}`,
+        }
+    };
+    const body = JSON.stringify({
+        new_password1,
+        new_password2,
+        old_password
+    });
+    try {
+        await axios.patch(`http://localhost:8000/api/v1/auth/change-password/`, body, config);
+
+        dispatch({
+            type: CHANGE_PASSWORD_SUCCESS
+        });
+    } catch (err) {
+        dispatch({
+            type: CHANGE_PASSWORD_FAIL
+        });
+        dispatch({
+            type: ADD_ERROR_SUCCESS,
+            payload: err.response.data.detail
+        })
+        setTimeout(() => {
+            dispatch({
+                type: CLEAN_ERROR_SUCCESS,
+            })
+        }, 3000)
+        return err;
+    }
+};
+//PUT http://127.0.0.1:8000/api/v1/auth/change-password/ 403 (Forbidden)
+
 
 // export const reset_password = (email) => async dispatch => {
 //     const config = {
@@ -280,7 +343,15 @@ export const logout = () => async dispatch => {
         dispatch({
             type: LOGOUT
         });
-    } catch {
-        console.log("LOG OUT FAIL");
+    } catch (err) {
+        dispatch({
+            type: ADD_ERROR_SUCCESS,
+            payload: err.response.data.detail
+        })
+        setTimeout(() => {
+            dispatch({
+                type: CLEAN_ERROR_SUCCESS,
+            })
+        }, 3000)
     }
 };

@@ -14,7 +14,7 @@ import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
 
 import history from "../../routers/history";
-
+import styles from "../../assets/Styles/pages/signup/body";
 import { signup } from "../../services/actions/auth";
 
 const navigate = (e, route) => {
@@ -24,103 +24,66 @@ const navigate = (e, route) => {
 
 const Body = () => {
   const dispatch = useDispatch();
-  const [user, setUser] = useState([
-    {
-      email: "",
-      name: "",
-      surname: "",
-      password: "",
-      repassword: "",
-    },
-  ]);
+  const [user, setUser] = useState({
+    email: "",
+    name: "",
+    surname: "",
+    password: "",
+    repassword: "",
+  });
   const [passVisible, setPassVisible] = useState(false);
   const [repassVisible, setRePassVisible] = useState(false);
-
+  const onChangeFactory = (e) => {
+    setUser({ ...user, [e.target.name]: e.target.value });
+  };
   return (
-    <Box
-      sx={{
-        position: "absolute",
-        left: "50%",
-        top: "50%",
-        p: 2.5,
-        transform: "translate(-50%,-50%)",
-        borderRadius: "10px",
-        typography: {
-          xs: {
-            width: "100%",
-            boxSizing: "border-box",
-            backgroundColor: "transparent",
-            boxShadow: "none",
-          },
-          sm: {
-            width: "360px",
-            boxShadow: "0px 4px 20px rgba(194, 194, 194, 0.25)",
-            backgroundColor: "#ffffff",
-          },
-        },
-      }}
-    >
-      <Typography
-        variant="h4"
-        textAlign="center"
-        sx={{
-          typography: { xs: { display: "none" }, sm: { display: "block" } },
-          mb: 2.5,
-        }}
-      >
+    <Box sx={styles().box}>
+      <Typography variant="h4" textAlign="center" sx={styles().header}>
         Sign up
       </Typography>
       <Typography variant="h6" sx={{ mb: 1 }}>
         Email
       </Typography>
-      <FormControl sx={{ width: "100%", backgroundColor: "#ffffff" }}>
+      <FormControl sx={styles().input}>
         <OutlinedInput
+          name="email"
           placeholder={"Email"}
-          value={user[0].email}
-          onChange={(e) => {
-            user[0].email = e.target.value;
-            setUser([...user]);
-          }}
+          value={user.email}
+          onChange={onChangeFactory}
         />
       </FormControl>
       <Typography variant="h6" sx={{ mb: 1 }}>
         Name
       </Typography>
-      <FormControl sx={{ width: "100%", backgroundColor: "#ffffff" }}>
+      <FormControl sx={styles().input}>
         <OutlinedInput
+          name="name"
           placeholder={"Name"}
-          value={user[0].name}
-          onChange={(e) => {
-            user[0].name = e.target.value;
-            setUser([...user]);
-          }}
+          value={user.name}
+          onChange={onChangeFactory}
         />
       </FormControl>
       <Typography variant="h6" sx={{ mb: 1 }}>
         Surname
       </Typography>
-      <FormControl sx={{ width: "100%", backgroundColor: "#ffffff" }}>
+      <FormControl sx={styles().input}>
         <OutlinedInput
+          name="surname"
           placeholder={"Surname"}
-          value={user[0].surname}
-          onChange={(e) => {
-            user[0].surname = e.target.value;
-            setUser([...user]);
-          }}
+          value={user.surname}
+          onChange={onChangeFactory}
         />
       </FormControl>
       <Typography variant="h6" sx={{ mb: 1 }}>
         Password
       </Typography>
-      <FormControl sx={{ width: "100%", backgroundColor: "#ffffff" }}>
+      <FormControl sx={styles().input}>
         <OutlinedInput
+          name="password"
           placeholder={`Password`}
           type={passVisible ? "text" : "password"}
-          value={user[0].password}
-          onChange={(e) => {
-            user[0].password = e.target.value;
-            setUser([...user]);
-          }}
+          value={user.password}
+          onChange={onChangeFactory}
           endAdornment={
             <InputAdornment
               position="end"
@@ -142,15 +105,13 @@ const Body = () => {
       <Typography variant="h6" sx={{ mb: 1 }}>
         Repassword
       </Typography>
-      <FormControl sx={{ width: "100%", backgroundColor: "#ffffff" }}>
+      <FormControl sx={styles().input}>
         <OutlinedInput
+          name="repassword"
           placeholder={`Repassword`}
           type={repassVisible ? "text" : "password"}
-          value={user[0].repassword}
-          onChange={(e) => {
-            user[0].repassword = e.target.value;
-            setUser([...user]);
-          }}
+          value={user.repassword}
+          onChange={onChangeFactory}
           endAdornment={
             <InputAdornment
               position="end"
@@ -173,15 +134,13 @@ const Body = () => {
         variant="contained"
         sx={{ width: "100%", mt: 2.5 }}
         onClick={async (e) => {
-          await dispatch(
-            signup(
-              user[0].email,
-              user[0].name,
-              user[0].surname,
-              user[0].password
-            )
+          (await dispatch(
+            signup(user.email, user.name, user.surname, user.password)
+          )) ? (
+            <></>
+          ) : (
+            navigate(e, "/")
           );
-          navigate(e, "/");
         }}
       >
         Sign Up

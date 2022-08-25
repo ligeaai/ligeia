@@ -5,31 +5,12 @@ import CopyrightIcon from "@mui/icons-material/Copyright";
 
 import LangSelector from "../../components/LangSelector";
 import langPicker from "./LangPicker";
+import styles from "../../assets/Styles/pages/login/footer";
 const Footer = () => {
   const text = langPicker();
   return (
-    <Box
-      sx={{
-        position: "fixed",
-        bottom: "0",
-        backgroundColor: "#ffffff",
-        width: "100%",
-        py: 1,
-      }}
-    >
-      <Grid
-        container
-        alignItems="center"
-        sx={{
-          typography: {
-            xs: { justifyContent: "center" },
-            sm: {
-              flexDirection: "row-reverse",
-              justifyContent: "space-between",
-            },
-          },
-        }}
-      >
+    <Box sx={styles().box}>
+      <Grid container alignItems="center" sx={styles().flexBox}>
         <Grid item>
           <Grid>
             {[
@@ -38,60 +19,23 @@ const Footer = () => {
               text.footer.nav3,
               text.footer.nav4,
             ].map((e, i) => (
-              <Link href="#" key={i} sx={{ textDecoration: "none", mr: 2.5 }}>
-                <Typography
-                  sx={{
-                    display: "inline",
-                    typography: {
-                      xs: { fontSize: "12px" },
-                      sm: { fontsize: "20px" },
-                    },
-                  }}
-                >
-                  {e}
-                </Typography>
+              <Link href="#" key={i} sx={styles().link}>
+                <Typography sx={styles().navItem}>{e}</Typography>
               </Link>
             ))}
           </Grid>
         </Grid>
-        <Grid item sx={{ ml: 3.5 }}>
-          <Grid
-            container
-            alignItems="center"
-            sx={{ typography: { xs: { justifyContent: "space-between" } } }}
-          >
+        <Grid item sx={{ ml: 2 }}>
+          <Grid container alignItems="center" sx={styles().text}>
             <Grid item>
               <Grid container alignItems="center">
-                <CopyrightIcon
-                  sx={{
-                    typography: {
-                      xs: { fontSize: "12px" },
-                      sm: { fontsize: "20px" },
-                    },
-                    mr: 0.5,
-                  }}
-                />
-                <Typography
-                  sx={{
-                    typography: {
-                      xs: { fontSize: "12px" },
-                      sm: { fontsize: "20px" },
-                    },
-                  }}
-                >
+                <CopyrightIcon sx={styles().textItem} />
+                <Typography sx={styles().textItem}>
                   {text.footer.text}
                 </Typography>
               </Grid>
             </Grid>
-            <Grid
-              item
-              sx={{
-                typography: {
-                  xs: { display: "inline-block" },
-                  sm: { display: "none" },
-                },
-              }}
-            >
+            <Grid item sx={styles().langSelector}>
               <LangSelector />
             </Grid>
           </Grid>

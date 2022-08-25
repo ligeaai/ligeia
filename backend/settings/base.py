@@ -44,6 +44,7 @@ DJANGO_APPS = [
 THIRD_PARTY_APPS = [
     "raven.contrib.django.raven_compat",
     "rest_framework",
+    "rest_framework.authtoken",
     "drf_yasg",
     "knox",
     "django_extensions",
@@ -121,7 +122,6 @@ MODELTRANSLATION_DEFAULT_LANGUAGE = "en"
 # #     "apps.db_models.translation",
 # # )
 
-ACCOUNT_ACTIVATION_DAYS = 7  # days
 
 # STATIC_URL = '/static/'
 # STATIC_ROOT = os.path.join(BASE_DIR, 'static_root')
@@ -146,8 +146,6 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
-                # "social_django.context_processors.backends",  # <-- Here
-                # "social_django.context_processors.login_redirect",  # <-- Here
             ],
         },
     },
@@ -155,9 +153,6 @@ TEMPLATES = [
 
 
 AUTHENTICATION_BACKENDS = (
-    # "social_core.backends.google.GoogleOAuth2",
-    # 'social_core.backends.google.GoogleOAuth',
-    # "social_core.backends.facebook.FacebookOAuth2",
     "django.contrib.auth.backends.ModelBackend",
     "allauth.account.auth_backends.AuthenticationBackend",
 )
@@ -174,6 +169,7 @@ REST_FRAMEWORK = {
     ],
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "knox.auth.TokenAuthentication",
+        # "rest_framework.authentication.TokenAuthentication",
         # "rest_framework.authentication.SessionAuthentication",
         # "rest_framework.authentication.BasicAuthentication",
     ),
@@ -268,16 +264,16 @@ LOGGING = {
     },
 }
 
-CACHES = {
-    "default": {
-        "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": f"redis://{os.environ['REDIS_URI']}",
-        "OPTIONS": {
-            "CLIENT_CLASS": "django_redis.client.DefaultClient",
-            "SOCKET_TIMEOUT": 900,
-        },
-    }
-}
+# CACHES = {
+#     "default": {
+#         "BACKEND": "django_redis.cache.RedisCache",
+#         "LOCATION": f"redis://{os.environ['REDIS_URI']}",
+#         "OPTIONS": {
+#             "CLIENT_CLASS": "django_redis.client.DefaultClient",
+#             "SOCKET_TIMEOUT": 900,
+#         },
+#     }
+# }
 
 # SESSION_ENGINE = "django.contrib.sessions.backends.cache"
 # SESSION_CACHE_ALIAS = "default"
@@ -301,20 +297,37 @@ LOGGER_EXCEPTION = DEFAULT_LOGGER
 LOGGER_ERROR = DEFAULT_LOGGER
 LOGGER_WARNING = DEFAULT_LOGGER
 
-SITE_ID = 1
+LOGIN_REDIRECT_URL = "/"
 
+ACCOUNT_USER_MODEL_USERNAME_FIELD = None
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_AUTHENTICATION_METHOD = "email"
+ACCOUNT_ACTIVATION_DAYS = 7  # days
+ACCOUNT_EMAIL_VERIFICATION = "optional"
 
-# SOCIAL_AUTH_JSONFIELD_ENABLED = True
-
-# SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = (
-#     "344458235841-ouh1mdjtcvk4p743ohdm10a7von2vbug.apps.googleusercontent.com"
-# )
-# SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = "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"
-
-# LOGIN_URL = "login"
-# LOGOUT_URL = "logout"
-# LOGIN_REDIRECT_URL = "http://127.0.0.1:8000/en/api/v1/code_list"
-
-
-# SOCIAL_AUTH_FACEBOOK_KEY = "3411592432496228"  # App ID
-# SOCIAL_AUTH_FACEBOOK_SECRET = "ea397b51fc3cd7fdd6f4afc94e5c7c92"  # App Secret
+SOCIALACCOUNT_PROVIDERS = {
+    "google": {
+        # For each OAuth based provider, either add a ``SocialApp``
+        # (``socialaccount`` app) containing the required client
+        # credentials, or list them here:
+        "APP": {
+            "client_id": "344458235841-ouh1mdjtcvk4p743ohdm10a7von2vbug.apps.googleusercontent.com",
+            "secret": "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",
+            "key": "344458235841-ouh1mdjtcvk4p743ohdm10a7von2vbug.apps.googleusercontent.com",
+        },
+        "AUTH_PARAMS": {
+            "access_type": "offline",
+        },
+    },
+    "facebook": {
+        # For each OAuth based provider, either add a ``SocialApp``
+        # (``socialaccount`` app) containing the required client
+        # credentials, or list them here:
+        "APP": {
+            "client_id": "344458235841-ouh1mdjtcvk4p743ohdm10a7von2vbug.apps.googleusercontent.com",
+            "secret": "ea397b51fc3cd7fdd6f4afc94e5c7c92",
+            "key": "3411592432496228",
+        }
+    },
+}

@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 
 import { Grid, Link, Typography } from "@mui/material";
 import "@fontsource/roboto/400.css";
+import { makeStyles } from "@mui/styles";
 
 import history from "../../routers/history";
 
@@ -14,8 +15,12 @@ import {
   GroupFour,
   GroupFive,
 } from "../../assets/Images/drawer";
+import styles from "../../assets/Styles/layout/drawer/drawerItem";
+
+const useStyles = makeStyles(styles);
 
 const DrawerItem = () => {
+  const classes = useStyles();
   const drawer = useSelector((state) => state.drawer);
   const items = [
     {
@@ -52,27 +57,11 @@ const DrawerItem = () => {
   return (
     <>
       {items.map((e, i) => (
-        <Grid
-          key={i}
-          item
-          xs={12}
-          sx={{
-            mx: 1,
-            my: 1,
-            py: 0.5,
-            px: 1,
-            borderRadius: "3px",
-            "&:hover": {
-              backgroundColor: "#EBECF0",
-              color: "#458BF3",
-              fill: "#458BF3",
-            },
-          }}
-        >
+        <Grid key={i} item xs={12} className={classes.box}>
           <Link
             variant="body2"
             underline="none"
-            sx={{ fontFamily: "Roboto", color: "inherit", cursor: "pointer" }}
+            className={classes.link}
             onClick={() => {
               history.push(`${e.url}`);
             }}
@@ -80,11 +69,8 @@ const DrawerItem = () => {
             <Grid container flexWrap="nowrap">
               {e.img}
               <Typography
-                sx={{
-                  ml: 2,
-                  display: `${drawer.display}`,
-                  width: "180px",
-                }}
+                className={classes.typography}
+                sx={{ display: `${drawer.display}` }}
               >
                 {e.text}
               </Typography>

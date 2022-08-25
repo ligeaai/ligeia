@@ -24,7 +24,7 @@ urlpatterns = [
         "code_list/",
         include(("apps.code_list.urls", "apps.code_list"), namespace="code_list"),
     ),
-    path("auth/", include(("apps.users.urls", "apps.users"), namespace="users")),
+    path("auth/", include(("apps.users.urls", "apps.users"), namespace="auth")),
     re_path(
         r"^swagger(?P<format>\.json|\.yaml)$",
         schema_view.without_ui(cache_timeout=0),
