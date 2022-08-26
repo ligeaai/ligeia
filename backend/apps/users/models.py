@@ -13,6 +13,7 @@ from django.db import models
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
+
 logger = logging.getLogger(__name__)
 
 
@@ -134,3 +135,6 @@ class User(AbstractBaseUser, PermissionsMixin):
         verbose_name = _("User")
         verbose_name_plural = _("Users")
         swappable = "AUTH_USER_MODEL"
+
+
+
