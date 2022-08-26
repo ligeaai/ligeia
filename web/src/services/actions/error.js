@@ -10,11 +10,6 @@ export const add_error = (errMsg) => async dispatch => {
         type: ADD_ERROR_SUCCESS,
         payload: errMsg
     })
-    setTimeout(() => {
-        dispatch({
-            type: CLEAN_ERROR_SUCCESS,
-        })
-    }, 3000)
 };
 
 

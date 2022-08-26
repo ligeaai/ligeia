@@ -281,6 +281,41 @@ export const change_password = (new_password1, new_password2, old_password) => a
         return err;
     }
 };
+
+export const reset_password = (email, password) => async dispatch => {
+    let token = localStorage.getItem('token');
+    const config = {
+        headers: {
+            'Content-Type': 'application/json',
+            "Authorization": `token ${token}`,
+            "accept": "application/json"
+        }
+    };
+    const body = JSON.stringify({
+        email,
+        password
+    });
+    console.log(body);
+    try {
+        await axios.post(`http://localhost:8000/api/v1/auth/reset-password`, body, config);
+        dispatch({
+            type: CHANGE_PASSWORD_SUCCESS
+        });
+
+    } catch (err) {
+        dispatch({
+            type: ADD_ERROR_SUCCESS,
+            payload: err.message
+        })
+        setTimeout(() => {
+            dispatch({
+                type: CLEAN_ERROR_SUCCESS,
+            })
+        }, 3000)
+        return err;
+    }
+};
+
 //PUT http://127.0.0.1:8000/api/v1/auth/change-password/ 403 (Forbidden)
 
 

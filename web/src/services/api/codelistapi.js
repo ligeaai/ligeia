@@ -1,6 +1,7 @@
 import axios from "axios";
+import { add_error } from '../actions/error';
 
-const getAll = () => {
+const getAll = () => async dispatch => {
     let token = localStorage.getItem('token');
     const config = {
         headers: {
@@ -9,17 +10,20 @@ const getAll = () => {
         }
     };
     const body = JSON.stringify({ token: localStorage.getItem('token') });
-
-    return axios.get(
-        "http://localhost:8000/api/v1/code_list/code_list/",
-        body,
-        config,
-    )
-
+    try {
+        const temp = await axios.get(
+            "http://localhost:8000/api/v1/code_list/code_list/",
+            body,
+            config,
+        )
+        return temp;
+    } catch (err) {
+        dispatch(add_error(err.message))
+    }
 
 };
 
-const getWithLISTTYPE = async (id) => {
+const getWithLISTTYPE = (id) => async dispatch => {
     let token = localStorage.getItem('token');
     const config = {
         headers: {
@@ -28,18 +32,22 @@ const getWithLISTTYPE = async (id) => {
         }
     };
     const body = JSON.stringify({ token: localStorage.getItem('token') });
+    try {
+        const temp = await axios.get(
+            `http://localhost:8000/api/v1/code_list/code_list/`,
+            body,
+            config,
+        )
+        return temp.data[id];
+    } catch (err) {
+        dispatch(add_error(err.message))
+    }
 
-    const temp = await axios.get(
-        `http://localhost:8000/api/v1/code_list/code_list/`,
-        body,
-        config,
-    )
-    return temp.data[id];
 
 
 };
 
-const deleteCodeList = async (id) => {
+const deleteCodeList = (id) => async dispatch => {
     let token = localStorage.getItem('token');
     const config = {
         headers: {
@@ -48,15 +56,18 @@ const deleteCodeList = async (id) => {
         }
     };
     const body = JSON.stringify({ token: localStorage.getItem('token') });
-
-    await axios.delete(
-        `http://localhost:8000/api/v1/code_list/code_list/${id}`,
-        body,
-        config,
-    )
+    try {
+        await axios.delete(
+            `http://localhost:8000/api/v1/code_list/code_list/${id}`,
+            body,
+            config,
+        )
+    } catch (err) {
+        dispatch(add_error(err.message))
+    }
 };
 
-const addCodeList = async (data) => {
+const addCodeList = (data) => async dispatch => {
     let token = localStorage.getItem('token');
     const config = {
         headers: {
@@ -65,15 +76,18 @@ const addCodeList = async (data) => {
         }
     };
     const body = JSON.stringify(data);;
-
-    await axios.post(
-        `http://localhost:8000/api/v1/code_list/code_list/`,
-        body,
-        config,
-    )
+    try {
+        await axios.post(
+            `http://localhost:8000/api/v1/code_list/code_list/`,
+            body,
+            config,
+        )
+    } catch (err) {
+        dispatch(add_error(err.message))
+    }
 };
 
-const updateCodeList = async (id, data) => {
+const updateCodeList = (id, data) => async dispatch => {
     let token = localStorage.getItem('token');
     const config = {
         headers: {
@@ -81,14 +95,16 @@ const updateCodeList = async (id, data) => {
             "Authorization": `token ${token}`,
         }
     };
-    const body = JSON.stringify(data);;
-    console.log(data);
-    console.log(id);
-    await axios.put(
-        `http://localhost:8000/api/v1/code_list/code_list/${id}/`,
-        body,
-        config,
-    )
+    const body = JSON.stringify(data);
+    try {
+        await axios.put(
+            `http://localhost:8000/api/v1/code_list/code_list/${id}/`,
+            body,
+            config,
+        )
+    } catch (err) {
+        dispatch(add_error(err.message))
+    }
 };
 
 export { addCodeList, deleteCodeList, getAll, getWithLISTTYPE, updateCodeList };

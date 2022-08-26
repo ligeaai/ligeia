@@ -1,5 +1,5 @@
 import * as React from "react";
-
+import { useDispatch } from "react-redux";
 import {
   Box,
   Button,
@@ -13,6 +13,7 @@ import {
 import SettingsSuggestSharpIcon from "@mui/icons-material/SettingsSuggestSharp";
 import { deleteCodeList, updateCodeList } from "../services/api/codelistapi";
 export default function CodeListSetting(props) {
+  const dispatch = useDispatch();
   const [open, setOpen] = React.useState(false);
   const [codeList, setCodeList] = React.useState({
     LISTTYPE: "",
@@ -90,14 +91,14 @@ export default function CodeListSetting(props) {
           <Button
             variant="contained"
             color="error"
-            onClick={() => updateCodeList(props.id, codeList)}
+            onClick={() => dispatch(updateCodeList(props.id, codeList))}
           >
             Update
           </Button>
           <Button
             variant="contained"
             color="error"
-            onClick={() => deleteCodeList(props.id)}
+            onClick={() => dispatch(deleteCodeList(props.id))}
           >
             Delete
           </Button>

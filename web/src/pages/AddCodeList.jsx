@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useDispatch } from "react-redux";
 
 import {
   Box,
@@ -11,7 +12,9 @@ import {
   TextField,
 } from "@mui/material";
 import { addCodeList } from "../services/api/codelistapi";
+
 export default function AddCodeList() {
+  const dispatch = useDispatch();
   const [open, setOpen] = React.useState(false);
   const [codeList, setCodeList] = React.useState({
     LISTTYPE: "",
@@ -62,7 +65,7 @@ export default function AddCodeList() {
     setCodeList({ ...codeList, [e.target.name]: e.target.value });
   };
   const onClickAddCodeList = (e) => {
-    addCodeList(codeList);
+    dispatch(addCodeList(codeList));
   };
   return (
     <Box sx={{ m: 2.5 }}>

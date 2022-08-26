@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 
 import {
   Box,
@@ -15,6 +16,7 @@ import CodeListSetting from "./CodeListSetting";
 import { getWithLISTTYPE } from "../services/api/codelistapi";
 
 const TableItems = (props) => {
+  const dispatch = useDispatch();
   const [temp, setTemp] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -27,9 +29,11 @@ const TableItems = (props) => {
       setIsOpen(true);
       let abortController = new AbortController();
       const fetchData = async () => {
-        const data = await getWithLISTTYPE(props.temp.LISTTYPE);
-        setTemp(data);
-        setIsLoading(true);
+        const data = await dispatch(getWithLISTTYPE(props.temp.LISTTYPE));
+        if (data) {
+          setTemp(data);
+          setIsLoading(true);
+        }
       };
       fetchData();
       return () => {

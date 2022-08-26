@@ -17,6 +17,7 @@ import NewPassword from '../pages/login/newPassword/newPassword';
 import PassRecovery from '../pages/login/passRecovery/PassRecovery'
 import PrivateRoute from './PrivateRouter';
 import ReportsPage from '../pages/reportsPage/ReportsPage'
+import ResetPassword from '../pages/resetpassword/ResetPassword'
 import SecureCodePage from '../pages/login/secureCodepage/secureCodePage'
 import ServicePage from '../pages/servicePage/servicePage'
 import Signup from '../pages/signup/Signup'
@@ -38,6 +39,7 @@ const AppRouter1 = () => {
                         <Route path='reports' element={<ReportsPage />} />
                         <Route path='codelist' element={<CodeList />} />
                         <Route path='changepass' element={<ChangePass />} />
+                        <Route path='resetpassword' element={<ResetPassword />} />
                     </Route>
                 </Route>
                 <Route exact path='/login' element={<LoginLayout />} >

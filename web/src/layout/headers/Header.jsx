@@ -96,6 +96,17 @@ const Header = () => {
                   Change Pass
                 </Button>
               </Grid>
+              <Grid item>
+                <Button
+                  variant="outlined"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    history.push("/resetpassword");
+                  }}
+                >
+                  Reset Pass
+                </Button>
+              </Grid>
             </Grid>
           </Mobil>
           <Grid item>

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 
 import {
   Box,
@@ -18,14 +19,17 @@ import AddCodeList from "./AddCodeList";
 import TableItems from "./tableItems";
 
 const Code_list = () => {
+  const dispatch = useDispatch();
   const [temp, setTemp] = useState([]);
   const [loading, setLoading] = React.useState(false);
   useEffect(() => {
     let abortController = new AbortController();
     const fetchData = async () => {
-      const data = await getAll();
-      setTemp(data.data);
-      setLoading(true);
+      const data = await dispatch(getAll());
+      if (data) {
+        setTemp(data.data);
+        setLoading(true);
+      }
     };
     fetchData();
     return () => {
