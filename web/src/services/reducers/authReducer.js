@@ -43,7 +43,6 @@ export default function (state = initialState, action) {
         case GOOGLE_AUTH_SUCCESS:
         case FACEBOOK_AUTH_SUCCESS:
             localStorage.setItem('token', payload.token);
-
             return {
                 ...state,
                 isAuthenticated: true,

@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
+import { useFormik } from "formik";
 
 import {
   Box,
   Button,
-  FormControl,
   InputAdornment,
   OutlinedInput,
   Typography,
@@ -26,43 +26,49 @@ const navigate = (e, route) => {
 
 const Body = () => {
   const dispatch = useDispatch();
-  const [user, setUser] = useState({
-    email: "",
-    password: "",
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+      password: "",
+    },
+    onSubmit: async (values) => {
+      (await dispatch(login(values.email, values.password))) ? (
+        <></>
+      ) : (
+        history.push(`/`)
+      );
+    },
   });
+
   const [passVisible, setPassVisible] = useState(false);
   const text = langPicker();
-  const onChangeFactory = (e) => {
-    setUser({ ...user, [e.target.name]: e.target.value });
-  };
-
   return (
     <>
       <Box sx={styles().box}>
-        <Typography variant="h4" textAlign="center" sx={styles().header}>
-          {text.body.authorization}
-        </Typography>
-        <Typography variant="h6" sx={styles().inputLabel}>
-          {text.body.username}
-        </Typography>
-        <FormControl sx={styles().input}>
+        <form onSubmit={formik.handleSubmit}>
+          <Typography variant="h4" textAlign="center" sx={styles().header}>
+            {text.body.authorization}
+          </Typography>
+          <Typography variant="h6" sx={styles().inputLabel}>
+            {text.body.username}
+          </Typography>
           <OutlinedInput
+            sx={styles().input}
             name="email"
             placeholder={`${text.body.usernameInput}`}
-            value={user.email}
-            onChange={onChangeFactory}
+            value={formik.values.email}
+            onChange={formik.handleChange}
           />
-        </FormControl>
-        <Typography variant="h6" sx={styles().inputLabel}>
-          {text.body.password}
-        </Typography>
-        <FormControl sx={styles().input}>
+          <Typography variant="h6" sx={styles().inputLabel}>
+            {text.body.password}
+          </Typography>
           <OutlinedInput
+            sx={styles().input}
             name="password"
             placeholder={`${text.body.passwordInput}`}
             type={passVisible ? "text" : "password"}
-            value={user.password}
-            onChange={onChangeFactory}
+            value={formik.values.password}
+            onChange={formik.handleChange}
             endAdornment={
               <InputAdornment
                 position="end"
@@ -79,22 +85,11 @@ const Body = () => {
               </InputAdornment>
             }
           />
-        </FormControl>
 
-        <Button
-          variant="contained"
-          sx={styles().btnSignIn}
-          onClick={async (e) => {
-            e.preventDefault();
-            (await dispatch(login(user.email, user.password))) ? (
-              <></>
-            ) : (
-              navigate(e, "/")
-            );
-          }}
-        >
-          {text.body.signIn}
-        </Button>
+          <Button variant="contained" sx={styles().btnSignIn} type="submit">
+            {text.body.signIn}
+          </Button>
+        </form>
         <Button
           onClick={(e) => {
             navigate(e, "/login/passrecovery");

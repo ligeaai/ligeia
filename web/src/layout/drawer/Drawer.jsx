@@ -19,8 +19,8 @@ const Drawer = () => {
   const dispatch = useDispatch();
   return (
     <Grid
-      onMouseOver={() => dispatch(mouseEnterDrawer())}
-      onMouseOut={() => dispatch(mouseLeaveDrawer())}
+      onMouseEnter={() => dispatch(mouseEnterDrawer())}
+      onMouseLeave={() => dispatch(mouseLeaveDrawer())}
       container
       className={classes.box}
     >

@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
+import { useFormik } from "formik";
+
 import {
   Box,
   Button,
@@ -18,22 +20,28 @@ import styles from "../../assets/Styles/pages/changepass/changepass";
 
 const ChangePass = () => {
   const dispatch = useDispatch();
-  const [passVisible, setPassVisible] = useState([false, false, false]);
-  const [password, setPassword] = useState({
-    newpassword: "",
-    repassword: "",
-    oldpassword: "",
+  const formik = useFormik({
+    initialValues: {
+      newpassword: "",
+      repassword: "",
+      oldpassword: "",
+    },
+    onSubmit: async (values) => {
+      (await dispatch(
+        change_password(
+          values.newpassword,
+          values.repassword,
+          values.oldpassword
+        )
+      )) ? (
+        <></>
+      ) : (
+        history.push("/")
+      );
+    },
   });
 
-  const navigate = (e, route) => {
-    e.preventDefault();
-    history.push(`${route}`);
-  };
-
-  const onChangeFactory = (e) => {
-    setPassword({ ...password, [e.target.name]: e.target.value });
-  };
-
+  const [passVisible, setPassVisible] = useState([false, false, false]);
   return (
     <Box sx={styles().box}>
       <Typography sx={styles().header}>Enter a new password</Typography>
@@ -41,101 +49,87 @@ const ChangePass = () => {
         Create a new password that is at least 6 characters long. A strong
         password is a combination of letters, numbers, and punctuation.
       </Typography>
-      <OutlinedInput
-        name="oldpassword"
-        placeholder={"Enter old password"}
-        type={passVisible[0] ? "text" : "password"}
-        value={password.oldpassword}
-        sx={styles().input}
-        onChange={onChangeFactory}
-        endAdornment={
-          <InputAdornment
-            position="end"
-            sx={styles().cursorPointer}
-            onClick={() => {
-              passVisible[0] = !passVisible[0];
-              setPassVisible([...passVisible]);
-            }}
-          >
-            {passVisible[0] ? (
-              <VisibilityOffOutlinedIcon />
-            ) : (
-              <VisibilityOutlinedIcon />
-            )}
-          </InputAdornment>
-        }
-      />
-      <OutlinedInput
-        name="newpassword"
-        placeholder={"Enter new password"}
-        type={passVisible[1] ? "text" : "password"}
-        value={password.newpassword}
-        sx={styles().input}
-        onChange={onChangeFactory}
-        endAdornment={
-          <InputAdornment
-            position="end"
-            sx={styles().cursorPointer}
-            onClick={() => {
-              passVisible[1] = !passVisible[1];
-              setPassVisible([...passVisible]);
-            }}
-          >
-            {passVisible[1] ? (
-              <VisibilityOffOutlinedIcon />
-            ) : (
-              <VisibilityOutlinedIcon />
-            )}
-          </InputAdornment>
-        }
-      />
-      <OutlinedInput
-        name="repassword"
-        placeholder={"Enter repassword"}
-        type={passVisible[2] ? "text" : "password"}
-        value={password.repassword}
-        sx={styles().input}
-        onChange={onChangeFactory}
-        endAdornment={
-          <InputAdornment
-            position="end"
-            sx={styles().cursorPointer}
-            onClick={() => {
-              passVisible[2] = !passVisible[2];
-              setPassVisible([...passVisible]);
-            }}
-          >
-            {passVisible[2] ? (
-              <VisibilityOffOutlinedIcon />
-            ) : (
-              <VisibilityOutlinedIcon />
-            )}
-          </InputAdornment>
-        }
-      />
-      <Grid container spacing={2}>
-        <Grid item xs={12}>
-          <Button
-            variant="contained"
-            sx={styles().button}
-            onClick={async (e) => {
-              (await dispatch(
-                change_password(
-                  password.newpassword,
-                  password.repassword,
-                  password.oldpassword
-                )
-              )) ? (
-                <></>
+      <form onSubmit={formik.handleSubmit}>
+        <OutlinedInput
+          name="oldpassword"
+          placeholder={"Enter old password"}
+          type={passVisible[0] ? "text" : "password"}
+          value={formik.values.oldpassword}
+          sx={styles().input}
+          onChange={formik.handleChange}
+          endAdornment={
+            <InputAdornment
+              position="end"
+              sx={styles().cursorPointer}
+              onClick={() => {
+                passVisible[0] = !passVisible[0];
+                setPassVisible([...passVisible]);
+              }}
+            >
+              {passVisible[0] ? (
+                <VisibilityOffOutlinedIcon />
               ) : (
-                navigate(e, "/")
-              );
-            }}
-          >
-            Next
-          </Button>
+                <VisibilityOutlinedIcon />
+              )}
+            </InputAdornment>
+          }
+        />
+        <OutlinedInput
+          name="newpassword"
+          placeholder={"Enter new password"}
+          type={passVisible[1] ? "text" : "password"}
+          value={formik.values.newpassword}
+          sx={styles().input}
+          onChange={formik.handleChange}
+          endAdornment={
+            <InputAdornment
+              position="end"
+              sx={styles().cursorPointer}
+              onClick={() => {
+                passVisible[1] = !passVisible[1];
+                setPassVisible([...passVisible]);
+              }}
+            >
+              {passVisible[1] ? (
+                <VisibilityOffOutlinedIcon />
+              ) : (
+                <VisibilityOutlinedIcon />
+              )}
+            </InputAdornment>
+          }
+        />
+        <OutlinedInput
+          name="repassword"
+          placeholder={"Enter repassword"}
+          type={passVisible[2] ? "text" : "password"}
+          value={formik.values.repassword}
+          sx={styles().input}
+          onChange={formik.handleChange}
+          endAdornment={
+            <InputAdornment
+              position="end"
+              sx={styles().cursorPointer}
+              onClick={() => {
+                passVisible[2] = !passVisible[2];
+                setPassVisible([...passVisible]);
+              }}
+            >
+              {passVisible[2] ? (
+                <VisibilityOffOutlinedIcon />
+              ) : (
+                <VisibilityOutlinedIcon />
+              )}
+            </InputAdornment>
+          }
+        />
+        <Grid container spacing={2}>
+          <Grid item xs={12}>
+            <Button variant="contained" sx={styles().button} type="submit">
+              Next
+            </Button>
+          </Grid>
         </Grid>
-      </Grid>
+      </form>
     </Box>
   );
 };

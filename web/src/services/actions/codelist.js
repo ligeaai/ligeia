@@ -19,10 +19,11 @@ let token = localStorage.getItem('token');
 const config = {
     headers: {
         'Content-Type': 'application/json',
-        "Authorization": `token ${token}`,
+        // "Authorization": `token ${token}`,
     }
 };
-const body = JSON.stringify({ token: localStorage.getItem('token') });
+//const body = JSON.stringify({ token: localStorage.getItem('token') });
+const body = {}
 const refreshList = (listtype) => async dispatch => {
     try {
         const temp = await axios.get(
