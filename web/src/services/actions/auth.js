@@ -260,7 +260,7 @@ export const change_password = (new_password1, new_password2, old_password) => a
         old_password
     });
     try {
-        await axios.patch(`http://localhost:8000/api/v1/auth/change-password/`, body, config);
+        await axios.put(`http://localhost:8000/api/v1/auth/change-password/`, body, config);
 
         dispatch({
             type: CHANGE_PASSWORD_SUCCESS
@@ -271,7 +271,7 @@ export const change_password = (new_password1, new_password2, old_password) => a
         });
         dispatch({
             type: ADD_ERROR_SUCCESS,
-            payload: err.response.data.detail
+            payload: err.message
         })
         setTimeout(() => {
             dispatch({
@@ -283,12 +283,9 @@ export const change_password = (new_password1, new_password2, old_password) => a
 };
 
 export const reset_password = (email, password) => async dispatch => {
-    let token = localStorage.getItem('token');
     const config = {
         headers: {
             'Content-Type': 'application/json',
-            "Authorization": `token ${token}`,
-            "accept": "application/json"
         }
     };
     const body = JSON.stringify({

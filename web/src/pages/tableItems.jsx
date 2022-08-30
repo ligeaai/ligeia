@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 import {
   Box,
@@ -13,34 +13,24 @@ import {
 } from "@mui/material";
 
 import CodeListSetting from "./CodeListSetting";
-import { getWithLISTTYPE } from "../services/api/codelistapi";
+import {
+  getWithLISTTYPE,
+  clearlistTypeSchema,
+  setIsOpen,
+} from "../services/actions/codelist";
 
 const TableItems = (props) => {
   const dispatch = useDispatch();
-  const [temp, setTemp] = useState([]);
-  const [isOpen, setIsOpen] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const temp = useSelector((state) => state.codelist);
+
   const onClickHandler = () => {
-    if (isOpen) {
-      setIsOpen(false);
-      setIsLoading(false);
-      setTemp([]);
-    } else {
-      setIsOpen(true);
-      let abortController = new AbortController();
-      const fetchData = async () => {
-        const data = await dispatch(getWithLISTTYPE(props.temp.LISTTYPE));
-        if (data) {
-          setTemp(data);
-          setIsLoading(true);
-        }
-      };
-      fetchData();
-      return () => {
-        abortController.abort();
-      };
+    dispatch(clearlistTypeSchema());
+    if (!(props.temp.LISTTYPE === temp.isOpen)) {
+      dispatch(setIsOpen(props.temp.LISTTYPE));
+      dispatch(getWithLISTTYPE(props.temp.LISTTYPE));
     }
   };
+
   return (
     <>
       <React.Fragment>
@@ -83,8 +73,12 @@ const TableItems = (props) => {
         </TableRow>
         <TableRow>
           <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={28}>
-            <Collapse in={isOpen} timeout="auto" unmountOnExit>
-              {isLoading ? (
+            <Collapse
+              in={temp.isOpen === props.temp.LISTTYPE}
+              timeout="auto"
+              unmountOnExit
+            >
+              {temp.listTypeSchema ? (
                 <Table>
                   <TableHead>
                     <TableRow>
@@ -119,38 +113,48 @@ const TableItems = (props) => {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {temp.map((data, i) => (
+                    {Object.keys(temp.listTypeSchema).map((key, i) => (
                       <TableRow key={i}>
                         <TableCell>
-                          <CodeListSetting id={data.id} />
+                          <CodeListSetting id={temp.listTypeSchema[key].id} />
                         </TableCell>
-                        <TableCell>{data.LISTTYPE}</TableCell>
-                        <TableCell>{data.CULTURE}</TableCell>
-                        <TableCell>{data.CODE}</TableCell>
-                        <TableCell>{data.CODETEXT}</TableCell>
-                        <TableCell>{data.PARENT}</TableCell>
-                        <TableCell>{data.LEGACYMODE}</TableCell>
-                        <TableCell>{data.VAL1}</TableCell>
-                        <TableCell>{data.VAL2}</TableCell>
-                        <TableCell>{data.VAL3}</TableCell>
-                        <TableCell>{data.VAL4}</TableCell>
-                        <TableCell>{data.VAL5}</TableCell>
-                        <TableCell>{data.VAL6}</TableCell>
-                        <TableCell>{data.VAL7}</TableCell>
-                        <TableCell>{data.VAL8}</TableCell>
-                        <TableCell>{data.VAL9}</TableCell>
-                        <TableCell>{data.VAL10}</TableCell>
-                        <TableCell>{data.DATE1}</TableCell>
-                        <TableCell>{data.DATE2}</TableCell>
-                        <TableCell>{data.DATE3}</TableCell>
-                        <TableCell>{data.DATE4}</TableCell>
-                        <TableCell>{data.DATE5}</TableCell>
-                        <TableCell>{data.CHAR1}</TableCell>
-                        <TableCell>{data.CHAR2}</TableCell>
-                        <TableCell>{data.CHAR3}</TableCell>
-                        <TableCell>{data.CHAR4}</TableCell>
-                        <TableCell>{data.CHAR5}</TableCell>
-                        <TableCell>{data.LAYERNAME}</TableCell>
+                        <TableCell>
+                          {temp.listTypeSchema[key].LISTTYPE}
+                        </TableCell>
+                        <TableCell>
+                          {temp.listTypeSchema[key].CULTURE}
+                        </TableCell>
+                        <TableCell>{temp.listTypeSchema[key].CODE}</TableCell>
+                        <TableCell>
+                          {temp.listTypeSchema[key].CODETEXT}
+                        </TableCell>
+                        <TableCell>{temp.listTypeSchema[key].PARENT}</TableCell>
+                        <TableCell>
+                          {temp.listTypeSchema[key].LEGACYMODE}
+                        </TableCell>
+                        <TableCell>{temp.listTypeSchema[key].VAL1}</TableCell>
+                        <TableCell>{temp.listTypeSchema[key].VAL2}</TableCell>
+                        <TableCell>{temp.listTypeSchema[key].VAL3}</TableCell>
+                        <TableCell>{temp.listTypeSchema[key].VAL4}</TableCell>
+                        <TableCell>{temp.listTypeSchema[key].VAL5}</TableCell>
+                        <TableCell>{temp.listTypeSchema[key].VAL6}</TableCell>
+                        <TableCell>{temp.listTypeSchema[key].VAL7}</TableCell>
+                        <TableCell>{temp.listTypeSchema[key].VAL8}</TableCell>
+                        <TableCell>{temp.listTypeSchema[key].VAL9}</TableCell>
+                        <TableCell>{temp.listTypeSchema[key].VAL10}</TableCell>
+                        <TableCell>{temp.listTypeSchema[key].DATE1}</TableCell>
+                        <TableCell>{temp.listTypeSchema[key].DATE2}</TableCell>
+                        <TableCell>{temp.listTypeSchema[key].DATE3}</TableCell>
+                        <TableCell>{temp.listTypeSchema[key].DATE4}</TableCell>
+                        <TableCell>{temp.listTypeSchema[key].DATE5}</TableCell>
+                        <TableCell>{temp.listTypeSchema[key].CHAR1}</TableCell>
+                        <TableCell>{temp.listTypeSchema[key].CHAR2}</TableCell>
+                        <TableCell>{temp.listTypeSchema[key].CHAR3}</TableCell>
+                        <TableCell>{temp.listTypeSchema[key].CHAR4}</TableCell>
+                        <TableCell>{temp.listTypeSchema[key].CHAR5}</TableCell>
+                        <TableCell>
+                          {temp.listTypeSchema[key].LAYERNAME}
+                        </TableCell>
                       </TableRow>
                     ))}
                   </TableBody>

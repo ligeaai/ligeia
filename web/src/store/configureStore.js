@@ -2,7 +2,7 @@ import { configureStore } from '@reduxjs/toolkit'
 import thunk from 'redux-thunk';
 import logger from 'redux-logger'
 
-import { authReducer, drawerReducer, errorReducer, langReducer } from '../services/reducers'
+import { authReducer, codelistReducer, drawerReducer, errorReducer, langReducer } from '../services/reducers'
 
 export default configureStore({
     reducer: {
@@ -10,6 +10,7 @@ export default configureStore({
         drawer: drawerReducer,
         error: errorReducer,
         lang: langReducer,
+        codelist: codelistReducer,
     },
     middleware: [thunk, logger]
 })

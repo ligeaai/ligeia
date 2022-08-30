@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 import {
   Box,
@@ -13,23 +13,20 @@ import {
 } from "@mui/material";
 import CircularProgress from "@mui/material/CircularProgress";
 
-import { getAll } from "../services/api/codelistapi";
+import { getAll } from "../services/actions/codelist";
 
 import AddCodeList from "./AddCodeList";
 import TableItems from "./tableItems";
 
 const Code_list = () => {
+  const temp = useSelector((state) => state.codelist.codeListSchema);
+
   const dispatch = useDispatch();
-  const [temp, setTemp] = useState([]);
-  const [loading, setLoading] = React.useState(false);
+
   useEffect(() => {
     let abortController = new AbortController();
     const fetchData = async () => {
-      const data = await dispatch(getAll());
-      if (data) {
-        setTemp(data.data);
-        setLoading(true);
-      }
+      await dispatch(getAll());
     };
     fetchData();
     return () => {
@@ -80,14 +77,18 @@ const Code_list = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {loading ? (
-              Object.keys(temp).map((key, i) => (
-                <TableItems key={i} temp={temp[key][0]} />
-              ))
+            {temp ? (
+              Object.keys(temp).map((key, i) => {
+                return <TableItems key={i} temp={temp[key]} />;
+              })
             ) : (
-              <CircularProgress
-                sx={{ position: "absolute", left: "50%", top: "120px" }}
-              />
+              <TableRow>
+                <TableCell sx={{ border: "none" }}>
+                  <CircularProgress
+                    sx={{ position: "absolute", left: "50%", top: "120px" }}
+                  />
+                </TableCell>
+              </TableRow>
             )}
           </TableBody>
         </Table>

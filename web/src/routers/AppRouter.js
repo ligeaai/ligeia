@@ -4,6 +4,8 @@ import { unstable_HistoryRouter as HistoryRouter } from "react-router-dom";
 
 import history from './history';
 
+import AdminRouter from './AdminRouter';
+import AllUsers from '../pages/servicePage/allusers/allusers';
 import ChangePass from '../pages/changepass/ChangePass'
 import CodeList from '../pages/code_list';
 //import DatabasePage from '../pages/databasePage/DatabasePage'
@@ -32,7 +34,7 @@ const AppRouter1 = () => {
                 <Route exact path='/' element={<PrivateRoute />}>
                     <Route exact path='/' element={<Layout />}>
                         <Route path='monitoring' element={<Monitoring />} />
-                        <Route path='service' element={<ServicePage />} />
+                        <Route exact path='service' element={<ServicePage />} />
                         <Route path='failuredirectory' element={<FailureDirectory />} />
                         <Route path='log' element={<IntegrationLog />} />
                         <Route path='database' element={<DatabasePage />} />
@@ -40,6 +42,9 @@ const AppRouter1 = () => {
                         <Route path='codelist' element={<CodeList />} />
                         <Route path='changepass' element={<ChangePass />} />
                         <Route path='resetpassword' element={<ResetPassword />} />
+                        <Route path='service' element={<AdminRouter />}>
+                            <Route path='allusers' element={<AllUsers />} />
+                        </Route>
                     </Route>
                 </Route>
                 <Route exact path='/login' element={<LoginLayout />} >

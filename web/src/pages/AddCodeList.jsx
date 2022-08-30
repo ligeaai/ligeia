@@ -11,7 +11,7 @@ import {
   Grid,
   TextField,
 } from "@mui/material";
-import { addCodeList } from "../services/api/codelistapi";
+import { addCodeList } from "../services/actions/codelist";
 
 export default function AddCodeList() {
   const dispatch = useDispatch();

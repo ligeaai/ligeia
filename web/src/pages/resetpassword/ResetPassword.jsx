@@ -62,7 +62,7 @@ const ResetPassword = () => {
               setPassVisible(!passVisible);
             }}
           >
-            {passVisible[1] ? (
+            {passVisible ? (
               <VisibilityOffOutlinedIcon />
             ) : (
               <VisibilityOutlinedIcon />

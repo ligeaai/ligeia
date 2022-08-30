@@ -2,6 +2,8 @@ import React, { useState } from "react";
 
 import { Box, Grid, Link, Typography } from "@mui/material";
 
+import history from "../../routers/history";
+
 const CardItems = (props) => {
   const [theme, setTheme] = useState("#42526E");
   return (
@@ -36,7 +38,13 @@ const CardItems = (props) => {
             <Typography sx={{ mb: 5, mr: 6 }}>
               {props.props.cardBody}
             </Typography>
-            <Link underline="none" sx={{ float: "right", cursor: "pointer" }}>
+            <Link
+              underline="none"
+              sx={{ float: "right", cursor: "pointer" }}
+              onClick={() => {
+                history.push(props.props.cardURL);
+              }}
+            >
               Перейти
             </Link>
           </Grid>

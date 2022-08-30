@@ -30,7 +30,7 @@ const ErrorMessage = (props) => {
     return (
       <>
         <Element />
-        <Snackbar open={true} message={err.errMsg} action={action} />;
+        <Snackbar open={true} message={err.errMsg} action={action} />
       </>
     );
   }

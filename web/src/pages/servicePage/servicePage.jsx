@@ -7,7 +7,7 @@ const servicePage = () => {
     {
       cardTitle: "Учетные записи",
       cardBody: "Краткое описание назначения данного раздела",
-      cardURL: "/monitoring",
+      cardURL: "/service/allusers",
     },
     {
       cardTitle: "Оборудование",

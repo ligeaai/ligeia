@@ -3,18 +3,20 @@ import { useDispatch } from "react-redux";
 import {
   Box,
   Button,
+  CircularProgress,
   Dialog,
   DialogActions,
   DialogContent,
   DialogTitle,
-  Grid,
   TextField,
 } from "@mui/material";
 import SettingsSuggestSharpIcon from "@mui/icons-material/SettingsSuggestSharp";
-import { deleteCodeList, updateCodeList } from "../services/api/codelistapi";
+import { deleteCodeList, updateCodeList } from "../services/actions/codelist";
+
 export default function CodeListSetting(props) {
   const dispatch = useDispatch();
   const [open, setOpen] = React.useState(false);
+  const [loading, setLoading] = React.useState(false);
   const [codeList, setCodeList] = React.useState({
     LISTTYPE: "",
     CULTURE: "",
@@ -55,6 +57,7 @@ export default function CodeListSetting(props) {
   });
   const handleClickOpen = () => {
     setOpen(true);
+    setLoading(false);
   };
 
   const handleClose = () => {
@@ -69,42 +72,63 @@ export default function CodeListSetting(props) {
         sx={{ cursor: "pointer" }}
         onClick={handleClickOpen}
       />
-      <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Settings</DialogTitle>
-        <DialogContent>
-          {Object.keys(codeList).map((key, i) => (
-            <React.Fragment key={i}>
-              <TextField
-                autoFocus
-                id={key}
-                name={key}
-                value={codeList[key]}
-                label={key}
-                fullWidth
-                variant="standard"
-                onChange={onChangeFactory}
-              />
-            </React.Fragment>
-          ))}
-        </DialogContent>
-        <DialogActions>
-          <Button
-            variant="contained"
-            color="error"
-            onClick={() => dispatch(updateCodeList(props.id, codeList))}
-          >
-            Update
-          </Button>
-          <Button
-            variant="contained"
-            color="error"
-            onClick={() => dispatch(deleteCodeList(props.id))}
-          >
-            Delete
-          </Button>
-          <Button onClick={handleClose}>Cancel</Button>
-        </DialogActions>
-      </Dialog>
+      {loading ? (
+        <Dialog open={open} onClose={handleClose}>
+          <DialogTitle>Plase Wait</DialogTitle>
+          <DialogContent sx={{ textAlign: "center" }}>
+            <CircularProgress />
+          </DialogContent>
+        </Dialog>
+      ) : (
+        <Dialog open={open} onClose={handleClose}>
+          <DialogTitle>Settings</DialogTitle>
+          <DialogContent>
+            {Object.keys(codeList).map((key, i) => (
+              <React.Fragment key={i}>
+                <TextField
+                  autoFocus
+                  id={key}
+                  name={key}
+                  value={codeList[key]}
+                  label={key}
+                  fullWidth
+                  variant="standard"
+                  onChange={onChangeFactory}
+                />
+              </React.Fragment>
+            ))}
+          </DialogContent>
+          <DialogActions>
+            <Button
+              variant="contained"
+              color="error"
+              onClick={async () => {
+                setLoading(true);
+                let temp = await dispatch(updateCodeList(props.id, codeList));
+                if (temp) {
+                  setOpen(false);
+                }
+              }}
+            >
+              Update
+            </Button>
+            <Button
+              variant="contained"
+              color="error"
+              onClick={async () => {
+                setLoading(true);
+                let temp = await dispatch(deleteCodeList(props.id));
+                if (temp) {
+                  setOpen(false);
+                }
+              }}
+            >
+              Delete
+            </Button>
+            <Button onClick={handleClose}>Cancel</Button>
+          </DialogActions>
+        </Dialog>
+      )}
     </Box>
   );
 }
