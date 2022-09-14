@@ -24,31 +24,7 @@ const config = {
 };
 //const body = JSON.stringify({ token: localStorage.getItem('token') });
 const body = {}
-const refreshList = (listtype) => async dispatch => {
-    try {
-        const temp = await axios.get(
-            "http://localhost:8000/api/v1/code_list/code_list/",
-            body,
-            config,
-        )
-        let temporary = []
-        Object.keys(temp.data).map((key, i) => {
-            temporary.push({ ...temp.data[key][0] })
-        })
-        console.log(listtype);
-        dispatch({
-            type: GET_CODELIST_SUCCESS,
-            payload: temporary
-        })
-        dispatch({
-            type: GET_LISTTYPE_SUCCESS,
-            payload: temp.data[listtype],
-        })
 
-    } catch (err) {
-        dispatch(add_error(err.message))
-    }
-}
 const clearlistTypeSchema = () => dispatch => {
     dispatch({
         type: CLEAR_LISTTYPESCHEMA
@@ -64,7 +40,7 @@ const setIsOpen = (data) => dispatch => {
 const getAll = () => async dispatch => {
     try {
         const temp = await axios.get(
-            "http://localhost:8000/api/v1/code_list/code_list/",
+            "http://localhost:8000/api/v1/code_list/code_list_schema/",
             body,
             config,
         )
@@ -85,15 +61,15 @@ const getAll = () => async dispatch => {
 const getWithLISTTYPE = (listType) => async dispatch => {
     try {
         const temp = await axios.get(
-            `http://localhost:8000/api/v1/code_list/code_list/`,
+            `http://localhost:8000/api/v1/code_list/code_list_listtype/?LISTTYPE=${listType}`,
             body,
             config,
         )
         dispatch({
             type: GET_LISTTYPE_SUCCESS,
-            payload: temp.data[listType],
+            payload: temp.data,
         })
-        return temp.data[listType];
+        return temp;
     } catch (err) {
         dispatch(add_error(err.message))
     }
@@ -102,16 +78,15 @@ const getWithLISTTYPE = (listType) => async dispatch => {
 const deleteCodeList = (id) => async dispatch => {
     try {
         const listtype = await axios.get(
-            `http://localhost:8000/api/v1/code_list/code_list/${id}/`,
+            `http://localhost:8000/api/v1/code_list/code_list_listtype/${id}/`,
             body,
             config,
         )
         await axios.delete(
-            `http://localhost:8000/api/v1/code_list/code_list/${id}`,
+            `http://localhost:8000/api/v1/code_list/code_list_listtype/${id}`,
             body,
             config,
         )
-        await dispatch(refreshList(listtype.data.LISTTYPE));
         return true;
     } catch (err) {
         dispatch(add_error(err.message))
@@ -119,10 +94,10 @@ const deleteCodeList = (id) => async dispatch => {
 };
 
 const addCodeList = (data) => async dispatch => {
-    const body = JSON.stringify(data);;
+    const body = JSON.stringify(data);
     try {
         await axios.post(
-            `http://localhost:8000/api/v1/code_list/code_list/`,
+            `http://localhost:8000/api/v1/code_list/code_list_listtype/`,
             body,
             config,
         )
@@ -135,16 +110,15 @@ const updateCodeList = (id, data) => async dispatch => {
     const body = JSON.stringify(data);
     try {
         const listtype = await axios.get(
-            `http://localhost:8000/api/v1/code_list/code_list/${id}/`,
+            `http://localhost:8000/api/v1/code_list/code_list_listtype/${id}/`,
             body,
             config,
         )
         await axios.put(
-            `http://localhost:8000/api/v1/code_list/code_list/${id}/`,
+            `http://localhost:8000/api/v1/code_list/code_list_listtype/${id}/`,
             body,
             config,
         )
-        await dispatch(refreshList(listtype.data.LISTTYPE))
         return true;
     } catch (err) {
         dispatch(add_error(err.message))

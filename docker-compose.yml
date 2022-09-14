@@ -12,25 +12,25 @@ services:
   #     - "3000:3000"
   #   networks:
   #     - net
-  # django:
-  #   restart: unless-stopped
-  #   build:
-  #     context: .
-  #     dockerfile: ./dockerfile/local/django/Dockerfile
-  #   command: /start
-  #   env_file:
-  #     - .env
-  #   volumes:
-  #     - .:/django
-  #     # - static_volume:/django/staticfiles
-  #     # - media_volume:/django/mediafiles
-  #   depends_on:
-  #     - redis
-  #     - postgres
-  #   ports:
-  #     - "8000:8000"
-  #   networks:
-  #     - net
+  django:
+    restart: unless-stopped
+    build:
+      context: .
+      dockerfile: ./dockerfile/local/django/Dockerfile
+    command: /start
+    env_file:
+      - .env
+    volumes:
+      - .:/django
+      # - static_volume:/django/staticfiles
+      # - media_volume:/django/mediafiles
+    depends_on:
+      - redis
+      - postgres
+    ports:
+      - "8000:8000"
+    networks:
+      - net
   postgres:
     restart: unless-stopped
     image: postgres:latest
