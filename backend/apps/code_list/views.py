@@ -54,6 +54,3 @@ class code_list_listtype_view(ModelViewSet):
                 queryset = queryset.filter(LISTTYPE=listtype)
                 cache.set(listtype, queryset, timeout=CACHE_TTL)
             return queryset
-    
-
-

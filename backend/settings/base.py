@@ -74,7 +74,7 @@ LOCAL_APPS = [
     # "apps.db_dictionaries",
     # "apps.config",
     "apps.users",
-    "apps.code_list",
+    "apps.code_list.apps.CodeListConfig",
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
