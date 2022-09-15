@@ -39,3 +39,5 @@ class code_list (models.Model):
     STATUS = models.CharField(null = True , max_length = 10 )
     REV_GRP_ID = models.CharField(null = True , max_length = 32 )
     
+    class Meta: 
+        ordering = ['id']

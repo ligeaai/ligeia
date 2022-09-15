@@ -11,5 +11,4 @@ CACHE_TTL = getattr(settings, 'CACHE_TTL', DEFAULT_TIMEOUT)
 @receiver([post_save,pre_delete], sender=code_list)
 def clean_cache(sender,instance,**kwargs):
     if instance.LISTTYPE in cache:
-        print("cache deleted")
         cache.delete(instance.LISTTYPE)
