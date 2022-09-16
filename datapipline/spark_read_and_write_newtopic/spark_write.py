@@ -23,13 +23,14 @@ spark.sparkContext.setLogLevel("ERROR")
 
 schema = StructType(
     [
-        StructField("Tarih", StringType(), True),
-        StructField("Time", TimestampType(), True),
-        StructField("Temperature:", FloatType(), True),
-        StructField("Pressure:", FloatType(), True),
-        StructField("Vibration_X", FloatType(), True),
-        StructField("Vibration_Y", FloatType(), True),
-        StructField("Vibration_motor", FloatType(), True),
+        StructField("id", IntegerType(), True),
+        StructField("tarih", StringType(), True),
+        StructField("time", TimestampType(), True),
+        StructField("temperature", FloatType(), True),
+        StructField("pressure", FloatType(), True),
+        StructField("vibration_x", FloatType(), True),
+        StructField("vibration_y", FloatType(), True),
+        StructField("vibration_motor", FloatType(), True),
     ]
 )
 
@@ -46,19 +47,20 @@ lines = (
 df = lines.select("*")
 
 df2 = (
-    df.withColumn("org_unit4", split(col("Tarih"), ",").getItem(0))
-    .withColumn("asset", split(col("Tarih"), ",").getItem(1))
-    .drop("Tarih")
-    .withColumn("Time", date_format(col("Time"), time_format))
+    df.withColumn("org_unit4", split(col("tarih"), ",").getItem(0))
+    .withColumn("asset", split(col("tarih"), ",").getItem(1))
+    .drop("tarih")
+    .withColumn("Time", date_format(col("time"), time_format))
     .select(
+        "id",
         "org_unit4",
         "asset",
-        "Time",
-        "Temperature:",
-        "Pressure:",
-        "Vibration_X",
-        "Vibration_Y",
-        "Vibration_motor",
+        "time",
+        "temperature",
+        "pressure",
+        "vibration_x",
+        "vibration_y",
+        "vibration_motor",
     )
 )
 
