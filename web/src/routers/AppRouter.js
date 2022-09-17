@@ -23,6 +23,7 @@ import ResetPassword from '../pages/resetpassword/ResetPassword'
 import SecureCodePage from '../pages/login/secureCodepage/secureCodePage'
 import ServicePage from '../pages/servicePage/servicePage'
 import Signup from '../pages/signup/Signup'
+import Start from '../pages/start/Start'
 import IntegrationLog from '../pages/integrationLog/IntegrationLog'
 
 import ErrorMessage from '../components/HOC/errorMessage';
@@ -47,6 +48,7 @@ const AppRouter1 = () => {
                         </Route>
                     </Route>
                 </Route>
+                <Route exact path='home' element={<Start />} />
                 <Route exact path='/login' element={<LoginLayout />} >
                     <Route path='' element={<Login />} />
                     <Route path='passrecovery' element={<PassRecovery />} />

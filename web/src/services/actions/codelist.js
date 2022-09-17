@@ -44,13 +44,9 @@ const getAll = () => async dispatch => {
             body,
             config,
         )
-        let temporary = []
-        Object.keys(temp.data).map((key, i) => {
-            temporary.push({ ...temp.data[key][0] })
-        })
         dispatch({
             type: GET_CODELIST_SUCCESS,
-            payload: temporary
+            payload: temp.data.results
         })
         return temp;
     } catch (err) {
@@ -67,7 +63,7 @@ const getWithLISTTYPE = (listType) => async dispatch => {
         )
         dispatch({
             type: GET_LISTTYPE_SUCCESS,
-            payload: temp.data,
+            payload: temp.data.results,
         })
         return temp;
     } catch (err) {
