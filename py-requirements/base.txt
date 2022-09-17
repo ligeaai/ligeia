@@ -44,3 +44,7 @@ django-celery-beat>=2.3.0
 drf-yasg==1.20.0
 #social-auth-app-django>=5.0.0
 django-allauth>=0.51.0
+
+#Datapipline
+findspark==2.0.1
+pyspark==2.3.1
