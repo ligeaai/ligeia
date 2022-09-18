@@ -129,13 +129,12 @@ class UserLoginView(generics.GenericAPIView):
 
 class UserChangePassword(generics.UpdateAPIView):
     serializer_class = ChangePasswordSerializer
-    permission_classes = [
-        permissions.IsAuthenticated,
-    ]
-
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = [permissions.IsAuthenticated]
+    
     def update(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
-
+        
         if serializer.is_valid(raise_exception=True):
             user = serializer.save()
             return Response(

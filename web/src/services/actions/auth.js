@@ -257,8 +257,8 @@ export const change_password = (new_password1, new_password2, old_password) => a
         old_password
     });
     try {
-        await axios.put(`http://localhost:8000/api/v1/auth/change-password/`, body, config);
-
+        await axios.patch(`http://localhost:8000/api/v1/auth/change-password/`, body, config);
+        await axios.post(`http://localhost:8000/api/v1/auth/logout/`, body, config);
         dispatch({
             type: CHANGE_PASSWORD_SUCCESS
         });
