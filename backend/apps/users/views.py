@@ -1,6 +1,9 @@
 import email
+from lib2to3.pgen2 import token
 import logging
-
+import profile
+from urllib import response
+from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 from knox.auth import AuthToken, TokenAuthentication
 from rest_framework.decorators import api_view
@@ -11,7 +14,7 @@ from rest_framework.response import Response
 from rest_framework.authtoken.serializers import AuthTokenSerializer
 from django.contrib.auth import login
 from django.contrib.auth.models import update_last_login
-
+from rest_framework.views import APIView
 from .models import *
 from .serializers import (
     UserRegistrationSerializer,
@@ -20,6 +23,7 @@ from .serializers import (
     ChangePasswordSerializer,
     ForgetPasswordSerializer,
     UserModelSerializer,
+    ResetNewPasswordSerializer,
 )
 
 from utils import AtomicMixin
@@ -162,15 +166,23 @@ class UserChangePassword(generics.UpdateAPIView):
 class ResetPassword(generics.GenericAPIView):
     serializer_class = ForgetPasswordSerializer
     def post(self, request):
-        serializer = self.get_serializer(data=request.data)
-        alldatas = {}
+        serializer = self.serializer_class(data=request.data)
         if serializer.is_valid(raise_exception=True):
-            mname = serializer.save()
-            # alldatas[‘data’]=’successfully registered’
-            # print(alldatas)
-            return Response(alldatas)
-        return Response("failed retry after some time")
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
+class ResetNewPassword(generics.GenericAPIView):
+    serializer_class = ResetNewPasswordSerializer
+
+    def post(self,request, *args, **kwargs):
+        
+        serializer = self.serializer_class(data=request.data)
+        if serializer.is_valid(raise_exception=True):
+            serializer.save(kwargs)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 # class logout(APIView):
 #     def get(self, request):

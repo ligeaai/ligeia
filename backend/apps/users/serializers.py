@@ -1,12 +1,13 @@
+import json
 from rest_framework import serializers
 from django.contrib.auth import authenticate
 from django.contrib.auth import get_user_model
 from django.contrib.auth.password_validation import validate_password
 from django.utils.translation import gettext_lazy as _
-
+import uuid
 # from .models import User
 from utils import validate_email as email_is_valid
-
+from .helpers import send_forget_password_mail
 User = get_user_model()
 
 from rest_framework.serializers import ModelSerializer
@@ -109,26 +110,37 @@ class ChangePasswordSerializer(serializers.Serializer):
         return user
 
 
+
 class ForgetPasswordSerializer(serializers.Serializer):
-    """
-    Used for resetting password who forget their password via otp varification
-    """
 
     email = serializers.EmailField(required=True)
-    password = serializers.CharField(required=True)
-
+    class Meta:
+        fields = ['email']
     def save(self):
         email = self.validated_data["email"]
-        password = self.validated_data["password"]
-        # filtering out whethere email is existing or not, if your email is existing then if condition will allow your email
         if User.objects.filter(email=email).exists():
-            # if your email is existing get the query of your specific email
-            user = User.objects.get(email=email)
-            # then set the new password for your email
-            user.set_password(password)
-            user.save()
-            return user
+            user_obj = User.objects.get(email=email)
+            token = str(uuid.uuid4())
+            user_obj.forget_password_token = self.validated_data.get("forget_password_token",token)
+            user_obj.save()
+            #send_forget_password_mail(user_obj, token)
+            return user_obj
         else:
             raise serializers.ValidationError(
                 {"error": "please enter valid crendentials"}
             )
+   
+            
+class ResetNewPasswordSerializer(serializers.Serializer):
+    password = serializers.CharField(
+        write_only=True, required=True, validators=[validate_password]
+    )
+    class Meta:
+        model = User
+        fields = ['__all__']
+    def save(self, instance):
+        instance = User.objects.get(forget_password_token=instance["token"])
+        password = self.validated_data["password"]
+        instance.set_password(password)
+        instance.save()
+        return instance

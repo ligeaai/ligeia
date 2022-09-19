@@ -92,6 +92,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     date_joined = models.DateTimeField(_("date joined"), auto_now_add=True)
     date_updated = models.DateTimeField(_("date updated"), auto_now=True)
 
+    forget_password_token = models.CharField(max_length=100,default="False")
     activation_key = models.UUIDField(unique=True, default=uuid.uuid4)  # email
     confirmed_email = models.BooleanField(default=False)
     # groups = models.ForeignKey(Group, on_delete=models.CASCADE, blank=True, null=True)
