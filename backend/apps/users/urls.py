@@ -15,16 +15,22 @@ from .views import (
     UserEmailConfirmationStatusView,
     UserModelViewSet,
     UserDetails,
+<<<<<<< HEAD
+    FacebookLogin,
+    GoogleLogin,
+=======
     ResetNewPassword,
+>>>>>>> b2648357483638074c8b6e1e17e87bdf83b25cc8
 )
-
 routers = DefaultRouter()
-
 routers.register("users", UserModelViewSet, basename="users")
 # routers.register("users-details", UserDetails, basename="users-details")
 
 urlpatterns = [
+   
     # path("", include("knox.urls")),
+    path('google/', GoogleLogin.as_view(),name="google"),
+    path("facebook/", FacebookLogin.as_view(), name="facebook"),
     path("login/", UserLoginView.as_view(), name="login"),
     path("logout/", knox_views.LogoutView.as_view(), name="logout"),
     path("logoutall/", knox_views.LogoutAllView.as_view(), name="logoutall"),

@@ -106,6 +106,7 @@ class UserRegisterView(generics.GenericAPIView):
 
 
 class UserLoginView(generics.GenericAPIView):
+    
     serializer_class = UserLoginSerializer
     permission_classes = [
         permissions.AllowAny,
@@ -218,3 +219,28 @@ class UserEmailConfirmationStatusView(generics.GenericAPIView):
         """Retrieve user current confirmed_email status."""
         user = self.request.user
         return Response({"status": user.confirmed_email}, status=status.HTTP_200_OK)
+
+
+
+
+
+
+
+
+
+
+
+#### REST-AUTH
+from django.urls import include, path, reverse
+from allauth.socialaccount.providers.oauth2.client import OAuth2Client
+from allauth.socialaccount.providers.facebook.views import FacebookOAuth2Adapter
+from allauth.socialaccount.providers.google.views import GoogleOAuth2Adapter
+from dj_rest_auth.registration.views import SocialLoginView
+import urllib.parse
+from django.shortcuts import redirect
+
+class FacebookLogin(SocialLoginView):
+    adapter_class = FacebookOAuth2Adapter
+class GoogleLogin(SocialLoginView):
+    adapter_class = GoogleOAuth2Adapter
+    

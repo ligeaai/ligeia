@@ -4,8 +4,8 @@ from django.contrib import admin
 
 from django.conf.urls.static import static
 from django.conf import settings
-
 urlpatterns = [
+
     path("accounts/", include("allauth.urls")),
     path("admin/", admin.site.urls),
     path("health/", include("health_check.urls")),

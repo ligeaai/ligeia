@@ -60,6 +60,7 @@ THIRD_PARTY_APPS = [
     "rosetta",
     "modeltranslation",
     # "oauth2_provider",
+    'dj_rest_auth',
     "allauth",
     "allauth.account",
     "allauth.socialaccount",
@@ -181,6 +182,7 @@ REST_FRAMEWORK = {
         "rest_framework.parsers.MultiPartParser",
     ),
 }
+
 
 # ############ REST KNOX ########################
 REST_KNOX = {
@@ -305,31 +307,48 @@ ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_AUTHENTICATION_METHOD = "email"
 ACCOUNT_ACTIVATION_DAYS = 7  # days
 ACCOUNT_EMAIL_VERIFICATION = "optional"
-
+SOCIALACCOUNT_ADAPTER = 'apps.users.adapter.SocialAdapter'
 SOCIALACCOUNT_PROVIDERS = {
     "google": {
         # For each OAuth based provider, either add a ``SocialApp``
         # (``socialaccount`` app) containing the required client
         # credentials, or list them here:
         "APP": {
-            "client_id": "344458235841-ouh1mdjtcvk4p743ohdm10a7von2vbug.apps.googleusercontent.com",
-            "secret": "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",
+            "client_id": "491001574499-4ppnfldsim578soko2qp1o96seorjhgo.apps.googleusercontent.com",
+            "secret": "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",
             "key": "344458235841-ouh1mdjtcvk4p743ohdm10a7von2vbug.apps.googleusercontent.com",
         },
         "AUTH_PARAMS": {
             "access_type": "offline",
         },
     },
-    "facebook": {
-        # For each OAuth based provider, either add a ``SocialApp``
-        # (``socialaccount`` app) containing the required client
-        # credentials, or list them here:
-        "APP": {
-            "client_id": "344458235841-ouh1mdjtcvk4p743ohdm10a7von2vbug.apps.googleusercontent.com",
-            "secret": "ea397b51fc3cd7fdd6f4afc94e5c7c92",
-            "key": "3411592432496228",
-        }
-    },
+     'facebook':
+        {
+         'METHOD': 'oauth2',
+         'SDK_URL': '//connect.facebook.net/{locale}/sdk.js',
+         'SCOPE': ['email', 'public_profile'],
+         'AUTH_PARAMS': {'auth_type': 'reauthenticate'},
+         'INIT_PARAMS': {'cookie': True},
+         'FIELDS': [
+             'id',
+             'first_name',
+             'last_name',
+             'name',
+             'name_format',
+             'picture',
+             'short_name'
+         ],
+         'EXCHANGE_TOKEN': True,
+         'LOCALE_FUNC': lambda request: 'ru_RU',
+         'VERIFIED_EMAIL': False,
+         'VERSION': 'v7.0',
+         # you should fill in 'APP' only if you don't create a Facebook instance at /admin/socialaccount/socialapp/
+         'APP': {
+             'client_id': '1531824097251400',  # !!! THIS App ID
+             'secret': '1af933e352c0a2665b0bcc67b542e3be',  # !!! THIS App Secret
+             'key': ''
+                }
+         }
 }
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
