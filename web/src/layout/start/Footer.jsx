@@ -1,11 +1,11 @@
 import React from "react";
 import { Box, Grid, Typography } from "@mui/material";
 
-import github from "../../assets/Images/socialmedia/github.png";
-import instagram from "../../assets/Images/socialmedia/instagram.png";
+import GitHubIcon from "@mui/icons-material/GitHub";
+import InstagramIcon from "@mui/icons-material/Instagram";
 import logo from "../../assets/Images/socialmedia/logo.png";
-import pinterest from "../../assets/Images/socialmedia/pinterest.png";
-import twitter from "../../assets/Images/socialmedia/twitter.png";
+import PinterestIcon from "@mui/icons-material/Pinterest";
+import TwitterIcon from "@mui/icons-material/Twitter";
 
 const Footer = () => {
   return (
@@ -14,22 +14,27 @@ const Footer = () => {
         width: "100%",
         position: "fixed",
         bottom: "0",
-        padding: "0 7% 2% 3.5%",
+        py: 3,
+        px: { xs: 2, lg: 4, xl: 6 },
       }}
     >
       <Grid
         container
         sx={{
           width: "100%",
-          justifyContent: "space-between",
+          justifyContent: { xs: "center", sm: "space-between" },
           alignItems: "center",
         }}
       >
         <Grid item>
           <Typography
             sx={{
+              textAlign: { xs: "center", sm: "start" },
               lineHeight: 1.875,
               fontSize: "16px",
+              color: "#ffffff",
+
+              marginBottom: { xs: "1rem", sm: "0px" },
             }}
           >
             © 2022 Ligeia.ai. All rights Reserved <br />
@@ -37,21 +42,21 @@ const Footer = () => {
           </Typography>
         </Grid>
         <Grid item>
-          <Grid container spacing={4}>
+          <Grid container spacing={4} sx={{ alignItems: "center" }}>
             <Grid item>
-              <img src={logo} alt="logo" />
+              <img src={logo} alt="logo" style={{ fill: "#ffffff" }} />
             </Grid>
             <Grid item>
-              <img src={twitter} alt="twitter" />
+              <TwitterIcon sx={{ color: "#ffffff" }} />
             </Grid>
             <Grid item>
-              <img src={instagram} alt="instagram" />
+              <InstagramIcon sx={{ color: "#ffffff" }} />
             </Grid>
             <Grid item>
-              <img src={pinterest} alt="pinterest" />
+              <PinterestIcon sx={{ color: "#ffffff" }} />
             </Grid>
             <Grid item>
-              <img src={github} alt="github" />
+              <GitHubIcon sx={{ color: "#ffffff" }} />
             </Grid>
           </Grid>
         </Grid>

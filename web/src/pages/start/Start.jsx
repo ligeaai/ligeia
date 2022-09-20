@@ -1,49 +1,35 @@
 import React from "react";
-import { Grid, Box, Typography } from "@mui/material";
-
-import headBackground from "../../assets/backgorunds/image.png";
+import { Box, Grid, Typography } from "@mui/material";
 import background from "../../assets/backgorunds/back.png";
-
-import Header from "../../layout/start/header";
-import Footer from "../../layout/start/Footer";
+import StartComponent from "../../layout/start/Start";
 
 const Start = () => {
   return (
     <Box>
+      <StartComponent />
       <Box>
-        <img
-          src={headBackground}
-          alt="bg"
-          style={{
-            margin: "1%",
-            width: "98%",
-            height: "550px",
-            position: "absolute",
-            zIndex: "-5",
-          }}
-        />
-        <Header />
         <Grid
           container
           sx={{
-            height: "483px",
-            position: "absolute",
-            justifyContent: "center",
             alignItems: "center",
+            margin: "auto",
           }}
         >
           <Typography
             sx={{
-              fontSize: "48px",
+              fontSize: { xs: "32px", md: "48px", xl: "63px" },
               fontWeight: "800",
               color: "#ffffff",
+              margin: "15% auto",
             }}
           >
             Advancing AI for everyone
           </Typography>
         </Grid>
       </Box>
-      <Footer />
+      {/* <Box>
+        <img src={background} alt="bg" style={{ width: "100%" }} />
+      </Box> */}
     </Box>
   );
 };
