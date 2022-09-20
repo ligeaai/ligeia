@@ -7,6 +7,8 @@ import logo from "../../assets/Images/socialmedia/logo.png";
 import PinterestIcon from "@mui/icons-material/Pinterest";
 import TwitterIcon from "@mui/icons-material/Twitter";
 
+import PrivacyPolicy from "../PrivacyPolicy";
+
 const Footer = () => {
   return (
     <Box
@@ -33,12 +35,11 @@ const Footer = () => {
               lineHeight: 1.875,
               fontSize: "16px",
               color: "#ffffff",
-
               marginBottom: { xs: "1rem", sm: "0px" },
             }}
           >
             © 2022 Ligeia.ai. All rights Reserved <br />
-            Privacy Policy | Legal Stuff
+            <PrivacyPolicy />| Legal Stuff
           </Typography>
         </Grid>
         <Grid item>
