@@ -1,17 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  Box,
-  Button,
-  Grid,
-  Link,
-  Menu,
-  MenuItem,
-  Typography,
-  Collapse,
-  List,
-  ListItem,
-} from "@mui/material";
+import { Box, Button, Grid, Link } from "@mui/material";
 
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 
@@ -22,6 +11,7 @@ import logo from "../../assets/Images/header/logo1.png";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import TranslateIcon from "@mui/icons-material/Translate";
 import Brightness2OutlinedIcon from "@mui/icons-material/Brightness2Outlined";
+import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 
 import { changeTheme } from "../../services/actions/theme";
 import { changeLanguage } from "../../services/actions/language";
@@ -29,14 +19,11 @@ import { changeLanguage } from "../../services/actions/language";
 import SearchBar from "../../components/searchBar/searchBar";
 import SearchBarMobile from "../../components/searchBar/searchBarMobile";
 import NestedMenu from "./nestedMenu";
-import { useEffect } from "react";
-import { breakpoints } from "@mui/system";
 
 const Header = () => {
   const dispatch = useDispatch();
   const theme = useSelector((state) => state.theme.theme);
   const lang = useSelector((state) => state.lang.lang);
-  const [anchorEl, setAnchorEl] = React.useState(null);
   const [search, setSearch] = React.useState(false);
   const [menu, setMenu] = React.useState("none");
   const [settingsMenu, setSettingsMenu] = React.useState(null);
@@ -47,9 +34,11 @@ const Header = () => {
     false,
     false,
     false,
-    false, //language selector
   ]);
-
+  var openValid = [false, false, false, false, false, false];
+  // const searchBar = (val) => {
+  //   setSearch(val);
+  // };
   const themeSelect = (val) => {
     dispatch(changeTheme(val));
   };
@@ -57,16 +46,14 @@ const Header = () => {
     dispatch(changeLanguage(val));
   };
   const locationSelect = (val) => {};
-  const handleClick = (event, key) => {
-    setAnchorEl(event.currentTarget);
-    open[key] = true;
-    setOpen(open);
+  const handleClick = (key) => {
+    openValid[key] = true;
+    setOpen(openValid);
   };
-  const handleClose = () => {
-    setAnchorEl(null);
-    setOpen([false, false, false, false, false, false, false]);
+  const handleClose = (key) => {
+    openValid[key] = false;
+    setOpen(openValid);
   };
-
   var myObject = {
     Product: ["Product 1", "Product 2"],
     Learn: ["Learn 1", "Learn 2", "Learn 3", "Learn 4"],
@@ -117,7 +104,7 @@ const Header = () => {
           >
             <Grid
               item
-              sx={{ mr: 2, cursor: "pointer" }}
+              sx={{ cursor: "pointer" }}
               onClick={() => {
                 history.push("/");
               }}
@@ -127,7 +114,7 @@ const Header = () => {
             <Grid
               item
               sx={{
-                zIndex: "4",
+                ml: 2,
               }}
             >
               <MenuIcon
@@ -148,7 +135,6 @@ const Header = () => {
                 container
                 sx={{
                   borderRadius: "10px",
-
                   ml: 2,
                   typography: {
                     xs: {
@@ -158,7 +144,6 @@ const Header = () => {
                       flexDirection: "column",
                       top: "80px",
                       left: "0px",
-
                       backgroundColor: "#0000008A",
                       position: "absolute",
                       width: "max-content",
@@ -181,61 +166,94 @@ const Header = () => {
                     <Grid
                       key={key}
                       item
-                      sx={{ cursor: "pointer", zIndex: "3", color: "#ffffff" }}
+                      id={key}
+                      sx={{
+                        cursor: "pointer",
+                        zIndex: "3",
+                        color: "#ffffff",
+                        position: "relative",
+                      }}
+                      onMouseEnter={() => {
+                        handleClick(key);
+                      }}
+                      onMouseLeave={() => {
+                        handleClose(key);
+                      }}
                     >
-                      <Button
-                        sx={{
-                          color: "#ffffff",
-                          fontSize: { md: "12px", lg: "17px", xl: "19px" },
-                          textTransform: "capitalize",
-                        }}
-                        id="basic-button"
-                        aria-controls={open[key] ? "basic-menu" : undefined}
-                        aria-haspopup="true"
-                        aria-expanded={open[key] ? "true" : undefined}
-                        onClick={(e) => {
-                          handleClick(e, key);
-                        }}
+                      <Grid
+                        container
+                        sx={{ flexDirection: "column", alignItems: "center" }}
                       >
-                        {e}
-                        <KeyboardArrowDownIcon
-                          sx={{
-                            color: "#ffffff",
-                            fontSize: { md: "16px", lg: "20px", xl: "22px" },
-                            marginLeft: "1.5px",
-                          }}
-                        />
-                      </Button>
-                      <Menu
-                        TransitionProps={{
-                          style: {
-                            backgroundColor: "#1F1F1F",
-                            color: "#ffffff",
-                          },
-                        }}
-                        id="basic-menu"
-                        anchorEl={anchorEl}
-                        open={open[key]}
-                        onClose={handleClose}
-                        MenuListProps={{
-                          "aria-labelledby": "basic-button",
-                        }}
-                      >
-                        {myObject[e].map((value, myKey) => (
-                          <MenuItem
-                            key={value}
+                        <Grid item>
+                          <Button
                             sx={{
+                              color: "#ffffff",
                               fontSize: { md: "12px", lg: "17px", xl: "19px" },
-                              "&:hover": {
-                                backgroundColor: "#3F3F3F",
-                              },
+                              textTransform: "capitalize",
                             }}
-                            onClick={handleClose}
                           >
-                            {value}
-                          </MenuItem>
-                        ))}
-                      </Menu>
+                            {e}
+                            <KeyboardArrowDownIcon
+                              sx={{
+                                color: "#ffffff",
+                                fontSize: {
+                                  md: "16px",
+                                  lg: "20px",
+                                  xl: "22px",
+                                },
+                                display: { xs: "none", md: "inline" },
+                                marginLeft: "1.5px",
+                              }}
+                            />
+                            <KeyboardArrowRightIcon
+                              sx={{
+                                color: "#ffffff",
+                                fontSize: {
+                                  md: "16px",
+                                  lg: "20px",
+                                  xl: "22px",
+                                },
+                                display: { xs: "inline", md: "none" },
+                                marginLeft: "1.5px",
+                              }}
+                            />
+                          </Button>
+                        </Grid>
+                        <Grid
+                          sx={{
+                            flexDirection: "column",
+                            backgroundColor: "#1F1F1F",
+                            py: 1.5,
+                            width: "max-content",
+                            borderRadius: "8px",
+                            position: "absolute",
+                            top: { xs: "0px", lg: "45px" },
+                            left: { xs: "120px", lg: "0px" },
+                            display: open[key] ? "flex" : "none",
+                          }}
+                        >
+                          {myObject[e].map((value, myKey) => (
+                            <Grid
+                              key={myKey}
+                              sx={{
+                                zIndex: 1512320,
+                                fontSize: {
+                                  md: "12px",
+                                  lg: "17px",
+                                  xl: "19px",
+                                },
+                                "&:hover": {
+                                  backgroundColor: "#3F3F3F",
+                                },
+                                px: 1.5,
+                                py: 0.5,
+                              }}
+                            >
+                              {value}
+                            </Grid>
+                          ))}
+                        </Grid>
+                      </Grid>
                     </Grid>
                   );
                 })}

@@ -3,7 +3,8 @@ import { styled, alpha } from "@mui/material/styles";
 import SearchIcon from "@mui/icons-material/Search";
 import InputBase from "@mui/material/InputBase";
 
-const SearchBar = () => {
+const SearchBar = (props) => {
+  // const { myFunction } = props;
   const Search = styled("div")(({ theme }) => ({
     position: "relative",
     borderRadius: theme.shape.borderRadius,
@@ -74,6 +75,12 @@ const SearchBar = () => {
         <SearchIcon />
       </SearchIconWrapper>
       <StyledInputBase
+        // onFocus={() => {
+        //   myFunction(true);
+        // }}
+        // onBlur={() => {
+        //   myFunction(false);
+        // }}
         sx={{
           input: {
             "&:hover": {
