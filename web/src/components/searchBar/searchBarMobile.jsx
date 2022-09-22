@@ -1,8 +1,15 @@
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+
 import { styled, alpha } from "@mui/material/styles";
 import SearchIcon from "@mui/icons-material/Search";
 import InputBase from "@mui/material/InputBase";
-const SearchMobil = () => {
+
+import { setFocus, setBlur, setText } from "../../services/actions/searchBar";
+
+const SearchBarMobile = () => {
+  const dispatch = useDispatch();
+  const value = useSelector((state) => state.searchBar.text);
   const Search = styled("div")(({ theme }) => ({
     position: "relative",
     borderRadius: theme.shape.borderRadius,
@@ -38,6 +45,17 @@ const SearchMobil = () => {
         <SearchIcon />
       </SearchIconWrapper>
       <StyledInputBase
+        key="search"
+        value={value}
+        onFocus={() => {
+          dispatch(setFocus());
+        }}
+        onBlur={() => {
+          dispatch(setBlur());
+        }}
+        onChange={(e) => {
+          dispatch(setText(e.target.value));
+        }}
         sx={{
           input: {
             "&:hover": {
@@ -61,4 +79,4 @@ const SearchMobil = () => {
   );
 };
 
-export default SearchMobil;
+export default SearchBarMobile;
