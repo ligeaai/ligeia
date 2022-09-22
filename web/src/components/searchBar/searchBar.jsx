@@ -2,7 +2,8 @@ import React from "react";
 import { styled, alpha } from "@mui/material/styles";
 import SearchIcon from "@mui/icons-material/Search";
 import InputBase from "@mui/material/InputBase";
-const SearchInput = () => {
+
+const SearchBar = () => {
   const Search = styled("div")(({ theme }) => ({
     position: "relative",
     borderRadius: theme.shape.borderRadius,
@@ -12,7 +13,7 @@ const SearchInput = () => {
     },
     marginLeft: 0,
     width: "100%",
-    [theme.breakpoints.up("sm")]: {
+    [theme.breakpoints.up("md")]: {
       marginLeft: theme.spacing(1),
       width: "auto",
     },
@@ -27,6 +28,7 @@ const SearchInput = () => {
     alignItems: "center",
     justifyContent: "center",
   }));
+
   const StyledInputBase = styled(InputBase)(({ theme }) => ({
     color: "#ffffff",
     "& .MuiInputBase-input": {
@@ -64,7 +66,7 @@ const SearchInput = () => {
           width: "20ch",
         },
         "&:focus": {
-          width: "24ch",
+          width: "34ch",
         },
       },
     },
@@ -96,4 +98,4 @@ const SearchInput = () => {
   );
 };
 
-export default SearchInput;
+export default SearchBar;

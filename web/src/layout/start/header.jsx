@@ -26,8 +26,8 @@ import Brightness2OutlinedIcon from "@mui/icons-material/Brightness2Outlined";
 import { changeTheme } from "../../services/actions/theme";
 import { changeLanguage } from "../../services/actions/language";
 
-import SearchInput from "../../components/searchInput/SearchInput";
-import SearchMobil from "../../components/searchInput/SearchMobil";
+import SearchBar from "../../components/searchBar/searchBar";
+import SearchBarMobile from "../../components/searchBar/searchBarMobile";
 import NestedMenu from "./nestedMenu";
 
 const Header = () => {
@@ -92,7 +92,7 @@ const Header = () => {
           setSearch(false);
         }}
       >
-        <SearchMobil />
+        <SearchBarMobile />
       </Grid>
       <Grid
         container
@@ -112,27 +112,30 @@ const Header = () => {
             }}
           >
             <Grid item>
-              <MenuIcon
+              <Grid item>
+                <img src={logo} alt="logo" />
+              </Grid>
+              <Grid
+                item
                 sx={{
-                  mr: 2,
-                  color: "#ffffff",
-                  fontSize: "40px",
-                  cursor: "pointer",
-                  display: { sx: "flex", md: "none" },
+                  zIndex: "4",
                 }}
-                onClick={() => {
-                  setMenu(menu === "none" ? "flex" : "none");
-                }}
-              />
+              >
+                {/* <MenuIcon
+                  sx={{
+                    mr: 2,
+                    color: "#ffffff",
+                    fontSize: "40px",
+                    cursor: "pointer",
+                    display: { sx: "flex", md: "none" },
+                  }}
+                  onClick={() => {
+                    setMenu(menu === "none" ? "flex" : "none");
+                  }}
+                /> */}
+              </Grid>
             </Grid>
-            <Grid
-              item
-              sx={{
-                zIndex: "4",
-              }}
-            >
-              <img src={logo} alt="logo" />
-            </Grid>
+
             <Grid item>
               <Grid
                 container
@@ -254,7 +257,7 @@ const Header = () => {
                 setSearch(false);
               }}
             >
-              <SearchInput />
+              <SearchBar />
             </Grid>
             <Grid item>
               <Link
