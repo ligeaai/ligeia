@@ -115,7 +115,13 @@ const Header = () => {
               color: "#ffffff",
             }}
           >
-            <Grid item sx={{ mr: 2 }}>
+            <Grid
+              item
+              sx={{ mr: 2, cursor: "pointer" }}
+              onClick={() => {
+                history.push("/");
+              }}
+            >
               <img src={logo} alt="logo" />
             </Grid>
             <Grid
