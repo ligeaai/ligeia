@@ -23,10 +23,10 @@ const Start = () => {
             <Grid item>
               <Typography
                 sx={{
+                  textAlign: "center",
                   fontSize: { xs: "32px", md: "48px", xl: "63px" },
                   fontWeight: "800",
                   color: "#ffffff",
-                  p: 2,
                 }}
               >
                 Advancing AI for your assets

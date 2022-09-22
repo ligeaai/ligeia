@@ -38,26 +38,23 @@ const SearchBar = () => {
       width: "100%",
       [theme.breakpoints.up("xs")]: {
         width: "0ch",
-        "&:focus": {
-          width: "10ch",
-        },
       },
       [theme.breakpoints.up("sm")]: {
         width: "8ch",
         "&:hover": {
-          width: "9.5ch",
+          width: "10ch",
         },
         "&:focus": {
-          width: "11ch",
+          width: "14ch",
         },
       },
       [theme.breakpoints.up("lg")]: {
         width: "12ch",
         "&:hover": {
-          width: "14ch",
+          width: "16ch",
         },
         "&:focus": {
-          width: "18ch",
+          width: "28ch",
         },
       },
       [theme.breakpoints.up("xl")]: {

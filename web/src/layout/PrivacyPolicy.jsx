@@ -40,6 +40,7 @@ const PrivacyPolicy = () => {
         PaperProps={{
           style: {
             overflow: "visible",
+            marginTop: "60px",
           },
         }}
       >

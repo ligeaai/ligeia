@@ -29,6 +29,8 @@ import { changeLanguage } from "../../services/actions/language";
 import SearchBar from "../../components/searchBar/searchBar";
 import SearchBarMobile from "../../components/searchBar/searchBarMobile";
 import NestedMenu from "./nestedMenu";
+import { useEffect } from "react";
+import { breakpoints } from "@mui/system";
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -64,6 +66,7 @@ const Header = () => {
     setAnchorEl(null);
     setOpen([false, false, false, false, false, false, false]);
   };
+
   var myObject = {
     Product: ["Product 1", "Product 2"],
     Learn: ["Learn 1", "Learn 2", "Learn 3", "Learn 4"],
@@ -72,6 +75,7 @@ const Header = () => {
     Partners: ["Partners 1", "Partners 2", "Partners 3", "Partners 4"],
     Contact: ["Contact 1", "Contact 2"],
   };
+
   return (
     <Grid
       sx={{
@@ -111,29 +115,26 @@ const Header = () => {
               color: "#ffffff",
             }}
           >
-            <Grid item>
-              <Grid item>
-                <img src={logo} alt="logo" />
-              </Grid>
-              <Grid
-                item
+            <Grid item sx={{ mr: 2 }}>
+              <img src={logo} alt="logo" />
+            </Grid>
+            <Grid
+              item
+              sx={{
+                zIndex: "4",
+              }}
+            >
+              <MenuIcon
                 sx={{
-                  zIndex: "4",
+                  color: "#ffffff",
+                  fontSize: "40px",
+                  cursor: "pointer",
+                  display: { sx: "flex", md: "none" },
                 }}
-              >
-                {/* <MenuIcon
-                  sx={{
-                    mr: 2,
-                    color: "#ffffff",
-                    fontSize: "40px",
-                    cursor: "pointer",
-                    display: { sx: "flex", md: "none" },
-                  }}
-                  onClick={() => {
-                    setMenu(menu === "none" ? "flex" : "none");
-                  }}
-                /> */}
-              </Grid>
+                onClick={() => {
+                  setMenu(menu === "none" ? "flex" : "none");
+                }}
+              />
             </Grid>
 
             <Grid item>
@@ -246,17 +247,7 @@ const Header = () => {
               color: "#ffffff",
             }}
           >
-            <Grid
-              item
-              onFocus={() => {
-                console.log("sadsasd");
-                setSearch(true);
-              }}
-              onBlur={() => {
-                console.log("sads");
-                setSearch(false);
-              }}
-            >
+            <Grid item>
               <SearchBar />
             </Grid>
             <Grid item>
@@ -272,7 +263,7 @@ const Header = () => {
                 Sign in
               </Link>
             </Grid>
-            <Grid item>
+            <Grid item id="settingsMenu">
               <Button
                 sx={{
                   color: "#ffffff",
@@ -293,28 +284,27 @@ const Header = () => {
                   display: settingsMenu ? "flex" : "none",
                   position: "absolute",
                   right: { xs: "16px", lg: "32px", xl: "48px" },
-                  paddingTop: "12px",
                 }}
               >
                 <NestedMenu
                   dict={[
                     {
                       icon: <Brightness2OutlinedIcon />,
-                      fixedText: "Appearance : ",
+                      fixedText: "Appearance",
                       text: theme,
                       subtable: ["dark", "light"],
                       functions: themeSelect,
                     },
                     {
                       icon: <TranslateIcon />,
-                      fixedText: "Language : ",
+                      fixedText: "Language",
                       text: "English",
                       subtable: ["English"],
                       functions: langSelect,
                     },
                     {
                       icon: <LanguageIcon />,
-                      fixedText: "Location : ",
+                      fixedText: "Location",
                       text: "Canada",
                       subtable: ["Canada"],
                       functions: locationSelect,
