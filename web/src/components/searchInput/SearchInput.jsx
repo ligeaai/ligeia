@@ -28,14 +28,12 @@ const SearchInput = () => {
     justifyContent: "center",
   }));
   const StyledInputBase = styled(InputBase)(({ theme }) => ({
-    color: "#ffffffA8",
+    color: "#ffffff",
     "& .MuiInputBase-input": {
       padding: theme.spacing(1, 1, 1, 0),
-      // vertical padding + font size from searchIcon
       paddingLeft: `calc(1em + ${theme.spacing(4)})`,
       transition: theme.transitions.create("width"),
       width: "100%",
-
       [theme.breakpoints.up("xs")]: {
         width: "0ch",
         "&:focus": {
@@ -44,18 +42,27 @@ const SearchInput = () => {
       },
       [theme.breakpoints.up("sm")]: {
         width: "8ch",
+        "&:hover": {
+          width: "9.5ch",
+        },
         "&:focus": {
           width: "11ch",
         },
       },
       [theme.breakpoints.up("lg")]: {
         width: "12ch",
+        "&:hover": {
+          width: "14ch",
+        },
         "&:focus": {
           width: "18ch",
         },
       },
       [theme.breakpoints.up("xl")]: {
         width: "16ch",
+        "&:hover": {
+          width: "20ch",
+        },
         "&:focus": {
           width: "24ch",
         },
@@ -68,6 +75,20 @@ const SearchInput = () => {
         <SearchIcon />
       </SearchIconWrapper>
       <StyledInputBase
+        sx={{
+          input: {
+            "&:hover": {
+              "&::placeholder": {
+                opacity: 1,
+              },
+            },
+            "&:focus": {
+              "&::placeholder": {
+                opacity: 1,
+              },
+            },
+          },
+        }}
         placeholder="Search…"
         inputProps={{ "aria-label": "search" }}
       />

@@ -12,8 +12,8 @@ import CodeList from '../pages/code_list';
 import DatabasePage from '../pages/code_list'
 import FailureDirectory from '../pages/failureDirectory/failureDirectory'
 import Layout from '../layout/layout';
-import Login from '../pages/login/login/Login'
-import LoginLayout from '../pages/login/LoginLayout'
+import Login from '../pages/authorization/login/login'
+import LoginLayout from '../layout/start/Start'
 import Monitoring from '../pages/monitoring/monitoring'
 import NewPassword from '../pages/login/newPassword/newPassword';
 import PassRecovery from '../pages/login/passRecovery/PassRecovery'
@@ -49,7 +49,7 @@ const AppRouter1 = () => {
                     </Route>
                 </Route>
                 <Route exact path='home' element={<Start />} />
-                <Route exact path='/login' element={<LoginLayout />} >
+                <Route exact path='/login'>
                     <Route path='' element={<Login />} />
                     <Route path='passrecovery' element={<PassRecovery />} />
                     <Route path='securecode' element={<SecureCodePage />} />

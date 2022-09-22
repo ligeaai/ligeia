@@ -14,10 +14,11 @@ const Footer = () => {
     <Box
       sx={{
         width: "100%",
-        position: "fixed",
         bottom: "0",
-        py: 3,
+        pt: 3,
+        pb: 0,
         px: { xs: 2, lg: 4, xl: 6 },
+        height: { xs: "150px", sm: "100px" },
       }}
     >
       <Grid

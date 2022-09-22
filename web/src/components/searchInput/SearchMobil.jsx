@@ -24,7 +24,7 @@ const SearchMobil = () => {
     justifyContent: "center",
   }));
   const StyledInputBase = styled(InputBase)(({ theme }) => ({
-    color: "#ffffffA8",
+    color: "#ffffff",
     "& .MuiInputBase-input": {
       padding: theme.spacing(1, 1, 1, 0),
       // vertical padding + font size from searchIcon
@@ -38,6 +38,20 @@ const SearchMobil = () => {
         <SearchIcon />
       </SearchIconWrapper>
       <StyledInputBase
+        sx={{
+          input: {
+            "&:hover": {
+              "&::placeholder": {
+                opacity: 1,
+              },
+            },
+            "&:focus": {
+              "&::placeholder": {
+                opacity: 1,
+              },
+            },
+          },
+        }}
         fullWidth
         autoFocus
         placeholder="Search…"
