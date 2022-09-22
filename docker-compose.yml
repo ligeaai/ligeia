@@ -68,7 +68,7 @@ services:
     networks:
       - net
   zookeeper:
-    image: confluentinc/cp-zookeeper:6.2.0
+    image: confluentinc/cp-zookeeper:5.3.1
     hostname: zookeeper
     container_name: zookeeper
     ports:
@@ -79,63 +79,42 @@ services:
     networks:
       - net
   broker:
-    image: confluentinc/cp-server:6.2.0
+    image: confluentinc/cp-enterprise-kafka:5.3.1
     hostname: broker
     container_name: broker
     depends_on:
       - zookeeper
     ports:
       - "9092:9092"
-      - "9101:9101"
     environment:
       KAFKA_BROKER_ID: 1
-      KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:2181'
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
       KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://broker:29092,PLAINTEXT_HOST://localhost:9092
-      KAFKA_METRIC_REPORTERS: io.confluent.metrics.reporter.ConfluentMetricsReporter
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
       KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
-      KAFKA_CONFLUENT_LICENSE_TOPIC_REPLICATION_FACTOR: 1
-      KAFKA_CONFLUENT_BALANCER_TOPIC_REPLICATION_FACTOR: 1
-      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
-      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
-      KAFKA_JMX_PORT: 9101
-      KAFKA_JMX_HOSTNAME: localhost
-      KAFKA_CONFLUENT_SCHEMA_REGISTRY_URL: http://schema-registry:8081
+      KAFKA_METRIC_REPORTERS: io.confluent.metrics.reporter.ConfluentMetricsReporter
       CONFLUENT_METRICS_REPORTER_BOOTSTRAP_SERVERS: broker:29092
+      CONFLUENT_METRICS_REPORTER_ZOOKEEPER_CONNECT: zookeeper:2181
       CONFLUENT_METRICS_REPORTER_TOPIC_REPLICAS: 1
       CONFLUENT_METRICS_ENABLE: 'true'
       CONFLUENT_SUPPORT_CUSTOMER_ID: 'anonymous'
-    networks:
-      - net
-  schema-registry:
-    image: confluentinc/cp-schema-registry:6.2.0
-    hostname: schema-registry
-    container_name: schema-registry
-    depends_on:
-      - broker
-    ports:
-      - "8082:8082"
-    environment:
-      SCHEMA_REGISTRY_HOST_NAME: schema-registry
-      SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: 'broker:29092'
-      SCHEMA_REGISTRY_LISTENERS: http://0.0.0.0:8082
+      KAFKA_JMX_HOSTNAME: localhost
     networks:
       - net
   control-center:
-    image: confluentinc/cp-enterprise-control-center:6.2.0
+    image: confluentinc/cp-enterprise-control-center:5.3.1
     hostname: control-center
     container_name: control-center
     depends_on:
+      - zookeeper
       - broker
-      - schema-registry
-      - connect
     ports:
       - "9021:9021"
     environment:
       CONTROL_CENTER_BOOTSTRAP_SERVERS: 'broker:29092'
-      CONTROL_CENTER_CONNECT_CONNECT-DEFAULT_CLUSTER: 'connect:8083'
-      CONTROL_CENTER_SCHEMA_REGISTRY_URL: "http://schema-registry:8082"
+      CONTROL_CENTER_ZOOKEEPER_CONNECT: 'zookeeper:2181'
+      CONTROL_CENTER_CONNECT_CLUSTER: 'connect:8088'
       CONTROL_CENTER_REPLICATION_FACTOR: 1
       CONTROL_CENTER_INTERNAL_TOPICS_PARTITIONS: 1
       CONTROL_CENTER_MONITORING_INTERCEPTOR_TOPIC_PARTITIONS: 1
@@ -143,36 +122,6 @@ services:
       PORT: 9021
     networks:
       - net
-
-  connect:
-    image: docker.io/debezium/connect:latest
-    container_name: connect
-    hostname: connect
-    expose:
-      - 8081
-      - 8083
-    ports:
-      - "8081:8081"
-      - "8083:8083"
-    volumes:
-      - 'connect_data:/kafka/connect'
-    networks:
-      - net
-    environment:
-      - BOOTSTRAP_SERVERS=broker:29092
-      - GROUP_ID=1
-      - CONFIG_STORAGE_TOPIC=connect-cassandra-config
-      - OFFSET_STORAGE_TOPIC=connect-cassandra-offset
-      - KEY_CONVERTER=org.apache.kafka.connect.json.JsonConverter
-      - VALUE_CONVERTER=org.apache.kafka.connect.json.JsonConverter
-      - INTERNAL_KEY_CONVERTER=org.apache.kafka.connect.json.JsonConverter
-      - INTERNAL_VALUE_CONVERTER=org.apache.kafka.connect.json.JsonConverter
-      - ADVERTISED_HOST_NAME=connect
-      - ADVERTISED_PORT=8081
-    depends_on:
-      - broker
-      - zookeeper
-
   cassandra:
     container_name: cassandra
     hostname: 'cassandra'
@@ -194,6 +143,38 @@ services:
     depends_on:
       - broker
       - zookeeper
+
+  connect:
+    build: ./
+    container_name: connect
+    hostname: connect
+    ports:
+      - "8088:8088"
+    depends_on:
+      - broker
+    environment:
+      CONNECT_BOOTSTRAP_SERVERS: broker:29092
+      CONNECT_GROUP_ID: "connect-group"
+      CONNECT_CONFIG_STORAGE_TOPIC: "connect-config-storage"
+      CONNECT_OFFSET_STORAGE_TOPIC: "connect-offset-storage"
+      CONNECT_STATUS_STORAGE_TOPIC: "connect-status-storage"
+      CONNECT_KEY_CONVERTER: "org.apache.kafka.connect.storage.StringConverter"
+      CONNECT_VALUE_CONVERTER: "org.apache.kafka.connect.converters.ByteArrayConverter"
+      CONNECT_INTERNAL_KEY_CONVERTER: "org.apache.kafka.connect.json.JsonConverter"
+      CONNECT_INTERNAL_VALUE_CONVERTER: "org.apache.kafka.connect.json.JsonConverter"
+      CONNECT_PLUGIN_PATH: "/usr/share/confluent-hub-components"
+      CONNECT_REST_ADVERTISED_HOST_NAME: "connect"
+      CONNECT_REST_HOST_NAME: "connect"
+      CONNECT_REST_PORT: "8088"
+      CONNECT_CONFIG_STORAGE_REPLICATION_FACTOR: 1
+      CONNECT_OFFSET_STORAGE_REPLICATION_FACTOR: 1
+      CONNECT_STATUS_STORAGE_REPLICATION_FACTOR: 1
+      CONNECT_LOG4J_ROOT_LOGLEVEL: "INFO"
+      CLASSPATH: /usr/share/java/monitoring-interceptors/monitoring-interceptors-5.1.1.jar
+      CONNECT_PRODUCER_INTERCEPTOR_CLASSES: "io.confluent.monitoring.clients.interceptor.MonitoringProducerInterceptor"
+      CONNECT_CONSUMER_INTERCEPTOR_CLASSES: "io.confluent.monitoring.clients.interceptor.MonitoringConsumerInterceptor"
+    networks:
+      - net
 networks:
   net:
     driver: bridge
