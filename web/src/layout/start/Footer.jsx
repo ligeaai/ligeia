@@ -7,17 +7,18 @@ import logo from "../../assets/Images/socialmedia/logo.png";
 import PinterestIcon from "@mui/icons-material/Pinterest";
 import TwitterIcon from "@mui/icons-material/Twitter";
 
-import PrivacyPolicy from "../PrivacyPolicy";
+import PrivacyPolicy from "../privacyPolicy";
 
 const Footer = () => {
   return (
     <Box
       sx={{
         width: "100%",
-        position: "fixed",
         bottom: "0",
-        py: 3,
+        pt: 3,
+        pb: 0,
         px: { xs: 2, lg: 4, xl: 6 },
+        height: { xs: "150px", sm: "100px" },
       }}
     >
       <Grid

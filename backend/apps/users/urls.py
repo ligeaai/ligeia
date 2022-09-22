@@ -15,12 +15,10 @@ from .views import (
     UserEmailConfirmationStatusView,
     UserModelViewSet,
     UserDetails,
-<<<<<<< HEAD
     FacebookLogin,
     GoogleLogin,
-=======
     ResetNewPassword,
->>>>>>> b2648357483638074c8b6e1e17e87bdf83b25cc8
+    
 )
 routers = DefaultRouter()
 routers.register("users", UserModelViewSet, basename="users")

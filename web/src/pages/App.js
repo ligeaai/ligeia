@@ -1,15 +1,15 @@
 import React from 'react';
-
+import { useSelector } from "react-redux";
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 
 import AppRouter from '../routers/AppRouter'
 
 
-function App() {
-
+const App = () => {
+    const theme = useSelector((state) => state.theme.theme);
     const darkTheme = createTheme({
         palette: {
-            mode: 'light',
+            mode: theme,
         },
     });
     return (

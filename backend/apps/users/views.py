@@ -25,10 +25,16 @@ from .serializers import (
     UserModelSerializer,
     ResetNewPasswordSerializer,
 )
-
+#### REST-AUTH
+from django.urls import include, path, reverse
+from allauth.socialaccount.providers.oauth2.client import OAuth2Client
+from allauth.socialaccount.providers.facebook.views import FacebookOAuth2Adapter
+from allauth.socialaccount.providers.google.views import GoogleOAuth2Adapter
+from dj_rest_auth.registration.views import SocialLoginView
+import urllib.parse
+from django.shortcuts import redirect
 from utils import AtomicMixin
 from rest_framework.viewsets import ModelViewSet
-
 from .models import User
 
 logger = logging.getLogger(__name__)
@@ -185,11 +191,7 @@ class ResetNewPassword(generics.GenericAPIView):
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-# class logout(APIView):
-#     def get(self, request):
-#         request.user.auth_token.delete()
-#         auth.logout(request)
-#         return Response("successfully deleted")
+
 
 
 class UserConfirmEmailView(AtomicMixin, GenericAPIView):
@@ -220,24 +222,6 @@ class UserEmailConfirmationStatusView(generics.GenericAPIView):
         user = self.request.user
         return Response({"status": user.confirmed_email}, status=status.HTTP_200_OK)
 
-
-
-
-
-
-
-
-
-
-
-#### REST-AUTH
-from django.urls import include, path, reverse
-from allauth.socialaccount.providers.oauth2.client import OAuth2Client
-from allauth.socialaccount.providers.facebook.views import FacebookOAuth2Adapter
-from allauth.socialaccount.providers.google.views import GoogleOAuth2Adapter
-from dj_rest_auth.registration.views import SocialLoginView
-import urllib.parse
-from django.shortcuts import redirect
 
 class FacebookLogin(SocialLoginView):
     adapter_class = FacebookOAuth2Adapter

@@ -1,31 +1,32 @@
 import React from "react";
-import { Grid, Box, Typography } from "@mui/material";
+import { Grid, Box } from "@mui/material";
 
 import headBackground from "../../assets/backgorunds/image.jpeg";
 
 import Header from "./header";
 import Footer from "./Footer";
 
-const Start = () => {
+function Start(props) {
   return (
-    <Box>
-      <img
-        src={headBackground}
-        alt="bg"
-        style={{
-          width: "100%",
-          height: "100%",
-          position: "absolute",
-          zIndex: "-5",
-          top: "0",
-        }}
-      />
-      <Box>
-        <Header />
-        <Footer />
-      </Box>
+    <Box
+      sx={{
+        backgroundImage: `url(${headBackground})`,
+        backgroundSize: "contain",
+      }}
+    >
+      <Grid container>
+        <Grid item xs={12}>
+          <Header />
+        </Grid>
+        <Grid item xs={12}>
+          {props.Element}
+        </Grid>
+        <Grid item xs={12}>
+          <Footer />
+        </Grid>
+      </Grid>
     </Box>
   );
-};
+}
 
 export default Start;

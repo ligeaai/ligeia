@@ -1,8 +1,11 @@
-import json
+import imp
+from rest_framework.response import Response
+from rest_framework import status
 from rest_framework import serializers
 from django.contrib.auth import authenticate
 from django.contrib.auth import get_user_model
 from django.contrib.auth.password_validation import validate_password
+from django.core.exceptions import ObjectDoesNotExist
 from django.utils.translation import gettext_lazy as _
 import uuid
 # from .models import User
@@ -123,7 +126,7 @@ class ForgetPasswordSerializer(serializers.Serializer):
             token = str(uuid.uuid4())
             user_obj.forget_password_token = self.validated_data.get("forget_password_token",token)
             user_obj.save()
-            #send_forget_password_mail(user_obj, token)
+            send_forget_password_mail(user_obj, token)
             return user_obj
         else:
             raise serializers.ValidationError(
@@ -139,8 +142,21 @@ class ResetNewPasswordSerializer(serializers.Serializer):
         model = User
         fields = ['__all__']
     def save(self, instance):
-        instance = User.objects.get(forget_password_token=instance["token"])
-        password = self.validated_data["password"]
-        instance.set_password(password)
-        instance.save()
-        return instance
+        try:
+            # The request sent with the default value has been checked as it may create vulnerability.
+            if instance['token'] == 'False':
+                raise serializers.ValidationError(
+                {"error": "this link has expired please send new request"})
+            instance = User.objects.get(forget_password_token=instance["token"])
+            password = self.validated_data["password"]
+            instance.set_password(password)
+             # generate and save new token to deactivate old token
+            instance.forget_password_token = self.validated_data.get("forget_password_token",'False')
+            instance.save()
+            return instance
+        except ObjectDoesNotExist:
+            raise serializers.ValidationError(
+                {"error": "this link has expired please send new request"}
+            )
+        
+       

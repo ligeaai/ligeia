@@ -1,5 +1,5 @@
 import React from "react";
-
+import { useDispatch, useSelector } from "react-redux";
 import {
   Box,
   Button,
@@ -8,21 +8,36 @@ import {
   Menu,
   MenuItem,
   Typography,
-  TextField,
+  Collapse,
+  List,
+  ListItem,
 } from "@mui/material";
+
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 
 import LanguageIcon from "@mui/icons-material/Language";
 import history from "../../routers/history";
 import MenuIcon from "@mui/icons-material/Menu";
 import logo from "../../assets/Images/header/logo1.png";
+import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
+import TranslateIcon from "@mui/icons-material/Translate";
+import Brightness2OutlinedIcon from "@mui/icons-material/Brightness2Outlined";
 
-import SearchInput from "../../components/searchInput/SearchInput";
-import SearchMobil from "../../components/searchInput/SearchMobil";
+import { changeTheme } from "../../services/actions/theme";
+import { changeLanguage } from "../../services/actions/language";
+
+import SearchBar from "../../components/searchBar/searchBar";
+import SearchBarMobile from "../../components/searchBar/searchBarMobile";
+import NestedMenu from "./nestedMenu";
+
 const Header = () => {
+  const dispatch = useDispatch();
+  const theme = useSelector((state) => state.theme.theme);
+  const lang = useSelector((state) => state.lang.lang);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [search, setSearch] = React.useState(false);
   const [menu, setMenu] = React.useState("none");
+  const [settingsMenu, setSettingsMenu] = React.useState(null);
   const [open, setOpen] = React.useState([
     false,
     false,
@@ -33,6 +48,13 @@ const Header = () => {
     false, //language selector
   ]);
 
+  const themeSelect = (val) => {
+    dispatch(changeTheme(val));
+  };
+  const langSelect = (val) => {
+    dispatch(changeLanguage(val));
+  };
+  const locationSelect = (val) => {};
   const handleClick = (event, key) => {
     setAnchorEl(event.currentTarget);
     open[key] = true;
@@ -41,9 +63,6 @@ const Header = () => {
   const handleClose = () => {
     setAnchorEl(null);
     setOpen([false, false, false, false, false, false, false]);
-  };
-  const onFocus = () => {
-    setSearch(true);
   };
   var myObject = {
     Product: ["Product 1", "Product 2"],
@@ -58,7 +77,7 @@ const Header = () => {
       sx={{
         py: 3,
         px: { xs: 2, lg: 4, xl: 6 },
-        height: "100px",
+        height: "150px",
       }}
     >
       <Grid
@@ -73,7 +92,7 @@ const Header = () => {
           setSearch(false);
         }}
       >
-        <SearchMobil />
+        <SearchBarMobile />
       </Grid>
       <Grid
         container
@@ -93,27 +112,30 @@ const Header = () => {
             }}
           >
             <Grid item>
-              <MenuIcon
+              <Grid item>
+                <img src={logo} alt="logo" />
+              </Grid>
+              <Grid
+                item
                 sx={{
-                  mr: 2,
-                  color: "#ffffff",
-                  fontSize: "40px",
-                  cursor: "pointer",
-                  display: { sx: "flex", md: "none" },
+                  zIndex: "4",
                 }}
-                onClick={() => {
-                  setMenu(menu === "none" ? "flex" : "none");
-                }}
-              />
+              >
+                {/* <MenuIcon
+                  sx={{
+                    mr: 2,
+                    color: "#ffffff",
+                    fontSize: "40px",
+                    cursor: "pointer",
+                    display: { sx: "flex", md: "none" },
+                  }}
+                  onClick={() => {
+                    setMenu(menu === "none" ? "flex" : "none");
+                  }}
+                /> */}
+              </Grid>
             </Grid>
-            <Grid
-              item
-              sx={{
-                zIndex: "4",
-              }}
-            >
-              <img src={logo} alt="logo" />
-            </Grid>
+
             <Grid item>
               <Grid
                 container
@@ -158,6 +180,7 @@ const Header = () => {
                         sx={{
                           color: "#ffffff",
                           fontSize: { md: "12px", lg: "17px", xl: "19px" },
+                          textTransform: "capitalize",
                         }}
                         id="basic-button"
                         aria-controls={open[key] ? "basic-menu" : undefined}
@@ -170,12 +193,19 @@ const Header = () => {
                         {e}
                         <KeyboardArrowDownIcon
                           sx={{
-                            color: "white",
+                            color: "#ffffff",
                             fontSize: { md: "16px", lg: "20px", xl: "22px" },
+                            marginLeft: "1.5px",
                           }}
                         />
                       </Button>
                       <Menu
+                        TransitionProps={{
+                          style: {
+                            backgroundColor: "#1F1F1F",
+                            color: "#ffffff",
+                          },
+                        }}
                         id="basic-menu"
                         anchorEl={anchorEl}
                         open={open[key]}
@@ -189,6 +219,9 @@ const Header = () => {
                             key={value}
                             sx={{
                               fontSize: { md: "12px", lg: "17px", xl: "19px" },
+                              "&:hover": {
+                                backgroundColor: "#3F3F3F",
+                              },
                             }}
                             onClick={handleClose}
                           >
@@ -215,7 +248,8 @@ const Header = () => {
           >
             <Grid
               item
-              onClick={() => {
+              onFocus={() => {
+                console.log("sadsasd");
                 setSearch(true);
               }}
               onBlur={() => {
@@ -223,7 +257,7 @@ const Header = () => {
                 setSearch(false);
               }}
             >
-              <SearchInput />
+              <SearchBar />
             </Grid>
             <Grid item>
               <Link
@@ -243,34 +277,51 @@ const Header = () => {
                 sx={{
                   color: "#ffffff",
                 }}
-                id="basic-button"
-                aria-controls={open[6] ? "basic-menu" : undefined}
-                aria-haspopup="true"
-                aria-expanded={open[6] ? "true" : undefined}
                 onClick={(e) => {
-                  handleClick(e, 6);
+                  setSettingsMenu(!settingsMenu);
                 }}
               >
-                <LanguageIcon
+                <SettingsOutlinedIcon
                   sx={{ width: { md: "21px", lg: "27px", xl: "30px" } }}
                 />
                 <KeyboardArrowDownIcon
                   sx={{ fontSize: { md: "15px", lg: "21px", xl: "24" } }}
                 />
               </Button>
-              <Menu
-                id="basic-menu"
-                anchorEl={anchorEl}
-                open={open[6]}
-                onClose={handleClose}
-                MenuListProps={{
-                  "aria-labelledby": "basic-button",
+              <Box
+                sx={{
+                  display: settingsMenu ? "flex" : "none",
+                  position: "absolute",
+                  right: { xs: "16px", lg: "32px", xl: "48px" },
+                  paddingTop: "12px",
                 }}
               >
-                <MenuItem onClick={handleClose}>Language 1</MenuItem>
-                <MenuItem onClick={handleClose}>Language 2</MenuItem>
-                <MenuItem onClick={handleClose}>Language 3</MenuItem>
-              </Menu>
+                <NestedMenu
+                  dict={[
+                    {
+                      icon: <Brightness2OutlinedIcon />,
+                      fixedText: "Appearance : ",
+                      text: theme,
+                      subtable: ["dark", "light"],
+                      functions: themeSelect,
+                    },
+                    {
+                      icon: <TranslateIcon />,
+                      fixedText: "Language : ",
+                      text: "English",
+                      subtable: ["English"],
+                      functions: langSelect,
+                    },
+                    {
+                      icon: <LanguageIcon />,
+                      fixedText: "Location : ",
+                      text: "Canada",
+                      subtable: ["Canada"],
+                      functions: locationSelect,
+                    },
+                  ]}
+                />
+              </Box>
             </Grid>
           </Grid>
         </Grid>

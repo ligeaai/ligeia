@@ -46,11 +46,11 @@ const PrivacyPolicy = () => {
         <DialogTitle sx={{ paddingY: "0px" }}>
           <Box
             sx={{
-              background: "linear-gradient(to right, #000000, #000000DE)",
+              background: "linear-gradient(to right, #212121, #616161)",
               color: "#ffffff",
               padding: 2,
               borderRadius: "10px",
-              boxShadow: "2px 2px 8px 0 black",
+              boxShadow: 8,
               position: "relative",
               top: "-30px",
             }}
