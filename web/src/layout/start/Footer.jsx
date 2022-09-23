@@ -7,7 +7,7 @@ import logo from "../../assets/Images/socialmedia/logo.png";
 import PinterestIcon from "@mui/icons-material/Pinterest";
 import TwitterIcon from "@mui/icons-material/Twitter";
 
-import PrivacyPolicy from "../PrivacyPolicy";
+import PrivacyPolicy from "../privacyPolicy";
 
 const Footer = () => {
   return (

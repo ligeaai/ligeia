@@ -19,6 +19,7 @@ import InputBase from "@mui/material/InputBase";
 
 import { changeTheme } from "../../services/actions/theme";
 import { changeLanguage } from "../../services/actions/language";
+import { getAllCountries } from "../../services/api/countries";
 
 import { setFocus, setBlur, setText } from "../../services/actions/searchBar";
 import SearchBarMobile from "../../components/searchBar/searchBarMobile";
@@ -88,6 +89,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     },
   },
 }));
+
 const Header = () => {
   const dispatch = useDispatch();
   const value = useSelector((state) => state.searchBar.text);
@@ -105,6 +107,20 @@ const Header = () => {
     false,
   ]);
   var openValid = [false, false, false, false, false, false];
+
+  window.addEventListener("click", function (e) {
+    // e.path.forEach((val) => {
+    //   if (val.id === "settingsMenu") {
+    //   } else {
+    //     setSettingsMenu(false);
+    //   }
+    // });
+    if (document.getElementById("settingsMenu").contains(e.target)) {
+      console.log(e.target);
+    } else {
+      setSettingsMenu(false);
+    }
+  });
 
   const themeSelect = (val) => {
     dispatch(changeTheme(val));
@@ -180,6 +196,12 @@ const Header = () => {
               sx={{
                 ml: 2,
               }}
+              onMouseEnter={() => {
+                setMenu("flex");
+              }}
+              onMouseLeave={() => {
+                setMenu("none");
+              }}
             >
               <MenuIcon
                 sx={{
@@ -188,139 +210,139 @@ const Header = () => {
                   cursor: "pointer",
                   display: { sx: "flex", md: "none" },
                 }}
-                onClick={() => {
-                  setMenu(menu === "none" ? "flex" : "none");
-                }}
               />
-            </Grid>
 
-            <Grid item>
-              <Grid
-                container
-                sx={{
-                  borderRadius: "10px",
-                  ml: 2,
-                  typography: {
-                    xs: {
-                      display: `${menu}`,
-                      boxShadow: "0px 0px 4px 1.2px #888888",
-                      padding: "10px",
-                      flexDirection: "column",
-                      top: "80px",
-                      left: "0px",
-                      backgroundColor: "#0000008A",
-                      position: "absolute",
-                      width: "max-content",
-                    },
-                    md: {
-                      display: "flex",
-                      boxShadow: "none",
-                      padding: "0px",
-                      top: "0px",
-                      flexDirection: "row",
-                      backgroundColor: "inherit",
-                      position: "relative",
-                      width: "auto",
-                    },
-                  },
-                }}
-              >
-                {Object.keys(myObject).map((e, key) => {
-                  return (
-                    <Grid
-                      key={key}
-                      item
-                      id={key}
-                      sx={{
-                        cursor: "pointer",
-                        zIndex: "3",
-                        color: "#ffffff",
+              <Grid item>
+                <Grid
+                  container
+                  sx={{
+                    borderRadius: "10px",
+                    ml: 2,
+                    typography: {
+                      xs: {
+                        display: `${menu}`,
+                        boxShadow: "0px 0px 4px 1.2px #888888",
+                        flexDirection: "column",
+                        left: "0px",
+                        backgroundColor: "#0000008A",
+                        position: "absolute",
+                        width: "125px",
+                      },
+                      md: {
+                        display: "flex",
+                        boxShadow: "none",
+                        flexDirection: "row",
+                        backgroundColor: "inherit",
                         position: "relative",
-                      }}
-                      onMouseEnter={() => {
-                        handleClick(key);
-                      }}
-                      onMouseLeave={() => {
-                        handleClose(key);
-                      }}
-                    >
+                        width: "auto",
+                      },
+                    },
+                  }}
+                >
+                  {Object.keys(myObject).map((e, key) => {
+                    return (
                       <Grid
-                        container
-                        sx={{ flexDirection: "column", alignItems: "center" }}
+                        key={key}
+                        item
+                        id={key}
+                        sx={{
+                          cursor: "pointer",
+                          width: { xs: "125px", sm: "auto" },
+                          color: "#ffffff",
+                          position: "relative",
+                        }}
+                        onMouseEnter={() => {
+                          handleClick(key);
+                        }}
+                        onMouseLeave={() => {
+                          handleClose(key);
+                        }}
                       >
-                        <Grid item>
-                          <Button
-                            sx={{
-                              color: "#ffffff",
-                              fontSize: { md: "12px", lg: "17px", xl: "19px" },
-                              textTransform: "capitalize",
-                            }}
-                          >
-                            {e}
-                            <KeyboardArrowDownIcon
-                              sx={{
-                                color: "#ffffff",
-                                fontSize: {
-                                  md: "16px",
-                                  lg: "20px",
-                                  xl: "22px",
-                                },
-                                display: { xs: "none", md: "inline" },
-                                marginLeft: "1.5px",
-                              }}
-                            />
-                            <KeyboardArrowRightIcon
-                              sx={{
-                                color: "#ffffff",
-                                fontSize: {
-                                  md: "16px",
-                                  lg: "20px",
-                                  xl: "22px",
-                                },
-                                display: { xs: "inline", md: "none" },
-                                marginLeft: "1.5px",
-                              }}
-                            />
-                          </Button>
-                        </Grid>
                         <Grid
+                          container
                           sx={{
                             flexDirection: "column",
-                            backgroundColor: "#1F1F1F",
-                            py: 1.5,
-                            width: "max-content",
-                            borderRadius: "8px",
-                            position: "absolute",
-                            top: { xs: "0px", lg: "45px" },
-                            left: { xs: "120px", lg: "0px" },
-                            display: open[key] ? "flex" : "none",
+                            alignItems: "center",
                           }}
                         >
-                          {myObject[e].map((value, myKey) => (
-                            <Grid
-                              key={myKey}
+                          <Grid item sx={{ width: "100%" }}>
+                            <Button
                               sx={{
-                                zIndex: 1512320,
+                                color: "#ffffff",
+                                width: "100%",
                                 fontSize: {
                                   md: "12px",
                                   lg: "17px",
                                   xl: "19px",
                                 },
-                                "&:hover": {
-                                  backgroundColor: "#3F3F3F",
-                                },
-                                px: 1.5,
-                                py: 0.5,
+                                textTransform: "capitalize",
                               }}
                             >
-                              {value}
-                            </Grid>
-                          ))}
+                              {e}
+                              <KeyboardArrowDownIcon
+                                sx={{
+                                  color: "#ffffff",
+                                  fontSize: {
+                                    md: "16px",
+                                    lg: "20px",
+                                    xl: "22px",
+                                  },
+                                  display: { xs: "none", md: "inline" },
+                                  marginLeft: "1.5px",
+                                }}
+                              />
+                              <KeyboardArrowRightIcon
+                                sx={{
+                                  color: "#ffffff",
+                                  fontSize: {
+                                    md: "16px",
+                                    lg: "20px",
+                                    xl: "22px",
+                                  },
+                                  display: { xs: "inline", md: "none" },
+                                  marginLeft: "1.5px",
+                                }}
+                              />
+                            </Button>
+                          </Grid>
+                          <Grid
+                            sx={{
+                              flexDirection: "column",
+                              backgroundColor: "#1F1F1F",
+                              py: 1.5,
+                              width: "max-content",
+                              borderRadius: "8px",
+                              position: "absolute",
+                              top: { xs: "0px", md: "30px", lg: "45px" },
+                              left: { xs: "125px", md: "0px" },
+                              display: open[key] ? "flex" : "none",
+                            }}
+                          >
+                            {myObject[e].map((value, myKey) => (
+                              <Grid
+                                key={myKey}
+                                sx={{
+                                  fontSize: {
+                                    md: "12px",
+                                    lg: "17px",
+                                    xl: "19px",
+                                  },
+                                  "&:hover": {
+                                    backgroundColor: "#3F3F3F",
+                                  },
+                                  px: 1.5,
+                                  py: 0.5,
+                                }}
+                              >
+                                {value}
+                              </Grid>
+                            ))}
+                          </Grid>
                         </Grid>
                       </Grid>
-                    </Grid>
-                  );
-                })}
+                    );
+                  })}
+                </Grid>
               </Grid>
             </Grid>
           </Grid>
@@ -341,17 +363,11 @@ const Header = () => {
                   <SearchIcon />
                 </SearchIconWrapper>
                 <StyledInputBase
-                  key="search"
                   value={value}
-                  name="search"
                   onFocus={(e) => {
-                    console.log(e);
                     dispatch(setFocus());
-
-                    console.log(e.target);
                   }}
                   onBlur={() => {
-                    console.log("blur");
                     dispatch(setBlur());
                   }}
                   onChange={(e) => {
@@ -432,7 +448,7 @@ const Header = () => {
                       icon: <LanguageIcon />,
                       fixedText: "Location",
                       text: "Canada",
-                      subtable: ["Canada"],
+                      subtable: ["canada"],
                       functions: locationSelect,
                     },
                   ]}
