@@ -13,7 +13,7 @@ import DatabasePage from "../pages/code_list";
 import FailureDirectory from "../pages/failureDirectory/failureDirectory";
 import Layout from "../layout/layout";
 import Login from "../pages/authorization/login/login";
-import LoginLayout from "../layout/start/start";
+import LoginLayout from "../layout/start/Start";
 import Monitoring from "../pages/monitoring/monitoring";
 import NewPassword from "../pages/login/newPassword/newPassword";
 import PassRecovery from "../pages/login/passRecovery/PassRecovery";

@@ -16,7 +16,7 @@ import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined
 import { palette } from "@mui/system";
 import history from "../../../routers/history";
 
-import Start from "../../../layout/start/start";
+import Start from "../../../layout/start/Start";
 import Layout from "../../../layout/authorization/layout";
 import styles from "../../../assets/Styles/pages/login/login/body";
 
