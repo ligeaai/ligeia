@@ -97,7 +97,7 @@ const Header = () => {
   const theme = useSelector((state) => state.theme.theme);
   const lang = useSelector((state) => state.lang.lang);
   const [menu, setMenu] = React.useState("none");
-  const [settingsMenu, setSettingsMenu] = React.useState(null);
+  const [settingsMenu, setSettingsMenu] = React.useState(false);
   const [open, setOpen] = React.useState([
     false,
     false,
@@ -109,15 +109,7 @@ const Header = () => {
   var openValid = [false, false, false, false, false, false];
 
   window.addEventListener("click", function (e) {
-    // e.path.forEach((val) => {
-    //   if (val.id === "settingsMenu") {
-    //   } else {
-    //     setSettingsMenu(false);
-    //   }
-    // });
-    if (document.getElementById("settingsMenu").contains(e.target)) {
-      console.log(e.target);
-    } else {
+    if (!e.target.closest(".settingsMenu")) {
       setSettingsMenu(false);
     }
   });
@@ -405,7 +397,7 @@ const Header = () => {
                 Sign in
               </Link>
             </Grid>
-            <Grid item id="settingsMenu">
+            <Grid item className="settingsMenu">
               <Button
                 sx={{
                   color: "#ffffff",
@@ -448,7 +440,7 @@ const Header = () => {
                       icon: <LanguageIcon />,
                       fixedText: "Location",
                       text: "Canada",
-                      subtable: ["canada"],
+                      subtable: ["Canada"],
                       functions: locationSelect,
                     },
                   ]}

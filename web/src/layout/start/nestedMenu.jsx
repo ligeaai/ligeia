@@ -5,12 +5,12 @@ import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import DoneIcon from "@mui/icons-material/Done";
-import { useState } from "react";
-import { ReactReduxContext } from "react-redux";
+import { useEffect } from "react";
 
 const NestedMenu = (props) => {
   const { dict } = props;
   const [menu, setMenu] = React.useState(dict.map(() => false));
+  var menuValidator = dict.map(() => false);
   const [mainMenu, setMainMenu] = React.useState(true);
   return (
     <Grid
@@ -28,6 +28,7 @@ const NestedMenu = (props) => {
             return (
               <React.Fragment key={key}>
                 <Grid
+                  className="settingsMenu"
                   item
                   sx={{
                     padding: "5px",
@@ -45,8 +46,8 @@ const NestedMenu = (props) => {
                       justifyContent: "space-between",
                     }}
                     onClick={() => {
-                      menu[key] = !menu[key];
-                      setMenu([...menu]);
+                      menuValidator[key] = !menu[key];
+                      setMenu(menuValidator);
                       setMainMenu(false);
                     }}
                   >
@@ -113,6 +114,7 @@ const NestedMenu = (props) => {
         <>
           {menu.map((key, i) => (
             <Grid
+              className="settingsMenu"
               key={i}
               container
               sx={{
@@ -132,8 +134,8 @@ const NestedMenu = (props) => {
                 }}
                 onClick={() => {
                   setMainMenu(true);
-                  menu[i] = !menu[i];
-                  setMenu(menu);
+                  menuValidator[i] = !menu[i];
+                  setMenu(menuValidator);
                 }}
               >
                 <Grid
