@@ -141,7 +141,7 @@ const Header = () => {
       sx={{
         py: 3,
         px: { xs: 2, lg: 4, xl: 6 },
-        height: "150px",
+        height: "100px",
       }}
     >
       <Grid

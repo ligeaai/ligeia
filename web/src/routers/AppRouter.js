@@ -13,16 +13,17 @@ import DatabasePage from "../pages/code_list";
 import FailureDirectory from "../pages/failureDirectory/failureDirectory";
 import Layout from "../layout/layout";
 import Login from "../pages/authorization/login/login";
-import LoginLayout from "../layout/start/Start";
 import Monitoring from "../pages/monitoring/monitoring";
 import NewPassword from "../pages/login/newPassword/newPassword";
 import PassRecovery from "../pages/login/passRecovery/PassRecovery";
+import Register from "../pages/authorization/register/register";
+import RegisterPageTwo from "../pages/authorization/register/registerPageTwo";
 import PrivateRoute from "./PrivateRouter";
 import ReportsPage from "../pages/reportsPage/ReportsPage";
 import ResetPassword from "../pages/resetpassword/ResetPassword";
 import SecureCodePage from "../pages/login/secureCodepage/secureCodePage";
 import ServicePage from "../pages/servicePage/servicePage";
-import Signup from "../pages/signup/Signup";
+
 import Start from "../pages/start/Start";
 import IntegrationLog from "../pages/integrationLog/IntegrationLog";
 
@@ -55,8 +56,9 @@ const AppRouter1 = () => {
           <Route path="securecode" element={<SecureCodePage />} />
           <Route path="newpassword" element={<NewPassword />} />
         </Route>
-        <Route exact path="/signup" element={<LoginLayout />}>
-          <Route path="" element={<Signup />} />
+        <Route exact path="/signup">
+          <Route path="" element={<Register />} />
+          <Route path="/signup/signup" element={<RegisterPageTwo />} />
         </Route>
       </Routes>
     </Fragment>

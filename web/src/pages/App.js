@@ -4,6 +4,7 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 
 import AppRouter from '../routers/AppRouter'
 
+import Loading from '../components/loading';
 
 const App = () => {
     const theme = useSelector((state) => state.theme.theme);
@@ -14,7 +15,7 @@ const App = () => {
     });
     return (
         <ThemeProvider theme={darkTheme}>
-            <AppRouter />
+            <Loading Element={<AppRouter />} />
         </ThemeProvider>
     );
 }
