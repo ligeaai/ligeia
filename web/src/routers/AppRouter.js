@@ -22,7 +22,7 @@ import ReportsPage from "../pages/reportsPage/ReportsPage";
 import ResetPassword from "../pages/resetpassword/ResetPassword";
 import SecureCodePage from "../pages/login/secureCodepage/secureCodePage";
 import ServicePage from "../pages/servicePage/servicePage";
-import Signup from "../pages/signup/Signup";
+import Register from "../pages/authorization/register/register";
 import Start from "../pages/start/Start";
 import IntegrationLog from "../pages/integrationLog/IntegrationLog";
 
@@ -55,8 +55,8 @@ const AppRouter1 = () => {
           <Route path="securecode" element={<SecureCodePage />} />
           <Route path="newpassword" element={<NewPassword />} />
         </Route>
-        <Route exact path="/signup" element={<LoginLayout />}>
-          <Route path="" element={<Signup />} />
+        <Route exact path="/signup">
+          <Route path="" element={<Register />} />
         </Route>
       </Routes>
     </Fragment>

@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { setLoaderFalse } from './loader';
 import {
     CHANGE_PASSWORD_SUCCESS,
     CHANGE_PASSWORD_FAIL,
@@ -177,8 +178,9 @@ export const login = (email, password) => async dispatch => {
         })
         dispatch({
             type: ADD_ERROR_SUCCESS,
-            payload: err.response.data.email
+            payload: err.message
         })
+        dispatch(setLoaderFalse());
         setTimeout(() => {
             dispatch({
                 type: CLEAN_ERROR_SUCCESS,

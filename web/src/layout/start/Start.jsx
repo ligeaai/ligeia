@@ -6,7 +6,8 @@ import headBackground from "../../assets/backgorunds/image.jpeg";
 import Header from "./header";
 import Footer from "./Footer";
 
-function Start(props) {
+const Start = (props) => {
+  const { Element } = props;
   return (
     <Box
       sx={{
@@ -19,7 +20,7 @@ function Start(props) {
           <Header />
         </Grid>
         <Grid item xs={12}>
-          {props.Element}
+          <Element />
         </Grid>
         <Grid item xs={12}>
           <Footer />
@@ -27,6 +28,6 @@ function Start(props) {
       </Grid>
     </Box>
   );
-}
+};
 
 export default Start;
