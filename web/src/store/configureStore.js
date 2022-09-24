@@ -2,7 +2,7 @@ import { configureStore } from '@reduxjs/toolkit'
 import thunk from 'redux-thunk';
 import logger from 'redux-logger'
 
-import { authReducer, codelistReducer, drawerReducer, errorReducer, langReducer, loaderReducer, searchBarReducer, themeReducer } from '../services/reducers'
+import { authReducer, codelistReducer, drawerReducer, errorReducer, langReducer, loaderReducer, registerFormReducer, searchBarReducer, themeReducer } from '../services/reducers'
 
 export default configureStore({
     reducer: {
@@ -12,6 +12,7 @@ export default configureStore({
         error: errorReducer,
         lang: langReducer,
         loader: loaderReducer,
+        registerForm: registerFormReducer,
         searchBar: searchBarReducer,
         theme: themeReducer,
     },
