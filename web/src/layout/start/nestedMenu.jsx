@@ -8,10 +8,16 @@ import DoneIcon from "@mui/icons-material/Done";
 import { useEffect } from "react";
 
 const NestedMenu = (props) => {
-  const { dict } = props;
+  const { dict, isOpen } = props;
   const [menu, setMenu] = React.useState(dict.map(() => false));
   var menuValidator = dict.map(() => false);
   const [mainMenu, setMainMenu] = React.useState(true);
+  useEffect(() => {
+    if (isOpen) {
+      setMenu(dict.map(() => false));
+      setMainMenu(true);
+    }
+  }, [isOpen]);
   return (
     <Grid
       container

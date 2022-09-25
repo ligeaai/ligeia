@@ -19,7 +19,6 @@ import InputBase from "@mui/material/InputBase";
 
 import { changeTheme } from "../../services/actions/theme";
 import { changeLanguage } from "../../services/actions/language";
-import { getAllCountries } from "../../services/api/countries";
 
 import { setFocus, setBlur, setText } from "../../services/actions/searchBar";
 import SearchBarMobile from "../../components/searchBar/searchBarMobile";
@@ -137,13 +136,12 @@ const Header = () => {
     Partners: ["Partners 1", "Partners 2", "Partners 3", "Partners 4"],
     Contact: ["Contact 1", "Contact 2"],
   };
-
   return (
     <Grid
       sx={{
         py: 3,
         px: { xs: 2, lg: 4, xl: 6 },
-        height: "150px",
+        height: "100px",
       }}
     >
       <Grid
@@ -433,17 +431,18 @@ const Header = () => {
                       icon: <TranslateIcon />,
                       fixedText: "Language",
                       text: lang,
-                      subtable: ["English"],
+                      subtable: ["English", "Kazakça", "Rusça", "Türkçe"],
                       functions: langSelect,
                     },
                     {
                       icon: <LanguageIcon />,
                       fixedText: "Location",
                       text: "Canada",
-                      subtable: ["Canada"],
+                      subtable: ["Canada", "Kazakistan", "Türkiye"],
                       functions: locationSelect,
                     },
                   ]}
+                  isOpen={settingsMenu}
                 />
               </Box>
             </Grid>

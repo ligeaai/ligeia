@@ -12,17 +12,17 @@ import {
   InputAdornment,
   Link,
   TextField,
+  Typography,
 } from "@mui/material";
 
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
-import { palette } from "@mui/system";
 import history from "../../../routers/history";
 
 import Start from "../../../layout/start/start";
 import Layout from "../../../layout/authorization/layout";
 
-import { login } from "../../../services/actions/auth";
+import { setEmailPass } from "../../../services/reducers/registerFormReducer";
 import { setLoaderTrue } from "../../../services/actions/loader";
 
 const validationSchema = yup.object({
@@ -33,28 +33,25 @@ const validationSchema = yup.object({
   password: yup.string("Enter your password").required("Password is required"),
 });
 
-const navigate = (e, route) => {
-  e.preventDefault();
-  history.push(`${route}`);
-};
 const MyBody = () => {
   const dispatch = useDispatch();
-  const theme = useSelector((state) => state.theme.theme);
+  const isAgree = useSelector((state) => state.registerForm.isAgree);
   const formik = useFormik({
     initialValues: {
       email: "",
       password: "",
+      isAgree: isAgree,
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
-      dispatch(setLoaderTrue());
-      {
-        (await dispatch(login(values.email, values.password))) ? (
-          <></>
-        ) : (
-          history.push(`/`)
-        );
-      }
+      dispatch(
+        setEmailPass({
+          email: values.email,
+          password: values.password,
+          isAgree: values.isAgree,
+        })
+      );
+      history.push(`/signup/signup`);
     },
   });
 
@@ -124,17 +121,14 @@ const MyBody = () => {
             {formik.errors.password}
           </Box>
         ) : null}
-
-        <Grid
-          container
-          sx={{ justifyContent: "space-between", alignItems: "center", my: 3 }}
-        >
+        <Grid container sx={{ justifyContent: "center", my: 3 }}>
           <Grid item>
             <FormGroup>
               <FormControlLabel
+                name="isAgree"
                 control={
                   <Checkbox
-                    defaultChecked
+                    checked={formik.values.isAgree}
                     sx={{
                       "&.Mui-checked": {
                         color: "text.secondary",
@@ -142,25 +136,23 @@ const MyBody = () => {
                     }}
                   />
                 }
-                label="Remember me"
+                onChange={formik.handleChange}
+                label={
+                  <Typography>
+                    I agree the{" "}
+                    <Link underline="none" sx={{ fontWeight: "700" }}>
+                      Term and Conditions
+                    </Link>
+                  </Typography>
+                }
                 sx={{
                   color: "text.secondary",
                 }}
               />
             </FormGroup>
           </Grid>
-          <Grid item>
-            <Link
-              underline="none"
-              onClick={(e) => {
-                navigate(e, "forgotPassword");
-              }}
-              sx={{ fontWeight: "700", cursor: "pointer" }}
-            >
-              Forgot Password?
-            </Link>
-          </Grid>
         </Grid>
+
         <Button
           variant="contained"
           type="submit"
@@ -174,7 +166,7 @@ const MyBody = () => {
             p: 1.5,
           }}
         >
-          Sign In
+          Continue
         </Button>
       </form>
     </>
@@ -182,11 +174,11 @@ const MyBody = () => {
 };
 
 const authorizationLayout = () => {
-  return <Layout Element={MyBody} isSignIn={true} />;
+  return <Layout Element={MyBody} isSignIn={false} />;
 };
 
-const Login = () => {
+const Register = () => {
   return <Start Element={authorizationLayout} />;
 };
 
-export default Login;
+export default Register;
