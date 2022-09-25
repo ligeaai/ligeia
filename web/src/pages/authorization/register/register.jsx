@@ -19,7 +19,7 @@ import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
 import history from "../../../routers/history";
 
-import Start from "../../../layout/start/Start";
+import Start from "../../../layout/start/start";
 import Layout from "../../../layout/authorization/layout";
 
 import { setEmailPass } from "../../../services/reducers/registerFormReducer";
@@ -121,7 +121,7 @@ const MyBody = () => {
             {formik.errors.password}
           </Box>
         ) : null}
-        <Grid container sx={{ justifyContent: "center", my: 4 }}>
+        <Grid container sx={{ justifyContent: "center", my: 3 }}>
           <Grid item>
             <FormGroup>
               <FormControlLabel

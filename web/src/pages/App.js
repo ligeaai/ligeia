@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector } from "react-redux";
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 
-import AppRouter from '../routers/AppRouter'
+import AppRouter from '../routers/appRouter'
 
 import Loading from '../components/loading';
 

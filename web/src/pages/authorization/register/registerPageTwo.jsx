@@ -15,7 +15,7 @@ import {
 
 import history from "../../../routers/history";
 
-import Start from "../../../layout/start/Start";
+import Start from "../../../layout/start/start";
 import Layout from "../../../layout/authorization/layout";
 
 import { signup } from "../../../services/actions/auth";
@@ -86,7 +86,7 @@ const MyBody = () => {
           onChange={formik.handleChange}
           sx={{ mt: 2 }}
         />
-        <Grid container sx={{ justifyContent: "center", my: 4 }}>
+        <Grid container sx={{ justifyContent: "center", my: 3 }}>
           <Grid item>
             <FormGroup>
               <FormControlLabel

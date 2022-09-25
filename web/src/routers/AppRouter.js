@@ -4,28 +4,12 @@ import { unstable_HistoryRouter as HistoryRouter } from "react-router-dom";
 
 import history from "./history";
 
-import AdminRouter from "./AdminRouter";
-import AllUsers from "../pages/servicePage/allusers/allusers";
-import ChangePass from "../pages/changepass/ChangePass";
-import CodeList from "../pages/code_list";
-//import DatabasePage from '../pages/databasePage/DatabasePage'
-import DatabasePage from "../pages/code_list";
-import FailureDirectory from "../pages/failureDirectory/failureDirectory";
-import Layout from "../layout/layout";
 import Login from "../pages/authorization/login/login";
-import Monitoring from "../pages/monitoring/monitoring";
-import NewPassword from "../pages/login/newPassword/newPassword";
-import PassRecovery from "../pages/login/passRecovery/PassRecovery";
 import Register from "../pages/authorization/register/register";
 import RegisterPageTwo from "../pages/authorization/register/registerPageTwo";
-import PrivateRoute from "./PrivateRouter";
-import ReportsPage from "../pages/reportsPage/ReportsPage";
-import ResetPassword from "../pages/resetpassword/ResetPassword";
-import SecureCodePage from "../pages/login/secureCodepage/secureCodePage";
-import ServicePage from "../pages/servicePage/servicePage";
+import PrivateRoute from "./privateRouter";
+import Start from "../pages/start/start";
 
-import Start from "../pages/start/Start";
-import IntegrationLog from "../pages/integrationLog/IntegrationLog";
 
 import ErrorMessage from "../components/HOC/errorMessage";
 
@@ -34,11 +18,9 @@ const AppRouter1 = () => {
     <Fragment>
       <Routes>
         <Route exact path="/" element={<PrivateRoute />}>
-          <Route exact path="/" element={<Layout />}>
+          {/* <Route exact path="/" element={<Layout />}>
             <Route path="monitoring" element={<Monitoring />} />
             <Route exact path="service" element={<ServicePage />} />
-            <Route path="failuredirectory" element={<FailureDirectory />} />
-            <Route path="log" element={<IntegrationLog />} />
             <Route path="database" element={<DatabasePage />} />
             <Route path="reports" element={<ReportsPage />} />
             <Route path="codelist" element={<CodeList />} />
@@ -47,14 +29,14 @@ const AppRouter1 = () => {
             <Route path="service" element={<AdminRouter />}>
               <Route path="allusers" element={<AllUsers />} />
             </Route>
-          </Route>
+          </Route> */}
         </Route>
         <Route exact path="home" element={<Start />} />
         <Route exact path="/login">
           <Route path="" element={<Login />} />
-          <Route path="passrecovery" element={<PassRecovery />} />
+          {/* <Route path="passrecovery" element={<PassRecovery />} />
           <Route path="securecode" element={<SecureCodePage />} />
-          <Route path="newpassword" element={<NewPassword />} />
+          <Route path="newpassword" element={<NewPassword />} /> */}
         </Route>
         <Route exact path="/signup">
           <Route path="" element={<Register />} />
