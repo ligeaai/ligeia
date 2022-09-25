@@ -3,7 +3,6 @@ import logging
 import environ
 from datetime import timedelta
 from rest_framework.settings import api_settings
-
 from django.utils.translation import gettext_lazy as _
 
 logger = logging.getLogger(__name__)
@@ -183,7 +182,6 @@ REST_FRAMEWORK = {
     ),
 }
 
-
 # ############ REST KNOX ########################
 REST_KNOX = {
     "SECURE_HASH_ALGORITHM": "cryptography.hazmat.primitives.hashes.SHA512",
@@ -193,78 +191,6 @@ REST_KNOX = {
     "EXPIRY_DATETIME_FORMAT": api_settings.DATETIME_FORMAT,
 }
 
-# ########### Sentry configuration
-
-# Change this to proper sentry url.
-RAVEN_CONFIG = {
-    "dsn": "",
-}
-
-SENTRY_DSN = os.environ.get("SENTRY_DSN")
-
-if SENTRY_DSN:
-    RAVEN_CONFIG = {
-        "dsn": f"{SENTRY_DSN}",
-        "register_signals": True,
-    }
-
-LOGGING = {
-    "version": 1,
-    "disable_existing_loggers": True,
-    "root": {
-        "level": "WARNING",
-        "handlers": ["sentry"],
-    },
-    "formatters": {
-        "verbose": {
-            "format": "%(levelname)s %(asctime)s %(module)s "
-            "%(process)d %(thread)d %(message)s"
-        },
-    },
-    "handlers": {
-        "sentry": {
-            "level": "ERROR",
-            "class": ("raven.contrib.django.raven_compat.handlers.SentryHandler"),
-        },
-        "console": {
-            "level": "DEBUG",
-            "class": "logging.StreamHandler",
-            "formatter": "verbose",
-        },
-    },
-    "loggers": {
-        "django.db.backends": {
-            "level": "ERROR",
-            "handlers": ["console"],
-            "propagate": False,
-        },
-        "django": {
-            "handlers": ["console"],
-            "propagate": True,
-            "level": "INFO",
-        },
-        "django.request": {
-            "handlers": ["console"],
-            "level": "ERROR",
-            "propagate": False,
-        },
-        "raven": {
-            "level": "DEBUG",
-            "handlers": ["sentry"],
-            "propagate": False,
-        },
-        "sentry.errors": {
-            "level": "DEBUG",
-            "handlers": ["sentry"],
-            "propagate": False,
-        },
-        "console_tasks": {
-            "handlers": ["console_tasks"],
-            "level": "DEBUG",
-            "propagate": True,
-        },
-    },
-}
 
 CACHES = {
     "default": {
@@ -292,12 +218,6 @@ CACHES = {
 # SESSION_EXPIRE_AT_BROWSER_CLOSE=False
 # #whether the session cookie should be secure (https:// only)
 # SESSION_COOKIE_SECURE=False
-
-DEFAULT_LOGGER = "raven"
-
-LOGGER_EXCEPTION = DEFAULT_LOGGER
-LOGGER_ERROR = DEFAULT_LOGGER
-LOGGER_WARNING = DEFAULT_LOGGER
 
 LOGIN_REDIRECT_URL = "/"
 
