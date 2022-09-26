@@ -153,7 +153,7 @@ const Header = () => {
           },
         }}
       >
-        <SearchBarMobile />
+        <SearchBarMobile theme="dark" />
       </Grid>
       <Grid
         container

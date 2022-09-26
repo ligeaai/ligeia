@@ -7,15 +7,16 @@ import InputBase from "@mui/material/InputBase";
 
 import { setFocus, setBlur, setText } from "../../services/actions/searchBar";
 
-const SearchBarMobile = () => {
+const SearchBarMobile = (props) => {
+  const { theme } = props;
   const dispatch = useDispatch();
   const value = useSelector((state) => state.searchBar.text);
   const Search = styled("div")(({ theme }) => ({
     position: "relative",
     borderRadius: theme.shape.borderRadius,
-    backgroundColor: alpha(theme.palette.common.white, 0.15),
+    backgroundColor: theme === "dark" ? "#ffffff33" : "#00000033",
     "&:hover": {
-      backgroundColor: alpha(theme.palette.common.white, 0.25),
+      backgroundColor: theme === "dark" ? "#ffffff22" : "#00000022",
     },
     marginLeft: 0,
     width: "100%",

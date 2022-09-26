@@ -1,10 +1,10 @@
-import GroupZero from './GroupZero'
-import GroupOne from './GroupOne'
-import GroupTwo from './GroupTwo'
-import GroupThree from './GroupThree'
-import GroupFour from './GroupFour'
-import GroupFive from './GroupFive'
+import GroupZero from './groupZero'
+import GroupOne from './groupOne'
+import GroupTwo from './groupTwo'
+import GroupThree from './groupThree'
+import GroupFour from './groupFour'
+import GroupFive from './groupFive'
 
 
 
-export {GroupZero,GroupOne,GroupTwo,GroupThree,GroupFour,GroupFive}
+export { GroupZero, GroupOne, GroupTwo, GroupThree, GroupFour, GroupFive }

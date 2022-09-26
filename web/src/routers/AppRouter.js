@@ -11,6 +11,8 @@ import PrivateRoute from "./privateRouter";
 import Start from "../pages/start/start";
 
 
+import Main from "../pages/main/main";
+
 import ErrorMessage from "../components/HOC/errorMessage";
 
 const AppRouter1 = () => {
@@ -31,7 +33,8 @@ const AppRouter1 = () => {
             </Route>
           </Route> */}
         </Route>
-        <Route exact path="home" element={<Start />} />
+        {/* <Route exact path="home" element={<Start />} /> */}
+        <Route exact path="home" element={<Main />} />
         <Route exact path="/login">
           <Route path="" element={<Login />} />
           {/* <Route path="passrecovery" element={<PassRecovery />} />

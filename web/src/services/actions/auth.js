@@ -377,11 +377,13 @@ export const logout = () => async dispatch => {
         dispatch({
             type: LOGOUT
         });
+        dispatch(setLoaderFalse())
     } catch (err) {
         dispatch({
             type: ADD_ERROR_SUCCESS,
-            payload: err.response.data.detail
+            payload: err.message
         })
+        dispatch(setLoaderFalse())
         setTimeout(() => {
             dispatch({
                 type: CLEAN_ERROR_SUCCESS,

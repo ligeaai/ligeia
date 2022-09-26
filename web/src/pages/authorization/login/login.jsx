@@ -48,20 +48,18 @@ const MyBody = () => {
     validationSchema: validationSchema,
     onSubmit: async (values) => {
       dispatch(setLoaderTrue());
-      {
-        (await dispatch(login(values.email, values.password))) ? (
-          <></>
-        ) : (
-          history.push(`/`)
-        );
-      }
+      (await dispatch(login(values.email, values.password))) ? (
+        <></>
+      ) : (
+        history.push(`/`)
+      );
     },
   });
 
   const [passVisible, setPassVisible] = useState(false);
 
   return (
-    <>
+    <React.Fragment>
       <form onSubmit={formik.handleSubmit} autoComplete="off">
         <TextField
           fullWidth
@@ -177,7 +175,7 @@ const MyBody = () => {
           Sign In
         </Button>
       </form>
-    </>
+    </React.Fragment>
   );
 };
 
