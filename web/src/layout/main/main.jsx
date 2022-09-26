@@ -6,37 +6,37 @@ import Drawer from "../../components/drawer/drawer";
 import Header from "./header";
 
 import {
-  GroupZero,
-  GroupOne,
-  GroupTwo,
-  GroupThree,
-  GroupFive,
+  AdminstrationIcon,
+  AnalyticsIcon,
+  HomeIcon,
+  OverviewIcon,
+  ReportingIcon,
 } from "../../assets/Images/drawer";
 
 const main = () => {
   const items = [
     {
-      img: <GroupFive />,
+      img: <HomeIcon />,
       text: "Home",
       url: "/none",
     },
     {
-      img: <GroupZero />,
+      img: <OverviewIcon />,
       text: "Overview",
       url: "/none",
     },
     {
-      img: <GroupOne />,
+      img: <AnalyticsIcon />,
       text: "Analyrics",
       url: "/none",
     },
     {
-      img: <GroupTwo />,
+      img: <ReportingIcon />,
       text: "Reporting",
       url: "/none",
     },
     {
-      img: <GroupThree />,
+      img: <AdminstrationIcon />,
       text: "Administration",
       url: "/none",
     },
