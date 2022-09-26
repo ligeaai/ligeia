@@ -54,7 +54,7 @@ const MyBody = () => {
             userData.password
           )
         )) ? (
-          <></>
+          <React.Fragment></React.Fragment>
         ) : (
           history.push(`/`)
         );
@@ -68,7 +68,7 @@ const MyBody = () => {
   });
 
   return (
-    <>
+    <React.Fragment>
       <form onSubmit={formik.handleSubmit} autoComplete="off">
         <TextField
           fullWidth
@@ -134,7 +134,7 @@ const MyBody = () => {
           Sign Up
         </Button>
       </form>
-    </>
+    </React.Fragment>
   );
 };
 

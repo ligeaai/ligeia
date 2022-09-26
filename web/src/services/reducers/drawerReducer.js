@@ -5,7 +5,7 @@ export const drawerReducer = createSlice({
     initialState: {
         display: "none",
         temp: 0,//temporary value determines the drawer stat before the drawer hover
-        width: "56px"
+        width: "74px"
     },
     reducers: {
         toggleDrawer: (state) => {
@@ -13,12 +13,12 @@ export const drawerReducer = createSlice({
                 return {
                     ...state,
                     display: "inline-block",
-                    width: "252px"
+                    width: "270px"
                 }
             }
             else {
                 state.display = "none";
-                state.width = "56px"
+                state.width = "74px"
             }
         },
         mouseEnterDrawer: (state) => {

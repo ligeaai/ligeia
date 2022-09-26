@@ -1,10 +1,9 @@
-import GroupZero from './GroupZero'
-import GroupOne from './GroupOne'
-import GroupTwo from './GroupTwo'
-import GroupThree from './GroupThree'
-import GroupFour from './GroupFour'
-import GroupFive from './GroupFive'
+import OverviewIcon from './overviewIcon'
+import AnalyticsIcon from './analyticsIcon'
+import ReportingIcon from './reportingIcon'
+import AdminstrationIcon from './adminstrationIcon'
+import HomeIcon from './homeIcon'
 
 
 
-export {GroupZero,GroupOne,GroupTwo,GroupThree,GroupFour,GroupFive}
+export { AdminstrationIcon, AnalyticsIcon, HomeIcon, OverviewIcon, ReportingIcon }

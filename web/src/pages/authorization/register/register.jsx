@@ -58,7 +58,7 @@ const MyBody = () => {
   const [passVisible, setPassVisible] = useState(false);
 
   return (
-    <>
+    <React.Fragment>
       <form onSubmit={formik.handleSubmit} autoComplete="off">
         <TextField
           fullWidth
@@ -169,7 +169,7 @@ const MyBody = () => {
           Continue
         </Button>
       </form>
-    </>
+    </React.Fragment>
   );
 };
 

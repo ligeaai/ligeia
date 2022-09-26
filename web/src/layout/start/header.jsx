@@ -153,7 +153,7 @@ const Header = () => {
           },
         }}
       >
-        <SearchBarMobile />
+        <SearchBarMobile theme="dark" />
       </Grid>
       <Grid
         container
@@ -390,7 +390,7 @@ const Header = () => {
                   cursor: "pointer",
                   fontSize: { md: "12px", lg: "17px", xl: "19px" },
                 }}
-                onClick={() => history.push("login")}
+                onClick={() => history.push("/signin")}
               >
                 Sign in
               </Link>
