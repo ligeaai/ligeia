@@ -276,6 +276,7 @@ const Header = () => {
                   right: { xs: "0" },
                   top: "75px",
                   boxShadow: "0px 1px 5px rgba(0, 0, 0, 0.1)",
+                  zIndex: 2,
                 }}
               >
                 <NestedMenu

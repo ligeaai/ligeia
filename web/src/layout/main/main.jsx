@@ -1,6 +1,6 @@
 import React from "react";
-
-import { Box } from "@mui/system";
+import { useSelector } from "react-redux";
+import { Box, Grid } from "@mui/material";
 
 import Drawer from "../../components/drawer/drawer";
 import Header from "./header";
@@ -13,12 +13,14 @@ import {
   ReportingIcon,
 } from "../../assets/Images/drawer";
 
-const main = () => {
+const Main = (props) => {
+  const drawer = useSelector((state) => state.drawer);
+  const { Element } = props;
   const items = [
     {
       img: <HomeIcon />,
       text: "Home",
-      url: "/none",
+      url: "/home",
     },
     {
       img: <OverviewIcon />,
@@ -44,9 +46,40 @@ const main = () => {
   return (
     <Box>
       <Header />
-      <Drawer items={items} />
+      <Grid container>
+        <Grid
+          item
+          sx={{
+            typography: {
+              xs: {
+                display: `${drawer.width}` === "74px" ? "none" : "block",
+              },
+              sm: { display: "inline-block" },
+            },
+          }}
+        >
+          <Drawer items={items} />
+        </Grid>
+        <Grid
+          item
+          sx={{
+            backgroundColor: "#F0F2F5",
+            minHeight: "calc(100vh - 75px)",
+            height: "auto",
+            typography: {
+              xs: { marginLeft: "0px" },
+              sm: {
+                marginLeft: `${drawer.width}`,
+                width: `calc(100vw - ${drawer.width})`,
+              },
+            },
+          }}
+        >
+          {Element}
+        </Grid>
+      </Grid>
     </Box>
   );
 };
 
-export default main;
+export default Main;

@@ -4,7 +4,7 @@ import { ThemeProvider, createTheme } from "@mui/material/styles";
 
 import AppRouter from "../routers/appRouter";
 
-import Loading from "../components/loading";
+import Loading from "../components/HOC/loading";
 
 const App = () => {
   const theme = useSelector((state) => state.theme.theme);

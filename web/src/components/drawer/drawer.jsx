@@ -18,6 +18,7 @@ const MyBox = styled(Grid)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "black" : "#FAFCFF",
   width: "min-content",
   minHeight: "calc(100vh - 75px)",
+  height: "auto",
   alignContent: "flex-start",
   overflow: "hidden",
   zIndex: 2,
