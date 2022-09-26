@@ -35,7 +35,7 @@ const AppRouter1 = () => {
         </Route>
         {/* <Route exact path="home" element={<Start />} /> */}
         <Route exact path="home" element={<Main />} />
-        <Route exact path="/login">
+        <Route exact path="/signin">
           <Route path="" element={<Login />} />
           {/* <Route path="passrecovery" element={<PassRecovery />} />
           <Route path="securecode" element={<SecureCodePage />} />

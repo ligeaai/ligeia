@@ -32,7 +32,7 @@ const header = (props) => {
             opacity: isSignIn ? "1" : "0.6",
             fontWeight: "700",
           }}
-          onClick={() => history.push("/login")}
+          onClick={() => history.push("/signin")}
         >
           Sign In
         </Link>

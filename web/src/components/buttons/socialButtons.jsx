@@ -5,7 +5,7 @@ import { Box } from "@mui/material";
 import history from "../../routers/history";
 
 const socialButtons = (props) => {
-  const { url, logo } = props;
+  const { url, Logo } = props;
   return (
     <Box
       sx={{
@@ -23,7 +23,7 @@ const socialButtons = (props) => {
         history.push(url);
       }}
     >
-      <img src={logo} alt="" />
+      <Logo sx={{ width: "36px", height: "36px" }} />
     </Box>
   );
 };
