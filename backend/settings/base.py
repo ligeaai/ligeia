@@ -24,7 +24,6 @@ PAGE_CACHE_SECONDS = 60
 LOGGING_CONFIG = None
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 SITE_ID = 1
-
 # TODO: n a real production server this should have a proper url
 ALLOWED_HOSTS = env("ALLOWED_HOSTS").split(" ")
 
@@ -44,7 +43,6 @@ THIRD_PARTY_APPS = [
     "raven.contrib.django.raven_compat",
     "rest_framework",
     "rest_framework.authtoken",
-    "drf_yasg",
     "knox",
     "django_extensions",
     "django_filters",

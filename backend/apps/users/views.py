@@ -5,7 +5,7 @@ from knox.auth import AuthToken, TokenAuthentication
 from rest_framework.decorators import api_view
 from rest_framework import status, generics, permissions
 from rest_framework.generics import GenericAPIView
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated,AllowAny
 from rest_framework.response import Response
 from rest_framework.authtoken.serializers import AuthTokenSerializer
 from django.contrib.auth import login
@@ -32,6 +32,7 @@ from utils import AtomicMixin
 from rest_framework.viewsets import ModelViewSet
 from .models import User
 from Logs.Handlers import KafkaLogger
+
 logger = KafkaLogger()
 
 class UserModelViewSet(ModelViewSet):
@@ -48,51 +49,42 @@ class UserModelViewSet(ModelViewSet):
 class UserDetails(ModelViewSet):
     queryset = User.objects.none()
     serializer_class = UserModelSerializer
-    permission_classes = (IsAuthenticated,)
+    authentication_classes = [TokenAuthentication,]
     http_method_names = ("head", "option", "get")
 
     def list(self, request):
         queryset = User.objects.get(email=request.user)
         serializer = self.serializer_class(queryset)
-        if serializer.is_valid():
+        try:
             logger.info(request=request,message="User details listed")
             return Response(serializer.data,status=status.HTTP_200_OK)
-        
-        logger.warning(request=request,message="user details could not be listed",warning=serializer.errors)
-        return Response(serializer.data)
+        except Exception as e:
+            logger.warning(request=request,message="user details could not be listed",warning=e)
+            return Response(e)
 
-class UserDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
-    permission_classes = [permissions.IsAuthenticated]
 
-    def get_object(self):
-        return self.request.user
 
 
 class UserList(generics.ListAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
-    permission_classes = [
-        permissions.IsAuthenticated,
-        # permissions.IsAdminUser
-    ]
-
+    authentication_classes = [TokenAuthentication,]
+    permission_classes = []
     def list(self, request):
         # Note the use of `get_queryset()` instead of `self.queryset`
-        queryset = self.get_queryset()
-        serializer = UserSerializer(queryset, many=True)
-        if serializer.is_valid():
+        try:
+            queryset = self.get_queryset()
+            serializer = UserSerializer(queryset, many=True)
             logger.info(request=request,message="All users listed")
             return Response(serializer.data,status=status.HTTP_200_OK)
-        
-        logger.warning(request=request,message="All Users could not be listed",warning=serializer.errors)
-        return Response(serializer.data)
+        except Exception as e:
+            logger.warning(request=request,message="All Users could not be listed",warning=e)
+            return Response(e)
 
 
 class UserRegisterView(generics.GenericAPIView):
     serializer_class = UserRegistrationSerializer
-    permission_classes = ()
+    permission_classes = [AllowAny]
 
     def post(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
@@ -116,7 +108,7 @@ class UserLoginView(generics.GenericAPIView):
     
     serializer_class = UserLoginSerializer
     permission_classes = [
-        permissions.AllowAny,
+        AllowAny
     ]
 
     def post(self, request, *args, **kwargs):
@@ -142,7 +134,7 @@ class UserLoginView(generics.GenericAPIView):
 
 class UserChangePassword(generics.UpdateAPIView):
     serializer_class = ChangePasswordSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    authentication_classes = [TokenAuthentication,]
     
     def update(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
@@ -179,8 +171,9 @@ class UserChangePassword(generics.UpdateAPIView):
 #         password = request.data.get("password", False)
 
 
-class ResetPassword(generics.GenericAPIView):
+class ForgetPassword(generics.GenericAPIView):
     serializer_class = ForgetPasswordSerializer
+    permission_classes =[AllowAny]
     def post(self, request):
         serializer = self.serializer_class(data=request.data)
         if serializer.is_valid(raise_exception=True):
@@ -191,9 +184,9 @@ class ResetPassword(generics.GenericAPIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-class ResetNewPassword(generics.GenericAPIView):
+class ResetForgetPassword(generics.GenericAPIView):
     serializer_class = ResetNewPasswordSerializer
-    permission_classes = []
+    permission_classes =[AllowAny]
     def post(self,request, *args, **kwargs):
         serializer = self.serializer_class(data=request.data)
         if serializer.is_valid(raise_exception=True):
@@ -227,7 +220,6 @@ class UserConfirmEmailView(AtomicMixin, GenericAPIView):
 class UserEmailConfirmationStatusView(generics.GenericAPIView):
     serializer_class = None
     authentication_classes = (TokenAuthentication,)
-    permission_classes = (IsAuthenticated,)
 
     def get(self, request):
         """Retrieve user current confirmed_email status."""
