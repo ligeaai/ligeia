@@ -105,7 +105,7 @@ const Header = () => {
   const locationSelect = (val) => {};
 
   return (
-    <>
+    <React.Fragment>
       <Grid
         container
         sx={{
@@ -310,7 +310,7 @@ const Header = () => {
           </Grid>
         </Grid>
       </Grid>
-    </>
+    </React.Fragment>
   );
 };
 

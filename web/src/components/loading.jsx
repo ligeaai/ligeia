@@ -7,7 +7,7 @@ const Loading = (props) => {
   const { Element } = props;
   const loader = useSelector((state) => state.loader.loader);
   return (
-    <>
+    <React.Fragment>
       {loader ? (
         <Box
           sx={{
@@ -26,10 +26,10 @@ const Loading = (props) => {
           <CircularProgress color="secondary" />
         </Box>
       ) : (
-        <></>
+        <React.Fragment></React.Fragment>
       )}
       {Element}
-    </>
+    </React.Fragment>
   );
 };
 

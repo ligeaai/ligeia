@@ -28,10 +28,10 @@ const ErrorMessage = (props) => {
     return <Element />;
   } else {
     return (
-      <>
+      <React.Fragment>
         <Element />
         <Snackbar open={true} message={err.errMsg} action={action} />
-      </>
+      </React.Fragment>
     );
   }
 };

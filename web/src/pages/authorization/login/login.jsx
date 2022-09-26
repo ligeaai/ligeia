@@ -49,7 +49,7 @@ const MyBody = () => {
     onSubmit: async (values) => {
       dispatch(setLoaderTrue());
       (await dispatch(login(values.email, values.password))) ? (
-        <></>
+        <React.Fragment></React.Fragment>
       ) : (
         history.push(`/`)
       );

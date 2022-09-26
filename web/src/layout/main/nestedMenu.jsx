@@ -266,7 +266,7 @@ const NestedMenu = (props) => {
           </Grid>
         </React.Fragment>
       ) : (
-        <>
+        <React.Fragment>
           {menu.map((key, i) => (
             <Grid
               className="settingsMenu"
@@ -360,7 +360,7 @@ const NestedMenu = (props) => {
               })}
             </Grid>
           ))}
-        </>
+        </React.Fragment>
       )}
     </Grid>
   );

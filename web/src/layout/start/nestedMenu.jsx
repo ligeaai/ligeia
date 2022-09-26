@@ -29,7 +29,7 @@ const NestedMenu = (props) => {
       }}
     >
       {mainMenu ? (
-        <>
+        <React.Fragment>
           {dict.map((e, key) => {
             return (
               <React.Fragment key={key}>
@@ -115,9 +115,9 @@ const NestedMenu = (props) => {
               <Grid item>Help</Grid>
             </Grid>
           </Grid>
-        </>
+        </React.Fragment>
       ) : (
-        <>
+        <React.Fragment>
           {menu.map((key, i) => (
             <Grid
               className="settingsMenu"
@@ -204,7 +204,7 @@ const NestedMenu = (props) => {
               })}
             </Grid>
           ))}
-        </>
+        </React.Fragment>
       )}
     </Grid>
   );
