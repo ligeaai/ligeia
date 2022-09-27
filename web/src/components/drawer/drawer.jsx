@@ -1,7 +1,8 @@
 import React from "react";
+import { useState } from "react";
 import { useDispatch } from "react-redux";
 
-import { Box, Grid } from "@mui/material";
+import { Grid } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
 import {
@@ -11,24 +12,29 @@ import {
 
 import DrawerItem from "./drawerItem";
 
-const MyBox = styled(Grid)(({ theme }) => ({
-  display: "flex",
-  flexDirection: "column",
-  position: "absolute",
-  backgroundColor: theme.palette.mode === "dark" ? "black" : "#FAFCFF",
-  width: "min-content",
-  minHeight: "calc(100vh - 75px)",
-  height: "auto",
-  alignContent: "flex-start",
-  overflow: "hidden",
-  zIndex: 2,
-  paddingTop: "16px",
-  boxShadow: "inset 0 8px 6px -6px rgba(0, 0, 0, 0.1)",
-}));
-
 const Drawer = (props) => {
   const dispatch = useDispatch();
   const { items } = props;
+  const [drawerHeight, setDrawerHeight] = useState(0);
+  React.useEffect(() => {
+    function handleResize() {
+      setDrawerHeight(document.body.scrollHeight);
+    }
+    window.addEventListener("resize", handleResize);
+  });
+  const MyBox = styled(Grid)(({ theme }) => ({
+    display: "flex",
+    flexDirection: "column",
+    position: "absolute",
+    backgroundColor: theme.palette.myBackgorundColor,
+    width: "min-content",
+    minHeight: `calc(100vh - 75px)`,
+    height: `calc(${drawerHeight}px - 75px)`,
+    alignContent: "flex-start",
+    overflow: "hidden",
+    zIndex: 2,
+    paddingBottom: "16px",
+  }));
   return (
     <MyBox
       onMouseEnter={() => dispatch(mouseEnterDrawer())}

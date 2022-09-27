@@ -1,20 +1,14 @@
 import React from "react";
-import { useSelector } from "react-redux";
-import { ThemeProvider, createTheme } from "@mui/material/styles";
-
+import { ThemeProvider } from "@mui/material/styles";
 import AppRouter from "../routers/appRouter";
 
+import myTheme from "../themes/composeStyle";
 import Loading from "../components/HOC/loading";
 
 const App = () => {
-  const theme = useSelector((state) => state.theme.theme);
-  const darkTheme = createTheme({
-    palette: {
-      mode: theme,
-    },
-  });
+
   return (
-    <ThemeProvider theme={darkTheme}>
+    <ThemeProvider theme={myTheme()}>
       <Loading Element={<AppRouter />} />
     </ThemeProvider>
   );

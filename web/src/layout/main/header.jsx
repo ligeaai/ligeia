@@ -11,6 +11,7 @@ import {
   Typography,
 } from "@mui/material";
 import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
+import BadgeUnstyled, { badgeUnstyledClasses } from "@mui/base/BadgeUnstyled";
 
 import { styled, alpha } from "@mui/material/styles";
 import SearchIcon from "@mui/icons-material/Search";
@@ -28,7 +29,6 @@ import { toggleDrawer } from "../../services/reducers/drawerReducer";
 import SearchBarMobile from "../../components/searchBar/searchBarMobile";
 import NestedMenu from "./nestedMenu";
 const Search = styled("div")(({ theme }) => {
-  console.log(theme);
   return {
     position: "relative",
     borderRadius: theme.shape.borderRadius,
@@ -91,7 +91,6 @@ const Header = () => {
 
   window.addEventListener("click", function (e) {
     if (!e.target.closest(".settingsMenu")) {
-      console.log("sadasd");
       setSettingsMenu(false);
     }
   });
@@ -104,16 +103,53 @@ const Header = () => {
   };
   const locationSelect = (val) => {};
 
+  const MyBox = styled(Grid)(({ theme }) => ({
+    backgroundColor: theme.palette.myBackgorundColor,
+    alignItems: "center",
+    justifyContent: "space-between",
+    padding: "13px 21px",
+    height: "75px",
+    boxShadow: "0px 1px 5px rgba(0, 0, 0, 0.1)",
+  }));
+
+  const StyledBadge = styled(BadgeUnstyled)(
+    ({ theme }) => `
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-size: 18px;
+    list-style: none;
+    font-family: IBM Plex Sans, sans-serif;
+    position: relative;
+    display: inline-block;
+    line-height: 1;
+  
+    & .${badgeUnstyledClasses.badge} {
+      z-index: auto;
+      position: absolute;
+      top: 3px;
+      right: 3px;
+      min-width: 22px;
+      height: 22px;
+      background:#EA5455;
+      color: #fff;
+      font-weight: 600;
+      font-size: 12px;
+      line-height: 22px;
+      white-space: nowrap;
+      text-align: center;
+      border-radius: 12px;
+      transform: translate(50%, -50%);
+      transform-origin: 100% 0; 
+    }
+    `
+  );
+
   return (
     <React.Fragment>
-      <Grid
+      <MyBox
         container
         sx={{
-          backgroundColor: "primary.contrastText",
-          boxShadow: "0px 1px 5px rgba(0, 0, 0, 0.1)",
-          px: "26px",
-          py: "18px",
-          height: "75px",
           display: {
             xs: search ? "flex" : "none",
             md: "none",
@@ -121,17 +157,9 @@ const Header = () => {
         }}
       >
         <SearchBarMobile theme={theme} />
-      </Grid>
-      <Grid
-        container
+      </MyBox>
+      <MyBox
         sx={{
-          alignItems: "center",
-          justifyContent: "space-between",
-          px: "26px",
-          py: "13px",
-          height: "75px",
-          boxShadow: "0px 1px 5px rgba(0, 0, 0, 0.1)",
-          backgroundColor: "primary.contrastText",
           display: {
             xs: search ? "none" : "flex",
             md: "flex",
@@ -139,12 +167,13 @@ const Header = () => {
         }}
       >
         <Grid item>
-          <Grid container spacing={2} alignItems="center">
+          <Grid container spacing={2.5} alignItems="center">
             <Grid item>
               <MenuIcon
                 sx={{
+                  mx: "9px",
                   typography: "h4",
-                  color: "text.primary",
+                  color: "text.secondary",
                 }}
                 onClick={() => {
                   dispatch(toggleDrawer());
@@ -196,21 +225,15 @@ const Header = () => {
                   borderRadius: "60px",
                   height: "49px",
                   width: "49px !important",
-                  p: 0,
                 }}
               >
-                <Badge
-                  badgeContent={8}
-                  color="error"
-                  max={99}
-                  sx={{ position: "absolute" }}
-                >
+                <StyledBadge badgeContent={8} max={99}>
                   <NotificationsNoneIcon
                     sx={{
                       color: "text.primary",
                     }}
                   />
-                </Badge>
+                </StyledBadge>
               </Button>
             </Grid>
             <Grid item className="settingsMenu">
@@ -221,7 +244,7 @@ const Header = () => {
                   setSettingsMenu(!settingsMenu);
                 }}
               >
-                <Grid item sx={{ mr: 1.5, ml: 1 }}>
+                <Grid item sx={{ mr: 1.5 }}>
                   <Grid
                     container
                     sx={{
@@ -236,7 +259,7 @@ const Header = () => {
                         sx={{
                           fontWeight: "500",
                           textTransform: "capitalize",
-                          color: "text.primary",
+                          color: "text.secondary",
                         }}
                       >
                         {user
@@ -248,7 +271,7 @@ const Header = () => {
                       <Typography
                         variant="caption"
                         sx={{
-                          color: "text.secondary",
+                          color: "text.disabled",
                           textTransform: "capitalize",
                         }}
                       >
@@ -276,7 +299,7 @@ const Header = () => {
                   right: { xs: "0" },
                   top: "75px",
                   boxShadow: "0px 1px 5px rgba(0, 0, 0, 0.1)",
-                  zIndex: 2,
+                  zIndex: 3,
                 }}
               >
                 <NestedMenu
@@ -310,7 +333,7 @@ const Header = () => {
             </Grid>
           </Grid>
         </Grid>
-      </Grid>
+      </MyBox>
     </React.Fragment>
   );
 };

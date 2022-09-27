@@ -6,6 +6,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 const Loading = (props) => {
   const { Element } = props;
   const loader = useSelector((state) => state.loader.loader);
+  console.log(document.body.scrollHeight);
   return (
     <React.Fragment>
       {loader ? (

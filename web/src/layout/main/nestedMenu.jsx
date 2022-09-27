@@ -2,6 +2,7 @@ import React from "react";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 
+import { styled } from "@mui/material/styles";
 import { Box, Grid, Typography } from "@mui/material";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
@@ -26,17 +27,15 @@ const NestedMenu = (props) => {
       setMenu(dict.map(() => false));
       setMainMenu(true);
     }
-  }, [isOpen]);
+  }, [isOpen, dict]);
+  const MyBox = styled(Grid)(({ theme }) => ({
+    backgroundColor: theme.palette.myBackgorundColor,
+    flexDirection: "column",
+    width: "250px",
+    pt: 1,
+  }));
   return (
-    <Grid
-      container
-      sx={{
-        flexDirection: "column",
-        backgroundColor: "primary.contrastText",
-        width: "250px",
-        pt: 1,
-      }}
-    >
+    <MyBox container>
       {mainMenu ? (
         <React.Fragment>
           <Grid
@@ -362,7 +361,7 @@ const NestedMenu = (props) => {
           ))}
         </React.Fragment>
       )}
-    </Grid>
+    </MyBox>
   );
 };
 

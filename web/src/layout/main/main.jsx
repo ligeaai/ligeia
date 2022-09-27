@@ -1,5 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
+import { styled } from "@mui/system";
 import { Box, Grid } from "@mui/material";
 
 import Drawer from "../../components/drawer/drawer";
@@ -7,42 +8,53 @@ import Header from "./header";
 
 import {
   AdminstrationIcon,
-  AnalyticsIcon,
+  // AnalyticsIcon,
   HomeIcon,
   OverviewIcon,
   ReportingIcon,
 } from "../../assets/Images/drawer";
-
+import AnalyticsIcon from "@mui/icons-material/Analytics";
+import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
+import DisplaySettingsIcon from "@mui/icons-material/DisplaySettings";
+import AccountTreeIcon from "@mui/icons-material/AccountTree";
+import ConstructionIcon from "@mui/icons-material/Construction";
 const Main = (props) => {
   const drawer = useSelector((state) => state.drawer);
   const { Element } = props;
   const items = [
     {
-      img: <HomeIcon />,
+      img: <HomeOutlinedIcon />,
       text: "Home",
       url: "/home",
     },
     {
-      img: <OverviewIcon />,
+      img: <DisplaySettingsIcon />,
       text: "Overview",
-      url: "/none",
+      url: "/#",
+    },
+    {
+      img: <AccountTreeIcon />,
+      text: "Analytics",
+      url: "/#",
     },
     {
       img: <AnalyticsIcon />,
-      text: "Analyrics",
-      url: "/none",
-    },
-    {
-      img: <ReportingIcon />,
       text: "Reporting",
-      url: "/none",
+      url: "/#",
     },
     {
-      img: <AdminstrationIcon />,
+      img: <ConstructionIcon />,
       text: "Administration",
-      url: "/none",
+      url: "/#",
     },
   ];
+  const MyCanvas = styled(Grid)(({ theme }) => {
+    return {
+      backgroundColor: theme.palette.myCanvasBg,
+      minHeight: "calc(100vh - 75px)",
+      height: "auto",
+    };
+  });
   return (
     <Box>
       <Header />
@@ -52,7 +64,7 @@ const Main = (props) => {
           sx={{
             typography: {
               xs: {
-                display: `${drawer.width}` === "74px" ? "none" : "block",
+                display: `${drawer.width}` === "88px" ? "none" : "block",
               },
               sm: { display: "inline-block" },
             },
@@ -60,12 +72,9 @@ const Main = (props) => {
         >
           <Drawer items={items} />
         </Grid>
-        <Grid
+        <MyCanvas
           item
           sx={{
-            backgroundColor: "#F0F2F5",
-            minHeight: "calc(100vh - 75px)",
-            height: "auto",
             typography: {
               xs: { marginLeft: "0px" },
               sm: {
@@ -76,7 +85,7 @@ const Main = (props) => {
           }}
         >
           {Element}
-        </Grid>
+        </MyCanvas>
       </Grid>
     </Box>
   );

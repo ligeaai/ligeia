@@ -8,7 +8,7 @@ import InputBase from "@mui/material/InputBase";
 import { setFocus, setBlur, setText } from "../../services/actions/searchBar";
 
 const SearchBarMobile = (props) => {
-  const { theme } = props;
+  const { theme } = props; //The theme should be checked manually as the starter page background is always black.
   const dispatch = useDispatch();
   const value = useSelector((state) => state.searchBar.text);
   const Search = styled("div")(({ theme }) => ({
@@ -43,7 +43,7 @@ const SearchBarMobile = (props) => {
   return (
     <Search>
       <SearchIconWrapper>
-        <SearchIcon />
+        <SearchIcon sx={{ color: theme === "light" ? "#000000" : "#ffffff" }} />
       </SearchIconWrapper>
       <StyledInputBase
         key="search"

@@ -7,7 +7,7 @@ export const registerFormReducer = createSlice({
         password: "",
         firstname: "",
         lastname: "",
-        isAgree: false
+        isAgree: true
     },
     reducers: {
         setEmailPass: (state, payload) => {
