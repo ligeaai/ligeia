@@ -218,7 +218,7 @@ const Header = () => {
           </Grid>
         </Grid>
         <Grid item>
-          <Grid container>
+          <Grid container sx={{ alignItems: "center" }}>
             <Grid item sx={{ position: "relative" }}>
               <Button
                 sx={{

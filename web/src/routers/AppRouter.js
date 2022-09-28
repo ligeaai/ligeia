@@ -20,6 +20,7 @@ const AppRouter1 = () => {
     <Fragment>
       <Routes>
         <Route exact path="/" element={<PrivateRoute />}>
+          <Route exact path="" element={<Main />} />
           {/* <Route exact path="/" element={<Layout />}>
             <Route path="monitoring" element={<Monitoring />} />
             <Route exact path="service" element={<ServicePage />} />
@@ -33,8 +34,7 @@ const AppRouter1 = () => {
             </Route>
           </Route> */}
         </Route>
-        {/* <Route exact path="home" element={<Start />} /> */}
-        <Route exact path="home" element={<Main />} />
+        <Route exact path="/home" element={<Start />} />
         <Route exact path="/signin">
           <Route path="" element={<Login />} />
           {/* <Route path="passrecovery" element={<PassRecovery />} />

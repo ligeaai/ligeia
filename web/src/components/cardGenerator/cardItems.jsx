@@ -18,9 +18,8 @@ const CardItems = (props) => {
         mb: 3.5,
         height: "215px",
         cursor: "pointer",
-        // borderTopRightRadius: "35px",
-        // borderTopRightRadius: "12px",
-        // borderBottomRightRadius: "12px",
+        borderTopRightRadius: "12px",
+        borderBottomRightRadius: "12px",
         "&:hover": {
           boxShadow: "4px 4px 8px rgba(0, 0, 0, 0.6)",
           position: "relative",

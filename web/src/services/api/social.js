@@ -11,16 +11,31 @@ const myFacebookLogin = async (accesstoken) => {
     return await res.status;
 };
 
-const myGoogleLogin = async (accesstoken) => {
-    console.log(accesstoken);
+const myGoogleLogin = async (response) => {
+    console.log(response);
     let res = await axios.post(
-        "http://localhost:8000/rest-auth/google/",
+        "http://localhost:8000/auth/google/",
         {
-            access_token: accesstoken,
+            access_token: response.accessToken,
+
+            id_token: response.xc.id_token,
         }
     );
     console.log(res);
     return await res.status;
 };
 
-export { myFacebookLogin, myGoogleLogin };
+const myGithubLogin = async (response) => {
+
+    let res = await axios.post(
+        "http://localhost:8000/auth/github/",
+        {
+            access_token: response.accessToken,
+
+        }
+    );
+    console.log(res);
+    return await res.status;
+};
+
+export { myFacebookLogin, myGoogleLogin, myGithubLogin };

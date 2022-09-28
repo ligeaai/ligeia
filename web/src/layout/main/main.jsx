@@ -25,7 +25,7 @@ const Main = (props) => {
     {
       img: <HomeOutlinedIcon />,
       text: "Home",
-      url: "/home",
+      url: "/",
     },
     {
       img: <DisplaySettingsIcon />,

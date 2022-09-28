@@ -23,7 +23,8 @@ function GoogleSocialAuth(props) {
         <Box onClick={renderProps.onClick}>{Element}</Box>
       )}
       onSuccess={(response) => {
-        myGoogleLogin(response.accessToken);
+        console.log(response);
+        myGoogleLogin(response);
       }}
       onFailure={(response) => {
         console.log("google auth fail");

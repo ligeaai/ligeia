@@ -172,6 +172,7 @@ export const login = (email, password) => async dispatch => {
             type: LOGIN_SUCCESS,
             payload: res.data
         });
+        dispatch(setLoaderFalse());
         //dispatch(load_user());
     } catch (err) {
         dispatch({
