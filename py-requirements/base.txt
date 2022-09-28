@@ -51,4 +51,7 @@ django-allauth
 findspark
 pyspark
 
-packaging
+#ElasticSearch
+elasticsearch
+elasticsearch-dsl
+django-elasticsearch-dsl

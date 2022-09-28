@@ -4,6 +4,7 @@ from knox import views as knox_views
 from rest_framework.routers import DefaultRouter
 
 from .views import (
+    GithubLogin,
     UserList,
     UserLoginView,
     UserRegisterView,
@@ -28,6 +29,7 @@ urlpatterns = [
    
     # path("", include("knox.urls")),
     path('google/', GoogleLogin.as_view(),name="google"),
+    path('github/', GithubLogin.as_view(),name="github"),
     path("facebook/", FacebookLogin.as_view(), name="facebook"),
     path("login/", UserLoginView.as_view(), name="login"),
     path("logout/", knox_views.LogoutView.as_view(), name="logout"),

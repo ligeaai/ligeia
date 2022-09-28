@@ -63,8 +63,14 @@ THIRD_PARTY_APPS = [
     "allauth.socialaccount",
     "allauth.socialaccount.providers.google",
     "allauth.socialaccount.providers.facebook",
+    "allauth.socialaccount.providers.github",
+    'django_elasticsearch_dsl',
 ]
-
+ELASTICSEARCH_DSL = {
+    'default': {
+        'hosts': env('Elastic_Search_Host')
+    },
+}
 LOCAL_APPS = [
     # "apps.base",
     # "apps.citylight",
