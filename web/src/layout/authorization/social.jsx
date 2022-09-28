@@ -1,5 +1,5 @@
 import React from "react";
-
+import axios from "axios";
 import { Grid } from "@mui/material";
 
 import FacebookRoundedIcon from "@mui/icons-material/FacebookRounded";
@@ -7,7 +7,8 @@ import GoogleIcon from "@mui/icons-material/Google";
 import GitHubIcon from "@mui/icons-material/GitHub";
 
 import SocialButtons from "../../components/buttons/socialButtons";
-
+import FacebookSocialAuth from "./faceSocialAuth";
+import GoogleSocialAuth from "./googleSocialAuth";
 const social = () => {
   const socialAcount = [
     {
@@ -26,11 +27,14 @@ const social = () => {
 
   return (
     <Grid container spacing={1} sx={{ justifyContent: "center" }}>
-      {socialAcount.map((e, key) => (
-        <Grid item key={key}>
-          <SocialButtons url={e.url} Logo={e.logo} />
-        </Grid>
-      ))}
+      <Grid item>
+        <FacebookSocialAuth
+          Element={<SocialButtons Logo={FacebookRoundedIcon} />}
+        />
+      </Grid>
+      <Grid item>
+        <GoogleSocialAuth Element={<SocialButtons Logo={GoogleIcon} />} />
+      </Grid>
     </Grid>
   );
 };
