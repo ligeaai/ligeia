@@ -6,22 +6,16 @@ import { Box, Grid } from "@mui/material";
 import Drawer from "../../components/drawer/drawer";
 import Header from "./header";
 
-import {
-  AdminstrationIcon,
-  // AnalyticsIcon,
-  HomeIcon,
-  OverviewIcon,
-  ReportingIcon,
-} from "../../assets/Images/drawer";
 import AnalyticsIcon from "@mui/icons-material/Analytics";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import DisplaySettingsIcon from "@mui/icons-material/DisplaySettings";
 import AccountTreeIcon from "@mui/icons-material/AccountTree";
 import ConstructionIcon from "@mui/icons-material/Construction";
+
 const Main = (props) => {
-  const drawer = useSelector((state) => state.drawer);
+  const drawerWidth = useSelector((state) => state.drawer.width);
   const { Element } = props;
-  const items = [
+  const navItems = [
     {
       img: <HomeOutlinedIcon />,
       text: "Home",
@@ -64,13 +58,13 @@ const Main = (props) => {
           sx={{
             typography: {
               xs: {
-                display: `${drawer.width}` === "88px" ? "none" : "block",
+                display: `${drawerWidth}` === "88px" ? "none" : "block",
               },
               sm: { display: "inline-block" },
             },
           }}
         >
-          <Drawer items={items} />
+          <Drawer navItems={navItems} />
         </Grid>
         <MyCanvas
           item
@@ -78,8 +72,8 @@ const Main = (props) => {
             typography: {
               xs: { marginLeft: "0px" },
               sm: {
-                marginLeft: `${drawer.width}`,
-                width: `calc(100vw - ${drawer.width})`,
+                marginLeft: `${drawerWidth}`,
+                width: `calc(100vw - ${drawerWidth})`,
               },
             },
           }}

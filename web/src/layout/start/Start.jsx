@@ -1,7 +1,7 @@
 import React from "react";
 import { Grid, Box } from "@mui/material";
 
-import headBackground from "../../assets/backgorunds/image.jpeg";
+import headBackground from "../../assets/Images/backgorunds/image.jpeg";
 
 import Header from "./header";
 import Footer from "./footer";

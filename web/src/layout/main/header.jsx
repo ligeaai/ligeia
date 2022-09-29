@@ -3,19 +3,16 @@ import { useDispatch, useSelector } from "react-redux";
 
 import {
   Avatar,
-  Badge,
   Box,
   Button,
   Grid,
-  Link,
   Typography,
+  InputBase,
 } from "@mui/material";
 import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 import BadgeUnstyled, { badgeUnstyledClasses } from "@mui/base/BadgeUnstyled";
-
-import { styled, alpha } from "@mui/material/styles";
+import { styled } from "@mui/material/styles";
 import SearchIcon from "@mui/icons-material/Search";
-import InputBase from "@mui/material/InputBase";
 import MenuIcon from "@mui/icons-material/Menu";
 import TranslateIcon from "@mui/icons-material/Translate";
 import Brightness2OutlinedIcon from "@mui/icons-material/Brightness2Outlined";
@@ -25,9 +22,9 @@ import { changeTheme } from "../../services/actions/theme";
 import { changeLanguage } from "../../services/actions/language";
 import { setBlur, setFocus, setText } from "../../services/actions/searchBar";
 import { toggleDrawer } from "../../services/reducers/drawerReducer";
-
 import SearchBarMobile from "../../components/searchBar/searchBarMobile";
 import NestedMenu from "./nestedMenu";
+
 const Search = styled("div")(({ theme }) => {
   return {
     position: "relative",
@@ -82,7 +79,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 const Header = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.auth.user);
-  const value = useSelector((state) => state.searchBar.text);
+  const searchBarValue = useSelector((state) => state.searchBar.text);
   const search = useSelector((state) => state.searchBar.isFocus);
   const theme = useSelector((state) => state.theme.theme);
   const lang = useSelector((state) => state.lang.lang);
@@ -95,13 +92,13 @@ const Header = () => {
     }
   });
 
-  const themeSelect = (val) => {
-    dispatch(changeTheme(val));
+  const themeSelect = (theme) => {
+    dispatch(changeTheme(theme));
   };
-  const langSelect = (val) => {
-    dispatch(changeLanguage(val));
+  const langSelect = (language) => {
+    dispatch(changeLanguage(language));
   };
-  const locationSelect = (val) => {};
+  const locationSelect = (location) => {};
 
   const MyBox = styled(Grid)(({ theme }) => ({
     backgroundColor: theme.palette.myBackgorundColor,
@@ -186,7 +183,7 @@ const Header = () => {
                   <SearchIcon />
                 </SearchIconWrapper>
                 <StyledInputBase
-                  value={value}
+                  value={searchBarValue}
                   onFocus={(e) => {
                     dispatch(setFocus());
                   }}
@@ -303,7 +300,7 @@ const Header = () => {
                 }}
               >
                 <NestedMenu
-                  dict={[
+                  menuItems={[
                     {
                       icon: <Brightness2OutlinedIcon />,
                       fixedText: "Appearance",
@@ -326,8 +323,8 @@ const Header = () => {
                       functions: locationSelect,
                     },
                   ]}
-                  isOpen={settingsMenu}
-                  theme={theme}
+                  isSubmenuOpen={settingsMenu}
+                  themeMode={theme}
                 />
               </Box>
             </Grid>

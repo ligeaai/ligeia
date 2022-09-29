@@ -14,7 +14,7 @@ import DrawerItem from "./drawerItem";
 
 const Drawer = (props) => {
   const dispatch = useDispatch();
-  const { items } = props;
+  const { navItems } = props;
   const [drawerHeight, setDrawerHeight] = useState(0);
   React.useEffect(() => {
     function handleResize() {
@@ -30,6 +30,7 @@ const Drawer = (props) => {
     width: "min-content",
     minHeight: `calc(100vh - 75px)`,
     height: `calc(${drawerHeight}px - 75px)`,
+    paddingTop: "16px",
     alignContent: "flex-start",
     overflow: "hidden",
     zIndex: 2,
@@ -40,7 +41,7 @@ const Drawer = (props) => {
       onMouseEnter={() => dispatch(mouseEnterDrawer())}
       onMouseLeave={() => dispatch(mouseLeaveDrawer())}
     >
-      <DrawerItem items={items} />
+      <DrawerItem items={navItems} />
     </MyBox>
   );
 };

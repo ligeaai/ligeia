@@ -8,13 +8,13 @@ import DoneIcon from "@mui/icons-material/Done";
 import { useEffect } from "react";
 
 const NestedMenu = (props) => {
-  const { dict, isOpen } = props;
-  const [menu, setMenu] = React.useState(dict.map(() => false));
-  var menuValidator = dict.map(() => false);
+  const { menuItems, isOpen } = props;
+  const [menu, setMenu] = React.useState(menuItems.map(() => false));
+  var menuValidator = menuItems.map(() => false);
   const [mainMenu, setMainMenu] = React.useState(true);
   useEffect(() => {
     if (isOpen) {
-      setMenu(dict.map(() => false));
+      setMenu(menuItems.map(() => false));
       setMainMenu(true);
     }
   }, [isOpen]);
@@ -30,7 +30,7 @@ const NestedMenu = (props) => {
     >
       {mainMenu ? (
         <React.Fragment>
-          {dict.map((e, key) => {
+          {menuItems.map((e, key) => {
             return (
               <React.Fragment key={key}>
                 <Grid
@@ -154,7 +154,7 @@ const NestedMenu = (props) => {
                   <Grid item sx={{ mx: 1 }}>
                     <ArrowBackIcon />
                   </Grid>
-                  <Grid item>{dict[i].fixedText}</Grid>
+                  <Grid item>{menuItems[i].fixedText}</Grid>
                 </Grid>
               </Grid>
               <Box
@@ -166,7 +166,7 @@ const NestedMenu = (props) => {
                   marginY: 1,
                 }}
               />
-              {dict[i].subtable.map((subValue, subKey) => {
+              {menuItems[i].subtable.map((subValue, subKey) => {
                 return (
                   <Grid
                     item
@@ -180,12 +180,12 @@ const NestedMenu = (props) => {
                       width: "100%",
                     }}
                     onClick={() => {
-                      dict[i].functions(subValue);
+                      menuItems[i].functions(subValue);
                     }}
                   >
                     <Grid container>
                       <Grid item sx={{ mx: 1 }}>
-                        {subValue === dict[i].text ? (
+                        {subValue === menuItems[i].text ? (
                           <DoneIcon />
                         ) : (
                           <DoneIcon sx={{ visibility: "hidden" }} />

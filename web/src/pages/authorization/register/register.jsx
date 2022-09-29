@@ -174,7 +174,7 @@ const MyBody = () => {
 };
 
 const authorizationLayout = () => {
-  return <Layout Element={MyBody} isSignIn={false} />;
+  return <Layout Element={MyBody} isSignInPanel={false} />;
 };
 
 const Register = () => {

@@ -180,7 +180,7 @@ const MyBody = () => {
 };
 
 const authorizationLayout = () => {
-  return <Layout Element={MyBody} isSignIn={true} />;
+  return <Layout Element={MyBody} isSignInPanel={true} />;
 };
 
 const Login = () => {

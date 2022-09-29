@@ -1,13 +1,9 @@
 import * as React from "react";
 import {
   Box,
-  Button,
   Dialog,
-  DialogActions,
   DialogContent,
   DialogTitle,
-  Grid,
-  TextField,
   Typography,
   Link,
 } from "@mui/material";
@@ -17,11 +13,9 @@ const PrivacyPolicy = () => {
   const handleClickOpen = () => {
     setOpen(true);
   };
-  //"linear-gradient(to right bottom, text.primary, text.secondary)"
   const handleClose = () => {
     setOpen(false);
   };
-  const styles = (theme) => ({ dialogPaper: { overflow: "visible" } });
   return (
     <Box component="span">
       <Box

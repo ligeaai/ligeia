@@ -1,7 +1,9 @@
 import React from "react";
 
 import { Grid } from "@mui/material";
+
 import CardItems from "./cardItems";
+
 const Cards = (props) => {
   const { cards } = props;
   return (

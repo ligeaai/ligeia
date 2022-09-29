@@ -20,10 +20,7 @@ import Layout from "../../../layout/authorization/layout";
 
 import { signup } from "../../../services/actions/auth";
 import { setFirstLastName } from "../../../services/reducers/registerFormReducer";
-import {
-  setLoaderFalse,
-  setLoaderTrue,
-} from "../../../services/actions/loader";
+import { setLoaderTrue } from "../../../services/actions/loader";
 
 const MyBody = () => {
   const dispatch = useDispatch();
@@ -139,7 +136,7 @@ const MyBody = () => {
 };
 
 const authorizationLayout = () => {
-  return <Layout Element={MyBody} isSignIn={false} />;
+  return <Layout Element={MyBody} isSignInPanel={false} />;
 };
 
 const RegisterPageTwo = () => {

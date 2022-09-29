@@ -1,18 +1,21 @@
-import React, { Component } from "react";
+import React from "react";
+
 import { Box } from "@mui/material";
+
 import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
+
 import { myFacebookLogin } from "../../services/api/social";
+
 function FacebookSocialAuth(props) {
   const { Element } = props;
 
   return (
-    <div className="App">
-      <FacebookLogin
-        render={(renderProps) => (
-          <Box onClick={renderProps.onClick}>{Element}</Box>
-        )}
-        appId="1531824097251400"
-        fields="
+    <FacebookLogin
+      render={(renderProps) => (
+        <Box onClick={renderProps.onClick}>{Element}</Box>
+      )}
+      appId="1531824097251400"
+      fields="
             id,
             first_name,
             last_name,
@@ -20,12 +23,11 @@ function FacebookSocialAuth(props) {
             name_format,
             picture,
             short_name"
-        callback={(response) => {
-          console.log(response);
-          myFacebookLogin();
-        }}
-      />
-    </div>
+      callback={(response) => {
+        console.log(response);
+        myFacebookLogin();
+      }}
+    />
   );
 }
 

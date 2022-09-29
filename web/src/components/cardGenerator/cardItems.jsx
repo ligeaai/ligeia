@@ -6,7 +6,7 @@ import history from "../../routers/history";
 
 const CardItems = (props) => {
   const { card } = props;
-  const [theme, setTheme] = useState("myCardFancyColor");
+  const [cardFancyTheme, setCardFancyTheme] = useState("myCardFancyColor");
   return (
     <Grid
       item
@@ -27,8 +27,8 @@ const CardItems = (props) => {
           left: "-3px",
         },
       }}
-      onMouseOver={() => setTheme("myCardFancyColorHover")}
-      onMouseLeave={() => setTheme("myCardFancyColor")}
+      onMouseOver={() => setCardFancyTheme("myCardFancyColorHover")}
+      onMouseLeave={() => setCardFancyTheme("myCardFancyColor")}
       onClick={() => {
         history.push(`${card.cardURL}`);
       }}
@@ -43,7 +43,7 @@ const CardItems = (props) => {
             sx={{
               width: "20px",
               height: "100%",
-              backgroundColor: theme,
+              backgroundColor: cardFancyTheme,
             }}
           />
         </Grid>

@@ -2,9 +2,7 @@ import React from "react";
 
 import { Box } from "@mui/material";
 
-import history from "../../routers/history";
-
-const socialButtons = (props) => {
+const socialButton = (props) => {
   const { Logo } = props;
   return (
     <Box
@@ -25,4 +23,4 @@ const socialButtons = (props) => {
   );
 };
 
-export default socialButtons;
+export default socialButton;

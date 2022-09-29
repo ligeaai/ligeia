@@ -5,7 +5,7 @@ import Header from "./header";
 import Social from "./social";
 
 const layout = (props) => {
-  const { Element, isSignIn } = props;
+  const { Element, isSignInPanel } = props;
   return (
     <Grid
       container
@@ -27,7 +27,7 @@ const layout = (props) => {
           width: "410px",
         }}
       >
-        <Header isSignIn={isSignIn} />
+        <Header isSignInPanel={isSignInPanel} />
         <Box sx={{ height: "44px" }} />
         <Social />
         <Typography

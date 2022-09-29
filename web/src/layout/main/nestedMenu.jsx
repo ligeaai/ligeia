@@ -18,16 +18,16 @@ import { setLoaderTrue } from "../../services/actions/loader";
 
 const NestedMenu = (props) => {
   const dispatch = useDispatch();
-  const { dict, isOpen, theme } = props;
-  const [menu, setMenu] = React.useState(dict.map(() => false));
-  var menuValidator = dict.map(() => false);
+  const { menuItems, isSubmenuOpen, themeMode } = props;
+  const [menu, setMenu] = React.useState(menuItems.map(() => false));
+  var menuValidator = menuItems.map(() => false);
   const [mainMenu, setMainMenu] = React.useState(true);
   useEffect(() => {
-    if (isOpen) {
-      setMenu(dict.map(() => false));
+    if (isSubmenuOpen) {
+      setMenu(menuItems.map(() => false));
       setMainMenu(true);
     }
-  }, [isOpen, dict]);
+  }, [isSubmenuOpen]);
   const MyBox = styled(Grid)(({ theme }) => ({
     backgroundColor: theme.palette.myBackgorundColor,
     flexDirection: "column",
@@ -44,7 +44,8 @@ const NestedMenu = (props) => {
             sx={{
               padding: "5px",
               "&:hover": {
-                backgroundColor: theme === "dark" ? "#ffffff22" : "#00000022",
+                backgroundColor:
+                  themeMode === "dark" ? "#ffffff22" : "#00000022",
               },
             }}
           >
@@ -83,7 +84,7 @@ const NestedMenu = (props) => {
               my: 1,
             }}
           />
-          {dict.map((e, key) => {
+          {menuItems.map((e, key) => {
             return (
               <React.Fragment key={key}>
                 <Grid
@@ -93,7 +94,7 @@ const NestedMenu = (props) => {
                     padding: "5px",
                     "&:hover": {
                       backgroundColor:
-                        theme === "dark" ? "#ffffff22" : "#00000022",
+                        themeMode === "dark" ? "#ffffff22" : "#00000022",
                     },
                   }}
                 >
@@ -151,7 +152,8 @@ const NestedMenu = (props) => {
             sx={{
               padding: "5px",
               "&:hover": {
-                backgroundColor: theme === "dark" ? "#ffffff22" : "#00000022",
+                backgroundColor:
+                  themeMode === "dark" ? "#ffffff22" : "#00000022",
               },
               marginBottom: "8px",
             }}
@@ -184,7 +186,8 @@ const NestedMenu = (props) => {
             sx={{
               padding: "5px",
               "&:hover": {
-                backgroundColor: theme === "dark" ? "#ffffff22" : "#00000022",
+                backgroundColor:
+                  themeMode === "dark" ? "#ffffff22" : "#00000022",
               },
             }}
           >
@@ -207,7 +210,8 @@ const NestedMenu = (props) => {
             sx={{
               padding: "5px",
               "&:hover": {
-                backgroundColor: theme === "dark" ? "#ffffff22" : "#00000022",
+                backgroundColor:
+                  themeMode === "dark" ? "#ffffff22" : "#00000022",
               },
               marginBottom: "8px",
             }}
@@ -240,7 +244,8 @@ const NestedMenu = (props) => {
             sx={{
               padding: "5px",
               "&:hover": {
-                backgroundColor: theme === "dark" ? "#ffffff22" : "#00000022",
+                backgroundColor:
+                  themeMode === "dark" ? "#ffffff22" : "#00000022",
               },
               marginBottom: "8px",
             }}
@@ -282,7 +287,7 @@ const NestedMenu = (props) => {
                 sx={{
                   "&:hover": {
                     backgroundColor:
-                      theme === "dark" ? "#ffffff22" : "#00000022",
+                      themeMode === "dark" ? "#ffffff22" : "#00000022",
                   },
                   width: "100%",
                   padding: "5px",
@@ -304,7 +309,7 @@ const NestedMenu = (props) => {
                     <ArrowBackIcon />
                   </Grid>
                   <Grid item sx={{ color: "text.primary" }}>
-                    {dict[i].fixedText}
+                    {menuItems[i].fixedText}
                   </Grid>
                 </Grid>
               </Grid>
@@ -317,7 +322,7 @@ const NestedMenu = (props) => {
                   marginY: 1,
                 }}
               />
-              {dict[i].subtable.map((subValue, subKey) => {
+              {menuItems[i].subtable.map((subValue, subKey) => {
                 return (
                   <Grid
                     item
@@ -326,18 +331,18 @@ const NestedMenu = (props) => {
                       cursor: "pointer",
                       "&:hover": {
                         backgroundColor:
-                          theme === "dark" ? "#ffffff22" : "#00000022",
+                          themeMode === "dark" ? "#ffffff22" : "#00000022",
                       },
                       padding: "8px",
                       width: "100%",
                     }}
                     onClick={() => {
-                      dict[i].functions(subValue);
+                      menuItems[i].functions(subValue);
                     }}
                   >
                     <Grid container>
                       <Grid item sx={{ mx: 1 }}>
-                        {subValue === dict[i].text ? (
+                        {subValue === menuItems[i].text ? (
                           <DoneIcon sx={{ color: "text.primary" }} />
                         ) : (
                           <DoneIcon sx={{ visibility: "hidden" }} />

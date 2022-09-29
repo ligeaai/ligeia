@@ -1,8 +1,11 @@
 import React from "react";
+
 import { Grid, Link } from "@mui/material";
+
 import history from "../../routers/history";
+
 const header = (props) => {
-  const { isSignIn } = props;
+  const { isSignInPanel } = props;
   return (
     <Grid
       container
@@ -19,7 +22,7 @@ const header = (props) => {
           borderWidth: "0px",
           paddingBottom: "5px",
           borderBottomWidth: "1px",
-          borderColor: isSignIn ? "text.primary" : "text.secondary",
+          borderColor: isSignInPanel ? "text.primary" : "text.secondary",
           borderStyle: "solid",
         }}
       >
@@ -28,8 +31,8 @@ const header = (props) => {
           sx={{
             width: "100%",
             cursor: "pointer",
-            color: isSignIn ? "text.primary" : "text.secondary",
-            opacity: isSignIn ? "1" : "0.6",
+            color: isSignInPanel ? "text.primary" : "text.secondary",
+            opacity: isSignInPanel ? "1" : "0.6",
             fontWeight: "700",
           }}
           onClick={() => history.push("/signin")}
@@ -45,9 +48,9 @@ const header = (props) => {
           borderWidth: "0px",
           paddingBottom: "5px",
           borderBottomWidth: "1px",
-          borderColor: isSignIn ? "text.secondary" : "text.primary",
+          borderColor: isSignInPanel ? "text.secondary" : "text.primary",
           borderStyle: "solid",
-          opacity: isSignIn ? "0.6" : "1",
+          opacity: isSignInPanel ? "0.6" : "1",
         }}
       >
         <Link
@@ -55,7 +58,7 @@ const header = (props) => {
           sx={{
             width: "100%",
             cursor: "pointer",
-            color: isSignIn ? "text.secondary" : "text.primary",
+            color: isSignInPanel ? "text.secondary" : "text.primary",
             fontWeight: "700",
           }}
           onClick={() => history.push("/signup")}

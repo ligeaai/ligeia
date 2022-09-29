@@ -197,7 +197,7 @@ export const signup = (email, first_name, last_name, password) => async dispatch
             'Content-Type': 'application/json'
         }
     };
-
+    console.log(email, first_name, last_name, password);
     const body = JSON.stringify({ email, first_name, last_name, password });
 
     try {

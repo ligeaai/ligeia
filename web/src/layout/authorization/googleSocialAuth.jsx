@@ -1,8 +1,12 @@
 import React, { useEffect } from "react";
+
+import { Box } from "@mui/material";
+
 import { GoogleLogin } from "react-google-login";
 import { gapi } from "gapi-script";
+
 import { myGoogleLogin } from "../../services/api/social";
-import { Box } from "@mui/material";
+
 function GoogleSocialAuth(props) {
   const { Element } = props;
   useEffect(() => {

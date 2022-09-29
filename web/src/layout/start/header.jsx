@@ -91,13 +91,13 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 const Header = () => {
   const dispatch = useDispatch();
-  const value = useSelector((state) => state.searchBar.text);
-  const search = useSelector((state) => state.searchBar.isFocus);
-  const theme = useSelector((state) => state.theme.theme);
+  const searchBarValue = useSelector((state) => state.searchBar.text);
+  const isFocusSearchBar = useSelector((state) => state.searchBar.isFocus);
+  const themeMode = useSelector((state) => state.theme.theme);
   const lang = useSelector((state) => state.lang.lang);
   const [menu, setMenu] = React.useState("none");
   const [settingsMenu, setSettingsMenu] = React.useState(false);
-  const [open, setOpen] = React.useState([
+  const [openNavbar, setOpenNavbar] = React.useState([
     false,
     false,
     false,
@@ -122,13 +122,13 @@ const Header = () => {
   const locationSelect = (val) => {};
   const handleClick = (key) => {
     openValid[key] = true;
-    setOpen(openValid);
+    setOpenNavbar(openValid);
   };
   const handleClose = (key) => {
     openValid[key] = false;
-    setOpen(openValid);
+    setOpenNavbar(openValid);
   };
-  var myObject = {
+  var myNavbarItems = {
     Product: ["Product 1", "Product 2"],
     Learn: ["Learn 1", "Learn 2", "Learn 3", "Learn 4"],
     Stories: ["Stories 1", "Stories 2", "Stories 3"],
@@ -148,7 +148,7 @@ const Header = () => {
         container
         sx={{
           display: {
-            xs: search ? "flex" : "none",
+            xs: isFocusSearchBar ? "flex" : "none",
             md: "none",
           },
         }}
@@ -159,7 +159,7 @@ const Header = () => {
         container
         sx={{
           display: {
-            xs: search ? "none" : "flex",
+            xs: isFocusSearchBar ? "none" : "flex",
             md: "flex",
           },
           justifyContent: "space-between",
@@ -229,7 +229,7 @@ const Header = () => {
                     },
                   }}
                 >
-                  {Object.keys(myObject).map((e, key) => {
+                  {Object.keys(myNavbarItems).map((e, key) => {
                     return (
                       <Grid
                         key={key}
@@ -305,10 +305,10 @@ const Header = () => {
                               position: "absolute",
                               top: { xs: "0px", md: "30px", lg: "45px" },
                               left: { xs: "125px", md: "0px" },
-                              display: open[key] ? "flex" : "none",
+                              display: openNavbar[key] ? "flex" : "none",
                             }}
                           >
-                            {myObject[e].map((value, myKey) => (
+                            {myNavbarItems[e].map((value, myKey) => (
                               <Grid
                                 key={myKey}
                                 sx={{
@@ -353,7 +353,7 @@ const Header = () => {
                   <SearchIcon />
                 </SearchIconWrapper>
                 <StyledInputBase
-                  value={value}
+                  value={searchBarValue}
                   onFocus={(e) => {
                     dispatch(setFocus());
                   }}
@@ -419,11 +419,11 @@ const Header = () => {
                 }}
               >
                 <NestedMenu
-                  dict={[
+                  menuItems={[
                     {
                       icon: <Brightness2OutlinedIcon />,
                       fixedText: "Appearance",
-                      text: theme,
+                      text: themeMode,
                       subtable: ["dark", "light"],
                       functions: themeSelect,
                     },
