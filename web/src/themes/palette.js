@@ -5,14 +5,14 @@ const Palette = () => {
     const palette = {
         mode: theme,
         ...(theme === "light" ? {
-            myBackgorundColor: "#ffffff",
+            myBackgroundColor: "#ffffff",
             myCanvasBg: "#FAFCFF",
             myTextColor: "#42526E",
             myReverseText: "#ffffff",
             myCardFancyColor: "#42526E",
             myCardFancyColorHover: "#458BF3",
         } : {
-            myBackgorundColor: "#202020",
+            myBackgroundColor: "#202020",
             myCanvasBg: "#181818",
             myTextColor: "#BB86FC",
             myReverseText: "#000000",

@@ -15,31 +15,19 @@ import DrawerItem from "./drawerItem";
 const Drawer = (props) => {
   const dispatch = useDispatch();
   const { navItems } = props;
-  const [drawerHeight, setDrawerHeight] = useState(0);
-  React.useEffect(() => {
-    function handleResize() {
-      setDrawerHeight(document.body.scrollHeight);
-    }
-    window.addEventListener("resize", handleResize);
-  });
-  const MyBox = styled(Grid)(({ theme }) => ({
-    display: "flex",
-    flexDirection: "column",
-    position: "absolute",
-    backgroundColor: theme.palette.myBackgorundColor,
-    width: "min-content",
-    minHeight: `calc(100vh - 75px)`,
-    height: `calc(${drawerHeight}px - 75px)`,
-    paddingTop: "16px",
-    alignContent: "flex-start",
-    overflow: "hidden",
-    zIndex: 2,
-    paddingBottom: "16px",
-  }));
+
+  const MyBox = styled(Grid)(({ theme }) => ({}));
   return (
     <MyBox
       onMouseEnter={() => dispatch(mouseEnterDrawer())}
       onMouseLeave={() => dispatch(mouseLeaveDrawer())}
+      sx={{
+        width: "min-content",
+        minHeight: `calc(100vh - 75px)`,
+        paddingTop: "16px",
+        alignContent: "flex-start",
+        paddingBottom: "16px",
+      }}
     >
       <DrawerItem items={navItems} />
     </MyBox>

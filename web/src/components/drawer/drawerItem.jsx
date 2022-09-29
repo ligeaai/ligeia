@@ -23,7 +23,6 @@ const DrawerItem = (props) => {
             cursor: "ponter",
             paddingY: "13px",
             textAlign: "start",
-
             "&:hover": {
               backgroundColor:
                 drawer.isActive === i ? "action.active" : "action.hover",
@@ -48,7 +47,7 @@ const DrawerItem = (props) => {
                   display: `${drawer.display}`,
                   marginLeft: "16px",
                   fontWeight: "700",
-                  width: "165px",
+                  width: "130px",
                   fontSize: "16px",
                   textTransform: "capitalize",
                 }}

@@ -4,6 +4,7 @@ import { styled } from "@mui/system";
 import { Box, Grid } from "@mui/material";
 
 import Drawer from "../../components/drawer/drawer";
+// import Drawer from "../../trash/myDrawer/drawer";
 import Header from "./header";
 
 import AnalyticsIcon from "@mui/icons-material/Analytics";
@@ -42,44 +43,38 @@ const Main = (props) => {
       url: "/#",
     },
   ];
-  const MyCanvas = styled(Grid)(({ theme }) => {
-    return {
-      backgroundColor: theme.palette.myCanvasBg,
-      minHeight: "calc(100vh - 75px)",
-      height: "auto",
-    };
-  });
+
   return (
     <Box>
       <Header />
-      <Grid container>
+      <Grid container sx={{ flexWrap: "nowrap" }}>
         <Grid
           item
           sx={{
+            backgroundColor: "myBackgroundColor",
+            zIndex: 2,
             typography: {
               xs: {
-                display: `${drawerWidth}` === "88px" ? "none" : "block",
+                position: "absolute",
+                display: `${drawerWidth}` === "88px" ? "none" : "inline-block",
               },
-              sm: { display: "inline-block" },
+              sm: { display: "inline-block", position: "relative" },
             },
           }}
         >
           <Drawer navItems={navItems} />
         </Grid>
-        <MyCanvas
+        <Grid
           item
           sx={{
-            typography: {
-              xs: { marginLeft: "0px" },
-              sm: {
-                marginLeft: `${drawerWidth}`,
-                width: `calc(100vw - ${drawerWidth})`,
-              },
-            },
+            backgroundColor: "myCanvasBg",
+            minHeight: "calc(100vh - 75px)",
+            height: "auto",
+            width: "100%",
           }}
         >
           {Element}
-        </MyCanvas>
+        </Grid>
       </Grid>
     </Box>
   );
