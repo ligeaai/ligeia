@@ -1,10 +1,12 @@
 import email
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
-from knox.auth import AuthToken, TokenAuthentication
+from rest_framework.authtoken.models import Token
+#from knox.auth import AuthToken, TokenAuthentication
 from rest_framework.decorators import api_view
 from rest_framework import status, generics, permissions
 from rest_framework.generics import GenericAPIView
+from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated,AllowAny
 from rest_framework.response import Response
 from rest_framework.authtoken.serializers import AuthTokenSerializer
@@ -92,15 +94,11 @@ class UserRegisterView(generics.GenericAPIView):
         serializer = self.get_serializer(data=request.data)
         if serializer.is_valid():
             user = serializer.save()
-            token = AuthToken.objects.create(user)
+            token = Token.objects.create(user=user)
             logger.info(message='Created a Profile ',request=request)
             return Response(
                 {
-                    "status": status.HTTP_201_CREATED,
-                    "users": UserSerializer(
-                        user, context=self.get_serializer_context()
-                    ).data,
-                    "token": token[1],
+                    'token':token.key,
                 }
             )
         logger.warning(request=request,message="Register Failed",warning=serializer.errors)
@@ -120,15 +118,13 @@ class UserLoginView(generics.GenericAPIView):
         if serializer.is_valid(raise_exception=True):
             user = serializer.validated_data["user"]
             update_last_login(None, user)
+            token = Token.objects.get_or_create(user=user)
             logger.info(request=request,message="Successful Login")
             return Response(
                 {
-                    "status": status.HTTP_200_OK,
-                    "user": UserSerializer(
-                        user, context=self.get_serializer_context()
-                    ).data,
-                    "token": AuthToken.objects.create(user)[1],
-                }
+                    "token":str(token[0]),
+                   
+                },status=status.HTTP_200_OK
             )
         logger.warning(request=request,message="Login Failed",warning=serializer.errors)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

@@ -43,7 +43,7 @@ THIRD_PARTY_APPS = [
     "raven.contrib.django.raven_compat",
     "rest_framework",
     "rest_framework.authtoken",
-    "knox",
+    #"knox",
     "django_extensions",
     "django_filters",
     # "cities_light",
@@ -172,8 +172,8 @@ REST_FRAMEWORK = {
         "rest_framework.permissions.IsAuthenticated",
     ],
     "DEFAULT_AUTHENTICATION_CLASSES": (
-        "knox.auth.TokenAuthentication",
-        # "rest_framework.authentication.TokenAuthentication",
+        #"knox.auth.TokenAuthentication",
+         "rest_framework.authentication.TokenAuthentication",
         # "rest_framework.authentication.SessionAuthentication",
         # "rest_framework.authentication.BasicAuthentication",
     ),
@@ -187,13 +187,13 @@ REST_FRAMEWORK = {
 }
 
 # ############ REST KNOX ########################
-REST_KNOX = {
-    "SECURE_HASH_ALGORITHM": "cryptography.hazmat.primitives.hashes.SHA512",
-    "AUTH_TOKEN_CHARACTER_LENGTH": 64,
-    "USER_SERIALIZER": "users.serializers.UserSerializer",
-    "TOKEN_TTL": timedelta(minutes=45),
-    "EXPIRY_DATETIME_FORMAT": api_settings.DATETIME_FORMAT,
-}
+# REST_KNOX = {
+#     "SECURE_HASH_ALGORITHM": "cryptography.hazmat.primitives.hashes.SHA512",
+#     "AUTH_TOKEN_CHARACTER_LENGTH": 64,
+#     "USER_SERIALIZER": "users.serializers.UserSerializer",
+#     "TOKEN_TTL": timedelta(minutes=45),
+#     "EXPIRY_DATETIME_FORMAT": api_settings.DATETIME_FORMAT,
+# }
 
 
 CACHES = {
@@ -231,7 +231,6 @@ ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_AUTHENTICATION_METHOD = "email"
 ACCOUNT_ACTIVATION_DAYS = 7  # days
 ACCOUNT_EMAIL_VERIFICATION = "optional"
-SOCIALACCOUNT_ADAPTER = 'apps.users.adapter.SocialAdapter'
 SOCIALACCOUNT_PROVIDERS = {
     "google": {
         # For each OAuth based provider, either add a ``SocialApp``

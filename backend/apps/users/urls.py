@@ -1,5 +1,5 @@
 from django.urls import include, path, re_path
-from knox import views as knox_views
+#from knox import views as knox_views
 
 from rest_framework.routers import DefaultRouter
 
@@ -22,7 +22,6 @@ from .views import (
 from rest_framework import routers
 router = routers.DefaultRouter()
 router.register('user-detail', UserDetails, basename='user-detail')
-
 # routers.register("users-details", UserDetails, basename="users-details")
 
 urlpatterns = [
@@ -32,8 +31,8 @@ urlpatterns = [
     path('github/', GithubLogin.as_view(),name="github"),
     path("facebook/", FacebookLogin.as_view(), name="facebook"),
     path("login/", UserLoginView.as_view(), name="login"),
-    path("logout/", knox_views.LogoutView.as_view(), name="logout"),
-    path("logoutall/", knox_views.LogoutAllView.as_view(), name="logoutall"),
+   #path("logout/", knox_views.LogoutView.as_view(), name="logout"),
+   #path("logoutall/", knox_views.LogoutAllView.as_view(), name="logoutall"),
     path("register/", UserRegisterView.as_view(), name="register"),
     path("change-password/", UserChangePassword.as_view(), name="change_password"),
     path("api-auth/", include("rest_framework.urls")),
