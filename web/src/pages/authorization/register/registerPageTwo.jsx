@@ -43,18 +43,16 @@ const MyBody = () => {
       );
       if (values.isAgree) {
         dispatch(setLoaderTrue());
-        (await dispatch(
+        dispatch(
           signup(
             userData.email,
             values.firstname,
             values.lastname,
             userData.password
           )
-        )) ? (
-          <React.Fragment></React.Fragment>
-        ) : (
-          history.push(`/`)
-        );
+        ).then(() => {
+          history.push(`/`);
+        });
       } else {
         dispatch({
           type: "ADD_ERROR_SUCCESS",

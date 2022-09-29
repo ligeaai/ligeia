@@ -28,34 +28,34 @@ import {
     CLEAN_ERROR_SUCCESS
 } from './types';
 
-// export const load_user = () => async dispatch => {
-//     if (localStorage.getItem('access')) {
-//         const config = {
-//             headers: {
-//                 'Content-Type': 'application/json',
-//                 'Authorization': `JWT ${localStorage.getItem('access')}`,
-//                 'Accept': 'application/json'
-//             }
-//         };
+const _loadUser = () => async dispatch => {
+    if (localStorage.getItem('token')) {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Token ${localStorage.getItem('token')}`,
+                'Accept': 'application/json'
+            }
+        };
 
-//         try {
-//             const res = await axios.get(`http://localhost:8000/en/api/v1/...`, config);
+        try {
+            const res = await axios.get(`http://localhost:8000/api/v1/auth/user-detail`, config);
 
-//             dispatch({
-//                 type: USER_LOADED_SUCCESS,
-//                 payload: res.data
-//             });
-//         } catch (err) {
-//             dispatch({
-//                 type: USER_LOADED_FAIL
-//             });
-//         }
-//     } else {
-//         dispatch({
-//             type: USER_LOADED_FAIL
-//         });
-//     }
-// };
+            dispatch({
+                type: USER_LOADED_SUCCESS,
+                payload: res.data
+            });
+        } catch (err) {
+            dispatch({
+                type: USER_LOADED_FAIL
+            });
+        }
+    } else {
+        dispatch({
+            type: USER_LOADED_FAIL
+        });
+    }
+};
 
 // export const googleAuthenticate = (state, code) => async dispatch => {
 //     if (state && code && !localStorage.getItem('access')) {
@@ -173,7 +173,7 @@ export const login = (email, password) => async dispatch => {
             payload: res.data
         });
         dispatch(setLoaderFalse());
-        //dispatch(load_user());
+        dispatch(_loadUser());
     } catch (err) {
         dispatch({
             type: LOGIN_FAIL
@@ -207,6 +207,7 @@ export const signup = (email, first_name, last_name, password) => async dispatch
             type: SIGNUP_SUCCESS,
             payload: res.data
         });
+        dispatch(_loadUser());
         dispatch(setLoaderFalse());
         dispatch(cleanState())
     } catch (err) {
@@ -224,7 +225,6 @@ export const signup = (email, first_name, last_name, password) => async dispatch
                 type: CLEAN_ERROR_SUCCESS,
             })
         }, 3000)
-        return err;
     }
 };
 
@@ -282,7 +282,6 @@ export const change_password = (new_password1, new_password2, old_password) => a
                 type: CLEAN_ERROR_SUCCESS,
             })
         }, 3000)
-        return err;
     }
 };
 
@@ -312,7 +311,6 @@ export const reset_password = (email, password) => async dispatch => {
                 type: CLEAN_ERROR_SUCCESS,
             })
         }, 3000)
-        return err;
     }
 };
 

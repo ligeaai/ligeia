@@ -47,7 +47,6 @@ export default function (state = initialState, action) {
                 ...state,
                 isAuthenticated: true,
                 token: payload.token,
-                user: payload.user
             }
         case USER_LOADED_SUCCESS:
             return {

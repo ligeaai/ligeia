@@ -46,13 +46,11 @@ const MyBody = () => {
       password: "",
     },
     validationSchema: validationSchema,
-    onSubmit: async (values) => {
+    onSubmit: (values) => {
       dispatch(setLoaderTrue());
-      (await dispatch(login(values.email, values.password))) ? (
-        <React.Fragment></React.Fragment>
-      ) : (
-        history.push(`/`)
-      );
+      dispatch(login(values.email, values.password)).then(() => {
+        history.push(`/`);
+      });
     },
   });
 
