@@ -4,7 +4,7 @@ from django.urls import include, path, re_path
 from rest_framework.routers import DefaultRouter
 
 from .views import (
-    GithubLogin,
+    GitHubLogin,
     UserList,
     UserLoginView,
     UserRegisterView,
@@ -17,18 +17,23 @@ from .views import (
     FacebookLogin,
     GoogleLogin,
     ResetForgetPassword,
+    github_callback
     
 )
+
+from allauth.socialaccount.providers.github import views 
 from rest_framework import routers
 router = routers.DefaultRouter()
 router.register('user-detail', UserDetails, basename='user-detail')
 # routers.register("users-details", UserDetails, basename="users-details")
 
 urlpatterns = [
-   
+    path('github/', GitHubLogin.as_view()),
+    path('github/callback/', github_callback, name='github_callback'),
+    path('github/url/', views.oauth2_login,name = 'github-url'),
     # path("", include("knox.urls")),
     path('google/', GoogleLogin.as_view(),name="google"),
-    path('github/', GithubLogin.as_view(),name="github"),
+    #path('github/', GithubLogin.as_view(),name="github"),
     path("facebook/", FacebookLogin.as_view(), name="facebook"),
     path("login/", UserLoginView.as_view(), name="login"),
    #path("logout/", knox_views.LogoutView.as_view(), name="logout"),

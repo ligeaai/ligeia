@@ -14,11 +14,11 @@ const myFacebookLogin = async (accesstoken) => {
 const myGoogleLogin = async (response) => {
     console.log(response);
     let res = await axios.post(
-        "http://localhost:8000/auth/google/",
+        "http://localhost:8000/api/v1/auth/google/",
         {
             access_token: response.accessToken,
 
-            id_token: response.xc.id_token,
+
         }
     );
     console.log(res);

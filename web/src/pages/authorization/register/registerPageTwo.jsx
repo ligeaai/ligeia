@@ -33,7 +33,7 @@ const MyBody = () => {
       isAgree: userData.isAgree,
     },
 
-    onSubmit: async (values) => {
+    onSubmit: (values) => {
       dispatch(
         setFirstLastName({
           firstname: values.firstname,

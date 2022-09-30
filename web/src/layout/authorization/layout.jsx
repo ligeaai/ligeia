@@ -19,7 +19,7 @@ const layout = (props) => {
       <Grid
         item
         sx={{
-          backgroundColor: "myBackgorundColor",
+          backgroundColor: "myBackgroundColor",
           p: 3,
           pb: 6.5,
           boxShadow: "0px 20px 27px rgba(0, 0, 0, 0.05)",
