@@ -143,6 +143,14 @@ services:
     depends_on:
       - broker
       - zookeeper
+  rabbitmq:
+    image: rabbitmq:3-management
+    hostname: localhost
+    ports:
+      - '15672:15672'
+      - '5672:5672'
+    networks:
+      - net
 
   connect:
     build: ./

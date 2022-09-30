@@ -24,7 +24,6 @@ function FacebookSocialAuth(props) {
             picture,
             short_name"
       callback={(response) => {
-        console.log(response);
         myFacebookLogin();
       }}
     />

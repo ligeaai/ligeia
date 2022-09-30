@@ -29,7 +29,7 @@ const NestedMenu = (props) => {
     }
   }, [isSubmenuOpen]);
   const MyBox = styled(Grid)(({ theme }) => ({
-    backgroundColor: theme.palette.myBackgorundColor,
+    backgroundColor: theme.palette.myBackgroundColor,
     flexDirection: "column",
     width: "250px",
     pt: 1,

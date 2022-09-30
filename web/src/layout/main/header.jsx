@@ -101,7 +101,7 @@ const Header = () => {
   const locationSelect = (location) => {};
 
   const MyBox = styled(Grid)(({ theme }) => ({
-    backgroundColor: theme.palette.myBackgorundColor,
+    backgroundColor: theme.palette.myBackgroundColor,
     alignItems: "center",
     justifyContent: "space-between",
     padding: "13px 21px",
