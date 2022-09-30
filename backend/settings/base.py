@@ -232,6 +232,14 @@ ACCOUNT_AUTHENTICATION_METHOD = "email"
 ACCOUNT_ACTIVATION_DAYS = 7  # days
 ACCOUNT_EMAIL_VERIFICATION = "optional"
 SOCIALACCOUNT_PROVIDERS = {
+    "github":{
+        'APP': {
+             'client_id': '18aca4fc69e6c0c27eae',  # !!! THIS App ID
+             'secret': '806dd5c09888650bbb7872d21eafb3a7f211e303',  # !!! THIS App Secret
+             'key': ''
+                }
+         
+    },
     "google": {
         # For each OAuth based provider, either add a ``SocialApp``
         # (``socialaccount`` app) containing the required client
