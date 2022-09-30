@@ -235,7 +235,7 @@ SOCIALACCOUNT_PROVIDERS = {
     "github":{
         'APP': {
              'client_id': '18aca4fc69e6c0c27eae',  # !!! THIS App ID
-             'secret': '806dd5c09888650bbb7872d21eafb3a7f211e303',  # !!! THIS App Secret
+             'secret': 'fabc80da0e9e7f9da543ffd7b6fc111104fd39c9',  # !!! THIS App Secret
              'key': ''
                 }
          
@@ -282,6 +282,7 @@ SOCIALACCOUNT_PROVIDERS = {
          }
 }
 
+ACCOUNT_DEFAULT_HTTP_PROTOCOL = 'https'
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = env('EMAIL_HOST')
 EMAIL_USE_TLS = True

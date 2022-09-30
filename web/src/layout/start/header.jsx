@@ -13,85 +13,22 @@ import TranslateIcon from "@mui/icons-material/Translate";
 import Brightness2OutlinedIcon from "@mui/icons-material/Brightness2Outlined";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 
-import { styled, alpha } from "@mui/material/styles";
-import SearchIcon from "@mui/icons-material/Search";
-import InputBase from "@mui/material/InputBase";
-
 import { changeTheme } from "../../services/actions/theme";
 import { changeLanguage } from "../../services/actions/language";
 
-import { setFocus, setBlur, setText } from "../../services/actions/searchBar";
 import SearchBarMobile from "../../components/searchBar/searchBarMobile";
 import NestedMenu from "./nestedMenu";
+import SearchBar from "../../components/searchBar/searchBar";
 
-const Search = styled("div")(({ theme }) => ({
-  position: "relative",
-  borderRadius: theme.shape.borderRadius,
-  backgroundColor: alpha(theme.palette.common.white, 0.15),
-  "&:hover": {
-    backgroundColor: alpha(theme.palette.common.white, 0.25),
-  },
-  marginLeft: 0,
-  width: "100%",
-  [theme.breakpoints.up("md")]: {
-    marginLeft: theme.spacing(1),
-    width: "auto",
-  },
-}));
-
-const SearchIconWrapper = styled("div")(({ theme }) => ({
-  padding: theme.spacing(0, 2),
-  height: "100%",
-  position: "absolute",
-  pointerEvents: "none",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-}));
-
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: "#ffffff",
-  "& .MuiInputBase-input": {
-    padding: theme.spacing(1, 1, 1, 0),
-    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-    transition: theme.transitions.create("width"),
-    width: "100%",
-    [theme.breakpoints.up("xs")]: {
-      width: "0ch",
-    },
-    [theme.breakpoints.up("sm")]: {
-      width: "8ch",
-      "&:hover": {
-        width: "10ch",
-      },
-      "&:focus": {
-        width: "14ch",
-      },
-    },
-    [theme.breakpoints.up("lg")]: {
-      width: "12ch",
-      "&:hover": {
-        width: "16ch",
-      },
-      "&:focus": {
-        width: "28ch",
-      },
-    },
-    [theme.breakpoints.up("xl")]: {
-      width: "16ch",
-      "&:hover": {
-        width: "20ch",
-      },
-      "&:focus": {
-        width: "34ch",
-      },
-    },
-  },
-}));
+const searchBarSize = {
+  sm: { focus: "14ch", blur: "8ch" },
+  md: { focus: "14ch", blur: "8ch" },
+  lg: { focus: "28ch", blur: "16ch" },
+  xl: { focus: "34ch", blur: "20ch" },
+};
 
 const Header = () => {
   const dispatch = useDispatch();
-  const searchBarValue = useSelector((state) => state.searchBar.text);
   const isFocusSearchBar = useSelector((state) => state.searchBar.isFocus);
   const themeMode = useSelector((state) => state.theme.theme);
   const lang = useSelector((state) => state.lang.lang);
@@ -348,39 +285,7 @@ const Header = () => {
             }}
           >
             <Grid item>
-              <Search>
-                <SearchIconWrapper>
-                  <SearchIcon />
-                </SearchIconWrapper>
-                <StyledInputBase
-                  value={searchBarValue}
-                  onFocus={(e) => {
-                    dispatch(setFocus());
-                  }}
-                  onBlur={() => {
-                    dispatch(setBlur());
-                  }}
-                  onChange={(e) => {
-                    dispatch(setText(e.target.value));
-                  }}
-                  sx={{
-                    input: {
-                      "&:hover": {
-                        "&::placeholder": {
-                          opacity: 1,
-                        },
-                      },
-                      "&:focus": {
-                        "&::placeholder": {
-                          opacity: 1,
-                        },
-                      },
-                    },
-                  }}
-                  placeholder="Search…"
-                  inputProps={{ "aria-label": "search" }}
-                />
-              </Search>
+              <SearchBar searchBarSize={searchBarSize} />
             </Grid>
             <Grid item>
               <Link

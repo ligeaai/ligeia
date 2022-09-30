@@ -1,10 +1,8 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { styled } from "@mui/system";
 import { Box, Grid } from "@mui/material";
 
 import Drawer from "../../components/drawer/drawer";
-// import Drawer from "../../trash/myDrawer/drawer";
 import Header from "./header";
 
 import AnalyticsIcon from "@mui/icons-material/Analytics";

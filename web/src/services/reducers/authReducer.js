@@ -7,6 +7,8 @@ import {
     USER_LOADED_FAIL,
     AUTHENTICATED_SUCCESS,
     AUTHENTICATED_FAIL,
+    GITHUB_AUTH_SUCCESS,
+    GITHUB_AUTH_FAIL,
     PASSWORD_RESET_SUCCESS,
     PASSWORD_RESET_FAIL,
     PASSWORD_RESET_CONFIRM_SUCCESS,
@@ -42,11 +44,12 @@ export default function (state = initialState, action) {
         case SIGNUP_SUCCESS:
         case GOOGLE_AUTH_SUCCESS:
         case FACEBOOK_AUTH_SUCCESS:
-            localStorage.setItem('token', payload.token);
+        case GITHUB_AUTH_SUCCESS:
+            localStorage.setItem('token', payload);
             return {
                 ...state,
                 isAuthenticated: true,
-                token: payload.token,
+                token: payload,
             }
         case USER_LOADED_SUCCESS:
             return {
@@ -64,6 +67,7 @@ export default function (state = initialState, action) {
                 user: null
             }
         case CHANGE_PASSWORD_SUCCESS:
+        case GITHUB_AUTH_FAIL:
         case GOOGLE_AUTH_FAIL:
         case FACEBOOK_AUTH_FAIL:
         case LOGIN_FAIL:

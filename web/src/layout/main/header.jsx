@@ -12,7 +12,6 @@ import {
 import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 import BadgeUnstyled, { badgeUnstyledClasses } from "@mui/base/BadgeUnstyled";
 import { styled } from "@mui/material/styles";
-import SearchIcon from "@mui/icons-material/Search";
 import MenuIcon from "@mui/icons-material/Menu";
 import TranslateIcon from "@mui/icons-material/Translate";
 import Brightness2OutlinedIcon from "@mui/icons-material/Brightness2Outlined";
@@ -20,62 +19,17 @@ import LanguageIcon from "@mui/icons-material/Language";
 
 import { changeTheme } from "../../services/actions/theme";
 import { changeLanguage } from "../../services/actions/language";
-import { setBlur, setFocus, setText } from "../../services/actions/searchBar";
 import { toggleDrawer } from "../../services/reducers/drawerReducer";
 import SearchBarMobile from "../../components/searchBar/searchBarMobile";
 import NestedMenu from "./nestedMenu";
+import SearchBar from "../../components/searchBar/searchBar";
 
-const Search = styled("div")(({ theme }) => {
-  return {
-    position: "relative",
-    borderRadius: theme.shape.borderRadius,
-    backgroundColor: theme.palette.mode === "dark" ? "#ffffff33" : "#00000033",
-    "&:hover": {
-      backgroundColor:
-        theme.palette.mode === "dark" ? "#ffffff22" : "#00000022",
-    },
-    marginLeft: 0,
-    width: "100%",
-  };
-});
-
-const SearchIconWrapper = styled("div")(({ theme }) => ({
-  padding: theme.spacing(0, 2),
-  height: "100%",
-  position: "absolute",
-  pointerEvents: "none",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-}));
-
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: "text.primary",
-  "& .MuiInputBase-input": {
-    padding: theme.spacing(1, 1, 1, 0),
-    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-    transition: theme.transitions.create("width"),
-    width: "100%",
-    [theme.breakpoints.up("xs")]: {
-      width: "0ch",
-      "&:focus": {
-        width: "auto",
-      },
-    },
-    [theme.breakpoints.up("sm")]: {
-      width: "16ch",
-      "&:focus": {
-        width: "28ch",
-      },
-    },
-    [theme.breakpoints.up("md")]: {
-      width: "34ch",
-      "&:focus": {
-        width: "60ch",
-      },
-    },
-  },
-}));
+const searchBarSize = {
+  sm: { focus: "28ch", blur: "16ch" },
+  md: { focus: "60ch", blur: "34ch" },
+  lg: { focus: "60ch", blur: "34ch" },
+  xl: { focus: "60ch", blur: "34ch" },
+};
 const Header = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.auth.user);
@@ -178,39 +132,7 @@ const Header = () => {
               />
             </Grid>
             <Grid item>
-              <Search>
-                <SearchIconWrapper>
-                  <SearchIcon />
-                </SearchIconWrapper>
-                <StyledInputBase
-                  value={searchBarValue}
-                  onFocus={(e) => {
-                    dispatch(setFocus());
-                  }}
-                  onBlur={() => {
-                    dispatch(setBlur());
-                  }}
-                  onChange={(e) => {
-                    dispatch(setText(e.target.value));
-                  }}
-                  sx={{
-                    input: {
-                      "&:hover": {
-                        "&::placeholder": {
-                          opacity: 1,
-                        },
-                      },
-                      "&:focus": {
-                        "&::placeholder": {
-                          opacity: 1,
-                        },
-                      },
-                    },
-                  }}
-                  placeholder="Search…"
-                  inputProps={{ "aria-label": "search" }}
-                />
-              </Search>
+              <SearchBar searchBarSize={searchBarSize} />
             </Grid>
           </Grid>
         </Grid>
