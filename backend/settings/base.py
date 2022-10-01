@@ -225,6 +225,7 @@ CACHES = {
 
 LOGIN_REDIRECT_URL = "/"
 
+ACCOUNT_DEFAULT_HTTP_PROTOCOL = 'https'
 ACCOUNT_USER_MODEL_USERNAME_FIELD = None
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_USERNAME_REQUIRED = False
@@ -237,8 +238,13 @@ SOCIALACCOUNT_PROVIDERS = {
              'client_id': '18aca4fc69e6c0c27eae',  # !!! THIS App ID
              'secret': 'fabc80da0e9e7f9da543ffd7b6fc111104fd39c9',  # !!! THIS App Secret
              'key': ''
-                }
-         
+                },
+            'SCOPE': [
+            'user',
+            'repo',
+            'read:org',
+        ],
+        
     },
     "google": {
         # For each OAuth based provider, either add a ``SocialApp``
