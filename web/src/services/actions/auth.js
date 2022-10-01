@@ -10,6 +10,8 @@ import {
     USER_LOADED_FAIL,
     AUTHENTICATED_SUCCESS,
     AUTHENTICATED_FAIL,
+    GITHUB_AUTH_SUCCESS,
+    GITHUB_AUTH_FAIL,
     PASSWORD_RESET_SUCCESS,
     PASSWORD_RESET_FAIL,
     PASSWORD_RESET_CONFIRM_SUCCESS,
@@ -28,7 +30,7 @@ import {
     CLEAN_ERROR_SUCCESS
 } from './types';
 
-const _loadUser = () => async dispatch => {
+export const loadUser = () => async dispatch => {
     if (localStorage.getItem('token')) {
         const config = {
             headers: {
@@ -170,10 +172,10 @@ export const login = (email, password) => async dispatch => {
         const res = await axios.post(`http://localhost:8000/api/v1/auth/login/`, body, config);
         dispatch({
             type: LOGIN_SUCCESS,
-            payload: res.data
+            payload: res.data.token
         });
         dispatch(setLoaderFalse());
-        dispatch(_loadUser());
+        dispatch(loadUser());
     } catch (err) {
         dispatch({
             type: LOGIN_FAIL
@@ -205,9 +207,9 @@ export const signup = (email, first_name, last_name, password) => async dispatch
 
         dispatch({
             type: SIGNUP_SUCCESS,
-            payload: res.data
+            payload: res.data.token
         });
-        dispatch(_loadUser());
+        dispatch(loadUser());
         dispatch(setLoaderFalse());
         dispatch(cleanState())
     } catch (err) {
@@ -372,7 +374,6 @@ export const logout = () => async dispatch => {
     const body = JSON.stringify({ token: localStorage.getItem('token') });
     try {
         await axios.post(`http://localhost:8000/api/v1/auth/logout/`, body, config);
-
         dispatch({
             type: LOGOUT
         });
@@ -389,4 +390,73 @@ export const logout = () => async dispatch => {
             })
         }, 3000)
     }
+};
+
+
+export const myFacebookLogin = (accesstoken) => async (dispatch) => {
+    try {
+        let res = await axios.post(
+            "http://localhost:8000/api/v1/auth/facebook/",
+            {
+                access_token: accesstoken,
+            }
+        );
+        console.log(res);
+        await dispatch({ type: FACEBOOK_AUTH_SUCCESS, payload: res.data.key })
+        await dispatch(loadUser())
+        await dispatch(setLoaderFalse())
+    } catch (err) {
+        dispatch({ type: FACEBOOK_AUTH_FAIL })
+        dispatch({
+            type: ADD_ERROR_SUCCESS,
+            payload: err.message
+        })
+        dispatch(setLoaderFalse())
+    }
+
+};
+
+export const myGoogleLogin = (response) => async (dispatch) => {
+    try {
+        let res = await axios.post(
+            "http://localhost:8000/api/v1/auth/google/",
+            {
+                access_token: response.accessToken,
+            }
+        );
+        await dispatch({ type: GOOGLE_AUTH_SUCCESS, payload: res.data.key })
+        await dispatch(loadUser())
+        await dispatch(setLoaderFalse())
+    } catch (err) {
+        dispatch({ type: GOOGLE_AUTH_FAIL })
+        dispatch({
+            type: ADD_ERROR_SUCCESS,
+            payload: err.message
+        })
+        dispatch(setLoaderFalse())
+    }
+};
+
+export const myGithubLogin = (access_token) => async (dispatch) => {
+    console.log(access_token);
+    try {
+        let res = await axios.post(
+            "http://localhost:8000/auth/github/",
+            {
+                access_token: access_token,
+            }
+        );
+        console.log(res);
+        await dispatch({ type: GITHUB_AUTH_SUCCESS, payload: res.data.key })
+        await dispatch(loadUser())
+        await dispatch(setLoaderFalse())
+    } catch (err) {
+        dispatch({ type: GITHUB_AUTH_FAIL })
+        dispatch({
+            type: ADD_ERROR_SUCCESS,
+            payload: err.message
+        })
+        dispatch(setLoaderFalse())
+    }
+
 };

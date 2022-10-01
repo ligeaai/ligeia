@@ -30,7 +30,7 @@ const social = () => {
           },
         }}
       >
-        <SocialButton Logo={GitHubIcon} />
+        <GitHubSocialAuth Element={<SocialButton Logo={GitHubIcon} />} />
       </Grid>
     </Grid>
   );

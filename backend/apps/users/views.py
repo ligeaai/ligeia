@@ -36,7 +36,8 @@ from utils import AtomicMixin
 from rest_framework.viewsets import ModelViewSet
 from .models import User
 from Logs.Handlers import KafkaLogger
-
+from django.shortcuts import redirect
+from django.urls import reverse
 logger = KafkaLogger()
 
 class UserModelViewSet(ModelViewSet):
@@ -230,7 +231,17 @@ class FacebookLogin(SocialLoginView):
 class GoogleLogin(SocialLoginView):
     adapter_class = GoogleOAuth2Adapter
 
-class GithubLogin(SocialLoginView):
-    authentication_classes = []
+class GitHubLogin(SocialLoginView):
     adapter_class = GitHubOAuth2Adapter
     client_class = OAuth2Client
+
+    @property
+    def callback_url(self):
+        # use the same callback url as defined in your GitHub app, this url must
+        # be absolute:
+        return self.request.build_absolute_uri(reverse('github_callback'))
+
+import urllib.parse
+def github_callback(request):
+    params = urllib.parse.urlencode(request.GET)
+    return redirect(f'https://localhost:8000/auth/github?{params}')

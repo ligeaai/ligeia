@@ -1,12 +1,16 @@
 import React from "react";
+import { useDispatch } from "react-redux";
 
 import { Box } from "@mui/material";
 
 import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
 
-import { myFacebookLogin } from "../../services/api/social";
+import { myFacebookLogin } from "../../services/actions/auth";
+import { setLoaderTrue } from "../../services/actions/loader";
+import history from "../../routers/history";
 
 function FacebookSocialAuth(props) {
+  const dispatch = useDispatch();
   const { Element } = props;
 
   return (
@@ -24,7 +28,10 @@ function FacebookSocialAuth(props) {
             picture,
             short_name"
       callback={(response) => {
-        myFacebookLogin();
+        dispatch(setLoaderTrue());
+        dispatch(myFacebookLogin(response.accessToken)).then(() => {
+          history.push("/");
+        });
       }}
     />
   );

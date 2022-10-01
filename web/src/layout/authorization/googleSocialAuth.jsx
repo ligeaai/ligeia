@@ -5,9 +5,14 @@ import { Box } from "@mui/material";
 import { GoogleLogin } from "react-google-login";
 import { gapi } from "gapi-script";
 
-import { myGoogleLogin } from "../../services/api/social";
+import { myGoogleLogin } from "../../services/actions/auth";
+import { useDispatch } from "react-redux";
+
+import history from "../../routers/history";
+import { setLoaderTrue } from "../../services/actions/loader";
 
 function GoogleSocialAuth(props) {
+  const dispatch = useDispatch();
   const { Element } = props;
   useEffect(() => {
     function start() {
@@ -27,8 +32,10 @@ function GoogleSocialAuth(props) {
         <Box onClick={renderProps.onClick}>{Element}</Box>
       )}
       onSuccess={(response) => {
-        console.log(response);
-        myGoogleLogin(response);
+        dispatch(setLoaderTrue());
+        dispatch(myGoogleLogin(response)).then(() => {
+          history.push("/");
+        });
       }}
       onFailure={(response) => {
         console.log("google auth fail");
