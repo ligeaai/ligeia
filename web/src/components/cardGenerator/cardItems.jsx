@@ -1,10 +1,12 @@
 import React, { useState } from "react";
-
+import { useDispatch } from "react-redux";
 import { Box, Grid, Link, Typography } from "@mui/material";
 
 import history from "../../routers/history";
+import { setActive } from "../../services/reducers/drawerReducer";
 
 const CardItems = (props) => {
+  const dispatch = useDispatch();
   const { card } = props;
   const [isClick, setIsClick] = useState(false);
   const [cardFancyTheme, setCardFancyTheme] = useState("myCardFancyColor");
@@ -15,7 +17,6 @@ const CardItems = (props) => {
       md={4}
       sx={{
         backgroundColor: "myBackgorundColor",
-        boxShadow: "3px 3px 8px rgba(0, 0, 0, 0.3)",
         mb: 3.5,
         height: "215px",
         cursor: "pointer",
@@ -30,7 +31,7 @@ const CardItems = (props) => {
         top: isClick ? "3px !important" : "0",
         left: isClick ? "3px !important" : "0",
         boxShadow: isClick
-          ? "none !important"
+          ? "2px 2px 6px rgba(0, 0, 0, 0.2) !important"
           : "3px 3px 8px rgba(0, 0, 0, 0.3)",
       }}
       onMouseOver={() => setCardFancyTheme("myCardFancyColorHover")}
@@ -39,6 +40,7 @@ const CardItems = (props) => {
         setIsClick(false);
       }}
       onClick={() => {
+        dispatch(setActive(card.isActiveDrawer));
         history.push(`${card.cardURL}`);
       }}
       onMouseDown={() => {

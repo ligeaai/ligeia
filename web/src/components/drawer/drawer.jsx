@@ -1,5 +1,4 @@
 import React from "react";
-import { useState } from "react";
 import { useDispatch } from "react-redux";
 
 import { Grid } from "@mui/material";
@@ -16,9 +15,11 @@ const Drawer = (props) => {
   const dispatch = useDispatch();
   const { navItems } = props;
 
-  const MyBox = styled(Grid)(({ theme }) => ({}));
+  // const MyBox = styled(Grid)(({ theme }) => {
+  //   console.log(theme);
+  // });
   return (
-    <MyBox
+    <Grid
       onMouseEnter={() => dispatch(mouseEnterDrawer())}
       onMouseLeave={() => dispatch(mouseLeaveDrawer())}
       sx={{
@@ -27,10 +28,11 @@ const Drawer = (props) => {
         paddingTop: "16px",
         alignContent: "flex-start",
         paddingBottom: "16px",
+        boxShadow: "inset -7px 8px 7px -9px",
       }}
     >
       <DrawerItem items={navItems} />
-    </MyBox>
+    </Grid>
   );
 };
 

@@ -10,7 +10,7 @@ import { setFocus, setBlur, setText } from "../../services/actions/searchBar";
 const SearchBarMobile = (props) => {
   const { theme } = props; //The theme should be checked manually as the starter page background is always black.
   const dispatch = useDispatch();
-  const searchBarValue = useSelector((state) => state.searchBar.text);
+  const searchBar = useSelector((state) => state.searchBar);
   const Search = styled("div")(({ theme }) => ({
     position: "relative",
     borderRadius: theme.shape.borderRadius,
@@ -47,8 +47,8 @@ const SearchBarMobile = (props) => {
       </SearchIconWrapper>
       <StyledInputBase
         key="search"
-        value={searchBarValue}
-        onFocus={() => {
+        value={searchBar.text}
+        onClick={() => {
           dispatch(setFocus());
         }}
         onBlur={() => {
@@ -72,7 +72,7 @@ const SearchBarMobile = (props) => {
           },
         }}
         fullWidth
-        autoFocus
+        autoFocus={searchBar.isFocus}
         placeholder="Search…"
         inputProps={{ "aria-label": "search" }}
       />

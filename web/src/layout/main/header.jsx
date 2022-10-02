@@ -33,7 +33,6 @@ const searchBarSize = {
 const Header = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.auth.user);
-  const searchBarValue = useSelector((state) => state.searchBar.text);
   const search = useSelector((state) => state.searchBar.isFocus);
   const theme = useSelector((state) => state.theme.theme);
   const lang = useSelector((state) => state.lang.lang);
@@ -59,8 +58,8 @@ const Header = () => {
     alignItems: "center",
     justifyContent: "space-between",
     padding: "13px 21px",
-    height: "75px",
-    boxShadow: "0px 1px 5px rgba(0, 0, 0, 0.1)",
+    height: "74px",
+    borderBottom: "1px solid rgba(0,0,0,0.3)",
   }));
 
   const StyledBadge = styled(BadgeUnstyled)(
@@ -132,7 +131,7 @@ const Header = () => {
               />
             </Grid>
             <Grid item>
-              <SearchBar searchBarSize={searchBarSize} />
+              {/* <SearchBar searchBarSize={searchBarSize} /> */}
             </Grid>
           </Grid>
         </Grid>

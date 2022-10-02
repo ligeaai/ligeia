@@ -23,7 +23,7 @@ const Main = (props) => {
     {
       img: <DisplaySettingsIcon />,
       text: "Overview",
-      url: "/#",
+      url: "/overview",
     },
     {
       img: <AccountTreeIcon />,

@@ -4,6 +4,7 @@ import { unstable_HistoryRouter as HistoryRouter } from "react-router-dom";
 
 import history from "./history";
 
+import Overview from "../pages/main/asset/overview";
 import Login from "../pages/authorization/login/login";
 import Register from "../pages/authorization/register/register";
 import RegisterPageTwo from "../pages/authorization/register/registerPageTwo";
@@ -21,8 +22,8 @@ const AppRouter1 = () => {
       <Routes>
         <Route exact path="/" element={<PrivateRoute />}>
           <Route exact path="" element={<Main />} />
-          {/* <Route exact path="/" element={<Layout />}>
-            <Route path="monitoring" element={<Monitoring />} />
+          <Route path="/overview" element={<Overview />} />
+          {/*  <Route path="monitoring" element={<Monitoring />} />
             <Route exact path="service" element={<ServicePage />} />
             <Route path="database" element={<DatabasePage />} />
             <Route path="reports" element={<ReportsPage />} />
