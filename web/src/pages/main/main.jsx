@@ -28,10 +28,16 @@ const cards = [
     isActiveDrawer: 3,
   },
   {
+    cardTitle: "Configuration",
+    cardBody: "Configuration of the platform",
+    cardURL: "/#",
+    isActiveDrawer: 4,
+  },
+  {
     cardTitle: "Adminstration",
     cardBody: "Administration and configuration",
     cardURL: "/#",
-    isActiveDrawer: 4,
+    isActiveDrawer: 5,
   },
 ];
 const main = () => {

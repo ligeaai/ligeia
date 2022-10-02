@@ -12,10 +12,10 @@ const socialButton = (props) => {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        border: "1px solid #8392AB",
         borderRadius: "8px",
-        backgroundColor: "#ffffff",
         cursor: "pointer",
+        color: "text.primary",
+        border: 1,
       }}
     >
       <Logo sx={{ width: "36px", height: "36px" }} />

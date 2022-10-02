@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 
-import { Box, Breadcrumbs, Grid, Typography } from "@mui/material";
+import { Box, Breadcrumbs, Grid } from "@mui/material";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
@@ -9,28 +9,40 @@ import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import SearchBarMobile from "../../../components/searchBar/searchBarMobile";
 import Main from "../../../layout/main/main";
 import Menu from "../../../components/assetsComponent/app";
-import { keys } from "@material-ui/core/styles/createBreakpoints";
 
 const AssetOwerview = () => {
   const breadcrumb = useSelector((state) => state.breadcrumb.breadcrumb);
-
   const [leftMenuWidth, setLeftMenuWidth] = React.useState(250);
   const theme = useSelector((state) => state.theme.theme);
   function handleClick(event) {
     event.preventDefault();
     console.info("You clicked a breadcrumb.");
   }
+  const handler = (mouseDownEvent) => {
+    const startSize = leftMenuWidth;
+    const startPosition = mouseDownEvent.pageX;
+
+    function onMouseMove(mouseMoveEvent) {
+      if (startSize - startPosition + mouseMoveEvent.pageX < 10) {
+        setLeftMenuWidth(0);
+      } else {
+        setLeftMenuWidth(startSize - startPosition + mouseMoveEvent.pageX);
+      }
+    }
+    function onMouseUp() {
+      document.body.removeEventListener("mousemove", onMouseMove);
+    }
+
+    document.body.addEventListener("mousemove", onMouseMove);
+    document.body.addEventListener("mouseup", onMouseUp);
+  };
 
   return (
-    <Grid
-      container
-      sx={{
-        owerflow: "hidden",
-      }}
-    >
+    <Grid container>
       <Grid
         item
         sx={{
+          position: "relative",
           width: `${leftMenuWidth}px`,
           height: "calc(100vh - 75px)",
           backgroundColor: "myBackgroundColor",
@@ -75,6 +87,19 @@ const AssetOwerview = () => {
           >
             <Menu />
           </Grid>
+          <Box
+            sx={{
+              position: "absolute",
+              height: "100%",
+              width: "5px",
+              right: 0,
+              "&:hover": {
+                backgroundColor: "rgba(0,0,0,0.5)",
+                cursor: "w-resize",
+              },
+            }}
+            onMouseDown={handler}
+          />
         </Grid>
       </Grid>
       <Grid item sx={{ width: `calc(100% - ${leftMenuWidth}px - 1px )` }}>
@@ -84,10 +109,10 @@ const AssetOwerview = () => {
             xs={12}
             sx={{
               position: "relative",
-              height: "75px",
+              height: "48px",
               display: "flex",
-              alignItems: "center",
-              backgroundColor: "myBackgroundColor",
+              alignItems: "flex-end",
+              backgroundColor: "myCanvasBg",
               borderLeft: "1px solid rgba(0,0,0,0.3)",
               boxShadow: "inset 0px 8px 6px -9px",
             }}
@@ -137,7 +162,7 @@ const AssetOwerview = () => {
             </Box>
           </Grid>
           <Grid item xs={12}>
-            canvas
+            CANVAS
           </Grid>
         </Grid>
       </Grid>
@@ -146,7 +171,7 @@ const AssetOwerview = () => {
 };
 
 const overview = () => {
-  return <Main Element={AssetOwerview()} />;
+  return <Main Element={AssetOwerview()} delSearchBar={true} />;
 };
 
 export default overview;

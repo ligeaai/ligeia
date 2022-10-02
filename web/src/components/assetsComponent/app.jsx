@@ -36,7 +36,15 @@ const SingleLevel = ({ item }) => {
   return (
     <ListItem button style={{ marginLeft: "10px" }} onClick={handleClick}>
       {item.icon}
-      <Typography sx={{ ml: 1, color: "text.primary" }}>
+      <Typography
+        sx={{
+          ml: 1,
+          color: "text.primary",
+          overflow: "hidden",
+          whiteSpace: "nowrap",
+          textOverflow: "ellipsis",
+        }}
+      >
         {item.title}
       </Typography>
     </ListItem>
@@ -61,7 +69,15 @@ const MultiLevel = ({ item }) => {
         ) : (
           <ArrowDropDownIcon sx={{ color: "text.primary" }} />
         )}
-        <Typography sx={{ ml: 0.5, color: "text.primary" }}>
+        <Typography
+          sx={{
+            ml: 0.5,
+            color: "text.primary",
+            overflow: "hidden",
+            whiteSpace: "nowrap",
+            textOverflow: "ellipsis",
+          }}
+        >
           {item.title}
         </Typography>
       </ListItem>

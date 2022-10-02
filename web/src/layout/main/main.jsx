@@ -13,7 +13,7 @@ import ConstructionIcon from "@mui/icons-material/Construction";
 
 const Main = (props) => {
   const drawerWidth = useSelector((state) => state.drawer.width);
-  const { Element } = props;
+  const { Element, delSearchBar } = props;
   const navItems = [
     {
       img: <HomeOutlinedIcon />,
@@ -36,6 +36,11 @@ const Main = (props) => {
       url: "/#",
     },
     {
+      img: <AnalyticsIcon />,
+      text: "Configuration",
+      url: "/#",
+    },
+    {
       img: <ConstructionIcon />,
       text: "Administration",
       url: "/#",
@@ -44,7 +49,7 @@ const Main = (props) => {
 
   return (
     <Box>
-      <Header />
+      <Header delSearchBar={delSearchBar} />
       <Grid container sx={{ flexWrap: "nowrap" }}>
         <Grid
           item

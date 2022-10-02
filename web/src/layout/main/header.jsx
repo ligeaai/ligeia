@@ -30,7 +30,8 @@ const searchBarSize = {
   lg: { focus: "60ch", blur: "34ch" },
   xl: { focus: "60ch", blur: "34ch" },
 };
-const Header = () => {
+const Header = (props) => {
+  const { delSearchBar } = props;
   const dispatch = useDispatch();
   const user = useSelector((state) => state.auth.user);
   const search = useSelector((state) => state.searchBar.isFocus);
@@ -131,7 +132,9 @@ const Header = () => {
               />
             </Grid>
             <Grid item>
-              {/* <SearchBar searchBarSize={searchBarSize} /> */}
+              {delSearchBar ? null : (
+                <SearchBar searchBarSize={searchBarSize} />
+              )}
             </Grid>
           </Grid>
         </Grid>
