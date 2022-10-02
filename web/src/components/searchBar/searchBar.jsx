@@ -7,20 +7,6 @@ import SearchIcon from "@mui/icons-material/Search";
 
 import { setBlur, setFocus, setText } from "../../services/actions/searchBar";
 
-const Search = styled("div")(({ theme }) => {
-  return {
-    position: "relative",
-    borderRadius: theme.shape.borderRadius,
-    backgroundColor: theme.palette.mode === "dark" ? "#ffffff33" : "#00000033",
-    "&:hover": {
-      backgroundColor:
-        theme.palette.mode === "dark" ? "#ffffff22" : "#00000022",
-    },
-    marginLeft: 0,
-    width: "100%",
-  };
-});
-
 const SearchIconWrapper = styled("div")(({ theme }) => ({
   padding: theme.spacing(0, 2),
   height: "100%",
@@ -34,9 +20,21 @@ const SearchIconWrapper = styled("div")(({ theme }) => ({
 const SearchBar = (props) => {
   const dispatch = useDispatch();
   const searchBar = useSelector((state) => state.searchBar);
-  const { searchBarSize } = props;
+  const { searchBarSize, searchBarTheme } = props;
+  const Search = styled("div")(({ theme }) => {
+    return {
+      position: "relative",
+      borderRadius: theme.shape.borderRadius,
+      backgroundColor: searchBarTheme === "dark" ? "#ffffff33" : "#00000033",
+      "&:hover": {
+        backgroundColor: searchBarTheme === "dark" ? "#ffffff22" : "#00000022",
+      },
+      marginLeft: 0,
+      width: "100%",
+    };
+  });
   const StyledInputBase = styled(InputBase)(({ theme }) => ({
-    color: "text.primary",
+    color: searchBarTheme === "dark" ? "#ffffff" : "#000000",
     "& .MuiInputBase-input": {
       padding: theme.spacing(1, 1, 1, 0),
       paddingLeft: `calc(1em + ${theme.spacing(4)})`,

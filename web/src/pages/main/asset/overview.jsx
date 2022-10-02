@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useSelector } from "react-redux";
 
 import { Box, Breadcrumbs, Grid } from "@mui/material";
@@ -14,6 +14,7 @@ const AssetOwerview = () => {
   const breadcrumb = useSelector((state) => state.breadcrumb.breadcrumb);
   const [leftMenuWidth, setLeftMenuWidth] = React.useState(250);
   const theme = useSelector((state) => state.theme.theme);
+  const isFullScreen = useSelector((state) => state.fullScreen.isFullScreen);
   function handleClick(event) {
     event.preventDefault();
     console.info("You clicked a breadcrumb.");
@@ -44,7 +45,7 @@ const AssetOwerview = () => {
         sx={{
           position: "relative",
           width: `${leftMenuWidth}px`,
-          height: "calc(100vh - 75px)",
+          height: isFullScreen ? "calc(100vh - 1px)" : "calc(100vh - 75px)",
           backgroundColor: "myBackgroundColor",
           borderLeft: "1px solid rgba(0,0,0,0.3)",
         }}
@@ -71,7 +72,7 @@ const AssetOwerview = () => {
             sx={{
               overflowY: "scroll",
               overflowX: "hidden",
-              height: "calc(100% - 75px)",
+              height: isFullScreen ? "calc(100% -  75px)" : "calc(100% - 75px)",
               "&::-webkit-scrollbar": {
                 width: "0.4em",
               },
@@ -161,7 +162,14 @@ const AssetOwerview = () => {
               </Breadcrumbs>
             </Box>
           </Grid>
-          <Grid item xs={12}>
+          <Grid
+            item
+            xs={12}
+            sx={{
+              height: isFullScreen ? "calc(100vh - 48px)" : "auto",
+              backgroundColor: "myCanvasBg",
+            }}
+          >
             CANVAS
           </Grid>
         </Grid>
@@ -170,8 +178,8 @@ const AssetOwerview = () => {
   );
 };
 
-const overview = () => {
+const Overview = () => {
   return <Main Element={AssetOwerview()} delSearchBar={true} />;
 };
 
-export default overview;
+export default Overview;

@@ -36,7 +36,7 @@ const Element = () => {
 const Start = () => {
   return (
     <Box>
-      <StartComponent Element={Element} />
+      <StartComponent Element={Element} searchBarTheme="dark" />
     </Box>
   );
 };

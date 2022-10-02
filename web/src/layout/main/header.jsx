@@ -133,7 +133,10 @@ const Header = (props) => {
             </Grid>
             <Grid item>
               {delSearchBar ? null : (
-                <SearchBar searchBarSize={searchBarSize} />
+                <SearchBar
+                  searchBarSize={searchBarSize}
+                  searchBarTheme={theme}
+                />
               )}
             </Grid>
           </Grid>

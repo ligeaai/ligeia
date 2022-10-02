@@ -285,7 +285,7 @@ const Header = () => {
             }}
           >
             <Grid item>
-              <SearchBar searchBarSize={searchBarSize} />
+              <SearchBar searchBarSize={searchBarSize} searchBarTheme="dark" />
             </Grid>
             <Grid item>
               <Link

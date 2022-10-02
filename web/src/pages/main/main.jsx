@@ -1,5 +1,7 @@
 import React from "react";
 
+import { Box } from "@mui/material";
+
 import Cards from "../../components/cardGenerator/cards";
 import Main from "../../layout/main/main";
 const cards = [
@@ -41,7 +43,11 @@ const cards = [
   },
 ];
 const main = () => {
-  return <Main Element={<Cards cards={cards} />} />;
+  return (
+    <Box sx={{ backgroundColor: "myCanvasBg", height: "100vh" }}>
+      <Main Element={<Cards cards={cards} />} />
+    </Box>
+  );
 };
 
 export default main;
