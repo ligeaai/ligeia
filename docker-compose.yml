@@ -78,6 +78,7 @@ services:
       ZOOKEEPER_TICK_TIME: 2000
     networks:
       - net
+
   broker:
     image: confluentinc/cp-enterprise-kafka:5.3.1
     hostname: broker
@@ -98,30 +99,18 @@ services:
       CONFLUENT_METRICS_REPORTER_ZOOKEEPER_CONNECT: zookeeper:2181
       CONFLUENT_METRICS_REPORTER_TOPIC_REPLICAS: 1
       CONFLUENT_METRICS_ENABLE: 'true'
-      CONFLUENT_SUPPORT_CUSTOMER_ID: 'anonymous'
+      CONFLUENT_SUPPORT_CUSTOMER_ID: 'anonymous'  
       KAFKA_JMX_HOSTNAME: localhost
     networks:
       - net
-  control-center:
-    image: confluentinc/cp-enterprise-control-center:5.3.1
-    hostname: control-center
-    container_name: control-center
-    depends_on:
-      - zookeeper
-      - broker
-    ports:
-      - "9021:9021"
-    environment:
-      CONTROL_CENTER_BOOTSTRAP_SERVERS: 'broker:29092'
-      CONTROL_CENTER_ZOOKEEPER_CONNECT: 'zookeeper:2181'
-      CONTROL_CENTER_CONNECT_CLUSTER: 'connect:8088'
-      CONTROL_CENTER_REPLICATION_FACTOR: 1
-      CONTROL_CENTER_INTERNAL_TOPICS_PARTITIONS: 1
-      CONTROL_CENTER_MONITORING_INTERCEPTOR_TOPIC_PARTITIONS: 1
-      CONFLUENT_METRICS_TOPIC_REPLICATION: 1
-      PORT: 9021
+  spark:
+    image: gettyimages/spark:2.4.1-hadoop-3.0
+    container_name: spark
+    volumes:
+      - ./:/app
     networks:
       - net
+      
   cassandra:
     container_name: cassandra
     hostname: 'cassandra'
@@ -146,12 +135,33 @@ services:
   rabbitmq:
     image: rabbitmq:3-management
     hostname: localhost
+    container_name: rabbitmq
     ports:
       - '15672:15672'
       - '5672:5672'
     networks:
       - net
-
+  control-center:
+    image: confluentinc/cp-enterprise-control-center:5.3.1
+    hostname: control-center
+    container_name: control-center
+    depends_on:
+      - zookeeper
+      - broker
+    ports:
+      - "9021:9021"
+    environment:
+      CONTROL_CENTER_BOOTSTRAP_SERVERS: 'broker:29092'
+      CONTROL_CENTER_ZOOKEEPER_CONNECT: 'zookeeper:2181'
+      CONTROL_CENTER_CONNECT_CLUSTER: 'connect:8088'
+      CONTROL_CENTER_REPLICATION_FACTOR: 1
+      CONTROL_CENTER_INTERNAL_TOPICS_PARTITIONS: 1
+      CONTROL_CENTER_MONITORING_INTERCEPTOR_TOPIC_PARTITIONS: 1
+      CONFLUENT_METRICS_TOPIC_REPLICATION: 1
+      PORT: 9021
+    networks:
+      - net
+      
   connect:
     build: ./
     container_name: connect
@@ -162,20 +172,20 @@ services:
       - broker
     environment:
       CONNECT_BOOTSTRAP_SERVERS: broker:29092
-      CONNECT_GROUP_ID: "connect-group"
-      CONNECT_CONFIG_STORAGE_TOPIC: "connect-config-storage"
-      CONNECT_OFFSET_STORAGE_TOPIC: "connect-offset-storage"
-      CONNECT_STATUS_STORAGE_TOPIC: "connect-status-storage"
-      CONNECT_KEY_CONVERTER: "org.apache.kafka.connect.storage.StringConverter"
-      CONNECT_VALUE_CONVERTER: "org.apache.kafka.connect.converters.ByteArrayConverter"
-      CONNECT_INTERNAL_KEY_CONVERTER: "org.apache.kafka.connect.json.JsonConverter"
+      CONNECT_GROUP_ID: "connect-group" 
+      CONNECT_CONFIG_STORAGE_TOPIC: "connect-config-storage" 
+      CONNECT_OFFSET_STORAGE_TOPIC: "connect-offset-storage" 
+      CONNECT_STATUS_STORAGE_TOPIC: "connect-status-storage" 
+      CONNECT_KEY_CONVERTER: "org.apache.kafka.connect.storage.StringConverter" 
+      CONNECT_VALUE_CONVERTER: "org.apache.kafka.connect.converters.ByteArrayConverter" 
+      CONNECT_INTERNAL_KEY_CONVERTER: "org.apache.kafka.connect.json.JsonConverter" 
       CONNECT_INTERNAL_VALUE_CONVERTER: "org.apache.kafka.connect.json.JsonConverter"
-      CONNECT_PLUGIN_PATH: "/usr/share/confluent-hub-components"
-      CONNECT_REST_ADVERTISED_HOST_NAME: "connect"
-      CONNECT_REST_HOST_NAME: "connect"
-      CONNECT_REST_PORT: "8088"
-      CONNECT_CONFIG_STORAGE_REPLICATION_FACTOR: 1
-      CONNECT_OFFSET_STORAGE_REPLICATION_FACTOR: 1
+      CONNECT_PLUGIN_PATH: "/usr/share/confluent-hub-components" 
+      CONNECT_REST_ADVERTISED_HOST_NAME: "connect" 
+      CONNECT_REST_HOST_NAME: "connect" 
+      CONNECT_REST_PORT: "8088" 
+      CONNECT_CONFIG_STORAGE_REPLICATION_FACTOR: 1 
+      CONNECT_OFFSET_STORAGE_REPLICATION_FACTOR: 1 
       CONNECT_STATUS_STORAGE_REPLICATION_FACTOR: 1
       CONNECT_LOG4J_ROOT_LOGLEVEL: "INFO"
       CLASSPATH: /usr/share/java/monitoring-interceptors/monitoring-interceptors-5.1.1.jar
@@ -183,61 +193,6 @@ services:
       CONNECT_CONSUMER_INTERCEPTOR_CLASSES: "io.confluent.monitoring.clients.interceptor.MonitoringConsumerInterceptor"
     networks:
       - net
-      
-  master:
-    image: gettyimages/spark
-    command: bin/spark-class org.apache.spark.deploy.master.Master -h master
-    hostname: master
-    environment:
-      MASTER: spark://master:7077
-      SPARK_CONF_DIR: /conf
-      SPARK_PUBLIC_DNS: localhost
-    expose:
-      - 7001
-      - 7002
-      - 7003
-      - 7004
-      - 7005
-      - 7077
-      - 6066
-    ports:
-      - 4040:4040
-      - 6066:6066
-      - 7077:7077
-      - 8080:8080
-    volumes:
-      - ./conf/master:/conf
-      - ./data:/tmp/data
-    networks:
-      - net
-
-  worker:
-    image: gettyimages/spark
-    command: bin/spark-class org.apache.spark.deploy.worker.Worker spark://master:7077
-    hostname: worker
-    environment:
-      SPARK_CONF_DIR: /conf
-      SPARK_WORKER_CORES: 2
-      SPARK_WORKER_MEMORY: 1g
-      SPARK_WORKER_PORT: 8881
-      SPARK_WORKER_WEBUI_PORT: 28081
-      SPARK_PUBLIC_DNS: localhost
-    links:
-      - master
-    expose:
-      - 7012
-      - 7013
-      - 7014
-      - 7015
-      - 8881
-    ports:
-      - 28081:28081
-    volumes:
-      - ./conf/worker:/conf
-      - ./data:/tmp/data
-    networks:
-      - net
-
 networks:
   net:
     driver: bridge
