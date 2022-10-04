@@ -27,10 +27,17 @@ services:
     depends_on:
       - redis
       - postgres
+      - es
     ports:
       - "8000:8000"
     networks:
       - net
+  es:
+    image: elasticsearch:8.4.2
+    environment:
+      - discovery.type=single-node
+    ports:
+      - "9200:9200"
   postgres:
     restart: unless-stopped
     image: postgres:latest
@@ -99,7 +106,7 @@ services:
       CONFLUENT_METRICS_REPORTER_ZOOKEEPER_CONNECT: zookeeper:2181
       CONFLUENT_METRICS_REPORTER_TOPIC_REPLICAS: 1
       CONFLUENT_METRICS_ENABLE: 'true'
-      CONFLUENT_SUPPORT_CUSTOMER_ID: 'anonymous'  
+      CONFLUENT_SUPPORT_CUSTOMER_ID: 'anonymous'
       KAFKA_JMX_HOSTNAME: localhost
     networks:
       - net
@@ -110,7 +117,7 @@ services:
       - ./:/app
     networks:
       - net
-      
+
   cassandra:
     container_name: cassandra
     hostname: 'cassandra'
@@ -161,7 +168,7 @@ services:
       PORT: 9021
     networks:
       - net
-      
+
   connect:
     build: ./
     container_name: connect
@@ -172,20 +179,20 @@ services:
       - broker
     environment:
       CONNECT_BOOTSTRAP_SERVERS: broker:29092
-      CONNECT_GROUP_ID: "connect-group" 
-      CONNECT_CONFIG_STORAGE_TOPIC: "connect-config-storage" 
-      CONNECT_OFFSET_STORAGE_TOPIC: "connect-offset-storage" 
-      CONNECT_STATUS_STORAGE_TOPIC: "connect-status-storage" 
-      CONNECT_KEY_CONVERTER: "org.apache.kafka.connect.storage.StringConverter" 
-      CONNECT_VALUE_CONVERTER: "org.apache.kafka.connect.converters.ByteArrayConverter" 
-      CONNECT_INTERNAL_KEY_CONVERTER: "org.apache.kafka.connect.json.JsonConverter" 
+      CONNECT_GROUP_ID: "connect-group"
+      CONNECT_CONFIG_STORAGE_TOPIC: "connect-config-storage"
+      CONNECT_OFFSET_STORAGE_TOPIC: "connect-offset-storage"
+      CONNECT_STATUS_STORAGE_TOPIC: "connect-status-storage"
+      CONNECT_KEY_CONVERTER: "org.apache.kafka.connect.storage.StringConverter"
+      CONNECT_VALUE_CONVERTER: "org.apache.kafka.connect.converters.ByteArrayConverter"
+      CONNECT_INTERNAL_KEY_CONVERTER: "org.apache.kafka.connect.json.JsonConverter"
       CONNECT_INTERNAL_VALUE_CONVERTER: "org.apache.kafka.connect.json.JsonConverter"
-      CONNECT_PLUGIN_PATH: "/usr/share/confluent-hub-components" 
-      CONNECT_REST_ADVERTISED_HOST_NAME: "connect" 
-      CONNECT_REST_HOST_NAME: "connect" 
-      CONNECT_REST_PORT: "8088" 
-      CONNECT_CONFIG_STORAGE_REPLICATION_FACTOR: 1 
-      CONNECT_OFFSET_STORAGE_REPLICATION_FACTOR: 1 
+      CONNECT_PLUGIN_PATH: "/usr/share/confluent-hub-components"
+      CONNECT_REST_ADVERTISED_HOST_NAME: "connect"
+      CONNECT_REST_HOST_NAME: "connect"
+      CONNECT_REST_PORT: "8088"
+      CONNECT_CONFIG_STORAGE_REPLICATION_FACTOR: 1
+      CONNECT_OFFSET_STORAGE_REPLICATION_FACTOR: 1
       CONNECT_STATUS_STORAGE_REPLICATION_FACTOR: 1
       CONNECT_LOG4J_ROOT_LOGLEVEL: "INFO"
       CLASSPATH: /usr/share/java/monitoring-interceptors/monitoring-interceptors-5.1.1.jar

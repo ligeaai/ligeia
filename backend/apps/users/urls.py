@@ -17,7 +17,8 @@ from .views import (
     FacebookLogin,
     GoogleLogin,
     ResetForgetPassword,
-    github_callback
+    github_callback,
+    logout,
     
 )
 
@@ -28,6 +29,7 @@ router.register('user-detail', UserDetails, basename='user-detail')
 # routers.register("users-details", UserDetails, basename="users-details")
 
 urlpatterns = [
+    path('logout/', logout.as_view(),name='logout'),
     path('github/', GitHubLogin.as_view()),
     path('github/callback/', github_callback, name='github_callback'),
     path('github/url/', views.oauth2_login,name = 'github-url'),

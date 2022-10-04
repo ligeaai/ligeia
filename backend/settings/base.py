@@ -4,6 +4,7 @@ import environ
 from datetime import timedelta
 from rest_framework.settings import api_settings
 from django.utils.translation import gettext_lazy as _
+from settings.localapp import modelApp
 
 logger = logging.getLogger(__name__)
 
@@ -78,10 +79,10 @@ LOCAL_APPS = [
     # "apps.db_dictionaries",
     # "apps.config",
     "apps.users",
-    "apps.code_list.apps.CodeListConfig",
+    #"apps.code_list.apps.CodeListConfig",
 ]
 
-INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
+INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS + modelApp
 
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
@@ -235,8 +236,8 @@ ACCOUNT_EMAIL_VERIFICATION = "optional"
 SOCIALACCOUNT_PROVIDERS = {
     "github":{
         'APP': {
-             'client_id': '18aca4fc69e6c0c27eae',  # !!! THIS App ID
-             'secret': 'fabc80da0e9e7f9da543ffd7b6fc111104fd39c9',  # !!! THIS App Secret
+             'client_id': env('Github_Client_Id'),  # !!! THIS App ID
+             'secret': env('Github_Secret'),  # !!! THIS App Secret
              'key': ''
                 },
             'SCOPE': [
@@ -251,9 +252,9 @@ SOCIALACCOUNT_PROVIDERS = {
         # (``socialaccount`` app) containing the required client
         # credentials, or list them here:
         "APP": {
-            "client_id": "491001574499-4ppnfldsim578soko2qp1o96seorjhgo.apps.googleusercontent.com",
-            "secret": "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",
-            "key": "344458235841-ouh1mdjtcvk4p743ohdm10a7von2vbug.apps.googleusercontent.com",
+            "client_id": env('Google_Client_Id'),
+            "secret": env('Google_Secret'),
+            "key": env('Google_Key'),
         },
         "AUTH_PARAMS": {
             "access_type": "offline",
@@ -281,8 +282,8 @@ SOCIALACCOUNT_PROVIDERS = {
          'VERSION': 'v7.0',
          # you should fill in 'APP' only if you don't create a Facebook instance at /admin/socialaccount/socialapp/
          'APP': {
-             'client_id': '1531824097251400',  # !!! THIS App ID
-             'secret': '1af933e352c0a2665b0bcc67b542e3be',  # !!! THIS App Secret
+             'client_id': env('Facebook_Client_Id'), 
+             'secret': env('Facebok_Secret'),  
              'key': ''
                 }
          }

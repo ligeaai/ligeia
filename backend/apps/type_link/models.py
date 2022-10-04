@@ -1,0 +1,26 @@
+from django.db import models 
+import uuid 
+from django.utils import timezone 
+class type_link(models.Model): 
+	TYPE=models.CharField(max_length=14,primary_key=False,null=False,)
+	FROM_TYPE=models.CharField(max_length=14,primary_key=False,null=False,)
+	FROM_TYPE_CLASS=models.CharField(max_length=50,primary_key=False,null=False,)
+	FROM_CARDINALITY=models.CharField(max_length=10,primary_key=False,null=True,)
+	TO_TYPE=models.CharField(max_length=14,primary_key=False,null=False,)
+	TO_TYPE_CLASS=models.CharField(max_length=50,primary_key=False,null=False,)
+	TO_CARDINALITY=models.CharField(max_length=10,primary_key=False,null=True,)
+	COLL_TYPE=models.CharField(max_length=14,primary_key=False,null=True,)
+	COLL_TYPE_CLASS=models.CharField(max_length=50,primary_key=False,null=True,)
+	SYSTEM=models.CharField(max_length=5,primary_key=False,null=True,)
+	MANDATORY=models.CharField(max_length=5,primary_key=False,null=True,)
+	RELATION_EDIT_CLASS=models.CharField(max_length=100,primary_key=False,null=True,)
+	LAYER_NAME=models.CharField(max_length=50,primary_key=False,null=False,)
+	DESCRIPTION_ID=models.CharField(max_length=100,primary_key=False,null=True,)
+	HIDDEN=models.CharField(max_length=5,primary_key=False,null=True,)
+	LAST_UPDT_USER=models.CharField(max_length=100,primary_key=False,null=True,)
+	LAST_UPDT_DATE=models.DateField(default=timezone.now,primary_key=False,null=True,)
+	VERSION=models.CharField(max_length=32,default=uuid.uuid4,primary_key=False,null=False,)
+	DB_ID=models.CharField(max_length=32,primary_key=False,null=True,)
+	ROW_ID=models.CharField(max_length=32,default=uuid.uuid4,primary_key=False,null=False,db_index=True,)
+	STATUS=models.CharField(max_length=10,primary_key=False,null=True,)
+	REV_GRP_ID=models.CharField(max_length=32,primary_key=False,null=True,)

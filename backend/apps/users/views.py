@@ -68,8 +68,6 @@ class UserDetails(ModelViewSet):
             return Response(e)
 
 
-
-
 class UserList(generics.ListAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
@@ -130,6 +128,10 @@ class UserLoginView(generics.GenericAPIView):
         logger.warning(request=request,message="Login Failed",warning=serializer.errors)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+class logout(generics.ListAPIView):
+    authentication_classes = [TokenAuthentication,]
+    def list(self, request, *args, **kwargs):
+        return Response({'message':'successful logout'},status=status.HTTP_200_OK)
 
 class UserChangePassword(generics.UpdateAPIView):
     serializer_class = ChangePasswordSerializer
