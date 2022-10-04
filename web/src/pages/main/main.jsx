@@ -44,7 +44,13 @@ const cards = [
 ];
 const main = () => {
   return (
-    <Box sx={{ backgroundColor: "myCanvasBg", height: "100vh" }}>
+    <Box
+      sx={{
+        backgroundColor: "myCanvasBg",
+        minHeight: "100vh",
+        height: "auto",
+      }}
+    >
       <Main Element={<Cards cards={cards} />} />
     </Box>
   );

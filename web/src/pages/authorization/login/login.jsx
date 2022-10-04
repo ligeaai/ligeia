@@ -151,7 +151,7 @@ const MyBody = () => {
               onClick={(e) => {
                 navigate(e, "forgotPassword");
               }}
-              sx={{ fontWeight: "700", cursor: "pointer" }}
+              sx={{ fontWeight: "700", cursor: "pointer", fontSize: "14px" }}
             >
               Forgot Password?
             </Link>

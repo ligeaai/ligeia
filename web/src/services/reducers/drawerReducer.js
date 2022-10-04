@@ -3,37 +3,23 @@ import { createSlice } from '@reduxjs/toolkit'
 export const drawerReducer = createSlice({
     name: 'drawer',
     initialState: {
-        display: "none",
+        isOpen: false,
         temp: 0,//temporary value determines the drawer stat before the drawer hover
-        width: "88px",
-        isActive: 0
     },
     reducers: {
         toggleDrawer: (state) => {
-            if (state.display === "none") {
-                return {
-                    ...state,
-                    display: "inline-block",
-                    width: "270px"
-                }
-            }
-            else {
-                state.display = "none";
-                state.width = "88px"
-            }
+            state.isOpen = !state.isOpen
         },
         mouseEnterDrawer: (state) => {
-            if (state.display === "none") {
+            if (state.isOpen === false) {
                 state.temp = 1
-                state.display = "inline-block"
-                state.width = "270px"
+                state.isOpen = true
             }
         },
         mouseLeaveDrawer: (state) => {
             if (state.temp === 1) {
                 state.temp = 0
-                state.display = "none"
-                state.width = "88px"
+                state.isOpen = false
             }
         },
         setActive: (state, payload) => {

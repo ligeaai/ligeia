@@ -31,11 +31,11 @@ const NestedMenu = (props) => {
   const MyBox = styled(Grid)(({ theme }) => ({
     backgroundColor: theme.palette.myBackgroundColor,
     flexDirection: "column",
-    width: "250px",
-    pt: 1,
+    width: "230px",
+    paddingTop: "8px",
   }));
   return (
-    <MyBox container>
+    <MyBox container sx={{ marginTop: "-2px" }}>
       {mainMenu ? (
         <React.Fragment>
           <Grid
@@ -68,9 +68,11 @@ const NestedMenu = (props) => {
                   sx={{ alignItems: "center", color: "text.primary" }}
                 >
                   <Grid item sx={{ px: 1 }}>
-                    <AccountCircleIcon />
+                    <AccountCircleIcon sx={{ typography: "h6" }} />
                   </Grid>
-                  <Grid item>Your Profile</Grid>
+                  <Grid item>
+                    <Typography variant="body2">Your Profile</Typography>
+                  </Grid>
                 </Grid>
               </Grid>
             </Grid>
@@ -84,6 +86,7 @@ const NestedMenu = (props) => {
               my: 1,
             }}
           />
+
           {menuItems.map((e, key) => {
             return (
               <React.Fragment key={key}>
@@ -92,6 +95,7 @@ const NestedMenu = (props) => {
                   item
                   sx={{
                     padding: "5px",
+                    py: 1,
                     "&:hover": {
                       backgroundColor:
                         themeMode === "dark" ? "#ffffff22" : "#00000022",
@@ -100,7 +104,6 @@ const NestedMenu = (props) => {
                 >
                   <Grid
                     container
-                    spacing={1}
                     sx={{
                       alignItems: "center",
                       cursor: "pointer",
@@ -113,13 +116,29 @@ const NestedMenu = (props) => {
                     }}
                   >
                     <Grid item>
-                      <Grid container sx={{ color: "text.primary" }}>
-                        <Grid item sx={{ px: 1 }}>
+                      <Grid
+                        container
+                        sx={{ color: "text.primary", alignItems: "center" }}
+                      >
+                        <Grid
+                          item
+                          sx={{
+                            px: 1,
+                            typography: "h6",
+                            height: "24px",
+                          }}
+                        >
                           {e.icon}
                         </Grid>
                         <Grid item>
-                          {e.fixedText} :{" "}
                           <Typography
+                            variant="body2"
+                            sx={{ display: "inline" }}
+                          >
+                            {e.fixedText} :{" "}
+                          </Typography>
+                          <Typography
+                            variant="body2"
                             sx={{
                               display: "inline",
                               textTransform: "capitalize",
@@ -130,7 +149,15 @@ const NestedMenu = (props) => {
                         </Grid>
                       </Grid>
                     </Grid>
-                    <Grid item sx={{ px: 1, color: "text.primary" }}>
+                    <Grid
+                      item
+                      sx={{
+                        px: 1,
+                        color: "text.primary",
+                        typography: "h6",
+                        height: "24px",
+                      }}
+                    >
                       <KeyboardArrowRightIcon />
                     </Grid>
                   </Grid>
@@ -138,6 +165,7 @@ const NestedMenu = (props) => {
               </React.Fragment>
             );
           })}
+
           <Box
             sx={{
               border: "none",
@@ -167,9 +195,11 @@ const NestedMenu = (props) => {
               }}
             >
               <Grid item sx={{ mx: 1 }}>
-                <SettingsOutlinedIcon />
+                <SettingsOutlinedIcon sx={{ typography: "h6" }} />
               </Grid>
-              <Grid item>Settings</Grid>
+              <Grid item>
+                <Typography variant="body2">Settings</Typography>
+              </Grid>
             </Grid>
           </Grid>
           <Box
@@ -200,9 +230,11 @@ const NestedMenu = (props) => {
               }}
             >
               <Grid item sx={{ mx: 1 }}>
-                <HelpOutlineIcon />
+                <HelpOutlineIcon sx={{ typography: "h6" }} />
               </Grid>
-              <Grid item>Help</Grid>
+              <Grid item>
+                <Typography variant="body2">Help</Typography>
+              </Grid>
             </Grid>
           </Grid>
           <Grid
@@ -225,9 +257,11 @@ const NestedMenu = (props) => {
               }}
             >
               <Grid item sx={{ mx: 1 }}>
-                <FeedbackOutlinedIcon />
+                <FeedbackOutlinedIcon sx={{ typography: "h6" }} />
               </Grid>
-              <Grid item>Send feedback</Grid>
+              <Grid item>
+                <Typography variant="body2">Send feedback</Typography>
+              </Grid>
             </Grid>
           </Grid>
           <Box
@@ -263,9 +297,11 @@ const NestedMenu = (props) => {
               }}
             >
               <Grid item sx={{ mx: 1 }}>
-                <ExitToAppIcon />
+                <ExitToAppIcon sx={{ typography: "h6" }} />
               </Grid>
-              <Grid item>Sign out</Grid>
+              <Grid item>
+                <Typography variant="body2">Sign out</Typography>
+              </Grid>
             </Grid>
           </Grid>
         </React.Fragment>

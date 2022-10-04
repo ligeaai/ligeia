@@ -138,7 +138,7 @@ const MyBody = () => {
                 }
                 onChange={formik.handleChange}
                 label={
-                  <Typography>
+                  <Typography variant="body2">
                     I agree the{" "}
                     <Link underline="none" sx={{ fontWeight: "700" }}>
                       Term and Conditions

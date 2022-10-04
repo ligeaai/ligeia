@@ -24,7 +24,7 @@ const NestedMenu = (props) => {
       sx={{
         flexDirection: "column",
         backgroundColor: "#1F1F1F",
-        width: "250px",
+        width: "230px",
         pt: 1,
       }}
     >
@@ -38,6 +38,7 @@ const NestedMenu = (props) => {
                   item
                   sx={{
                     padding: "5px",
+                    py: 1,
                     "&:hover": {
                       backgroundColor: "#3F3F3F",
                     },
@@ -58,13 +59,22 @@ const NestedMenu = (props) => {
                     }}
                   >
                     <Grid item>
-                      <Grid container>
-                        <Grid item sx={{ px: 1 }}>
+                      <Grid container sx={{ alignItems: "center" }}>
+                        <Grid
+                          item
+                          sx={{ px: 1, typography: "h6", height: "24px" }}
+                        >
                           {e.icon}
                         </Grid>
                         <Grid item>
-                          {e.fixedText} :{" "}
                           <Typography
+                            variant="body2"
+                            sx={{ display: "inline" }}
+                          >
+                            {e.fixedText} :{" "}
+                          </Typography>
+                          <Typography
+                            variant="body2"
                             sx={{
                               display: "inline",
                               textTransform: "capitalize",
@@ -75,8 +85,8 @@ const NestedMenu = (props) => {
                         </Grid>
                       </Grid>
                     </Grid>
-                    <Grid item sx={{ px: 1 }}>
-                      <KeyboardArrowRightIcon />
+                    <Grid item sx={{ px: 1, height: "24px" }}>
+                      <KeyboardArrowRightIcon sx={{ typography: "h6" }} />
                     </Grid>
                   </Grid>
                 </Grid>
@@ -110,9 +120,11 @@ const NestedMenu = (props) => {
               }}
             >
               <Grid item sx={{ mx: 1 }}>
-                <HelpOutlineIcon />
+                <HelpOutlineIcon sx={{ typography: "h6" }} />
               </Grid>
-              <Grid item>Help</Grid>
+              <Grid item>
+                <Typography variant="body2">Help</Typography>
+              </Grid>
             </Grid>
           </Grid>
         </React.Fragment>

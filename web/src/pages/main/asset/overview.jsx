@@ -9,7 +9,7 @@ import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import SearchBarMobile from "../../../components/searchBar/searchBarMobile";
 import Main from "../../../layout/main/main";
 import Menu from "../../../components/assetsComponent/app";
-
+import { menu } from "./owerviewMenu";
 const AssetOwerview = () => {
   const breadcrumb = useSelector((state) => state.breadcrumb.breadcrumb);
   const [leftMenuWidth, setLeftMenuWidth] = React.useState(250);
@@ -52,7 +52,11 @@ const AssetOwerview = () => {
       >
         <Grid
           container
-          sx={{ height: "100%", boxShadow: "inset -7px 8px 7px -9px" }}
+          sx={{
+            height: "100%",
+            boxShadow: "inset -7px 8px 7px -9px",
+            backgroundColor: "myTreeViewBg",
+          }}
         >
           <Grid item xs={12} sx={{ m: 2 }}>
             <SearchBarMobile theme={theme} />
@@ -86,7 +90,7 @@ const AssetOwerview = () => {
               },
             }}
           >
-            <Menu />
+            <Menu menu={menu} />
           </Grid>
           <Box
             sx={{
@@ -149,6 +153,7 @@ const AssetOwerview = () => {
                       href="/"
                       onClick={handleClick}
                       sx={{
+                        typography: "body2",
                         color:
                           breadcrumb.length === key + 1
                             ? "text.primary"

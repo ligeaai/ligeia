@@ -68,8 +68,8 @@ const CardItems = (props) => {
           <Grid container>
             <Grid item xs={12} sx={{ mb: 2.5, mt: 1.5 }}>
               <Typography
+                variant="h6"
                 sx={{
-                  fontSize: "22px",
                   fontWeight: "700",
                   color: "myTextColor",
                 }}
@@ -82,7 +82,9 @@ const CardItems = (props) => {
               xs={12}
               sx={{ fontSize: "18px", color: "text.secondary" }}
             >
-              {card.cardBody}
+              <Typography variant="subtitle2" sx={{ color: "text.secondary" }}>
+                {card.cardBody}
+              </Typography>
             </Grid>
             <Grid
               item
@@ -95,9 +97,9 @@ const CardItems = (props) => {
                 marginBottom: "20px",
               }}
             >
-              <Link underline="none" color="myTextColor">
+              <Typography variant="body2" color="myTextColor">
                 Next
-              </Link>
+              </Typography>
             </Grid>
           </Grid>
         </Grid>

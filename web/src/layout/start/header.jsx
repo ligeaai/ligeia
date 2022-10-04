@@ -77,7 +77,7 @@ const Header = () => {
     <Grid
       sx={{
         py: 3,
-        px: { xs: 2, lg: 4, xl: 6 },
+        px: { xs: 1, lg: 4, xl: 6 },
         height: "100px",
       }}
     >
@@ -116,7 +116,7 @@ const Header = () => {
                 history.push("/");
               }}
             >
-              <img src={logo} alt="logo" />
+              <img src={logo} alt="logo" width={"40px"} />
             </Grid>
             <Grid
               item
@@ -133,7 +133,7 @@ const Header = () => {
               <MenuIcon
                 sx={{
                   color: "#ffffff",
-                  fontSize: "40px",
+                  typography: "h4",
                   cursor: "pointer",
                   display: { sx: "flex", md: "none" },
                 }}
@@ -144,7 +144,6 @@ const Header = () => {
                   container
                   sx={{
                     borderRadius: "10px",
-                    ml: 2,
                     typography: {
                       xs: {
                         display: `${menu}`,
@@ -197,11 +196,7 @@ const Header = () => {
                               sx={{
                                 color: "#ffffff",
                                 width: "100%",
-                                fontSize: {
-                                  md: "12px",
-                                  lg: "17px",
-                                  xl: "19px",
-                                },
+                                typography: "body2",
                                 textTransform: "capitalize",
                               }}
                             >
@@ -209,11 +204,7 @@ const Header = () => {
                               <KeyboardArrowDownIcon
                                 sx={{
                                   color: "#ffffff",
-                                  fontSize: {
-                                    md: "16px",
-                                    lg: "20px",
-                                    xl: "22px",
-                                  },
+                                  typography: "h6",
                                   display: { xs: "none", md: "inline" },
                                   marginLeft: "1.5px",
                                 }}
@@ -221,11 +212,7 @@ const Header = () => {
                               <KeyboardArrowRightIcon
                                 sx={{
                                   color: "#ffffff",
-                                  fontSize: {
-                                    md: "16px",
-                                    lg: "20px",
-                                    xl: "22px",
-                                  },
+                                  typography: "h6",
                                   display: { xs: "inline", md: "none" },
                                   marginLeft: "1.5px",
                                 }}
@@ -240,7 +227,7 @@ const Header = () => {
                               width: "max-content",
                               borderRadius: "8px",
                               position: "absolute",
-                              top: { xs: "0px", md: "30px", lg: "45px" },
+                              top: { xs: "0px", md: "30px" },
                               left: { xs: "125px", md: "0px" },
                               display: openNavbar[key] ? "flex" : "none",
                             }}
@@ -249,16 +236,11 @@ const Header = () => {
                               <Grid
                                 key={myKey}
                                 sx={{
-                                  fontSize: {
-                                    md: "12px",
-                                    lg: "17px",
-                                    xl: "19px",
-                                  },
+                                  typography: "subtitle1",
                                   "&:hover": {
                                     backgroundColor: "#3F3F3F",
                                   },
                                   px: 1.5,
-                                  py: 0.5,
                                 }}
                               >
                                 {value}
@@ -274,11 +256,9 @@ const Header = () => {
             </Grid>
           </Grid>
         </Grid>
-
         <Grid item>
           <Grid
             container
-            spacing={1.5}
             sx={{
               alignItems: "center",
               color: "#ffffff",
@@ -287,13 +267,13 @@ const Header = () => {
             <Grid item>
               <SearchBar searchBarSize={searchBarSize} searchBarTheme="dark" />
             </Grid>
-            <Grid item>
+            <Grid item sx={{ ml: 1.5 }}>
               <Link
                 underline="none"
                 sx={{
                   color: "#ffffff",
                   cursor: "pointer",
-                  fontSize: { md: "12px", lg: "17px", xl: "19px" },
+                  typography: "body1",
                 }}
                 onClick={() => history.push("/signin")}
               >

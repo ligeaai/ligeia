@@ -1,0 +1,170 @@
+import React, { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
+// import List from "@material-ui/core/List";
+// import ListItem from "@material-ui/core/ListItem";
+import {
+  Box,
+  Grid,
+  Link,
+  Collapse,
+  List,
+  ListItem,
+  Typography,
+} from "@mui/material";
+
+import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+
+import { hasChildren } from "./utils";
+import { useDispatch } from "react-redux";
+import { setBreadcrumb } from "../../services/reducers/breadcrumbReducer";
+import history from "../../routers/history";
+
+export default function App({ menu }) {
+  return menu.map((item, key) => <MenuItem key={key} item={item} />);
+}
+
+const MenuItem = ({ item }) => {
+  const Component = hasChildren(item) ? MultiLevel : SingleLevel;
+  return <Component item={item} />;
+};
+
+const SingleLevel = ({ item }) => {
+  const isOpen = useSelector((state) => state.drawer.isOpen);
+  const dispatch = useDispatch();
+  const handleClick = () => {
+    dispatch(setBreadcrumb(item.breadcrumbItems));
+    history.push(item.url);
+  };
+  return (
+    <ListItem
+      button
+      sx={{
+        borderRadius: 2,
+        "&:hover": {
+          backgroundColor:
+            item.url === window.location.pathname
+              ? "action.active"
+              : "action.hover",
+          opacity: "action.hoverOpacity",
+        },
+        backgroundColor:
+          item.url === window.location.pathname ? "action.active" : "inherit",
+      }}
+      onClick={handleClick}
+    >
+      <item.Icon
+        sx={{
+          color:
+            item.url === window.location.pathname
+              ? "myReverseText"
+              : "text.primary",
+          ml: 0.5,
+          mr: 1,
+          my: 0.5,
+          typography: "h6",
+        }}
+      />
+      <Typography
+        variant="body2"
+        sx={{
+          mx: 1,
+          display: isOpen ? "inline-block" : "none",
+          color:
+            item.url === window.location.pathname
+              ? "myReverseText"
+              : "text.primary",
+          overflow: "hidden",
+          whiteSpace: "nowrap",
+          textOverflow: "ellipsis",
+        }}
+      >
+        {item.title}
+      </Typography>
+    </ListItem>
+  );
+};
+
+const MultiLevel = ({ item }) => {
+  const dispatch = useDispatch();
+  const isOpen = useSelector((state) => state.drawer.isOpen);
+  const { items: children } = item;
+  const [open, setOpen] = useState(false);
+  useEffect(() => {
+    setOpen(false);
+  }, [isOpen]);
+  const handleClick = () => {
+    dispatch(setBreadcrumb(item.breadcrumbItems));
+    setOpen((prev) => !prev);
+  };
+
+  return (
+    <React.Fragment>
+      <ListItem button onClick={handleClick} sx={{ borderRadius: 2 }}>
+        {open ? (
+          <ArrowDropUpIcon
+            sx={{
+              color:
+                item.url === window.location.pathname
+                  ? "myReverseText"
+                  : "text.primary",
+              typography: "body1",
+              display: isOpen ? "inline-block" : "none",
+            }}
+          />
+        ) : (
+          <ArrowDropDownIcon
+            sx={{
+              color:
+                item.url === window.location.pathname
+                  ? "myReverseText"
+                  : "text.primary",
+              typography: "body1",
+              display: isOpen ? "inline-block" : "none",
+            }}
+          />
+        )}
+        <item.Icon
+          sx={{
+            color:
+              item.url === window.location.pathname
+                ? "myReverseText"
+                : "text.primary",
+            mr: 1,
+            my: 0.5,
+            ml: 0.5,
+            typography: "h6",
+          }}
+        />
+        <Typography
+          variant="subtitle2"
+          sx={{
+            mx: 0.5,
+            display: isOpen ? "inline-block" : "none",
+            color:
+              item.url === window.location.pathname
+                ? "myReverseText"
+                : "text.primary",
+            overflow: "hidden",
+            whiteSpace: "nowrap",
+            textOverflow: "ellipsis",
+          }}
+        >
+          {item.title}
+        </Typography>
+      </ListItem>
+      <Collapse
+        in={open}
+        timeout="auto"
+        unmountOnExit
+        style={{ marginLeft: "10px" }}
+      >
+        <List component="div" disablePadding>
+          {children.map((child, key) => (
+            <MenuItem key={key} item={child} />
+          ))}
+        </List>
+      </Collapse>
+    </React.Fragment>
+  );
+};

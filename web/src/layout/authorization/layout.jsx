@@ -32,6 +32,7 @@ const layout = (props) => {
         <Social />
         <Typography
           sx={{
+            typography: "body2",
             marginY: "28px",
             textAlign: "center",
             opacity: "0.4",

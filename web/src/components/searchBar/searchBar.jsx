@@ -83,6 +83,7 @@ const SearchBar = (props) => {
           dispatch(setText(e.target.value));
         }}
         sx={{
+          fontSize: "14px",
           input: {
             "&:hover": {
               "&::placeholder": {

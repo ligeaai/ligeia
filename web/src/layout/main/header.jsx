@@ -187,7 +187,8 @@ const Header = (props) => {
                         }}
                       >
                         {user
-                          ? user.first_name.concat(" ", user.last_name)
+                          ? // ? user.first_name.concat(" ", user.last_name)
+                            user.first_name
                           : "name"}
                       </Typography>
                     </Grid>

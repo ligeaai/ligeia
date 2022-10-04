@@ -57,7 +57,7 @@ const PrivacyPolicy = () => {
           </Box>
         </DialogTitle>
         <DialogContent dividers={false}>
-          <Typography sx={{ mb: 2 }}>
+          <Typography variant="subtitle2" sx={{ mb: 2 }}>
             Thank you for your interest in Dataiku! We are committed to
             protecting the privacy of the individuals who visit our websites,
             (“Visitors”){" "}
@@ -82,19 +82,19 @@ const PrivacyPolicy = () => {
             </Link>
             .
           </Typography>
-          <Typography sx={{ mb: 2 }}>
+          <Typography variant="subtitle2" sx={{ mb: 2 }}>
             The Dataiku License Terms govern the delivery and usage of the
             Installed delivery method of Dataiku’s Data Science Studio (DSS).
             The Dataiku Online Terms govern the delivery and usage of the
             Dataiku Online platform, the Software-as-a-Service version of DSS,
             including any data imported into Dataiku Online by a customer.{" "}
           </Typography>
-          <Typography sx={{ mb: 2 }}>
+          <Typography variant="subtitle2" sx={{ mb: 2 }}>
             Plain English: Thanks for stopping by! This Privacy Policy covers
             use of our websites and our Service. The Dataiku Online Terms covers
             use of the Dataiku Online platform.
           </Typography>
-          <Typography sx={{ mb: 2 }}>
+          <Typography variant="subtitle2" sx={{ mb: 2 }}>
             This Privacy Policy sets forth Dataiku’s policy with respect to
             information, including personally identifiable information
             (“Personal Data”) and other information collected from Visitors and
@@ -104,11 +104,11 @@ const PrivacyPolicy = () => {
             read and understand, we have separated the text into two parts: a
             plain English section for easy readability, and a legal section.
           </Typography>
-          <Typography sx={{ mb: 2 }}>
+          <Typography variant="subtitle2" sx={{ mb: 2 }}>
             Plain English: Read this section to easily understand our position
             with regard to your privacy.
           </Typography>
-          <Typography sx={{ mb: 2 }}>
+          <Typography variant="subtitle2" sx={{ mb: 2 }}>
             This policy describes the information we receive and process and how
             it is used. Please review this Privacy Policy carefully. Any use of
             information or Personal Data received from you shall always be
@@ -119,22 +119,22 @@ const PrivacyPolicy = () => {
             the Service to you and others. We will not sell any of your
             information or Personal Data.
           </Typography>
-          <Typography sx={{ mb: 2 }}>
+          <Typography variant="subtitle2" sx={{ mb: 2 }}>
             Plain English: We use your information to help us improve and make
             our customers happy! We will not sell any of your information.
           </Typography>
-          <Typography sx={{ mb: 2 }}>
+          <Typography variant="subtitle2" sx={{ mb: 2 }}>
             By visiting any of our Websites or using our Service, you accept and
             consent to this Privacy Policy.
           </Typography>
-          <Typography sx={{ mb: 2 }}>
+          <Typography variant="subtitle2" sx={{ mb: 2 }}>
             Plain English: If you continue, you accept and agree to the contents
             of this Privacy Policy.
           </Typography>
-          <Typography sx={{ mb: 2 }}>
+          <Typography variant="subtitle2" sx={{ mb: 2 }}>
             A. Information We Receive From You
           </Typography>
-          <Typography sx={{ mb: 2 }}>
+          <Typography variant="subtitle2" sx={{ mb: 2 }}>
             When you register as a User, certain information such as name,
             company name, contact telephone number, and email address may be
             collected. When a Visitor contacts us and/or requests information
@@ -148,14 +148,14 @@ const PrivacyPolicy = () => {
             of visit, time spent on those pages, and referring pages, among
             other information.
           </Typography>
-          <Typography sx={{ mb: 2 }}>
+          <Typography variant="subtitle2" sx={{ mb: 2 }}>
             Plain English: We may collect your name, company name, contact
             telephone number, and email address. We may also ask for some other
             information related to your company and job. Sometimes your browser
             may send us some other information that tells us how you are using
             our Websites.
           </Typography>
-          <Typography sx={{ mb: 2 }}>
+          <Typography variant="subtitle2" sx={{ mb: 2 }}>
             If you are a User, we may collect Personal Data from you in order to
             properly register you or issue you a license to use our Service or
             to service a support request from you relating to our Service. This
@@ -163,17 +163,17 @@ const PrivacyPolicy = () => {
             department, IP address, and usage information relating to our
             Service.
           </Typography>
-          <Typography sx={{ mb: 2 }}>
+          <Typography variant="subtitle2" sx={{ mb: 2 }}>
             We may also send Service related notifications, announcements or
             communications related to our company to your email address if you
             are a User.
           </Typography>
-          <Typography sx={{ mb: 2 }}>
+          <Typography variant="subtitle2" sx={{ mb: 2 }}>
             Plain English: We collect information from you in order to make sure
             that you are able to access our Service and we may also send you
             service-related emails.
           </Typography>
-          <Typography sx={{ mb: 2 }}>
+          <Typography variant="subtitle2" sx={{ mb: 2 }}>
             If you wish to subscribe to a newsletter via our Websites or access
             other content from our Websites, we will collect Personal Data, such
             as your name and email address, in order to send you the newsletter.
@@ -190,7 +190,7 @@ const PrivacyPolicy = () => {
             sponsoring partners your contact information and sponsor interaction
             activity when you attend a Dataiku conference.
           </Typography>
-          <Typography sx={{ mb: 2 }}>
+          <Typography variant="subtitle2" sx={{ mb: 2 }}>
             Plain English: Thank you for your interest in our newsletters or
             other content. If you changed your mind about your newsletter or do
             not want to get emails from our marketing team, you can easily
@@ -205,7 +205,7 @@ const PrivacyPolicy = () => {
             . At a Dataiku marketing event, your contact information and sponsor
             interaction activity may be shared with Dataiku’s sponsors.
           </Typography>
-          <Typography sx={{ mb: 2 }}>
+          <Typography variant="subtitle2" sx={{ mb: 2 }}>
             We may also collect Personal Data from you if you contact us through
             third parties, including but not limited to: (i) Intercom for
             chatting with us through our Websites; (ii) Meetup for joining any
@@ -218,13 +218,13 @@ const PrivacyPolicy = () => {
             have their own privacy policies governing how they use and protect
             your information. We encourage you to read those privacy policies.
           </Typography>
-          <Typography sx={{ mb: 2 }}>
+          <Typography variant="subtitle2" sx={{ mb: 2 }}>
             Plain English: We may collect information from you if you use a
             third party to contact or correspond with us. These third parties
             have their own privacy policies and we encourage you to become
             familiar with them.
           </Typography>
-          <Typography sx={{ mb: 2 }}>
+          <Typography variant="subtitle2" sx={{ mb: 2 }}>
             We may collect Personal Data, including name, email address, and
             company name from people who attend our events or third party events
             which we attend. This information is generally collected using a

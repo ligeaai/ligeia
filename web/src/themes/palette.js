@@ -6,14 +6,16 @@ const Palette = () => {
         mode: theme,
         ...(theme === "light" ? {
             myBackgroundColor: "#ffffff",
+            myTreeViewBg: "#ffffff",
             myCanvasBg: "#FAFCFF",
             myTextColor: "#42526E",
             myReverseText: "#ffffff",
             myCardFancyColor: "#42526E",
             myCardFancyColorHover: "#458BF3",
         } : {
-            myBackgroundColor: "#202020",
-            myCanvasBg: "#181818",
+            myBackgroundColor: "#424242",
+            myTreeViewBg: "#9E9E9E",
+            myCanvasBg: "black",
             myTextColor: "#BB86FC",
             myReverseText: "#000000",
             myCardFancyColor: grey[800],

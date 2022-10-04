@@ -16,39 +16,72 @@ import { setIsFullScreen } from "../../services/reducers/fullScreenReducer";
 
 const Main = (props) => {
   const dispatch = useDispatch();
-  const drawerWidth = useSelector((state) => state.drawer.width);
   const isFullScreen = useSelector((state) => state.fullScreen.isFullScreen);
   const { Element, delSearchBar } = props;
   const navItems = [
     {
-      img: <HomeOutlinedIcon />,
-      text: "Home",
+      Icon: HomeOutlinedIcon,
+      title: "Home",
+      breadcrumbItems: ["Home"],
       url: "/",
     },
     {
-      img: <DisplaySettingsIcon />,
-      text: "Overview",
+      Icon: DisplaySettingsIcon,
+      title: "Overview",
+      breadcrumbItems: ["Overview"],
       url: "/overview",
     },
     {
-      img: <AccountTreeIcon />,
-      text: "Analytics",
+      Icon: AccountTreeIcon,
+      title: "Analytics",
+      breadcrumbItems: ["Analytics"],
       url: "/#",
     },
     {
-      img: <AnalyticsIcon />,
-      text: "Reporting",
+      Icon: AnalyticsIcon,
+      title: "Reporting",
+      breadcrumbItems: ["Reporting"],
       url: "/#",
     },
     {
-      img: <AnalyticsIcon />,
-      text: "Configuration",
+      Icon: ConstructionIcon,
+      title: "Administration",
+      breadcrumbItems: ["Administration"],
       url: "/#",
     },
     {
-      img: <ConstructionIcon />,
-      text: "Administration",
+      Icon: AnalyticsIcon,
+      title: "Configuration",
+      breadcrumbItems: ["Configuration"],
       url: "/#",
+      items: [
+        {
+          Icon: AnalyticsIcon,
+          title: "Configuration",
+          breadcrumbItems: ["Configuration"],
+          url: "/#",
+          items: [
+            {
+              Icon: AnalyticsIcon,
+              title: "Unit 1",
+              breadcrumbItems: ["Configuration", "Organization", "Unit 1"],
+              url: "/#",
+            },
+            {
+              Icon: AnalyticsIcon,
+              title: "Unit 2",
+              breadcrumbItems: ["Configuration", "Organization", "Unit 2"],
+              url: "/#",
+            },
+            {
+              Icon: AnalyticsIcon,
+              title: "unit 3",
+              breadcrumbItems: ["Configuration", "Organization", "Unit 3"],
+              url: "/#",
+            },
+          ],
+        },
+      ],
     },
   ];
 
@@ -78,10 +111,8 @@ const Main = (props) => {
               typography: {
                 xs: {
                   position: "absolute",
-                  display:
-                    `${drawerWidth}` === "88px" ? "none" : "inline-block",
                 },
-                sm: { display: "inline-block", position: "relative" },
+                sm: { position: "relative" },
               },
             }}
           >

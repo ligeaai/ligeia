@@ -20,7 +20,6 @@ function GithubSocialAuth(props) {
         });
       }}
       onFailure={(response) => {
-        console.log("ads");
         console.log(response);
       }}
     >

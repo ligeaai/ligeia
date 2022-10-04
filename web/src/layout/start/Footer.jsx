@@ -17,7 +17,7 @@ const Footer = () => {
         bottom: "0",
         pt: 3,
         pb: 0,
-        px: { xs: 2, lg: 4, xl: 6 },
+        px: { xs: 1, lg: 4, xl: 6 },
         height: { xs: "150px", sm: "100px" },
       }}
     >
@@ -29,12 +29,12 @@ const Footer = () => {
           alignItems: "center",
         }}
       >
-        <Grid item>
+        <Grid item xs={12} sm={6}>
           <Typography
             sx={{
               textAlign: { xs: "center", sm: "start" },
               lineHeight: 1.875,
-              fontSize: "16px",
+              fontSize: { xs: "12px", sm: "14px" },
               color: "#ffffff",
               marginBottom: { xs: "1rem", sm: "0px" },
             }}
@@ -43,8 +43,15 @@ const Footer = () => {
             <PrivacyPolicy />| Legal Stuff
           </Typography>
         </Grid>
-        <Grid item>
-          <Grid container spacing={4} sx={{ alignItems: "center" }}>
+        <Grid item xs={12} sm={6}>
+          <Grid
+            container
+            spacing={4}
+            sx={{
+              alignItems: "center",
+              justifyContent: { xs: "center", sm: "flex-end" },
+            }}
+          >
             <Grid item>
               <img src={logo} alt="logo" style={{ fill: "#ffffff" }} />
             </Grid>

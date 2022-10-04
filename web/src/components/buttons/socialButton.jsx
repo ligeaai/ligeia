@@ -7,8 +7,8 @@ const socialButton = (props) => {
   return (
     <Box
       sx={{
-        width: "78px",
-        height: "56px",
+        width: "5rem",
+        height: "3.5rem",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
@@ -18,7 +18,7 @@ const socialButton = (props) => {
         border: 1,
       }}
     >
-      <Logo sx={{ width: "36px", height: "36px" }} />
+      <Logo sx={{ typography: "h4" }} />
     </Box>
   );
 };
