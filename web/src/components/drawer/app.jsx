@@ -3,22 +3,7 @@ import { useSelector } from "react-redux";
 // import List from "@material-ui/core/List";
 // import ListItem from "@material-ui/core/ListItem";
 import * as Icons from "@mui/icons-material";
-import AnalyticsIcon from "@mui/icons-material/Analytics";
-import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
-import DisplaySettingsIcon from "@mui/icons-material/DisplaySettings";
-import AccountTreeIcon from "@mui/icons-material/AccountTree";
-import ConstructionIcon from "@mui/icons-material/Construction";
-import FullscreenExitIcon from "@mui/icons-material/FullscreenExit";
-import FullscreenIcon from "@mui/icons-material/Fullscreen";
-import {
-  Box,
-  Grid,
-  Link,
-  Collapse,
-  List,
-  ListItem,
-  Typography,
-} from "@mui/material";
+import { Collapse, List, ListItem, Typography } from "@mui/material";
 
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
@@ -76,6 +61,7 @@ const SingleLevel = ({ item }) => {
         variant="body2"
         sx={{
           mx: 1,
+          pl: 1,
           display: isOpen ? "inline-block" : "none",
           color:
             item.url === window.location.pathname
@@ -96,10 +82,12 @@ const MultiLevel = ({ item }) => {
   const dispatch = useDispatch();
   const isOpen = useSelector((state) => state.drawer.isOpen);
   const { items: children } = item;
+  const { [item.Icon]: Icon } = Icons;
   const [open, setOpen] = useState(false);
   useEffect(() => {
     setOpen(false);
   }, [isOpen]);
+
   const handleClick = () => {
     dispatch(setBreadcrumb(item.breadcrumbItems));
     setOpen((prev) => !prev);
@@ -131,22 +119,20 @@ const MultiLevel = ({ item }) => {
             }}
           />
         )}
-        {/* <item.Icon
+        <Icon
           sx={{
             color:
               item.url === window.location.pathname
                 ? "myReverseText"
                 : "text.primary",
-            mr: 1,
-            my: 0.5,
-            ml: 0.5,
-            typography: "h6",
           }}
-        /> */}
+        />
+
         <Typography
           variant="subtitle2"
           sx={{
             mx: 0.5,
+            pl: 1,
             display: isOpen ? "inline-block" : "none",
             color:
               item.url === window.location.pathname

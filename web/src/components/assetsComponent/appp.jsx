@@ -1,5 +1,7 @@
 import React from "react";
+
 import { Box } from "@mui/material";
+
 import TreeView from "@material-ui/lab/TreeView";
 import MuiTreeItem from "@material-ui/lab/TreeItem";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
@@ -9,9 +11,7 @@ import { useDispatch } from "react-redux";
 
 import { setBreadcrumb } from "../../services/reducers/breadcrumbReducer";
 
-const TreeItem = withStyles({
-  selected: {},
-})(MuiTreeItem);
+const TreeItem = withStyles({})(MuiTreeItem);
 
 const GetTreeItemsFromData = (treeItems) => {
   const dispatch = useDispatch();
@@ -27,6 +27,7 @@ const GetTreeItemsFromData = (treeItems) => {
         label={treeItemData.title}
         icon={treeItemData.icon}
         children={children}
+        sx={{ backgroundColor: "red" }}
         onClick={() => {
           dispatch(setBreadcrumb(treeItemData.url));
         }}

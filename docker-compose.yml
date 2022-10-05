@@ -32,6 +32,16 @@ services:
       - "8000:8000"
     networks:
       - net
+  couchserver:
+    image: couchdb
+    restart: always
+    ports:
+      - "5984:5984"
+    environment:
+      - COUCHDB_USER=${COUCHDB_USER}
+      - COUCHDB_PASSWORD=${COUCHDB_PASSWORD}
+    volumes:
+      - .:/couchDbData:/opt/couchdb/data
   es:
     image: elasticsearch:8.4.2
     environment:
@@ -105,8 +115,8 @@ services:
       CONFLUENT_METRICS_REPORTER_BOOTSTRAP_SERVERS: broker:29092
       CONFLUENT_METRICS_REPORTER_ZOOKEEPER_CONNECT: zookeeper:2181
       CONFLUENT_METRICS_REPORTER_TOPIC_REPLICAS: 1
-      CONFLUENT_METRICS_ENABLE: 'true'
-      CONFLUENT_SUPPORT_CUSTOMER_ID: 'anonymous'
+      CONFLUENT_METRICS_ENABLE: "true"
+      CONFLUENT_SUPPORT_CUSTOMER_ID: "anonymous"
       KAFKA_JMX_HOSTNAME: localhost
     networks:
       - net

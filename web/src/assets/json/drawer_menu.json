@@ -1,0 +1,74 @@
+{
+  "header": {
+    "name": "drawerMenu",
+    "version": "1",
+    "created_by": "EmirAlp",
+    "createdTime": "2022-10-05T14:00:00Z"
+  },
+  "drawerMenu": {
+    "Home": {
+      "Icon": "HomeOutlined",
+      "title": "Home",
+      "breadcrumbItems": ["Home"],
+      "url": "/"
+    },
+    "Overview": {
+      "Icon": "DisplaySettings",
+      "title": "Overview",
+      "breadcrumbItems": ["Overview"],
+      "url": "/overview"
+    },
+    "Analytics": {
+      "Icon": "AccountTree",
+      "title": "Analytics",
+      "breadcrumbItems": ["Analytics"],
+      "url": "/#"
+    },
+    "Reporting": {
+      "Icon": "Analytics",
+      "title": "Reporting",
+      "breadcrumbItems": ["Reporting"],
+      "url": "/#"
+    },
+    "Administration": {
+      "Icon": "Construction",
+      "title": "Administration",
+      "breadcrumbItems": ["Administration"],
+      "url": "/#"
+    },
+    "Configuration": {
+      "Icon": "Analytics",
+      "title": "Configuration",
+      "breadcrumbItems": ["Configuration"],
+      "url": "/#",
+      "items": {
+        "Organization": {
+          "Icon": "Analytics",
+          "title": "Organization",
+          "breadcrumbItems": ["Configuration", "Organization"],
+          "url": "/#",
+          "items": {
+            "Unit 1": {
+              "Icon": "Analytics",
+              "title": "Unit 1",
+              "breadcrumbItems": ["Configuration", "Organization", "Unit 1"],
+              "url": "/#"
+            },
+            "Unit 2": {
+              "Icon": "Analytics",
+              "title": "Unit 2",
+              "breadcrumbItems": ["Configuration", "Organization", "Unit 2"],
+              "url": "/#"
+            },
+            "Unit 3": {
+              "Icon": "Analytics",
+              "title": "unit 3",
+              "breadcrumbItems": ["Configuration", "Organization", "Unit 3"],
+              "url": "/#"
+            }
+          }
+        }
+      }
+    }
+  }
+}
