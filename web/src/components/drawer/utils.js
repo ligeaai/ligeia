@@ -5,7 +5,7 @@ export function hasChildren(item) {
         return false;
     }
 
-    if (children.constructor !== Array) {
+    if (children.constructor !== Object) {
         return false;
     }
 

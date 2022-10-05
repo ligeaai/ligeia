@@ -2,6 +2,14 @@ import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 // import List from "@material-ui/core/List";
 // import ListItem from "@material-ui/core/ListItem";
+import * as Icons from "@mui/icons-material";
+import AnalyticsIcon from "@mui/icons-material/Analytics";
+import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
+import DisplaySettingsIcon from "@mui/icons-material/DisplaySettings";
+import AccountTreeIcon from "@mui/icons-material/AccountTree";
+import ConstructionIcon from "@mui/icons-material/Construction";
+import FullscreenExitIcon from "@mui/icons-material/FullscreenExit";
+import FullscreenIcon from "@mui/icons-material/Fullscreen";
 import {
   Box,
   Grid,
@@ -21,7 +29,9 @@ import { setBreadcrumb } from "../../services/reducers/breadcrumbReducer";
 import history from "../../routers/history";
 
 export default function App({ menu }) {
-  return menu.map((item, key) => <MenuItem key={key} item={item} />);
+  return Object.keys(menu).map((item, key) => (
+    <MenuItem key={key} item={menu[item]} />
+  ));
 }
 
 const MenuItem = ({ item }) => {
@@ -31,6 +41,7 @@ const MenuItem = ({ item }) => {
 
 const SingleLevel = ({ item }) => {
   const isOpen = useSelector((state) => state.drawer.isOpen);
+  const { [item.Icon]: Icon } = Icons;
   const dispatch = useDispatch();
   const handleClick = () => {
     dispatch(setBreadcrumb(item.breadcrumbItems));
@@ -53,16 +64,12 @@ const SingleLevel = ({ item }) => {
       }}
       onClick={handleClick}
     >
-      <item.Icon
+      <Icon
         sx={{
           color:
             item.url === window.location.pathname
               ? "myReverseText"
               : "text.primary",
-          ml: 0.5,
-          mr: 1,
-          my: 0.5,
-          typography: "h6",
         }}
       />
       <Typography
@@ -124,7 +131,7 @@ const MultiLevel = ({ item }) => {
             }}
           />
         )}
-        <item.Icon
+        {/* <item.Icon
           sx={{
             color:
               item.url === window.location.pathname
@@ -135,7 +142,7 @@ const MultiLevel = ({ item }) => {
             ml: 0.5,
             typography: "h6",
           }}
-        />
+        /> */}
         <Typography
           variant="subtitle2"
           sx={{
@@ -160,8 +167,8 @@ const MultiLevel = ({ item }) => {
         style={{ marginLeft: "10px" }}
       >
         <List component="div" disablePadding>
-          {children.map((child, key) => (
-            <MenuItem key={key} item={child} />
+          {Object.keys(children).map((child, key) => (
+            <MenuItem key={key} item={children[child]} />
           ))}
         </List>
       </Collapse>

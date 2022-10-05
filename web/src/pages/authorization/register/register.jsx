@@ -166,7 +166,7 @@ const MyBody = () => {
             p: 1.5,
           }}
         >
-          Continue
+          Sign Up
         </Button>
       </form>
     </React.Fragment>

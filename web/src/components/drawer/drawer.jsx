@@ -16,15 +16,12 @@ const Drawer = (props) => {
   const isOpen = useSelector((state) => state.drawer.isOpen);
   const { navItems } = props;
 
-  const MyBox = styled(Grid)(({ theme }) => {
-    console.log(theme);
-  });
   return (
     <Box
       onMouseEnter={() => dispatch(mouseEnterDrawer())}
       onMouseLeave={() => dispatch(mouseLeaveDrawer())}
       sx={{
-        minWidth: "96px",
+        minWidth: "88px",
         // width: isOpen ? "min-content" : `96px`,
         // overflow:"hidden",
         minHeight: "calc(100vh - 75px)",

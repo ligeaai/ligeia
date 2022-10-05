@@ -2,11 +2,6 @@ import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import { Box, Button, Grid } from "@mui/material";
-import AnalyticsIcon from "@mui/icons-material/Analytics";
-import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
-import DisplaySettingsIcon from "@mui/icons-material/DisplaySettings";
-import AccountTreeIcon from "@mui/icons-material/AccountTree";
-import ConstructionIcon from "@mui/icons-material/Construction";
 import FullscreenExitIcon from "@mui/icons-material/FullscreenExit";
 import FullscreenIcon from "@mui/icons-material/Fullscreen";
 
@@ -14,77 +9,14 @@ import Drawer from "../../components/drawer/drawer";
 import Header from "./header";
 import { setIsFullScreen } from "../../services/reducers/fullScreenReducer";
 
+import items from "../../services/json/menu.json";
+
 const Main = (props) => {
   const dispatch = useDispatch();
   const isFullScreen = useSelector((state) => state.fullScreen.isFullScreen);
   const { Element, delSearchBar } = props;
-  const navItems = [
-    {
-      Icon: HomeOutlinedIcon,
-      title: "Home",
-      breadcrumbItems: ["Home"],
-      url: "/",
-    },
-    {
-      Icon: DisplaySettingsIcon,
-      title: "Overview",
-      breadcrumbItems: ["Overview"],
-      url: "/overview",
-    },
-    {
-      Icon: AccountTreeIcon,
-      title: "Analytics",
-      breadcrumbItems: ["Analytics"],
-      url: "/#",
-    },
-    {
-      Icon: AnalyticsIcon,
-      title: "Reporting",
-      breadcrumbItems: ["Reporting"],
-      url: "/#",
-    },
-    {
-      Icon: ConstructionIcon,
-      title: "Administration",
-      breadcrumbItems: ["Administration"],
-      url: "/#",
-    },
-    {
-      Icon: AnalyticsIcon,
-      title: "Configuration",
-      breadcrumbItems: ["Configuration"],
-      url: "/#",
-      items: [
-        {
-          Icon: AnalyticsIcon,
-          title: "Configuration",
-          breadcrumbItems: ["Configuration"],
-          url: "/#",
-          items: [
-            {
-              Icon: AnalyticsIcon,
-              title: "Unit 1",
-              breadcrumbItems: ["Configuration", "Organization", "Unit 1"],
-              url: "/#",
-            },
-            {
-              Icon: AnalyticsIcon,
-              title: "Unit 2",
-              breadcrumbItems: ["Configuration", "Organization", "Unit 2"],
-              url: "/#",
-            },
-            {
-              Icon: AnalyticsIcon,
-              title: "unit 3",
-              breadcrumbItems: ["Configuration", "Organization", "Unit 3"],
-              url: "/#",
-            },
-          ],
-        },
-      ],
-    },
-  ];
 
+  const navItems = items.menu.drawerMenu;
   return isFullScreen ? (
     <React.Fragment>
       {Element}
