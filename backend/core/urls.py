@@ -9,6 +9,8 @@ urlpatterns = [
     path("accounts/", include("allauth.urls")),
     path("admin/", admin.site.urls),
     path("api/v1/auth/", include('apps.users.urls')),
+    path("api/v1/type/", include('apps.type.urls')),
+    path("api/v1/type-property/", include('apps.type_property.urls')),
     path("health/", include("health_check.urls")),
     # path("rosetta/", include("rosetta.urls")),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
