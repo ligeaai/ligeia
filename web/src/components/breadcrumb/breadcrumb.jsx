@@ -19,7 +19,7 @@ const Breadcrumbs = () => {
             onClick={() => history.push(routeTo)}
             sx={{
               typography: "body2",
-              color: "#ffffff",
+              color: "text.secondary",
               cursor: "pointer",
               textTransform: "capitalize",
             }}

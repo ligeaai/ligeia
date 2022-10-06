@@ -16,7 +16,6 @@ const CardItems = (props) => {
       xs={12}
       md={4}
       sx={{
-        backgroundColor: "myBackgorundColor",
         mb: 3.5,
         height: "215px",
         cursor: "pointer",

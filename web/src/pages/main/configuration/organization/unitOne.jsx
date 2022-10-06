@@ -3,13 +3,10 @@ import { useSelector } from "react-redux";
 
 import { Box, Grid, Typography } from "@mui/material";
 
-import Main from "../../../layout/main/main";
-import Menu from "../../../components/assetsComponent/treeView";
-import { menu } from "./owerviewMenu";
-import Breadcrumb from "../../../components/breadcrumb/breadcrumb";
-
-import DrawerMenu from "../../../layout/main/asset/treeViewMenu";
-
+import Main from "../../../../layout/main/main";
+import Breadcrumb from "../../../../components/breadcrumb/breadcrumb";
+import DrawerMenu from "../../../../layout/main/asset/treeViewMenu";
+import ActionIcon from "../../../../components/assetsComponent/actionIcon";
 const Canvas = () => {
   return (
     <Typography
@@ -24,7 +21,7 @@ const Canvas = () => {
   );
 };
 
-const AssetOwerview = () => {
+const UnitOneBody = () => {
   const isFullScreen = useSelector((state) => state.fullScreen.isFullScreen);
 
   return (
@@ -36,7 +33,7 @@ const AssetOwerview = () => {
         flexWrap: "nowrap",
       }}
     >
-      <DrawerMenu Element={<Menu menu={menu} />} />
+      <DrawerMenu Element={<Box />} />
       <Grid item xs={12}>
         <Grid container>
           <Grid
@@ -46,16 +43,35 @@ const AssetOwerview = () => {
               position: "relative",
               height: "48px",
               display: "flex",
-              alignItems: "flex-end",
+              alignItems: "center",
               backgroundColor: "myCanvasBg",
               borderLeft: "1px solid rgba(0,0,0,0.3)",
               boxShadow: "inset 0px 8px 6px -9px",
             }}
           >
-            <Box sx={{ color: "text.primary", ml: 3 }}>
-              <Breadcrumb />
-            </Box>
+            <Grid
+              container
+              sx={{
+                justifyContent: "space-between",
+                alignItems: "center",
+                mx: 3,
+              }}
+            >
+              <Grid item>
+                <Box sx={{ color: "text.primary" }}>
+                  <Breadcrumb />
+                </Box>
+              </Grid>
+              <Grid item sx={{ borderLeft: "2px solid white", pl: 2 }}>
+                <ActionIcon />
+              </Grid>
+            </Grid>
           </Grid>
+          <Grid
+            item
+            xs={12}
+            sx={{ height: "42px", backgroundColor: "myBackgroundColor" }}
+          ></Grid>
           <Grid
             item
             xs={12}
@@ -72,8 +88,8 @@ const AssetOwerview = () => {
   );
 };
 
-const Overview = () => {
-  return <Main Element={AssetOwerview()} delSearchBar={true} />;
+const UnitOne = () => {
+  return <Main Element={UnitOneBody()} delSearchBar={true} />;
 };
 
-export default Overview;
+export default UnitOne;

@@ -371,9 +371,8 @@ export const logout = () => async dispatch => {
             "Authorization": `token ${token}`,
         }
     };
-    const body = JSON.stringify({ token: localStorage.getItem('token') });
     try {
-        await axios.post(`http://localhost:8000/api/v1/auth/logout/`, body, config);
+        await axios.get(`http://localhost:8000/api/v1/auth/logout/`, config);
         dispatch({
             type: LOGOUT
         });

@@ -26,7 +26,6 @@ const MenuItem = ({ item }) => {
 const SingleLevel = ({ item }) => {
   const isOpen = useSelector((state) => state.drawer.isOpen);
   const { [item.Icon]: Icon } = Icons;
-  const dispatch = useDispatch();
   const handleClick = () => {
     history.push(item.url);
   };

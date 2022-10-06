@@ -13,6 +13,7 @@ import RegisterPageTwo from "../pages/authorization/register/registerPageTwo";
 import Reporting from "../pages/main/asset/reporting";
 import PrivateRoute from "./privateRouter";
 import Start from "../pages/start/start";
+import UnitOne from "../pages/main/configuration/organization/unitOne";
 
 
 import Main from "../pages/main/main";
@@ -29,6 +30,7 @@ const AppRouter1 = () => {
           <Route path="/analytics" element={<Analytics />} />
           <Route path="/reporting" element={<Reporting />} />
           <Route path="/administration" element={<Administration />} />
+          <Route path="/configuration/organization/unit1" element={<UnitOne />} />
         </Route>
         <Route exact path="/home" element={<Start />} />
         <Route exact path="/signin">

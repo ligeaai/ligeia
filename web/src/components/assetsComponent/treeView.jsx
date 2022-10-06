@@ -30,7 +30,6 @@ const MenuItem = ({ item, propsOpenAll }) => {
 };
 
 const SingleLevel = ({ item }) => {
-  const dispatch = useDispatch();
   return (
     <ListItem button sx={{ marginLeft: "10px", typography: "body2" }}>
       {item.icon}
@@ -51,7 +50,6 @@ const SingleLevel = ({ item }) => {
 };
 
 const MultiLevel = ({ item, propsOpenAll }) => {
-  const dispatch = useDispatch();
   const { items: children } = item;
   const [open, setOpen] = useState(propsOpenAll);
   const [openAll, setOpenAll] = useState(propsOpenAll);
