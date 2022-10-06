@@ -45,7 +45,6 @@ const header = (props) => {
         item
         xs={6}
         sx={{
-          typography: "body2",
           textAlign: "center",
           borderWidth: "0px",
           paddingBottom: "5px",
@@ -58,6 +57,7 @@ const header = (props) => {
         <Link
           underline="none"
           sx={{
+            typography: "body2",
             width: "100%",
             cursor: "pointer",
             color: isSignInPanel ? "text.secondary" : "text.primary",

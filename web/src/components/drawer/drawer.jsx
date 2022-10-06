@@ -15,18 +15,15 @@ const Drawer = (props) => {
   const dispatch = useDispatch();
   const isOpen = useSelector((state) => state.drawer.isOpen);
   const { navItems } = props;
-
   return (
     <Box
       onMouseEnter={() => dispatch(mouseEnterDrawer())}
       onMouseLeave={() => dispatch(mouseLeaveDrawer())}
       sx={{
         minWidth: "88px",
-        // width: isOpen ? "min-content" : `96px`,
-        // overflow:"hidden",
         minHeight: "calc(100vh - 75px)",
+        height: "500px",
         width: "min-content",
-
         typography: {
           xs: {
             display: isOpen ? "inline-block" : "none",

@@ -1,4 +1,3 @@
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import CircleIcon from '@mui/icons-material/Circle';
 import React from "react";
 
@@ -17,11 +16,11 @@ export const menu = [
                     title: "151/1",
                     url: ["Owerview", "Area", "CAT-1", "151/1"],
                     id: "3",
-                    // children: [{
+                    // items: [{
                     //     id: "4",
                     //     title: "CAT-1",
                     //     url: ["Owerview", "Area", "CAT-1"],
-                    //     children: [
+                    //     items: [
                     //         {
                     //             id: "5",
                     //             icon: <CircleIcon fontSize='small' color="error" />,
@@ -41,7 +40,7 @@ export const menu = [
                     //     id: "7",
                     //     title: "CAT-2",
                     //     url: ["Owerview", "Area", "CAT-2"],
-                    //     children: [
+                    //     items: [
                     //         {
                     //             id: "8",
                     //             icon: <CircleIcon fontSize='small' color="success" />,
@@ -60,7 +59,7 @@ export const menu = [
                     //     id: "11",
                     //     title: "OPZ",
                     //     url: ["Owerview", "Area", "OPZ"],
-                    //     children: [
+                    //     items: [
                     //         {
                     //             id: "12",
                     //             icon: <CircleIcon fontSize='small' color="warning" />,

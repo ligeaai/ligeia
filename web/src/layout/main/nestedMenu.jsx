@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 
 import { styled } from "@mui/material/styles";
-import { Box, Grid, Typography } from "@mui/material";
+import { Grid, Typography } from "@mui/material";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
@@ -15,6 +15,11 @@ import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 
 import { logout } from "../../services/actions/auth";
 import { setLoaderTrue } from "../../services/actions/loader";
+
+import {
+  ItemSperatorLine,
+  Items,
+} from "../../components/nestedMenu/nestedItems";
 
 const NestedMenu = (props) => {
   const dispatch = useDispatch();
@@ -28,65 +33,25 @@ const NestedMenu = (props) => {
       setMainMenu(true);
     }
   }, [isSubmenuOpen]);
+
+  const myLogout = () => {
+    dispatch(logout());
+    dispatch(setLoaderTrue());
+  };
+
   const MyBox = styled(Grid)(({ theme }) => ({
     backgroundColor: theme.palette.myBackgroundColor,
     flexDirection: "column",
     width: "230px",
     paddingTop: "8px",
+    paddingBottom: "8px",
   }));
   return (
     <MyBox container sx={{ marginTop: "-2px" }}>
       {mainMenu ? (
         <React.Fragment>
-          <Grid
-            className="settingsMenu"
-            item
-            sx={{
-              padding: "5px",
-              "&:hover": {
-                backgroundColor:
-                  themeMode === "dark" ? "#ffffff22" : "#00000022",
-              },
-            }}
-          >
-            {" "}
-            <Grid
-              container
-              spacing={1}
-              sx={{
-                alignItems: "center",
-                cursor: "pointer",
-                justifyContent: "space-between",
-              }}
-              onClick={() => {
-                //todo route profile file
-              }}
-            >
-              <Grid item>
-                <Grid
-                  container
-                  sx={{ alignItems: "center", color: "text.primary" }}
-                >
-                  <Grid item sx={{ px: 1 }}>
-                    <AccountCircleIcon sx={{ typography: "h6" }} />
-                  </Grid>
-                  <Grid item>
-                    <Typography variant="body2">Your Profile</Typography>
-                  </Grid>
-                </Grid>
-              </Grid>
-            </Grid>
-          </Grid>
-          <Box
-            sx={{
-              border: "none",
-              height: "1px",
-              backgroundColor: "#3F3F3F",
-              width: "100%",
-              my: 1,
-            }}
-          />
-
+          <Items Icon={AccountCircleIcon} text="Your Profile" />
+          <ItemSperatorLine />
           {menuItems.map((e, key) => {
             return (
               <React.Fragment key={key}>
@@ -166,144 +131,13 @@ const NestedMenu = (props) => {
             );
           })}
 
-          <Box
-            sx={{
-              border: "none",
-              height: "1px",
-              backgroundColor: "#3F3F3F",
-              width: "100%",
-              marginY: 1,
-            }}
-          />
-          <Grid
-            item
-            sx={{
-              padding: "5px",
-              "&:hover": {
-                backgroundColor:
-                  themeMode === "dark" ? "#ffffff22" : "#00000022",
-              },
-              marginBottom: "8px",
-            }}
-          >
-            <Grid
-              container
-              sx={{
-                alignItems: "center",
-                cursor: "pointer",
-                color: "text.primary",
-              }}
-            >
-              <Grid item sx={{ mx: 1 }}>
-                <SettingsOutlinedIcon sx={{ typography: "h6" }} />
-              </Grid>
-              <Grid item>
-                <Typography variant="body2">Settings</Typography>
-              </Grid>
-            </Grid>
-          </Grid>
-          <Box
-            sx={{
-              border: "none",
-              height: "1px",
-              backgroundColor: "#3F3F3F",
-              width: "100%",
-              marginBottom: 1,
-            }}
-          />
-          <Grid
-            item
-            sx={{
-              padding: "5px",
-              "&:hover": {
-                backgroundColor:
-                  themeMode === "dark" ? "#ffffff22" : "#00000022",
-              },
-            }}
-          >
-            <Grid
-              container
-              sx={{
-                alignItems: "center",
-                cursor: "pointer",
-                color: "text.primary",
-              }}
-            >
-              <Grid item sx={{ mx: 1 }}>
-                <HelpOutlineIcon sx={{ typography: "h6" }} />
-              </Grid>
-              <Grid item>
-                <Typography variant="body2">Help</Typography>
-              </Grid>
-            </Grid>
-          </Grid>
-          <Grid
-            item
-            sx={{
-              padding: "5px",
-              "&:hover": {
-                backgroundColor:
-                  themeMode === "dark" ? "#ffffff22" : "#00000022",
-              },
-              marginBottom: "8px",
-            }}
-          >
-            <Grid
-              container
-              sx={{
-                alignItems: "center",
-                cursor: "pointer",
-                color: "text.primary",
-              }}
-            >
-              <Grid item sx={{ mx: 1 }}>
-                <FeedbackOutlinedIcon sx={{ typography: "h6" }} />
-              </Grid>
-              <Grid item>
-                <Typography variant="body2">Send feedback</Typography>
-              </Grid>
-            </Grid>
-          </Grid>
-          <Box
-            sx={{
-              border: "none",
-              height: "1px",
-              backgroundColor: "#3F3F3F",
-              width: "100%",
-              mb: 1,
-            }}
-          />
-          <Grid
-            item
-            sx={{
-              padding: "5px",
-              "&:hover": {
-                backgroundColor:
-                  themeMode === "dark" ? "#ffffff22" : "#00000022",
-              },
-              marginBottom: "8px",
-            }}
-            onClick={() => {
-              dispatch(logout());
-              dispatch(setLoaderTrue());
-            }}
-          >
-            <Grid
-              container
-              sx={{
-                alignItems: "center",
-                cursor: "pointer",
-                color: "text.primary",
-              }}
-            >
-              <Grid item sx={{ mx: 1 }}>
-                <ExitToAppIcon sx={{ typography: "h6" }} />
-              </Grid>
-              <Grid item>
-                <Typography variant="body2">Sign out</Typography>
-              </Grid>
-            </Grid>
-          </Grid>
+          <ItemSperatorLine />
+          <Items Icon={SettingsOutlinedIcon} text="Settings" />
+          <ItemSperatorLine />
+          <Items Icon={HelpOutlineIcon} text="Help" />
+          <Items Icon={FeedbackOutlinedIcon} text="Send feedback" />
+          <ItemSperatorLine />
+          <Items Icon={ExitToAppIcon} text="Sign out" myFunction={myLogout} />
         </React.Fragment>
       ) : (
         <React.Fragment>
@@ -349,15 +183,7 @@ const NestedMenu = (props) => {
                   </Grid>
                 </Grid>
               </Grid>
-              <Box
-                sx={{
-                  border: "none",
-                  height: "1px",
-                  backgroundColor: "#3F3F3F",
-                  width: "100%",
-                  marginY: 1,
-                }}
-              />
+              <ItemSperatorLine />
               {menuItems[i].subtable.map((subValue, subKey) => {
                 return (
                   <Grid

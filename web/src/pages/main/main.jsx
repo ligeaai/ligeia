@@ -20,13 +20,13 @@ const cards = [
   {
     cardTitle: "Analytics",
     cardBody: "Assets analytics",
-    cardURL: "/#",
+    cardURL: "/analytics",
     isActiveDrawer: 2,
   },
   {
     cardTitle: "Reporting",
     cardBody: "Assets reporting",
-    cardURL: "/#",
+    cardURL: "/reporting",
     isActiveDrawer: 3,
   },
   {
@@ -38,7 +38,7 @@ const cards = [
   {
     cardTitle: "Adminstration",
     cardBody: "Administration and configuration",
-    cardURL: "/#",
+    cardURL: "/administration",
     isActiveDrawer: 5,
   },
 ];

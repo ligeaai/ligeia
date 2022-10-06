@@ -4,10 +4,13 @@ import { unstable_HistoryRouter as HistoryRouter } from "react-router-dom";
 
 import history from "./history";
 
+import Administration from "../pages/main/administration/main";
+import Analytics from "../pages/main/asset/analytics";
 import Overview from "../pages/main/asset/overview";
 import Login from "../pages/authorization/login/login";
 import Register from "../pages/authorization/register/register";
 import RegisterPageTwo from "../pages/authorization/register/registerPageTwo";
+import Reporting from "../pages/main/asset/reporting";
 import PrivateRoute from "./privateRouter";
 import Start from "../pages/start/start";
 
@@ -23,24 +26,13 @@ const AppRouter1 = () => {
         <Route exact path="/" element={<PrivateRoute />}>
           <Route exact path="" element={<Main />} />
           <Route path="/overview" element={<Overview />} />
-          {/*  <Route path="monitoring" element={<Monitoring />} />
-            <Route exact path="service" element={<ServicePage />} />
-            <Route path="database" element={<DatabasePage />} />
-            <Route path="reports" element={<ReportsPage />} />
-            <Route path="codelist" element={<CodeList />} />
-            <Route path="changepass" element={<ChangePass />} />
-            <Route path="resetpassword" element={<ResetPassword />} />
-            <Route path="service" element={<AdminRouter />}>
-              <Route path="allusers" element={<AllUsers />} />
-            </Route>
-          </Route> */}
+          <Route path="/analytics" element={<Analytics />} />
+          <Route path="/reporting" element={<Reporting />} />
+          <Route path="/administration" element={<Administration />} />
         </Route>
         <Route exact path="/home" element={<Start />} />
         <Route exact path="/signin">
           <Route path="" element={<Login />} />
-          {/* <Route path="passrecovery" element={<PassRecovery />} />
-          <Route path="securecode" element={<SecureCodePage />} />
-          <Route path="newpassword" element={<NewPassword />} /> */}
         </Route>
         <Route exact path="/signup">
           <Route path="" element={<Register />} />

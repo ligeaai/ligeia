@@ -77,7 +77,6 @@ const Main = (props) => {
               sx={{
                 backgroundColor: "myCanvasBg",
                 minHeight: "calc(100vh - 75px)",
-                height: "auto",
                 width: "100%",
               }}
             >

@@ -95,10 +95,16 @@ const MultiLevel = ({ item }) => {
 
   return (
     <React.Fragment>
-      <ListItem button onClick={handleClick} sx={{ borderRadius: 2 }}>
+      <ListItem
+        button
+        onClick={handleClick}
+        sx={{ borderRadius: 2, position: "relative" }}
+      >
         {open ? (
           <ArrowDropUpIcon
             sx={{
+              position: "absolute",
+              left: "0px",
               color:
                 item.url === window.location.pathname
                   ? "myReverseText"
@@ -110,6 +116,8 @@ const MultiLevel = ({ item }) => {
         ) : (
           <ArrowDropDownIcon
             sx={{
+              position: "absolute",
+              left: "0px",
               color:
                 item.url === window.location.pathname
                   ? "myReverseText"

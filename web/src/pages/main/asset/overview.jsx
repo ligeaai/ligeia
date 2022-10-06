@@ -39,13 +39,19 @@ const AssetOwerview = () => {
   };
 
   return (
-    <Grid container>
+    <Grid
+      container
+      sx={{
+        minHeight: isFullScreen ? "calc(100vh - 1px)" : "calc(100vh - 75px)",
+        height: "500px",
+      }}
+    >
       <Grid
         item
         sx={{
           position: "relative",
           width: `${leftMenuWidth}px`,
-          height: isFullScreen ? "calc(100vh - 1px)" : "calc(100vh - 75px)",
+
           backgroundColor: "myBackgroundColor",
           borderLeft: "1px solid rgba(0,0,0,0.3)",
         }}
@@ -76,7 +82,8 @@ const AssetOwerview = () => {
             sx={{
               overflowY: "scroll",
               overflowX: "hidden",
-              height: isFullScreen ? "calc(100% -  75px)" : "calc(100% - 75px)",
+              minHeight: "min-content",
+              height: "calc(100% - 75px)",
               "&::-webkit-scrollbar": {
                 width: "0.4em",
               },
