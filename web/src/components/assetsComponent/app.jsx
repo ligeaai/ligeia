@@ -17,7 +17,6 @@ import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 
 import { hasChildren } from "./utils";
 import { useDispatch } from "react-redux";
-import { setBreadcrumb } from "../../services/reducers/breadcrumbReducer";
 
 export default function App({ menu }) {
   return menu.map((item, key) => (
@@ -32,15 +31,8 @@ const MenuItem = ({ item, propsOpenAll }) => {
 
 const SingleLevel = ({ item }) => {
   const dispatch = useDispatch();
-  const handleClick = () => {
-    dispatch(setBreadcrumb(item.url));
-  };
   return (
-    <ListItem
-      button
-      sx={{ marginLeft: "10px", typography: "body2" }}
-      onClick={handleClick}
-    >
+    <ListItem button sx={{ marginLeft: "10px", typography: "body2" }}>
       {item.icon}
       <Typography
         variant="body2"
@@ -65,7 +57,6 @@ const MultiLevel = ({ item, propsOpenAll }) => {
   const [openAll, setOpenAll] = useState(propsOpenAll);
 
   const handleClick = (e) => {
-    dispatch(setBreadcrumb(item.url));
     setOpen((prev) => !prev);
     setOpenAll(false);
   };
@@ -80,7 +71,6 @@ const MultiLevel = ({ item, propsOpenAll }) => {
             sx={{ color: "text.primary", typography: "h6" }}
             onClick={(e) => {
               e.stopPropagation();
-              dispatch(setBreadcrumb(item.url));
               setOpenAll(true);
               setOpen((prev) => !prev);
             }}

@@ -4,9 +4,9 @@ import logger from 'redux-logger'
 
 import {
     authReducer,
-    breadcrumbReducer,
     codelistReducer,
-    drawerReducer, errorReducer,
+    drawerReducer,
+    errorReducer,
     fullScreenReducer,
     langReducer,
     loaderReducer,
@@ -18,7 +18,6 @@ import {
 export default configureStore({
     reducer: {
         auth: authReducer,
-        breadcrumb: breadcrumbReducer,
         codelist: codelistReducer,
         drawer: drawerReducer,
         error: errorReducer,

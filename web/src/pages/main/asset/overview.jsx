@@ -1,24 +1,21 @@
 import React from "react";
 import { useSelector } from "react-redux";
 
-import { Box, Breadcrumbs, Grid } from "@mui/material";
+import { Box, Grid } from "@mui/material";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 
 import SearchBarMobile from "../../../components/searchBar/searchBarMobile";
 import Main from "../../../layout/main/main";
 import Menu from "../../../components/assetsComponent/app";
 import { menu } from "./owerviewMenu";
+import Breadcrumb from "../../../components/breadcrumb/breadcrumb";
+
 const AssetOwerview = () => {
-  const breadcrumb = useSelector((state) => state.breadcrumb.breadcrumb);
   const [leftMenuWidth, setLeftMenuWidth] = React.useState(250);
   const theme = useSelector((state) => state.theme.theme);
   const isFullScreen = useSelector((state) => state.fullScreen.isFullScreen);
-  function handleClick(event) {
-    event.preventDefault();
-    console.info("You clicked a breadcrumb.");
-  }
+
   const handler = (mouseDownEvent) => {
     const startSize = leftMenuWidth;
     const startPosition = mouseDownEvent.pageX;
@@ -147,31 +144,7 @@ const AssetOwerview = () => {
               {leftMenuWidth > 0 ? <ChevronLeftIcon /> : <ChevronRightIcon />}
             </Box>
             <Box sx={{ color: "text.primary", ml: 3 }}>
-              <Breadcrumbs
-                separator={<NavigateNextIcon fontSize="small" />}
-                aria-label="breadcrumb"
-              >
-                {breadcrumb.map((e, key) => {
-                  return (
-                    <Box
-                      underline="hover"
-                      key={key}
-                      color="inherit"
-                      href="/"
-                      onClick={handleClick}
-                      sx={{
-                        typography: "body2",
-                        color:
-                          breadcrumb.length === key + 1
-                            ? "text.primary"
-                            : "text.secondary",
-                      }}
-                    >
-                      {e}
-                    </Box>
-                  );
-                })}
-              </Breadcrumbs>
+              <Breadcrumb />
             </Box>
           </Grid>
           <Grid

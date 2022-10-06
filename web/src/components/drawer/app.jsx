@@ -10,7 +10,6 @@ import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 
 import { hasChildren } from "./utils";
 import { useDispatch } from "react-redux";
-import { setBreadcrumb } from "../../services/reducers/breadcrumbReducer";
 import history from "../../routers/history";
 
 export default function App({ menu }) {
@@ -29,7 +28,6 @@ const SingleLevel = ({ item }) => {
   const { [item.Icon]: Icon } = Icons;
   const dispatch = useDispatch();
   const handleClick = () => {
-    dispatch(setBreadcrumb(item.breadcrumbItems));
     history.push(item.url);
   };
   return (
@@ -79,7 +77,6 @@ const SingleLevel = ({ item }) => {
 };
 
 const MultiLevel = ({ item }) => {
-  const dispatch = useDispatch();
   const isOpen = useSelector((state) => state.drawer.isOpen);
   const { items: children } = item;
   const { [item.Icon]: Icon } = Icons;
@@ -89,7 +86,6 @@ const MultiLevel = ({ item }) => {
   }, [isOpen]);
 
   const handleClick = () => {
-    dispatch(setBreadcrumb(item.breadcrumbItems));
     setOpen((prev) => !prev);
   };
 
