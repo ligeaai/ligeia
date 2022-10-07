@@ -7,6 +7,8 @@ import Main from "../../../../layout/main/main";
 import Breadcrumb from "../../../../components/breadcrumb/breadcrumb";
 import DrawerMenu from "../../../../layout/main/asset/treeViewMenu";
 import ActionIcon from "../../../../components/assetsComponent/actionIcon";
+import TimeRangePicker from "../../../../components/assetsComponent/timeRangePicker";
+
 const Canvas = () => {
   return (
     <Typography
@@ -23,7 +25,6 @@ const Canvas = () => {
 
 const UnitOneBody = () => {
   const isFullScreen = useSelector((state) => state.fullScreen.isFullScreen);
-
   return (
     <Grid
       container
@@ -70,8 +71,10 @@ const UnitOneBody = () => {
           <Grid
             item
             xs={12}
-            sx={{ height: "42px", backgroundColor: "myBackgroundColor" }}
-          ></Grid>
+            sx={{ height: "56px", backgroundColor: "myBackgroundColor", pl: 4 }}
+          >
+            <TimeRangePicker />
+          </Grid>
           <Grid
             item
             xs={12}
@@ -80,7 +83,45 @@ const UnitOneBody = () => {
               backgroundColor: "myCanvasBg",
             }}
           >
-            <Canvas />
+            <Grid container>
+              <Grid
+                item
+                sx={{
+                  backgroundColor: "#313131",
+                  writingMode: "tb-rl",
+                  "-webkit-transform": "rotate(180deg)",
+                  "-moz-transform": "rotate(180deg)",
+                  "-o-transform": "rotate(180deg)",
+                  "-ms-transform": "rotate(180deg)",
+                }}
+              >
+                <Grid container spacing={1}>
+                  <Grid
+                    item
+                    sx={{
+                      border: "1px solid black",
+                      fontSize: "14px",
+                      color: "text.primary",
+                    }}
+                  >
+                    asdasd
+                  </Grid>
+                  <Grid
+                    item
+                    sx={{
+                      border: "1px solid black",
+                      fontSize: "14px",
+                      color: "text.primary",
+                    }}
+                  >
+                    deneme
+                  </Grid>
+                </Grid>
+              </Grid>
+              <Grid item>
+                <Canvas />
+              </Grid>
+            </Grid>
           </Grid>
         </Grid>
       </Grid>
