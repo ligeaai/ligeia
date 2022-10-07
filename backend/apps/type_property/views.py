@@ -25,5 +25,5 @@ class TypePropertyView(generics.ListAPIView):
     ]
     def get(self, request, *args, **kwargs):
         
-        data = typeAddData.create_type_data('TYPE_PROPERTY')
-        return Response({"Error":'error_message'}, status=status.HTTP_200_OK)
+        data = typeAddData.create_type_property_data()
+        return Response({"Message":'girdi'}, status=status.HTTP_200_OK)

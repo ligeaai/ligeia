@@ -3,9 +3,9 @@ from xmlInfo import IxmlInfo
 paramaterDict = {
     'Name':'Name',
     'Precision':'max_length',
-    'IsIdentity':'primary_key',
     'IsNullable':'null',
     'Scale':'decimal_places',
+    'PkOrder' : 'primary_key',
     'DefaultValueType':'default',
     'LogicalDbType':'valueType'
 }
@@ -16,6 +16,7 @@ valueDict = {
     'ChangeInterval':'"ChangeInterval"',
     'EndDatetime': 'timezone.now',
     'SourceType':'"SourceType"',
+    "primary_key":"True",
     'Culture' :'"Culture"',
 }
 
@@ -33,6 +34,12 @@ def get_xml_to_model_dict(xmlInfo):
             paramaterDict['Precision'] = 'max_length'
         
         for keys,value in parser.items():
+            if keys=='PkOrder':
+                if value == "1":
+                    value = 'primary_key'
+                else:
+                    keys= None
+                    value = None
             if valueDict.get(value) is not None:
                 value = valueDict.get(value)
             newparamDict[paramaterDict.get(keys)] = value

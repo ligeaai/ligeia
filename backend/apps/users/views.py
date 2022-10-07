@@ -32,10 +32,10 @@ from allauth.socialaccount.providers.facebook.views import FacebookOAuth2Adapter
 from allauth.socialaccount.providers.google.views import GoogleOAuth2Adapter
 from dj_rest_auth.registration.views import SocialLoginView
 from django.shortcuts import redirect
-from utils import AtomicMixin
+from utils.utils import AtomicMixin
 from rest_framework.viewsets import ModelViewSet
 from .models import User
-from Logs.Handlers import KafkaLogger
+from services.logging.Handlers import KafkaLogger
 from django.shortcuts import redirect
 from django.urls import reverse
 logger = KafkaLogger()

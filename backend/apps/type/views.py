@@ -25,5 +25,5 @@ class TypeView(generics.ListAPIView):
     ]
     def get(self, request, *args, **kwargs):
         
-        data = typeAddData.create_type_data('TYPE')
+        data = typeAddData.create_type_data()
         return Response({"Error":'error_message'}, status=status.HTTP_200_OK)

@@ -9,7 +9,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.utils.translation import gettext_lazy as _
 import uuid
 # from .models import User
-from utils import validate_email as email_is_valid
+from utils.utils import validate_email as email_is_valid
 from .helpers import send_forget_password_mail
 User = get_user_model()
 

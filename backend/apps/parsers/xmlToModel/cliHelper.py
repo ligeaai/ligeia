@@ -1,12 +1,7 @@
 import os
 
-def get_script_dir(): 
-    scriptDir = os.getcwd()
-    print(scriptDir)
-    return scriptDir
-        
 def get_apps_dir():
-    appsDir = (os.path.abspath(os.path.join(get_script_dir(), os.pardir)))
+    appsDir = '/django/backend/apps'
     return appsDir
         
 def get_backend_dir():
