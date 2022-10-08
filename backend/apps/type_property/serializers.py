@@ -7,3 +7,7 @@ class TypePropertySaveSerializer(serializers.ModelSerializer):
         model = type_property
         fields = '__all__'
     
+class TypePropertyDetailsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = type_property
+        fields = '__all__'

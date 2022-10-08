@@ -13,3 +13,8 @@ class TypeSaveSerializer(serializers.ModelSerializer):
             user = Type.objects.create(**validated_data)
             user.save()
             return user
+
+class TypeDetailsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Type
+        fields = '__all__'

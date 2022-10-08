@@ -24,7 +24,7 @@ def create_type_property_data():
 
     dataset = pd.read_csv('/django/backend/apps/parsers/addData/type/TYPE_PROPERTY.csv')
     dataset=dataset.fillna(0)
-    for index in range(0,1):
+    for index in range(0,dataset.shape[0]):
         data = dataset.iloc[0,0:-1]
         data = data.to_dict()
         headers = {'Content-type': 'application/json', 'Accept': 'application/json'}
@@ -70,7 +70,6 @@ def create_type_property_data():
                     "PROP_UNIQUE": data.get('PROP_UNIQUE'),
                     "ALLOW_MULTI_EDIT": data.get('ALLOW_MULTI_EDIT'),
                     "DEF_ACCUM_FUNC": data.get('DEF_ACCUM_FUNC')}
-        print('------------------------------------------------------->',data.get('TYPE'))
         requests.post(url,json.dumps(data),headers=headers)
         time.sleep(0.1)
 

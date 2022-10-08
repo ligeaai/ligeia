@@ -2,7 +2,7 @@ from django.db import models
 import uuid 
 from django.utils import timezone 
 class type_property(models.Model): 
-	TYPE=models.CharField(max_length=14,primary_key=True,null=False,)
+	TYPE=models.CharField(max_length=14,primary_key=False,null=False,)
 	PROPERTY_NAME=models.CharField(max_length=15,null=False,)
 	PROP_GRP=models.CharField(max_length=50,null=True,)
 	PROP_GRP_PRNT=models.CharField(max_length=50,null=True,)
