@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React from "react";
 import { Route, Routes } from "react-router-dom";
 import { unstable_HistoryRouter as HistoryRouter } from "react-router-dom";
 
@@ -6,6 +6,8 @@ import history from "./history";
 
 import Administration from "../pages/main/administration/main";
 import Analytics from "../pages/main/asset/analytics";
+import ForgotPassword from "../pages/authorization/forgotPassword/forgotPassword";
+import ForgotPasswordConfirm from "../pages/authorization/forgotPassword/forgotPasswordConfirm";
 import Overview from "../pages/main/asset/overview";
 import Login from "../pages/authorization/login/login";
 import Register from "../pages/authorization/register/register";
@@ -22,7 +24,7 @@ import ErrorMessage from "../components/HOC/errorMessage";
 
 const AppRouter1 = () => {
   return (
-    <Fragment>
+    <React.Fragment>
       <Routes>
         <Route exact path="/" element={<PrivateRoute />}>
           <Route exact path="" element={<Main />} />
@@ -35,13 +37,16 @@ const AppRouter1 = () => {
         <Route exact path="/home" element={<Start />} />
         <Route exact path="/signin">
           <Route path="" element={<Login />} />
+          <Route path="/signin/forgotpassword" element={<ForgotPassword />} />
+          <Route path="/signin/forgotpasswordconfirm/:token" element={<ForgotPasswordConfirm />} />
         </Route>
+
         <Route exact path="/signup">
           <Route path="" element={<Register />} />
           <Route path="/signup/signup" element={<RegisterPageTwo />} />
         </Route>
       </Routes>
-    </Fragment>
+    </React.Fragment>
   );
 };
 

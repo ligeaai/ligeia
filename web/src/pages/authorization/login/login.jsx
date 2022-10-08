@@ -149,7 +149,7 @@ const MyBody = () => {
             <Link
               underline="none"
               onClick={(e) => {
-                navigate(e, "forgotPassword");
+                navigate(e, "/signin/forgotpassword");
               }}
               sx={{ fontWeight: "700", cursor: "pointer", fontSize: "14px" }}
             >

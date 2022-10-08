@@ -13,7 +13,7 @@ const App = () => {
   useEffect(() => {
     if (localStorage.getItem('token')) {
       dispatch(loadUser()).then(() => {
-        history.push("/")
+        history.push(`${window.location.pathname}`)
       })
     }
 

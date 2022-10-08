@@ -59,70 +59,6 @@ export const loadUser = () => async dispatch => {
     }
 };
 
-// export const googleAuthenticate = (state, code) => async dispatch => {
-//     if (state && code && !localStorage.getItem('access')) {
-//         const config = {
-//             headers: {
-//                 'Content-Type': 'application/x-www-form-urlencoded'
-//             }
-//         };
-
-//         const details = {
-//             'state': state,
-//             'code': code
-//         };
-
-//         const formBody = Object.keys(details).map(key => encodeURIComponent(key) + '=' + encodeURIComponent(details[key])).join('&');
-
-//         try {
-//             const res = await axios.post(`http://localhost:8000/en/api/v1/.../?${formBody}`, config);
-
-//             dispatch({
-//                 type: GOOGLE_AUTH_SUCCESS,
-//                 payload: res.data
-//             });
-
-//             dispatch(load_user());
-//         } catch (err) {
-//             dispatch({
-//                 type: GOOGLE_AUTH_FAIL
-//             });
-//         }
-//     }
-// };
-
-// export const facebookAuthenticate = (state, code) => async dispatch => {
-//     if (state && code && !localStorage.getItem('access')) {
-//         const config = {
-//             headers: {
-//                 'Content-Type': 'application/x-www-form-urlencoded'
-//             }
-//         };
-
-//         const details = {
-//             'state': state,
-//             'code': code
-//         };
-
-//         const formBody = Object.keys(details).map(key => encodeURIComponent(key) + '=' + encodeURIComponent(details[key])).join('&');
-
-//         try {
-//             const res = await axios.post(`http://localhost:8000/en/api/v1/.../?${formBody}`, config);
-
-//             dispatch({
-//                 type: FACEBOOK_AUTH_SUCCESS,
-//                 payload: res.data
-//             });
-
-//             dispatch(load_user());
-//         } catch (err) {
-//             dispatch({
-//                 type: FACEBOOK_AUTH_FAIL
-//             });
-//         }
-//     }
-// };
-
 // export const checkAuthenticated = () => async dispatch => {
 //     if (localStorage.getItem('access')) {
 //         const config = {
@@ -252,42 +188,42 @@ export const signup = (email, first_name, last_name, password) => async dispatch
 //     }
 // };
 
-export const change_password = (new_password1, new_password2, old_password) => async dispatch => {
-    let token = localStorage.getItem('token');
-    const config = {
-        headers: {
-            'Content-Type': 'application/json',
-            "Authorization": `token ${token}`,
-        }
-    };
-    const body = JSON.stringify({
-        new_password1,
-        new_password2,
-        old_password
-    });
-    try {
-        await axios.patch(`http://localhost:8000/api/v1/auth/change-password/`, body, config);
-        await axios.post(`http://localhost:8000/api/v1/auth/logout/`, body, config);
-        dispatch({
-            type: CHANGE_PASSWORD_SUCCESS
-        });
-    } catch (err) {
-        dispatch({
-            type: CHANGE_PASSWORD_FAIL
-        });
-        dispatch({
-            type: ADD_ERROR_SUCCESS,
-            payload: err.message
-        })
-        setTimeout(() => {
-            dispatch({
-                type: CLEAN_ERROR_SUCCESS,
-            })
-        }, 3000)
-    }
-};
+// export const change_password = (new_password1, new_password2, old_password) => async dispatch => {
+//     let token = localStorage.getItem('token');
+//     const config = {
+//         headers: {
+//             'Content-Type': 'application/json',
+//             "Authorization": `token ${token}`,
+//         }
+//     };
+//     const body = JSON.stringify({
+//         new_password1,
+//         new_password2,
+//         old_password
+//     });
+//     try {
+//         await axios.patch(`http://localhost:8000/api/v1/auth/change-password/`, body, config);
+//         await axios.post(`http://localhost:8000/api/v1/auth/logout/`, body, config);
+//         dispatch({
+//             type: CHANGE_PASSWORD_SUCCESS
+//         });
+//     } catch (err) {
+//         dispatch({
+//             type: CHANGE_PASSWORD_FAIL
+//         });
+//         dispatch({
+//             type: ADD_ERROR_SUCCESS,
+//             payload: err.message
+//         })
+//         setTimeout(() => {
+//             dispatch({
+//                 type: CLEAN_ERROR_SUCCESS,
+//             })
+//         }, 3000)
+//     }
+// };
 
-export const reset_password = (email, password) => async dispatch => {
+export const forget_password = (email) => async dispatch => {
     const config = {
         headers: {
             'Content-Type': 'application/json',
@@ -295,15 +231,20 @@ export const reset_password = (email, password) => async dispatch => {
     };
     const body = JSON.stringify({
         email,
-        password
     });
     try {
-        await axios.post(`http://localhost:8000/api/v1/auth/reset-password`, body, config);
+        await axios.post(`http://localhost:8000/api/v1/auth/Forget-password/`, body, config);
         dispatch({
             type: CHANGE_PASSWORD_SUCCESS
         });
+        dispatch({
+            type: ADD_ERROR_SUCCESS,
+            payload: "Check your mail"
+        })
+        dispatch(setLoaderFalse())
 
     } catch (err) {
+        dispatch(setLoaderFalse())
         dispatch({
             type: ADD_ERROR_SUCCESS,
             payload: err.message
@@ -316,52 +257,35 @@ export const reset_password = (email, password) => async dispatch => {
     }
 };
 
-//PUT http://127.0.0.1:8000/api/v1/auth/change-password/ 403 (Forbidden)
 
+export const forgot_password_confirm = (token, password) => async dispatch => {
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    };
 
-// export const reset_password = (email) => async dispatch => {
-//     const config = {
-//         headers: {
-//             'Content-Type': 'application/json'
-//         }
-//     };
+    const body = JSON.stringify({ password });
+    console.log(token);
+    console.log(body);
+    try {
+        await axios.post(`http://localhost:8000/api/v1/auth/reset-new-password/${token}/`, body, config);
 
-//     const body = JSON.stringify({ email });
-
-//     try {
-//         await axios.post(`http://localhost:8000/en/api/v1/...`, body, config);
-
-//         dispatch({
-//             type: PASSWORD_RESET_SUCCESS
-//         });
-//     } catch (err) {
-//         dispatch({
-//             type: PASSWORD_RESET_FAIL
-//         });
-//     }
-// };
-
-// export const reset_password_confirm = (uid, token, new_password, re_new_password) => async dispatch => {
-//     const config = {
-//         headers: {
-//             'Content-Type': 'application/json'
-//         }
-//     };
-
-//     const body = JSON.stringify({ uid, token, new_password, re_new_password });
-
-//     try {
-//         await axios.post(`http://localhost:8000/en/api/v1/...`, body, config);
-
-//         dispatch({
-//             type: PASSWORD_RESET_CONFIRM_SUCCESS
-//         });
-//     } catch (err) {
-//         dispatch({
-//             type: PASSWORD_RESET_CONFIRM_FAIL
-//         });
-//     }
-// };
+        dispatch({
+            type: PASSWORD_RESET_CONFIRM_SUCCESS
+        });
+        dispatch(setLoaderFalse())
+    } catch (err) {
+        dispatch({
+            type: PASSWORD_RESET_CONFIRM_FAIL
+        });
+        dispatch(setLoaderFalse());
+        dispatch({
+            type: ADD_ERROR_SUCCESS,
+            payload: err.message
+        });
+    }
+};
 
 export const logout = () => async dispatch => {
     let token = localStorage.getItem('token');
@@ -400,7 +324,6 @@ export const myFacebookLogin = (accesstoken) => async (dispatch) => {
                 access_token: accesstoken,
             }
         );
-        console.log(res);
         await dispatch({ type: FACEBOOK_AUTH_SUCCESS, payload: res.data.key })
         await dispatch(loadUser())
         await dispatch(setLoaderFalse())

@@ -71,7 +71,7 @@ const UnitOneBody = () => {
           <Grid
             item
             xs={12}
-            sx={{ height: "56px", backgroundColor: "myBackgroundColor", pl: 4 }}
+            sx={{ backgroundColor: "myBackgroundColor", pl: 4 }}
           >
             <TimeRangePicker />
           </Grid>
@@ -89,10 +89,10 @@ const UnitOneBody = () => {
                 sx={{
                   backgroundColor: "#313131",
                   writingMode: "tb-rl",
-                  "-webkit-transform": "rotate(180deg)",
-                  "-moz-transform": "rotate(180deg)",
-                  "-o-transform": "rotate(180deg)",
-                  "-ms-transform": "rotate(180deg)",
+                  WebkitTransform: "rotate(180deg)",
+                  MozTransform: "rotate(180deg)",
+                  OTransform: "rotate(180deg)",
+                  msTransform: "rotate(180deg)",
                 }}
               >
                 <Grid container spacing={1}>
@@ -104,7 +104,7 @@ const UnitOneBody = () => {
                       color: "text.primary",
                     }}
                   >
-                    asdasd
+                    Links
                   </Grid>
                   <Grid
                     item
@@ -114,7 +114,7 @@ const UnitOneBody = () => {
                       color: "text.primary",
                     }}
                   >
-                    deneme
+                    Properties
                   </Grid>
                 </Grid>
               </Grid>
