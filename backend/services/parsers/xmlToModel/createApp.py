@@ -4,8 +4,8 @@ import os
 import environ
 
 settingspath = '/django/backend/settings/localapp.py'
-xmlpath = '/django/backend/apps/parsers/config/resources/xml/'
-modeltypelist = ['CODE_LIST','ITEM','ITEM_LINK','TYPE_PROPERTY','TYPE_LINK','ITEM_PROPERTY','TYPE','RESOURCE_LIST','TYPE_UOM','ITEM_VERSION','LAYER']
+xmlpath = '/django/backend/services/parsers/config/resources/xml/'
+modeltypelist = ['TYPE_REF']
 
 for item in modeltypelist:
     xmlinfo = IxmlInfo(item,'Columns','DbInfo.xml','Tables',xmlpath,settingspath)

@@ -3,7 +3,7 @@ from xmlInfo import IxmlInfo
 import os
 import time
 
-xmlpath = '/django/backend/apps/parsers/config/resources/xml/'
+xmlpath = '/django/backend/services/parsers/config/resources/xml/'
 settingspath = '/django/backend/settings/localapp.py'
 modeltypelist = ['CODE_LIST','ITEM','ITEM_LINK','TYPE_PROPERTY','TYPE_LINK','ITEM_PROPERTY','TYPE','RESOURCE_LIST','TYPE_UOM','ITEM_VERSION',]
 

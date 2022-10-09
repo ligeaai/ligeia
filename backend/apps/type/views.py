@@ -6,7 +6,7 @@ from rest_framework import status
 from .serializers import TypeSaveSerializer,TypeDetailsSerializer
 # Create your views here.
 from .models import type as Type
-from apps.parsers.addData.type import typeAddData 
+from services.parsers.addData.type import typeAddData
 
 
 class TypeSaveView(generics.CreateAPIView):

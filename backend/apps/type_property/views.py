@@ -8,7 +8,7 @@ from rest_framework import status
 from .serializers import TypePropertySaveSerializer,TypePropertyDetailsSerializer
 # Create your views here.
 from .models import type_property
-from apps.parsers.addData.type import typeAddData 
+from services.parsers.addData.type import typeAddData 
 
 class TypePropertySaveView(generics.CreateAPIView):
 

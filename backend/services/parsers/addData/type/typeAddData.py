@@ -8,7 +8,7 @@ import json
 def create_type_data():
     url = 'http://localhost:8000/api/v1/type/save/'
 
-    dataset = pd.read_csv('/django/backend/apps/parsers/addData/type/type.csv')
+    dataset = pd.read_csv('/django/backend/services/parsers/addData/type/type.csv')
     dataset=dataset.fillna(0)
     for index in range(0,dataset.shape[0]):
         data = dataset.iloc[index,0:-1]
@@ -22,7 +22,7 @@ def create_type_data():
 def create_type_property_data():
     url = 'http://localhost:8000/api/v1/type-property/save/'
 
-    dataset = pd.read_csv('/django/backend/apps/parsers/addData/type/TYPE_PROPERTY.csv')
+    dataset = pd.read_csv('/django/backend/services/parsers/addData/type/TYPE_PROPERTY.csv')
     dataset=dataset.fillna(0)
     for index in range(0,dataset.shape[0]):
         data = dataset.iloc[0,0:-1]

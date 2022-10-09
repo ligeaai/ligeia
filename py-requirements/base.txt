@@ -55,3 +55,7 @@ pyspark
 elasticsearch
 elasticsearch-dsl
 django-elasticsearch-dsl
+
+
+#couchdb
+couchdb
