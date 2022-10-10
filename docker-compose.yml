@@ -115,8 +115,8 @@ services:
       CONFLUENT_METRICS_REPORTER_BOOTSTRAP_SERVERS: broker:29092
       CONFLUENT_METRICS_REPORTER_ZOOKEEPER_CONNECT: zookeeper:2181
       CONFLUENT_METRICS_REPORTER_TOPIC_REPLICAS: 1
-      CONFLUENT_METRICS_ENABLE: 'true'
-      CONFLUENT_SUPPORT_CUSTOMER_ID: 'anonymous'  
+      CONFLUENT_METRICS_ENABLE: "true"
+      CONFLUENT_SUPPORT_CUSTOMER_ID: "anonymous"
       KAFKA_JMX_HOSTNAME: localhost
     networks:
       - net
@@ -132,16 +132,16 @@ services:
 
   apache-cassandra:
     container_name: apache-cassandra
-    hostname: 'cassandra'
+    hostname: "cassandra"
     image: docker.io/bitnami/cassandra:4.0
     expose:
       - 7000
       - 9042
     ports:
-      - '7000:7000'
-      - '9042:9042'
+      - "7000:7000"
+      - "9042:9042"
     volumes:
-      - 'cassandra_data:/bitnami'
+      - "apache-cassandra_data:/bitnami"
     environment:
       - CASSANDRA_SEEDS=cassandra
       - CASSANDRA_DC=DC1
@@ -149,15 +149,15 @@ services:
     networks:
       - net
     depends_on:
-      - broker
+      - apache-kafka-broker1
       - zookeeper
   rabbitmq:
     image: rabbitmq:3-management
     hostname: localhost
     container_name: rabbitmq
     ports:
-      - '15672:15672'
-      - '5672:5672'
+      - "15672:15672"
+      - "5672:5672"
     networks:
       - net
   control-center:
@@ -166,13 +166,13 @@ services:
     container_name: control-center
     depends_on:
       - zookeeper
-      - broker
+      - apache-kafka-broker1
     ports:
       - "9021:9021"
     environment:
-      CONTROL_CENTER_BOOTSTRAP_SERVERS: 'broker:29092'
-      CONTROL_CENTER_ZOOKEEPER_CONNECT: 'zookeeper:2181'
-      CONTROL_CENTER_CONNECT_CLUSTER: 'connect:8088'
+      CONTROL_CENTER_BOOTSTRAP_SERVERS: "broker:29092"
+      CONTROL_CENTER_ZOOKEEPER_CONNECT: "zookeeper:2181"
+      CONTROL_CENTER_CONNECT_CLUSTER: "connect:8088"
       CONTROL_CENTER_REPLICATION_FACTOR: 1
       CONTROL_CENTER_INTERNAL_TOPICS_PARTITIONS: 1
       CONTROL_CENTER_MONITORING_INTERCEPTOR_TOPIC_PARTITIONS: 1
@@ -180,7 +180,7 @@ services:
       PORT: 9021
     networks:
       - net
-      
+
   kafka-connect:
     build: ./
     container_name: kafka-connect
@@ -188,23 +188,23 @@ services:
     ports:
       - "8088:8088"
     depends_on:
-      - broker
+      - apache-kafka-broker1
     environment:
       CONNECT_BOOTSTRAP_SERVERS: broker:29092
-      CONNECT_GROUP_ID: "connect-group" 
-      CONNECT_CONFIG_STORAGE_TOPIC: "connect-config-storage" 
-      CONNECT_OFFSET_STORAGE_TOPIC: "connect-offset-storage" 
-      CONNECT_STATUS_STORAGE_TOPIC: "connect-status-storage" 
-      CONNECT_KEY_CONVERTER: "org.apache.kafka.connect.storage.StringConverter" 
-      CONNECT_VALUE_CONVERTER: "org.apache.kafka.connect.converters.ByteArrayConverter" 
-      CONNECT_INTERNAL_KEY_CONVERTER: "org.apache.kafka.connect.json.JsonConverter" 
+      CONNECT_GROUP_ID: "connect-group"
+      CONNECT_CONFIG_STORAGE_TOPIC: "connect-config-storage"
+      CONNECT_OFFSET_STORAGE_TOPIC: "connect-offset-storage"
+      CONNECT_STATUS_STORAGE_TOPIC: "connect-status-storage"
+      CONNECT_KEY_CONVERTER: "org.apache.kafka.connect.storage.StringConverter"
+      CONNECT_VALUE_CONVERTER: "org.apache.kafka.connect.converters.ByteArrayConverter"
+      CONNECT_INTERNAL_KEY_CONVERTER: "org.apache.kafka.connect.json.JsonConverter"
       CONNECT_INTERNAL_VALUE_CONVERTER: "org.apache.kafka.connect.json.JsonConverter"
-      CONNECT_PLUGIN_PATH: "/usr/share/confluent-hub-components" 
-      CONNECT_REST_ADVERTISED_HOST_NAME: "connect" 
-      CONNECT_REST_HOST_NAME: "connect" 
-      CONNECT_REST_PORT: "8088" 
-      CONNECT_CONFIG_STORAGE_REPLICATION_FACTOR: 1 
-      CONNECT_OFFSET_STORAGE_REPLICATION_FACTOR: 1 
+      CONNECT_PLUGIN_PATH: "/usr/share/confluent-hub-components"
+      CONNECT_REST_ADVERTISED_HOST_NAME: "connect"
+      CONNECT_REST_HOST_NAME: "connect"
+      CONNECT_REST_PORT: "8088"
+      CONNECT_CONFIG_STORAGE_REPLICATION_FACTOR: 1
+      CONNECT_OFFSET_STORAGE_REPLICATION_FACTOR: 1
       CONNECT_STATUS_STORAGE_REPLICATION_FACTOR: 1
       CONNECT_LOG4J_ROOT_LOGLEVEL: "INFO"
       CLASSPATH: /usr/share/java/monitoring-interceptors/monitoring-interceptors-5.1.1.jar
@@ -229,7 +229,6 @@ volumes:
     driver: local
   apache-cassandra_data:
     driver: local
-
 
   # celery_worker:
   #   restart: on-failure
