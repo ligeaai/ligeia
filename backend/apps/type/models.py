@@ -1,6 +1,7 @@
 from django.db import models 
 import uuid 
 from django.utils import timezone 
+
 class type(models.Model): 
 	TYPE=models.CharField(max_length=14,primary_key=True,null=False,)
 	TYPE_CLASS=models.CharField(max_length=50,null=False,)
@@ -14,7 +15,7 @@ class type(models.Model):
 	IS_QUICK_LINK=models.CharField(max_length=5,null=True,)
 	PROP_TBL_NAME=models.CharField(max_length=50,null=True,)
 	BASE_TBL_NAME=models.CharField(max_length=50,null=True,)
-	TAG_TBL_NAME=models.CharField(max_length=50,null=True,)
+	TAG_TBL_NAME=models.CharField(max_length=50,null=True,) 
 	LAST_UPDT_USER=models.CharField(max_length=100,null=True,)
 	LAST_UPDT_DATE=models.DateField(default=timezone.now,null=True,)
 	VERSION=models.CharField(max_length=32,default=uuid.uuid4,null=False,)
