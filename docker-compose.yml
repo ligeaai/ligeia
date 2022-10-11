@@ -41,7 +41,7 @@ services:
       - COUCHDB_USER=${COUCHDB_USER}
       - COUCHDB_PASSWORD=${COUCHDB_PASSWORD}
     volumes:
-      - .:/couchDbData:/opt/couchdb/data
+      - couch-data:/opt/couchdb/data
   es:
     image: elasticsearch:8.4.2
     environment:
@@ -91,3 +91,4 @@ volumes:
   postgres-data: null
   pgadmin-data: null
   redis-data: null
+  couch-data: null
