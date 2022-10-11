@@ -20,8 +20,8 @@ const Drawer = (props) => {
       onMouseEnter={() => dispatch(mouseEnterDrawer())}
       onMouseLeave={() => dispatch(mouseLeaveDrawer())}
       sx={{
-        minWidth: "88px",
-        minHeight: "calc(100vh - 75px)",
+        minWidth: "80px",
+        minHeight: "calc(100vh - 75px - 8px)",
         height: "500px",
         width: "min-content",
         typography: {
@@ -30,10 +30,14 @@ const Drawer = (props) => {
           },
           sm: { display: "inline-block" },
         },
-        paddingTop: "16px",
-        paddingBottom: "16px",
-        paddingX: "16px",
-        boxShadow: "inset -7px 8px 7px -9px",
+        paddingTop: "8px",
+        paddingBottom: "8px",
+        paddingX: "12px",
+        m: 0.5,
+        mr: 0,
+        boxShadow: 3,
+        borderRadius: "5px",
+        // boxShadow: "inset -7px 8px 7px -9px",
       }}
     >
       <App menu={navItems} />

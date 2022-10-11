@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Grid } from "@mui/material";
+import { IconButton, Grid, Tooltip } from "@mui/material";
 import ControlPointRoundedIcon from "@mui/icons-material/ControlPointRounded";
 import ControlPointDuplicateRoundedIcon from "@mui/icons-material/ControlPointDuplicateRounded";
 import SaveOutlinedIcon from "@mui/icons-material/SaveOutlined";
@@ -10,20 +10,24 @@ import ArrowCircleRightOutlinedIcon from "@mui/icons-material/ArrowCircleRightOu
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 
 const icons = [
-  ControlPointRoundedIcon,
-  ControlPointDuplicateRoundedIcon,
-  SaveOutlinedIcon,
-  DeleteOutlineOutlinedIcon,
-  ArrowCircleLeftOutlinedIcon,
-  ArrowCircleRightOutlinedIcon,
-  InfoOutlinedIcon,
+  { Icon: ControlPointRoundedIcon, tooltip: "New" },
+  { Icon: ControlPointDuplicateRoundedIcon, tooltip: "Duplicate" },
+  { Icon: SaveOutlinedIcon, tooltip: "Save" },
+  { Icon: DeleteOutlineOutlinedIcon, tooltip: "Delete" },
+  { Icon: ArrowCircleLeftOutlinedIcon, tooltip: "Save, Go Previous" },
+  { Icon: ArrowCircleRightOutlinedIcon, tooltip: "Save, Go Next" },
+  { Icon: InfoOutlinedIcon, tooltip: "Item Info" },
 ];
 
 const actionIcon = () => {
   return (
-    <Grid container columnGap={1.5}>
+    <Grid container>
       {icons.map((Element, key) => (
-        <Element key={key} sx={{ color: "white" }} />
+        <Tooltip key={key} title={Element.tooltip}>
+          <IconButton>
+            <Element.Icon sx={{ color: "text.primary" }} />
+          </IconButton>
+        </Tooltip>
       ))}
     </Grid>
   );

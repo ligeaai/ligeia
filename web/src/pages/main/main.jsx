@@ -42,6 +42,22 @@ const cards = [
     isActiveDrawer: 5,
   },
 ];
+
+const MainRender = () => {
+  return (
+    <Box
+      sx={{
+        m: 0.5,
+        boxShadow: 3,
+        borderRadius: "5px",
+        height: "calc(100% - 8px)",
+      }}
+    >
+      <Cards cards={cards} />
+    </Box>
+  );
+};
+
 const main = () => {
   return (
     <Box
@@ -51,7 +67,7 @@ const main = () => {
         height: "auto",
       }}
     >
-      <Main Element={<Cards cards={cards} />} />
+      <Main Element={MainRender()} />
     </Box>
   );
 };

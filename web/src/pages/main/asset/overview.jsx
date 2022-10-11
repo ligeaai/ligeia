@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { Box, Grid, Typography } from "@mui/material";
 
 import Main from "../../../layout/main/main";
-import Menu from "../../../components/assetsComponent/treeView";
+import Menu from "../../../components/navigationComp/treeView";
 import { menu } from "./owerviewMenu";
 import Breadcrumb from "../../../components/breadcrumb/breadcrumb";
 
@@ -37,7 +37,15 @@ const AssetOwerview = () => {
       }}
     >
       <DrawerMenu Element={<Menu menu={menu} />} />
-      <Grid item xs={12}>
+      <Grid
+        item
+        xs={12}
+        sx={{
+          m: 0.5,
+          boxShadow: 3,
+          borderRadius: "5px",
+        }}
+      >
         <Grid container>
           <Grid
             item
@@ -47,9 +55,9 @@ const AssetOwerview = () => {
               height: "48px",
               display: "flex",
               alignItems: "flex-end",
-              backgroundColor: "myCanvasBg",
-              borderLeft: "1px solid rgba(0,0,0,0.3)",
-              boxShadow: "inset 0px 8px 6px -9px",
+              backgroundColor: "myTreeViewBg",
+              borderTopLeftRadius: "5px",
+              borderTopRightRadius: "5px",
             }}
           >
             <Box sx={{ color: "text.primary", ml: 3 }}>

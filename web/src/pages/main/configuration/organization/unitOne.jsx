@@ -1,13 +1,17 @@
 import React from "react";
 import { useSelector } from "react-redux";
 
-import { Box, Grid, Typography } from "@mui/material";
+import PropTypes from "prop-types";
+import { Box, Grid, Typography, Tab, Tabs } from "@mui/material";
 
 import Main from "../../../../layout/main/main";
 import Breadcrumb from "../../../../components/breadcrumb/breadcrumb";
 import DrawerMenu from "../../../../layout/main/asset/treeViewMenu";
-import ActionIcon from "../../../../components/assetsComponent/actionIcon";
-import TimeRangePicker from "../../../../components/assetsComponent/timeRangePicker";
+import ActionIcon from "../../../../components/navigationComp/actionMenu";
+import TimeRangePicker from "../../../../components/navigationComp/timeRangePicker";
+import Properties from "../../../../components/navigationComp/propLinkTabs";
+import { ItemSperatorLineXL } from "../../../../components/nestedMenu/nestedItems";
+import DateBreak from "../../../../components/navigationComp/dateBreak";
 
 const Canvas = () => {
   return (
@@ -25,6 +29,7 @@ const Canvas = () => {
 
 const UnitOneBody = () => {
   const isFullScreen = useSelector((state) => state.fullScreen.isFullScreen);
+
   return (
     <Grid
       container
@@ -34,8 +39,26 @@ const UnitOneBody = () => {
         flexWrap: "nowrap",
       }}
     >
-      <DrawerMenu Element={<Box />} />
-      <Grid item xs={12}>
+      <DrawerMenu
+        Element={
+          <Box
+            sx={{
+              height: isFullScreen
+                ? "calc(100vh - 85px)"
+                : "calc(100vh - 85px - 75px)",
+            }}
+          />
+        }
+      />
+      <Grid
+        item
+        xs={12}
+        sx={{
+          m: 0.5,
+          boxShadow: 3,
+          borderRadius: "5px",
+        }}
+      >
         <Grid container>
           <Grid
             item
@@ -45,9 +68,10 @@ const UnitOneBody = () => {
               height: "48px",
               display: "flex",
               alignItems: "center",
-              backgroundColor: "myCanvasBg",
-              borderLeft: "1px solid rgba(0,0,0,0.3)",
-              boxShadow: "inset 0px 8px 6px -9px",
+              backgroundColor: "myTreeViewBg",
+              color: "text.primary",
+              borderTopLeftRadius: "5px",
+              borderTopRightRadius: "5px",
             }}
           >
             <Grid
@@ -56,72 +80,40 @@ const UnitOneBody = () => {
                 justifyContent: "space-between",
                 alignItems: "center",
                 mx: 3,
+                color: "text.primary",
               }}
             >
               <Grid item>
-                <Box sx={{ color: "text.primary" }}>
+                <Box>
                   <Breadcrumb />
                 </Box>
               </Grid>
-              <Grid item sx={{ borderLeft: "2px solid white", pl: 2 }}>
+              <Grid
+                item
+                sx={{
+                  borderLeft: "2px solid",
+                  borderColor: "text.primary",
+                  pl: 2,
+                }}
+              >
                 <ActionIcon />
               </Grid>
             </Grid>
           </Grid>
-          <Grid
-            item
-            xs={12}
-            sx={{ backgroundColor: "myBackgroundColor", pl: 4 }}
-          >
-            <TimeRangePicker />
-          </Grid>
+          <ItemSperatorLineXL />
           <Grid
             item
             xs={12}
             sx={{
-              height: isFullScreen ? "calc(100vh - 48px)" : "auto",
-              backgroundColor: "myCanvasBg",
+              backgroundColor: "myBackgroundColor",
+              pl: 4,
             }}
           >
-            <Grid container>
-              <Grid
-                item
-                sx={{
-                  backgroundColor: "#313131",
-                  writingMode: "tb-rl",
-                  WebkitTransform: "rotate(180deg)",
-                  MozTransform: "rotate(180deg)",
-                  OTransform: "rotate(180deg)",
-                  msTransform: "rotate(180deg)",
-                }}
-              >
-                <Grid container spacing={1}>
-                  <Grid
-                    item
-                    sx={{
-                      border: "1px solid black",
-                      fontSize: "14px",
-                      color: "text.primary",
-                    }}
-                  >
-                    Links
-                  </Grid>
-                  <Grid
-                    item
-                    sx={{
-                      border: "1px solid black",
-                      fontSize: "14px",
-                      color: "text.primary",
-                    }}
-                  >
-                    Properties
-                  </Grid>
-                </Grid>
-              </Grid>
-              <Grid item>
-                <Canvas />
-              </Grid>
-            </Grid>
+            <DateBreak />
+          </Grid>
+          <ItemSperatorLineXL />
+          <Grid item xs={12}>
+            <Properties />
           </Grid>
         </Grid>
       </Grid>

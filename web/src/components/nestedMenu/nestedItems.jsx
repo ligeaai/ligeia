@@ -53,3 +53,17 @@ export const ItemSperatorLine = () => {
     />
   );
 };
+
+export const ItemSperatorLineXL = () => {
+  return (
+    <Box
+      sx={{
+        border: "none",
+        height: "1px",
+        backgroundColor: "#616161",
+        width: "98%",
+        margin: "auto",
+      }}
+    />
+  );
+};

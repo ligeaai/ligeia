@@ -75,7 +75,6 @@ const Main = (props) => {
             <Grid
               item
               sx={{
-                backgroundColor: "myCanvasBg",
                 minHeight: "calc(100vh - 75px)",
                 width: "100%",
               }}
