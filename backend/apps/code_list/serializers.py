@@ -18,3 +18,8 @@ class CodeListDetailsSerializer(serializers.ModelSerializer):
     class Meta:
         model = code_list
         fields = '__all__'
+
+class CodeListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = code_list
+        fields = '__all__'

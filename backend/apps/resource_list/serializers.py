@@ -18,3 +18,8 @@ class ResourceListDetailsSerializer(serializers.ModelSerializer):
     class Meta:
         model = resource_list
         fields = '__all__'
+
+class ResourceListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = resource_list
+        fields = '__all__'
