@@ -30,6 +30,11 @@ import {
     CLEAN_ERROR_SUCCESS
 } from './types';
 
+const instance = axios.create({
+    baseURL: 'http://localhost:8000'
+});
+
+
 export const loadUser = () => async dispatch => {
     if (localStorage.getItem('token')) {
         const config = {
@@ -41,7 +46,7 @@ export const loadUser = () => async dispatch => {
         };
 
         try {
-            const res = await axios.get(`http://localhost:8000/api/v1/auth/user-detail`, config);
+            const res = await instance.get(`/api/v1/auth/user-detail`, config);
 
             dispatch({
                 type: USER_LOADED_SUCCESS,
@@ -105,7 +110,7 @@ export const login = (email, password) => async dispatch => {
     const body = JSON.stringify({ email, password });
 
     try {
-        const res = await axios.post(`http://localhost:8000/api/v1/auth/login/`, body, config);
+        const res = await instance.post(`/api/v1/auth/login/`, body, config);
         dispatch({
             type: LOGIN_SUCCESS,
             payload: res.data.token
@@ -139,7 +144,7 @@ export const signup = (email, first_name, last_name, password) => async dispatch
     const body = JSON.stringify({ email, first_name, last_name, password });
 
     try {
-        const res = await axios.post(`http://localhost:8000/api/v1/auth/register/`, body, config);
+        const res = await instance.post(`/api/v1/auth/register/`, body, config);
 
         dispatch({
             type: SIGNUP_SUCCESS,
@@ -233,7 +238,7 @@ export const forget_password = (email) => async dispatch => {
         email,
     });
     try {
-        await axios.post(`http://localhost:8000/api/v1/auth/Forget-password/`, body, config);
+        await instance.post(`/api/v1/auth/Forget-password/`, body, config);
         dispatch({
             type: CHANGE_PASSWORD_SUCCESS
         });
@@ -269,7 +274,7 @@ export const forgot_password_confirm = (token, password) => async dispatch => {
     console.log(token);
     console.log(body);
     try {
-        await axios.post(`http://localhost:8000/api/v1/auth/reset-new-password/${token}/`, body, config);
+        await instance.post(`/api/v1/auth/reset-new-password/${token}/`, body, config);
 
         dispatch({
             type: PASSWORD_RESET_CONFIRM_SUCCESS
@@ -296,7 +301,7 @@ export const logout = () => async dispatch => {
         }
     };
     try {
-        await axios.get(`http://localhost:8000/api/v1/auth/logout/`, config);
+        await instance.get(`/api/v1/auth/logout/`, config);
         dispatch({
             type: LOGOUT
         });
@@ -318,8 +323,8 @@ export const logout = () => async dispatch => {
 
 export const myFacebookLogin = (accesstoken) => async (dispatch) => {
     try {
-        let res = await axios.post(
-            "http://localhost:8000/api/v1/auth/facebook/",
+        let res = await instance.post(
+            "/api/v1/auth/facebook/",
             {
                 access_token: accesstoken,
             }
@@ -340,8 +345,8 @@ export const myFacebookLogin = (accesstoken) => async (dispatch) => {
 
 export const myGoogleLogin = (response) => async (dispatch) => {
     try {
-        let res = await axios.post(
-            "http://localhost:8000/api/v1/auth/google/",
+        let res = await instance.post(
+            "/api/v1/auth/google/",
             {
                 access_token: response.accessToken,
             }
@@ -362,8 +367,8 @@ export const myGoogleLogin = (response) => async (dispatch) => {
 export const myGithubLogin = (access_token) => async (dispatch) => {
     console.log(access_token);
     try {
-        let res = await axios.post(
-            "http://localhost:8000/auth/github/",
+        let res = await instance.post(
+            "/auth/github/",
             {
                 access_token: access_token,
             }

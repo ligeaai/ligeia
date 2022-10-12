@@ -11,6 +11,7 @@ import { setIsFullScreen } from "../../services/reducers/fullScreenReducer";
 
 import Loading from "../../components/HOC/loading";
 import axios from "axios";
+import { loadDrawerMenu } from "../../services/api/couchApi/drawer";
 
 const Main = (props) => {
   const dispatch = useDispatch();
@@ -19,24 +20,9 @@ const Main = (props) => {
   const [navItems, setNavItems] = React.useState(false);
 
   React.useEffect(() => {
-    const config = {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Basic " + btoa("COUCHDB_USER:COUCHDB_PASSWORD"),
-      },
-    };
-    try {
-      axios
-        .get(
-          "http://127.0.0.1:5984/drawermenu/5df1d721606c002e2d914d8fd800012f",
-          config
-        )
-        .then((res) => {
-          setNavItems(res.data.drawerMenu);
-        });
-    } catch (err) {
-      console.log(err);
-    }
+    loadDrawerMenu().then((res) => {
+      setNavItems(res.data.drawerMenu);
+    });
   }, []);
   if (navItems) {
     return isFullScreen ? (

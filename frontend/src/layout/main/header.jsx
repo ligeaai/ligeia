@@ -16,6 +16,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import TranslateIcon from "@mui/icons-material/Translate";
 import Brightness2OutlinedIcon from "@mui/icons-material/Brightness2Outlined";
 import LanguageIcon from "@mui/icons-material/Language";
+import MenuOpenOutlinedIcon from "@mui/icons-material/MenuOpenOutlined";
 
 import { changeTheme } from "../../services/actions/theme";
 import { changeLanguage } from "../../services/actions/language";
@@ -37,7 +38,7 @@ const Header = (props) => {
   const search = useSelector((state) => state.searchBar.isFocus);
   const theme = useSelector((state) => state.theme.theme);
   const lang = useSelector((state) => state.lang.lang);
-
+  const drawerIsOpen = useSelector((state) => state.drawer.isOpen);
   const [settingsMenu, setSettingsMenu] = React.useState(false);
 
   window.addEventListener("click", function (e) {
@@ -55,11 +56,11 @@ const Header = (props) => {
   const locationSelect = (location) => {};
 
   const MyBox = styled(Grid)(({ theme }) => ({
-    backgroundColor: theme.palette.myBackgroundColor,
+    backgroundColor: "#7E99AA",
     alignItems: "center",
     justifyContent: "space-between",
     padding: "13px 21px",
-    height: "74px",
+    height: "60px",
     borderBottom: "1px solid rgba(0,0,0,0.3)",
   }));
 
@@ -120,16 +121,29 @@ const Header = (props) => {
         <Grid item>
           <Grid container spacing={2.5} alignItems="center">
             <Grid item>
-              <MenuIcon
-                sx={{
-                  mx: "9px",
-                  typography: "h4",
-                  color: "text.secondary",
-                }}
-                onClick={() => {
-                  dispatch(toggleDrawer());
-                }}
-              />
+              {drawerIsOpen ? (
+                <MenuIcon
+                  sx={{
+                    mx: "9px",
+                    typography: "h4",
+                    color: "#ffffff",
+                  }}
+                  onClick={() => {
+                    dispatch(toggleDrawer());
+                  }}
+                />
+              ) : (
+                <MenuOpenOutlinedIcon
+                  sx={{
+                    mx: "9px",
+                    typography: "h4",
+                    color: "#ffffff",
+                  }}
+                  onClick={() => {
+                    dispatch(toggleDrawer());
+                  }}
+                />
+              )}
             </Grid>
             <Grid item>
               {delSearchBar ? null : (
@@ -154,7 +168,7 @@ const Header = (props) => {
                 <StyledBadge badgeContent={8} max={99}>
                   <NotificationsNoneIcon
                     sx={{
-                      color: "text.primary",
+                      color: "#ffffff",
                     }}
                   />
                 </StyledBadge>
@@ -183,7 +197,7 @@ const Header = (props) => {
                         sx={{
                           fontWeight: "500",
                           textTransform: "capitalize",
-                          color: "text.secondary",
+                          color: "#ffffff",
                         }}
                       >
                         {user
@@ -196,7 +210,7 @@ const Header = (props) => {
                       <Typography
                         variant="caption"
                         sx={{
-                          color: "text.disabled",
+                          color: "#ffffffAA",
                           textTransform: "capitalize",
                         }}
                       >
@@ -222,7 +236,7 @@ const Header = (props) => {
                   display: settingsMenu ? "flex" : "none",
                   position: "absolute",
                   right: { xs: "0" },
-                  top: "75px",
+                  top: "62px",
                   boxShadow: "0px 1px 5px rgba(0, 0, 0, 0.1)",
                   zIndex: 3,
                 }}

@@ -46,16 +46,20 @@ const SingleLevel = ({ item }) => {
       }}
       onClick={handleClick}
     >
-      <Icon
-        sx={{
-          color:
-            item.url === window.location.pathname
-              ? "myReverseText"
-              : "text.primary",
-        }}
-      />
+      {Icon ? (
+        <Icon
+          sx={{
+            color:
+              item.url === window.location.pathname
+                ? "myReverseText"
+                : "myBoldText",
+          }}
+        />
+      ) : (
+        <></>
+      )}
       <Typography
-        variant="body2"
+        variant="subtitle2"
         sx={{
           mx: 1,
           pl: 1,
@@ -63,7 +67,7 @@ const SingleLevel = ({ item }) => {
           color:
             item.url === window.location.pathname
               ? "myReverseText"
-              : "text.primary",
+              : "myBoldText",
           overflow: "hidden",
           whiteSpace: "nowrap",
           textOverflow: "ellipsis",
@@ -103,7 +107,7 @@ const MultiLevel = ({ item }) => {
               color:
                 item.url === window.location.pathname
                   ? "myReverseText"
-                  : "text.primary",
+                  : "myBoldText",
               typography: "body1",
               display: isOpen ? "inline-block" : "none",
             }}
@@ -116,20 +120,24 @@ const MultiLevel = ({ item }) => {
               color:
                 item.url === window.location.pathname
                   ? "myReverseText"
-                  : "text.primary",
+                  : "myBoldText",
               typography: "body1",
               display: isOpen ? "inline-block" : "none",
             }}
           />
         )}
-        <Icon
-          sx={{
-            color:
-              item.url === window.location.pathname
-                ? "myReverseText"
-                : "text.primary",
-          }}
-        />
+        {Icon ? (
+          <Icon
+            sx={{
+              color:
+                item.url === window.location.pathname
+                  ? "myReverseText"
+                  : "myBoldText",
+            }}
+          />
+        ) : (
+          <></>
+        )}
 
         <Typography
           variant="subtitle2"
@@ -140,7 +148,7 @@ const MultiLevel = ({ item }) => {
             color:
               item.url === window.location.pathname
                 ? "myReverseText"
-                : "text.primary",
+                : "myBoldText",
             overflow: "hidden",
             whiteSpace: "nowrap",
             textOverflow: "ellipsis",

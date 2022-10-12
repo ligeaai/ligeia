@@ -42,8 +42,9 @@ const AssetOwerview = () => {
         xs={12}
         sx={{
           m: 0.5,
+          ml: 0,
           boxShadow: 3,
-          borderRadius: "5px",
+          borderRadius: "3px",
         }}
       >
         <Grid container>
@@ -56,8 +57,8 @@ const AssetOwerview = () => {
               display: "flex",
               alignItems: "flex-end",
               backgroundColor: "myTreeViewBg",
-              borderTopLeftRadius: "5px",
-              borderTopRightRadius: "5px",
+              borderTopLeftRadius: "3px",
+              borderTopRightRadius: "3px",
             }}
           >
             <Box sx={{ color: "text.primary", ml: 3 }}>

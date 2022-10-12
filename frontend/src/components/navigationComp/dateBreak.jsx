@@ -2,9 +2,10 @@ import React from "react";
 
 import { Box, Grid, Button, TextField } from "@mui/material";
 
+import { grey } from "@mui/material/colors";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
-import QuestionMarkIcon from "@mui/icons-material/QuestionMark";
+import FolderCopyOutlinedIcon from "@mui/icons-material/FolderCopyOutlined";
 
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
@@ -14,9 +15,10 @@ const SeperatorLineVertical = () => {
   return (
     <Box
       sx={{
-        height: "24px",
-        width: "1.5px",
-        backgroundColor: "text.secondary",
+        height: "26px",
+        width: "2px",
+        backgroundColor: "#4B4B4B",
+        marginX: "2px",
       }}
     />
   );
@@ -26,14 +28,14 @@ const DateBreak = () => {
   const instanttime = new Date();
   const [date, setDate] = React.useState(instanttime);
   return (
-    <Grid container sx={{ alignItems: "center" }}>
+    <Grid container sx={{ alignItems: "center", height: "100%" }}>
       <Grid item sx={{ pr: 1.5 }}>
         <Grid container sx={{ alignItems: "center" }}>
           <Button
             sx={{
               textTransform: "capitalize",
-              typography: "subtitle2",
-              color: "text.secondary",
+              fontSize: "12px",
+              color: "#4B4B4B",
             }}
           >
             Add a Date Break:
@@ -58,11 +60,17 @@ const DateBreak = () => {
                       ".MuiInputAdornment-root": {
                         pl: 0,
                         ml: 0,
+                        button: {
+                          svg: {
+                            fontSize: "medium",
+                          },
+                          color: "#4B4B4B",
+                        },
                       },
                       Input: {
+                        color: "#4B4B4B",
                         fontSize: "12px",
                         paddingY: "6px",
-                        fontWeight: "bold",
                       },
                     }}
                   />
@@ -72,32 +80,54 @@ const DateBreak = () => {
           </Grid>
         </Grid>
       </Grid>
-      <SeperatorLineVertical />
+      <Grid item>
+        <SeperatorLineVertical />
+      </Grid>
       <Grid item>
         <Button
+          variant="outlined"
           sx={{
+            height: "36px",
             textTransform: "capitalize",
-            typography: "subtitle2",
-            color: "text.secondary",
+            fontSize: "12px",
+            color: "#4B4B4B",
+            px: 1,
+            border: "none",
+            "&:hover": {
+              backgroundColor: grey[300],
+              border: "none",
+            },
           }}
         >
-          <DeleteForeverIcon /> Delete Selected Date Brek
+          <DeleteForeverIcon fontSize="medium" /> Delete Selected Date Break
         </Button>
       </Grid>
-      <SeperatorLineVertical />
+      <Grid item>
+        <SeperatorLineVertical />
+      </Grid>
       <Grid item>
         <Button
+          variant="outlined"
           sx={{
+            height: "36px",
             textTransform: "capitalize",
-            typography: "subtitle2",
-            color: "text.secondary",
+            fontSize: "12px",
+            color: "#4B4B4B",
+            px: 1,
+            border: "none",
+            "&:hover": {
+              backgroundColor: grey[300],
+              border: "none",
+            },
           }}
         >
-          <QuestionMarkIcon />
-          Apply Template
+          <FolderCopyOutlinedIcon fontSize="small" sx={{ mr: 0.4 }} /> Apply
+          Template
         </Button>
       </Grid>
-      <SeperatorLineVertical />
+      <Grid item>
+        <SeperatorLineVertical />
+      </Grid>
       {/* <Grid item>
         <Button
           sx={{
