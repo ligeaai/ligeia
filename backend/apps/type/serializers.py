@@ -18,3 +18,10 @@ class TypeDetailsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Type
         fields = '__all__'
+
+
+
+class TypeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Type
+        fields = ['TYPE','BASE_TYPE',]

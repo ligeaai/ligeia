@@ -1,9 +1,10 @@
+import re
 from django.shortcuts import render
 from rest_framework.authentication import TokenAuthentication
 from rest_framework import generics,permissions
 from rest_framework.response import Response
 from rest_framework import status
-from .serializers import TypeSaveSerializer,TypeDetailsSerializer
+from .serializers import TypeSaveSerializer,TypeDetailsSerializer,TypeSerializer
 # Create your views here.
 from .models import type as Type
 from services.parsers.addData.type import typeAddData
@@ -29,18 +30,17 @@ class TypeView(generics.ListAPIView):
         return Response({"Error":'error_message'}, status=status.HTTP_200_OK)
 
 
-class TypeDetailView(generics.ListAPIView):
-
-    queryset = Type.objects.all()
-    serializer_class = TypeDetailsSerializer
-    authentication_classes = [TokenAuthentication,]
-    permission_classes = [permissions.IsAuthenticated]
-    def list(self, request):
+class TypeDetailView(generics.CreateAPIView):
+    permission_classes = [
+        permissions.AllowAny
+    ]
+    serializer_class = [TypeSerializer,]
+    def post(self, request):
         # Note the use of `get_queryset()` instead of `self.queryset`
         try:
-            queryset = self.get_queryset()
-            serializer = TypeDetailsSerializer(queryset, many=True)
-            return Response(serializer.data,status=status.HTTP_200_OK)
+            typeQuary = Type.objects.filter(TYPE=request.data.get('TYPE'))
+            serializer = TypeSerializer(typeQuary, many=True)
+            #print(serializer.data[0].get('TYPE'))
+            return Response(serializer.data[0].get('TYPE'),status=status.HTTP_200_OK)
         except Exception as e:
             return Response(e)
-

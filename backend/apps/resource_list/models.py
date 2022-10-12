@@ -2,8 +2,8 @@ from django.db import models
 import uuid 
 from django.utils import timezone 
 class resource_list(models.Model): 
-	CULTURE=models.CharField(max_length=10,primary_key=True,null=False,)
-	ID=models.CharField(max_length=100,null=False,)
+	CULTURE=models.CharField(max_length=10,primary_key=False,null=False,)
+	ID=models.CharField(max_length=100,null=False,primary_key=True)
 	SHORT_LABEL=models.CharField(max_length=200,null=True,)
 	MOBILE_LABEL=models.CharField(max_length=200,null=True,)
 	LAYER_NAME=models.CharField(max_length=50,null=False,)
