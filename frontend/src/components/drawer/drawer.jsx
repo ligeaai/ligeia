@@ -10,18 +10,21 @@ import {
 } from "../../services/reducers/drawerReducer";
 
 import App from "./app";
-
+// const MyBox = styled(Grid)(({ theme }) => {
+//   console.log(theme);
+// });
 const Drawer = (props) => {
   const dispatch = useDispatch();
   const isOpen = useSelector((state) => state.drawer.isOpen);
   const { navItems } = props;
+
   return (
     <Box
       onMouseEnter={() => dispatch(mouseEnterDrawer())}
       onMouseLeave={() => dispatch(mouseLeaveDrawer())}
       sx={{
-        minWidth: "80px",
-        minHeight: "calc(100vh - 75px - 8px)",
+        minWidth: "68px",
+        minHeight: "calc(100vh - 60px - 8px)",
         height: "500px",
         width: "min-content",
         typography: {
@@ -32,12 +35,11 @@ const Drawer = (props) => {
         },
         paddingTop: "8px",
         paddingBottom: "8px",
-        paddingX: "12px",
+        paddingX: "6px",
         m: 0.5,
         mr: 0,
         boxShadow: 3,
-        borderRadius: "5px",
-        // boxShadow: "inset -7px 8px 7px -9px",
+        borderRadius: "3px",
       }}
     >
       <App menu={navItems} />

@@ -23,6 +23,11 @@ const config = {
     }
 };
 //const body = JSON.stringify({ token: localStorage.getItem('token') });
+
+const instance = axios.create({
+    baseURL: 'http://localhost:8000'
+});
+
 const body = {}
 
 const clearlistTypeSchema = () => dispatch => {
@@ -39,8 +44,8 @@ const setIsOpen = (data) => dispatch => {
 
 const getAll = () => async dispatch => {
     try {
-        const temp = await axios.get(
-            "http://localhost:8000/api/v1/code_list/code_list_schema/",
+        const temp = await instance.get(
+            "/api/v1/code_list/code_list_schema/",
             body,
             config,
         )
@@ -56,8 +61,8 @@ const getAll = () => async dispatch => {
 
 const getWithLISTTYPE = (listType) => async dispatch => {
     try {
-        const temp = await axios.get(
-            `http://localhost:8000/api/v1/code_list/code_list_listtype/?LISTTYPE=${listType}`,
+        const temp = await instance.get(
+            `/api/v1/code_list/code_list_listtype/?LISTTYPE=${listType}`,
             body,
             config,
         )
@@ -73,13 +78,13 @@ const getWithLISTTYPE = (listType) => async dispatch => {
 
 const deleteCodeList = (id) => async dispatch => {
     try {
-        const listtype = await axios.get(
-            `http://localhost:8000/api/v1/code_list/code_list_listtype/${id}/`,
+        const listtype = await instance.get(
+            `/api/v1/code_list/code_list_listtype/${id}/`,
             body,
             config,
         )
-        await axios.delete(
-            `http://localhost:8000/api/v1/code_list/code_list_listtype/${id}`,
+        await instance.delete(
+            `/api/v1/code_list/code_list_listtype/${id}`,
             body,
             config,
         )
@@ -92,8 +97,8 @@ const deleteCodeList = (id) => async dispatch => {
 const addCodeList = (data) => async dispatch => {
     const body = JSON.stringify(data);
     try {
-        await axios.post(
-            `http://localhost:8000/api/v1/code_list/code_list_listtype/`,
+        await instance.post(
+            `/api/v1/code_list/code_list_listtype/`,
             body,
             config,
         )
@@ -105,13 +110,13 @@ const addCodeList = (data) => async dispatch => {
 const updateCodeList = (id, data) => async dispatch => {
     const body = JSON.stringify(data);
     try {
-        const listtype = await axios.get(
-            `http://localhost:8000/api/v1/code_list/code_list_listtype/${id}/`,
+        const listtype = await instance.get(
+            `/api/v1/code_list/code_list_listtype/${id}/`,
             body,
             config,
         )
-        await axios.put(
-            `http://localhost:8000/api/v1/code_list/code_list_listtype/${id}/`,
+        await instance.put(
+            `/api/v1/code_list/code_list_listtype/${id}/`,
             body,
             config,
         )

@@ -46,23 +46,23 @@ const DrawerMenu = (props) => {
           height: "100%",
           backgroundColor: "myTreeViewBg",
           boxShadow: 3,
-          borderRadius: "5px",
+          borderRadius: "3px",
         }}
       >
         <Grid item xs={12} sx={{ p: 2, pb: 0, position: "relative" }}>
-          <SearchBarMobile theme={theme} />
+          <SearchBarMobile theme={"light"} />
         </Grid>
         <Box
           sx={{
             borderRadius: "50px",
-            backgroundColor: "text.primary",
             width: "25px",
             height: "25px",
             position: "absolute",
+            boxShadow: 2,
+            backgroundColor: "myReverseText",
             top: "25px",
             right: "-8px",
             zIndex: { xs: 0, sm: 3 },
-            color: "myReverseText",
           }}
           onClick={() => {
             setLeftMenuWidth(() => (leftMenuWidth > 0 ? 0 : 250));

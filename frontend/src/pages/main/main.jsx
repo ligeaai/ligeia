@@ -49,7 +49,7 @@ const MainRender = () => {
       sx={{
         m: 0.5,
         boxShadow: 3,
-        borderRadius: "5px",
+        borderRadius: "3px",
         height: "calc(100% - 8px)",
       }}
     >

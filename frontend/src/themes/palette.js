@@ -12,6 +12,8 @@ const Palette = () => {
             myReverseText: "#ffffff",
             myCardFancyColor: "#42526E",
             myCardFancyColorHover: "#458BF3",
+            myBoldText: "#364868",
+            myLightText: "#7B809A"
         } : {
             myBackgroundColor: "#424242",
             myTreeViewBg: "#9E9E9E",
@@ -20,6 +22,8 @@ const Palette = () => {
             myReverseText: "#000000",
             myCardFancyColor: grey[800],
             myCardFancyColorHover: grey[600],
+            myBoldText: "#364868",
+            myLightText: "#7B809A"
         })
     }
     return (
