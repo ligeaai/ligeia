@@ -66,7 +66,6 @@ class TypeDetailView(generics.CreateAPIView):
                             codeListQuery = code_list.objects.filter(LIST_TYPE=codelist)
                             serializerCode = CodeListSerializer(codeListQuery,many=True)
                             parser.data[index]['CODE-LIST'] = serializerCode.data
-                            
                         resourceListQuery = resource_list.objects.filter(ID=label_id)
                         serializerResource = ResourceListSerializer(resourceListQuery,many=True)
                         parser.data[index]['RESOURCE-LIST'] = serializerResource.data

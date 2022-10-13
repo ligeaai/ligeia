@@ -228,8 +228,13 @@ class UserEmailConfirmationStatusView(generics.GenericAPIView):
         return Response({"status": user.confirmed_email}, status=status.HTTP_200_OK)
 
 
+
+from .serializers import SocialLoginSerializer
+
 class FacebookLogin(SocialLoginView):
     adapter_class = FacebookOAuth2Adapter
+    serializer_class = SocialLoginSerializer
+    
 class GoogleLogin(SocialLoginView):
     adapter_class = GoogleOAuth2Adapter
 
