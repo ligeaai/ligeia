@@ -61,11 +61,11 @@ class TypeDetailView(generics.CreateAPIView):
                 if len(parser.data) >= 1:
                     for index in range(0,len(parser.data)):
                         label_id = parser.data[index].get('LABEL_ID')
-                        codelist = parser.data[index].get('CODE_LIST')
-                        if codelist is not None:
-                            codeListQuery = code_list.objects.filter(LIST_TYPE=codelist)
-                            serializerCode = CodeListSerializer(codeListQuery,many=True)
-                            parser.data[index]['CODE-LIST'] = serializerCode.data
+                        # codelist = parser.data[index].get('CODE_LIST')
+                        # if codelist is not None:
+                        #     codeListQuery = code_list.objects.filter(LIST_TYPE=codelist)
+                        #     serializerCode = CodeListSerializer(codeListQuery,many=True)
+                        #     parser.data[index]['CODE-LIST'] = serializerCode.data
                         resourceListQuery = resource_list.objects.filter(ID=label_id)
                         serializerResource = ResourceListSerializer(resourceListQuery,many=True)
                         parser.data[index]['RESOURCE-LIST'] = serializerResource.data
