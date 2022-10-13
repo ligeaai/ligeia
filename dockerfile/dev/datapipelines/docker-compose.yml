@@ -85,10 +85,10 @@ services:
     networks:
       - net
 
-  zookeeper:
+  apache-zookeeper:
     image: confluentinc/cp-zookeeper:5.3.1
     hostname: zookeeper
-    container_name: zookeeper
+    container_name: apache-zookeeper
     ports:
       - "2181:2181"
     environment:
@@ -96,12 +96,13 @@ services:
       ZOOKEEPER_TICK_TIME: 2000
     networks:
       - net
+
   apache-kafka-broker1:
     image: confluentinc/cp-enterprise-kafka:5.3.1
     hostname: broker
     container_name: apache-kafka-broker1
     depends_on:
-      - zookeeper
+      - apache-zookeeper
     ports:
       - "9092:9092"
     environment:
@@ -129,8 +130,9 @@ services:
       - ./:/app
     networks:
       - net
-  apache-cassandra:
-    container_name: apache-cassandra
+
+  cassandra:
+    container_name: cassandra
     hostname: "cassandra"
     image: docker.io/bitnami/cassandra:4.0
     expose:
@@ -140,7 +142,7 @@ services:
       - "7000:7000"
       - "9042:9042"
     volumes:
-      - "apache-cassandra_data:/bitnami"
+      - "cassandra_data:/bitnami"
     environment:
       - CASSANDRA_SEEDS=cassandra
       - CASSANDRA_DC=DC1
@@ -149,7 +151,7 @@ services:
       - net
     depends_on:
       - apache-kafka-broker1
-      - zookeeper
+      - apache-zookeeper
   rabbitmq:
     image: rabbitmq:3-management
     hostname: localhost
@@ -164,7 +166,7 @@ services:
     hostname: control-center
     container_name: control-center
     depends_on:
-      - zookeeper
+      - apache-zookeeper
       - apache-kafka-broker1
     ports:
       - "9021:9021"
@@ -179,9 +181,10 @@ services:
       PORT: 9021
     networks:
       - net
-  kafka-connect:
+      
+  connect:
     build: ./
-    container_name: kafka-connect
+    container_name: connect
     hostname: connect
     ports:
       - "8088:8088"
@@ -189,20 +192,20 @@ services:
       - apache-kafka-broker1
     environment:
       CONNECT_BOOTSTRAP_SERVERS: broker:29092
-      CONNECT_GROUP_ID: "connect-group"
-      CONNECT_CONFIG_STORAGE_TOPIC: "connect-config-storage"
-      CONNECT_OFFSET_STORAGE_TOPIC: "connect-offset-storage"
-      CONNECT_STATUS_STORAGE_TOPIC: "connect-status-storage"
-      CONNECT_KEY_CONVERTER: "org.apache.kafka.connect.storage.StringConverter"
-      CONNECT_VALUE_CONVERTER: "org.apache.kafka.connect.converters.ByteArrayConverter"
-      CONNECT_INTERNAL_KEY_CONVERTER: "org.apache.kafka.connect.json.JsonConverter"
+      CONNECT_GROUP_ID: "connect-group" 
+      CONNECT_CONFIG_STORAGE_TOPIC: "connect-config-storage" 
+      CONNECT_OFFSET_STORAGE_TOPIC: "connect-offset-storage" 
+      CONNECT_STATUS_STORAGE_TOPIC: "connect-status-storage" 
+      CONNECT_KEY_CONVERTER: "org.apache.kafka.connect.storage.StringConverter" 
+      CONNECT_VALUE_CONVERTER: "org.apache.kafka.connect.converters.ByteArrayConverter" 
+      CONNECT_INTERNAL_KEY_CONVERTER: "org.apache.kafka.connect.json.JsonConverter" 
       CONNECT_INTERNAL_VALUE_CONVERTER: "org.apache.kafka.connect.json.JsonConverter"
-      CONNECT_PLUGIN_PATH: "/usr/share/confluent-hub-components"
-      CONNECT_REST_ADVERTISED_HOST_NAME: "connect"
-      CONNECT_REST_HOST_NAME: "connect"
-      CONNECT_REST_PORT: "8088"
-      CONNECT_CONFIG_STORAGE_REPLICATION_FACTOR: 1
-      CONNECT_OFFSET_STORAGE_REPLICATION_FACTOR: 1
+      CONNECT_PLUGIN_PATH: "/usr/share/confluent-hub-components" 
+      CONNECT_REST_ADVERTISED_HOST_NAME: "connect" 
+      CONNECT_REST_HOST_NAME: "connect" 
+      CONNECT_REST_PORT: "8088" 
+      CONNECT_CONFIG_STORAGE_REPLICATION_FACTOR: 1 
+      CONNECT_OFFSET_STORAGE_REPLICATION_FACTOR: 1 
       CONNECT_STATUS_STORAGE_REPLICATION_FACTOR: 1
       CONNECT_LOG4J_ROOT_LOGLEVEL: "INFO"
       CLASSPATH: /usr/share/java/monitoring-interceptors/monitoring-interceptors-5.1.1.jar
@@ -210,16 +213,16 @@ services:
       CONNECT_CONSUMER_INTERCEPTOR_CLASSES: "io.confluent.monitoring.clients.interceptor.MonitoringConsumerInterceptor"
     networks:
       - net
-
 networks:
   net:
     driver: bridge
+
 volumes:
   postgres-data: null
   pgadmin-data: null
   redis-data: null
   mongodb-data: null
-  zookeeper_data:
+  apache-zookeeper_data:
     driver: local
   apache-kafka-broker1_data:
     driver: local

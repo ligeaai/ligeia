@@ -1,5 +1,5 @@
 import React from "react";
-
+import { useSelector } from "react-redux";
 import { Box } from "@mui/material";
 
 import Cards from "../../components/cardGenerator/cards";
@@ -44,13 +44,14 @@ const cards = [
 ];
 
 const MainRender = () => {
+  const isFullScreen = useSelector((state) => state.fullScreen.isFullScreen);
   return (
     <Box
       sx={{
-        m: 0.5,
+        minHeight: isFullScreen ? "100vh" : "100%",
+        height: "500px",
         boxShadow: 3,
         borderRadius: "3px",
-        height: "calc(100% - 8px)",
       }}
     >
       <Cards cards={cards} />
@@ -59,17 +60,11 @@ const MainRender = () => {
 };
 
 const main = () => {
-  return (
-    <Box
-      sx={{
-        backgroundColor: "myCanvasBg",
-        minHeight: "100vh",
-        height: "auto",
-      }}
-    >
-      <Main Element={MainRender()} />
-    </Box>
-  );
+  try {
+    return <Main Element={MainRender()} />;
+  } catch {
+    throw new Error("asdsad");
+  }
 };
 
 export default main;

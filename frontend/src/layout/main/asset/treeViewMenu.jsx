@@ -6,11 +6,10 @@ import { Box, Grid } from "@mui/material";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 
-import SearchBarMobile from "../../../components/searchBar/searchBarMobile";
+import { SearchBarMobile } from "../../../components";
 
 const DrawerMenu = (props) => {
   const [leftMenuWidth, setLeftMenuWidth] = React.useState(250);
-  const theme = useSelector((state) => state.theme.theme);
   const { Element } = props;
   const handler = (mouseDownEvent) => {
     const startSize = leftMenuWidth;
@@ -37,7 +36,7 @@ const DrawerMenu = (props) => {
       sx={{
         position: "relative",
         width: `${leftMenuWidth}px`,
-        p: 0.5,
+        pr: 0.5,
       }}
     >
       <Grid
@@ -88,7 +87,7 @@ const DrawerMenu = (props) => {
             minHeight: "min-content",
             height: "calc(100% - 75px)",
             "&::-webkit-scrollbar": {
-              width: "0.4em",
+              width: "0.2em",
             },
             "&::-webkit-scrollbar-track": {
               boxShadow: "inset 0 0 6px rgba(0,0,0,0.00)",
@@ -96,7 +95,7 @@ const DrawerMenu = (props) => {
             },
             "&::-webkit-scrollbar-thumb": {
               backgroundColor: "rgba(0,0,0,.1)",
-              outline: "1px solid slategrey",
+              outline: "1px solid rgba(0,0,0,.3)",
             },
           }}
         >

@@ -5,7 +5,7 @@ import FacebookRoundedIcon from "@mui/icons-material/FacebookRounded";
 import GoogleIcon from "@mui/icons-material/Google";
 import GitHubIcon from "@mui/icons-material/GitHub";
 
-import SocialButton from "../../components/buttons/socialButton";
+import { SocialButton } from "../../components";
 import FacebookSocialAuth from "./faceSocialAuth";
 import GoogleSocialAuth from "./googleSocialAuth";
 import GitHubSocialAuth from "./githubSocialAuth";

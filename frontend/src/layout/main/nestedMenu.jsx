@@ -16,10 +16,7 @@ import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import { logout } from "../../services/actions/auth";
 import { setLoaderTrue } from "../../services/actions/loader";
 
-import {
-  ItemSperatorLine,
-  Items,
-} from "../../components/nestedMenu/nestedItems";
+import { ItemSperatorLine, Items } from "../../components";
 
 const NestedMenu = (props) => {
   const dispatch = useDispatch();

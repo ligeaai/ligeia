@@ -1,22 +1,11 @@
 import React, { useState } from "react";
 
-// import List from "@material-ui/core/List";
-// import ListItem from "@material-ui/core/ListItem";
-import {
-  Box,
-  Grid,
-  Link,
-  Collapse,
-  List,
-  ListItem,
-  Typography,
-} from "@mui/material";
+import { Collapse, List, ListItem, Typography } from "@mui/material";
 
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 
 import { hasChildren } from "./utils";
-import { useDispatch } from "react-redux";
 
 export default function App({ menu }) {
   return menu.map((item, key) => (
