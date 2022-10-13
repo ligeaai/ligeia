@@ -1,18 +1,13 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { Grid, Box } from "@mui/material";
-import { styled } from "@mui/material/styles";
-
+import { Box } from "@mui/material";
 import {
   mouseEnterDrawer,
   mouseLeaveDrawer,
 } from "../../services/reducers/drawerReducer";
 
 import App from "./app";
-// const MyBox = styled(Grid)(({ theme }) => {
-//   console.log(theme);
-// });
 const Drawer = (props) => {
   const dispatch = useDispatch();
   const isOpen = useSelector((state) => state.drawer.isOpen);
@@ -26,6 +21,18 @@ const Drawer = (props) => {
         minWidth: "68px",
         minHeight: "calc(100vh - 60px - 8px)",
         height: "500px",
+        overflowY: "auto",
+        "&::-webkit-scrollbar": {
+          width: "0.2em",
+        },
+        "&::-webkit-scrollbar-track": {
+          boxShadow: "inset 0 0 6px rgba(0,0,0,0.00)",
+          webkitBoxShadow: "inset 0 0 6px rgba(0,0,0,0.00)",
+        },
+        "&::-webkit-scrollbar-thumb": {
+          backgroundColor: "rgba(0,0,0,.1)",
+          outline: "1px solid rgba(0,0,0,.3)",
+        },
         width: "min-content",
         typography: {
           xs: {
@@ -36,8 +43,8 @@ const Drawer = (props) => {
         paddingTop: "8px",
         paddingBottom: "8px",
         paddingX: "6px",
-        m: 0.5,
-        mr: 0,
+        mt: 0.5,
+        ml: 0.5,
         boxShadow: 3,
         borderRadius: "3px",
       }}

@@ -1,14 +1,7 @@
 import * as React from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import {
-  Avatar,
-  Box,
-  Button,
-  Grid,
-  Typography,
-  InputBase,
-} from "@mui/material";
+import { Avatar, Box, Button, Grid, Typography } from "@mui/material";
 import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 import BadgeUnstyled, { badgeUnstyledClasses } from "@mui/base/BadgeUnstyled";
 import { styled } from "@mui/material/styles";
@@ -21,9 +14,8 @@ import MenuOpenOutlinedIcon from "@mui/icons-material/MenuOpenOutlined";
 import { changeTheme } from "../../services/actions/theme";
 import { changeLanguage } from "../../services/actions/language";
 import { toggleDrawer } from "../../services/reducers/drawerReducer";
-import SearchBarMobile from "../../components/searchBar/searchBarMobile";
+import { SearchBarMobile, SearchBar } from "../../components";
 import NestedMenu from "./nestedMenu";
-import SearchBar from "../../components/searchBar/searchBar";
 
 const searchBarSize = {
   sm: { focus: "28ch", blur: "16ch" },

@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-// import List from "@material-ui/core/List";
-// import ListItem from "@material-ui/core/ListItem";
 import * as Icons from "@mui/icons-material";
 import { Collapse, List, ListItem, Typography } from "@mui/material";
 
@@ -9,7 +7,6 @@ import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 
 import { hasChildren } from "./utils";
-import { useDispatch } from "react-redux";
 import history from "../../routers/history";
 
 export default function App({ menu }) {

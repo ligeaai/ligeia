@@ -4,9 +4,8 @@ import { useSelector } from "react-redux";
 import { Box, Grid, Typography } from "@mui/material";
 
 import Main from "../../../layout/main/main";
-import Menu from "../../../components/navigationComp/treeView";
+import { TreeView, Breadcrumb } from "../../../components";
 import { menu } from "./owerviewMenu";
-import Breadcrumb from "../../../components/breadcrumb/breadcrumb";
 
 import DrawerMenu from "../../../layout/main/asset/treeViewMenu";
 
@@ -31,18 +30,16 @@ const AssetOwerview = () => {
     <Grid
       container
       sx={{
-        minHeight: isFullScreen ? "calc(100vh - 1px)" : "calc(100vh - 75px)",
+        minHeight: isFullScreen ? "100vh" : "100%",
         height: "500px",
         flexWrap: "nowrap",
       }}
     >
-      <DrawerMenu Element={<Menu menu={menu} />} />
+      <DrawerMenu Element={<TreeView menu={menu} />} />
       <Grid
         item
         xs={12}
         sx={{
-          m: 0.5,
-          ml: 0,
           boxShadow: 3,
           borderRadius: "3px",
         }}
@@ -69,7 +66,6 @@ const AssetOwerview = () => {
             item
             xs={12}
             sx={{
-              height: isFullScreen ? "calc(100vh - 48px)" : "auto",
               backgroundColor: "myCanvasBg",
             }}
           >

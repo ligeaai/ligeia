@@ -16,9 +16,8 @@ import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import { changeTheme } from "../../services/actions/theme";
 import { changeLanguage } from "../../services/actions/language";
 
-import SearchBarMobile from "../../components/searchBar/searchBarMobile";
+import { SearchBarMobile, SearchBar } from "../../components";
 import NestedMenu from "./nestedMenu";
-import SearchBar from "../../components/searchBar/searchBar";
 
 const searchBarSize = {
   sm: { focus: "14ch", blur: "8ch" },

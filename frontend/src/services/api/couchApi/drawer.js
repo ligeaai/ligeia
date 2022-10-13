@@ -1,9 +1,9 @@
 import { instance, config } from "./baseUrl";
 
 
-export const loadDrawerMenu = () => {
+export const loadDrawerMenu = async () => {
   try {
-    let res = instance
+    let res = await instance
       .get(
         "/drawermenu/1eb0b88415ca3c4a55a25b464200046c",
         config
@@ -11,6 +11,6 @@ export const loadDrawerMenu = () => {
     return res;
 
   } catch (err) {
-    console.log(err);
+    return err
   }
 }

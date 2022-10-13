@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Box, Grid, Button, TextField } from "@mui/material";
+import { Box, Grid, Button, TextField, Typography } from "@mui/material";
 
 import { grey } from "@mui/material/colors";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
@@ -29,17 +29,18 @@ const DateBreak = () => {
   const [date, setDate] = React.useState(instanttime);
   return (
     <Grid container sx={{ alignItems: "center", height: "100%" }}>
-      <Grid item sx={{ pr: 1.5 }}>
+      <Grid item sx={{ px: 1.5 }}>
         <Grid container sx={{ alignItems: "center" }}>
-          <Button
+          <Typography
             sx={{
               textTransform: "capitalize",
               fontSize: "12px",
               color: "#4B4B4B",
+              pr: 1,
             }}
           >
             Add a Date Break:
-          </Button>
+          </Typography>
           <Grid item>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DatePicker
