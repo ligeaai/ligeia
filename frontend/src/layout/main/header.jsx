@@ -52,7 +52,7 @@ const Header = (props) => {
     alignItems: "center",
     justifyContent: "space-between",
     padding: "13px 21px",
-    height: "60px",
+    height: "59px",
     borderBottom: "1px solid rgba(0,0,0,0.3)",
   }));
 

@@ -6,7 +6,6 @@ import Drawer from "./drawer/drawer";
 import { ErrorBoundary } from "./errorMessage/errorBoundary"
 import ErrorMessage from "./errorMessage/errorMessage"
 import Loading from "./loading/loading";
-import Properties from "./navigationComp/properties";
 import PropLinkTabs from "./navigationComp/propLinkTabs"
 import SocialButton from "./buttons/socialButton";
 import TimeRangePicker from "./navigationComp/timeRangePicker";
@@ -19,6 +18,6 @@ import SearchBarMobile from "./searchBar/searchBarMobile";
 
 
 export {
-    ActionMenu, Breadcrumb, Cards, DateBreak, Drawer, ErrorBoundary, ErrorMessage, Loading, Properties, PropLinkTabs, SocialButton
+    ActionMenu, Breadcrumb, Cards, DateBreak, Drawer, ErrorBoundary, ErrorMessage, Loading, PropLinkTabs, SocialButton
     , TimeRangePicker, TreeView, ItemSperatorLine, ItemSperatorLineXL, Items, SearchBar, SearchBarMobile
 }
