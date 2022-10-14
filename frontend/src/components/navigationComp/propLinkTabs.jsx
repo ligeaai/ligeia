@@ -1,11 +1,11 @@
 import React from "react";
 
-import { Box, Grid, Typography, Tab, Tabs } from "@mui/material";
+import { Grid, Typography } from "@mui/material";
 
 import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import DashboardCustomizeOutlinedIcon from "@mui/icons-material/DashboardCustomizeOutlined";
-import MyProperties from "./properties";
+import MyProperties from "../../pages/main/configuration/organization/properties";
 
 const Properties = () => {
   const [view, setView] = React.useState("Properties");
@@ -22,15 +22,21 @@ const Properties = () => {
     setIsHover("");
   };
   return (
-    <Grid container>
+    <Grid
+      container
+      sx={{
+        flexWrap: "noWrap",
+        height: "calc(100vh - 60px - 4px - 50px - 36px - 16px)",
+      }}
+    >
       <Grid
         item
         sx={{
           px: 0.5,
-          my: 1,
+          my: 0.5,
           borderRight: "1.2px solid",
           borderColor: "text.disabled",
-          height: "calc(100vh - 60px - 4px - 50px - 36px - 16px)",
+          height: "100%",
         }}
       >
         <ToggleButtonGroup
@@ -103,8 +109,10 @@ const Properties = () => {
           </ToggleButton>
         </ToggleButtonGroup>
       </Grid>
-      {view === "Properties" ? <MyProperties /> : <></>}
-      {view === "Links" ? <Grid>Links</Grid> : <></>}
+      <Grid item xs={12} sx={{ mr: 1 }}>
+        {view === "Properties" ? <MyProperties /> : <></>}
+        {view === "Links" ? <Grid>Links</Grid> : <></>}
+      </Grid>
     </Grid>
   );
 };

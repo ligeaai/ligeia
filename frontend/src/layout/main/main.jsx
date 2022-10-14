@@ -5,13 +5,12 @@ import { Box, Button, Grid } from "@mui/material";
 import FullscreenExitIcon from "@mui/icons-material/FullscreenExit";
 import FullscreenIcon from "@mui/icons-material/Fullscreen";
 
-import Drawer from "../../components/drawer/drawer";
+import { Drawer } from "../../components";
 import Header from "./header";
 import { setIsFullScreen } from "../../services/reducers/fullScreenReducer";
 
-import Loading from "../../components/HOC/loading";
-import axios from "axios";
 import { loadDrawerMenu } from "../../services/api/couchApi/drawer";
+import { setLoaderFalse, setLoaderTrue } from "../../services/actions/loader";
 
 const Main = (props) => {
   const dispatch = useDispatch();
@@ -20,14 +19,19 @@ const Main = (props) => {
   const [navItems, setNavItems] = React.useState(false);
 
   React.useEffect(() => {
-    loadDrawerMenu().then((res) => {
-      setNavItems(res.data.drawerMenu);
-    });
+    dispatch(setLoaderTrue());
+    const getData = async () => {
+      let data = await loadDrawerMenu();
+      setNavItems(data);
+      dispatch(setLoaderFalse());
+    };
+    getData();
   }, []);
   if (navItems) {
     return isFullScreen ? (
       <React.Fragment>
-        {Element}
+        <Box sx={{ minHeight: "100vh", borderRadius: "3px" }}>{Element}</Box>
+
         <Box sx={{ position: "fixed", bottom: 0, right: 0, m: 2 }}>
           <Button
             onClick={() => {
@@ -56,13 +60,15 @@ const Main = (props) => {
                 },
               }}
             >
-              <Drawer navItems={navItems} />
+              <Drawer navItems={navItems.data.drawerMenu} />
             </Grid>
             <Grid
               item
               sx={{
-                minHeight: "calc(100vh - 75px)",
+                minHeight: "calc(100vh - 60px - 8px)",
+                height: "500px",
                 width: "100%",
+                m: 0.5,
               }}
             >
               {Element}
@@ -81,7 +87,6 @@ const Main = (props) => {
       </React.Fragment>
     );
   }
-  return <Loading />;
 };
 
 export default Main;

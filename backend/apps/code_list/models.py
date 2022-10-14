@@ -38,3 +38,11 @@ class code_list(models.Model):
 	ROW_ID=models.CharField(max_length=32,default=uuid.uuid4,primary_key=True,null=False,)
 	STATUS=models.CharField(max_length=10,null=True,)
 	REV_GRP_ID=models.CharField(max_length=32,null=True,)
+	class Meta:
+		indexes = [
+           models.Index(fields=['LIST_TYPE']),
+		   models.Index(fields=['CULTURE']),
+		   models.Index(fields=['CODE']),
+		   models.Index(fields=['CODE_TEXT']),
+		   models.Index(fields=['PARENT']),
+		]

@@ -1,6 +1,6 @@
 import React from "react";
 
-import { IconButton, Grid, Box, Tooltip } from "@mui/material";
+import { IconButton, Grid, Tooltip } from "@mui/material";
 
 import AddBoxOutlinedIcon from "@mui/icons-material/AddBoxOutlined";
 import AddToPhotosOutlinedIcon from "@mui/icons-material/AddToPhotosOutlined";

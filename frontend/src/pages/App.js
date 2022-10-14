@@ -4,8 +4,9 @@ import { ThemeProvider } from "@mui/material/styles";
 import AppRouter from "../routers/appRouter";
 
 import myTheme from "../themes/composeStyle";
-import Loading from "../components/HOC/loading";
+import Loading from "../components/loading/loading";
 import { loadUser } from "../services/actions/auth";
+import { ErrorBoundary } from "../components/errorMessage/errorBoundary"
 
 import history from "../routers/history";
 const App = () => {
@@ -20,9 +21,11 @@ const App = () => {
   }, [])
 
   return (
-    <ThemeProvider theme={myTheme()}>
-      <Loading Element={<AppRouter />} />
-    </ThemeProvider>
+    <ErrorBoundary>
+      <ThemeProvider theme={myTheme()}>
+        <Loading Element={<AppRouter />} />
+      </ThemeProvider>
+    </ErrorBoundary>
   );
 };
 

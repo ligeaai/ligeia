@@ -1,16 +1,16 @@
 import { instance, config } from "./baseUrl";
 
 
-export const loadCompanyName = () => {
+export const loadCompanyName = async () => {
     try {
-        let res = instance
+        let res = await instance
             .get(
-                "/company/72f6a6e538b3eab5255aa16ff60071e0",
+                "/company/a3e0a015661f1b35103cd012d7001388",
                 config
             )
         return res;
 
     } catch (err) {
-        console.log(err);
+        return err
     }
 }

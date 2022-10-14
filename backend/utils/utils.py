@@ -1,8 +1,12 @@
+
+import json
+
+import redis
 from django.core.exceptions import ValidationError
 from django.core.validators import validate_email as django_validate_email
 from django.db import transaction
 
-
+rds = redis.StrictRedis('ligeiaai-redis-1',port=6379,db=0)
 def validate_email(value):
     """Validate a single email."""
     if not value:
@@ -37,3 +41,20 @@ class AtomicMixin:
             transaction.set_rollback(True)
 
         return response
+
+
+class redisCaching():
+
+    def set(cache_key,data):
+        data =json.dumps(data)
+        rds.set(cache_key,data)
+        return True
+
+    def get(cache_key):
+        cache_data = rds.get(cache_key)
+        if not cache_data:
+            return None
+        cache_data = cache_data.decode('utf-8')
+        cache_data = json.loads(cache_data)
+        return cache_data
+    
