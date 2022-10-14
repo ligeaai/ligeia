@@ -1,27 +1,34 @@
 import re
-from django.shortcuts import render
-from rest_framework.authentication import TokenAuthentication
-from rest_framework import generics,permissions
-from rest_framework.response import Response
-from rest_framework import status
-from .serializers import TypeSaveSerializer,TypeDetailsSerializer,TypeSerializer
-from apps.type_property.serializers import TypePropertySerializer
-from apps.type_property.models import type_property
-from apps.resource_list.serializers import ResourceListSerializer
-from apps.resource_list.models import resource_list
-from apps.code_list.serializers import CodeListSerializer
+
 from apps.code_list.models import code_list
+from apps.code_list.serializers import (CodeListSaveSerializer,
+                                        CodeListSerializer)
+from apps.resource_list.models import resource_list
+from apps.resource_list.serializers import (ResourceListSaveSerializer,
+                                            ResourceListSerializer)
+from apps.type_property.models import type_property
+from apps.type_property.serializers import (TypePropertySaveSerializer,
+                                            TypePropertySerializer)
+from django.shortcuts import render
+from rest_framework import generics, permissions, status
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.response import Response
+from services.parsers.addData.type import typeAddData
+from utils.utils import redisCaching as Red
+
 # Create your views here.
 from .models import type as Type
-from services.parsers.addData.type import typeAddData
+from .serializers import (TypeDetailsSerializer, TypeSaveSerializer,
+                          TypeSerializer)
 
 
 class TypeSaveView(generics.CreateAPIView):
 
-    serializer_class = TypeSaveSerializer
+    serializer_class = [TypeSaveSerializer,]
     permission_classes = [
         permissions.AllowAny
     ]
+    
 
 
 class TypeView(generics.ListAPIView):
@@ -42,6 +49,11 @@ class TypeDetailView(generics.CreateAPIView):
     ]
     serializer_class = [TypeSerializer,TypePropertySerializer,]
     def post(self, request):
+        cache_data = Red.get(request.data.get('TYPE'))
+        if cache_data:
+            print(cache_data)
+            return Response(cache_data,status=status.HTTP_200_OK)
+        
         # Note the use of `get_queryset()` instead of `self.queryset`
         seriliazerPropertyList = []
         seriliazerResourceList = []
@@ -83,6 +95,7 @@ class TypeDetailView(generics.CreateAPIView):
                     'TYPE PROPERTY COLUMNS':typeProperty
                     },
             }
+            cache_data = Red.set(request.data.get('TYPE'),newdict)
             
             #print(serializer.data[0].get('TYPE'))
             return Response(newdict,status=status.HTTP_200_OK)
