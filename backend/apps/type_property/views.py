@@ -1,14 +1,15 @@
 
 from django.shortcuts import render
-
+from rest_framework import generics, permissions, status
 from rest_framework.authentication import TokenAuthentication
-from rest_framework import generics,permissions
 from rest_framework.response import Response
-from rest_framework import status
-from .serializers import TypePropertySaveSerializer,TypePropertyDetailsSerializer
+from services.parsers.addData.type import typeAddData
+
 # Create your views here.
 from .models import type_property
-from services.parsers.addData.type import typeAddData 
+from .serializers import (TypePropertyDetailsSerializer,
+                          TypePropertySaveSerializer)
+
 
 class TypePropertySaveView(generics.CreateAPIView):
 

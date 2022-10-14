@@ -1,6 +1,9 @@
-from rest_framework import serializers
-from .models import resource_list
 import uuid
+
+from rest_framework import serializers
+
+from .models import resource_list
+
 
 class ResourceListSaveSerializer(serializers.ModelSerializer):
     class Meta:
@@ -22,4 +25,4 @@ class ResourceListDetailsSerializer(serializers.ModelSerializer):
 class ResourceListSerializer(serializers.ModelSerializer):
     class Meta:
         model = resource_list
-        fields = '__all__'
+        fields = ['CULTURE','SHORT_LABEL']
