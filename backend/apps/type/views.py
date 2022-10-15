@@ -29,6 +29,16 @@ class TypeSaveView(generics.CreateAPIView):
     permission_classes = [
         permissions.AllowAny
     ]
+
+
+
+class TypeAndPropertySaveView(generics.CreateAPIView):
+
+    serializer_class = TypeSaveSerializer
+    res = ResourceListSaveSerializer
+    permission_classes = [
+        permissions.AllowAny
+    ]
     def post(self, request, *args, **kwargs):
         typeValue = request.data.get('TYPE')
         typePropertyValue = request.data.get('TYPE_PROPERTY')
@@ -84,6 +94,7 @@ class TypeDetailView(generics.CreateAPIView):
         try:
             typeQuary = Type.objects.filter(TYPE=request.data.get('TYPE'))
             serializerType = TypeSerializer(typeQuary, many=True)
+            print(serializerType.data)
             for typeValue in serializerType.data[0].values():
                 proertyQuery = type_property.objects.filter(TYPE=typeValue)
                 serializerProperty = TypePropertySerializer(proertyQuery,many=True)
