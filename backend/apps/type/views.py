@@ -24,12 +24,36 @@ from .serializers import (TypeDetailsSerializer, TypeSaveSerializer,
 
 class TypeSaveView(generics.CreateAPIView):
 
-    serializer_class = [TypeSaveSerializer,]
+    serializer_class = TypeSaveSerializer
+    res = ResourceListSaveSerializer
     permission_classes = [
         permissions.AllowAny
     ]
+    def post(self, request, *args, **kwargs):
+        typeValue = request.data.get('TYPE')
+        typePropertyValue = request.data.get('TYPE_PROPERTY')
+        types = Type.objects.create(**typeValue)
+        types.save()
+        typesProperty = type_property.objects.create(**typePropertyValue)
+        typesProperty.save()
+        return Response('Registration Successful')
+    
     
 
+class TypeUpdateView(generics.UpdateAPIView):
+    serializer_class = TypeSaveSerializer
+    permission_classes = [
+        permissions.AllowAny
+    ]
+    def put(self, request, *args, **kwargs):
+        data = request.data.get('ITEMS')
+        print('--------------------> GİRDİ')
+        qs = Type.objects.filter(TYPE=request.data.get('FILTER_TYPE')).update(**data)
+        # serializer = TypeSaveSerializer(qs, data=data, many=True)
+
+        # if serializer.is_valid():
+        # #     serializer.save()
+        return Response('serializer.data')
 
 class TypeView(generics.ListAPIView):
 
@@ -49,12 +73,12 @@ class TypeDetailView(generics.CreateAPIView):
     ]
     serializer_class = [TypeSerializer,TypePropertySerializer,]
     def post(self, request):
-        cache_data = Red.get(request.data.get('TYPE'))
-        if cache_data:
-            print(cache_data)
-            return Response(cache_data,status=status.HTTP_200_OK)
+        # cache_data = Red.get(request.data.get('TYPE'))
+        # if cache_data:
+        #     return Response(cache_data,status=status.HTTP_200_OK)
         
         # Note the use of `get_queryset()` instead of `self.queryset`
+        
         seriliazerPropertyList = []
         seriliazerResourceList = []
         try:
@@ -65,39 +89,42 @@ class TypeDetailView(generics.CreateAPIView):
                 serializerProperty = TypePropertySerializer(proertyQuery,many=True)
                 seriliazerPropertyList.append(serializerProperty)
            
-            # deneme = seriliazerList[0]
 
+            filterDict = dict()
+            propertyList = []
             # print(deneme.data[0])
-
+            culture = request.data.get('CULTURE')
             for parser in seriliazerPropertyList:
-                if len(parser.data) >= 1:
-                    for index in range(0,len(parser.data)):
-                        label_id = parser.data[index].get('LABEL_ID')
-                        # codelist = parser.data[index].get('CODE_LIST')
-                        # if codelist is not None:
-                        #     codeListQuery = code_list.objects.filter(LIST_TYPE=codelist)
-                        #     serializerCode = CodeListSerializer(codeListQuery,many=True)
-                        #     parser.data[index]['CODE-LIST'] = serializerCode.data
-                        resourceListQuery = resource_list.objects.filter(ID=label_id)
+                dicList = []
+                for value in parser.data:
+                    label_id = value.get('LABEL_ID')
+                    resourceListQuery = resource_list.objects.filter(ID=label_id,CULTURE=culture)
+                    if resourceListQuery:
+                        filterDict = value
                         serializerResource = ResourceListSerializer(resourceListQuery,many=True)
-                        parser.data[index]['RESOURCE-LIST'] = serializerResource.data
+                        filterDict['RESOURCE-LIST'] = serializerResource.data
+                        dicList.append(filterDict)
+                
+                propertyList.append(dicList)
+             
+                    
             
             typeProperty = {
-                'TYPE':seriliazerPropertyList[0].data,
-                'BASETYPE':seriliazerPropertyList[1].data,
+                'TYPE':propertyList[0],
+                'BASETYPE':propertyList[1],
             }
             
             
-            newdict = {
+            data = {
                   "TYPE":
                   {
                     'TYPE COLUMNS': serializerType.data,
                     'TYPE PROPERTY COLUMNS':typeProperty
                     },
             }
-            cache_data = Red.set(request.data.get('TYPE'),newdict)
+            cache_data = Red.set(request.data.get('TYPE'),data)
             
             #print(serializer.data[0].get('TYPE'))
-            return Response(newdict,status=status.HTTP_200_OK)
+            return Response(data,status=status.HTTP_200_OK)
         except Exception as e:
             return Response(e)
