@@ -1,43 +1,38 @@
 import email
-from django.http import JsonResponse
-from django.shortcuts import get_object_or_404
-from rest_framework.authtoken.models import Token
-#from knox.auth import AuthToken, TokenAuthentication
-from rest_framework.decorators import api_view
-from rest_framework import status, generics, permissions
-from rest_framework.generics import GenericAPIView
-from rest_framework.authentication import TokenAuthentication
-from rest_framework.permissions import IsAuthenticated,AllowAny
-from rest_framework.response import Response
-from rest_framework.authtoken.serializers import AuthTokenSerializer
+
+from allauth.socialaccount.providers.facebook.views import \
+    FacebookOAuth2Adapter
+from allauth.socialaccount.providers.github.views import GitHubOAuth2Adapter
+from allauth.socialaccount.providers.google.views import GoogleOAuth2Adapter
+from allauth.socialaccount.providers.oauth2.client import OAuth2Client
+from dj_rest_auth.registration.views import SocialLoginView
 from django.contrib.auth import login
 from django.contrib.auth.models import update_last_login
-from rest_framework.views import APIView
-from .models import *
-from .serializers import (
-    UserRegistrationSerializer,
-    UserSerializer,
-    UserLoginSerializer,
-    ChangePasswordSerializer,
-    ForgetPasswordSerializer,
-    UserModelSerializer,
-    ResetNewPasswordSerializer,
-)
+from django.http import JsonResponse
+from django.shortcuts import get_object_or_404, redirect
 #### REST-AUTH
 from django.urls import include, path, reverse
-from allauth.socialaccount.providers.github.views import GitHubOAuth2Adapter
-from allauth.socialaccount.providers.oauth2.client import OAuth2Client
-
-from allauth.socialaccount.providers.facebook.views import FacebookOAuth2Adapter
-from allauth.socialaccount.providers.google.views import GoogleOAuth2Adapter
-from dj_rest_auth.registration.views import SocialLoginView
-from django.shortcuts import redirect
-from utils.utils import AtomicMixin
+from rest_framework import generics, permissions, status
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.authtoken.models import Token
+from rest_framework.authtoken.serializers import AuthTokenSerializer
+#from knox.auth import AuthToken, TokenAuthentication
+from rest_framework.decorators import api_view
+from rest_framework.generics import GenericAPIView
+from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework.response import Response
+from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
-from .models import User
 from services.logging.Handlers import KafkaLogger
-from django.shortcuts import redirect
-from django.urls import reverse
+from utils.utils import AtomicMixin
+
+from .models import *
+from .models import User
+from .serializers import (ChangePasswordSerializer, ForgetPasswordSerializer,
+                          ResetNewPasswordSerializer, UserLoginSerializer,
+                          UserModelSerializer, UserRegistrationSerializer,
+                          UserSerializer)
+
 logger = KafkaLogger()
 
 class UserModelViewSet(ModelViewSet):
@@ -130,7 +125,8 @@ class UserLoginView(generics.GenericAPIView):
 
 class logout(generics.ListAPIView):
     authentication_classes = [TokenAuthentication,]
-    def list(self, request, *args, **kwargs):
+    def get(self, request, *args, **kwargs):
+        logger.info(request=request,message="user logout")
         return Response({'message':'successful logout'},status=status.HTTP_200_OK)
 
 class UserChangePassword(generics.UpdateAPIView):
@@ -231,6 +227,7 @@ class UserEmailConfirmationStatusView(generics.GenericAPIView):
 
 from .serializers import SocialLoginSerializer
 
+
 class FacebookLogin(SocialLoginView):
     adapter_class = FacebookOAuth2Adapter
     serializer_class = SocialLoginSerializer
@@ -249,6 +246,8 @@ class GitHubLogin(SocialLoginView):
         return self.request.build_absolute_uri(reverse('github_callback'))
 
 import urllib.parse
+
+
 def github_callback(request):
     params = urllib.parse.urlencode(request.GET)
     return redirect(f'https://localhost:8000/auth/github?{params}')

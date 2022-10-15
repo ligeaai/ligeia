@@ -1,16 +1,17 @@
-import imp
-from rest_framework.response import Response
-from rest_framework import status
-from rest_framework import serializers
-from django.contrib.auth import authenticate
-from django.contrib.auth import get_user_model
+
+import uuid
+
+from django.contrib.auth import authenticate, get_user_model
 from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ObjectDoesNotExist
 from django.utils.translation import gettext_lazy as _
-import uuid
+from rest_framework import serializers, status
+from rest_framework.response import Response
 # from .models import User
 from utils.utils import validate_email as email_is_valid
+
 from .helpers import send_forget_password_mail
+
 User = get_user_model()
 
 from rest_framework.serializers import ModelSerializer
@@ -189,6 +190,7 @@ from django.utils.translation import gettext_lazy as _
 from requests.exceptions import HTTPError
 from rest_framework import serializers
 from rest_framework.reverse import reverse
+
 try:
     from allauth.account import app_settings as allauth_settings
     from allauth.account.adapter import get_adapter
@@ -231,6 +233,7 @@ class SocialLoginSerializer(serializers.Serializer):
             `allauth.socialaccount.SocialLoginView` instance
         """
         request = self._get_request()
+        print('----------------------------------------->',str(request))
         social_login = adapter.complete_login(request, app, token, response=response)
         social_login.token = token
         return social_login
@@ -347,6 +350,7 @@ class SocialLoginSerializer(serializers.Serializer):
 
             login.lookup()
             #login.save(request, connect=True)
+            raise serializers.ValidationError(ret.content)
 
         attrs['user'] = login.account.user
 
