@@ -57,13 +57,26 @@ class TypeUpdateView(generics.UpdateAPIView):
     ]
     def put(self, request, *args, **kwargs):
         data = request.data.get('ITEMS')
-        print('--------------------> GİRDİ')
         qs = Type.objects.filter(TYPE=request.data.get('FILTER_TYPE')).update(**data)
         # serializer = TypeSaveSerializer(qs, data=data, many=True)
 
         # if serializer.is_valid():
         # #     serializer.save()
-        return Response('serializer.data')
+        return Response({'Message':'Successful Update '},status=status.HTTP_200_OK)
+    
+
+class TypeDeleteeView(generics.UpdateAPIView):
+    serializer_class = TypeSaveSerializer
+    permission_classes = [
+        permissions.AllowAny
+    ]
+    def put(self, request, *args, **kwargs):
+        qs = Type.objects.filter(TYPE=request.data.get('Type')).delete()
+        # serializer = TypeSaveSerializer(qs, data=data, many=True)
+
+        # if serializer.is_valid():
+        # #     serializer.save()
+        return Response({'Message':'Successful Delete '},status=status.HTTP_200_OK)
 
 class TypeView(generics.ListAPIView):
 

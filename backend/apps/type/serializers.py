@@ -1,6 +1,9 @@
-from rest_framework import serializers
-from .models import type as Type
 import uuid
+
+from rest_framework import serializers
+
+from .models import type as Type
+
 
 class TypeSaveSerializer(serializers.ModelSerializer):
     class Meta:
@@ -10,9 +13,9 @@ class TypeSaveSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
             validated_data['VERSION'] = uuid.uuid4().hex
             validated_data['ROW_ID'] = uuid.uuid4().hex
-            user = Type.objects.create(**validated_data)
-            user.save()
-            return user
+            types = Type.objects.create(**validated_data)
+            types.save()
+            return types
 
 class TypeDetailsSerializer(serializers.ModelSerializer):
     class Meta:

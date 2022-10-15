@@ -18,7 +18,6 @@ class TypePropertySaveView(generics.CreateAPIView):
         permissions.AllowAny
     ]
 
-
 class TypePropertyView(generics.ListAPIView):
 
     serializer_class = TypePropertySaveSerializer
@@ -46,3 +45,19 @@ class TypePropertyDetailView(generics.ListAPIView):
             return Response(serializer.data,status=status.HTTP_200_OK)
         except Exception as e:
             return Response(e)
+
+class TypePropertyUpdateView(generics.UpdateAPIView):
+    serializer_class = TypePropertySaveSerializer
+    permission_classes = [
+        permissions.AllowAny
+    ]
+    def put(self, request, *args, **kwargs):
+        filter = request.data.get('FILTER')
+        data = request.data.get('ITEMS')
+        qs = type_property.objects.filter(**data).update
+
+        # serializer = TypeSaveSerializer(qs, data=data, many=True)
+
+        # if serializer.is_valid():
+        # #     serializer.save()
+        return Response({'Message':'Successful Update '},status=status.HTTP_200_OK)

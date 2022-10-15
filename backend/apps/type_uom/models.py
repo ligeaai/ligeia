@@ -1,6 +1,9 @@
-from django.db import models 
-import uuid 
-from django.utils import timezone 
+import uuid
+
+from django.db import models
+from django.utils import timezone
+
+
 class type_uom(models.Model): 
 	PROPERTY_CLASS=models.CharField(max_length=100,primary_key=True,null=False,)
 	UOM=models.CharField(max_length=50,null=False,)

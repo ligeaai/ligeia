@@ -1,9 +1,13 @@
 from django.urls import include, path, re_path
-from .views import TypePropertyView,TypePropertySaveView,TypePropertyDetailView
-from django.urls.resolvers import URLPattern 
+from django.urls.resolvers import URLPattern
+
+from .views import (TypePropertyDetailView, TypePropertySaveView,
+                    TypePropertyUpdateView, TypePropertyView)
+
 urlpatterns = [
     
     path("save/", TypePropertySaveView.as_view(),name='PropertySave'),
+    path("update/", TypePropertyUpdateView.as_view(),name='PropertyUpdate'),
     path("scripts/", TypePropertyView.as_view(),name='PropertyScript'),
     path("details/", TypePropertyDetailView.as_view(),name='PropertyDetails'),
     
