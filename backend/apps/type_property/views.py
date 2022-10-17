@@ -26,8 +26,8 @@ class TypePropertyView(generics.ListAPIView):
     ]
     def get(self, request, *args, **kwargs):
         
-        data = typeAddData.create_type_property_data()
-        return Response({"Error":'girdi'}, status=status.HTTP_200_OK)
+        typeAddData.import_data("TYPE_PROPERTY")
+        return Response({"Message":'successful'}, status=status.HTTP_200_OK)
 
 
 class TypePropertyDetailView(generics.ListAPIView):
@@ -61,3 +61,17 @@ class TypePropertyUpdateView(generics.UpdateAPIView):
         # if serializer.is_valid():
         # #     serializer.save()
         return Response({'Message':'Successful Update '},status=status.HTTP_200_OK)
+    
+class TypeDeleteeView(generics.DestroyAPIView):
+    serializer_class = TypePropertySaveSerializer
+    permission_classes = [
+        permissions.AllowAny
+    ]
+    def delete(self, request, *args, **kwargs):
+        filter = request.data.get('FILTER')
+        qs = type_property.objects.filter(**filter).delete()
+        # serializer = TypeSaveSerializer(qs, data=data, many=True)
+
+        # if serializer.is_valid():
+        # #     serializer.save()
+        return Response({'Message':'Successful Delete '},status=status.HTTP_200_OK)

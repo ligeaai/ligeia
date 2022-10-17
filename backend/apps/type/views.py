@@ -1,8 +1,7 @@
 import re
 
 from apps.code_list.models import code_list
-from apps.code_list.serializers import (CodeListSaveSerializer,
-                                        CodeListSerializer)
+from apps.code_list.serializers import (codeListNameSerializer)
 from apps.resource_list.models import resource_list
 from apps.resource_list.serializers import (ResourceListSaveSerializer,
                                             ResourceListSerializer)
@@ -86,8 +85,8 @@ class TypeView(generics.ListAPIView):
     ]
     def get(self, request, *args, **kwargs):
         
-        data = typeAddData.create_type_data()
-        return Response({"Error":'error_message'}, status=status.HTTP_200_OK)
+        typeAddData.import_data("TYPE")
+        return Response({"Message":'successful'}, status=status.HTTP_200_OK)
 
 
 class TypeDetailView(generics.CreateAPIView):
@@ -96,9 +95,10 @@ class TypeDetailView(generics.CreateAPIView):
     ]
     serializer_class = [TypeSerializer,TypePropertySerializer,]
     def post(self, request):
-        # cache_data = Red.get(request.data.get('TYPE'))
-        # if cache_data:
-        #     return Response(cache_data,status=status.HTTP_200_OK)
+        cache_key = request.data.get('TYPE') +"-"+request.data.get('CULTURE')
+        cache_data = Red.get(cache_key)
+        if cache_data:
+            return Response(cache_data,status=status.HTTP_200_OK)
         
         # Note the use of `get_queryset()` instead of `self.queryset`
         
@@ -107,32 +107,65 @@ class TypeDetailView(generics.CreateAPIView):
         try:
             typeQuary = Type.objects.filter(TYPE=request.data.get('TYPE'))
             serializerType = TypeSerializer(typeQuary, many=True)
-            print(serializerType.data)
             for typeValue in serializerType.data[0].values():
                 proertyQuery = type_property.objects.filter(TYPE=typeValue)
                 serializerProperty = TypePropertySerializer(proertyQuery,many=True)
                 seriliazerPropertyList.append(serializerProperty)
            
-
+            
             filterDict = dict()
             propertyList = []
-            # print(deneme.data[0])
+
             culture = request.data.get('CULTURE')
             for parser in seriliazerPropertyList:
                 dicList = []
+                label_id = []
+                codeListType = []
                 for value in parser.data:
-                    label_id = value.get('LABEL_ID')
-                    resourceListQuery = resource_list.objects.filter(ID=label_id,CULTURE=culture)
-                    if resourceListQuery:
-                        filterDict = value
-                        serializerResource = ResourceListSerializer(resourceListQuery,many=True)
-                        filterDict['RESOURCE-LIST'] = serializerResource.data
-                        dicList.append(filterDict)
-                
+                    try:
+                        if value.get('CODE_LIST'):
+                            index = codeListType.index(value.get('CODE_LIST'))
+
+                    except Exception as e:
+                        codeListValue = value.get('CODE_LIST')
+                        codeListType.append(codeListValue)
+                        parentCodeListQuery = code_list.objects.filter(LIST_TYPE = 'CODE_LIST',CULTURE=culture,CODE = codeListValue)
+                        childCodeListQuery = code_list.objects.filter(LIST_TYPE = codeListValue,CULTURE=culture)
+                        
+                        if parentCodeListQuery:
+                            parentserializerCodeList = codeListNameSerializer(childCodeListQuery,many=True)
+                            if childCodeListQuery:
+                                serializerCodeList = codeListNameSerializer(childCodeListQuery,many=True)
+                                parentserializerCodeList.data[0]['CHILD'] = serializerCodeList.data 
+                        
+                        value['CODE-LIST'] = parentserializerCodeList.data
+                                
+                        
+
+
+
+                    value_label = value.get('LABEL_ID')
+                    try:
+                        index = label_id.index(value_label)
+                    except Exception as e:
+                        label_id.append(value_label)
+                        resourceListQuery = resource_list.objects.filter(ID=value_label,CULTURE=culture)
+                        if resourceListQuery:
+                           filterDict = value
+                           serializerResource = ResourceListSerializer(resourceListQuery,many=True)
+                           filterDict['RESOURCE-LIST'] = serializerResource.data
+                           dicList.append(filterDict)
+                        
+                        
+                    
                 propertyList.append(dicList)
              
+            
                     
             
+            
+                
+            # 
             typeProperty = {
                 'TYPE':propertyList[0],
                 'BASETYPE':propertyList[1],
@@ -146,7 +179,7 @@ class TypeDetailView(generics.CreateAPIView):
                     'TYPE PROPERTY COLUMNS':typeProperty
                     },
             }
-            cache_data = Red.set(request.data.get('TYPE'),data)
+            cache_data = Red.set(cache_key,data)
             
             #print(serializer.data[0].get('TYPE'))
             return Response(data,status=status.HTTP_200_OK)

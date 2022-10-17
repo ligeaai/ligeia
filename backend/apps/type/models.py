@@ -1,6 +1,8 @@
-from django.db import models 
-import uuid 
-from django.utils import timezone 
+import uuid
+
+from django.db import models
+from django.utils import timezone
+
 
 class type(models.Model): 
 	TYPE=models.CharField(max_length=14,primary_key=True,null=False,)

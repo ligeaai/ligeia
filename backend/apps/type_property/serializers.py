@@ -19,4 +19,4 @@ class TypePropertyDetailsSerializer(serializers.ModelSerializer):
 class TypePropertySerializer(serializers.ModelSerializer):
     class Meta:
         model = type_property
-        fields = ['TYPE','PROPERTY_NAME','CODE_LIST','MANDATORY','LABEL_ID','PROP_GRP','PROPERTY_TYPE']
+        fields = ['TYPE','PROPERTY_NAME','CODE_LIST','MANDATORY','LABEL_ID','PROP_GRP','PROPERTY_TYPE','SORT_ORDER']

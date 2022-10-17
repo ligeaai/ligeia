@@ -30,8 +30,8 @@ class CodeListView(generics.ListAPIView):
     ]
     def get(self, request, *args, **kwargs):
         
-        data = typeAddData.create_codelist_data()
-        return Response({"Error":'error_message'}, status=status.HTTP_200_OK)
+        typeAddData.import_data("CODE_LIST")
+        return Response({"Message":'successful'}, status=status.HTTP_200_OK)
 
 
 class CodeListDetailView(generics.ListAPIView):

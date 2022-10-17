@@ -1,9 +1,10 @@
 from django.shortcuts import render
-from rest_framework import permissions
 from rest_framework import generics, permissions, status
-from .serializers import TypeLinkSaveSerializer
-from services.parsers.addData.type import typeAddData
 from rest_framework.response import Response
+from services.parsers.addData.type import typeAddData
+
+from .serializers import TypeLinkSaveSerializer
+
 
 # Create your views here.
 class TypeLinkSaveView(generics.CreateAPIView):
@@ -22,5 +23,5 @@ class TypeLinkView(generics.ListAPIView):
     ]
     def get(self, request, *args, **kwargs):
         
-        data = typeAddData.create_type_link_data()
-        return Response({"Error":'error_message'}, status=status.HTTP_200_OK)
+        typeAddData.import_data("TYPE_LINK")
+        return Response({"Message":'successful'}, status=status.HTTP_200_OK)

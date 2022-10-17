@@ -23,3 +23,8 @@ class CodeListSerializer(serializers.ModelSerializer):
     class Meta:
         model = code_list
         fields = '__all__'
+
+class codeListNameSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = code_list
+        fields = ['LIST_TYPE','CULTURE','CODE','CODE_TEXT']
