@@ -8,6 +8,11 @@ import loaderReducer from './loaderReducer';
 import registerFormReducer from './registerFormReducer';
 import searchBarReducer from './searchBarReducer';
 import themeReducer from './themeReducer';
+import typeReducer from './typeReducer';
+import typeTextReducer from './typeTextReducer';
 
 
-export { authReducer, codelistReducer, drawerReducer, errorReducer, fullScreenReducer, langReducer, loaderReducer, registerFormReducer, searchBarReducer, themeReducer };
+export {
+    authReducer, codelistReducer, drawerReducer, errorReducer, fullScreenReducer,
+    langReducer, loaderReducer, registerFormReducer, searchBarReducer, themeReducer, typeReducer, typeTextReducer
+};

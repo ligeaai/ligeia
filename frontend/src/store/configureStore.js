@@ -12,7 +12,9 @@ import {
     loaderReducer,
     registerFormReducer,
     searchBarReducer,
-    themeReducer
+    themeReducer,
+    typeReducer,
+    typeTextReducer
 } from '../services/reducers'
 
 export default configureStore({
@@ -27,6 +29,8 @@ export default configureStore({
         registerForm: registerFormReducer,
         searchBar: searchBarReducer,
         theme: themeReducer,
+        type: typeReducer,
+        typeText: typeTextReducer
     },
     middleware: [thunk, logger]
 })

@@ -31,7 +31,12 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 
 import { ComponentError } from "../../../../components";
 import history from "../../../../routers/history";
-
+import MyTextField from "./myTextField";
+import {
+  setValue,
+  changeValue,
+} from "../../../../services/reducers/typeReducer";
+import { setTextValue } from "../../../../services/reducers/typeTextReducer";
 const SeperatorLineVertical = () => {
   return (
     <Box
@@ -46,14 +51,10 @@ const SeperatorLineVertical = () => {
 };
 
 const DataGridDemo = ({ type }) => {
-  const [editable, setEditable] = React.useState([]);
-  function handleChange(evt) {
-    const value = evt.target.value;
-    setEditable({
-      ...editable,
-      [evt.target.name]: value,
-    });
-  }
+  const dispatch = useDispatch();
+  const culture = useSelector((state) => state.lang.cultur);
+  const [rows, setRows] = React.useState(false);
+  const typeRedux = useSelector((state) => state.type);
   const columns = [
     {
       field: "PROPERTY_NAME",
@@ -90,57 +91,46 @@ const DataGridDemo = ({ type }) => {
       field: "editable",
       headerName: "",
       width: 150,
-
+      filterable: false,
+      sortable: false,
       renderCell: (params) => {
+        if (params.row.PROPERTY_TYPE === "TEXT") {
+          return <MyTextField myKey={`${params.row.LABEL_ID}`} />;
+        }
+        if (params.row.PROPERTY_TYPE === "INT") {
+          return (
+            <MyTextField myKey={`${params.row.LABEL_ID}`} textType="number" />
+          );
+        }
         if (params.row.PROPERTY_TYPE === "BOOL") {
           return (
             <Checkbox
               sx={{ margin: "auto" }}
-              value={editable[`${params.row.LABEL_ID}`]}
+              checked={
+                typeRedux[`${params.row.LABEL_ID}`] === ""
+                  ? false
+                  : typeRedux[`${params.row.LABEL_ID}`]
+              }
               onChange={(event) => {
-                setEditable({
-                  ...editable,
-                  [params.row.LABEL_ID]: event.currentTarget.checked,
-                });
+                dispatch(
+                  changeValue({
+                    key: params.row.LABEL_ID,
+                    value: event.currentTarget.checked,
+                  })
+                );
               }}
             />
           );
         }
-        if (params.row.PROPERTY_TYPE === "TEXT") {
-          return (
-            <TextField
-              variant="standard"
-              value={editable[`${params.row.LABEL_ID}`]}
-              name={params.row.LABEL_ID}
-              onChange={handleChange}
-              InputProps={{
-                disableUnderline: true,
-              }}
-            />
-          );
-        }
-        if (params.row.PROPERTY_TYPE === "INT") {
-          return (
-            <TextField
-              type="number"
-              variant="standard"
-              value={editable[`${params.row.LABEL_ID}`]}
-              name={params.row.LABEL_ID}
-              onChange={handleChange}
-              InputProps={{
-                disableUnderline: true,
-              }}
-            />
-          );
-        }
-
         if (params.row.PROPERTY_TYPE === "HISTORY") {
           return (
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DatePicker
-                value={editable[`${params.row.LABEL_ID}`]}
+                value={typeRedux[`${params.row.LABEL_ID}`]}
                 onChange={(newValue) => {
-                  setEditable({ ...editable, [params.row.LABEL_ID]: newValue });
+                  dispatch(
+                    changeValue({ key: params.row.LABEL_ID, value: newValue })
+                  );
                 }}
                 InputProps={{
                   disableUnderline: true,
@@ -159,13 +149,15 @@ const DataGridDemo = ({ type }) => {
                 <FormControl fullWidth>
                   <Select
                     labelId="code-list"
-                    defaultValue={editable[`${params.row.LABEL_ID}`]}
-                    value={editable[`${params.row.LABEL_ID}`]}
+                    defaultValue={typeRedux[`${params.row.LABEL_ID}`]}
+                    value={typeRedux[`${params.row.LABEL_ID}`]}
                     onChange={(event) => {
-                      setEditable({
-                        ...editable,
-                        [params.row.LABEL_ID]: event.target.value,
-                      });
+                      dispatch(
+                        changeValue({
+                          key: params.row.LABEL_ID,
+                          value: event.target.value,
+                        })
+                      );
                     }}
                     sx={{
                       ".MuiOutlinedInput-notchedOutline": { border: "none" },
@@ -193,16 +185,14 @@ const DataGridDemo = ({ type }) => {
     },
   ];
 
-  const dispatch = useDispatch();
-  const culture = useSelector((state) => state.lang.cultur);
-  const [rows, setRows] = React.useState(false);
   React.useEffect(() => {
     setRows(false);
     dispatch(setLoaderTrue);
     const getData = async () => {
       let data = await loadType(type, culture);
       try {
-        let editableTemp = {};
+        const temp = {};
+        const tempText = {};
         data.data.TYPE["TYPE PROPERTY COLUMNS"].BASETYPE.concat([
           {
             PROPERTY_NAME: "",
@@ -221,12 +211,17 @@ const DataGridDemo = ({ type }) => {
         ])
           .concat(data.data.TYPE["TYPE PROPERTY COLUMNS"].TYPE)
           .map((e) => {
-            editableTemp[e.LABEL_ID] =
-              e.CODE_LIST && e["CODE-LIST"].length !== 0
-                ? e["CODE-LIST"][0].CODE_TEXT
-                : "";
-            setEditable(editableTemp);
+            if (e.PROPERTY_TYPE === "TEXT" || e.PROPERTY_TYPE === "INT") {
+              tempText[e.LABEL_ID] = "";
+            } else {
+              temp[e.LABEL_ID] =
+                e.CODE_LIST && e["CODE-LIST"].length !== 0
+                  ? e["CODE-LIST"][0].CODE_TEXT
+                  : "";
+            }
           });
+        dispatch(setTextValue(tempText));
+        dispatch(setValue(temp));
       } catch {
         console.log(
           "BOOM!something has gone terribly wrong(but we already sent droids to fix it)"
@@ -238,9 +233,7 @@ const DataGridDemo = ({ type }) => {
     };
     getData();
   }, [type]);
-  React.useEffect(() => {
-    console.log(editable);
-  }, [editable]);
+
   if (rows) {
     return (
       <Box
@@ -251,15 +244,10 @@ const DataGridDemo = ({ type }) => {
           "& .super-app-theme--cell": {
             backgroundColor: grey[200],
           },
+          button: { color: "#4B4B4B" },
         }}
       >
         <DataGrid
-          onCellEditCommit={(params, event, details) => {
-            console.log(params);
-            console.log(event);
-            console.log(details);
-          }}
-          editMode="cell"
           rows={rows.data.TYPE["TYPE PROPERTY COLUMNS"].BASETYPE.concat(
             rows.data.TYPE["TYPE PROPERTY COLUMNS"].TYPE
           ).concat([
@@ -282,6 +270,7 @@ const DataGridDemo = ({ type }) => {
           hideFooter={true}
           components={{ Toolbar: GridToolbar }}
           getRowId={(row) => row.LABEL_ID}
+          sx={{}}
         />
       </Box>
     );
