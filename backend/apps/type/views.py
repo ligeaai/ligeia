@@ -100,8 +100,7 @@ class TypeDetailView(generics.CreateAPIView):
         if cache_data:
             return Response(cache_data,status=status.HTTP_200_OK)
         
-        # Note the use of `get_queryset()` instead of `self.queryset`
-        
+        cache_data = Red.set(cache_key,data)
         seriliazerPropertyList = []
         seriliazerResourceList = []
         try:
@@ -111,11 +110,9 @@ class TypeDetailView(generics.CreateAPIView):
                 proertyQuery = type_property.objects.filter(TYPE=typeValue)
                 serializerProperty = TypePropertySerializer(proertyQuery,many=True)
                 seriliazerPropertyList.append(serializerProperty)
-           
             
             filterDict = dict()
             propertyList = []
-
             culture = request.data.get('CULTURE')
             for parser in seriliazerPropertyList:
                 dicList = []
@@ -139,10 +136,6 @@ class TypeDetailView(generics.CreateAPIView):
                                 parentserializerCodeList.data[0]['CHILD'] = serializerCodeList.data 
                         
                         value['CODE-LIST'] = parentserializerCodeList.data
-                                
-                        
-
-
 
                     value_label = value.get('LABEL_ID')
                     try:
@@ -155,22 +148,12 @@ class TypeDetailView(generics.CreateAPIView):
                            serializerResource = ResourceListSerializer(resourceListQuery,many=True)
                            filterDict['RESOURCE-LIST'] = serializerResource.data
                            dicList.append(filterDict)
-                        
-                        
-                    
-                propertyList.append(dicList)
-             
-            
-                    
-            
-            
-                
-            # 
+                propertyList.append(dicList) 
+
             typeProperty = {
                 'TYPE':propertyList[0],
                 'BASETYPE':propertyList[1],
             }
-            
             
             data = {
                   "TYPE":
@@ -180,8 +163,6 @@ class TypeDetailView(generics.CreateAPIView):
                     },
             }
             cache_data = Red.set(cache_key,data)
-            
-            #print(serializer.data[0].get('TYPE'))
             return Response(data,status=status.HTTP_200_OK)
         except Exception as e:
             return Response(e)
