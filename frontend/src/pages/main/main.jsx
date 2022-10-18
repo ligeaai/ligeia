@@ -38,7 +38,7 @@ const cards = [
   },
   {
     cardTitle: "Adminstration",
-    cardBody: "Administration and configuration",
+    cardBody: "Administration of the platform",
     cardURL: "/administration",
     isActiveDrawer: 5,
   },
