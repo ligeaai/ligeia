@@ -47,7 +47,13 @@ const SeperatorLineVertical = () => {
 
 const DataGridDemo = ({ type }) => {
   const [editable, setEditable] = React.useState([]);
-
+  function handleChange(evt) {
+    const value = evt.target.value;
+    setEditable({
+      ...editable,
+      [evt.target.name]: value,
+    });
+  }
   const columns = [
     {
       field: "PROPERTY_NAME",
@@ -105,12 +111,8 @@ const DataGridDemo = ({ type }) => {
             <TextField
               variant="standard"
               value={editable[`${params.row.LABEL_ID}`]}
-              onChange={(event) => {
-                setEditable({
-                  ...editable,
-                  [params.row.LABEL_ID]: event.target.value,
-                });
-              }}
+              name={params.row.LABEL_ID}
+              onChange={handleChange}
               InputProps={{
                 disableUnderline: true,
               }}
@@ -123,12 +125,8 @@ const DataGridDemo = ({ type }) => {
               type="number"
               variant="standard"
               value={editable[`${params.row.LABEL_ID}`]}
-              onChange={(event) => {
-                setEditable({
-                  ...editable,
-                  [params.row.LABEL_ID]: event.target.value,
-                });
-              }}
+              name={params.row.LABEL_ID}
+              onChange={handleChange}
               InputProps={{
                 disableUnderline: true,
               }}

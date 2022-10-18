@@ -18,6 +18,7 @@ import {
   PropLinkTabs,
   ItemSperatorLineXL,
   DateBreak,
+  ComponentError,
 } from "../../../../components";
 import DrawerMenu from "../../../../layout/main/asset/treeViewMenu";
 
@@ -28,6 +29,7 @@ import {
   setLoaderFalse,
   setLoaderTrue,
 } from "../../../../services/actions/loader";
+
 const TreeMenuItem = () => {
   const [selectedIndex, setSelectedIndex] = React.useState(0);
   function RenderRow(props) {
@@ -112,7 +114,10 @@ const UnitOneBody = (type) => {
         flexWrap: "nowrap",
       }}
     >
-      <DrawerMenu Element={TreeMenuItem()} />
+      <ComponentError errMsg="Error">
+        <DrawerMenu Element={TreeMenuItem()} />
+      </ComponentError>
+
       <Grid
         item
         xs={12}
