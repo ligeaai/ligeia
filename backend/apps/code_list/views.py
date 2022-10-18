@@ -9,7 +9,7 @@ from utils.utils import redisCaching as Red
 # Create your views here.
 from .models import code_list
 from .serializers import CodeListDetailsSerializer, CodeListSaveSerializer,CodeListSaveScriptSerializer
-
+from rest_framework.pagination import PageNumberPagination
 
 class CodeListSaveScriptView(generics.CreateAPIView):
 
@@ -67,26 +67,43 @@ class CodeListView(generics.ListAPIView):
         return Response({"Message":'successful'}, status=status.HTTP_200_OK)
 
 
-class CodeListDetailView(generics.ListAPIView):
+class CodeListDetailView(generics.CreateAPIView):
 
-    queryset = code_list.objects.all()
+  
     serializer_class = CodeListDetailsSerializer
     authentication_classes = []
     permission_classes = []
-    def list(self, request):
-        # Note the use of `get_queryset()` instead of `self.queryset`
+    def post(self, request, *args, **kwargs):
         try:
-            cache_key = "CodeListDetails"
+            if request.data.get('PARENT'):
+                cache_key = "Parent - " + request.data.get("CULTURE")
+                queryset = code_list.objects.filter(LIST_TYPE = 'CODE_LIST',CULTURE = request.data.get('CULTURE'))
+            else:
+                cache_key = request.data.get('LIST_TYPE') + request.data.get("CULTURE")
+                queryset = code_list.objects.filter(LIST_TYPE = request.data.get('LIST_TYPE'),CULTURE = request.data.get('CULTURE'))
             cache_data = Red.get(cache_key)
             if cache_data:
                 return Response(cache_data,status=status.HTTP_200_OK)
-        
-            queryset = self.get_queryset()
             serializer = CodeListDetailsSerializer(queryset, many=True)
             cache_data = Red.set(cache_key,serializer.data)
             return Response(serializer.data,status=status.HTTP_200_OK)
         except Exception as e:
-            return Response(e)
+            return Response("ERROR",status=status.HTTP_400_BAD_REQUEST)
+         
+    # def list(self, request):
+    #     # Note the use of `get_queryset()` instead of `self.queryset`
+    #     try:
+            
+    #         cache_key = "CodeListDetails"
+    #         # cache_data = Red.get(cache_key)
+    #         # if cache_data:
+    #         #     return Response(cache_data,status=status.HTTP_200_OK)
+    #         queryset = self.get_queryset()
+    #         serializer = CodeListDetailsSerializer(queryset, many=True)
+    #         cache_data = Red.set(cache_key,serializer.data)
+    #         return Response(serializer.data,status=status.HTTP_200_OK)
+    #     except Exception as e:
+    #         return Response(e)
 
 class CodeListUpdateView(generics.UpdateAPIView):
     serializer_class = CodeListSaveScriptSerializer
@@ -101,7 +118,7 @@ class CodeListUpdateView(generics.UpdateAPIView):
         return Response({'Message':'Successful Update '},status=status.HTTP_200_OK)
     
 
-class TypeDeleteeView(generics.UpdateAPIView):
+class CodeListDeleteView(generics.UpdateAPIView):
     serializer_class = CodeListSaveScriptSerializer
     permission_classes = [
         permissions.AllowAny

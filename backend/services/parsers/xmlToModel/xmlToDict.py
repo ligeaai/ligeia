@@ -12,7 +12,7 @@ paramaterDict = {
 
 valueDict = {
     'Guid':'uuid.uuid4',
-    'Now' : 'timezone.now',
+    'Now' : 'timezone.now()',
     'ChangeInterval':'"ChangeInterval"',
     'EndDatetime': 'timezone.now',
     'SourceType':'"SourceType"',

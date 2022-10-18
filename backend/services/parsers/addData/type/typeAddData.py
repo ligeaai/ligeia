@@ -13,7 +13,9 @@ def import_data(data):
         "TYPE":"type",
         "TYPE_PROPERTY":"type-property",
         "CODE_LIST":"code-list",
-        "RESOURCE_LIST":"resource-list"
+        "RESOURCE_LIST":"resource-list",
+        "ITEM_PROPERTY":"item-property",
+        "ITEM":"item",
     }
     base_url = "http://localhost:8000/api/v1/"+urlDict.get(data)+"/save/"
     _create_method(base_url,data)
@@ -21,6 +23,7 @@ def import_data(data):
 
 def _create_method(url,data):
     dataset = pd.read_csv('/django/backend/services/parsers/addData/type/'+data+'.csv')
+    print(dataset.iloc[:,:])
     headers = {'Content-type': 'application/json', 'Accept': 'application/json'}
     dataset = dataset.fillna(value='None')
     for index in range(0,dataset.shape[0]):
