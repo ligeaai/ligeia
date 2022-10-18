@@ -1,7 +1,6 @@
 import React from "react";
-import ErrorPage from "../../pages/error/errorPage";
-
-export class ErrorBoundary extends React.Component {
+import { Box } from "@mui/material";
+export class ComponentError extends React.Component {
   constructor(props) {
     super(props);
     this.state = { hasError: false };
@@ -13,7 +12,7 @@ export class ErrorBoundary extends React.Component {
 
   render() {
     if (this.state.hasError) {
-      return <ErrorPage />;
+      return <Box>{this.props.errMsg}</Box>;
     }
 
     return this.props.children;

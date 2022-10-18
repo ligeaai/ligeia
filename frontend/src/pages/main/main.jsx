@@ -4,6 +4,7 @@ import { Box } from "@mui/material";
 
 import Cards from "../../components/cardGenerator/cards";
 import Main from "../../layout/main/main";
+import { ErrorBoundary } from "../../components";
 const cards = [
   {
     cardTitle: "Asset",
@@ -60,11 +61,7 @@ const MainRender = () => {
 };
 
 const main = () => {
-  try {
-    return <Main Element={MainRender()} />;
-  } catch {
-    throw new Error("asdsad");
-  }
+  return <Main Element={MainRender()} />;
 };
 
 export default main;

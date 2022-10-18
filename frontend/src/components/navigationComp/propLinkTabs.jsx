@@ -7,7 +7,7 @@ import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import DashboardCustomizeOutlinedIcon from "@mui/icons-material/DashboardCustomizeOutlined";
 import MyProperties from "../../pages/main/configuration/organization/properties";
 
-const Properties = () => {
+const Properties = ({type}) => {
   const [view, setView] = React.useState("Properties");
   const [isHover, setIsHover] = React.useState("");
   const handleChange = (event, nextView) => {
@@ -26,6 +26,7 @@ const Properties = () => {
       container
       sx={{
         flexWrap: "noWrap",
+        minHeight: "calc(500px - 50px - 36px - 16px)",
         height: "calc(100vh - 60px - 4px - 50px - 36px - 16px)",
       }}
     >
@@ -110,7 +111,7 @@ const Properties = () => {
         </ToggleButtonGroup>
       </Grid>
       <Grid item xs={12} sx={{ mr: 1 }}>
-        {view === "Properties" ? <MyProperties /> : <></>}
+        {view === "Properties" ? <MyProperties type={type}/> : <></>}
         {view === "Links" ? <Grid>Links</Grid> : <></>}
       </Grid>
     </Grid>

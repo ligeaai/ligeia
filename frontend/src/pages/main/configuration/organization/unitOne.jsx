@@ -101,7 +101,7 @@ const TreeMenuItem = () => {
   }
 };
 
-const UnitOneBody = () => {
+const UnitOneBody = (type) => {
   const isFullScreen = useSelector((state) => state.fullScreen.isFullScreen);
   return (
     <Grid
@@ -168,7 +168,7 @@ const UnitOneBody = () => {
           </Grid>
           <ItemSperatorLineXL />
           <Grid item xs={12}>
-            <PropLinkTabs />
+            <PropLinkTabs type={type} />
           </Grid>
         </Grid>
       </Grid>
@@ -176,8 +176,9 @@ const UnitOneBody = () => {
   );
 };
 
-const UnitOne = () => {
-  return <Main Element={UnitOneBody()} delSearchBar={true} />;
+const UnitOne = (props) => {
+  const { type } = props;
+  return <Main Element={UnitOneBody(type)} delSearchBar={true} />;
 };
 
 export default UnitOne;

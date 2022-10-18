@@ -6,7 +6,7 @@ import history from "./history";
 
 import Administration from "../pages/main/administration/main";
 import Analytics from "../pages/main/asset/analytics";
-import NotFoundPage from "../pages/notFound/notFound";
+import NotFoundPage from "../pages/error/notFound";
 import ForgotPassword from "../pages/authorization/forgotPassword/forgotPassword";
 import ForgotPasswordConfirm from "../pages/authorization/forgotPassword/forgotPasswordConfirm";
 import Overview from "../pages/main/asset/overview";
@@ -35,7 +35,11 @@ const AppRouter1 = () => {
           <Route path="/analytics" element={<Analytics />} />
           <Route path="/reporting" element={<Reporting />} />
           <Route path="/administration" element={<Administration />} />
-          <Route path="/configuration/organization/company" element={<Company />} />
+          <Route path="/configuration/organization/company" element={<Company type="COMPANY" />} />
+          <Route path="/configuration/organization/org_unit_one" element={<Company type="ORG_UNIT1" />} />
+          <Route path="/configuration/organization/org_unit_two" element={<Company type="ORG_UNIT2" />} />
+          <Route path="/configuration/organization/org_unit_tree" element={<Company type="ORG_UNIT3" />} />
+          <Route path="/configuration/organization/org_unit_four" element={<Company type="ORG_UNIT4" />} />
         </Route>
         <Route exact path="/" element={<PublicRoute />}>
           <Route exact path="/home" element={<Start />} />

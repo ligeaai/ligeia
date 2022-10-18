@@ -1,8 +1,9 @@
 import { instance, config } from "../../baseApi";
 
 
-export const loadType = async (TYPE) => {
+export const loadType = async (TYPE, CULTURE) => {
     const body = JSON.stringify({
+        CULTURE,
         TYPE,
     });
 

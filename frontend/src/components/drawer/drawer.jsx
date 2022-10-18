@@ -49,7 +49,7 @@ const Drawer = (props) => {
         borderRadius: "3px",
       }}
     >
-      <App menu={navItems} />
+      <App menu={navItems.data.drawerMenu} />
     </Box>
   );
 };
