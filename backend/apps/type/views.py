@@ -100,7 +100,6 @@ class TypeDetailView(generics.CreateAPIView):
         if cache_data:
             return Response(cache_data,status=status.HTTP_200_OK)
         
-        cache_data = Red.set(cache_key,data)
         seriliazerPropertyList = []
         seriliazerResourceList = []
         try:
@@ -154,7 +153,6 @@ class TypeDetailView(generics.CreateAPIView):
                 'TYPE':propertyList[0],
                 'BASETYPE':propertyList[1],
             }
-            
             data = {
                   "TYPE":
                   {
@@ -162,6 +160,7 @@ class TypeDetailView(generics.CreateAPIView):
                     'TYPE PROPERTY COLUMNS':typeProperty
                     },
             }
+            
             cache_data = Red.set(cache_key,data)
             return Response(data,status=status.HTTP_200_OK)
         except Exception as e:
