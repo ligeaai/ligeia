@@ -42,7 +42,6 @@ class ItemPropertyCustomSaveSerializer(serializers.Serializer):
             temptDict['ITEM_TYPE'] = property_name
             if value is not None and value != property_name:
                 if value.get('VALUE') is not None :
-                    print(value.get('VALUE_TYPE'))
                     temptDict['ITEM_ID'] = uuid.uuid4().hex
                     temptDict['PROPERTY_TYPE'] = value.get('VALUE_TYPE')
                     temptDict['LAST_UPDT_DATE'] = str(datetime.now()).split(" ")[0]
