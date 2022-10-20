@@ -23,7 +23,6 @@ def import_data(data):
 
 def _create_method(url,data):
     dataset = pd.read_csv('/django/backend/services/parsers/addData/type/'+data+'.csv')
-    print(dataset.iloc[:,:])
     headers = {'Content-type': 'application/json', 'Accept': 'application/json'}
     dataset = dataset.fillna(value='None')
     for index in range(0,dataset.shape[0]):

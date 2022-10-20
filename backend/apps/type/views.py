@@ -6,8 +6,7 @@ from apps.resource_list.models import resource_list
 from apps.resource_list.serializers import (ResourceListSaveSerializer,
                                             ResourceListSerializer)
 from apps.type_property.models import type_property
-from apps.type_property.serializers import (TypePropertySaveSerializer,
-                                            TypePropertySerializer)
+from apps.type_property.serializers import (TypePropertySaveSerializer,TypePropertyCustomSaveSerializer,TypePropertySerializer)
 from django.shortcuts import render
 from rest_framework import generics, permissions, status
 from rest_framework.authentication import TokenAuthentication
@@ -17,8 +16,7 @@ from utils.utils import redisCaching as Red
 
 # Create your views here.
 from .models import type as Type
-from .serializers import (TypeDetailsSerializer, TypeSaveSerializer,
-                          TypeSerializer)
+from .serializers import (TypeDetailsSerializer, TypeSaveSerializer,TypeSerializer,TypeCustomSaveSerializer)
 
 
 class TypeSaveView(generics.CreateAPIView):
@@ -32,20 +30,19 @@ class TypeSaveView(generics.CreateAPIView):
 
 
 class TypeAndPropertySaveView(generics.CreateAPIView):
-
-    serializer_class = TypeSaveSerializer
-    res = ResourceListSaveSerializer
     permission_classes = [
         permissions.AllowAny
     ]
     def post(self, request, *args, **kwargs):
         typeValue = request.data.get('TYPE')
         typePropertyValue = request.data.get('TYPE_PROPERTY')
-        types = Type.objects.create(**typeValue)
-        types.save()
-        typesProperty = type_property.objects.create(**typePropertyValue)
-        typesProperty.save()
-        return Response('Registration Successful')
+        serializer = TypeCustomSaveSerializer(data = typeValue)
+        serializer.is_valid()
+        serializer.create(typeValue)
+        serializer = TypePropertyCustomSaveSerializer(data = typePropertyValue)
+        serializer.is_valid()
+        serializer.create(typePropertyValue)
+        return Response(request.data,status=status.HTTP_201_CREATED)
     
     
 

@@ -8,15 +8,19 @@ from services.parsers.addData.type import typeAddData
 from utils.utils import redisCaching as Red
 # Create your views here.
 from .models import code_list
-from .serializers import CodeListDetailsSerializer, CodeListSaveSerializer,CodeListSaveScriptSerializer
+from .serializers import CodeListDetailsSerializer, CodeListCustomSerializer,CodeListSaveSerializer,CodeListSaveScriptSerializer
 from rest_framework.pagination import PageNumberPagination
 
 class CodeListSaveScriptView(generics.CreateAPIView):
-
-    serializer_class = CodeListSaveScriptSerializer
     permission_classes = [
         permissions.AllowAny
     ]
+    def post(self, request, *args, **kwargs):
+        serializer = CodeListCustomSerializer(data=request.data)
+        serializer.is_valid()
+        serializer.create(request.data)
+        return Response({"Message":'successful',
+            "BODY":request.data}, status=status.HTTP_200_OK)
     # def create(self, request, *args, **kwargs):       
     #     serializer = self.get_serializer(data=request.data)
     #     serializer.is_valid(raise_exception=True)
@@ -25,34 +29,6 @@ class CodeListSaveScriptView(generics.CreateAPIView):
     #     return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
 
-class CodeListSaveView(generics.CreateAPIView):
-
-    serializer_class = CodeListSaveSerializer
-    permission_classes = [
-        permissions.AllowAny
-    ]
-    def _create_parent(self,request):
-        parentValue = request.data.get('PARENT')
-        temptCode = parentValue.get('LIST_TYPE')
-        parentValue['LIST_TYPE'] = 'CODE_LIST'
-        parentValue['CODE'] = temptCode
-        parentValue['LAYER_NAME'] = "OG_STD"
-        parentValue['VERSION'] = uuid.uuid4().hex
-        parentValue['ROW_ID'] = uuid.uuid4().hex
-        types = code_list.objects.create(**parentValue)
-        types.save()
-    def _create_child(self,request):
-        childValue = request.data.get('CHILD')
-        childValue['LIST_TYPE'] = request.data.get('PARENT').get('LIST_TYPE')
-        childValue['LAYER_NAME'] = "OG_STD"
-        childValue['VERSION'] = uuid.uuid4().hex
-        childValue['ROW_ID'] = uuid.uuid4().hex
-        childValues = code_list.objects.create(**childValue)
-        childValues.save()
-    def post(self, request, *args, **kwargs):
-        self._create_parent(request)
-        self._create_child(request)
-        return Response({"Message":'successful'}, status=status.HTTP_200_OK)
 
     
 class CodeListView(generics.ListAPIView):
@@ -113,18 +89,17 @@ class CodeListUpdateView(generics.UpdateAPIView):
     def put(self, request, *args, **kwargs):
         data = request.data.get('ITEMS')
         filter=request.data.get('FILTER_TYPE')
-        qs = code_list.objects.filter(LIST_TYPE=filter.get('LIST_TYPE'),CODE = filter.get('CODE')).update(**data)
+        qs = code_list.objects.filter(LIST_TYPE=filter.get('LIST_TYPE'),CODE = filter.get('CODE'),CULTURE = request.data.get('CULTURE')).update(**data)
 
         return Response({'Message':'Successful Update '},status=status.HTTP_200_OK)
     
 
-class CodeListDeleteView(generics.UpdateAPIView):
+class CodeListDeleteView(generics.DestroyAPIView):
     serializer_class = CodeListSaveScriptSerializer
     permission_classes = [
         permissions.AllowAny
     ]
-    def put(self, request, *args, **kwargs):
-        filter=request.data.get('FILTER_TYPE')
-        qs = code_list.objects.filter(LIST_TYPE=filter.get('LIST_TYPE'),CODE = filter.get('CODE')).delete()
+    def delete(self, request, *args, **kwargs):
+        qs = code_list.objects.filter(LIST_TYPE=request.data.get('LIST_TYPE'),CODE = request.data.get('CODE'),CULTURE = request.data.get('CULTURE')).delete()
 
         return Response({'Message':'Successful Delete '},status=status.HTTP_200_OK)
