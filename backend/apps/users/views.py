@@ -1,7 +1,6 @@
 import email
 
-from allauth.socialaccount.providers.facebook.views import \
-    FacebookOAuth2Adapter
+from allauth.socialaccount.providers.facebook.views import FacebookOAuth2Adapter
 from allauth.socialaccount.providers.github.views import GitHubOAuth2Adapter
 from allauth.socialaccount.providers.google.views import GoogleOAuth2Adapter
 from allauth.socialaccount.providers.oauth2.client import OAuth2Client
@@ -10,13 +9,15 @@ from django.contrib.auth import login
 from django.contrib.auth.models import update_last_login
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect
+
 #### REST-AUTH
 from django.urls import include, path, reverse
 from rest_framework import generics, permissions, status
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.authtoken.models import Token
 from rest_framework.authtoken.serializers import AuthTokenSerializer
-#from knox.auth import AuthToken, TokenAuthentication
+
+# from knox.auth import AuthToken, TokenAuthentication
 from rest_framework.decorators import api_view
 from rest_framework.generics import GenericAPIView
 from rest_framework.permissions import AllowAny, IsAuthenticated
@@ -28,18 +29,25 @@ from utils.utils import AtomicMixin
 
 from .models import *
 from .models import User
-from .serializers import (ChangePasswordSerializer, ForgetPasswordSerializer,
-                          ResetNewPasswordSerializer, UserLoginSerializer,
-                          UserModelSerializer, UserRegistrationSerializer,
-                          UserSerializer)
+from .serializers import (
+    ChangePasswordSerializer,
+    ForgetPasswordSerializer,
+    ResetNewPasswordSerializer,
+    UserLoginSerializer,
+    UserModelSerializer,
+    UserRegistrationSerializer,
+    UserSerializer,
+)
 
 logger = KafkaLogger()
+
 
 class UserModelViewSet(ModelViewSet):
     """
     Endpiont for user model, It accept all operations except for user creation.
     It will be enabled or disabled based upon the product requirements.
     """
+
     queryset = User.objects.all()
     serializer_class = UserModelSerializer
     permission_classes = (IsAuthenticated,)
@@ -49,34 +57,43 @@ class UserModelViewSet(ModelViewSet):
 class UserDetails(ModelViewSet):
     queryset = User.objects.none()
     serializer_class = UserModelSerializer
-    authentication_classes = [TokenAuthentication,]
+    authentication_classes = [
+        TokenAuthentication,
+    ]
     http_method_names = ("head", "option", "get")
 
     def list(self, request):
         queryset = User.objects.get(email=request.user)
         serializer = self.serializer_class(queryset)
         try:
-            logger.info(request=request,message="User details listed")
-            return Response(serializer.data,status=status.HTTP_200_OK)
+            logger.info(request=request, message="User details listed")
+            return Response(serializer.data, status=status.HTTP_200_OK)
         except Exception as e:
-            logger.warning(request=request,message="user details could not be listed",warning=e)
+            logger.warning(
+                request=request, message="user details could not be listed", warning=e
+            )
             return Response(e)
 
 
 class UserList(generics.ListAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
-    authentication_classes = [TokenAuthentication,]
+    authentication_classes = [
+        TokenAuthentication,
+    ]
     permission_classes = []
+
     def list(self, request):
         # Note the use of `get_queryset()` instead of `self.queryset`
         try:
             queryset = self.get_queryset()
             serializer = UserSerializer(queryset, many=True)
-            logger.info(request=request,message="All users listed")
-            return Response(serializer.data,status=status.HTTP_200_OK)
+            logger.info(request=request, message="All users listed")
+            return Response(serializer.data, status=status.HTTP_200_OK)
         except Exception as e:
-            logger.warning(request=request,message="All Users could not be listed",warning=e)
+            logger.warning(
+                request=request, message="All Users could not be listed", warning=e
+            )
             return Response(e)
 
 
@@ -89,21 +106,22 @@ class UserRegisterView(generics.GenericAPIView):
         if serializer.is_valid():
             user = serializer.save()
             token = Token.objects.create(user=user)
-            logger.info(message='Created a Profile ',request=request)
+            logger.info(message="Created a Profile ", request=request)
             return Response(
                 {
-                    'token':token.key,
+                    "token": token.key,
                 }
             )
-        logger.warning(request=request,message="Register Failed",warning=serializer.errors)
+        logger.warning(
+            request=request, message="Register Failed", warning=serializer.errors
+        )
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
 class UserLoginView(generics.GenericAPIView):
-    
+
     serializer_class = UserLoginSerializer
-    permission_classes = [
-        AllowAny
-    ]
+    permission_classes = [AllowAny]
 
     def post(self, request, *args, **kwargs):
         serializer = self.get_serializer(
@@ -113,38 +131,51 @@ class UserLoginView(generics.GenericAPIView):
             user = serializer.validated_data["user"]
             update_last_login(None, user)
             token = Token.objects.get_or_create(user=user)
-            logger.info(request=request,message="Successful Login")
+            logger.info(request=request, message="Successful Login")
             return Response(
                 {
-                    "token":str(token[0]),
-                   
-                },status=status.HTTP_200_OK
+                    "token": str(token[0]),
+                },
+                status=status.HTTP_200_OK,
             )
-        logger.warning(request=request,message="Login Failed",warning=serializer.errors)
+        logger.warning(
+            request=request, message="Login Failed", warning=serializer.errors
+        )
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
 class logout(generics.ListAPIView):
-    authentication_classes = [TokenAuthentication,]
+    authentication_classes = [
+        TokenAuthentication,
+    ]
+
     def get(self, request, *args, **kwargs):
-        logger.info(request=request,message="user logout")
-        return Response({'message':'successful logout'},status=status.HTTP_200_OK)
+        logger.info(request=request, message="user logout")
+        return Response({"message": "successful logout"}, status=status.HTTP_200_OK)
+
 
 class UserChangePassword(generics.UpdateAPIView):
     serializer_class = ChangePasswordSerializer
-    authentication_classes = [TokenAuthentication,]
-    
+    authentication_classes = [
+        TokenAuthentication,
+    ]
+
     def update(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         is_valid = serializer.is_valid()
-    
-        if request.data.get('old_password') == request.data.get('new_password1'):
+
+        if request.data.get("old_password") == request.data.get("new_password1"):
             is_valid = False
             error_message = "The old password cannot be the same as the new password."
-            logger.warning(request=request,message="Password Change Failed",warning= error_message)
-            return Response({"Error":error_message}, status=status.HTTP_400_BAD_REQUEST)
+            logger.warning(
+                request=request, message="Password Change Failed", warning=error_message
+            )
+            return Response(
+                {"Error": error_message}, status=status.HTTP_400_BAD_REQUEST
+            )
         elif serializer.is_valid():
             user = serializer.save()
-            logger.info(request=request,message="Password Change Successful")
+            logger.info(request=request, message="Password Change Successful")
             return Response(
                 {
                     "status": status.HTTP_200_OK,
@@ -152,8 +183,10 @@ class UserChangePassword(generics.UpdateAPIView):
                     "data": [],
                 }
             )
-        
-        logger.warning(request=request,message="Password Change Failed",warning=serializer.errors)
+
+        logger.warning(
+            request=request, message="Password Change Failed", warning=serializer.errors
+        )
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -170,36 +203,42 @@ class UserChangePassword(generics.UpdateAPIView):
 
 class ForgetPassword(generics.GenericAPIView):
     serializer_class = ForgetPasswordSerializer
-    permission_classes =[AllowAny]
+    permission_classes = [AllowAny]
+
     def post(self, request):
         serializer = self.serializer_class(data=request.data)
         if serializer.is_valid(raise_exception=True):
             serializer.save()
-            logger.info(request=request,message="Email sending to user is successful")
+            logger.info(request=request, message="Email sending to user is successful")
             return Response(serializer.data, status=status.HTTP_200_OK)
-        logger.warning(request=request,message="Email sending to user is failed",warning=serializer.errors)
+        logger.warning(
+            request=request,
+            message="Email sending to user is failed",
+            warning=serializer.errors,
+        )
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class ResetForgetPassword(generics.GenericAPIView):
     serializer_class = ResetNewPasswordSerializer
-    permission_classes =[AllowAny]
-    def post(self,request, *args, **kwargs):
+    permission_classes = [AllowAny]
+
+    def post(self, request, *args, **kwargs):
         serializer = self.serializer_class(data=request.data)
         if serializer.is_valid(raise_exception=True):
             serializer.save(kwargs)
-            logger.info(request=request,message="Password reset successful")
+            logger.info(request=request, message="Password reset successful")
             return Response(serializer.data, status=status.HTTP_200_OK)
-        logger.warning(request=request,message="Password reser failed",warning=serializer.errors)
+        logger.warning(
+            request=request, message="Password reser failed", warning=serializer.errors
+        )
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
 
 
 class UserConfirmEmailView(AtomicMixin, GenericAPIView):
     serializer_class = None
     authentication_classes = ()
-    
+
     def get(self, request, activation_key):
         """
         View for confirm email.
@@ -224,16 +263,17 @@ class UserEmailConfirmationStatusView(generics.GenericAPIView):
         return Response({"status": user.confirmed_email}, status=status.HTTP_200_OK)
 
 
-
 from .serializers import SocialLoginSerializer
 
 
 class FacebookLogin(SocialLoginView):
     adapter_class = FacebookOAuth2Adapter
     serializer_class = SocialLoginSerializer
-    
+
+
 class GoogleLogin(SocialLoginView):
     adapter_class = GoogleOAuth2Adapter
+
 
 class GitHubLogin(SocialLoginView):
     adapter_class = GitHubOAuth2Adapter
@@ -243,11 +283,12 @@ class GitHubLogin(SocialLoginView):
     def callback_url(self):
         # use the same callback url as defined in your GitHub app, this url must
         # be absolute:
-        return self.request.build_absolute_uri(reverse('github_callback'))
+        return self.request.build_absolute_uri(reverse("github_callback"))
+
 
 import urllib.parse
 
 
 def github_callback(request):
     params = urllib.parse.urlencode(request.GET)
-    return redirect(f'https://localhost:8000/auth/github?{params}')
+    return redirect(f"https://localhost:8000/auth/github?{params}")
