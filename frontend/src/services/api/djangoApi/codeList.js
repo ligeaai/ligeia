@@ -19,7 +19,6 @@ export const getParentCodeList = async (CULTURE) => {
 
 export const getChildCodeList = async (LIST_TYPE, CULTURE) => {
     const body = JSON.stringify({ CULTURE, LIST_TYPE });
-    console.log(body);
     try {
         let res = await instance
             .post(
@@ -27,6 +26,7 @@ export const getChildCodeList = async (LIST_TYPE, CULTURE) => {
                 body,
                 config
             )
+        console.log(res);
         return res;
 
     } catch (err) {
@@ -35,13 +35,14 @@ export const getChildCodeList = async (LIST_TYPE, CULTURE) => {
 }
 
 
-export const deleteCodeListChild = async (LIST_TYPE,
+export const deleteCodeList = async (LIST_TYPE,
     CULTURE,
     CODE,) => {
     const body = JSON.stringify({ LIST_TYPE, CULTURE, CODE });
+    console.log(body);
     try {
         let res = await instance
-            .delete(
+            .post(
                 "/code-list/delete/",
                 body,
                 config

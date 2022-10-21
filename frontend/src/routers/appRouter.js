@@ -22,7 +22,7 @@ import Start from "../pages/start/start";
 
 
 import Main from "../pages/main/main";
-
+import { Confirmation } from "../components";
 import ErrorMessage from "../components/errorMessage/errorMessage";
 
 const AppRouter1 = () => {
@@ -65,6 +65,7 @@ const AppRouter = () => {
   return (
     <HistoryRouter history={history}>
       <ErrorMessage Element={AppRouter1} />
+      <Confirmation />
     </HistoryRouter>
   );
 };

@@ -37,17 +37,17 @@ import {
 const TreeMenuItem = () => {
   const dispatch = useDispatch();
   const [selectedIndex, setSelectedIndex] = React.useState(0);
-  const codeListChildIndex = useSelector((state) => state.codeListChild.index);
+  const codeListChild = useSelector((state) => state.codeListChild);
   function RenderRow(props) {
     const { data, index, style } = props;
     useEffect(() => {
-      setSelectedIndex(codeListChildIndex);
+      setSelectedIndex(codeListChild.index);
       dispatch(
         setCodeListChild({
-          currentChild: data[codeListChildIndex].CODE,
+          currentChild: data[codeListChild.index].CODE,
         })
       );
-    }, [codeListChildIndex]);
+    }, [codeListChild.index]);
     useEffect(() => {
       dispatch(
         setLastItemIndex({
@@ -104,7 +104,7 @@ const TreeMenuItem = () => {
       dispatch(setLoaderFalse());
     };
     getData();
-  }, []);
+  }, [codeListChild.lastItem]);
   if (treeItem) {
     console.log(treeItem.data);
     return (

@@ -14,11 +14,12 @@ import TreeView from "./navigationComp/treeView";
 import { ItemSperatorLine, ItemSperatorLineXL, Items } from "./nestedMenu/nestedItems";
 import SearchBar from "./searchBar/searchBar";
 import SearchBarMobile from "./searchBar/searchBarMobile";
+import Confirmation from "./confirmation/confirmation"
 
 
 
 
 export {
-    ActionMenu, Breadcrumb, Cards, ComponentError, DateBreak, Drawer, ErrorBoundary, ErrorMessage, Loading, PropLinkTabs, SocialButton
+    ActionMenu, Breadcrumb, Cards, Confirmation, ComponentError, DateBreak, Drawer, ErrorBoundary, ErrorMessage, Loading, PropLinkTabs, SocialButton
     , TimeRangePicker, TreeView, ItemSperatorLine, ItemSperatorLineXL, Items, SearchBar, SearchBarMobile
 }
