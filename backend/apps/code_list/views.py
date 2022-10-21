@@ -51,16 +51,19 @@ class CodeListDetailView(generics.CreateAPIView):
     permission_classes = []
     def post(self, request, *args, **kwargs):
         try:
-            if request.data.get('PARENT'):
-                cache_key = "Parent - " + request.data.get("CULTURE")
-                queryset = code_list.objects.filter(LIST_TYPE = 'CODE_LIST',CULTURE = request.data.get('CULTURE'))
-            else:
-                cache_key = request.data.get('LIST_TYPE') + request.data.get("CULTURE")
-                queryset = code_list.objects.filter(LIST_TYPE = request.data.get('LIST_TYPE'),CULTURE = request.data.get('CULTURE'))
-            cache_data = Red.get(cache_key)
-            if cache_data:
-                return Response(cache_data,status=status.HTTP_200_OK)
+            cache_key = request.data.get('LIST_TYPE') + request.data.get("CULTURE")
+            queryset = code_list.objects.filter(LIST_TYPE = request.data.get('LIST_TYPE'),CULTURE = request.data.get('CULTURE'))
             serializer = CodeListDetailsSerializer(queryset, many=True)
+            for index in range(0,len(serializer.data)):
+                 item = serializer.data[index]
+                 for keys,value in item.items():
+                     if value is None or value == "NONE":
+                         serializer.data[index][keys] = ""
+
+               
+            # cache_data = Red.get(cache_key)
+            # if cache_data:
+            #     return Response(cache_data,status=status.HTTP_200_OK)
             cache_data = Red.set(cache_key,serializer.data)
             return Response(serializer.data,status=status.HTTP_200_OK)
         except Exception as e:
@@ -95,11 +98,43 @@ class CodeListUpdateView(generics.UpdateAPIView):
     
 
 class CodeListDeleteView(generics.DestroyAPIView):
-    serializer_class = CodeListSaveScriptSerializer
     permission_classes = [
         permissions.AllowAny
     ]
     def delete(self, request, *args, **kwargs):
-        qs = code_list.objects.filter(LIST_TYPE=request.data.get('LIST_TYPE'),CODE = request.data.get('CODE'),CULTURE = request.data.get('CULTURE')).delete()
+        print(len(request.data))
+        qs = code_list.objects.filter(LIST_TYPE=request.data.get('LIST_TYPE'),CODE = request.data.get('CODE'),CULTURE = request.data.get('CULTURE'))
+        if qs:
+            qs.delete()
+            return Response({'Message':'Successful Delete '},status=status.HTTP_200_OK)
+        else:
+            return Response({"Message":"data not found"},status=status.HTTP_400_BAD_REQUEST)
+        
 
-        return Response({'Message':'Successful Delete '},status=status.HTTP_200_OK)
+
+class CodeListDeepDetailView(generics.CreateAPIView):
+    permission_classes = [
+        permissions.AllowAny
+    ]
+    
+    def post(self, request, *args, **kwargs):
+        cache_key = request.data.get('LIST_TYPE') + request.data.get("CULTURE")
+        queryset = code_list.objects.filter(LIST_TYPE = request.data.get('LIST_TYPE'),CULTURE = request.data.get('CULTURE'))
+        serializer = CodeListDetailsSerializer(queryset, many=True)
+        for index in range(0,len(serializer.data)):
+            self._get_child(serializer.data[index])
+        return Response(serializer.data,status=status.HTTP_200_OK)
+    
+    def _get_child(self,data):
+        queryset = code_list.objects.filter(LIST_TYPE = data.get('CODE'),CULTURE = data.get('CULTURE'))
+        serializer = CodeListDetailsSerializer(queryset, many=True)
+        data['CHILD'] = serializer.data
+        for index in serializer.data:
+            tempt = index
+            self._get_child(tempt)
+        return data
+        
+
+
+
+    
