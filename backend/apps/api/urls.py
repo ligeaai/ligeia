@@ -8,5 +8,6 @@ urlpatterns = [
     path("code-list/", include("apps.code_list.urls")),
     path("resource-list/", include("apps.resource_list.urls")),
     path("item/", include("apps.item.urls")),
+    path("layer/", include("apps.layer.urls")),
     path("item-property/", include("apps.item_property.urls")),
 ]

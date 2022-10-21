@@ -16,6 +16,7 @@ def import_data(data):
         "RESOURCE_LIST":"resource-list",
         "ITEM_PROPERTY":"item-property",
         "ITEM":"item",
+        "LAYER":"layer",
     }
     base_url = "http://localhost:8000/api/v1/"+urlDict.get(data)+"/save/"
     _create_method(base_url,data)
