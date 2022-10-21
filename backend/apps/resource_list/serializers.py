@@ -8,7 +8,7 @@ from .models import resource_list
 class ResourceListSaveSerializer(serializers.ModelSerializer):
     class Meta:
         model = resource_list
-        fields = '__all__'
+        fields = "__all__"
 
     # def create(self, validated_data):
     #         validated_data['VERSION'] = uuid.uuid4().hex
@@ -17,12 +17,14 @@ class ResourceListSaveSerializer(serializers.ModelSerializer):
     #         user.save()
     #         return user
 
+
 class ResourceListDetailsSerializer(serializers.ModelSerializer):
     class Meta:
         model = resource_list
-        fields = '__all__'
+        fields = "__all__"
+
 
 class ResourceListSerializer(serializers.ModelSerializer):
     class Meta:
         model = resource_list
-        fields = ['CULTURE','SHORT_LABEL']
+        fields = ["CULTURE", "SHORT_LABEL"]
