@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import {
@@ -13,31 +13,48 @@ import { FixedSizeList } from "react-window";
 
 import Main from "../../../../layout/main/main";
 import {
-  Breadcrumb,
   ActionMenu,
-  PropLinkTabs,
+  Breadcrumb,
   ItemSperatorLineXL,
-  DateBreak,
   ComponentError,
+  PropLinkTabs,
 } from "../../../../components";
 import DrawerMenu from "../../../../layout/main/asset/treeViewMenu";
 
-import { loadCompanyName } from "../../../../services/api/couchApi/company";
-
+import ChildCodeList from "./childCodeList";
 import AutoSizer from "react-virtualized-auto-sizer";
 import {
   setLoaderFalse,
   setLoaderTrue,
 } from "../../../../services/actions/loader";
-import Properties from "./properties";
+import { getParentCodeList } from "../../../../services/api/djangoApi/codeList";
+import {
+  setCodeListChild,
+  setIndex,
+  setLastItemIndex,
+} from "../../../../services/reducers/codeListChildReducer";
 
 const TreeMenuItem = () => {
+  const dispatch = useDispatch();
   const [selectedIndex, setSelectedIndex] = React.useState(0);
+  const codeListChildIndex = useSelector((state) => state.codeListChild.index);
   function RenderRow(props) {
     const { data, index, style } = props;
-    const handleListItemClick = (event, index) => {
-      setSelectedIndex(index);
-    };
+    useEffect(() => {
+      setSelectedIndex(codeListChildIndex);
+      dispatch(
+        setCodeListChild({
+          currentChild: data[codeListChildIndex].CODE,
+        })
+      );
+    }, [codeListChildIndex]);
+    useEffect(() => {
+      dispatch(
+        setLastItemIndex({
+          lastItem: data.length,
+        })
+      );
+    }, []);
     return (
       <ListItem
         style={style}
@@ -52,31 +69,44 @@ const TreeMenuItem = () => {
       >
         <ListItemButton
           selected={selectedIndex === index}
-          onClick={(event) => handleListItemClick(event, index)}
+          onClick={(event) => {
+            dispatch(
+              setIndex({
+                index: index,
+              })
+            );
+          }}
         >
           <ListItemText
-            primary={`${data[index].name}`}
+            primary={`${data[index].CODE_TEXT}`}
             sx={{
-              span: { fontSize: "12px" },
+              span: {
+                fontSize: "12px",
+                overflow: "hidden",
+                whiteSpace: "nowrap",
+                textOverflow: "ellipsis",
+              },
             }}
           />
         </ListItemButton>
       </ListItem>
     );
   }
-  const dispatch = useDispatch();
+
   const isFullScreen = useSelector((state) => state.fullScreen.isFullScreen);
+  const culture = useSelector((state) => state.lang.cultur);
   const [treeItem, setTreeItem] = React.useState(false);
   React.useEffect(() => {
     dispatch(setLoaderTrue());
     const getData = async () => {
-      let data = await loadCompanyName();
+      let data = await getParentCodeList(culture);
       setTreeItem(data);
       dispatch(setLoaderFalse());
     };
     getData();
   }, []);
   if (treeItem) {
+    console.log(treeItem.data);
     return (
       <Box
         sx={{
@@ -91,8 +121,10 @@ const TreeMenuItem = () => {
               height={height}
               width={width}
               itemSize={35}
-              itemCount={Object.keys(treeItem.data.companies).length}
-              itemData={treeItem.data.companies}
+              itemCount={treeItem.data.length}
+              itemData={treeItem.data.sort((a, b) =>
+                a.CODE_TEXT > b.CODE_TEXT ? 1 : -1
+              )}
               overscanCount={5}
             >
               {RenderRow}
@@ -104,8 +136,9 @@ const TreeMenuItem = () => {
   }
 };
 
-const UnitOneBody = (type) => {
+const CodeListBody = () => {
   const isFullScreen = useSelector((state) => state.fullScreen.isFullScreen);
+
   return (
     <Grid
       container
@@ -142,39 +175,15 @@ const UnitOneBody = (type) => {
               borderTopRightRadius: "3px",
             }}
           >
-            <Box sx={{ ml: 3 }}>
+            <Box sx={{ ml: 2.5 }}>
               <Breadcrumb />
             </Box>
           </Grid>
           <ItemSperatorLineXL />
-          <Grid
-            item
-            sx={{
-              mx: 1.5,
-              backgroundColor: "myBackgroundColor",
-              height: "42px",
-            }}
-          >
-            <DateBreak />
-          </Grid>
-          <ItemSperatorLineXL />
-          <Grid
-            item
-            sx={{
-              mx: 1.5,
-              backgroundColor: "myBackgroundColor",
-              height: "42px",
-              display: "flex",
-              alignItems: "center",
-            }}
-          >
-            <ActionMenu />
-          </Grid>
-          <ItemSperatorLineXL />
           <Grid item xs={12}>
-            <PropLinkTabs
-              MyProperties={<Properties type={type}></Properties>}
-            />
+            <ComponentError errMsg="Error">
+              <PropLinkTabs MyProperties={<ChildCodeList />} />
+            </ComponentError>
           </Grid>
         </Grid>
       </Grid>
@@ -182,9 +191,8 @@ const UnitOneBody = (type) => {
   );
 };
 
-const UnitOne = (props) => {
-  const { type } = props;
-  return <Main Element={UnitOneBody(type)} delSearchBar={true} />;
+const CodeList = () => {
+  return <Main Element={CodeListBody()} delSearchBar={true} />;
 };
 
-export default UnitOne;
+export default CodeList;

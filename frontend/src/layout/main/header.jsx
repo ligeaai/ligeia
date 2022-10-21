@@ -113,7 +113,7 @@ const Header = (props) => {
         <Grid item>
           <Grid container spacing={2.5} alignItems="center">
             <Grid item>
-              {drawerIsOpen ? (
+              {!drawerIsOpen ? (
                 <MenuIcon
                   sx={{
                     mx: "9px",

@@ -11,17 +11,25 @@ import ArrowCircleRightOutlinedIcon from "@mui/icons-material/ArrowCircleRightOu
 
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 
-const icons = [
-  { Icon: AddBoxOutlinedIcon, tooltip: "New" },
-  { Icon: AddToPhotosOutlinedIcon, tooltip: "Duplicate" },
-  { Icon: SaveOutlinedIcon, tooltip: "Save" },
-  { Icon: DeleteOutlineIcon, tooltip: "Delete" },
-  { Icon: ArrowCircleLeftOutlinedIcon, tooltip: "Save, Go Previous" },
-  { Icon: ArrowCircleRightOutlinedIcon, tooltip: "Save, Go Next" },
-  { Icon: InfoOutlinedIcon, tooltip: "Item Info" },
-];
-
-const actionIcon = () => {
+const actionIcon = (props) => {
+  const { deleteChild, saveGoPrev, saveGoNext } = props;
+  const icons = [
+    { Icon: AddBoxOutlinedIcon, tooltip: "New" },
+    { Icon: AddToPhotosOutlinedIcon, tooltip: "Duplicate" },
+    { Icon: SaveOutlinedIcon, tooltip: "Save" },
+    { Icon: DeleteOutlineIcon, tooltip: "Delete", function: deleteChild },
+    {
+      Icon: ArrowCircleLeftOutlinedIcon,
+      tooltip: "Save, Go Previous",
+      function: saveGoPrev,
+    },
+    {
+      Icon: ArrowCircleRightOutlinedIcon,
+      tooltip: "Save, Go Next",
+      function: saveGoNext,
+    },
+    { Icon: InfoOutlinedIcon, tooltip: "Item Info" },
+  ];
   return (
     <Grid container sx={{ alignItems: "center" }}>
       {icons.map((Element, key) => (
@@ -32,7 +40,11 @@ const actionIcon = () => {
             tooltip: { sx: { backgroundColor: "primary.dark" } },
           }}
         >
-          <IconButton>
+          <IconButton
+            onClick={() => {
+              Element.function();
+            }}
+          >
             <Element.Icon fontSize="small" sx={{ color: "#4B4B4B" }} />
           </IconButton>
         </Tooltip>

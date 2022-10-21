@@ -5,6 +5,7 @@ import logger from 'redux-logger'
 import {
     authReducer,
     codelistReducer,
+    codeListChildReducer,
     drawerReducer,
     errorReducer,
     fullScreenReducer,
@@ -21,6 +22,7 @@ export default configureStore({
     reducer: {
         auth: authReducer,
         codelist: codelistReducer,
+        codeListChild: codeListChildReducer,
         drawer: drawerReducer,
         error: errorReducer,
         fullScreen: fullScreenReducer,

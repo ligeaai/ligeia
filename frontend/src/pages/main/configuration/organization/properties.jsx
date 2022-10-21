@@ -1,54 +1,42 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import {
   Box,
   Grid,
   Checkbox,
   TextField,
-  InputLabel,
   MenuItem,
   FormControl,
   Select,
 } from "@mui/material";
-import { ItemSperatorLine } from "../../../../components";
 import { grey } from "@mui/material/colors";
-import { DataGrid, GridToolbar } from "@mui/x-data-grid";
-import { useDispatch } from "react-redux";
+import {
+  DataGrid,
+  GridToolbarContainer,
+  GridToolbarColumnsButton,
+  GridToolbarFilterButton,
+  GridToolbarExport,
+  GridToolbarDensitySelector,
+} from "@mui/x-data-grid";
+
 import {
   setLoaderTrue,
   setLoaderFalse,
 } from "../../../../services/actions/loader";
 import { loadType } from "../../../../services/api/type/type";
 
-import SearchIcon from "@mui/icons-material/Search";
-import AddIcon from "@mui/icons-material/Add";
-import MenuIcon from "@mui/icons-material/Menu";
-import TuneOutlinedIcon from "@mui/icons-material/TuneOutlined";
-import FileDownloadOutlinedIcon from "@mui/icons-material/FileDownloadOutlined";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 
 import { ComponentError } from "../../../../components";
-import history from "../../../../routers/history";
+
 import MyTextField from "./myTextField";
 import {
   setValue,
   changeValue,
 } from "../../../../services/reducers/typeReducer";
 import { setTextValue } from "../../../../services/reducers/typeTextReducer";
-const SeperatorLineVertical = () => {
-  return (
-    <Box
-      sx={{
-        height: "26px",
-        width: "2px",
-        backgroundColor: "#4B4B4B",
-        marginX: "2px",
-      }}
-    />
-  );
-};
 
 const DataGridDemo = ({ type }) => {
   const dispatch = useDispatch();
@@ -80,7 +68,6 @@ const DataGridDemo = ({ type }) => {
     {
       field: "MANDATORY",
       headerName: "Mandatory",
-      type: "boolean",
       renderCell: (params) => {
         return <Checkbox disabled checked={params.row.MANDATORY === "True"} />;
       },
@@ -234,17 +221,29 @@ const DataGridDemo = ({ type }) => {
     getData();
   }, [type]);
 
+  function CustomToolbar() {
+    return (
+      <GridToolbarContainer>
+        <GridToolbarFilterButton />
+        <GridToolbarColumnsButton />
+        <GridToolbarDensitySelector />
+        <GridToolbarExport />
+      </GridToolbarContainer>
+    );
+  }
+
   if (rows) {
     return (
       <Box
         sx={{
           width: "674px",
           minHeight: "calc(500px - 50px - 36px - 32px - 42px)",
-          height: "calc(100vh - 60px - 4px - 50px - 36px - 32px - 42px)",
+          height: "calc(100vh - 60px - 50px - 36px - 32px - 42px)",
           "& .super-app-theme--cell": {
             backgroundColor: grey[200],
           },
           button: { color: "#4B4B4B" },
+          my: 0.5,
         }}
       >
         <DataGrid
@@ -268,29 +267,12 @@ const DataGridDemo = ({ type }) => {
           ])}
           columns={columns}
           hideFooter={true}
-          components={{ Toolbar: GridToolbar }}
+          components={{ Toolbar: CustomToolbar }}
           getRowId={(row) => row.LABEL_ID}
-          sx={{}}
         />
       </Box>
     );
   }
-};
-
-const FilterBox = () => {
-  return (
-    <Grid container sx={{ alignItems: "center", mt: 1 }}>
-      <SearchIcon />
-      <AddIcon />
-      <SeperatorLineVertical />
-      <MenuIcon />
-      <MenuIcon />
-      <MenuIcon fontSize="small" />
-      <SeperatorLineVertical />
-      <TuneOutlinedIcon />
-      <FileDownloadOutlinedIcon />
-    </Grid>
-  );
 };
 
 const properties = ({ type }) => {
@@ -306,12 +288,6 @@ const properties = ({ type }) => {
         borderRadius: "3px",
       }}
     >
-      <Grid container sx={{ justifyContent: "flex-end" }}>
-        <Grid item>
-          <FilterBox />
-        </Grid>
-      </Grid>
-      <ItemSperatorLine />
       <Grid container sx={{ pl: 0.5 }}>
         <Grid item xs={12} md={7}>
           <ComponentError errMsg="Table could not be loaded">

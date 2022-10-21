@@ -18,7 +18,7 @@ const Drawer = (props) => {
       onMouseEnter={() => dispatch(mouseEnterDrawer())}
       onMouseLeave={() => dispatch(mouseLeaveDrawer())}
       sx={{
-        minWidth: "68px",
+        minWidth: isOpen ? "200px" : "68px",
         minHeight: "calc(100vh - 60px - 8px)",
         height: "500px",
         overflowY: "auto",

@@ -1,5 +1,6 @@
 import authReducer from './authReducer';
 import codelistReducer from './codelistReducer';
+import codeListChildReducer from './codeListChildReducer';
 import drawerReducer from './drawerReducer';
 import errorReducer from './errorReducer';
 import fullScreenReducer from './fullScreenReducer';
@@ -13,6 +14,6 @@ import typeTextReducer from './typeTextReducer';
 
 
 export {
-    authReducer, codelistReducer, drawerReducer, errorReducer, fullScreenReducer,
+    authReducer, codelistReducer, codeListChildReducer, drawerReducer, errorReducer, fullScreenReducer,
     langReducer, loaderReducer, registerFormReducer, searchBarReducer, themeReducer, typeReducer, typeTextReducer
 };
