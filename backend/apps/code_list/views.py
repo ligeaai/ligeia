@@ -27,12 +27,8 @@ class CodeListSaveScriptView(generics.CreateAPIView):
     #     self.perform_create(serializer)
     #     headers = self.get_success_headers(serializer.data)
     #     return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
-
-
-
     
 class CodeListView(generics.ListAPIView):
-
     serializer_class = CodeListSaveSerializer
     permission_classes = [
         permissions.AllowAny
@@ -42,10 +38,7 @@ class CodeListView(generics.ListAPIView):
         typeAddData.import_data("CODE_LIST")
         return Response({"Message":'successful'}, status=status.HTTP_200_OK)
 
-
 class CodeListDetailView(generics.CreateAPIView):
-
-  
     serializer_class = CodeListDetailsSerializer
     authentication_classes = []
     permission_classes = []
@@ -96,7 +89,6 @@ class CodeListUpdateView(generics.UpdateAPIView):
 
         return Response({'Message':'Successful Update '},status=status.HTTP_200_OK)
     
-
 class CodeListDeleteView(generics.DestroyAPIView):
     permission_classes = [
         permissions.AllowAny
@@ -110,8 +102,6 @@ class CodeListDeleteView(generics.DestroyAPIView):
         else:
             return Response({"Message":"data not found"},status=status.HTTP_400_BAD_REQUEST)
         
-
-
 class CodeListDeepDetailView(generics.CreateAPIView):
     permission_classes = [
         permissions.AllowAny
