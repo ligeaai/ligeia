@@ -26,7 +26,6 @@ export const getChildCodeList = async (LIST_TYPE, CULTURE) => {
                 body,
                 config
             )
-        console.log(res);
         return res;
 
     } catch (err) {

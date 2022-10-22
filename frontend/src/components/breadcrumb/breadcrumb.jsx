@@ -1,10 +1,12 @@
 import React from "react";
+import { useParams } from "react-router-dom";
 import { Breadcrumbs as MUIBreadcrumbs, Typography } from "@mui/material";
 import HomeIcon from "@mui/icons-material/Home";
 import history from "../../routers/history";
 
 const Breadcrumbs = () => {
-  const pathnames = window.location.pathname.split("/").filter((x) => x);
+  var pathnames = window.location.pathname.split("/").filter((x) => x);
+  const { params } = useParams(); //  important for updating breadcrumb
   return (
     <MUIBreadcrumbs
       aria-label="breadcrumb"

@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, Navigate } from "react-router-dom";
 import { unstable_HistoryRouter as HistoryRouter } from "react-router-dom";
 
 import history from "./history";
@@ -41,7 +41,8 @@ const AppRouter1 = () => {
           <Route path="/configuration/organization/org_unit_two" element={<Company type="ORG_UNIT2" />} />
           <Route path="/configuration/organization/org_unit_tree" element={<Company type="ORG_UNIT3" />} />
           <Route path="/configuration/organization/org_unit_four" element={<Company type="ORG_UNIT4" />} />
-          <Route path="/configuration/initialize/code_list_editor" element={<CodeList />} />
+          <Route exact path="/configuration/initialize/code_list_editor/:codelist" element={<CodeList />} />
+          <Route path="/configuration/initialize/code_list_editor" element={<Navigate to="/configuration/initialize/code_list_editor/loading" />} />
         </Route>
         <Route exact path="/" element={<PublicRoute />}>
           <Route exact path="/home" element={<Start />} />

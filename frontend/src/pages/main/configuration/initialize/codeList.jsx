@@ -37,6 +37,7 @@ import {
 
 import { deleteCodeList } from "../../../../services/api/djangoApi/codeList";
 import { setConfirmation } from "../../../../services/reducers/confirmation";
+import history from "../../../../routers/history";
 const TreeMenuItem = () => {
   const dispatch = useDispatch();
   const [selectedIndex, setSelectedIndex] = React.useState(0);
@@ -44,6 +45,7 @@ const TreeMenuItem = () => {
   function RenderRow(props) {
     const { data, index, style } = props;
     useEffect(() => {
+      history.push(`${codeListChild.currentChild.toLowerCase()}`);
       setSelectedIndex(codeListChild.index);
       dispatch(
         setCodeListChild({
@@ -109,7 +111,6 @@ const TreeMenuItem = () => {
     getData();
   }, [codeListChild.lastItem]);
   if (treeItem) {
-    console.log(treeItem.data);
     return (
       <Box
         sx={{

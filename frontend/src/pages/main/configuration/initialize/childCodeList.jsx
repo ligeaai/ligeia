@@ -26,7 +26,6 @@ import {
   deleteCodeList,
 } from "../../../../services/api/djangoApi/codeList";
 import { setConfirmation } from "../../../../services/reducers/confirmation";
-
 const DataGridDemo = () => {
   const dispatch = useDispatch();
   const culture = useSelector((state) => state.lang.cultur);
