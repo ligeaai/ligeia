@@ -34,6 +34,8 @@ import {
   setLastItemIndex,
 } from "../../../../services/reducers/codeListChildReducer";
 
+import { deleteCodeList } from "../../../../services/api/djangoApi/codeList";
+import { setConfirmation } from "../../../../services/reducers/confirmation";
 const TreeMenuItem = () => {
   const dispatch = useDispatch();
   const [selectedIndex, setSelectedIndex] = React.useState(0);
@@ -137,7 +139,39 @@ const TreeMenuItem = () => {
 };
 
 const CodeListBody = () => {
+  const dispatch = useDispatch();
   const isFullScreen = useSelector((state) => state.fullScreen.isFullScreen);
+  const codeListChild = useSelector((state) => state.codeListChild);
+  const culture = useSelector((state) => state.lang.cultur);
+  const saveGoPrev = () => {
+    dispatch(
+      setIndex({
+        index: codeListChild.index - 1,
+      })
+    );
+  };
+  const saveGoNext = () => {
+    dispatch(
+      setIndex({
+        index: codeListChild.index + 1,
+      })
+    );
+  };
+  const deleteParentAgreeFunc = async () => {
+    dispatch(setLoaderTrue);
+    deleteCodeList("CODE_LIST", culture, codeListChild.currentChild);
+    dispatch(setLastItemIndex(codeListChild.lastItem - 1));
+    dispatch(setLoaderFalse);
+  };
+  const deleteParent = async () => {
+    dispatch(
+      setConfirmation({
+        title: "Are you sure you want to delete this code list?",
+        body: "here will come the code list",
+        agreefunction: deleteParentAgreeFunc,
+      })
+    );
+  };
 
   return (
     <Grid
@@ -151,7 +185,6 @@ const CodeListBody = () => {
       <ComponentError errMsg="Error">
         <DrawerMenu Element={TreeMenuItem()} />
       </ComponentError>
-
       <Grid
         item
         xs={12}
@@ -179,6 +212,14 @@ const CodeListBody = () => {
               <Breadcrumb />
             </Box>
           </Grid>
+          <ItemSperatorLineXL />
+          <Box sx={{ ml: 2 }}>
+            <ActionMenu
+              saveGoPrev={saveGoPrev}
+              saveGoNext={saveGoNext}
+              deleteParent={deleteParent}
+            />
+          </Box>
           <ItemSperatorLineXL />
           <Grid item xs={12}>
             <ComponentError errMsg="Error">

@@ -2,7 +2,7 @@ import { instance, config } from "../../baseApi";
 
 
 export const getParentCodeList = async (CULTURE) => {
-    const body = JSON.stringify({ CULTURE, PARENT: "True" });
+    const body = JSON.stringify({ CULTURE, LIST_TYPE: "CODE_LIST" });
     try {
         let res = await instance
             .post(

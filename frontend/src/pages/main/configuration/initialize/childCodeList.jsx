@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Box, Grid } from "@mui/material";
+import { Box, Grid, IconButton, Tooltip } from "@mui/material";
 import { grey } from "@mui/material/colors";
 import {
   DataGrid,
@@ -12,6 +12,9 @@ import {
 } from "@mui/x-data-grid";
 import { styled } from "@mui/material/styles";
 
+import AddBoxIcon from "@mui/icons-material/AddBox";
+import DeleteIcon from "@mui/icons-material/Delete";
+
 import {
   setLoaderTrue,
   setLoaderFalse,
@@ -20,9 +23,6 @@ import {
   getChildCodeList,
   deleteCodeList,
 } from "../../../../services/api/djangoApi/codeList";
-import { ActionMenu } from "../../../../components";
-import { setIndex } from "../../../../services/reducers/codeListChildReducer";
-import { setLastItemIndex } from "../../../../services/reducers/codeListChildReducer";
 import { setConfirmation } from "../../../../services/reducers/confirmation";
 
 const DataGridDemo = () => {
@@ -39,20 +39,6 @@ const DataGridDemo = () => {
       cellClassName: "super-app-theme--cell",
     },
   ];
-  const saveGoPrev = () => {
-    dispatch(
-      setIndex({
-        index: codeListChild.index - 1,
-      })
-    );
-  };
-  const saveGoNext = () => {
-    dispatch(
-      setIndex({
-        index: codeListChild.index + 1,
-      })
-    );
-  };
   const deleteChildAgreeFunc = async () => {
     dispatch(setLoaderTrue);
     setCheckboxSelection([]);
@@ -66,22 +52,6 @@ const DataGridDemo = () => {
     setRows(data);
 
     dispatch(setLoaderFalse);
-  };
-  const deleteParentAgreeFunc = async () => {
-    dispatch(setLoaderTrue);
-    setCheckboxSelection([]);
-    deleteCodeList("CODE_LIST", culture, codeListChild.currentChild);
-    dispatch(setLastItemIndex(codeListChild.lastItem - 1));
-    dispatch(setLoaderFalse);
-  };
-  const deleteParent = async () => {
-    dispatch(
-      setConfirmation({
-        title: "Are you sure you want to delete this code list?",
-        body: "here will come the code list",
-        agreefunction: deleteParentAgreeFunc,
-      })
-    );
   };
   const deleteChild = () => {
     dispatch(
@@ -181,18 +151,46 @@ const DataGridDemo = () => {
           container
           sx={{ alignItems: "center", justifyContent: "space-between" }}
         >
-          <Grid item>
-            <GridToolbarFilterButton />
-            <GridToolbarColumnsButton />
-            <GridToolbarDensitySelector />
-            <GridToolbarExport />
-          </Grid>
-          <Grid item>
-            <ActionMenu
-              saveGoPrev={saveGoPrev}
-              saveGoNext={saveGoNext}
-              deleteChild={deleteChild}
-              deleteParent={deleteParent}
+          <Grid item sx={{ alignItems: "center", displat: "flex" }}>
+            <Tooltip
+              title={"Add Child"}
+              componentsProps={{
+                tooltip: { sx: { backgroundColor: "primary.dark" } },
+              }}
+            >
+              <IconButton onClick={() => {}}>
+                <AddBoxIcon fontSize="small" sx={{ color: "#4B4B4B" }} />
+              </IconButton>
+            </Tooltip>
+            <Tooltip
+              title={"Delete Child"}
+              componentsProps={{
+                tooltip: { sx: { backgroundColor: "primary.dark" } },
+              }}
+            >
+              <IconButton onClick={deleteChild}>
+                <DeleteIcon fontSize="small" sx={{ color: "#4B4B4B" }} />
+              </IconButton>
+            </Tooltip>
+            <GridToolbarFilterButton
+              sx={{
+                color: "#4B4B4B",
+              }}
+            />
+            <GridToolbarColumnsButton
+              sx={{
+                color: "#4B4B4B",
+              }}
+            />
+            <GridToolbarDensitySelector
+              sx={{
+                color: "#4B4B4B",
+              }}
+            />
+            <GridToolbarExport
+              sx={{
+                color: "#4B4B4B",
+              }}
             />
           </Grid>
         </Grid>
@@ -205,12 +203,11 @@ const DataGridDemo = () => {
       <Box
         sx={{
           width: "874px",
-          minHeight: "calc(500px - 36px - 16px - 8px)",
-          height: "calc(100vh - 60px - 36px - 16px - 8px)",
+          minHeight: "calc(500px - 36px - 16px - 40px)",
+          height: "calc(100vh - 60px - 36px - 16px - 44px)",
           "& .super-app-theme--cell": {
             backgroundColor: grey[200],
           },
-          button: { color: "#4B4B4B" },
           m: 0.5,
         }}
       >

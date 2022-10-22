@@ -5,7 +5,7 @@ export const loadCompanyName = async () => {
     try {
         let res = await instance
             .get(
-                "/companys/174bef3d5b000c9b243a2c35cd0027ec",
+                "/companys/f9f355714e5c5115ad4e0bc943001697",
                 config
             )
         return res;
