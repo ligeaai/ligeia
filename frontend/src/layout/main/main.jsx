@@ -5,7 +5,7 @@ import { Box, Button, Grid } from "@mui/material";
 import FullscreenExitIcon from "@mui/icons-material/FullscreenExit";
 import FullscreenIcon from "@mui/icons-material/Fullscreen";
 
-import { Drawer, ComponentError } from "../../components";
+import { Drawer, ComponentError, ComponentErrorBody } from "../../components";
 import Header from "./header";
 import { setIsFullScreen } from "../../services/reducers/fullScreenReducer";
 
@@ -60,9 +60,7 @@ const Main = (props) => {
                 },
               }}
             >
-              <ComponentError errMsg="Menu is temporarily disabled">
-                <Drawer navItems={navItems} />
-              </ComponentError>
+              <Drawer navItems={navItems} />
             </Grid>
             <Grid
               item

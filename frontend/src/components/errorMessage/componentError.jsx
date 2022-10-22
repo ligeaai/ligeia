@@ -7,12 +7,25 @@ export class ComponentError extends React.Component {
   }
 
   static getDerivedStateFromError(error) {
+    console.log(error);
     return { hasError: true };
   }
 
   render() {
     if (this.state.hasError) {
-      return <Box>{this.props.errMsg}</Box>;
+      return (
+        <Box
+          sx={{
+            width: "100%",
+            height: "100%",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          {this.props.errMsg}
+        </Box>
+      );
     }
 
     return this.props.children;

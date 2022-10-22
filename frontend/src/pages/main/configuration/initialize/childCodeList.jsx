@@ -11,9 +11,11 @@ import {
   GridToolbarDensitySelector,
 } from "@mui/x-data-grid";
 import { styled } from "@mui/material/styles";
-
+import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
 import AddBoxIcon from "@mui/icons-material/AddBox";
 import DeleteIcon from "@mui/icons-material/Delete";
+
+import { ComponentError, ComponentErrorBody } from "../../../../components";
 
 import {
   setLoaderTrue,
@@ -200,36 +202,47 @@ const DataGridDemo = () => {
 
   if (rows) {
     return (
-      <Box
-        sx={{
-          width: "874px",
-          minHeight: "calc(500px - 36px - 16px - 40px)",
-          height: "calc(100vh - 60px - 36px - 16px - 44px)",
-          "& .super-app-theme--cell": {
-            backgroundColor: grey[200],
-          },
-          m: 0.5,
+      <DataGrid
+        checkboxSelection={true}
+        rows={rows.data}
+        columns={columns}
+        hideFooter={true}
+        components={{
+          Toolbar: CustomToolbar,
+          NoRowsOverlay: CustomNoRowsOverlay,
         }}
-      >
-        <DataGrid
-          checkboxSelection={true}
-          rows={rows.data}
-          columns={columns}
-          hideFooter={true}
-          components={{
-            Toolbar: CustomToolbar,
-            NoRowsOverlay: CustomNoRowsOverlay,
-          }}
-          getRowId={(row) => row.CODE}
-          onSelectionModelChange={(rowId) => setCheckboxSelection(rowId)}
-        />
-      </Box>
+        getRowId={(row) => row.CODE}
+        onSelectionModelChange={(rowId) => setCheckboxSelection(rowId)}
+      />
     );
   }
 };
 
 const childCodeList = () => {
-  return <DataGridDemo />;
+  return (
+    <Box
+      sx={{
+        width: "874px",
+        minHeight: "calc(500px - 36px - 16px - 40px)",
+        height: "calc(100vh - 60px - 36px - 16px - 44px)",
+        "& .super-app-theme--cell": {
+          backgroundColor: grey[200],
+        },
+        m: 0.5,
+      }}
+    >
+      <ComponentError
+        errMsg={
+          <ComponentErrorBody
+            text="Something went wrong"
+            icon={<ErrorOutlineIcon />}
+          />
+        }
+      >
+        <DataGridDemo />
+      </ComponentError>
+    </Box>
+  );
 };
 
 export default childCodeList;

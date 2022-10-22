@@ -18,7 +18,7 @@ import {
   GridToolbarExport,
   GridToolbarDensitySelector,
 } from "@mui/x-data-grid";
-
+import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
 import {
   setLoaderTrue,
   setLoaderFalse,
@@ -29,7 +29,7 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 
-import { ComponentError } from "../../../../components";
+import { ComponentError, ComponentErrorBody } from "../../../../components";
 
 import MyTextField from "./myTextField";
 import {
@@ -234,43 +234,30 @@ const DataGridDemo = ({ type }) => {
 
   if (rows) {
     return (
-      <Box
-        sx={{
-          width: "674px",
-          minHeight: "calc(500px - 50px - 36px - 32px - 42px)",
-          height: "calc(100vh - 60px - 50px - 36px - 32px - 42px)",
-          "& .super-app-theme--cell": {
-            backgroundColor: grey[200],
+      <DataGrid
+        rows={rows.data.TYPE["TYPE PROPERTY COLUMNS"].BASETYPE.concat(
+          rows.data.TYPE["TYPE PROPERTY COLUMNS"].TYPE
+        ).concat([
+          {
+            PROPERTY_NAME: "",
+            CODE_LIST: null,
+            MANDATORY: "False",
+            LABEL_ID: "HISTORY",
+            PROP_GRP: "",
+            PROPERTY_TYPE: "HISTORY",
+            SORT_ORDER: "",
+            "RESOURCE-LIST": [
+              {
+                SHORT_LABEL: "",
+              },
+            ],
           },
-          button: { color: "#4B4B4B" },
-          my: 0.5,
-        }}
-      >
-        <DataGrid
-          rows={rows.data.TYPE["TYPE PROPERTY COLUMNS"].BASETYPE.concat(
-            rows.data.TYPE["TYPE PROPERTY COLUMNS"].TYPE
-          ).concat([
-            {
-              PROPERTY_NAME: "",
-              CODE_LIST: null,
-              MANDATORY: "False",
-              LABEL_ID: "HISTORY",
-              PROP_GRP: "",
-              PROPERTY_TYPE: "HISTORY",
-              SORT_ORDER: "",
-              "RESOURCE-LIST": [
-                {
-                  SHORT_LABEL: "",
-                },
-              ],
-            },
-          ])}
-          columns={columns}
-          hideFooter={true}
-          components={{ Toolbar: CustomToolbar }}
-          getRowId={(row) => row.LABEL_ID}
-        />
-      </Box>
+        ])}
+        columns={columns}
+        hideFooter={true}
+        components={{ Toolbar: CustomToolbar }}
+        getRowId={(row) => row.LABEL_ID}
+      />
     );
   }
 };
@@ -290,9 +277,32 @@ const properties = ({ type }) => {
     >
       <Grid container sx={{ pl: 0.5 }}>
         <Grid item xs={12} md={7}>
-          <ComponentError errMsg="Table could not be loaded">
-            <DataGridDemo type={type} />
-          </ComponentError>
+          <Box
+            sx={{
+              width: "674px",
+              minHeight: "calc(500px - 50px - 36px - 32px - 42px)",
+              height: "calc(100vh - 60px - 50px - 36px - 32px - 42px)",
+              "& .super-app-theme--cell": {
+                backgroundColor: grey[200],
+              },
+              button: { color: "#4B4B4B" },
+              my: 0.5,
+              border: "0.5px solid",
+              borderColor: grey[200],
+              borderRadius: "5px",
+            }}
+          >
+            <ComponentError
+              errMsg={
+                <ComponentErrorBody
+                  text="Something went wrong"
+                  icon={<ErrorOutlineIcon />}
+                />
+              }
+            >
+              <DataGridDemo type={type} />
+            </ComponentError>
+          </Box>
         </Grid>
       </Grid>
     </Box>

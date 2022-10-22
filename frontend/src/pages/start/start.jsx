@@ -26,7 +26,7 @@ const Element = () => {
             color: "#ffffff",
           }}
         >
-          Advancing AI for your assets
+          Advancing AI for your needs
         </Typography>
       </Grid>
     </Grid>

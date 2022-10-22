@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 
 import { FixedSizeList } from "react-window";
-
+import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
 import Main from "../../../../layout/main/main";
 import {
   ActionMenu,
@@ -18,6 +18,7 @@ import {
   ItemSperatorLineXL,
   ComponentError,
   PropLinkTabs,
+  ComponentErrorBody,
 } from "../../../../components";
 import DrawerMenu from "../../../../layout/main/asset/treeViewMenu";
 
@@ -138,6 +139,21 @@ const TreeMenuItem = () => {
   }
 };
 
+const TreeMenuItems = () => {
+  return (
+    <ComponentError
+      errMsg={
+        <ComponentErrorBody
+          text="Something went wrong"
+          icon={<ErrorOutlineIcon />}
+        />
+      }
+    >
+      <TreeMenuItem />
+    </ComponentError>
+  );
+};
+
 const CodeListBody = () => {
   const dispatch = useDispatch();
   const isFullScreen = useSelector((state) => state.fullScreen.isFullScreen);
@@ -182,9 +198,8 @@ const CodeListBody = () => {
         flexWrap: "nowrap",
       }}
     >
-      <ComponentError errMsg="Error">
-        <DrawerMenu Element={TreeMenuItem()} />
-      </ComponentError>
+      <DrawerMenu Element={<TreeMenuItems />} />
+
       <Grid
         item
         xs={12}

@@ -2,6 +2,7 @@ import ActionMenu from "./navigationComp/actionMenu";
 import Breadcrumb from "./breadcrumb/breadcrumb";
 import Cards from "./cardGenerator/cards";
 import { ComponentError } from "./errorMessage/componentError"
+import ComponentErrorBody from "./errorMessage/componentErrorBody";
 import DateBreak from "./navigationComp/dateBreak";
 import Drawer from "./drawer/drawer";
 import { ErrorBoundary } from "./errorMessage/errorBoundary"
@@ -20,6 +21,6 @@ import Confirmation from "./confirmation/confirmation"
 
 
 export {
-    ActionMenu, Breadcrumb, Cards, Confirmation, ComponentError, DateBreak, Drawer, ErrorBoundary, ErrorMessage, Loading, PropLinkTabs, SocialButton
+    ActionMenu, Breadcrumb, Cards, Confirmation, ComponentError, ComponentErrorBody, DateBreak, Drawer, ErrorBoundary, ErrorMessage, Loading, PropLinkTabs, SocialButton
     , TimeRangePicker, TreeView, ItemSperatorLine, ItemSperatorLineXL, Items, SearchBar, SearchBarMobile
 }

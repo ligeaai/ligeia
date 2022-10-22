@@ -6,8 +6,9 @@ import {
   mouseEnterDrawer,
   mouseLeaveDrawer,
 } from "../../services/reducers/drawerReducer";
-
+import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
 import App from "./app";
+import { ComponentError, ComponentErrorBody } from "../index";
 const Drawer = (props) => {
   const dispatch = useDispatch();
   const isOpen = useSelector((state) => state.drawer.isOpen);
@@ -49,7 +50,16 @@ const Drawer = (props) => {
         borderRadius: "3px",
       }}
     >
-      <App menu={navItems.data.drawerMenu} />
+      <ComponentError
+        errMsg={
+          <ComponentErrorBody
+            text="Something went wrong"
+            icon={<ErrorOutlineIcon />}
+          />
+        }
+      >
+        <App menu={navItems} />
+      </ComponentError>
     </Box>
   );
 };

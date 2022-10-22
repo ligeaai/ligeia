@@ -10,8 +10,8 @@ import { hasChildren } from "./utils";
 import history from "../../routers/history";
 
 export default function App({ menu }) {
-  return Object.keys(menu).map((item, key) => (
-    <MenuItem key={key} item={menu[item]} />
+  return Object.keys(menu.data.drawerMenu).map((item, key) => (
+    <MenuItem key={key} item={menu.data.drawerMenu[item]} />
   ));
 }
 

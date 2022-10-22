@@ -10,11 +10,12 @@ import {
 } from "@mui/material";
 
 import { FixedSizeList } from "react-window";
-
+import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
 import Main from "../../../../layout/main/main";
 import {
   Breadcrumb,
   ActionMenu,
+  ComponentErrorBody,
   PropLinkTabs,
   ItemSperatorLineXL,
   DateBreak,
@@ -78,28 +79,37 @@ const TreeMenuItem = () => {
   }, []);
   if (treeItem) {
     return (
-      <Box
-        sx={{
-          height: isFullScreen
-            ? "calc(100vh - 85px)"
-            : "calc(100vh - 85px - 60px)",
-        }}
+      <ComponentError
+        errMsg={
+          <ComponentErrorBody
+            text="Something went wrong"
+            icon={<ErrorOutlineIcon />}
+          />
+        }
       >
-        <AutoSizer>
-          {({ height, width }) => (
-            <FixedSizeList
-              height={height}
-              width={width}
-              itemSize={35}
-              itemCount={Object.keys(treeItem.data.companies).length}
-              itemData={treeItem.data.companies}
-              overscanCount={5}
-            >
-              {RenderRow}
-            </FixedSizeList>
-          )}
-        </AutoSizer>
-      </Box>
+        <Box
+          sx={{
+            height: isFullScreen
+              ? "calc(100vh - 85px)"
+              : "calc(100vh - 85px - 60px)",
+          }}
+        >
+          <AutoSizer>
+            {({ height, width }) => (
+              <FixedSizeList
+                height={height}
+                width={width}
+                itemSize={35}
+                itemCount={Object.keys(treeItem.data.companies).length}
+                itemData={treeItem.data.companies}
+                overscanCount={5}
+              >
+                {RenderRow}
+              </FixedSizeList>
+            )}
+          </AutoSizer>
+        </Box>
+      </ComponentError>
     );
   }
 };
@@ -115,9 +125,7 @@ const UnitOneBody = (type) => {
         flexWrap: "nowrap",
       }}
     >
-      <ComponentError errMsg="Error">
-        <DrawerMenu Element={TreeMenuItem()} />
-      </ComponentError>
+      <DrawerMenu Element={TreeMenuItem()} />
 
       <Grid
         item
