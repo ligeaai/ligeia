@@ -9,11 +9,11 @@ from utils.utils import redisCaching as Red
 from .models import layer
 from .serializers import LayerSaveSerializer
 
-
 class LayerSaveView(generics.CreateAPIView):
 
     serializer_class = LayerSaveSerializer
     permission_classes = [permissions.AllowAny]
+
 
 
 class LayerView(generics.ListAPIView):
@@ -25,3 +25,7 @@ class LayerView(generics.ListAPIView):
 
 
 # Create your views here.
+class LayerModelViewSet(generics.ListAPIView):
+    queryset = layer.objects.all()
+    serializer_class = LayerSaveSerializer
+    permission_classes = (permissions.AllowAny,)

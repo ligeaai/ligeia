@@ -1,8 +1,9 @@
 from django.db import models 
 import uuid 
 from django.utils import timezone 
+
 class item_property(models.Model): 
-	ITEM_ID=models.CharField(max_length=32,primary_key=True,null=False,db_index=True,)
+	ITEM_ID=models.CharField(max_length=32,primary_key=False,null=False,db_index=True,)
 	ITEM_TYPE=models.CharField(max_length=14,null=False,db_index=True,)
 	START_DATETIME=models.DateField(null=False,db_index=True,)
 	END_DATETIME=models.DateField(default=timezone.now,null=False,db_index=True,)

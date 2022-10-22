@@ -106,6 +106,7 @@ class CodeListUpdateView(generics.UpdateAPIView):
         return Response({"Message": "Successful Update "}, status=status.HTTP_200_OK)
 
 
+<<<<<<< Updated upstream
 class CodeListDeleteView(generics.DestroyAPIView):
     permission_classes = [permissions.AllowAny]
 
@@ -116,6 +117,16 @@ class CodeListDeleteView(generics.DestroyAPIView):
             CODE=request.data.get("CODE"),
             CULTURE=request.data.get("CULTURE"),
         )
+=======
+        return Response({'Message':'Successful Update '},status=status.HTTP_200_OK)
+    
+class CodeListDeleteView(generics.CreateAPIView):
+    permission_classes = [
+        permissions.AllowAny
+    ]
+    def post(self, request, *args, **kwargs):
+        qs = code_list.objects.filter(LIST_TYPE=request.data.get('LIST_TYPE'),CODE = request.data.get('CODE'),CULTURE = request.data.get('CULTURE'))
+>>>>>>> Stashed changes
         if qs:
             qs.delete()
             return Response(

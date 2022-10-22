@@ -27,6 +27,7 @@ class ItemPropertyDetailsSerializer(serializers.ModelSerializer):
 
 class ItemPropertyCustomSaveSerializer(serializers.Serializer):
     def create(self, validated_data):
+<<<<<<< Updated upstream
         valueTypeDict = {
             "TEXT": "PROPERTY_STRING",
             "BOOL": "PROPERTY_STRING",
@@ -59,3 +60,30 @@ class ItemPropertyCustomSaveSerializer(serializers.Serializer):
                     return_dict[keys] = temptDict
 
         return return_dict
+=======
+        temptDict = validated_data.get('PROPERTY')
+        return_dict2 = dict()
+        for keys,value in temptDict.items():
+            return_dict = dict()
+            return_dict['ITEM_ID'] = validated_data.get('ITEM').get('ITEM_ID')
+            return_dict['ITEM_TYPE'] = validated_data.get('ITEM').get('ITEM_TYPE')
+            return_dict['START_DATETIME'] = validated_data.get('ITEM').get('START_DATETIME')
+            return_dict['LAST_UPDT_USER'] = validated_data.get('ITEM').get('LAST_UPDT_USER')
+            return_dict['PROPERTY_TYPE'] = keys
+            return_dict[value.get('VALUE_TYPE')] = value.get('VALUE')
+            return_dict['LAST_UPDT_DATE'] = str(datetime.now()).split(" ")[0]
+            return_dict['START_DATETIME'] = str(datetime.now()).split(" ")[0]
+            return_dict['END_DATETIME'] = str(datetime.now()).split(" ")[0]  
+            return_dict['ROW_ID']  = uuid.uuid4().hex
+            return_dict['VERSION'] = uuid.uuid4().hex
+            return_dict['END_DATETIME'] = '9000-01-01'
+            return_dict['UPDATE_SOURCE'] = "x"
+            return_dict['CREATE_SOURCE'] = "x"
+            
+            item_propertys = item_property.objects.create(**return_dict)
+            item_propertys.save()
+            return_dict2[keys] = return_dict
+        return return_dict2
+    
+
+>>>>>>> Stashed changes
