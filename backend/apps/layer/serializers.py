@@ -6,9 +6,6 @@ from .models import layer
 class LayerSaveSerializer(serializers.ModelSerializer):
     class Meta:
         model = layer
-<<<<<<< Updated upstream
-        fields = "__all__"
-=======
         fields = '__all__'
 
     def create(self, validated_data):
@@ -18,4 +15,3 @@ class LayerSaveSerializer(serializers.ModelSerializer):
         layers.save()
         return layers
     
->>>>>>> Stashed changes

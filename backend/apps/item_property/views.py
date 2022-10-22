@@ -21,17 +21,10 @@ class ItemPropertyScriptSaveView(generics.CreateAPIView):
     permission_classes = [permissions.AllowAny]
 
     def post(self, request, *args, **kwargs):
-<<<<<<< Updated upstream
-        serializer = ItemPropertyCustomSaveSerializer(data=request.data)
-        serializer.is_valid()
-        serializer.create(request.data)
-        return Response({"Message": "Succsesful"}, status=status.HTTP_201_CREATED)
-=======
         # serializer = ItemPropertyCustomSaveSerializer(data = request.data)
         # serializer.is_valid()
         # serializer.create(request.data)
         return Response({"Message":"Succsesful"},status=status.HTTP_201_CREATED)
->>>>>>> Stashed changes
 
 
 class ItemPropertyView(generics.ListAPIView):
@@ -41,9 +34,6 @@ class ItemPropertyView(generics.ListAPIView):
 
     def get(self, request, *args, **kwargs):
         typeAddData.import_data("ITEM_PROPERTY")
-<<<<<<< Updated upstream
-        return Response({"Message": "successful"}, status=status.HTTP_200_OK)
-=======
         return Response({"Message":'successful'}, status=status.HTTP_200_OK)
     
 
@@ -54,4 +44,3 @@ class ItemPropertyDetailsView(generics.ListAPIView):
     permission_classes = [
         permissions.AllowAny
     ]
->>>>>>> Stashed changes

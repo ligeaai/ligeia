@@ -20,14 +20,6 @@ class ItemSaveSerializer(serializers.Serializer):
 
 class ItemCustomSaveSerializer(serializers.Serializer):
     def create(self, validated_data):
-<<<<<<< Updated upstream
-        validated_data["ITEM_ID"] = uuid.uuid4().hex
-        validated_data["LAST_UPDT_DATE"] = str(datetime.now()).split(" ")[0]
-        validated_data["ROW_ID"] = uuid.uuid4().hex
-        validated_data["VERSION"] = uuid.uuid4().hex
-        validated_data["UPDATE_SOURCE"] = "x"
-        validated_data["CREATE_SOURCE"] = "x"
-=======
         validated_data['END_DATETIME'] = '9000-01-01'
         validated_data['LAST_UPDT_DATE'] = str(datetime.now()).split(" ")[0]
         validated_data['ROW_ID']  = uuid.uuid4().hex
@@ -35,7 +27,6 @@ class ItemCustomSaveSerializer(serializers.Serializer):
         validated_data['DB_ID'] = uuid.uuid4().hex
         validated_data['UPDATE_SOURCE'] = "x"
         validated_data['CREATE_SOURCE'] = "x"
->>>>>>> Stashed changes
         items = item.objects.create(**validated_data)
         items.save()
 
