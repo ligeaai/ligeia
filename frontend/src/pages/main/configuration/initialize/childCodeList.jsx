@@ -168,13 +168,13 @@ const DataGridDemo = () => {
   function CustomToolbar() {
     return (
       <GridToolbarContainer>
+        <Typography sx={{ fontWeight: "800", fontSize: "22px", mx: 1 }}>
+          Childs
+        </Typography>
         <Grid
           container
           sx={{ alignItems: "center", justifyContent: "space-between" }}
         >
-          <Typography sx={{ fontWeight: "700", fontSize: "18px" }}>
-            Childs
-          </Typography>
           <Grid item sx={{ alignItems: "center", displat: "flex" }}>
             <Tooltip
               title={"Add Child"}
@@ -196,26 +196,73 @@ const DataGridDemo = () => {
                 <DeleteIcon fontSize="small" sx={{ color: "#4B4B4B" }} />
               </IconButton>
             </Tooltip>
-            <GridToolbarFilterButton
-              sx={{
-                color: "#4B4B4B",
+            <Tooltip
+              title={"Show Filters"}
+              componentsProps={{
+                tooltip: { sx: { backgroundColor: "primary.dark" } },
               }}
-            />
-            <GridToolbarColumnsButton
-              sx={{
-                color: "#4B4B4B",
+            >
+              <GridToolbarFilterButton
+                sx={{
+                  color: "#4B4B4B",
+                  p: 0,
+
+                  borderRadius: "50px",
+                  span: {
+                    m: 0,
+                    svg: {
+                      width: "20px",
+                      height: "20px",
+                    },
+                  },
+                }}
+              />
+            </Tooltip>
+            <Tooltip
+              title={"Find Column"}
+              componentsProps={{
+                tooltip: { sx: { backgroundColor: "primary.dark" } },
               }}
-            />
-            <GridToolbarDensitySelector
-              sx={{
-                color: "#4B4B4B",
+            >
+              <GridToolbarColumnsButton
+                sx={{
+                  color: "#4B4B4B",
+                  span: {
+                    m: 0,
+                  },
+                }}
+              />
+            </Tooltip>
+            <Tooltip
+              title={"Show Density"}
+              componentsProps={{
+                tooltip: { sx: { backgroundColor: "primary.dark" } },
               }}
-            />
-            <GridToolbarExport
-              sx={{
-                color: "#4B4B4B",
+            >
+              <GridToolbarDensitySelector
+                sx={{
+                  color: "#4B4B4B",
+                  span: {
+                    m: 0,
+                  },
+                }}
+              />
+            </Tooltip>
+            <Tooltip
+              title={"Show Export"}
+              componentsProps={{
+                tooltip: { sx: { backgroundColor: "primary.dark" } },
               }}
-            />
+            >
+              <GridToolbarExport
+                sx={{
+                  color: "#4B4B4B",
+                  span: {
+                    m: 0,
+                  },
+                }}
+              />
+            </Tooltip>
           </Grid>
         </Grid>
       </GridToolbarContainer>
@@ -225,6 +272,12 @@ const DataGridDemo = () => {
   if (rows) {
     return (
       <DataGrid
+        localeText={{
+          toolbarColumns: "",
+          toolbarFilters: "",
+          toolbarDensity: "",
+          toolbarExport: "",
+        }}
         checkboxSelection={true}
         rows={rows.data}
         columns={columns}
@@ -252,6 +305,11 @@ const childCodeList = () => {
         },
         ".MuiDataGrid-root": {
           border: "none",
+        },
+        button: {
+          minWidth: "36px",
+          height: "36px",
+          borderRadius: "50px",
         },
       }}
     >
