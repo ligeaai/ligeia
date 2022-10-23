@@ -22,7 +22,10 @@ import {
 } from "../../../../components";
 import DrawerMenu from "../../../../layout/main/asset/treeViewMenu";
 
-import ChildCodeList from "./childCodeList";
+// import ChildCodeList from "./childCodeList";
+// import ChildCodeList from "./childCodeListDataGridPro";
+import ChildCodeList from "./childCodeListDataTable";
+// import ChildCodeList from "./dataTables";
 import AutoSizer from "react-virtualized-auto-sizer";
 import {
   setLoaderFalse,
@@ -45,7 +48,6 @@ const TreeMenuItem = () => {
   function RenderRow(props) {
     const { data, index, style } = props;
     useEffect(() => {
-      history.push(`${codeListChild.currentChild.toLowerCase()}`);
       setSelectedIndex(codeListChild.index);
       dispatch(
         setCodeListChild({

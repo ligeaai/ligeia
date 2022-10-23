@@ -17,6 +17,35 @@ export const getParentCodeList = async (CULTURE) => {
     }
 }
 
+
+export const getParentCode = async (CULTURE, CODE) => { //todo edit when new api arrives
+    const body = JSON.stringify({ CULTURE, LIST_TYPE: "CODE_LIST" });
+    try {
+        let res = await instance
+            .post(
+                "/code-list/details/",
+                body,
+                config
+            )
+        var i = 0;
+        while (true) {
+            if (res.data[i].CODE === CODE) {
+                console.log(res.data[i]);
+                return res.data[i]
+            }
+            if (i === 300) {
+                break
+            }
+            i++;
+        }
+
+
+
+    } catch (err) {
+        return err
+    }
+}
+
 export const getChildCodeList = async (LIST_TYPE, CULTURE) => {
     const body = JSON.stringify({ CULTURE, LIST_TYPE });
     try {

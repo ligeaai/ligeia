@@ -25,8 +25,8 @@ const Properties = ({ MyProperties }) => {
       container
       sx={{
         flexWrap: "noWrap",
-        // minHeight: "calc(500px - 50px - 36px - 16px - 42px)",
-        // height: "calc(100vh - 60px - 4px - 50px - 36px - 16px - 42px)",
+        // minHeight: "calc(500px - 50px - 36px - 10px)",
+        // height: "calc(100vh - 60px  - 50px - 36px - 10px)",
         height: "calc(100% - 8px)",
       }}
     >
@@ -110,7 +110,13 @@ const Properties = ({ MyProperties }) => {
           </ToggleButton> */}
         </ToggleButtonGroup>
       </Grid>
-      <Grid item xs={12} sx={{ mr: 1 }}>
+      <Grid
+        item
+        xs={12}
+        sx={{
+          mr: 1,
+        }}
+      >
         {view === "Properties" ? MyProperties : <></>}
         {/* {view === "Links" ? <Grid>Links</Grid> : <></>} */}
       </Grid>

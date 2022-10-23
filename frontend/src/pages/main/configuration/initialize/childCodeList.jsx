@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Box, Grid, IconButton, Tooltip } from "@mui/material";
+import { Box, Grid, IconButton, Tooltip, Typography } from "@mui/material";
 import { grey } from "@mui/material/colors";
 import {
   DataGrid,
@@ -26,6 +26,7 @@ import {
   deleteCodeList,
 } from "../../../../services/api/djangoApi/codeList";
 import { setConfirmation } from "../../../../services/reducers/confirmation";
+import history from "../../../../routers/history";
 const DataGridDemo = () => {
   const dispatch = useDispatch();
   const culture = useSelector((state) => state.lang.cultur);
@@ -33,6 +34,24 @@ const DataGridDemo = () => {
   const codeListChild = useSelector((state) => state.codeListChild);
   const [checkboxSelection, setCheckboxSelection] = React.useState([]);
   const columns = [
+    {
+      field: "LIST_TYPE",
+      headerName: "List type",
+      width: 200,
+      cellClassName: "super-app-theme--cell",
+    },
+    {
+      field: "CULTURE",
+      headerName: "Culture",
+      width: 100,
+      cellClassName: "super-app-theme--cell",
+    },
+    {
+      field: "CODE",
+      headerName: "Code",
+      width: 200,
+      cellClassName: "super-app-theme--cell",
+    },
     {
       field: "CODE_TEXT",
       headerName: "Code Text",
@@ -72,6 +91,7 @@ const DataGridDemo = () => {
       setRows(data);
       dispatch(setLoaderTrue);
     };
+    history.push(`${codeListChild.currentChild.toLowerCase()}`);
     getData();
   }, [codeListChild]);
 
@@ -152,6 +172,9 @@ const DataGridDemo = () => {
           container
           sx={{ alignItems: "center", justifyContent: "space-between" }}
         >
+          <Typography sx={{ fontWeight: "700", fontSize: "18px" }}>
+            Childs
+          </Typography>
           <Grid item sx={{ alignItems: "center", displat: "flex" }}>
             <Tooltip
               title={"Add Child"}
@@ -221,13 +244,15 @@ const childCodeList = () => {
   return (
     <Box
       sx={{
-        width: "874px",
-        minHeight: "calc(500px - 36px - 16px - 40px)",
-        height: "calc(100vh - 60px - 36px - 16px - 44px)",
+        width: "768px",
+        minHeight: "calc(500px - 36px - 16px - 40px - 125px)",
+        height: "calc(100vh - 60px - 36px - 16px - 44px - 125px)",
         "& .super-app-theme--cell": {
           backgroundColor: grey[200],
         },
-        m: 0.5,
+        ".MuiDataGrid-root": {
+          border: "none",
+        },
       }}
     >
       <ComponentError
