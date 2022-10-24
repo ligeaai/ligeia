@@ -29,3 +29,37 @@ class LayerModelViewSet(generics.ListAPIView):
     queryset = layer.objects.all()
     serializer_class = LayerSaveSerializer
     permission_classes = (permissions.AllowAny,)
+
+
+class LayerUpdateView(generics.UpdateAPIView):
+    permission_classes = (permissions.AllowAny)
+
+    def put(self, request, *args, **kwargs):
+        data = request.data.get('DATA')
+        qs = layer.objects.filter(LAYER_NAME=request.data.get('LAYER_NAME'))
+        if qs:
+            qs.update(data)
+            return Response(
+                {"Message": "Successful Update "}, status=status.HTTP_200_OK
+            )
+        else:
+            return Response(
+                {"Message": "data not found"}, status=status.HTTP_400_BAD_REQUEST
+            )
+    
+    
+class LayerDeleteView(generics.CreateAPIView):
+    permission_classes = [
+        permissions.AllowAny
+    ]
+    def post(self, request, *args, **kwargs):
+        qs = layer.objects.filter(LAYER_NAME=request.data.get('LAYER_NAME'))
+        if qs:
+            qs.delete()
+            return Response(
+                {"Message": "Successful Delete "}, status=status.HTTP_200_OK
+            )
+        else:
+            return Response(
+                {"Message": "data not found"}, status=status.HTTP_400_BAD_REQUEST
+            )

@@ -59,24 +59,25 @@ class TypeUpdateView(generics.UpdateAPIView):
     def put(self, request, *args, **kwargs):
         data = request.data.get("ITEMS")
         qs = Type.objects.filter(TYPE=request.data.get("FILTER_TYPE")).update(**data)
-        # serializer = TypeSaveSerializer(qs, data=data, many=True)
-
-        # if serializer.is_valid():
-        # #     serializer.save()
         return Response({"Message": "Successful Update "}, status=status.HTTP_200_OK)
 
 
-class TypeDeleteeView(generics.UpdateAPIView):
+class TypeDeleteView(generics.UpdateAPIView):
     serializer_class = TypeSaveSerializer
     permission_classes = [permissions.AllowAny]
 
-    def put(self, request, *args, **kwargs):
+    def post(self, request, *args, **kwargs):
         qs = Type.objects.filter(TYPE=request.data.get("Type")).delete()
-        # serializer = TypeSaveSerializer(qs, data=data, many=True)
+        if qs:
+            qs.delete()
+            return Response(
+                {"Message": "Successful Delete "}, status=status.HTTP_200_OK
+            )
+        else:
+            return Response(
+                {"Message": "data not found"}, status=status.HTTP_400_BAD_REQUEST
+            )
 
-        # if serializer.is_valid():
-        # #     serializer.save()
-        return Response({"Message": "Successful Delete "}, status=status.HTTP_200_OK)
 
 
 class TypeView(generics.ListAPIView):
