@@ -1,21 +1,21 @@
 version: "3.8"
 services:
-  frontend:
-    restart: unless-stopped
-    build:
-      context: .
-      dockerfile: ./dockerfile/local/frontend/Dockerfile
-    container_name: ligeiaai-frontend-1
-    env_file:
-      - .env
-    volumes:
-      - ./:/frontend:delegated
-    ports:
-      - "3000:3000"
-    environment:
-      - CHOKIDAR_USEPOLLING=true
-    networks:
-      - net
+  # frontend:
+  #   restart: unless-stopped
+  #   build:
+  #     context: .
+  #     dockerfile: ./dockerfile/local/frontend/Dockerfile
+  #   container_name: ligeiaai-frontend-1
+  #   env_file:
+  #     - .env
+  #   volumes:
+  #     - ./:/frontend:delegated
+  #   ports:
+  #     - "3000:3000"
+  #   environment:
+  #     - CHOKIDAR_USEPOLLING=true
+  #   networks:
+  #     - net
   django:
     restart: unless-stopped
     build:
@@ -32,7 +32,7 @@ services:
     depends_on:
       - redis
       - postgres
-      - es
+      # - es
     ports:
       - "8000:8000"
     networks:
@@ -48,13 +48,13 @@ services:
       - COUCHDB_PASSWORD=${COUCHDB_PASSWORD}
     volumes:
       - couch-data:/opt/couchdb/data
-  es:
-    image: elasticsearch:8.4.2
-    container_name: ligeiaai-es-1
-    environment:
-      - discovery.type=single-node
-    ports:
-      - "9200:9200"
+  # es:
+  #   image: elasticsearch:8.4.2
+  #   container_name: ligeiaai-es-1
+  #   environment:
+  #     - discovery.type=single-node
+  #   ports:
+  #     - "9200:9200"
   postgres:
     restart: unless-stopped
     image: postgres:latest

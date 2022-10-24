@@ -2,7 +2,7 @@ from django.db import models
 import uuid 
 from django.utils import timezone 
 class type_link(models.Model): 
-	TYPE=models.CharField(max_length=14,primary_key=True,null=False,)
+	TYPE=models.CharField(max_length=14,null=False,)
 	FROM_TYPE=models.CharField(max_length=14,null=False,)
 	FROM_TYPE_CLASS=models.CharField(max_length=50,null=False,)
 	FROM_CARDINALITY=models.CharField(max_length=10,null=True,)
@@ -21,6 +21,6 @@ class type_link(models.Model):
 	LAST_UPDT_DATE=models.DateField(default=timezone.now,null=True,)
 	VERSION=models.CharField(max_length=32,default=uuid.uuid4,null=False,)
 	DB_ID=models.CharField(max_length=32,null=True,)
-	ROW_ID=models.CharField(max_length=32,default=uuid.uuid4,null=False,db_index=True,)
+	ROW_ID=models.CharField(max_length=32,primary_key=True,default=uuid.uuid4,null=False,db_index=True,)
 	STATUS=models.CharField(max_length=10,null=True,)
 	REV_GRP_ID=models.CharField(max_length=32,null=True,)

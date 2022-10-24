@@ -53,42 +53,30 @@ class CodeListDetailView(generics.CreateAPIView):
     permission_classes = []
 
     def post(self, request, *args, **kwargs):
-        try:
-            cache_key = request.data.get("LIST_TYPE") + request.data.get("CULTURE")
+        cache_key = request.body
+        if request.data.get('CODE'):
             queryset = code_list.objects.filter(
                 LIST_TYPE=request.data.get("LIST_TYPE"),
                 CULTURE=request.data.get("CULTURE"),
+                CODE=request.data.get('CODE')
             )
-            serializer = CodeListDetailsSerializer(queryset, many=True)
-            for index in range(0, len(serializer.data)):
-                item = serializer.data[index]
-                for keys, value in item.items():
-                    if value is None or value == "NONE":
-                        serializer.data[index][keys] = ""
-
-            # cache_data = Red.get(cache_key)
-            # if cache_data:
-            #     return Response(cache_data,status=status.HTTP_200_OK)
-            cache_data = Red.set(cache_key, serializer.data)
-            return Response(serializer.data, status=status.HTTP_200_OK)
-        except Exception as e:
-            return Response("ERROR", status=status.HTTP_400_BAD_REQUEST)
-
-    # def list(self, request):
-    #     # Note the use of `get_queryset()` instead of `self.queryset`
-    #     try:
-
-    #         cache_key = "CodeListDetails"
-    #         # cache_data = Red.get(cache_key)
-    #         # if cache_data:
-    #         #     return Response(cache_data,status=status.HTTP_200_OK)
-    #         queryset = self.get_queryset()
-    #         serializer = CodeListDetailsSerializer(queryset, many=True)
-    #         cache_data = Red.set(cache_key,serializer.data)
-    #         return Response(serializer.data,status=status.HTTP_200_OK)
-    #     except Exception as e:
-    #         return Response(e)
-
+        else:
+            try:
+                queryset = code_list.objects.filter(
+                    LIST_TYPE=request.data.get("LIST_TYPE"),
+                    CULTURE=request.data.get("CULTURE"),
+                )
+            except Exception as e:
+                return Response("ERROR", status=status.HTTP_400_BAD_REQUEST)
+        
+        serializer = CodeListDetailsSerializer(queryset, many=True)
+        for index in range(0, len(serializer.data)):
+            item = serializer.data[index]
+            for keys, value in item.items():
+                if value is None or value == "NONE":
+                    serializer.data[index][keys] = ""
+        cache_data = Red.set(cache_key, serializer.data)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 class CodeListUpdateView(generics.UpdateAPIView):
     serializer_class = CodeListSaveScriptSerializer
