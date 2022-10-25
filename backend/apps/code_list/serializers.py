@@ -30,8 +30,12 @@ class codeListNameSerializer(serializers.ModelSerializer):
 
 
 class CodeListCustomSerializer(serializers.Serializer):
-    def create(self, validated_data):
-        validated_data["VERSION"] = uuid.uuid4().hex
-        codeList = code_list.objects.create(**validated_data)
-        codeList.save()
-        return codeList
+    def save(self, validated_data):
+        qs = code_list.objects.filter(ROW_ID = validated_data.get('ROW_ID'))
+        if qs:
+            qs.update(**validated_data)
+        else:
+            validated_data["VERSION"] = uuid.uuid4().hex
+            codeList = code_list.objects.create(**validated_data)
+            codeList.save()
+            return codeList

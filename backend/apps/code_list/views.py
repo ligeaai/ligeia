@@ -17,13 +17,13 @@ from .serializers import (
 from rest_framework.pagination import PageNumberPagination
 
 
-class CodeListSaveScriptView(generics.CreateAPIView):
+class CodeListSaveScriptView(generics.UpdateAPIView):
     permission_classes = [permissions.AllowAny]
 
-    def post(self, request, *args, **kwargs):
+    def put(self, request, *args, **kwargs):
         serializer = CodeListCustomSerializer(data=request.data)
         serializer.is_valid()
-        serializer.create(request.data)
+        serializer.save(request.data)
         return Response(
             {"Message": "successful", "BODY": request.data}, status=status.HTTP_200_OK
         )
@@ -72,22 +72,6 @@ class CodeListDetailView(generics.CreateAPIView):
                     serializer.data[index][keys] = ""
         return Response(serializer.data, status=status.HTTP_200_OK)
     
-class CodeListUpdateView(generics.UpdateAPIView):
-    permission_classes = [permissions.AllowAny]
-
-    def put(self, request, *args, **kwargs):
-        
-        data = request.data.get("ITEMS")
-        qs = code_list.objects.filter(ROW_ID = request.data.get('ROW_ID'))
-        if qs:
-            qs.update(**data)
-            return Response(
-                {"Message": "Successful Update "}, status=status.HTTP_200_OK
-            )
-        else:
-            return Response(
-                {"Message": "data not found"}, status=status.HTTP_400_BAD_REQUEST
-            )
     
     
 class CodeListDeleteView(generics.CreateAPIView):
