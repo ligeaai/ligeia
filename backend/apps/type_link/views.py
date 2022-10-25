@@ -34,7 +34,14 @@ class TypeLinkDetailsView(generics.CreateAPIView):
         permissions.AllowAny
     ]
     def post(self, request, *args, **kwargs):
-        type = type_link.objects.filter(TYPE=request.data.get('TYPE'))
+        from django.db.models import Q
+        obj = {
+            "TYPE":Q(TYPE = request.data.get("TYPE") ),
+            "TO_TYPE":Q(TO_TYPE = request.data.get("TO_TYPE") ),
+            "FROM_TYPE":Q(FROM_TYPE = request.data.get("FROM_TYPE") )
+        }
+        keys = list(request.data.keys())[0]
+        type = type_link.objects.filter(obj.get(keys))
         serializer = TypeLinkDetailsSerializer(type, many=True)
      
         return Response(serializer.data, status=status.HTTP_200_OK)

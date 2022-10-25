@@ -13,7 +13,6 @@ from .serializers import (
     CodeListDetailsSerializer,
     CodeListCustomSerializer,
     CodeListSaveSerializer,
-    CodeListSaveScriptSerializer,
 )
 from rest_framework.pagination import PageNumberPagination
 
@@ -54,10 +53,15 @@ class CodeListDetailView(generics.CreateAPIView):
 
     def post(self, request, *args, **kwargs):
         try:
-            queryset = code_list.objects.filter(
-                LIST_TYPE=request.data.get('LIST_TYPE'),
-                CULTURE=request.data.get("CULTURE"),
+            if request.data.get('ROW_ID'):
+                queryset = code_list.objects.filter(
+                ROW_ID=request.data.get('ROW_ID'),
                 )
+            else:
+                queryset = code_list.objects.filter(
+                    LIST_TYPE=request.data.get('LIST_TYPE'),
+                    CULTURE=request.data.get("CULTURE"),
+                    )
         except Exception as e:
                 return Response("ERROR", status=status.HTTP_400_BAD_REQUEST)
         serializer = CodeListDetailsSerializer(queryset, many=True)
@@ -69,12 +73,12 @@ class CodeListDetailView(generics.CreateAPIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
     
 class CodeListUpdateView(generics.UpdateAPIView):
-    serializer_class = CodeListSaveScriptSerializer
     permission_classes = [permissions.AllowAny]
 
     def put(self, request, *args, **kwargs):
+        
         data = request.data.get("ITEMS")
-        qs = code_list.objects.filter(ROW_ID = request.data.get('ROW_ID')).update(**data)
+        qs = code_list.objects.filter(ROW_ID = request.data.get('ROW_ID'))
         if qs:
             qs.update(**data)
             return Response(
