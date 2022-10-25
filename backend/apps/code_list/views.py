@@ -53,30 +53,25 @@ class CodeListDetailView(generics.CreateAPIView):
     permission_classes = []
 
     def post(self, request, *args, **kwargs):
-        cache_key = request.body
-        if request.data.get('CODE'):
+        try:
             queryset = code_list.objects.filter(
-                LIST_TYPE=request.data.get("LIST_TYPE"),
+                LIST_TYPE=request.data.get('LIST_TYPE'),
                 CULTURE=request.data.get("CULTURE"),
-                CODE=request.data.get('CODE')
-            )
-        else:
-            try:
-                queryset = code_list.objects.filter(
-                    LIST_TYPE=request.data.get("LIST_TYPE"),
-                    CULTURE=request.data.get("CULTURE"),
                 )
-            except Exception as e:
+        except Exception as e:
                 return Response("ERROR", status=status.HTTP_400_BAD_REQUEST)
-        
         serializer = CodeListDetailsSerializer(queryset, many=True)
         for index in range(0, len(serializer.data)):
-            item = serializer.data[index]
-            for keys, value in item.items():
-                if value is None or value == "NONE":
-                    serializer.data[index][keys] = ""
-        cache_data = Red.set(cache_key, serializer.data)
+            serializer.data = self.validate_code_null(index,serializer)
         return Response(serializer.data, status=status.HTTP_200_OK)
+    
+
+    def validate_code_null(self,index,serializer):
+        item = serializer.data[index]
+        for keys, value in item.items():
+            if value is None or value == "NONE":
+                serializer.data[index][keys] = ""
+        return serializer.data
 
 class CodeListUpdateView(generics.UpdateAPIView):
     serializer_class = CodeListSaveScriptSerializer
@@ -84,14 +79,16 @@ class CodeListUpdateView(generics.UpdateAPIView):
 
     def put(self, request, *args, **kwargs):
         data = request.data.get("ITEMS")
-        filter = request.data.get("FILTER_TYPE")
-        qs = code_list.objects.filter(
-            LIST_TYPE=filter.get("LIST_TYPE"),
-            CODE=filter.get("CODE"),
-            CULTURE=request.data.get("CULTURE"),
-        ).update(**data)
-
-        return Response({"Message": "Successful Update "}, status=status.HTTP_200_OK)
+        qs = code_list.objects.filter(ROW_ID = request.data.get('ROW_ID')).update(**data)
+        if qs:
+            qs.update(**data)
+            return Response(
+                {"Message": "Successful Update "}, status=status.HTTP_200_OK
+            )
+        else:
+            return Response(
+                {"Message": "data not found"}, status=status.HTTP_400_BAD_REQUEST
+            )
     
     
 class CodeListDeleteView(generics.CreateAPIView):
@@ -99,7 +96,7 @@ class CodeListDeleteView(generics.CreateAPIView):
         permissions.AllowAny
     ]
     def post(self, request, *args, **kwargs):
-        qs = code_list.objects.filter(LIST_TYPE=request.data.get('LIST_TYPE'),CODE = request.data.get('CODE'),CULTURE = request.data.get('CULTURE'))
+        qs = code_list.objects.filter(request.data.get('ROW_ID'))
         if qs:
             qs.delete()
             return Response(
