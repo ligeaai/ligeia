@@ -62,17 +62,12 @@ class CodeListDetailView(generics.CreateAPIView):
                 return Response("ERROR", status=status.HTTP_400_BAD_REQUEST)
         serializer = CodeListDetailsSerializer(queryset, many=True)
         for index in range(0, len(serializer.data)):
-            serializer.data = self.validate_code_null(index,serializer)
+            item = serializer.data[index]
+            for keys, value in item.items():
+                if value is None or value == "NONE":
+                    serializer.data[index][keys] = ""
         return Response(serializer.data, status=status.HTTP_200_OK)
     
-
-    def validate_code_null(self,index,serializer):
-        item = serializer.data[index]
-        for keys, value in item.items():
-            if value is None or value == "NONE":
-                serializer.data[index][keys] = ""
-        return serializer.data
-
 class CodeListUpdateView(generics.UpdateAPIView):
     serializer_class = CodeListSaveScriptSerializer
     permission_classes = [permissions.AllowAny]
@@ -96,7 +91,7 @@ class CodeListDeleteView(generics.CreateAPIView):
         permissions.AllowAny
     ]
     def post(self, request, *args, **kwargs):
-        qs = code_list.objects.filter(request.data.get('ROW_ID'))
+        qs = code_list.objects.filter(ROW_ID = request.data.get('ROW_ID'))
         if qs:
             qs.delete()
             return Response(
