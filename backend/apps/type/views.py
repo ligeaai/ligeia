@@ -19,7 +19,9 @@ from rest_framework.authentication import TokenAuthentication
 from rest_framework.response import Response
 from services.parsers.addData.type import typeAddData
 from utils.utils import redisCaching as Red
-
+from utils.models_utils import (
+                                validate_model_not_null,
+                                )
 # Create your views here.
 from .models import type as Type
 from .serializers import (
@@ -45,10 +47,10 @@ class TypeAndPropertySaveView(generics.CreateAPIView):
         typePropertyValue = request.data.get("TYPE_PROPERTY")
         serializer = TypeCustomSaveSerializer(data=typeValue)
         serializer.is_valid()
-        serializer.create(typeValue)
+        serializer.save(typeValue)
         serializer = TypePropertyCustomSaveSerializer(data=typePropertyValue)
         serializer.is_valid()
-        serializer.create(typePropertyValue)
+        serializer.save(typePropertyValue)
         return Response(request.data, status=status.HTTP_201_CREATED)
 
 

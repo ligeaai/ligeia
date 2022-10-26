@@ -1,7 +1,10 @@
 from rest_framework import serializers
 from .models import code_list
 import uuid
-
+from utils.models_utils import (
+                                validate_model_not_null,
+                                validate_value)
+from rest_framework.exceptions import ValidationError 
 
 
 
@@ -30,12 +33,19 @@ class codeListNameSerializer(serializers.ModelSerializer):
 
 
 class CodeListCustomSerializer(serializers.Serializer):
+
     def save(self, validated_data):
         qs = code_list.objects.filter(ROW_ID = validated_data.get('ROW_ID'))
         if qs:
-            qs.update(**validated_data)
-        else:
+            try:
+                qs.update(**validated_data)
+            except Exception as e:
+                validate_value(validated_data)
+                raise ValidationError(e)
+        else: 
+            validate_model_not_null(validated_data,"code_list") 
             validated_data["VERSION"] = uuid.uuid4().hex
             codeList = code_list.objects.create(**validated_data)
             codeList.save()
             return codeList
+        

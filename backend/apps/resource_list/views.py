@@ -8,17 +8,20 @@ from .serializers import ResourceListDetailsSerializer, ResourceListSaveSerializ
 # Create your views here.
 from .models import resource_list
 from services.parsers.addData.type import typeAddData
-
+from utils.models_utils import (
+                                validate_model_not_null,
+                                )
 
 class ResourceListSaveView(generics.CreateAPIView):
 
-    serializer_class = ResourceListSaveSerializer
     permission_classes = [permissions.AllowAny]
-    # def post(self, request, *args, **kwargs):
-    #     # if request.data['LEGACY_CODE'] == 'None':
-    #     #     request.data['LEGACY_CODE'] = None
-    #     print(type(request.data['LEGACY_CODE']))
-    #     return Response('DENEME')
+    def post(self, request, *args, **kwargs):
+        validate_model_not_null(request.data,"resource_list")
+        serializer = ResourceListSaveSerializer(data = request.data)
+        serializer.is_valid()
+        serializer.create(request.data)
+        return Response({"Message": "successful"}, status=status.HTTP_200_OK)
+
 
 
 class ResourceListView(generics.ListAPIView):

@@ -28,7 +28,7 @@ class type_property(models.Model):
 	LENGTH=models.DecimalField(max_digits=28,decimal_places=12,null=True,)
 	DECIMALS=models.DecimalField(max_digits=28,decimal_places=12,null=True,)
 	UOM=models.CharField(max_length=50,null=True,)
-	CHANGE_INTERVAL=models.CharField(max_length=10,default="ChangeInterval",null=True,)
+	CHANGE_INTERVAL=models.CharField(max_length=10,default="CH",null=True,)
 	DEFAULT_VALUE=models.CharField(max_length=50,null=True,)
 	LAYER_NAME=models.CharField(max_length=50,null=False,)
 	DESCRIPTION_ID=models.CharField(max_length=100,null=True,)

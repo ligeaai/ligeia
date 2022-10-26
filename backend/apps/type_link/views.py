@@ -5,16 +5,23 @@ from .models import type_link
 from services.parsers.addData.type import typeAddData
 
 from .serializers import TypeLinkSaveSerializer,TypeLinkDetailsSerializer
-
+from utils.models_utils import (
+                                validate_model_not_null,
+                                )
 
 # Create your views here.
 class TypeLinkSaveView(generics.CreateAPIView):
-
-    serializer_class = TypeLinkSaveSerializer
-   
+    
     permission_classes = [
         permissions.AllowAny
     ]
+    def create(self, request, *args, **kwargs):
+        validate_model_not_null(request.data,"TYPE_LINK")
+        serializer = TypeLinkSaveSerializer(data = request.data)
+        serializer.is_valid()
+        serializer.create(request.data)
+        return Response({"Message": "successful"}, status=status.HTTP_200_OK)
+
 
 class TypeLinkView(generics.ListAPIView):
     queryset = type_link.objects.all()

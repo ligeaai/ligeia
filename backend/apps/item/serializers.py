@@ -24,7 +24,6 @@ class ItemCustomSaveSerializer(serializers.Serializer):
         validated_data['LAST_UPDT_DATE'] = str(datetime.now()).split(" ")[0]
         validated_data['ROW_ID']  = uuid.uuid4().hex
         validated_data['VERSION'] = uuid.uuid4().hex
-        validated_data['DB_ID'] = uuid.uuid4().hex
         validated_data['UPDATE_SOURCE'] = "x"
         validated_data['CREATE_SOURCE'] = "x"
         items = item.objects.create(**validated_data)
