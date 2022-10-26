@@ -74,10 +74,18 @@ function Row() {
           },
         }}
       >
-        <TableCell>
+        <TableCell
+          sx={{
+            width: "auto !important",
+            padding: "0px !important",
+            display: "flex",
+            justifyContent: "center",
+          }}
+        >
           <IconButton
             aria-label="expand row"
             size="small"
+            sx={{ margin: "auto" }}
             onClick={() => {
               setOpen(!open);
             }}
@@ -175,7 +183,6 @@ export default function CollapsibleTable() {
         <Table aria-label="collapsible table">
           <TableHead>
             <TableRow
-              flex={true}
               sx={{
                 th: {
                   width: "100px",
@@ -186,7 +193,7 @@ export default function CollapsibleTable() {
                 },
               }}
             >
-              <TableCell />
+              <TableCell sx={{ width: "50px !important" }} />
               <TableCell>List Type</TableCell>
               <TableCell>Culture</TableCell>
               <TableCell>Code</TableCell>

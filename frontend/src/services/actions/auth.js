@@ -41,15 +41,14 @@ export const loadUser = () => async dispatch => {
                 'Accept': 'application/json'
             }
         };
-
         try {
             const res = await instance.get(`/auth/user-detail`, config);
-
             dispatch({
                 type: USER_LOADED_SUCCESS,
                 payload: res.data
             });
         } catch (err) {
+            localStorage.removeItem('token');
             dispatch({
                 type: USER_LOADED_FAIL
             });
