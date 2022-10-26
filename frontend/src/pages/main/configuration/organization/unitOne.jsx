@@ -161,9 +161,11 @@ const UnitOneBody = (type) => {
               mx: 1.5,
               backgroundColor: "myBackgroundColor",
               height: "42px",
+              display: "flex",
+              alignItems: "center",
             }}
           >
-            <DateBreak />
+            <ActionMenu />
           </Grid>
           <ItemSperatorLineXL />
           <Grid
@@ -172,11 +174,9 @@ const UnitOneBody = (type) => {
               mx: 1.5,
               backgroundColor: "myBackgroundColor",
               height: "42px",
-              display: "flex",
-              alignItems: "center",
             }}
           >
-            <ActionMenu />
+            <DateBreak />
           </Grid>
           <ItemSperatorLineXL />
           <Grid item xs={12}>

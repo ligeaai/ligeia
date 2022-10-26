@@ -22,10 +22,7 @@ import {
 } from "../../../../components";
 import DrawerMenu from "../../../../layout/main/asset/treeViewMenu";
 
-// import ChildCodeList from "./childCodeList";
-// import ChildCodeList from "./childCodeListDataGridPro";
-import ChildCodeList from "./childCodeListDataTable";
-// import ChildCodeList from "./dataTables";
+import ChildCodeListDataTable from "./childCodeListDataTable";
 import AutoSizer from "react-virtualized-auto-sizer";
 import {
   setLoaderFalse,
@@ -36,11 +33,18 @@ import {
   setCodeListChild,
   setIndex,
   setLastItemIndex,
+  setRowId,
 } from "../../../../services/reducers/codeListChildReducer";
 
-import { deleteCodeList } from "../../../../services/api/djangoApi/codeList";
+import {
+  deleteCodeList,
+  putCodeList,
+} from "../../../../services/api/djangoApi/codeList";
 import { setConfirmation } from "../../../../services/reducers/confirmation";
-import history from "../../../../routers/history";
+import {
+  setParentCodeList,
+  setIsUpdated,
+} from "../../../../services/reducers/parentCodelist";
 const TreeMenuItem = () => {
   const dispatch = useDispatch();
   const [selectedIndex, setSelectedIndex] = React.useState(0);
@@ -48,12 +52,20 @@ const TreeMenuItem = () => {
   function RenderRow(props) {
     const { data, index, style } = props;
     useEffect(() => {
-      setSelectedIndex(codeListChild.index);
-      dispatch(
-        setCodeListChild({
-          currentChild: data[codeListChild.index].CODE,
-        })
-      );
+      if (codeListChild.index !== -2) {
+        setSelectedIndex(codeListChild.index);
+        dispatch(
+          setCodeListChild({
+            currentChild: data[codeListChild.index].CODE,
+          })
+        );
+
+        dispatch(
+          setRowId({
+            rowId: data[codeListChild.index].ROW_ID,
+          })
+        );
+      }
     }, [codeListChild.index]);
     useEffect(() => {
       dispatch(
@@ -99,7 +111,7 @@ const TreeMenuItem = () => {
       </ListItem>
     );
   }
-
+  const parentCodelist = useSelector((state) => state.parentCodelist.isUpdated);
   const isFullScreen = useSelector((state) => state.fullScreen.isFullScreen);
   const culture = useSelector((state) => state.lang.cultur);
   const [treeItem, setTreeItem] = React.useState(false);
@@ -111,7 +123,7 @@ const TreeMenuItem = () => {
       dispatch(setLoaderFalse());
     };
     getData();
-  }, [codeListChild.lastItem]);
+  }, [codeListChild.lastItem, parentCodelist]);
   if (treeItem) {
     return (
       <Box
@@ -157,12 +169,51 @@ const TreeMenuItems = () => {
   );
 };
 
-const CodeListBody = () => {
+const MyActionMenu = () => {
   const dispatch = useDispatch();
-  const isFullScreen = useSelector((state) => state.fullScreen.isFullScreen);
   const codeListChild = useSelector((state) => state.codeListChild);
+  const parentCodeList = useSelector((state) => state.parentCodelist);
   const culture = useSelector((state) => state.lang.cultur);
+  function uuidv4() {
+    return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, (c) =>
+      (
+        c ^
+        (crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (c / 4)))
+      ).toString(16)
+    );
+  }
+  const btnNew = () => {
+    var uuid = uuidv4();
+    dispatch(
+      setParentCodeList({
+        ROW_ID: uuid.replace(/-/g, ""),
+        LIST_TYPE: "",
+        CULTURE: culture,
+        CODE: "",
+        CODE_TEXT: "",
+      })
+    );
+    dispatch(
+      setRowId({
+        rowId: uuid.replace(/-/g, ""),
+      })
+    );
+    dispatch(setIndex({ index: -2 }));
+  };
+  const save = async () => {
+    if (parentCodeList.isUpdated) {
+      await putCodeList(
+        parentCodeList.CODE,
+        parentCodeList.CODE_TEXT,
+        parentCodeList.CULTURE,
+        parentCodeList.LIST_TYPE,
+        parentCodeList.ROW_ID
+      );
+      dispatch(setIsUpdated(false));
+    }
+  };
   const saveGoPrev = () => {
+    save();
     dispatch(
       setIndex({
         index: codeListChild.index - 1,
@@ -170,6 +221,7 @@ const CodeListBody = () => {
     );
   };
   const saveGoNext = () => {
+    save();
     dispatch(
       setIndex({
         index: codeListChild.index + 1,
@@ -178,7 +230,7 @@ const CodeListBody = () => {
   };
   const deleteParentAgreeFunc = async () => {
     dispatch(setLoaderTrue);
-    deleteCodeList("CODE_LIST", culture, codeListChild.currentChild);
+    deleteCodeList(codeListChild.rowId);
     dispatch(setLastItemIndex(codeListChild.lastItem - 1));
     dispatch(setLoaderFalse);
   };
@@ -191,6 +243,20 @@ const CodeListBody = () => {
       })
     );
   };
+
+  return (
+    <ActionMenu
+      btnNew={btnNew}
+      save={save}
+      saveGoPrev={saveGoPrev}
+      saveGoNext={saveGoNext}
+      deleteParent={deleteParent}
+    />
+  );
+};
+
+const CodeListBody = () => {
+  const isFullScreen = useSelector((state) => state.fullScreen.isFullScreen);
 
   return (
     <Grid
@@ -232,16 +298,12 @@ const CodeListBody = () => {
           </Grid>
           <ItemSperatorLineXL />
           <Box sx={{ ml: 2 }}>
-            <ActionMenu
-              saveGoPrev={saveGoPrev}
-              saveGoNext={saveGoNext}
-              deleteParent={deleteParent}
-            />
+            <MyActionMenu />
           </Box>
           <ItemSperatorLineXL />
           <Grid item xs={12}>
             <ComponentError errMsg="Error">
-              <PropLinkTabs MyProperties={<ChildCodeList />} />
+              <PropLinkTabs MyProperties={<ChildCodeListDataTable />} />
             </ComponentError>
           </Grid>
         </Grid>

@@ -4,7 +4,7 @@ import logger from 'redux-logger'
 
 import {
     authReducer,
-    codelistReducer,
+    childCodeList,
     codeListChildReducer,
     confirmation,
     drawerReducer,
@@ -12,6 +12,7 @@ import {
     fullScreenReducer,
     langReducer,
     loaderReducer,
+    parentCodelist,
     registerFormReducer,
     searchBarReducer,
     themeReducer,
@@ -22,7 +23,7 @@ import {
 export default configureStore({
     reducer: {
         auth: authReducer,
-        codelist: codelistReducer,
+        childCodeList: childCodeList,
         codeListChild: codeListChildReducer,
         confirmation: confirmation,
         drawer: drawerReducer,
@@ -30,11 +31,12 @@ export default configureStore({
         fullScreen: fullScreenReducer,
         lang: langReducer,
         loader: loaderReducer,
+        parentCodelist: parentCodelist,
         registerForm: registerFormReducer,
         searchBar: searchBarReducer,
         theme: themeReducer,
         type: typeReducer,
         typeText: typeTextReducer
     },
-    middleware: [thunk, logger]
+    middleware: [thunk]
 })

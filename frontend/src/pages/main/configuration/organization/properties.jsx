@@ -235,9 +235,7 @@ const DataGridDemo = ({ type }) => {
   if (rows) {
     return (
       <DataGrid
-        rows={rows.data.TYPE["TYPE PROPERTY COLUMNS"].BASETYPE.concat(
-          rows.data.TYPE["TYPE PROPERTY COLUMNS"].TYPE
-        ).concat([
+        rows={[
           {
             PROPERTY_NAME: "",
             CODE_LIST: null,
@@ -252,7 +250,9 @@ const DataGridDemo = ({ type }) => {
               },
             ],
           },
-        ])}
+        ]
+          .concat(rows.data.TYPE["TYPE PROPERTY COLUMNS"].TYPE)
+          .concat(rows.data.TYPE["TYPE PROPERTY COLUMNS"].BASETYPE)}
         columns={columns}
         hideFooter={true}
         components={{ Toolbar: CustomToolbar }}

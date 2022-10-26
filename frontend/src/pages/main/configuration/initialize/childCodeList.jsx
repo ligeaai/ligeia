@@ -14,9 +14,9 @@ import { styled } from "@mui/material/styles";
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
 import AddBoxIcon from "@mui/icons-material/AddBox";
 import DeleteIcon from "@mui/icons-material/Delete";
-
+import SaveIcon from "@mui/icons-material/Save";
 import { ComponentError, ComponentErrorBody } from "../../../../components";
-
+import LinearProgress from "@mui/material/LinearProgress";
 import {
   setLoaderTrue,
   setLoaderFalse,
@@ -27,51 +27,92 @@ import {
 } from "../../../../services/api/djangoApi/codeList";
 import { setConfirmation } from "../../../../services/reducers/confirmation";
 import history from "../../../../routers/history";
+import {
+  setDataGridItems,
+  changeDataGridItems,
+  cleanDataGridItems,
+  setNewItem,
+  setDeletedItem,
+} from "../../../../services/reducers/childCodeList";
+import { putCodeList } from "../../../../services/api/djangoApi/codeList";
 const DataGridDemo = () => {
   const dispatch = useDispatch();
   const culture = useSelector((state) => state.lang.cultur);
   const [rows, setRows] = React.useState(false);
   const codeListChild = useSelector((state) => state.codeListChild);
-  const [checkboxSelection, setCheckboxSelection] = React.useState([]);
+  const childCodeList = useSelector((state) => state.childCodeList);
+  const [refreshDataGrid, setRefreshDataGrid] = React.useState(true);
+  var checkboxSelection = [];
   const columns = [
     {
       field: "LIST_TYPE",
       headerName: "List type",
       width: 200,
-      cellClassName: "super-app-theme--cell",
+      editable: true,
+      // cellClassName: "super-app-theme--cell",
     },
     {
       field: "CULTURE",
       headerName: "Culture",
       width: 100,
-      cellClassName: "super-app-theme--cell",
+      editable: true,
+      //  cellClassName: "super-app-theme--cell",
     },
     {
       field: "CODE",
       headerName: "Code",
       width: 200,
-      cellClassName: "super-app-theme--cell",
+      editable: true,
+      //cellClassName: "super-app-theme--cell",
     },
     {
       field: "CODE_TEXT",
       headerName: "Code Text",
       width: 200,
-      cellClassName: "super-app-theme--cell",
+      editable: true,
+      // cellClassName: "super-app-theme--cell",
     },
   ];
-  const deleteChildAgreeFunc = async () => {
-    dispatch(setLoaderTrue);
-    setCheckboxSelection([]);
-    await rows.data.map((e) => {
-      if (checkboxSelection.indexOf(e.CODE) !== -1) {
-        deleteCodeList(e.LIST_TYPE, culture, e.CODE);
-      }
+  const save = async () => {
+    await Promise.all(
+      Object.keys(childCodeList.newItems).map(async (e) => {
+        await putCodeList(
+          childCodeList.newItems[e].CODE,
+          childCodeList.newItems[e].CODE_TEXT,
+          childCodeList.newItems[e].CULTURE,
+          childCodeList.newItems[e].LIST_TYPE,
+          childCodeList.newItems[e].ROW_ID
+        );
+      })
+    );
+    await Promise.all(
+      Object.keys(childCodeList.dataGridItems).map(async (e) => {
+        Object.keys(childCodeList.changedItems).map(async (a) => {
+          if (childCodeList.changedItems[a] === e) {
+            await putCodeList(
+              childCodeList.dataGridItems[e].CODE,
+              childCodeList.dataGridItems[e].CODE_TEXT,
+              childCodeList.dataGridItems[e].CULTURE,
+              childCodeList.dataGridItems[e].LIST_TYPE,
+              childCodeList.dataGridItems[e].ROW_ID
+            );
+          }
+        });
+      })
+    );
+    Object.keys(childCodeList.deletedItems).map(async (a) => {
+      deleteCodeList(childCodeList.deletedItems[a]);
     });
-    setRows(false);
-    let data = await getChildCodeList(codeListChild.currentChild, culture);
-    setRows(data);
+    setRefreshDataGrid(!refreshDataGrid);
+  };
 
-    dispatch(setLoaderFalse);
+  const deleteChildAgreeFunc = async () => {
+    dispatch(setLoaderTrue());
+    checkboxSelection.map((e) => {
+      dispatch(setDeletedItem(e));
+    });
+    checkboxSelection = [];
+    dispatch(setLoaderFalse());
   };
   const deleteChild = () => {
     dispatch(
@@ -84,16 +125,22 @@ const DataGridDemo = () => {
   };
 
   React.useEffect(() => {
-    setRows(false);
     dispatch(setLoaderTrue);
+    setRows(false);
     const getData = async () => {
       let data = await getChildCodeList(codeListChild.currentChild, culture);
       setRows(data);
+      dispatch(cleanDataGridItems());
+      data.data.map((e, i) => {
+        dispatch(
+          setDataGridItems({ key: data.data[i].ROW_ID, value: data.data[i] })
+        );
+      });
       dispatch(setLoaderTrue);
     };
     history.push(`${codeListChild.currentChild.toLowerCase()}`);
     getData();
-  }, [codeListChild]);
+  }, [codeListChild, refreshDataGrid]);
 
   const StyledGridOverlay = styled("div")(({ theme }) => ({
     display: "flex",
@@ -164,13 +211,17 @@ const DataGridDemo = () => {
       </StyledGridOverlay>
     );
   }
-
+  function uuidv4() {
+    return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, (c) =>
+      (
+        c ^
+        (crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (c / 4)))
+      ).toString(16)
+    );
+  }
   function CustomToolbar() {
     return (
       <GridToolbarContainer>
-        <Typography sx={{ fontWeight: "800", fontSize: "22px", mx: 1 }}>
-          Childs
-        </Typography>
         <Grid
           container
           sx={{ alignItems: "center", justifyContent: "space-between" }}
@@ -182,8 +233,38 @@ const DataGridDemo = () => {
                 tooltip: { sx: { backgroundColor: "primary.dark" } },
               }}
             >
-              <IconButton onClick={() => {}}>
+              <IconButton
+                onClick={() => {
+                  var uuid = uuidv4();
+                  dispatch(
+                    setNewItem({
+                      uuid: uuid.replace(/-/g, ""),
+                      value: {
+                        ROW_ID: uuid.replace(/-/g, ""),
+                        LIST_TYPE: codeListChild.currentChild,
+                        CULTURE: culture,
+                        CODE: "",
+                        CODE_TEXT: "",
+                      },
+                    })
+                  );
+                }}
+              >
                 <AddBoxIcon fontSize="small" sx={{ color: "#4B4B4B" }} />
+              </IconButton>
+            </Tooltip>
+            <Tooltip
+              title={"Save Child"}
+              componentsProps={{
+                tooltip: { sx: { backgroundColor: "primary.dark" } },
+              }}
+            >
+              <IconButton
+                onClick={() => {
+                  save();
+                }}
+              >
+                <SaveIcon fontSize="small" sx={{ color: "#4B4B4B" }} />
               </IconButton>
             </Tooltip>
             <Tooltip
@@ -205,15 +286,8 @@ const DataGridDemo = () => {
               <GridToolbarFilterButton
                 sx={{
                   color: "#4B4B4B",
-                  p: 0,
-
-                  borderRadius: "50px",
                   span: {
                     m: 0,
-                    svg: {
-                      width: "20px",
-                      height: "20px",
-                    },
                   },
                 }}
               />
@@ -268,29 +342,36 @@ const DataGridDemo = () => {
       </GridToolbarContainer>
     );
   }
-
-  if (rows) {
-    return (
-      <DataGrid
-        localeText={{
-          toolbarColumns: "",
-          toolbarFilters: "",
-          toolbarDensity: "",
-          toolbarExport: "",
-        }}
-        checkboxSelection={true}
-        rows={rows.data}
-        columns={columns}
-        hideFooter={true}
-        components={{
-          Toolbar: CustomToolbar,
-          NoRowsOverlay: CustomNoRowsOverlay,
-        }}
-        getRowId={(row) => row.CODE}
-        onSelectionModelChange={(rowId) => setCheckboxSelection(rowId)}
-      />
-    );
-  }
+  const onCellEditCommit = (cellData) => {
+    const { id, field, value } = cellData;
+    dispatch(changeDataGridItems({ id, field, value }));
+  };
+  return (
+    <DataGrid
+      localeText={{
+        toolbarColumns: "",
+        toolbarFilters: "",
+        toolbarDensity: "",
+        toolbarExport: "",
+        noRowsLabel: "No Orders",
+        errorOverlayDefaultLabel: "An error occurred.",
+      }}
+      onCellEditCommit={onCellEditCommit}
+      loading={!rows}
+      checkboxSelection={true}
+      disableSelectionOnClick={true}
+      rows={rows.data ? Object.values(childCodeList.dataGridItems) : []}
+      columns={columns}
+      hideFooter={true}
+      components={{
+        Toolbar: CustomToolbar,
+        NoRowsOverlay: CustomNoRowsOverlay,
+        LoadingOverlay: LinearProgress,
+      }}
+      getRowId={(row) => row.ROW_ID}
+      onSelectionModelChange={(rowId) => (checkboxSelection = rowId)}
+    />
+  );
 };
 
 const childCodeList = () => {

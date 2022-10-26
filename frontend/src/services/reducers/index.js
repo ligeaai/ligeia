@@ -1,5 +1,5 @@
 import authReducer from './authReducer';
-import codelistReducer from './codelistReducer';
+import childCodeList from './childCodeList';
 import codeListChildReducer from './codeListChildReducer';
 import confirmation from './confirmation';
 import drawerReducer from './drawerReducer';
@@ -7,6 +7,7 @@ import errorReducer from './errorReducer';
 import fullScreenReducer from './fullScreenReducer';
 import langReducer from './langReducer';
 import loaderReducer from './loaderReducer';
+import parentCodelist from './parentCodelist';
 import registerFormReducer from './registerFormReducer';
 import searchBarReducer from './searchBarReducer';
 import themeReducer from './themeReducer';
@@ -15,6 +16,6 @@ import typeTextReducer from './typeTextReducer';
 
 
 export {
-    authReducer, codelistReducer, codeListChildReducer, confirmation, drawerReducer, errorReducer, fullScreenReducer,
-    langReducer, loaderReducer, registerFormReducer, searchBarReducer, themeReducer, typeReducer, typeTextReducer
+    authReducer, childCodeList, codeListChildReducer, confirmation, drawerReducer, errorReducer, fullScreenReducer,
+    langReducer, loaderReducer, parentCodelist, registerFormReducer, searchBarReducer, themeReducer, typeReducer, typeTextReducer
 };
