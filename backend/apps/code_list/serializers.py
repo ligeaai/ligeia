@@ -14,7 +14,7 @@ class CodeListSaveSerializer(serializers.ModelSerializer):
 class CodeListDetailsSerializer(serializers.ModelSerializer):
     class Meta:
         model = code_list
-        fields = ["LIST_TYPE", "CULTURE", "CODE", "CODE_TEXT","ROW_ID"]
+        fields = "__all__"
 
 
 class CodeListSerializer(serializers.ModelSerializer):
