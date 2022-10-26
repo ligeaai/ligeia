@@ -1,5 +1,6 @@
 import * as React from "react";
 import { useDispatch, useSelector } from "react-redux";
+import Box from "@mui/material/Box";
 import Collapse from "@mui/material/Collapse";
 import IconButton from "@mui/material/IconButton";
 import Table from "@mui/material/Table";
@@ -11,7 +12,7 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
-
+import { grey } from "@mui/material/colors";
 import { setLoaderTrue } from "../../../../services/actions/loader";
 import { getParentCode } from "../../../../services/api/djangoApi/codeList";
 import history from "../../../../routers/history";
@@ -22,9 +23,57 @@ import MyTextField from "./myTextField";
 function Row() {
   const [open, setOpen] = React.useState(true);
   const codeListChild = useSelector((state) => state.codeListChild);
+  const myKeys = [
+    "LIST_TYPE",
+    "CULTURE",
+    "CODE",
+    "CODE_TEXT",
+    "PARENT",
+    "LEGACY_CODE",
+    "VAL1",
+    "VAL2",
+    "VAL3",
+    "VAL4",
+    "VAL5",
+    "VAL6",
+    "VAL7",
+    "VAL8",
+    "VAL9",
+    "VAL10",
+    "DATE1",
+    "DATE2",
+    "DATE3",
+    "DATE4",
+    "DATE5",
+    "CHAR1",
+    "CHAR2",
+    "CHAR3",
+    "CHAR4",
+    "CHAR5",
+    "LAYER_NAME",
+    "DESCRIPTION_ID",
+    "HIDDEN",
+    "LAST_UPDT_USER",
+    "LAST_UPDT_DATE",
+  ];
   return (
     <React.Fragment>
-      <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
+      <TableRow
+        sx={{
+          "& > *": { borderBottom: "unset" },
+          td: {
+            width: "100px",
+            p: 0,
+            pr: 1,
+            pl: 0.5,
+            borderRight: "0.5px solid",
+            borderColor: grey[200],
+            overflow: "hidden",
+            whiteSpace: "nowrap",
+            textOverflow: "ellipsis",
+          },
+        }}
+      >
         <TableCell>
           <IconButton
             aria-label="expand row"
@@ -36,22 +85,15 @@ function Row() {
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
         </TableCell>
-        <TableCell>
-          <MyTextField myKey="LIST_TYPE" />
-        </TableCell>
-        <TableCell>
-          <MyTextField myKey="CULTURE" />
-        </TableCell>
-        <TableCell>
-          <MyTextField myKey="CODE" />
-        </TableCell>
-        <TableCell>
-          <MyTextField myKey="CODE_TEXT" />
-        </TableCell>
+        {myKeys.map((key, index) => (
+          <TableCell key={index}>
+            <MyTextField myKey={key} />
+          </TableCell>
+        ))}
       </TableRow>
       {codeListChild.index >= 0 ? (
         <TableRow>
-          <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+          <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={33}>
             <Collapse in={open} timeout="auto" unmountOnExit>
               <ChildCodeList />
             </Collapse>
@@ -82,6 +124,33 @@ export default function CollapsibleTable() {
           CULTURE: data.CULTURE,
           CODE: data.CODE,
           CODE_TEXT: data.CODE_TEXT,
+          PARENT: data.PARENT,
+          LEGACY_CODE: data.LEGACY_CODE,
+          VAL1: data.VAL1,
+          VAL2: data.VAL2,
+          VAL3: data.VAL3,
+          VAL4: data.VAL4,
+          VAL5: data.VAL5,
+          VAL6: data.VAL6,
+          VAL7: data.VAL7,
+          VAL8: data.VAL8,
+          VAL9: data.VAL9,
+          VAL10: data.VAL10,
+          DATE1: data.DATE1,
+          DATE2: data.DATE2,
+          DATE3: data.DATE3,
+          DATE4: data.DATE4,
+          DATE5: data.DATE5,
+          CHAR1: data.CHAR1,
+          CHAR2: data.CHAR2,
+          CHAR3: data.CHAR3,
+          CHAR4: data.CHAR4,
+          CHAR5: data.CHAR5,
+          LAYER_NAME: data.LAYER_NAME,
+          DESCRIPTION_ID: data.DESCRIPTION_ID,
+          HIDDEN: data.HIDDEN,
+          LAST_UPDT_USER: data.LAST_UPDT_USER,
+          LAST_UPDT_DATE: data.LAST_UPDT_DATE,
         })
       );
       dispatch(setLoaderTrue);
@@ -93,29 +162,73 @@ export default function CollapsibleTable() {
   }, [codeListChild.rowId]);
 
   return (
-    <TableContainer
-      component={Paper}
-      sx={{
-        width: "800px",
-        m: 0.5,
-        minHeight: "calc(500px - 36px - 16px - 40px)",
-        height: "calc(100vh - 60px - 36px - 16px - 44px)",
-      }}
-    >
-      <Table aria-label="collapsible table">
-        <TableHead>
-          <TableRow>
-            <TableCell />
-            <TableCell>List type</TableCell>
-            <TableCell>Culture</TableCell>
-            <TableCell>Code</TableCell>
-            <TableCell>Code Text</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          <Row />
-        </TableBody>
-      </Table>
-    </TableContainer>
+    <Box sx={{ owerflow: "scroll", m: 0 }}>
+      <TableContainer
+        component={Paper}
+        sx={{
+          width: "calc(100% - 16px)",
+          m: 0.5,
+          minHeight: "calc(500px - 36px - 16px - 40px)",
+          height: "calc(100vh - 60px - 36px - 16px - 44px)",
+        }}
+      >
+        <Table aria-label="collapsible table">
+          <TableHead>
+            <TableRow
+              flex={true}
+              sx={{
+                th: {
+                  width: "100px",
+                  p: 1,
+                  overflow: "hidden",
+                  whiteSpace: "nowrap",
+                  textOverflow: "ellipsis",
+                },
+              }}
+            >
+              <TableCell />
+              <TableCell>List Type</TableCell>
+              <TableCell>Culture</TableCell>
+              <TableCell>Code</TableCell>
+              <TableCell>Code Text</TableCell>
+              <TableCell>Parent</TableCell>
+              <TableCell>Legacy Code</TableCell>
+
+              <TableCell>Val1</TableCell>
+              <TableCell>Val2</TableCell>
+              <TableCell>Val3</TableCell>
+              <TableCell>Val4</TableCell>
+              <TableCell>Val5</TableCell>
+              <TableCell>Val6</TableCell>
+              <TableCell>Val7</TableCell>
+              <TableCell>Val8</TableCell>
+              <TableCell>Val9</TableCell>
+              <TableCell>Val10</TableCell>
+
+              <TableCell>Date1</TableCell>
+              <TableCell>Date2</TableCell>
+              <TableCell>Date3</TableCell>
+              <TableCell>Date4</TableCell>
+              <TableCell>Date5</TableCell>
+
+              <TableCell>Char1</TableCell>
+              <TableCell>Char2</TableCell>
+              <TableCell>Char3</TableCell>
+              <TableCell>Char4</TableCell>
+              <TableCell>Char5</TableCell>
+
+              <TableCell>Layer Name</TableCell>
+              <TableCell>Description Id</TableCell>
+              <TableCell>Hidden</TableCell>
+              <TableCell>Last Update User</TableCell>
+              <TableCell>Last Update Date</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            <Row />
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </Box>
   );
 }

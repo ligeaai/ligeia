@@ -5,30 +5,34 @@ export const drawerReducer = createSlice({
     initialState: {
         isOpen: false,
         temp: 0,//temporary value determines the drawer stat before the drawer hover
+        width: "68px",
     },
     reducers: {
         toggleDrawer: (state) => {
             state.isOpen = !state.isOpen
+            if (state.isOpen) {
+                state.width = "248px"
+            }
+            state.width = "68px"
         },
         mouseEnterDrawer: (state) => {
             if (state.isOpen === false) {
                 state.temp = 1
                 state.isOpen = true
+                state.width = "248px"
             }
         },
         mouseLeaveDrawer: (state) => {
             if (state.temp === 1) {
                 state.temp = 0
                 state.isOpen = false
+                state.width = "68px"
             }
-        },
-        setActive: (state, payload) => {
-            state.isActive = payload.payload
         },
     },
 })
 
 // Action creators are generated for each case reducer function
-export const { toggleDrawer, mouseEnterDrawer, mouseLeaveDrawer, setActive } = drawerReducer.actions
+export const { toggleDrawer, mouseEnterDrawer, mouseLeaveDrawer } = drawerReducer.actions
 
 export default drawerReducer.reducer

@@ -3,7 +3,6 @@ import { useDispatch } from "react-redux";
 import { Box, Grid, Typography } from "@mui/material";
 
 import history from "../../routers/history";
-import { setActive } from "../../services/reducers/drawerReducer";
 
 const CardItems = (props) => {
   const dispatch = useDispatch();
@@ -39,7 +38,6 @@ const CardItems = (props) => {
         setIsClick(false);
       }}
       onClick={() => {
-        dispatch(setActive(card.isActiveDrawer));
         history.push(`${card.cardURL}`);
       }}
       onMouseDown={() => {

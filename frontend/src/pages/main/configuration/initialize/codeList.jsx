@@ -191,6 +191,33 @@ const MyActionMenu = () => {
         CULTURE: culture,
         CODE: "",
         CODE_TEXT: "",
+        PARENT: "",
+        LEGACY_CODE: "",
+        VAL1: "",
+        VAL2: "",
+        VAL3: "",
+        VAL4: "",
+        VAL5: "",
+        VAL6: "",
+        VAL7: "",
+        VAL8: "",
+        VAL9: "",
+        VAL10: "",
+        DATE1: "",
+        DATE2: "",
+        DATE3: "",
+        DATE4: "",
+        DATE5: "",
+        CHAR1: "",
+        CHAR2: "",
+        CHAR3: "",
+        CHAR4: "",
+        CHAR5: "",
+        LAYER_NAME: "",
+        DESCRIPTION_ID: "",
+        HIDDEN: "",
+        LAST_UPDT_USER: "",
+        LAST_UPDT_DATE: "",
       })
     );
     dispatch(
@@ -207,7 +234,34 @@ const MyActionMenu = () => {
         parentCodeList.CODE_TEXT,
         parentCodeList.CULTURE,
         parentCodeList.LIST_TYPE,
-        parentCodeList.ROW_ID
+        parentCodeList.ROW_ID,
+        parentCodeList.PARENT,
+        parentCodeList.LEGACY_CODE,
+        parentCodeList.VAL1,
+        parentCodeList.VAL2,
+        parentCodeList.VAL3,
+        parentCodeList.VAL4,
+        parentCodeList.VAL5,
+        parentCodeList.VAL6,
+        parentCodeList.VAL7,
+        parentCodeList.VAL8,
+        parentCodeList.VAL9,
+        parentCodeList.VAL10,
+        parentCodeList.DATE1,
+        parentCodeList.DATE2,
+        parentCodeList.DATE3,
+        parentCodeList.DATE4,
+        parentCodeList.DATE5,
+        parentCodeList.CHAR1,
+        parentCodeList.CHAR2,
+        parentCodeList.CHAR3,
+        parentCodeList.CHAR4,
+        parentCodeList.CHAR5,
+        parentCodeList.LAYER_NAME,
+        parentCodeList.DESCRIPTION_ID,
+        parentCodeList.HIDDEN,
+        parentCodeList.LAST_UPDT_USER,
+        parentCodeList.LAST_UPDT_DATE
       );
       dispatch(setIsUpdated(false));
     }
@@ -275,6 +329,7 @@ const CodeListBody = () => {
         sx={{
           boxShadow: 3,
           borderRadius: "3px",
+          width: "500px",
         }}
       >
         <Grid container>

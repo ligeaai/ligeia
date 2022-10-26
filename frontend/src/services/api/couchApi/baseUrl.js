@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const instance = axios.create({
-    baseURL: 'http://localhost:5984/'
+    baseURL: 'http://35.193.198.82:5984/'
 });
 export const userName = "COUCHDB_USER"
 export const userPassword = "COUCHDB_PASSWORD"

@@ -35,6 +35,7 @@ import {
   setDeletedItem,
 } from "../../../../services/reducers/childCodeList";
 import { putCodeList } from "../../../../services/api/djangoApi/codeList";
+import { columns } from "./dataGridColumn";
 const DataGridDemo = () => {
   const dispatch = useDispatch();
   const culture = useSelector((state) => state.lang.cultur);
@@ -43,36 +44,6 @@ const DataGridDemo = () => {
   const childCodeList = useSelector((state) => state.childCodeList);
   const [refreshDataGrid, setRefreshDataGrid] = React.useState(true);
   var checkboxSelection = [];
-  const columns = [
-    {
-      field: "LIST_TYPE",
-      headerName: "List type",
-      width: 200,
-      editable: true,
-      // cellClassName: "super-app-theme--cell",
-    },
-    {
-      field: "CULTURE",
-      headerName: "Culture",
-      width: 100,
-      editable: true,
-      //  cellClassName: "super-app-theme--cell",
-    },
-    {
-      field: "CODE",
-      headerName: "Code",
-      width: 200,
-      editable: true,
-      //cellClassName: "super-app-theme--cell",
-    },
-    {
-      field: "CODE_TEXT",
-      headerName: "Code Text",
-      width: 200,
-      editable: true,
-      // cellClassName: "super-app-theme--cell",
-    },
-  ];
   const save = async () => {
     await Promise.all(
       Object.keys(childCodeList.newItems).map(async (e) => {
@@ -378,7 +349,7 @@ const childCodeList = () => {
   return (
     <Box
       sx={{
-        width: "768px",
+        width: "3272px",
         minHeight: "calc(500px - 36px - 16px - 40px - 125px)",
         height: "calc(100vh - 60px - 36px - 16px - 44px - 125px)",
         "& .super-app-theme--cell": {

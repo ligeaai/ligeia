@@ -17,7 +17,7 @@ const Main = (props) => {
   const isFullScreen = useSelector((state) => state.fullScreen.isFullScreen);
   const { Element, delSearchBar } = props;
   const [navItems, setNavItems] = React.useState(false);
-
+  const drawerWidth = useSelector((state) => state.drawer.width);
   React.useEffect(() => {
     dispatch(setLoaderTrue());
     const getData = async () => {
@@ -67,7 +67,7 @@ const Main = (props) => {
               sx={{
                 minHeight: "calc(100vh - 60px - 8px)",
                 height: "500px",
-                width: "100%",
+                width: `calc(100vw - ${drawerWidth})`,
                 m: 0.5,
               }}
             >

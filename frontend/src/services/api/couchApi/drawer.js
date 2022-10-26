@@ -5,7 +5,7 @@ export const loadDrawerMenu = async () => {
   try {
     let res = await instance
       .get(
-        "/drawermenu/f2bbd6f29ce38f1a08c0d6c9ff000f45",
+        "/drawermenu/8d9fb35ab3dc4aa2ff9392eb4b0001c6",
         config
       )
     return res;
