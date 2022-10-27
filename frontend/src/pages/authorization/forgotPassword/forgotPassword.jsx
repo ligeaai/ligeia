@@ -7,7 +7,6 @@ import { Box, Button, Grid, TextField } from "@mui/material";
 import Start from "../../../layout/start/start";
 
 import { forget_password } from "../../../services/actions/auth";
-import { setLoaderTrue } from "../../../services/actions/loader";
 
 const validationSchema = yup.object({
   email: yup
@@ -24,7 +23,6 @@ const MyBody = () => {
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      dispatch(setLoaderTrue());
       dispatch(forget_password(values.email));
     },
   });

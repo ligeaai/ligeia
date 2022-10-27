@@ -10,7 +10,6 @@ import Header from "./header";
 import { setIsFullScreen } from "../../services/reducers/fullScreenReducer";
 
 import { loadDrawerMenu } from "../../services/api/couchApi/drawer";
-import { setLoaderFalse, setLoaderTrue } from "../../services/actions/loader";
 
 const Main = (props) => {
   const dispatch = useDispatch();
@@ -19,11 +18,9 @@ const Main = (props) => {
   const [navItems, setNavItems] = React.useState(false);
   const drawerWidth = useSelector((state) => state.drawer.width);
   React.useEffect(() => {
-    dispatch(setLoaderTrue());
     const getData = async () => {
       let data = await loadDrawerMenu();
       setNavItems(data);
-      dispatch(setLoaderFalse());
     };
     getData();
   }, []);

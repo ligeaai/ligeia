@@ -23,7 +23,6 @@ import Start from "../../../layout/start/start";
 import Layout from "../../../layout/authorization/layout";
 
 import { setEmailPass } from "../../../services/reducers/registerFormReducer";
-import { setLoaderTrue } from "../../../services/actions/loader";
 
 const validationSchema = yup.object({
   email: yup

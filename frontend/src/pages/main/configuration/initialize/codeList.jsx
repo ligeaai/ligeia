@@ -24,10 +24,6 @@ import DrawerMenu from "../../../../layout/main/asset/treeViewMenu";
 
 import ChildCodeListDataTable from "./childCodeListDataTable";
 import AutoSizer from "react-virtualized-auto-sizer";
-import {
-  setLoaderFalse,
-  setLoaderTrue,
-} from "../../../../services/actions/loader";
 import { getParentCodeList } from "../../../../services/api/djangoApi/codeList";
 import {
   setCodeListChild,
@@ -94,7 +90,6 @@ const TreeMenuItem = () => {
   const isFullScreen = useSelector((state) => state.fullScreen.isFullScreen);
   const [treeItem, setTreeItem] = React.useState(false);
   React.useEffect(() => {
-    dispatch(setLoaderTrue());
     const getData = async () => {
       let data = await getParentCodeList(culture);
       setTreeItem(data);
@@ -114,7 +109,6 @@ const TreeMenuItem = () => {
           rowId: data.data[0].ROW_ID,
         })
       );
-      dispatch(setLoaderFalse());
     };
     getData();
   }, [codeListChild.lastItem]);
@@ -163,7 +157,7 @@ const TreeMenuItems = () => {
   );
 };
 
-const CodeListBody = () => {
+const CodeList = () => {
   const isFullScreen = useSelector((state) => state.fullScreen.isFullScreen);
 
   return (
@@ -219,10 +213,6 @@ const CodeListBody = () => {
       </Grid>
     </Grid>
   );
-};
-
-const CodeList = () => {
-  return <Main Element={CodeListBody()} delSearchBar={true} />;
 };
 
 export default CodeList;

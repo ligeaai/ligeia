@@ -3,8 +3,6 @@ import { useSelector } from "react-redux";
 import { Box } from "@mui/material";
 
 import Cards from "../../components/cardGenerator/cards";
-import Main from "../../layout/main/main";
-import { ErrorBoundary } from "../../components";
 const cards = [
   {
     cardTitle: "Asset",
@@ -44,7 +42,7 @@ const cards = [
   },
 ];
 
-const MainRender = () => {
+const Main = () => {
   const isFullScreen = useSelector((state) => state.fullScreen.isFullScreen);
   return (
     <Box
@@ -60,8 +58,4 @@ const MainRender = () => {
   );
 };
 
-const main = () => {
-  return <Main Element={MainRender()} />;
-};
-
-export default main;
+export default Main;

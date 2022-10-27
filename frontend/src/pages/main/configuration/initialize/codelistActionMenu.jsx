@@ -9,21 +9,12 @@ import { setConfirmation } from "../../../../services/reducers/confirmation";
 import {
   setParentCodeList,
   setIsUpdated,
-  changeTextParentCodeList,
 } from "../../../../services/reducers/parentCodelist";
-import { getParentCode } from "../../../../services/api/djangoApi/codeList";
 import {
-  setLoaderFalse,
-  setLoaderTrue,
-} from "../../../../services/actions/loader";
-import { getParentCodeList } from "../../../../services/api/djangoApi/codeList";
-import {
-  setCodeListChild,
   setIndex,
   setLastItemIndex,
   setCodeListItems,
   setRowId,
-  cleanCodeListItems,
 } from "../../../../services/reducers/codeListChildReducer";
 import { ActionMenu } from "../../../../components";
 const CodelistActionMenu = () => {
@@ -142,10 +133,8 @@ const CodelistActionMenu = () => {
     );
   };
   const deleteParentAgreeFunc = async () => {
-    dispatch(setLoaderTrue);
     deleteCodeList(codeListChild.rowId);
     dispatch(setLastItemIndex(codeListChild.lastItem - 1));
-    dispatch(setLoaderFalse);
   };
   const deleteParent = async () => {
     dispatch(

@@ -18,10 +18,6 @@ import SaveIcon from "@mui/icons-material/Save";
 import { ComponentError, ComponentErrorBody } from "../../../../components";
 import LinearProgress from "@mui/material/LinearProgress";
 import {
-  setLoaderTrue,
-  setLoaderFalse,
-} from "../../../../services/actions/loader";
-import {
   getChildCodeList,
   deleteCodeList,
 } from "../../../../services/api/djangoApi/codeList";
@@ -145,12 +141,10 @@ const DataGridDemo = () => {
     );
   };
   const deleteChildAgreeFunc = async () => {
-    dispatch(setLoaderTrue());
     checkboxSelection.map((e) => {
       dispatch(setDeletedItem(e));
     });
     checkboxSelection = [];
-    dispatch(setLoaderFalse());
   };
   const deleteChild = () => {
     dispatch(
@@ -163,7 +157,6 @@ const DataGridDemo = () => {
   };
 
   React.useEffect(() => {
-    dispatch(setLoaderTrue);
     setRows(false);
     const getData = async () => {
       let data = await getChildCodeList(codeListChild.currentChild, culture);
@@ -174,7 +167,6 @@ const DataGridDemo = () => {
           setDataGridItems({ key: data.data[i].ROW_ID, value: data.data[i] })
         );
       });
-      dispatch(setLoaderTrue);
     };
 
     getData();

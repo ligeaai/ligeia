@@ -11,7 +11,6 @@ import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined
 import Start from "../../../layout/start/start";
 
 import { forgot_password_confirm } from "../../../services/actions/auth";
-import { setLoaderTrue } from "../../../services/actions/loader";
 import history from "../../../routers/history";
 
 const validationSchema = yup.object({
@@ -36,7 +35,6 @@ const MyBody = () => {
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      dispatch(setLoaderTrue());
       dispatch(forgot_password_confirm(token, values.password));
       history.push("/signin");
     },

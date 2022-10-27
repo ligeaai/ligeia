@@ -13,7 +13,6 @@ import Paper from "@mui/material/Paper";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { grey } from "@mui/material/colors";
-import { setLoaderTrue } from "../../../../services/actions/loader";
 import { getParentCode } from "../../../../services/api/djangoApi/codeList";
 import history from "../../../../routers/history";
 import ChildCodeList from "./childCodeList";

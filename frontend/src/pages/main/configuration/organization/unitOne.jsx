@@ -26,10 +26,6 @@ import DrawerMenu from "../../../../layout/main/asset/treeViewMenu";
 import { loadCompanyName } from "../../../../services/api/couchApi/company";
 
 import AutoSizer from "react-virtualized-auto-sizer";
-import {
-  setLoaderFalse,
-  setLoaderTrue,
-} from "../../../../services/actions/loader";
 import Properties from "./properties";
 
 const TreeMenuItem = () => {
@@ -69,11 +65,9 @@ const TreeMenuItem = () => {
   const isFullScreen = useSelector((state) => state.fullScreen.isFullScreen);
   const [treeItem, setTreeItem] = React.useState(false);
   React.useEffect(() => {
-    dispatch(setLoaderTrue());
     const getData = async () => {
       let data = await loadCompanyName();
       setTreeItem(data);
-      dispatch(setLoaderFalse());
     };
     getData();
   }, []);
@@ -114,7 +108,8 @@ const TreeMenuItem = () => {
   }
 };
 
-const UnitOneBody = (type) => {
+const UnitOne = (props) => {
+  const { type } = props;
   const isFullScreen = useSelector((state) => state.fullScreen.isFullScreen);
   return (
     <Grid
@@ -188,11 +183,6 @@ const UnitOneBody = (type) => {
       </Grid>
     </Grid>
   );
-};
-
-const UnitOne = (props) => {
-  const { type } = props;
-  return <Main Element={UnitOneBody(type)} delSearchBar={true} />;
 };
 
 export default UnitOne;

@@ -19,10 +19,6 @@ import {
   GridToolbarDensitySelector,
 } from "@mui/x-data-grid";
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
-import {
-  setLoaderTrue,
-  setLoaderFalse,
-} from "../../../../services/actions/loader";
 import { loadType } from "../../../../services/api/type/type";
 
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -174,7 +170,6 @@ const DataGridDemo = ({ type }) => {
 
   React.useEffect(() => {
     setRows(false);
-    dispatch(setLoaderTrue);
     const getData = async () => {
       let data = await loadType(type, culture);
       try {
@@ -216,7 +211,6 @@ const DataGridDemo = ({ type }) => {
       }
 
       setRows(data);
-      dispatch(setLoaderFalse());
     };
     getData();
   }, [type]);

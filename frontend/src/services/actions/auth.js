@@ -242,10 +242,7 @@ export const forget_password = (email) => async dispatch => {
             type: ADD_ERROR_SUCCESS,
             payload: "Check your mail"
         })
-        dispatch(setLoaderFalse())
-
     } catch (err) {
-        dispatch(setLoaderFalse())
         dispatch({
             type: ADD_ERROR_SUCCESS,
             payload: err.message
@@ -275,12 +272,10 @@ export const forgot_password_confirm = (token, password) => async dispatch => {
         dispatch({
             type: PASSWORD_RESET_CONFIRM_SUCCESS
         });
-        dispatch(setLoaderFalse())
     } catch (err) {
         dispatch({
             type: PASSWORD_RESET_CONFIRM_FAIL
         });
-        dispatch(setLoaderFalse());
         dispatch({
             type: ADD_ERROR_SUCCESS,
             payload: err.message

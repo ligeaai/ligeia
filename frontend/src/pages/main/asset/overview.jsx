@@ -3,7 +3,6 @@ import { useSelector } from "react-redux";
 
 import { Box, Grid, Typography } from "@mui/material";
 
-import Main from "../../../layout/main/main";
 import { TreeView, Breadcrumb } from "../../../components";
 import { menu } from "./owerviewMenu";
 
@@ -23,7 +22,7 @@ const Canvas = () => {
   );
 };
 
-const AssetOwerview = () => {
+const Overview = () => {
   const isFullScreen = useSelector((state) => state.fullScreen.isFullScreen);
 
   return (
@@ -75,10 +74,6 @@ const AssetOwerview = () => {
       </Grid>
     </Grid>
   );
-};
-
-const Overview = () => {
-  return <Main Element={AssetOwerview()} delSearchBar={true} />;
 };
 
 export default Overview;
