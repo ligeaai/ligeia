@@ -21,6 +21,7 @@ from services.parsers.addData.type import typeAddData
 from utils.utils import redisCaching as Red
 from utils.models_utils import (
                                 validate_model_not_null,
+                                validate_find
                                 )
 # Create your views here.
 from .models import type as Type
@@ -110,6 +111,7 @@ class TypeDetailView(generics.CreateAPIView):
         seriliazerResourceList = []
         try:
             typeQuary = Type.objects.filter(TYPE=request.data.get("TYPE"))
+            validate_find(typeQuary)
             serializerType = TypeSerializer(typeQuary, many=True)
             for typeValue in serializerType.data[0].values():
                 proertyQuery = type_property.objects.filter(TYPE=typeValue)

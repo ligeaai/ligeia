@@ -34,12 +34,12 @@ class TypeSerializer(serializers.ModelSerializer):
 
 class TypeCustomSaveSerializer(serializers.Serializer):
     def save(self, validated_data):
-        qs = Type.objects.filter(ROW_ID = validated_data.get('ROW_ID'))
+        qs = Type.objects.filter(TYPE = validated_data.get('TYPE'))
         if qs:
             try:
+                validate_value(validated_data,'TYPE')
                 qs.update(**validated_data)
             except Exception as e:
-                validate_value(validated_data)
                 raise ValidationError(e)
         else: 
             try:

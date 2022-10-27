@@ -1,8 +1,5 @@
 from rest_framework.exceptions import ValidationError 
-
-
-def validate_model_not_null(data,model):
-        models = {
+models = {
             "CODE_LIST":['LIST_TYPE','CULTURE','CODE','ROW_ID','LAYER_NAME'],
             "ITEM":["ITEM_ID","ITEM_TYPE","START_DATETIME","LAST_UPDT_USER"],
             "ITEM_PROPERTY":["VALUE","VALUE_TYPE"],
@@ -10,8 +7,11 @@ def validate_model_not_null(data,model):
             "RESOURCE_LIST":["CULTURE","ID","LAYER_NAME"],
             "TYPE":["TYPE","TYPE_CLASS","LAYER_NAME","ROW_ID"],
             "TYPE_PROPERTY":["TYPE","PROPERTY_NAME","LAYER_NAME","ROW_ID"],
-            "TYPE_LINK":["TYPE","FROM_TYPE","FROM_TYPE_CLASS","TO_TYPE","TO_TYPE_CLASS","LAYER_NAME"]
+            "TYPE_LINK":["TYPE","FROM_TYPE","FROM_TYPE_CLASS","TO_TYPE","TO_TYPE_CLASS","LAYER_NAME","ROW_ID"]
         }
+
+def validate_model_not_null(data,model):
+   
        
         callback = []
         model = str(model).upper()
@@ -33,11 +33,26 @@ def null_value_to_space(serializer):
                 serializer.data[index][keys] = ""
     return serializer
 
-def validate_value(validated_data):
+def validate_value(validated_data,model):
     callback = []
+    model = str(model).upper()
+    model = models.get(model)
     for keys,value in validated_data.items():
-        if not value: 
-            callback.append(keys)
+        try:
+            index = model.index(keys)
+            if not value: 
+                callback.append(keys)
+        except:    
+            pass
     if callback:
         raise ValidationError(
-                {"Message": "These values cannot be null  " + str(callback) })
+                 {"Message": "These values cannot be null  " + str(callback) })
+
+
+def validate_find(quaryset):
+    if quaryset:
+        return quaryset
+    else:
+        raise ValidationError(
+                 {"Message": "Data not found"})
+

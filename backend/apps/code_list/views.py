@@ -17,6 +17,7 @@ from rest_framework.pagination import PageNumberPagination
 from utils.models_utils import (
                                 validate_model_not_null,
                                 null_value_to_space,
+                                validate_find,
                                 )
 
 
@@ -49,18 +50,17 @@ class CodeListDetailView(generics.CreateAPIView):
     permission_classes = []
 
     def post(self, request, *args, **kwargs):
-        try:
-            if request.data.get('ROW_ID'):
-                queryset = code_list.objects.filter(
+        
+        if request.data.get('ROW_ID'):
+            queryset = code_list.objects.filter(
                 ROW_ID=request.data.get('ROW_ID'),
                 )
-            else:
-                queryset = code_list.objects.filter(
+        else:
+            queryset = code_list.objects.filter(
                     LIST_TYPE=request.data.get('LIST_TYPE'),
                     CULTURE=request.data.get("CULTURE"),
                     )
-        except Exception as e:
-                return Response("ERROR", status=status.HTTP_400_BAD_REQUEST)
+        validate_find(queryset)
         serializer = CodeListDetailsSerializer(queryset, many=True)
         serializer = null_value_to_space(serializer)
         return Response(serializer.data, status=status.HTTP_200_OK)

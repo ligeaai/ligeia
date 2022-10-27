@@ -2,6 +2,7 @@ from django.shortcuts import render
 from rest_framework import generics, permissions, status
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.response import Response
+from utils.models_utils import validate_find
 from services.parsers.addData.type import typeAddData
 
 # Create your views here.
@@ -26,22 +27,17 @@ class TypePropertyView(generics.ListAPIView):
         return Response({"Message": "successful"}, status=status.HTTP_200_OK)
 
 
-class TypePropertyDetailView(generics.ListAPIView):
+class TypePropertyDetailView(generics.CreateAPIView):
 
-    queryset = type_property.objects.all()
-    serializer_class = TypePropertyDetailsSerializer
-    authentication_classes = [TokenAuthentication]
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.AllowAny]
 
-    def list(self, request):
-        # Note the use of `get_queryset()` instead of `self.queryset`
-        try:
-            queryset = self.get_queryset()
-            serializer = TypePropertyDetailsSerializer(queryset, many=True)
-
-            return Response(serializer.data, status=status.HTTP_200_OK)
-        except Exception as e:
-            return Response(e)
+    def post(self, request):
+        
+        queryset = type_property.objects.filter(ROW_ID=request.data.get('ROW_ID'))
+        validate_find(queryset)
+        serializer = TypePropertyDetailsSerializer(queryset, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+       
 
 
 class TypePropertyUpdateView(generics.UpdateAPIView):
@@ -52,11 +48,7 @@ class TypePropertyUpdateView(generics.UpdateAPIView):
         filter = request.data.get("FILTER")
         data = request.data.get("ITEMS")
         qs = type_property.objects.filter(**data).update
-
-        # serializer = TypeSaveSerializer(qs, data=data, many=True)
-
-        # if serializer.is_valid():
-        # #     serializer.save()
+    
         return Response({"Message": "Successful Update "}, status=status.HTTP_200_OK)
 
 
@@ -67,8 +59,4 @@ class TypeDeleteeView(generics.DestroyAPIView):
     def delete(self, request, *args, **kwargs):
         filter = request.data.get("FILTER")
         qs = type_property.objects.filter(**filter).delete()
-        # serializer = TypeSaveSerializer(qs, data=data, many=True)
-
-        # if serializer.is_valid():
-        # #     serializer.save()
         return Response({"Message": "Successful Delete "}, status=status.HTTP_200_OK)

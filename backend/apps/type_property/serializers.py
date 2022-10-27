@@ -40,9 +40,9 @@ class TypePropertyCustomSaveSerializer(serializers.Serializer):
         qs = type_property.objects.filter(ROW_ID = validated_data.get('ROW_ID'))
         if qs:
             try:
+                validate_value(validated_data,'TYPE_PROPERTY')
                 qs.update(**validated_data)
             except Exception as e:
-                validate_value(validated_data)
                 raise ValidationError(e)
         else: 
             try:

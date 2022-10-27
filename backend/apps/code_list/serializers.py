@@ -38,9 +38,10 @@ class CodeListCustomSerializer(serializers.Serializer):
         qs = code_list.objects.filter(ROW_ID = validated_data.get('ROW_ID'))
         if qs:
             try:
+                
+                validate_value(validated_data,"CODE_LIST")
                 qs.update(**validated_data)
             except Exception as e:
-                validate_value(validated_data)
                 raise ValidationError(e)
         else: 
             validate_model_not_null(validated_data,"code_list") 

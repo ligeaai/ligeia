@@ -6,6 +6,7 @@ from services.parsers.addData.type import typeAddData
 from utils.utils import redisCaching as Red
 from utils.models_utils import (
                                 validate_model_not_null,
+                                validate_find,
                                 )
 
 # Create your views here.
@@ -33,9 +34,14 @@ class LayerView(generics.ListAPIView):
 
 # Create your views here.
 class LayerModelViewSet(generics.ListAPIView):
-    queryset = layer.objects.all()
-    serializer_class = LayerSaveSerializer
     permission_classes = (permissions.AllowAny,)
+    def get(self, request, *args, **kwargs):
+        queryset = layer.objects.filter(ROW_ID = request.data.get('ROW_ID'))
+        validate_find(queryset)
+        serializer = LayerSaveSerializer(data = queryset,many = True)
+        serializer.is_valid()
+        return Response({"Message": "successful","BODY":serializer.data}, status=status.HTTP_200_OK)
+
 
 
 class LayerUpdateView(generics.UpdateAPIView):

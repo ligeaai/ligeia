@@ -10,6 +10,7 @@ from .models import resource_list
 from services.parsers.addData.type import typeAddData
 from utils.models_utils import (
                                 validate_model_not_null,
+                                validate_find
                                 )
 
 class ResourceListSaveView(generics.CreateAPIView):
@@ -35,18 +36,13 @@ class ResourceListView(generics.ListAPIView):
         return Response({"Message": "successful"}, status=status.HTTP_200_OK)
 
 
-class ResourceListDetailView(generics.ListAPIView):
+class ResourceListDetailView(generics.CreateAPIView):
 
-    queryset = resource_list.objects.all()
-    serializer_class = ResourceListDetailsSerializer
     authentication_classes = []
     permission_classes = []
 
-    def list(self, request):
-        # Note the use of `get_queryset()` instead of `self.queryset`
-        try:
-            queryset = self.get_queryset()
-            serializer = ResourceListDetailsSerializer(queryset, many=True)
-            return Response(serializer.data, status=status.HTTP_200_OK)
-        except Exception as e:
-            return Response(e)
+    def post(self, request):
+        queryset = resource_list.objects.filter(ROW_ID = request.data.get("ROW_ID"))
+        validate_find(queryset)
+        serializer = ResourceListDetailsSerializer(queryset,many = True)
+        return Response({"Message": "successful","BODY":serializer.data}, status=status.HTTP_200_OK)
