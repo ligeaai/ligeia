@@ -33,7 +33,9 @@ import {
   setCodeListChild,
   setIndex,
   setLastItemIndex,
+  setCodeListItems,
   setRowId,
+  cleanCodeListItems,
 } from "../../../../services/reducers/codeListChildReducer";
 
 import {
@@ -45,85 +47,86 @@ import {
   setParentCodeList,
   setIsUpdated,
 } from "../../../../services/reducers/parentCodelist";
-const TreeMenuItem = () => {
-  const dispatch = useDispatch();
-  const [selectedIndex, setSelectedIndex] = React.useState(0);
-  const codeListChild = useSelector((state) => state.codeListChild);
-  function RenderRow(props) {
-    const { data, index, style } = props;
-    useEffect(() => {
-      if (codeListChild.index !== -2) {
-        setSelectedIndex(codeListChild.index);
-        dispatch(
-          setCodeListChild({
-            currentChild: data[codeListChild.index].CODE,
-          })
-        );
+import { getParentCode } from "../../../../services/api/djangoApi/codeList";
 
-        dispatch(
-          setRowId({
-            rowId: data[codeListChild.index].ROW_ID,
-          })
-        );
-      }
-    }, [codeListChild.index]);
-    useEffect(() => {
-      dispatch(
-        setLastItemIndex({
-          lastItem: data.length,
-        })
-      );
-    }, []);
-    return (
-      <ListItem
-        style={style}
-        key={index}
-        component="div"
-        disablePadding
-        sx={{
-          ".MuiButtonBase-root": {
-            py: 0.5,
-          },
+function RenderRow(props) {
+  const dispatch = useDispatch();
+  const { data, index, style } = props;
+  const selectedIndex = useSelector((state) => state.codeListChild.index);
+  return (
+    <ListItem
+      style={style}
+      key={index}
+      component="div"
+      disablePadding
+      sx={{
+        ".MuiButtonBase-root": {
+          py: 0.5,
+        },
+      }}
+    >
+      <ListItemButton
+        selected={selectedIndex === index}
+        onClick={(event) => {
+          dispatch(
+            setIndex({
+              index: index,
+            })
+          );
+          dispatch(
+            setCodeListChild({
+              currentChild: data[index].CODE,
+            })
+          );
         }}
       >
-        <ListItemButton
-          selected={selectedIndex === index}
-          onClick={(event) => {
-            dispatch(
-              setIndex({
-                index: index,
-              })
-            );
+        <ListItemText
+          primary={`${data[index].CODE_TEXT}`}
+          sx={{
+            span: {
+              fontSize: "12px",
+              overflow: "hidden",
+              whiteSpace: "nowrap",
+              textOverflow: "ellipsis",
+            },
           }}
-        >
-          <ListItemText
-            primary={`${data[index].CODE_TEXT}`}
-            sx={{
-              span: {
-                fontSize: "12px",
-                overflow: "hidden",
-                whiteSpace: "nowrap",
-                textOverflow: "ellipsis",
-              },
-            }}
-          />
-        </ListItemButton>
-      </ListItem>
-    );
-  }
-  const parentCodelist = useSelector((state) => state.parentCodelist.isUpdated);
-  const isFullScreen = useSelector((state) => state.fullScreen.isFullScreen);
+        />
+      </ListItemButton>
+    </ListItem>
+  );
+}
+
+const TreeMenuItem = () => {
+  const dispatch = useDispatch();
+  const codeListChild = useSelector((state) => state.codeListChild);
   const culture = useSelector((state) => state.lang.cultur);
+  const isFullScreen = useSelector((state) => state.fullScreen.isFullScreen);
   const [treeItem, setTreeItem] = React.useState(false);
   React.useEffect(() => {
     dispatch(setLoaderTrue());
     const getData = async () => {
       let data = await getParentCodeList(culture);
       setTreeItem(data);
+      console.log(data);
+      dispatch(cleanCodeListItems());
+      var c = data.data.sort((a, b) => (a.CODE_TEXT > b.CODE_TEXT ? 1 : -1));
+      c.map((e) => {
+        dispatch(setCodeListItems(e.ROW_ID));
+      });
+      dispatch(
+        setCodeListChild({
+          currentChild: data.data[0].CODE,
+        })
+      );
+      dispatch(
+        setRowId({
+          rowId: data.data[0].ROW_ID,
+        })
+      );
       dispatch(setLoaderFalse());
     };
     getData();
-  }, [codeListChild.lastItem, parentCodelist]);
+  }, [codeListChild.lastItem]);
   if (treeItem) {
     return (
       <Box
@@ -263,10 +266,58 @@ const MyActionMenu = () => {
         parentCodeList.LAST_UPDT_USER,
         parentCodeList.LAST_UPDT_DATE
       );
+      dispatch(setCodeListItems(parentCodeList.ROW_ID));
       dispatch(setIsUpdated(false));
     }
   };
-  const saveGoPrev = () => {
+  React.useEffect(() => {
+    const myFunc = async () => {
+      let myData = await getParentCode(
+        culture,
+        codeListChild.codeListItems[codeListChild.index]
+      );
+
+      dispatch(
+        setParentCodeList({
+          ROW_ID: myData.ROW_ID,
+          LIST_TYPE: myData.LIST_TYPE,
+          CULTURE: myData.CULTURE,
+          CODE: myData.CODE,
+          CODE_TEXT: myData.CODE_TEXT,
+          PARENT: myData.PARENT,
+          LEGACY_CODE: myData.LEGACY_CODE,
+          VAL1: myData.VAL1,
+          VAL2: myData.VAL2,
+          VAL3: myData.VAL3,
+          VAL4: myData.VAL4,
+          VAL5: myData.VAL5,
+          VAL6: myData.VAL6,
+          VAL7: myData.VAL7,
+          VAL8: myData.VAL8,
+          VAL9: myData.VAL9,
+          VAL10: myData.VAL10,
+          DATE1: myData.DATE1,
+          DATE2: myData.DATE2,
+          DATE3: myData.DATE3,
+          DATE4: myData.DATE4,
+          DATE5: myData.DATE5,
+          CHAR1: myData.CHAR1,
+          CHAR2: myData.CHAR2,
+          CHAR3: myData.CHAR3,
+          CHAR4: myData.CHAR4,
+          CHAR5: myData.CHAR5,
+          LAYER_NAME: myData.LAYER_NAME,
+          DESCRIPTION_ID: myData.DESCRIPTION_ID,
+          HIDDEN: myData.HIDDEN,
+          LAST_UPDT_USER: myData.LAST_UPDT_USER,
+          LAST_UPDT_DATE: myData.LAST_UPDT_DATE,
+        })
+      );
+      dispatch(setCodeListChild({ currentChild: myData.CODE }));
+    };
+    myFunc();
+  }, [codeListChild.rowId]);
+  const saveGoPrev = async () => {
     save();
     dispatch(
       setIndex({

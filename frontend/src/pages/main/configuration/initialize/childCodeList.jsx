@@ -44,29 +44,55 @@ const DataGridDemo = () => {
   const childCodeList = useSelector((state) => state.childCodeList);
   const [refreshDataGrid, setRefreshDataGrid] = React.useState(true);
   var checkboxSelection = [];
+
+  const createPutBody = async (e) => {
+    await putCodeList(
+      e.CODE,
+      e.CODE_TEXT,
+      e.CULTURE,
+      e.LIST_TYPE,
+      e.ROW_ID,
+      e.PARENT,
+      e.LEGACY_CODE,
+      e.VAL1,
+      e.VAL2,
+      e.VAL3,
+      e.VAL4,
+      e.VAL5,
+      e.VAL6,
+      e.VAL7,
+      e.VAL8,
+      e.VAL9,
+      e.VAL10,
+      e.DATE1,
+      e.DATE2,
+      e.DATE3,
+      e.DATE4,
+      e.DATE5,
+      e.CHAR1,
+      e.CHAR2,
+      e.CHAR3,
+      e.CHAR4,
+      e.CHAR5,
+      e.LAYER_NAME,
+      e.DESCRIPTION_ID,
+      e.HIDDEN,
+      e.LAST_UPDT_USER,
+      e.LAST_UPDT_DATE
+    );
+  };
+
   const save = async () => {
     await Promise.all(
       Object.keys(childCodeList.newItems).map(async (e) => {
-        await putCodeList(
-          childCodeList.newItems[e].CODE,
-          childCodeList.newItems[e].CODE_TEXT,
-          childCodeList.newItems[e].CULTURE,
-          childCodeList.newItems[e].LIST_TYPE,
-          childCodeList.newItems[e].ROW_ID
-        );
+        await createPutBody(childCodeList.newItems[e]);
       })
     );
     await Promise.all(
       Object.keys(childCodeList.dataGridItems).map(async (e) => {
         Object.keys(childCodeList.changedItems).map(async (a) => {
           if (childCodeList.changedItems[a] === e) {
-            await putCodeList(
-              childCodeList.dataGridItems[e].CODE,
-              childCodeList.dataGridItems[e].CODE_TEXT,
-              childCodeList.dataGridItems[e].CULTURE,
-              childCodeList.dataGridItems[e].LIST_TYPE,
-              childCodeList.dataGridItems[e].ROW_ID
-            );
+            await createPutBody(childCodeList.dataGridItems[e]);
           }
         });
       })
@@ -109,9 +135,9 @@ const DataGridDemo = () => {
       });
       dispatch(setLoaderTrue);
     };
-    history.push(`${codeListChild.currentChild.toLowerCase()}`);
+
     getData();
-  }, [codeListChild, refreshDataGrid]);
+  }, [codeListChild.currentChild, refreshDataGrid]);
 
   const StyledGridOverlay = styled("div")(({ theme }) => ({
     display: "flex",
@@ -349,7 +375,7 @@ const childCodeList = () => {
   return (
     <Box
       sx={{
-        width: "3272px",
+        width: "3272x",
         minHeight: "calc(500px - 36px - 16px - 40px - 125px)",
         height: "calc(100vh - 60px - 36px - 16px - 44px - 125px)",
         "& .super-app-theme--cell": {

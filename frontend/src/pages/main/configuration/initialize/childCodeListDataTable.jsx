@@ -56,6 +56,9 @@ function Row() {
     "LAST_UPDT_USER",
     "LAST_UPDT_DATE",
   ];
+  React.useEffect(() => {
+    history.push(`${codeListChild.currentChild.toLowerCase()}`);
+  }, [codeListChild.rowId]);
   return (
     <React.Fragment>
       <TableRow
@@ -76,7 +79,7 @@ function Row() {
       >
         <TableCell
           sx={{
-            width: "auto !important",
+            width: "40px !important",
             padding: "0px !important",
             display: "flex",
             justifyContent: "center",
@@ -101,7 +104,7 @@ function Row() {
       </TableRow>
       {codeListChild.index >= 0 ? (
         <TableRow>
-          <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={33}>
+          <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={32}>
             <Collapse in={open} timeout="auto" unmountOnExit>
               <ChildCodeList />
             </Collapse>
@@ -115,60 +118,6 @@ function Row() {
 }
 
 export default function CollapsibleTable() {
-  const dispatch = useDispatch();
-  const [rows, setRows] = React.useState(false);
-  const codeListChild = useSelector((state) => state.codeListChild);
-  const culture = useSelector((state) => state.lang.cultur);
-  React.useEffect(() => {
-    setRows(false);
-    dispatch(setLoaderTrue);
-    const getData = async () => {
-      let data = await getParentCode(culture, codeListChild.rowId);
-      setRows(data);
-      dispatch(
-        setParentCodeList({
-          ROW_ID: data.ROW_ID,
-          LIST_TYPE: data.LIST_TYPE,
-          CULTURE: data.CULTURE,
-          CODE: data.CODE,
-          CODE_TEXT: data.CODE_TEXT,
-          PARENT: data.PARENT,
-          LEGACY_CODE: data.LEGACY_CODE,
-          VAL1: data.VAL1,
-          VAL2: data.VAL2,
-          VAL3: data.VAL3,
-          VAL4: data.VAL4,
-          VAL5: data.VAL5,
-          VAL6: data.VAL6,
-          VAL7: data.VAL7,
-          VAL8: data.VAL8,
-          VAL9: data.VAL9,
-          VAL10: data.VAL10,
-          DATE1: data.DATE1,
-          DATE2: data.DATE2,
-          DATE3: data.DATE3,
-          DATE4: data.DATE4,
-          DATE5: data.DATE5,
-          CHAR1: data.CHAR1,
-          CHAR2: data.CHAR2,
-          CHAR3: data.CHAR3,
-          CHAR4: data.CHAR4,
-          CHAR5: data.CHAR5,
-          LAYER_NAME: data.LAYER_NAME,
-          DESCRIPTION_ID: data.DESCRIPTION_ID,
-          HIDDEN: data.HIDDEN,
-          LAST_UPDT_USER: data.LAST_UPDT_USER,
-          LAST_UPDT_DATE: data.LAST_UPDT_DATE,
-        })
-      );
-      dispatch(setLoaderTrue);
-    };
-    history.push(`${codeListChild.currentChild.toLowerCase()}`);
-    if (codeListChild.index >= 0) {
-      getData();
-    }
-  }, [codeListChild.rowId]);
-
   return (
     <Box sx={{ owerflow: "scroll", m: 0 }}>
       <TableContainer
@@ -180,12 +129,11 @@ export default function CollapsibleTable() {
           height: "calc(100vh - 60px - 36px - 16px - 44px)",
         }}
       >
-        <Table aria-label="collapsible table">
+        <Table aria-label="collapsible table" sx={{ width: "3300px" }}>
           <TableHead>
             <TableRow
               sx={{
                 th: {
-                  width: "100px",
                   p: 1,
                   overflow: "hidden",
                   whiteSpace: "nowrap",
@@ -193,7 +141,7 @@ export default function CollapsibleTable() {
                 },
               }}
             >
-              <TableCell sx={{ width: "50px !important" }} />
+              <TableCell sx={{ width: "40px !important" }} />
               <TableCell>List Type</TableCell>
               <TableCell>Culture</TableCell>
               <TableCell>Code</TableCell>

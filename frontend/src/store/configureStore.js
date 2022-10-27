@@ -38,5 +38,5 @@ export default configureStore({
         type: typeReducer,
         typeText: typeTextReducer
     },
-    middleware: [thunk]
+    middleware: [thunk, logger]
 })
