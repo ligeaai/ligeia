@@ -100,10 +100,10 @@ class CodeListDeepDetailView(generics.CreateAPIView):
     def _get_child(self, data,respons_value,index):
         for item in data:
             childItem = []
-            childItem.append(item.get('CODE'))
             if index == 1:
                 childItem.append(item.get('LIST_TYPE'))
             
+            childItem.append(item.get('CODE'))
             item['HIERARCHY'] = childItem
             respons_value.append(item)
             queryset = code_list.objects.filter(
