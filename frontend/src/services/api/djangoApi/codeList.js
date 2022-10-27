@@ -19,16 +19,15 @@ export const getParentCodeList = async (CULTURE) => {
 
 
 export const getParentCode = async (CULTURE, ROW_ID) => {
-    const body = JSON.stringify({ CULTURE, ROW_ID });
+    const body = JSON.stringify({ ROW_ID });
     try {
         let res = await instance
             .post(
-                "/code-list/details/",
+                "/code-list/deep-details/",
                 body,
                 config
             )
-        var i = 0;
-        return res.data[0]
+        return res
 
 
 
@@ -73,15 +72,20 @@ export const deleteCodeList = async (ROW_ID) => {
     }
 }
 
-export const putCodeList = async (CODE, CODE_TEXT, CULTURE, LIST_TYPE, ROW_ID, PARENT, LEGACY_CODE, VAL1, VAL2,
-    VAL3, VAL4, VAL5, VAL6, VAL7, VAL8, VAL9, VAL10, DATE1, DATE2, DATE3, DATE4, DATE5, CHAR1, CHAR2, CHAR3, CHAR4, CHAR5,
-    LAYER_NAME, DESCRIPTION_ID, HIDDEN, LAST_UPDT_USER, LAST_UPDT_DATE) => {
+export const putCodeList = async (CODE, CODE_TEXT, CULTURE, LIST_TYPE, ROW_ID, PARENT, LEGACY_CODE, VAL1,
+    // VAL2,
+    //VAL3, VAL4, VAL5, VAL6, VAL7, VAL8, VAL9, VAL10, DATE1, DATE2, DATE3, DATE4, DATE5, CHAR1, CHAR2, CHAR3, CHAR4, CHAR5,
+    LAYER_NAME
+    //, DESCRIPTION_ID, HIDDEN, LAST_UPDT_USER, LAST_UPDT_DATE
+) => {
     const body = JSON.stringify({
-        LIST_TYPE, CULTURE, CODE, CODE_TEXT, ROW_ID, PARENT, LEGACY_CODE, VAL1, VAL2,
-        VAL3, VAL4, VAL5, VAL6, VAL7, VAL8, VAL9, VAL10, DATE1, DATE2, DATE3, DATE4, DATE5, CHAR1, CHAR2, CHAR3, CHAR4, CHAR5,
-        LAYER_NAME, DESCRIPTION_ID, HIDDEN, LAST_UPDT_USER, LAST_UPDT_DATE
+        LIST_TYPE, CULTURE, CODE, CODE_TEXT, ROW_ID, PARENT, LEGACY_CODE, VAL1,
+        // VAL2,
+        // VAL3, VAL4, VAL5, VAL6, VAL7, VAL8, VAL9, VAL10, DATE1, DATE2, DATE3, DATE4, DATE5, CHAR1, CHAR2, CHAR3, CHAR4, CHAR5,
+        LAYER_NAME,
+        // DESCRIPTION_ID, HIDDEN, LAST_UPDT_USER, LAST_UPDT_DATE
     });
-    console.log(VAL1);
+    console.log(body);
     try {
         let res = await instance
             .put(

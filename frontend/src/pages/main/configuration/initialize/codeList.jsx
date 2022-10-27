@@ -35,7 +35,7 @@ import {
 } from "../../../../services/reducers/codeListChildReducer";
 
 import MyActionMenu from "./codelistActionMenu";
-
+import DataGridPro from "./dataGridPro";
 function RenderRow(props) {
   const dispatch = useDispatch();
   const { data, index, style } = props;
@@ -204,12 +204,9 @@ const CodeList = () => {
             <MyActionMenu />
           </Box>
           <ItemSperatorLineXL />
-          <Grid item xs={12}>
+          <Grid item xs={12} sx={{ mt: 1 }}>
             <ComponentError errMsg="Error">
-              <PropLinkTabs
-                MyProperties={<ChildCodeListDataTable />}
-                isLinkOpen={false}
-              />
+              <PropLinkTabs MyProperties={<DataGridPro />} isLinkOpen={false} />
             </ComponentError>
           </Grid>
         </Grid>

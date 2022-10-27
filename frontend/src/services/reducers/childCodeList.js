@@ -6,9 +6,14 @@ export const childCodeList = createSlice({
         dataGridItems: {},
         changedItems: [],
         deletedItems: [],
-        newItems: {}
+        newItems: {},
+        loading: true,
+        refreshDataGrid: true,
     },
     reducers: {
+        setRefreshDataGrid: (state) => {
+            state.refreshDataGrid = !state.refreshDataGrid
+        },
         setDataGridItems: (state, payload) => {
             state.dataGridItems[payload.payload.key] = payload.payload.value
         },
@@ -20,7 +25,7 @@ export const childCodeList = createSlice({
             delete state.dataGridItems[payload.payload];
             state.deletedItems = [...new Set([...state.deletedItems, payload.payload])]
         },
-        cleanDataGridItems: (state, payload) => {
+        cleanDataGridItems: (state) => {
             state.dataGridItems = {}
             state.changedItems = []
             state.deletedItems = []
@@ -29,11 +34,15 @@ export const childCodeList = createSlice({
         changeDataGridItems: (state, payload) => {
             state.dataGridItems[payload.payload.id][payload.payload.field] = payload.payload.value;
             state.changedItems = [...new Set([...state.changedItems, payload.payload.id])]
-        }
+        },
+        setLoading: (state, payload) => {
+            state.loading = payload.payload
+        },
+
     },
 })
 
 // Action creators are generated for each case reducer function
-export const { cleanDataGridItems, setDataGridItems, setDeletedItem, setNewItem, changeDataGridItems } = childCodeList.actions
+export const { setRefreshDataGrid, cleanDataGridItems, setDataGridItems, setDeletedItem, setNewItem, changeDataGridItems, setLoading } = childCodeList.actions
 
 export default childCodeList.reducer

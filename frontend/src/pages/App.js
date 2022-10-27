@@ -9,6 +9,12 @@ import { loadUser } from "../services/actions/auth";
 import { ErrorBoundary } from "../components/errorMessage/errorBoundary"
 
 import history from "../routers/history";
+import { LicenseInfo } from "@mui/x-data-grid-pro";
+
+LicenseInfo.setLicenseKey(
+  "c637ab57aafc18858637cdde132c6c6fTz01MzI2NyxFPTE2OTg0OTQ5NTE2MjMsUz1wcm8sTE09c3Vic2NyaXB0aW9uLEtWPTI="
+);
+
 const App = () => {
   const dispatch = useDispatch();
   useEffect(() => {
