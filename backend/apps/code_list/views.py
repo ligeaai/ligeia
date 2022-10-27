@@ -88,22 +88,28 @@ class CodeListDeepDetailView(generics.CreateAPIView):
     permission_classes = [permissions.AllowAny]
 
     def post(self, request, *args, **kwargs):
-        cache_key = request.data.get("LIST_TYPE") + request.data.get("CULTURE")
+        # cache_key = request.data.get("LIST_TYPE") + request.data.get("CULTURE")
         queryset = code_list.objects.filter(
-            LIST_TYPE=request.data.get("LIST_TYPE"), CULTURE=request.data.get("CULTURE")
+            ROW_ID = request.data.get('ROW_ID')
         )
         serializer = CodeListDetailsSerializer(queryset, many=True)
-        for index in range(0, len(serializer.data)):
-            self._get_child(serializer.data[index])
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        respons_value = []
+        respons_value = self._get_child(serializer.data,respons_value,0)
+        return Response(respons_value, status=status.HTTP_200_OK)
 
-    def _get_child(self, data):
-        queryset = code_list.objects.filter(
-            LIST_TYPE=data.get("CODE"), CULTURE=data.get("CULTURE")
-        )
-        serializer = CodeListDetailsSerializer(queryset, many=True)
-        data["CHILD"] = serializer.data
-        for index in serializer.data:
-            tempt = index
-            self._get_child(tempt)
-        return data
+    def _get_child(self, data,respons_value,index):
+        for item in data:
+            childItem = []
+            childItem.append(item.get('CODE'))
+            if index == 1:
+                childItem.append(item.get('LIST_TYPE'))
+            
+            item['HIERARCHY'] = childItem
+            respons_value.append(item)
+            queryset = code_list.objects.filter(
+            LIST_TYPE=item.get("CODE"), CULTURE=item.get("CULTURE")
+            )
+            serializer = CodeListDetailsSerializer(queryset, many=True)
+            self._get_child(serializer.data,respons_value,1)
+        return respons_value
+ 
