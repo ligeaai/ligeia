@@ -18,11 +18,14 @@ import { getParentCode } from "../../../../services/api/djangoApi/codeList";
 import history from "../../../../routers/history";
 import ChildCodeList from "./childCodeList";
 
+import { setCodeListChild } from "../../../../services/reducers/codeListChildReducer";
 import { setParentCodeList } from "../../../../services/reducers/parentCodelist";
 import MyTextField from "./myTextField";
 function Row() {
+  const dispatch = useDispatch();
   const [open, setOpen] = React.useState(true);
   const codeListChild = useSelector((state) => state.codeListChild);
+  const culture = useSelector((state) => state.lang.cultur);
   const myKeys = [
     "LIST_TYPE",
     "CULTURE",

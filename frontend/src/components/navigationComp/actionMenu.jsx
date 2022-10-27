@@ -15,7 +15,7 @@ const actionIcon = (props) => {
   const { btnNew, deleteParent, save, saveGoPrev, saveGoNext } = props;
   const icons = [
     { Icon: AddBoxOutlinedIcon, tooltip: "New", function: btnNew },
-    { Icon: AddToPhotosOutlinedIcon, tooltip: "Duplicate" },
+    // { Icon: AddToPhotosOutlinedIcon, tooltip: "Duplicate" },
     { Icon: SaveOutlinedIcon, tooltip: "Save", function: save },
     { Icon: DeleteOutlineIcon, tooltip: "Delete", function: deleteParent },
     {
