@@ -163,7 +163,8 @@ const CodelistActionMenu = () => {
       save={save}
       saveGoPrev={saveGoPrev}
       saveGoNext={saveGoNext}
-      deleteParent={deleteParent}
+      btnDelete={deleteParent}
+      dublicateIsActive={false}
     />
   );
 };

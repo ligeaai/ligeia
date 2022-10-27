@@ -12,23 +12,66 @@ import ArrowCircleRightOutlinedIcon from "@mui/icons-material/ArrowCircleRightOu
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 
 const actionIcon = (props) => {
-  const { btnNew, deleteParent, save, saveGoPrev, saveGoNext } = props;
+  const defaultFunction = () => {};
+  const {
+    btnNew = defaultFunction(),
+    btnNewIsActive = true,
+    dublicate = defaultFunction(),
+    dublicateIsActive = true,
+    save = defaultFunction(),
+    saveIsActive = true,
+    btnDelete = defaultFunction(),
+    btnDeleteIsActive = true,
+    saveGoPrev = defaultFunction(),
+    saveGoPrevIsActive = true,
+    saveGoNext = defaultFunction(),
+    saveGoNextIsActive = true,
+    info = defaultFunction(),
+    infoIsActive = true,
+  } = props;
   const icons = [
-    { Icon: AddBoxOutlinedIcon, tooltip: "New", function: btnNew },
-    // { Icon: AddToPhotosOutlinedIcon, tooltip: "Duplicate" },
-    { Icon: SaveOutlinedIcon, tooltip: "Save", function: save },
-    { Icon: DeleteOutlineIcon, tooltip: "Delete", function: deleteParent },
+    {
+      Icon: AddBoxOutlinedIcon,
+      tooltip: "New",
+      function: btnNew,
+      isActive: btnNewIsActive,
+    },
+    {
+      Icon: AddToPhotosOutlinedIcon,
+      tooltip: "Duplicate",
+      function: dublicate,
+      isActive: dublicateIsActive,
+    },
+    {
+      Icon: SaveOutlinedIcon,
+      tooltip: "Save",
+      function: save,
+      isActive: saveIsActive,
+    },
+    {
+      Icon: DeleteOutlineIcon,
+      tooltip: "Delete",
+      function: btnDelete,
+      isActive: btnDeleteIsActive,
+    },
     {
       Icon: ArrowCircleLeftOutlinedIcon,
       tooltip: "Save, Go Previous",
       function: saveGoPrev,
+      isActive: saveGoPrevIsActive,
     },
     {
       Icon: ArrowCircleRightOutlinedIcon,
       tooltip: "Save, Go Next",
       function: saveGoNext,
+      isActive: saveGoNextIsActive,
     },
-    { Icon: InfoOutlinedIcon, tooltip: "Item Info" },
+    {
+      Icon: InfoOutlinedIcon,
+      tooltip: "Item Info",
+      function: info,
+      isActive: infoIsActive,
+    },
   ];
   return (
     <Grid container sx={{ alignItems: "center" }}>
@@ -39,6 +82,7 @@ const actionIcon = (props) => {
           componentsProps={{
             tooltip: { sx: { backgroundColor: "primary.dark" } },
           }}
+          sx={{ display: Element.isActive ? "flex" : "none" }}
         >
           <IconButton
             onClick={() => {

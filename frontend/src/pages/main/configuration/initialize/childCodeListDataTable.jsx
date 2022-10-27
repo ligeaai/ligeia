@@ -60,6 +60,51 @@ function Row() {
     "LAST_UPDT_DATE",
   ];
   React.useEffect(() => {
+    const myFunc = async () => {
+      let myData = await getParentCode(
+        culture,
+        codeListChild.codeListItems[codeListChild.index]
+      );
+
+      dispatch(
+        setParentCodeList({
+          ROW_ID: myData.ROW_ID,
+          LIST_TYPE: myData.LIST_TYPE,
+          CULTURE: myData.CULTURE,
+          CODE: myData.CODE,
+          CODE_TEXT: myData.CODE_TEXT,
+          PARENT: myData.PARENT,
+          LEGACY_CODE: myData.LEGACY_CODE,
+          VAL1: myData.VAL1,
+          VAL2: myData.VAL2,
+          VAL3: myData.VAL3,
+          VAL4: myData.VAL4,
+          VAL5: myData.VAL5,
+          VAL6: myData.VAL6,
+          VAL7: myData.VAL7,
+          VAL8: myData.VAL8,
+          VAL9: myData.VAL9,
+          VAL10: myData.VAL10,
+          DATE1: myData.DATE1,
+          DATE2: myData.DATE2,
+          DATE3: myData.DATE3,
+          DATE4: myData.DATE4,
+          DATE5: myData.DATE5,
+          CHAR1: myData.CHAR1,
+          CHAR2: myData.CHAR2,
+          CHAR3: myData.CHAR3,
+          CHAR4: myData.CHAR4,
+          CHAR5: myData.CHAR5,
+          LAYER_NAME: myData.LAYER_NAME,
+          DESCRIPTION_ID: myData.DESCRIPTION_ID,
+          HIDDEN: myData.HIDDEN,
+          LAST_UPDT_USER: myData.LAST_UPDT_USER,
+          LAST_UPDT_DATE: myData.LAST_UPDT_DATE,
+        })
+      );
+      dispatch(setCodeListChild({ currentChild: myData.CODE }));
+    };
+    myFunc();
     history.push(`${codeListChild.currentChild.toLowerCase()}`);
   }, [codeListChild.rowId]);
   return (

@@ -102,7 +102,48 @@ const DataGridDemo = () => {
     });
     setRefreshDataGrid(!refreshDataGrid);
   };
-
+  const mySetNewItem = () => {
+    var uuid = uuidv4();
+    dispatch(
+      setNewItem({
+        uuid: uuid.replace(/-/g, ""),
+        value: {
+          ROW_ID: uuid.replace(/-/g, ""),
+          LIST_TYPE: codeListChild.currentChild,
+          CULTURE: culture,
+          CODE: "",
+          CODE_TEXT: "",
+          PARENT: "",
+          LEGACY_CODE: "",
+          VAL1: "",
+          VAL2: "",
+          VAL3: "",
+          VAL4: "",
+          VAL5: "",
+          VAL6: "",
+          VAL7: "",
+          VAL8: "",
+          VAL9: "",
+          VAL10: "",
+          DATE1: "",
+          DATE2: "",
+          DATE3: "",
+          DATE4: "",
+          DATE5: "",
+          CHAR1: "",
+          CHAR2: "",
+          CHAR3: "",
+          CHAR4: "",
+          CHAR5: "",
+          LAYER_NAME: "",
+          DESCRIPTION_ID: "",
+          HIDDEN: "",
+          LAST_UPDT_USER: "",
+          LAST_UPDT_DATE: "",
+        },
+      })
+    );
+  };
   const deleteChildAgreeFunc = async () => {
     dispatch(setLoaderTrue());
     checkboxSelection.map((e) => {
@@ -230,23 +271,7 @@ const DataGridDemo = () => {
                 tooltip: { sx: { backgroundColor: "primary.dark" } },
               }}
             >
-              <IconButton
-                onClick={() => {
-                  var uuid = uuidv4();
-                  dispatch(
-                    setNewItem({
-                      uuid: uuid.replace(/-/g, ""),
-                      value: {
-                        ROW_ID: uuid.replace(/-/g, ""),
-                        LIST_TYPE: codeListChild.currentChild,
-                        CULTURE: culture,
-                        CODE: "",
-                        CODE_TEXT: "",
-                      },
-                    })
-                  );
-                }}
-              >
+              <IconButton onClick={mySetNewItem}>
                 <AddBoxIcon fontSize="small" sx={{ color: "#4B4B4B" }} />
               </IconButton>
             </Tooltip>
