@@ -6,7 +6,7 @@ import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import DashboardCustomizeOutlinedIcon from "@mui/icons-material/DashboardCustomizeOutlined";
 
-const Properties = ({ MyProperties }) => {
+const Properties = ({ MyProperties, isLinkOpen = true }) => {
   const [view, setView] = React.useState("Properties");
   const [isHover, setIsHover] = React.useState("");
   const handleChange = (event, nextView) => {
@@ -77,6 +77,37 @@ const Properties = ({ MyProperties }) => {
               )}
             </Typography>
           </ToggleButton>
+          <ToggleButton
+            value="Links"
+            aria-label="links"
+            sx={{ p: 1, display: isLinkOpen ? "flex" : "none" }}
+            onMouseEnter={() => {
+              handleMouseEnter("Links");
+            }}
+            onMouseLeave={handleMouseLeave}
+          >
+            <Typography
+              variant="body2"
+              sx={{
+                color: "#4B4B4B",
+                writingMode: "vertical-rl",
+                WebkitTransform: "rotate(180deg)",
+                MozTransform: "rotate(180deg)",
+                OTransform: "rotate(180deg)",
+                msTransform: "rotate(180deg)",
+                textTransform: "capitalize",
+                fontWeight: "bold",
+              }}
+            >
+              {view === "Links" || isHover === "Links" ? (
+                <>
+                  <DashboardCustomizeOutlinedIcon /> Links
+                </>
+              ) : (
+                <DashboardCustomizeOutlinedIcon />
+              )}
+            </Typography>
+          </ToggleButton>
         </ToggleButtonGroup>
       </Grid>
       <Grid
@@ -88,6 +119,7 @@ const Properties = ({ MyProperties }) => {
         }}
       >
         {view === "Properties" ? MyProperties : <></>}
+        {view === "Links" ? <Grid>Links</Grid> : <></>}
       </Grid>
     </Grid>
   );

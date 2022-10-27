@@ -206,7 +206,10 @@ const CodeList = () => {
           <ItemSperatorLineXL />
           <Grid item xs={12}>
             <ComponentError errMsg="Error">
-              <PropLinkTabs MyProperties={<ChildCodeListDataTable />} />
+              <PropLinkTabs
+                MyProperties={<ChildCodeListDataTable />}
+                isLinkOpen={false}
+              />
             </ComponentError>
           </Grid>
         </Grid>
