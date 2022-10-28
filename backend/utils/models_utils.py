@@ -26,11 +26,11 @@ def validate_model_not_null(data,model):
         
         
 def null_value_to_space(serializer):
-    for index in range(0, len(serializer.data)):
-        item = serializer.data[index]
+    for index in range(0, len(serializer)):
+        item = serializer[index]
         for keys, value in item.items():
             if value is None or value == "NONE":
-                serializer.data[index][keys] = ""
+                serializer[index][keys] = ""
     return serializer
 
 def validate_value(validated_data,model):

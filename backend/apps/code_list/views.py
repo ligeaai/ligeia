@@ -62,8 +62,8 @@ class CodeListDetailView(generics.CreateAPIView):
                     )
         validate_find(queryset)
         serializer = CodeListDetailsSerializer(queryset, many=True)
-        serializer = null_value_to_space(serializer)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        serializer = null_value_to_space(serializer.data)
+        return Response(serializer, status=status.HTTP_200_OK)
     
     
     
@@ -88,28 +88,40 @@ class CodeListDeepDetailView(generics.CreateAPIView):
     permission_classes = [permissions.AllowAny]
 
     def post(self, request, *args, **kwargs):
-        # cache_key = request.data.get("LIST_TYPE") + request.data.get("CULTURE")
+        cache_key = request.data.get('ROW_ID')
+        # cache_data = Red.get(cache_key)
+        # print(cache_data)
+        # if cache_data:
+        #     return Response(cache_data, status=status.HTTP_200_OK)
         queryset = code_list.objects.filter(
             ROW_ID = request.data.get('ROW_ID')
         )
         serializer = CodeListDetailsSerializer(queryset, many=True)
         respons_value = []
-        respons_value = self._get_child(serializer.data,respons_value,0)
+        respons_value = self._get_child(serializer.data,respons_value,0,None)
+        respons_value = null_value_to_space(respons_value)
+        Red.set(cache_key, respons_value)
         return Response(respons_value, status=status.HTTP_200_OK)
 
-    def _get_child(self, data,respons_value,index):
+    def _get_child(self, data,respons_value,index,parent):
         for item in data:
             childItem = []
+            if parent is not None and item.get('LIST_TYPE') != parent :
+                childItem.append(parent)
             if index == 1:
                 childItem.append(item.get('LIST_TYPE'))
-            
             childItem.append(item.get('CODE'))
+                
             item['HIERARCHY'] = childItem
-            respons_value.append(item)
+            if item.get('LIST_TYPE') != 'CODE_LIST':    
+                respons_value.append(item)
+            
+            if index == 0:
+                respons_value.append(item)
             queryset = code_list.objects.filter(
             LIST_TYPE=item.get("CODE"), CULTURE=item.get("CULTURE")
             )
             serializer = CodeListDetailsSerializer(queryset, many=True)
-            self._get_child(serializer.data,respons_value,1)
+            self._get_child(serializer.data,respons_value,1,childItem[0])
         return respons_value
  
