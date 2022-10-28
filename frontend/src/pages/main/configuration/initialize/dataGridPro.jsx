@@ -44,6 +44,7 @@ export default function TreeDataWithGap() {
   const childCodeList = useSelector((state) => state.childCodeList);
   const culture = useSelector((state) => state.lang.cultur);
   const [newItemNum, setNewItemNum] = React.useState(1);
+  const userEmail = useSelector((state) => state.auth.user.email);
   var myCheckboxSelection = [];
   function CustomToolbar() {
     const codeListChildCurrentChild = useSelector(
@@ -68,28 +69,12 @@ export default function TreeDataWithGap() {
             VAL1: "",
             VAL2: "",
             VAL3: "",
-            VAL4: "",
-            VAL5: "",
-            VAL6: "",
-            VAL7: "",
-            VAL8: "",
-            VAL9: "",
-            VAL10: "",
             DATE1: "",
             DATE2: "",
-            DATE3: "",
-            DATE4: "",
-            DATE5: "",
             CHAR1: "",
             CHAR2: "",
-            CHAR3: "",
-            CHAR4: "",
-            CHAR5: "",
             LAYER_NAME: "",
-            DESCRIPTION_ID: "",
-            HIDDEN: "",
-            LAST_UPDT_USER: "",
-            LAST_UPDT_DATE: "",
+            LAST_UPDT_USER: userEmail,
           },
         })
       );
@@ -214,10 +199,10 @@ export default function TreeDataWithGap() {
       dispatch(setLoading(false));
     };
     myFunc();
-  }, [codeListChild.rowId, codeListChild.refreshDataGrid]);
+  }, [codeListChild.refreshDataGrid, codeListChild.rowId]);
   React.useEffect(() => {
     history.push(`${codeListChild.currentChild.toLowerCase()}`);
-  }, [codeListChild.index]);
+  }, [codeListChild.index, codeListChild.refreshDataGrid]);
   const onCellEditCommit = (cellData) => {
     const { id, field, value } = cellData;
     dispatch(changeDataGridItems({ id, field, value }));

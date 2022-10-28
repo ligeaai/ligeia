@@ -86,6 +86,9 @@ function RenderRow(props) {
 const TreeMenuItem = () => {
   const dispatch = useDispatch();
   const codeListChild = useSelector((state) => state.codeListChild);
+  const childCodeListRefresh = useSelector(
+    (state) => state.childCodeList.refreshDataGrid
+  );
   const culture = useSelector((state) => state.lang.cultur);
   const isFullScreen = useSelector((state) => state.fullScreen.isFullScreen);
   const [treeItem, setTreeItem] = React.useState(false);
@@ -93,25 +96,14 @@ const TreeMenuItem = () => {
     const getData = async () => {
       let data = await getParentCodeList(culture);
       setTreeItem(data);
-      console.log(data);
       dispatch(cleanCodeListItems());
       var c = data.data.sort((a, b) => (a.CODE_TEXT > b.CODE_TEXT ? 1 : -1));
       c.map((e) => {
         dispatch(setCodeListItems(e.ROW_ID));
       });
-      dispatch(
-        setCodeListChild({
-          currentChild: data.data[0].CODE,
-        })
-      );
-      dispatch(
-        setRowId({
-          rowId: data.data[0].ROW_ID,
-        })
-      );
     };
     getData();
-  }, [codeListChild.lastItem]);
+  }, [codeListChild.lastItem, childCodeListRefresh]);
   if (treeItem) {
     return (
       <Box
