@@ -30,8 +30,8 @@ const CodelistActionMenu = () => {
   const dispatch = useDispatch();
   const codeListChild = useSelector((state) => state.codeListChild);
   const childCodeList = useSelector((state) => state.childCodeList);
-  const parentCodeList = useSelector((state) => state.parentCodelist);
   const culture = useSelector((state) => state.lang.cultur);
+  const userEmail = useSelector((state) => state.auth.user.email);
   function uuidv4() {
     return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, (c) =>
       (
@@ -49,7 +49,7 @@ const CodelistActionMenu = () => {
         value: {
           HIERARCHY: [`new`],
           ROW_ID: uuid.replace(/-/g, ""),
-          LIST_TYPE: "",
+          LIST_TYPE: "CODE_LIST",
           CULTURE: culture,
           CODE: "",
           CODE_TEXT: "",
@@ -58,28 +58,12 @@ const CodelistActionMenu = () => {
           VAL1: "",
           VAL2: "",
           VAL3: "",
-          VAL4: "",
-          VAL5: "",
-          VAL6: "",
-          VAL7: "",
-          VAL8: "",
-          VAL9: "",
-          VAL10: "",
           DATE1: "",
           DATE2: "",
-          DATE3: "",
-          DATE4: "",
-          DATE5: "",
           CHAR1: "",
           CHAR2: "",
-          CHAR3: "",
-          CHAR4: "",
-          CHAR5: "",
           LAYER_NAME: "",
-          DESCRIPTION_ID: "",
-          HIDDEN: "",
-          LAST_UPDT_USER: "",
-          LAST_UPDT_DATE: "",
+          LAST_UPDT_USER: userEmail,
         },
       })
     );
@@ -96,30 +80,14 @@ const CodelistActionMenu = () => {
       e.PARENT,
       e.LEGACY_CODE,
       e.VAL1,
-      // e.VAL2,
-      // e.VAL3,
-      // e.VAL4,
-      // e.VAL5,
-      // e.VAL6,
-      // e.VAL7,
-      // e.VAL8,
-      // e.VAL9,
-      // e.VAL10,
-      // e.DATE1,
-      // e.DATE2,
-      // e.DATE3,
-      // e.DATE4,
-      // e.DATE5,
-      // e.CHAR1,
-      // e.CHAR2,
-      // e.CHAR3,
-      // e.CHAR4,
-      // e.CHAR5,
-      e.LAYER_NAME
-      // e.DESCRIPTION_ID,
-      // e.HIDDEN,
-      // e.LAST_UPDT_USER,
-      // e.LAST_UPDT_DATE
+      e.VAL2,
+      e.VAL3,
+      e.DATE1,
+      e.DATE2,
+      e.CHAR1,
+      e.CHAR2,
+      e.LAYER_NAME,
+      userEmail
     );
   };
   const save = async () => {
@@ -160,11 +128,9 @@ const CodelistActionMenu = () => {
     );
   };
   const deleteParentAgreeFunc = async () => {
-    dispatch(setLoading(true));
     deleteCodeList(codeListChild.rowId);
     dispatch(setLastItemIndex(codeListChild.lastItem - 1));
-    dispatch(setIndex(codeListChild.index - 1));
-    dispatch(setLoading(false));
+    dispatch(setIndex({ index: codeListChild.index }));
   };
   const deleteParent = async () => {
     dispatch(
