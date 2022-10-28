@@ -142,7 +142,6 @@ const CodelistActionMenu = () => {
     });
     dispatch(setRefreshDataGrid());
     //  dispatch(setCodeListItems(parentCodeList.ROW_ID));
-    dispatch(setIsUpdated(false));
   };
   const saveGoPrev = async () => {
     await save();
@@ -164,7 +163,7 @@ const CodelistActionMenu = () => {
     dispatch(setLoading(true));
     deleteCodeList(codeListChild.rowId);
     dispatch(setLastItemIndex(codeListChild.lastItem - 1));
-    dispatch(setRefreshDataGrid());
+    dispatch(setIndex(codeListChild.index - 1));
     dispatch(setLoading(false));
   };
   const deleteParent = async () => {

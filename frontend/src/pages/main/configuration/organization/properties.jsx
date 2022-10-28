@@ -202,6 +202,7 @@ const DataGridDemo = ({ type }) => {
                   : "";
             }
           });
+        console.log(data);
         dispatch(setTextValue(tempText));
         dispatch(setValue(temp));
       } catch {

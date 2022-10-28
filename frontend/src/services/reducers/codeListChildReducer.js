@@ -37,7 +37,8 @@ export const codeListChildReducer = createSlice({
             }
         },
         setLastItemIndex: (state, payload) => {
-            state.lastItem = payload.payload.lastItem
+            console.log(payload.payload);
+            state.lastItem = payload.payload
         },
         setCodeListItems: (state, payload) => {
             state.codeListItems = [...new Set([...state.codeListItems, payload.payload])]
