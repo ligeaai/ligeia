@@ -33,13 +33,15 @@ import {
   setRowId,
   cleanCodeListItems,
 } from "../../../../services/reducers/codeListChildReducer";
-
+import { setRefreshDataGrid } from "../../../../services/reducers/childCodeList";
 import MyActionMenu from "./codelistActionMenu";
 import DataGridPro from "./dataGridPro";
+import history from "../../../../routers/history";
 function RenderRow(props) {
   const dispatch = useDispatch();
   const { data, index, style } = props;
   const selectedIndex = useSelector((state) => state.codeListChild.index);
+
   return (
     <ListItem
       style={style}
@@ -65,6 +67,7 @@ function RenderRow(props) {
               currentChild: data[index].CODE,
             })
           );
+          dispatch(setRefreshDataGrid());
         }}
       >
         <ListItemText
@@ -86,8 +89,8 @@ function RenderRow(props) {
 const TreeMenuItem = () => {
   const dispatch = useDispatch();
   const codeListChild = useSelector((state) => state.codeListChild);
-  const childCodeListRefresh = useSelector(
-    (state) => state.childCodeList.refreshDataGrid
+  const refreshTreeMenu = useSelector(
+    (state) => state.codeListChild.refreshTreeMenu
   );
   const culture = useSelector((state) => state.lang.cultur);
   const isFullScreen = useSelector((state) => state.fullScreen.isFullScreen);
@@ -99,11 +102,17 @@ const TreeMenuItem = () => {
       dispatch(cleanCodeListItems());
       var c = data.data.sort((a, b) => (a.CODE_TEXT > b.CODE_TEXT ? 1 : -1));
       c.map((e) => {
-        dispatch(setCodeListItems(e.ROW_ID));
+        dispatch(setCodeListItems(e));
       });
+      dispatch(setIndex({ index: codeListChild.index }));
+      dispatch(setLastItemIndex(data.data.length));
+      dispatch(setRefreshDataGrid());
     };
     getData();
-  }, [codeListChild.lastItem, childCodeListRefresh]);
+  }, [refreshTreeMenu]);
+  React.useEffect(() => {
+    history.push(`code_lists`);
+  }, []);
   if (treeItem) {
     return (
       <Box

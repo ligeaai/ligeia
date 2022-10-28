@@ -15,6 +15,7 @@ import {
   setLastItemIndex,
   setCodeListItems,
   setRowId,
+  setRefreshTreeMenu,
 } from "../../../../services/reducers/codeListChildReducer";
 import { ActionMenu } from "../../../../components";
 import {
@@ -108,29 +109,29 @@ const CodelistActionMenu = () => {
     Object.keys(childCodeList.deletedItems).map(async (a) => {
       deleteCodeList(childCodeList.deletedItems[a]);
     });
-    dispatch(setRefreshDataGrid());
-    //  dispatch(setCodeListItems(parentCodeList.ROW_ID));
+    //dispatch(setRefreshDataGrid());
+    dispatch(setRefreshTreeMenu());
+    //dispatch(setCodeListItems(parentCodeList.ROW_ID));
   };
   const saveGoPrev = async () => {
-    await save();
     dispatch(
       setIndex({
         index: codeListChild.index - 1,
       })
     );
+    await save();
   };
   const saveGoNext = async () => {
-    await save();
     dispatch(
       setIndex({
         index: codeListChild.index + 1,
       })
     );
+    await save();
   };
   const deleteParentAgreeFunc = async () => {
-    deleteCodeList(codeListChild.rowId);
-    dispatch(setLastItemIndex(codeListChild.lastItem - 1));
-    dispatch(setIndex({ index: codeListChild.index }));
+    await deleteCodeList(codeListChild.rowId);
+    dispatch(setRefreshTreeMenu());
   };
   const deleteParent = async () => {
     dispatch(

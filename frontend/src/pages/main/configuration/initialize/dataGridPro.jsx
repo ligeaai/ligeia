@@ -25,9 +25,11 @@ import {
   setDeletedItem,
 } from "../../../../services/reducers/childCodeList";
 import { getParentCode } from "../../../../services/api/djangoApi/codeList";
+import LinearProgress from "@mui/material/LinearProgress";
+
 import { columns } from "./dataGridColumn";
 import history from "../../../../routers/history";
-
+import { CustomNoRowsOverlay } from "./customNoRowOwerlay";
 const getTreeDataPath = (row) => row.HIERARCHY;
 function uuidv4() {
   return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, (c) =>
@@ -199,14 +201,21 @@ export default function TreeDataWithGap() {
       dispatch(setLoading(false));
     };
     myFunc();
-  }, [codeListChild.refreshDataGrid, codeListChild.rowId]);
+  }, [childCodeList.refreshDataGrid]);
   React.useEffect(() => {
     history.push(`${codeListChild.currentChild.toLowerCase()}`);
-  }, [codeListChild.index, codeListChild.refreshDataGrid]);
+  }, [childCodeList.refreshDataGrid, codeListChild.index]);
   const onCellEditCommit = (cellData) => {
     const { id, field, value } = cellData;
     dispatch(changeDataGridItems({ id, field, value }));
   };
+  const groupingColDef = {
+    headerName: "",
+    hideDescendantCount: true,
+    valueFormatter: () => "",
+    width: 10,
+  };
+
   return (
     <Box
       sx={{
@@ -249,7 +258,10 @@ export default function TreeDataWithGap() {
           onSelectionModelChange={(rowId) => (myCheckboxSelection = rowId)}
           components={{
             Toolbar: CustomToolbar,
+            NoRowsOverlay: CustomNoRowsOverlay,
+            LoadingOverlay: LinearProgress,
           }}
+          groupingColDef={groupingColDef}
         />
       </div>
     </Box>

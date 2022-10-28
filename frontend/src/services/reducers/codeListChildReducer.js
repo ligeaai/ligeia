@@ -5,11 +5,15 @@ export const codeListChildReducer = createSlice({
     initialState: {
         currentChild: "",
         rowId: "",
-        index: 0,
+        index: -3,
         lastItem: "",
-        codeListItems: []
+        codeListItems: [],
+        refreshTreeMenu: false
     },
     reducers: {
+        setRefreshTreeMenu: (state, payload) => {
+            state.refreshTreeMenu = !state.refreshTreeMenu
+        },
         setCodeListChild: (state, payload) => {
             state.currentChild = payload.payload.currentChild
         },
@@ -22,6 +26,11 @@ export const codeListChildReducer = createSlice({
                 state.currentChild = "new"
                 return;
             }
+            if (payload.payload.index === -3) {
+                state.index = -3
+                state.currentChild = ""
+                return;
+            }
             if (payload.payload.index >= 0) {
                 if (payload.payload.index < state.lastItem) {
                     state.index = payload.payload.index
@@ -29,20 +38,21 @@ export const codeListChildReducer = createSlice({
                 else {
                     state.index = 0
                 }
-                state.rowId = state.codeListItems[state.index]
+                state.rowId = state.codeListItems[state.index].ROW_ID
+                state.currentChild = state.codeListItems[state.index].CODE
             }
             else {
                 state.index = state.lastItem - 1
-                state.rowId = state.codeListItems[state.index]
+                state.rowId = state.codeListItems[state.index].ROW_ID
+                state.currentChild = state.codeListItems[state.index].CODE
             }
         },
         setLastItemIndex: (state, payload) => {
-            console.log(payload.payload);
             state.lastItem = payload.payload
         },
         setCodeListItems: (state, payload) => {
             state.codeListItems = [...new Set([...state.codeListItems, payload.payload])]
-            state.lastItem = state.codeListItems.length
+            //    state.lastItem = state.codeListItems.length
         },
         cleanCodeListItems: (state, payload) => {
             state.codeListItems = []
@@ -53,6 +63,6 @@ export const codeListChildReducer = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const { setCodeListChild, setRowId, setIndex, setLastItemIndex, setCodeListItems, cleanCodeListItems } = codeListChildReducer.actions
+export const { setRefreshTreeMenu, setCodeListChild, setRowId, setIndex, setLastItemIndex, setCodeListItems, cleanCodeListItems } = codeListChildReducer.actions
 
 export default codeListChildReducer.reducer

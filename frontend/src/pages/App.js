@@ -17,19 +17,23 @@ LicenseInfo.setLicenseKey(
 
 const App = () => {
   const dispatch = useDispatch();
+  const [isLoaded, setIsloaded] = React.useState(false)
   useEffect(() => {
     if (localStorage.getItem('token')) {
       dispatch(loadUser()).then(() => {
         history.push(`${window.location.pathname}`)
+        setIsloaded(true)
       })
     }
 
   }, [])
-
+  const MyAppRouter = () => {
+    return isLoaded ? <AppRouter /> : <></>
+  }
   return (
     <ErrorBoundary>
       <ThemeProvider theme={myTheme()}>
-        <Loading Element={<AppRouter />} />
+        <Loading Element={<MyAppRouter />} />
       </ThemeProvider>
     </ErrorBoundary>
   );

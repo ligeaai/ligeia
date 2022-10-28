@@ -42,7 +42,7 @@ const AppRouter1 = () => {
           <Route path="/configuration/organization/org_unit_tree" element={<Company type="ORG_UNIT3" />} />
           <Route path="/configuration/organization/org_unit_four" element={<Company type="ORG_UNIT4" />} />
           <Route exact path="/configuration/initialize/code_list_editor/:codelist" element={<CodeList />} />
-          <Route path="/configuration/initialize/code_list_editor" element={<Navigate to="/configuration/initialize/code_list_editor/loading" />} />
+          <Route path="/configuration/initialize/code_list_editor" element={<Navigate to="/configuration/initialize/code_list_editor/code_lists" />} />
         </Route>
         <Route exact path="/" element={<PublicRoute />}>
           <Route exact path="/home" element={<Start />} />
