@@ -6,8 +6,8 @@ from .views import (TypeAndPropertySaveView, TypeDetailView, TypeSaveView,
 
 urlpatterns = [
     
-    # path("save/", TypeSaveView.as_view(),name='typeSave'),
-    path("save/", TypeAndPropertySaveView.as_view(),name='typeAndPropertySave'),
+    path("save/", TypeSaveView.as_view(),name='typeSave'),
+    path("save-property/", TypeAndPropertySaveView.as_view(),name='typeAndPropertySave'),
     path("update/", TypeUpdateView.as_view(),name='typeUpdate'),
     path("delete/", TypeDeleteView.as_view(),name='typeDelete'),
     path("scripts/", TypeView.as_view(),name='type'),

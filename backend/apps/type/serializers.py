@@ -15,7 +15,6 @@ class TypeSaveSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
             validated_data['VERSION'] = uuid.uuid4().hex
-            validated_data['ROW_ID'] = uuid.uuid4().hex
             types = Type.objects.create(**validated_data)
             types.save()
             return types
