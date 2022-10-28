@@ -103,9 +103,9 @@ class TypeDetailView(generics.CreateAPIView):
 
     def post(self, request):
         cache_key = request.data.get("TYPE") + "-" + request.data.get("CULTURE")
-        cache_data = Red.get(cache_key)
-        if cache_data:
-            return Response(cache_data, status=status.HTTP_200_OK)
+        # cache_data = Red.get(cache_key)
+        # if cache_data:
+        #     return Response(cache_data, status=status.HTTP_200_OK)
 
         seriliazerPropertyList = []
         seriliazerResourceList = []
@@ -151,9 +151,11 @@ class TypeDetailView(generics.CreateAPIView):
                                 parentserializerCodeList.data[0][
                                     "CHILD"
                                 ] = serializerCodeList.data
-
+                        
                         value["CODE-LIST"] = parentserializerCodeList.data
-
+                    if value.get('SORT_ORDER'):
+                        value['SORT_ORDER'] = int(value.get('SORT_ORDER'))
+                    print(type(value.get('SORT_ORDER')))
                     value_label = value.get("LABEL_ID")
                     try:
                         index = label_id.index(value_label)
@@ -181,8 +183,9 @@ class TypeDetailView(generics.CreateAPIView):
                     "TYPE PROPERTY COLUMNS": typeProperty,
                 },
             }
-
+            
             cache_data = Red.set(cache_key, data)
+            
             return Response(data, status=status.HTTP_200_OK)
         except Exception as e:
             return Response(e)
