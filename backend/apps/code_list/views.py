@@ -29,7 +29,7 @@ class CodeListSaveScriptView(generics.UpdateAPIView):
         serializer.is_valid()
         serializer.save(request.data)
         return Response(
-            {"Message": "successful", "BODY": request.data}, status=status.HTTP_200_OK
+            {"Message": "Successful", "BODY": request.data}, status=status.HTTP_200_OK
         )
 
 
@@ -40,7 +40,7 @@ class CodeListView(generics.ListAPIView):
     def get(self, request, *args, **kwargs):
 
         typeAddData.import_data("CODE_LIST")
-        return Response({"Message": "successful"}, status=status.HTTP_200_OK)
+        return Response({"Message": "Successful"}, status=status.HTTP_200_OK)
 
 
 class CodeListDetailView(generics.CreateAPIView):
@@ -80,7 +80,7 @@ class CodeListDeleteView(generics.CreateAPIView):
             )
         else:
             return Response(
-                {"Message": "data not found"}, status=status.HTTP_400_BAD_REQUEST
+                {"Message": "Data Not Found"}, status=status.HTTP_400_BAD_REQUEST
             )
 
 

@@ -34,7 +34,7 @@ class ItemPropertyView(generics.ListAPIView):
 
     def get(self, request, *args, **kwargs):
         typeAddData.import_data("ITEM_PROPERTY")
-        return Response({"Message":'successful'}, status=status.HTTP_200_OK)
+        return Response({"Message":'Successful'}, status=status.HTTP_200_OK)
     
 
 class ItemPropertyDetailsView(generics.ListAPIView):
