@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import * as Icons from "@mui/icons-material";
 import { Box, Collapse, List, ListItem, Typography } from "@mui/material";
 
@@ -8,6 +8,8 @@ import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 
 import { hasChildren } from "./utils";
 import history from "../../routers/history";
+
+import { setSelectedItem } from "../../services/reducers/drawerReducer";
 
 export default function App({ menu }) {
   return Object.keys(menu.data.drawerMenu).map((item, key) => (
@@ -21,9 +23,12 @@ const MenuItem = ({ item }) => {
 };
 
 const SingleLevel = ({ item }) => {
+  const dispatch = useDispatch();
   const isOpen = useSelector((state) => state.drawer.isOpen);
   const { [item.Icon]: Icon } = Icons;
+  const selectedItem = useSelector((state) => state.drawer.selectedItem);
   const handleClick = () => {
+    dispatch(setSelectedItem(item.title));
     history.push(item.url);
   };
   return (
@@ -33,23 +38,18 @@ const SingleLevel = ({ item }) => {
         borderRadius: 2,
         "&:hover": {
           backgroundColor:
-            item.url === window.location.pathname
-              ? "action.active"
-              : "action.hover",
+            item.title === selectedItem ? "action.active" : "action.hover",
           opacity: "action.hoverOpacity",
         },
         backgroundColor:
-          item.url === window.location.pathname ? "action.active" : "inherit",
+          item.title === selectedItem ? "action.active" : "inherit",
       }}
       onClick={handleClick}
     >
       {Icon ? (
         <Icon
           sx={{
-            color:
-              item.url === window.location.pathname
-                ? "myReverseText"
-                : "myBoldText",
+            color: item.title === selectedItem ? "myReverseText" : "myBoldText",
           }}
         />
       ) : (
@@ -61,10 +61,7 @@ const SingleLevel = ({ item }) => {
           mx: 1,
           pl: 0.5,
           display: isOpen ? "inline-block" : "none",
-          color:
-            item.url === window.location.pathname
-              ? "myReverseText"
-              : "myBoldText",
+          color: item.title === selectedItem ? "myReverseText" : "myBoldText",
           overflow: "hidden",
           whiteSpace: "nowrap",
           textOverflow: "ellipsis",

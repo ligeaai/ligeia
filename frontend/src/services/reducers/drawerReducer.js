@@ -6,8 +6,12 @@ export const drawerReducer = createSlice({
         isOpen: false,
         temp: 0,//temporary value determines the drawer stat before the drawer hover
         width: "68px",
+        selectedItem: "Home"
     },
     reducers: {
+        setSelectedItem: (state, payload) => {
+            state.selectedItem = payload.payload
+        },
         toggleDrawer: (state) => {
             state.isOpen = !state.isOpen
             if (state.isOpen) {
@@ -33,6 +37,6 @@ export const drawerReducer = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const { toggleDrawer, mouseEnterDrawer, mouseLeaveDrawer } = drawerReducer.actions
+export const { setSelectedItem, toggleDrawer, mouseEnterDrawer, mouseLeaveDrawer } = drawerReducer.actions
 
 export default drawerReducer.reducer
