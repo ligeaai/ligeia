@@ -243,6 +243,9 @@ export default function TreeDataWithGap() {
           minHeight: "calc(500px - 36px - 16px - 40px)",
           height: "calc(100vh - 60px - 36px - 16px - 60px )",
           width: "100%",
+          "& .super-app-theme--cell": {
+            backgroundColor: grey[200],
+          },
         }}
       >
         <DataGridPro

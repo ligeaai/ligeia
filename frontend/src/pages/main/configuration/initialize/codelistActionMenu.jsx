@@ -91,6 +91,7 @@ const CodelistActionMenu = () => {
       userEmail
     );
   };
+  var saveDirection = 0;
   const saveConfirmed = async () => {
     // await Promise.all(
     //   Object.keys(childCodeList.newItems).map(async (e) => {
@@ -109,34 +110,70 @@ const CodelistActionMenu = () => {
     Object.keys(childCodeList.deletedItems).map(async (a) => {
       deleteCodeList(childCodeList.deletedItems[a]);
     });
-    //dispatch(setRefreshDataGrid());
     dispatch(setRefreshTreeMenu());
+    dispatch(
+      setIndex({
+        index: codeListChild.index + saveDirection,
+      })
+    );
+    dispatch(setRefreshDataGrid());
+    saveDirection = 0;
     //dispatch(setCodeListItems(parentCodeList.ROW_ID));
   };
+  const changeDetector = () => {
+    var changes = 0;
+    Object.keys(childCodeList.dataGridItems).map(async (e) => {
+      Object.keys(childCodeList.changedItems).map(async (a) => {
+        if (childCodeList.changedItems[a] === e) {
+          changes++;
+        }
+      });
+    });
+    Object.keys(childCodeList.deletedItems).map(async (a) => {
+      changes++;
+    });
+    if (changes > 0) {
+      return true;
+    }
+    return false;
+  };
+
   const save = async () => {
-    dispatch(
-      setConfirmation({
-        title: "Are you sure you want to delete this code list?",
-        body: "here will come the code list",
-        agreefunction: saveConfirmed,
-      })
-    );
+    if (changeDetector()) {
+      dispatch(
+        setConfirmation({
+          title: "Are you sure you want to save this code list?",
+          body: "here will come the code list",
+          agreefunction: saveConfirmed,
+        })
+      );
+    }
   };
   const saveGoPrev = async () => {
-    dispatch(
-      setIndex({
-        index: codeListChild.index - 1,
-      })
-    );
-    await save();
+    if (changeDetector()) {
+      saveDirection = -1;
+      await save();
+    } else {
+      dispatch(
+        setIndex({
+          index: codeListChild.index - 1,
+        })
+      );
+      dispatch(setRefreshDataGrid());
+    }
   };
   const saveGoNext = async () => {
-    dispatch(
-      setIndex({
-        index: codeListChild.index + 1,
-      })
-    );
-    await save();
+    if (changeDetector()) {
+      saveDirection = 1;
+      await save();
+    } else {
+      dispatch(
+        setIndex({
+          index: codeListChild.index + 1,
+        })
+      );
+      dispatch(setRefreshDataGrid());
+    }
   };
   const deleteParentAgreeFunc = async () => {
     await deleteCodeList(codeListChild.rowId);

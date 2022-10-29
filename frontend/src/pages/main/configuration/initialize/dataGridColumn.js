@@ -2,27 +2,23 @@ export const columns = [
     {
         field: "LIST_TYPE",
         headerName: "List type",
-        width: 200,
         editable: true,
     },
     {
         field: "CULTURE",
         headerName: "Culture",
-        width: 100,
         editable: true,
 
     },
     {
         field: "CODE",
         headerName: "Code",
-        width: 100,
         editable: true,
 
     },
     {
         field: "CODE_TEXT",
         headerName: "Code Text",
-        width: 100,
         editable: true,
 
     },
@@ -30,19 +26,16 @@ export const columns = [
     {
         field: "PARENT",
         headerName: "Parent",
-        width: 100,
         editable: true,
     },
     {
         field: "LEGACY_CODE",
         headerName: "Legacy Code",
-        width: 100,
         editable: true,
     },
     {
         field: "VAL1",
         headerName: "Val1",
-        width: 100,
         editable: true,
         type: "number",
         headerAlign: "left",
@@ -52,7 +45,6 @@ export const columns = [
     {
         field: "VAL2",
         headerName: "Val2",
-        width: 100,
         editable: true,
         type: "number",
         headerAlign: "left",
@@ -62,7 +54,6 @@ export const columns = [
     {
         field: "VAL3",
         headerName: "Val3",
-        width: 100,
         editable: true,
         type: "number",
         headerAlign: "left",
@@ -122,7 +113,6 @@ export const columns = [
     {
         field: "DATE1",
         headerName: "Date1",
-        width: 100,
         editable: true,
         type: "date",
 
@@ -130,7 +120,6 @@ export const columns = [
     {
         field: "DATE2",
         headerName: "Date2",
-        width: 100,
         editable: true,
         type: "date",
 
@@ -160,14 +149,12 @@ export const columns = [
     {
         field: "CHAR1",
         headerName: "Char1",
-        width: 100,
         editable: true,
 
     },
     {
         field: "CHAR2",
         headerName: "Char2",
-        width: 100,
         editable: true,
 
     },
@@ -193,7 +180,6 @@ export const columns = [
     {
         field: "LAYER_NAME",
         headerName: "Layer Name",
-        width: 100,
         editable: true,
 
     },
@@ -212,15 +198,13 @@ export const columns = [
     {
         field: "LAST_UPDT_USER",
         headerName: "Last Update User",
-        width: 100,
         editable: false,
-
+        cellClassName: "super-app-theme--cell"
     },
     {
         field: "LAST_UPDT_DATE",
         headerName: "Last Update Date",
-        width: 100,
         editable: false,
-
+        cellClassName: "super-app-theme--cell"
     },
 ];

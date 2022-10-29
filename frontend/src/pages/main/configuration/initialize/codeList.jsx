@@ -177,7 +177,7 @@ const CodeList = () => {
         sx={{
           boxShadow: 3,
           borderRadius: "3px",
-          width: "500px",
+          width: "100px",
         }}
       >
         <Grid container>
