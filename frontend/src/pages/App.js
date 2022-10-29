@@ -22,9 +22,12 @@ const App = () => {
     if (localStorage.getItem('token')) {
       dispatch(loadUser()).then(() => {
         history.push(`${window.location.pathname}`)
+        setIsloaded(true)
       })
     }
-    setIsloaded(true)
+    else {
+      setIsloaded(true)
+    }
   }, [])
   const MyAppRouter = () => {
     return isLoaded ? <AppRouter /> : <></>
