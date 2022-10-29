@@ -31,7 +31,7 @@ const Breadcrumbs = () => {
           <Typography
             key={name}
             sx={{
-              fontSize: "12px",
+              fontSize: "14px",
               color: "#4B4B4B",
               cursor: "pointer",
               textTransform: "capitalize",
@@ -45,7 +45,7 @@ const Breadcrumbs = () => {
             key={name}
             onClick={() => history.push(routeTo)}
             sx={{
-              fontSize: "12px",
+              fontSize: "14px",
               color: "myBoldText",
               cursor: "pointer",
               textTransform: "capitalize",

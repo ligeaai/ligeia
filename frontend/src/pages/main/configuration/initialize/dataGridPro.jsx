@@ -210,12 +210,19 @@ export default function TreeDataWithGap() {
     dispatch(changeDataGridItems({ id, field, value }));
   };
   const groupingColDef = {
-    headerName: "",
+    headerName: " ",
     hideDescendantCount: true,
     valueFormatter: () => "",
     width: 10,
-  };
 
+    options: { columns: false },
+  };
+  const [sortModel, setSortModel] = React.useState([
+    {
+      field: "CODE",
+      sort: "asc",
+    },
+  ]);
   return (
     <Box
       sx={{
@@ -231,8 +238,8 @@ export default function TreeDataWithGap() {
         },
       }}
     >
-      <div
-        style={{
+      <Box
+        sx={{
           minHeight: "calc(500px - 36px - 16px - 40px)",
           height: "calc(100vh - 60px - 36px - 16px - 60px )",
           width: "100%",
@@ -245,6 +252,7 @@ export default function TreeDataWithGap() {
             toolbarDensity: "",
             toolbarExport: "",
           }}
+          defaultGroupingExpansionDepth={1}
           hideFooter={true}
           treeData
           onCellEditCommit={onCellEditCommit}
@@ -253,9 +261,12 @@ export default function TreeDataWithGap() {
           getTreeDataPath={getTreeDataPath}
           getRowId={(row) => row.ROW_ID}
           loading={childCodeList.loading}
+          isRowSelectable={(rowId) => rowId.id !== codeListChild.rowId}
           checkboxSelection={true}
           disableSelectionOnClick={true}
           onSelectionModelChange={(rowId) => (myCheckboxSelection = rowId)}
+          sortModel={sortModel}
+          onSortModelChange={(model) => setSortModel(model)}
           components={{
             Toolbar: CustomToolbar,
             NoRowsOverlay: CustomNoRowsOverlay,
@@ -263,7 +274,7 @@ export default function TreeDataWithGap() {
           }}
           groupingColDef={groupingColDef}
         />
-      </div>
+      </Box>
     </Box>
   );
 }

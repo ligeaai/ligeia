@@ -1,5 +1,5 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { Box, Grid } from "@mui/material";
 
@@ -8,13 +8,15 @@ import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 
 import { SearchBarMobile } from "../../../components";
 
+import { setCssUserSelect } from "../../../services/reducers/cssUserSelect";
 const DrawerMenu = (props) => {
+  const dispatch = useDispatch();
   const [leftMenuWidth, setLeftMenuWidth] = React.useState(250);
   const { Element } = props;
   const handler = (mouseDownEvent) => {
     const startSize = leftMenuWidth;
     const startPosition = mouseDownEvent.pageX;
-
+    dispatch(setCssUserSelect(true));
     function onMouseMove(mouseMoveEvent) {
       if (startSize - startPosition + mouseMoveEvent.pageX < 10) {
         setLeftMenuWidth(0);
@@ -24,6 +26,7 @@ const DrawerMenu = (props) => {
     }
     function onMouseUp() {
       document.body.removeEventListener("mousemove", onMouseMove);
+      dispatch(setCssUserSelect(false));
     }
 
     document.body.addEventListener("mousemove", onMouseMove);

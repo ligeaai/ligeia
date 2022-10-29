@@ -1,6 +1,13 @@
 import React from "react";
 
-import { Box, Grid, Button, TextField, Typography } from "@mui/material";
+import {
+  Box,
+  Grid,
+  Button,
+  TextField,
+  Typography,
+  Divider,
+} from "@mui/material";
 
 import { grey } from "@mui/material/colors";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
@@ -81,9 +88,19 @@ const DateBreak = () => {
           </Grid>
         </Grid>
       </Grid>
-      <Grid item>
-        <SeperatorLineVertical />
-      </Grid>
+
+      <Divider
+        orientation="vertical"
+        variant="middle"
+        flexItem
+        sx={{
+          marginX: "2px",
+          borderWidth: "0.2px",
+          borderColor: "#4B4B4B",
+          backgroundColor: "#4B4B4B",
+        }}
+      />
+
       <Grid item>
         <Button
           variant="outlined"
@@ -103,9 +120,19 @@ const DateBreak = () => {
           <DeleteForeverIcon fontSize="medium" /> Delete Selected Date Break
         </Button>
       </Grid>
-      <Grid item>
-        <SeperatorLineVertical />
-      </Grid>
+
+      <Divider
+        orientation="vertical"
+        variant="middle"
+        flexItem
+        sx={{
+          marginX: "2px",
+          borderWidth: "0.2px",
+          borderColor: "#4B4B4B",
+          backgroundColor: "#4B4B4B",
+        }}
+      />
+
       <Grid item>
         <Button
           variant="outlined"
@@ -126,9 +153,19 @@ const DateBreak = () => {
           Template
         </Button>
       </Grid>
-      <Grid item>
-        <SeperatorLineVertical />
-      </Grid>
+
+      <Divider
+        orientation="vertical"
+        variant="middle"
+        flexItem
+        sx={{
+          marginX: "2px",
+          borderWidth: "0.2px",
+          borderColor: "#4B4B4B",
+          backgroundColor: "#4B4B4B",
+        }}
+      />
+
       {/* <Grid item>
         <Button
           sx={{

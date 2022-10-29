@@ -1,6 +1,9 @@
 import React from "react";
 import { Route, Routes, Navigate } from "react-router-dom";
 import { unstable_HistoryRouter as HistoryRouter } from "react-router-dom";
+import { useSelector } from "react-redux"
+
+import { Box } from "@mui/material"
 
 import history from "./history";
 
@@ -63,10 +66,13 @@ const AppRouter1 = () => {
 };
 
 const AppRouter = () => {
+  const cssUserSelect = useSelector((state) => state.cssUserSelect.userSelect);
   return (
     <HistoryRouter history={history}>
-      <ErrorMessage Element={AppRouter1} />
-      <Confirmation />
+      <Box sx={{ userSelect: cssUserSelect ? "none" : "text" }}>
+        <ErrorMessage Element={AppRouter1} />
+        <Confirmation />
+      </Box>
     </HistoryRouter>
   );
 };

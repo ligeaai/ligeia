@@ -22,7 +22,6 @@ import {
 } from "../../../../components";
 import DrawerMenu from "../../../../layout/main/asset/treeViewMenu";
 
-import ChildCodeListDataTable from "./childCodeListDataTable";
 import AutoSizer from "react-virtualized-auto-sizer";
 import { getParentCodeList } from "../../../../services/api/djangoApi/codeList";
 import {
@@ -74,7 +73,7 @@ function RenderRow(props) {
           primary={`${data[index].CODE_TEXT}`}
           sx={{
             span: {
-              fontSize: "12px",
+              fontSize: "14px",
               overflow: "hidden",
               whiteSpace: "nowrap",
               textOverflow: "ellipsis",

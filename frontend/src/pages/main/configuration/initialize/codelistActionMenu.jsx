@@ -91,7 +91,7 @@ const CodelistActionMenu = () => {
       userEmail
     );
   };
-  const save = async () => {
+  const saveConfirmed = async () => {
     // await Promise.all(
     //   Object.keys(childCodeList.newItems).map(async (e) => {
     //     await createPutBody(childCodeList.newItems[e]);
@@ -112,6 +112,15 @@ const CodelistActionMenu = () => {
     //dispatch(setRefreshDataGrid());
     dispatch(setRefreshTreeMenu());
     //dispatch(setCodeListItems(parentCodeList.ROW_ID));
+  };
+  const save = async () => {
+    dispatch(
+      setConfirmation({
+        title: "Are you sure you want to delete this code list?",
+        body: "here will come the code list",
+        agreefunction: saveConfirmed,
+      })
+    );
   };
   const saveGoPrev = async () => {
     dispatch(

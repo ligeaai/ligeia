@@ -10,18 +10,21 @@ export const columns = [
         headerName: "Culture",
         width: 100,
         editable: true,
+
     },
     {
         field: "CODE",
         headerName: "Code",
         width: 100,
         editable: true,
+
     },
     {
         field: "CODE_TEXT",
         headerName: "Code Text",
         width: 100,
         editable: true,
+
     },
 
     {
@@ -30,7 +33,6 @@ export const columns = [
         width: 100,
         editable: true,
     },
-
     {
         field: "LEGACY_CODE",
         headerName: "Legacy Code",
@@ -43,6 +45,9 @@ export const columns = [
         width: 100,
         editable: true,
         type: "number",
+        headerAlign: "left",
+        align: "left",
+
     },
     {
         field: "VAL2",
@@ -50,6 +55,9 @@ export const columns = [
         width: 100,
         editable: true,
         type: "number",
+        headerAlign: "left",
+        align: "left",
+
     },
     {
         field: "VAL3",
@@ -57,6 +65,9 @@ export const columns = [
         width: 100,
         editable: true,
         type: "number",
+        headerAlign: "left",
+        align: "left",
+
     },
     // {
     //     field: "VAL4",
@@ -114,6 +125,7 @@ export const columns = [
         width: 100,
         editable: true,
         type: "date",
+
     },
     {
         field: "DATE2",
@@ -121,6 +133,7 @@ export const columns = [
         width: 100,
         editable: true,
         type: "date",
+
     },
     // {
     //     field: "DATE3",
@@ -149,12 +162,14 @@ export const columns = [
         headerName: "Char1",
         width: 100,
         editable: true,
+
     },
     {
         field: "CHAR2",
         headerName: "Char2",
         width: 100,
         editable: true,
+
     },
     // {
     //     field: "CHAR3",
@@ -180,6 +195,7 @@ export const columns = [
         headerName: "Layer Name",
         width: 100,
         editable: true,
+
     },
     // {
     //     field: "DESCRIPTION_ID",
@@ -198,11 +214,13 @@ export const columns = [
         headerName: "Last Update User",
         width: 100,
         editable: false,
+
     },
     {
         field: "LAST_UPDT_DATE",
         headerName: "Last Update Date",
         width: 100,
         editable: false,
+
     },
 ];
