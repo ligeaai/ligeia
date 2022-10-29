@@ -34,7 +34,9 @@ const Overview = () => {
         flexWrap: "nowrap",
       }}
     >
-      <DrawerMenu Element={<TreeView menu={menu} />} />
+      <Grid item sx={{ minHeight: "500px", boxShadow: 3, mr: 0.5 }}>
+        <DrawerMenu Element={<TreeView menu={menu} />} />
+      </Grid>
       <Grid
         item
         xs={12}

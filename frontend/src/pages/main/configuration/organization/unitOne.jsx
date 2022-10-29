@@ -120,8 +120,9 @@ const UnitOne = (props) => {
         flexWrap: "nowrap",
       }}
     >
-      <DrawerMenu Element={TreeMenuItem()} />
-
+      <Grid item sx={{ minHeight: "500px", boxShadow: 3, mr: 0.5 }}>
+        <DrawerMenu Element={TreeMenuItem()} />
+      </Grid>
       <Grid
         item
         xs={12}

@@ -117,8 +117,9 @@ const TreeMenuItem = () => {
       <Box
         sx={{
           height: isFullScreen
-            ? "calc(100vh - 85px)"
-            : "calc(100vh - 85px - 60px)",
+            ? "calc(100vh - 85px )"
+            : "calc(100vh - 85px - 60px - 4px)",
+          minHeight: "416px",
         }}
       >
         <AutoSizer>
@@ -169,7 +170,9 @@ const CodeList = () => {
         flexWrap: "nowrap",
       }}
     >
-      <DrawerMenu Element={<TreeMenuItems />} />
+      <Grid item sx={{ minHeight: "500px", boxShadow: 3, mr: 0.5 }}>
+        <DrawerMenu Element={<TreeMenuItems />} />
+      </Grid>
 
       <Grid
         item

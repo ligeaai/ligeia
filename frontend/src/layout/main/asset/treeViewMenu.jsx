@@ -34,20 +34,17 @@ const DrawerMenu = (props) => {
   };
 
   return (
-    <Grid
-      item
+    <Box
       sx={{
         position: "relative",
         width: `${leftMenuWidth}px`,
-        pr: 0.5,
+        height: "100%",
       }}
     >
       <Grid
         container
         sx={{
-          height: "100%",
           backgroundColor: "myTreeViewBg",
-          boxShadow: 3,
           borderRadius: "3px",
         }}
       >
@@ -63,7 +60,7 @@ const DrawerMenu = (props) => {
             boxShadow: 2,
             backgroundColor: "myReverseText",
             top: "25px",
-            right: "-8px",
+            right: "-12px",
             zIndex: { xs: 0, sm: 3 },
           }}
           onClick={() => {
@@ -77,8 +74,7 @@ const DrawerMenu = (props) => {
             backgroundColor: "text.disabled",
             width: "100%",
             height: "1px",
-            mx: 1.5,
-            mb: 0.5,
+            m: 1.5,
           }}
         />
         <Grid
@@ -118,7 +114,7 @@ const DrawerMenu = (props) => {
           onMouseDown={handler}
         />
       </Grid>
-    </Grid>
+    </Box>
   );
 };
 
