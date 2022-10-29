@@ -58,3 +58,9 @@ class redisCaching():
         cache_data = json.loads(cache_data)
         return cache_data
     
+    def delete():
+        keys = rds.keys('*')
+        rds.delete(*keys)
+        return True
+    
+    
