@@ -30,6 +30,7 @@ import LinearProgress from "@mui/material/LinearProgress";
 import { columns } from "./dataGridColumn";
 import history from "../../../../routers/history";
 import { CustomNoRowsOverlay } from "./customNoRowOwerlay";
+
 const getTreeDataPath = (row) => row.HIERARCHY;
 function uuidv4() {
   return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, (c) =>
@@ -39,7 +40,7 @@ function uuidv4() {
     ).toString(16)
   );
 }
-
+var myCheckboxSelection = [];
 export default function TreeDataWithGap() {
   const dispatch = useDispatch();
   const codeListChild = useSelector((state) => state.codeListChild);
@@ -47,7 +48,6 @@ export default function TreeDataWithGap() {
   const culture = useSelector((state) => state.lang.cultur);
   const [newItemNum, setNewItemNum] = React.useState(1);
   const userEmail = useSelector((state) => state.auth.user.email);
-  var myCheckboxSelection = [];
   function CustomToolbar() {
     const codeListChildCurrentChild = useSelector(
       (state) => state.codeListChild.currentChild
@@ -210,12 +210,12 @@ export default function TreeDataWithGap() {
     dispatch(changeDataGridItems({ id, field, value }));
   };
   const groupingColDef = {
-    headerName: " ",
+    headerName: "group",
     hideDescendantCount: true,
     valueFormatter: () => "",
-    width: 10,
-
-    options: { columns: false },
+    width: 0,
+    minWidth: 0,
+    resizable: false,
   };
   const [sortModel, setSortModel] = React.useState([
     {
@@ -243,18 +243,63 @@ export default function TreeDataWithGap() {
           minHeight: "calc(500px - 36px - 16px - 40px)",
           height: "calc(100vh - 60px - 36px - 16px - 60px )",
           width: "100%",
+          "& .MuiDataGrid-cellContent": {
+            fontSize: "16px",
+          },
           "& .super-app-theme--cell": {
             backgroundColor: grey[200],
+          },
+          "& .MuiDataGrid-columnHeadersInner": {
+            "& div": {
+              "&>*:nth-of-type(2)": {
+                p: 0,
+              },
+            },
+          },
+          "& .MuiDataGrid-virtualScrollerRenderZone": {
+            div: {
+              "&>*:nth-of-type(2)": {
+                display: "none",
+              },
+            },
+
+            "&>*:nth-of-type(1)": {
+              "&>*:nth-of-type(1)": {
+                display: "none",
+              },
+              "&>*:nth-of-type(2)": {
+                display: "flex",
+                minWidth: "50px !important",
+                maxWidth: "50px !important",
+                button: {
+                  position: "relative",
+                  left: "-2px",
+                },
+              },
+            },
           },
         }}
       >
         <DataGridPro
+          componentsProps={{
+            basePopper: {
+              sx: {
+                ".MuiDataGrid-columnsPanel": {
+                  "&>*:nth-of-type(2)": {
+                    display: "none",
+                  },
+                },
+              },
+            },
+          }}
+          sx={{}}
           localeText={{
             toolbarColumns: "",
             toolbarFilters: "",
             toolbarDensity: "",
             toolbarExport: "",
           }}
+          disableVirtualization={true}
           defaultGroupingExpansionDepth={1}
           hideFooter={true}
           treeData

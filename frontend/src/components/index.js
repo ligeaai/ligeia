@@ -8,6 +8,7 @@ import Drawer from "./drawer/drawer";
 import { ErrorBoundary } from "./errorMessage/errorBoundary"
 import ErrorMessage from "./errorMessage/errorMessage"
 import Loading from "./loading/loading";
+import LoadingComponent from "./loading/loadingComopnent";
 import PropLinkTabs from "./navigationComp/propLinkTabs"
 import SocialButton from "./buttons/socialButton";
 import TimeRangePicker from "./navigationComp/timeRangePicker";
@@ -21,6 +22,6 @@ import Confirmation from "./confirmation/confirmation"
 
 
 export {
-    ActionMenu, Breadcrumb, Cards, Confirmation, ComponentError, ComponentErrorBody, DateBreak, Drawer, ErrorBoundary, ErrorMessage, Loading, PropLinkTabs, SocialButton
-    , TimeRangePicker, TreeView, ItemSperatorLine, ItemSperatorLineXL, Items, SearchBar, SearchBarMobile
+    ActionMenu, Breadcrumb, Cards, Confirmation, ComponentError, ComponentErrorBody, DateBreak, Drawer, ErrorBoundary, ErrorMessage, Loading, LoadingComponent,
+    PropLinkTabs, SocialButton, TimeRangePicker, TreeView, ItemSperatorLine, ItemSperatorLineXL, Items, SearchBar, SearchBarMobile
 }

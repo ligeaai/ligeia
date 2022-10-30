@@ -9,9 +9,11 @@ import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { SearchBarMobile } from "../../../components";
 
 import { setCssUserSelect } from "../../../services/reducers/cssUserSelect";
+
 const DrawerMenu = (props) => {
   const dispatch = useDispatch();
   const [leftMenuWidth, setLeftMenuWidth] = React.useState(250);
+  const isFullScreen = useSelector((state) => state.fullScreen.isFullScreen);
   const { Element } = props;
   const handler = (mouseDownEvent) => {
     const startSize = leftMenuWidth;
@@ -48,7 +50,7 @@ const DrawerMenu = (props) => {
           borderRadius: "3px",
         }}
       >
-        <Grid item xs={12} sx={{ p: 2, pb: 0, position: "relative" }}>
+        <Grid item xs={12} sx={{ padding: 2, pb: 0, position: "relative" }}>
           <SearchBarMobile theme={"light"} />
         </Grid>
         <Box
@@ -81,21 +83,25 @@ const DrawerMenu = (props) => {
           item
           xs={12}
           sx={{
-            overflowY: "scroll",
+            // overflowY: "scroll",
             overflowX: "hidden",
-            minHeight: "min-content",
-            height: "calc(100% - 75px)",
-            "&::-webkit-scrollbar": {
-              width: "0.2em",
-            },
-            "&::-webkit-scrollbar-track": {
-              boxShadow: "inset 0 0 6px rgba(0,0,0,0.00)",
-              webkitBoxShadow: "inset 0 0 6px rgba(0,0,0,0.00)",
-            },
-            "&::-webkit-scrollbar-thumb": {
-              backgroundColor: "rgba(0,0,0,.1)",
-              outline: "1px solid rgba(0,0,0,.3)",
-            },
+            height: isFullScreen
+              ? "calc(100vh - 85px )"
+              : "calc(100vh - 85px - 60px - 4px)",
+            minHeight: "416px",
+            // minHeight: "min-content",
+            //height: "calc(100% - 75px)",
+            // "&::-webkit-scrollbar": {
+            //   width: "0.2em",
+            // },
+            // "&::-webkit-scrollbar-track": {
+            //   boxShadow: "inset 0 0 6px rgba(0,0,0,0.00)",
+            //   webkitBoxShadow: "inset 0 0 6px rgba(0,0,0,0.00)",
+            // },
+            // "&::-webkit-scrollbar-thumb": {
+            //   backgroundColor: "rgba(0,0,0,.1)",
+            //   outline: "1px solid rgba(0,0,0,.3)",
+            // },
           }}
         >
           {Element}

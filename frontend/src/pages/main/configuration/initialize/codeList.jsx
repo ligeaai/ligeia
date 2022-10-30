@@ -36,6 +36,7 @@ import { setRefreshDataGrid } from "../../../../services/reducers/childCodeList"
 import MyActionMenu from "./codelistActionMenu";
 import DataGridPro from "./dataGridPro";
 import history from "../../../../routers/history";
+import { LoadingComponent } from "../../../../components";
 function RenderRow(props) {
   const dispatch = useDispatch();
   const { data, index, style } = props;
@@ -106,6 +107,7 @@ const TreeMenuItem = () => {
       dispatch(setIndex({ index: codeListChild.index }));
       dispatch(setLastItemIndex(data.data.length));
       dispatch(setRefreshDataGrid());
+      console.log("sadasd");
     };
     getData();
   }, [refreshTreeMenu]);
@@ -140,6 +142,8 @@ const TreeMenuItem = () => {
         </AutoSizer>
       </Box>
     );
+  } else {
+    return <LoadingComponent />;
   }
 };
 
@@ -157,7 +161,6 @@ const TreeMenuItems = () => {
     </ComponentError>
   );
 };
-
 const CodeList = () => {
   const isFullScreen = useSelector((state) => state.fullScreen.isFullScreen);
 

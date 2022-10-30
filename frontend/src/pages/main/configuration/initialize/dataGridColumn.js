@@ -3,6 +3,7 @@ export const columns = [
         field: "LIST_TYPE",
         headerName: "List type",
         editable: true,
+
     },
     {
         field: "CULTURE",
