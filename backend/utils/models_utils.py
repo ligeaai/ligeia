@@ -22,7 +22,7 @@ def validate_model_not_null(data,model,request):
        
         if callback:
             message_dict = {"Message":"These lines need to be filled " + str(callback)}
-            logger.error(request=request, message=message_dict ,error="ValidationError validate_model_not_null",logType="FAULTS")
+            logger.error(request=request, message=message_dict ,error="ValidationError validate_model_not_null")
             raise ValidationError(
                 {"Message":message_dict})
         
@@ -37,7 +37,7 @@ def null_value_to_space(serializer,request):
         return serializer
     except Exception as e:
         message_dict = {"Message": e }
-        logger.error(request=request, message=message_dict ,error="ValidationError null_value_to_space",logType="FAULTS")
+        logger.error(request=request, message=message_dict ,error="ValidationError null_value_to_space")
         raise ValidationError(message_dict)
 
    
@@ -55,7 +55,7 @@ def validate_value(validated_data,model,request):
             pass
     if callback:
         message_dict = {"Message": "These values cannot be null  " + str(callback) }
-        logger.error(request=request, message=message_dict ,error="ValidationError validate_value",logType="FAULTS")
+        logger.error(request=request, message=message_dict ,error="ValidationError validate_value")
         raise ValidationError(message_dict)
 
 
@@ -63,7 +63,7 @@ def validate_find(quaryset,request):
     if quaryset:
         return quaryset
     else:
-        logger.error(request=request, message="Data not found",error="ValidationError validate_find",logType="FAULTS")
+        logger.error(request=request, message="Data not found",error="ValidationError validate_find")
         raise ValidationError(
                  {"Message": "Data not found"})
 

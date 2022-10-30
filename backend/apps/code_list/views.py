@@ -14,6 +14,7 @@ from .serializers import (
     CodeListCustomSerializer,
     CodeListSaveSerializer,
 )
+from rest_framework.exceptions import ValidationError 
 from rest_framework.pagination import PageNumberPagination
 from utils.models_utils import (
                                 validate_model_not_null,
@@ -27,14 +28,14 @@ class CodeListSaveScriptView(generics.UpdateAPIView):
     permission_classes = [permissions.AllowAny]
 
     def put(self, request, *args, **kwargs):
+        Red.delete(request.data.get('CACHE_KEY'))
+        request.data.pop('CACHE_KEY')
         serializer = CodeListCustomSerializer(data=request.data)   
         serializer.is_valid()
-        serializer.save(request.data)
-        Red.delete()
-        message="Code list update successful"
+        message=serializer.save(request)
         logger.info(request=request, message = message)
         return Response(
-            {"Message":message, "BODY": request.data}, status=status.HTTP_200_OK
+            {"Message": message}, status=status.HTTP_200_OK
         )
 
 
@@ -77,22 +78,24 @@ class CodeListDeleteView(generics.CreateAPIView):
         permissions.AllowAny
     ]
     def post(self, request, *args, **kwargs):
-        qs = code_list.objects.filter(ROW_ID = request.data.get('ROW_ID'))
-        validate_find(qs,request=request)
-        qs.delete()
         message="Codelist deletion successful"
-        logger.info(request=request, message=message)
-        Red.delete()
-        return Response(message, status=status.HTTP_200_OK)
-
-
+        try:
+            qs = code_list.objects.filter(ROW_ID = request.data.get('ROW_ID'))
+            validate_find(qs,request=request)
+            qs.delete()
+            logger.info(request=request, message=message)
+            Red.delete(request.data.get('CACHE_KEY'))
+            return Response(message, status=status.HTTP_200_OK)
+        except Exception as e:
+            logger.error(request=request, message=message,error=str(ValidationError(e)))
+            raise ValidationError(e)
+            
 class CodeListDeepDetailView(generics.CreateAPIView):
     permission_classes = [permissions.AllowAny]
 
     def post(self, request, *args, **kwargs):
         cache_key = request.data.get('ROW_ID')
         cache_data = Red.get(cache_key)
-        print(cache_data)
         if cache_data:
             return Response(cache_data, status=status.HTTP_200_OK)
         queryset = code_list.objects.filter(
