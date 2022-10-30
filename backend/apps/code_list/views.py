@@ -28,8 +28,9 @@ class CodeListSaveScriptView(generics.UpdateAPIView):
     permission_classes = [permissions.AllowAny]
 
     def put(self, request, *args, **kwargs):
-        Red.delete(request.data.get('CACHE_KEY'))
-        request.data.pop('CACHE_KEY')
+        if request.data.get('CACHE_KEY'):
+            Red.delete(request.data.get('CACHE_KEY'))
+            request.data.pop('CACHE_KEY')
         serializer = CodeListCustomSerializer(data=request.data)   
         serializer.is_valid()
         message=serializer.save(request)
@@ -97,6 +98,7 @@ class CodeListDeepDetailView(generics.CreateAPIView):
         cache_key = request.data.get('ROW_ID')
         cache_data = Red.get(cache_key)
         if cache_data:
+            logger.info(request=request, message="Code list deep details (Parent-Child Relationship)")
             return Response(cache_data, status=status.HTTP_200_OK)
         queryset = code_list.objects.filter(
             ROW_ID = request.data.get('ROW_ID')
@@ -108,7 +110,7 @@ class CodeListDeepDetailView(generics.CreateAPIView):
         respons_value = null_value_to_space(respons_value,request)
         Red.set(cache_key, respons_value)
         logger.info(request=request, message="Code list deep details (Parent-Child Relationship)")
-        return Response(respons_value, status=status.HTTP_200_OK)
+        return Response("respons_value", status=status.HTTP_200_OK)
 
     def _get_child(self, data,respons_value,index,parent):
         for item in data:

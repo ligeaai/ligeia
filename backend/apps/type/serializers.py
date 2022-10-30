@@ -6,7 +6,8 @@ from utils.models_utils import (
                                 validate_value)
 from rest_framework.exceptions import ValidationError 
 from .models import type as Type
-
+from services.logging.Handlers import KafkaLogger 
+logger = KafkaLogger()
 
 class TypeSaveSerializer(serializers.ModelSerializer):
     class Meta:
@@ -14,7 +15,9 @@ class TypeSaveSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
     def create(self, validated_data):
+            print(validated_data)
             validated_data['VERSION'] = uuid.uuid4().hex
+            validated_data['ROW_ID'] = uuid.uuid4().hex
             types = Type.objects.create(**validated_data)
             types.save()
             return types
@@ -33,20 +36,26 @@ class TypeSerializer(serializers.ModelSerializer):
 
 class TypeCustomSaveSerializer(serializers.Serializer):
     def save(self, validated_data):
+        request = validated_data
+        validated_data = request.data.get('TYPE')
         qs = Type.objects.filter(TYPE = validated_data.get('TYPE'))
         if qs:
             try:
-                validate_value(validated_data,'TYPE')
+                if validated_data.get('ROW_ID'):
+                    validated_data.pop('ROW_ID')
+                validate_value(validated_data,'TYPE',request=request)
                 qs.update(**validated_data)
+                logger.info("Type object successfully updated",request= request)
             except Exception as e:
                 raise ValidationError(e)
         else: 
             try:
-                validate_model_not_null(validated_data,"TYPE") 
+                validate_model_not_null(validated_data,"TYPE",request) 
                 validated_data["VERSION"] = uuid.uuid4().hex
-                codeList = Type.objects.create(**validated_data)
-                codeList.save()
-                return codeList
+                types = Type.objects.create(**validated_data)
+                types.save()
+                logger.info("Type object successfully created",request= request)
+                return types
             except Exception as e:
                 raise ValidationError(e)
                 
