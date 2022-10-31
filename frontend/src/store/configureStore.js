@@ -74,7 +74,7 @@ export const store = configureStore({
                 ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
             },
         }),
-    middleware: [thunk, logger]
+    middleware: [thunk]
 });
 
 export const persistor = persistStore(store);

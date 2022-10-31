@@ -1,10 +1,10 @@
 export const columns = [
-    // {
-    //     field: "LIST_TYPE",
-    //     headerName: "List type",
-    //     editable: true,
-    //     width: 150
-    // },
+    {
+        field: "LIST_TYPE",
+        headerName: "List type",
+        editable: true,
+        width: 150
+    },
     {
         field: "CODE",
         headerName: "Code",

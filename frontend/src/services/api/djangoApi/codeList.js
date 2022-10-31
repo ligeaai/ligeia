@@ -93,3 +93,19 @@ export const putCodeList = async (CODE, CODE_TEXT, CULTURE, LIST_TYPE, ROW_ID, P
         return false
     }
 }
+
+export const putAllCodeList = async (CODE_LIST, CACHE_KEY) => {
+    const body = JSON.stringify({ CODE_LIST, CACHE_KEY });
+    console.log(body);
+    // try {
+    //     let res = await instance
+    //         .put(
+    //             "/code-list/save/",
+    //             body,
+    //             config
+    //         )
+    //     return res
+    // } catch (err) {
+    //     return false
+    // }
+}

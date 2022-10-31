@@ -2,15 +2,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { darken, lighten } from "@mui/material/styles";
 import { Box } from "@mui/material";
-import {
-  DataGridPro,
-  GridToolbar,
-  GridToolbarContainer,
-  GridToolbarColumnsButton,
-  GridToolbarFilterButton,
-  GridToolbarExport,
-  GridToolbarDensitySelector,
-} from "@mui/x-data-grid-pro";
+import { DataGridPro } from "@mui/x-data-grid-pro";
 import { columns } from "./confirmColumn";
 const getBackgroundColor = (color, mode) =>
   mode === "dark" ? darken(color, 0.6) : lighten(color, 0.6);

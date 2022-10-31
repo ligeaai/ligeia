@@ -97,11 +97,20 @@ const CodelistActionMenu = () => {
     //     await createPutBody(childCodeList.newItems[e]);
     //   })
     // );
+    var parentCode = childCodeList.dataGridItems[codeListChild.rowId].CODE;
     await Promise.all(
       Object.keys(childCodeList.dataGridItems).map(async (e) => {
         Object.keys(childCodeList.changedItems).map(async (a) => {
           if (childCodeList.changedItems[a] === e) {
-            await createPutBody(childCodeList.dataGridItems[e]);
+            console.log(e);
+            if (childCodeList.dataGridItems[e].LIST_TYPE === "CODE_LIST") {
+              await createPutBody(childCodeList.dataGridItems[e]);
+            } else {
+              await createPutBody({
+                ...childCodeList.dataGridItems[e],
+                LIST_TYPE: parentCode,
+              });
+            }
           }
         });
       })

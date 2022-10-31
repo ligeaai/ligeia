@@ -30,7 +30,7 @@ import LinearProgress from "@mui/material/LinearProgress";
 import { columns } from "./dataGridColumn";
 import history from "../../../../routers/history";
 import { CustomNoRowsOverlay } from "./customNoRowOwerlay";
-
+import DropDownMenu from "./dropDownMenu";
 const getTreeDataPath = (row) => row.HIERARCHY;
 function uuidv4() {
   return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, (c) =>
@@ -232,121 +232,137 @@ export default function TreeDataWithGap() {
     },
   ]);
   return (
-    <Box
-      sx={{
-        m: 0.5,
-        "& .super-app-theme--cell": {
-          backgroundColor: grey[200],
-        },
+    <Box>
+      {/*<Box sx={{ mb: 1.5 }}>
+         <DropDownMenu />
 
-        button: {
-          minWidth: "36px",
-          height: "36px",
-          borderRadius: "50px",
-        },
-      }}
-    >
+        <Box
+          sx={{
+            border: "0.2px solid",
+            backgroundColor: "#4B4B4B",
+            borderColor: "#4B4B4B",
+            width: "98%",
+            margin: "auto",
+          }}
+        />
+      </Box> */}
+
       <Box
         sx={{
-          minHeight: "calc(500px - 36px - 16px - 40px)",
-          height: "calc(100vh - 60px - 36px - 16px - 60px )",
-          width: "100%",
-          "& .MuiDataGrid-cellContent": {
-            fontSize: "16px",
-          },
+          m: 0.5,
           "& .super-app-theme--cell": {
             backgroundColor: grey[200],
           },
 
-          "& .MuiDataGrid-virtualScrollerRenderZone": {
-            "&>*:nth-of-type(1)": {
-              "&>*:nth-of-type(1)": {
-                svg: {
-                  display: "none",
-                },
-              },
-            },
+          button: {
+            minWidth: "36px",
+            height: "36px",
+            borderRadius: "50px",
           },
-
-          // ---------------------------------------------------------
-          // "& .MuiDataGrid-virtualScrollerRenderZone": {
-          //   "&>*:nth-of-type(1)": {
-          //     "&>*:nth-of-type(1)": {
-          //       svg: {
-          //         display: "none",
-          //       },
-          //     },
-          //   },
-          // },
-
-          // ---------------------------------------------------------
-
-          // "& .MuiDataGrid-virtualScrollerRenderZone": {
-          //   div: {
-          //     "&>*:nth-of-type(2)": {
-          //       display: "none",
-          //     },
-          //   },
-
-          //   "&>*:nth-of-type(1)": {
-          //     "&>*:nth-of-type(1)": {
-          //       display: "none",
-          //     },
-          //     "&>*:nth-of-type(2)": {
-          //       display: "flex",
-          //       minWidth: "50px !important",
-          //       maxWidth: "50px !important",
-          //       button: {
-          //         position: "relative",
-          //         left: "-2px",
-          //       },
-          //     },
-          //   },
-          // },
         }}
       >
-        <DataGridPro
-          componentsProps={{
-            basePopper: {
-              sx: {
-                ".MuiDataGrid-columnsPanel": {
-                  "&>*:nth-of-type(2)": {
+        <Box
+          sx={{
+            minHeight: "calc(500px - 36px - 16px - 40px )",
+            height: "calc(100vh - 60px - 36px - 16px - 60px)",
+            width: "100%",
+            "& .MuiDataGrid-cellContent": {
+              fontSize: "16px",
+            },
+            "& .super-app-theme--cell": {
+              backgroundColor: grey[200],
+            },
+
+            "& .MuiDataGrid-virtualScrollerRenderZone": {
+              "&>*:nth-of-type(1)": {
+                "&>*:nth-of-type(1)": {
+                  svg: {
                     display: "none",
                   },
                 },
               },
             },
+
+            // ---------------------------------------------------------
+            // "& .MuiDataGrid-virtualScrollerRenderZone": {
+            //   "&>*:nth-of-type(1)": {
+            //     "&>*:nth-of-type(1)": {
+            //       svg: {
+            //         display: "none",
+            //       },
+            //     },
+            //   },
+            // },
+
+            // ---------------------------------------------------------
+
+            // "& .MuiDataGrid-virtualScrollerRenderZone": {
+            //   div: {
+            //     "&>*:nth-of-type(2)": {
+            //       display: "none",
+            //     },
+            //   },
+
+            //   "&>*:nth-of-type(1)": {
+            //     "&>*:nth-of-type(1)": {
+            //       display: "none",
+            //     },
+            //     "&>*:nth-of-type(2)": {
+            //       display: "flex",
+            //       minWidth: "50px !important",
+            //       maxWidth: "50px !important",
+            //       button: {
+            //         position: "relative",
+            //         left: "-2px",
+            //       },
+            //     },
+            //   },
+            // },
           }}
-          sx={{}}
-          localeText={{
-            toolbarColumns: "",
-            toolbarFilters: "",
-            toolbarDensity: "",
-            toolbarExport: "",
-          }}
-          //disableVirtualization={true}
-          defaultGroupingExpansionDepth={1}
-          hideFooter={true}
-          treeData
-          onCellEditCommit={onCellEditCommit}
-          rows={Object.values(childCodeList.dataGridItems)}
-          columns={columns}
-          getTreeDataPath={getTreeDataPath}
-          getRowId={(row) => row.ROW_ID}
-          loading={childCodeList.loading}
-          isRowSelectable={(rowId) => rowId.id !== codeListChild.rowId}
-          checkboxSelection={true}
-          disableSelectionOnClick={true}
-          onSelectionModelChange={(rowId) => (myCheckboxSelection = rowId)}
-          sortModel={sortModel}
-          onSortModelChange={(model) => setSortModel(model)}
-          components={{
-            Toolbar: CustomToolbar,
-            NoRowsOverlay: CustomNoRowsOverlay,
-            LoadingOverlay: LinearProgress,
-          }}
-          groupingColDef={groupingColDef}
-        />
+        >
+          <DataGridPro
+            componentsProps={{
+              basePopper: {
+                sx: {
+                  ".MuiDataGrid-columnsPanel": {
+                    "&>*:nth-of-type(2)": {
+                      display: "none",
+                    },
+                  },
+                },
+              },
+            }}
+            sx={{}}
+            localeText={{
+              toolbarColumns: "",
+              toolbarFilters: "",
+              toolbarDensity: "",
+              toolbarExport: "",
+            }}
+            //disableVirtualization={true}
+            defaultGroupingExpansionDepth={1}
+            hideFooter={true}
+            treeData
+            onCellEditCommit={onCellEditCommit}
+            rows={Object.values(childCodeList.dataGridItems)}
+            columns={columns}
+            getTreeDataPath={getTreeDataPath}
+            getRowId={(row) => row.ROW_ID}
+            loading={childCodeList.loading}
+            isRowSelectable={(rowId) => rowId.id !== codeListChild.rowId}
+            checkboxSelection={true}
+            disableSelectionOnClick={true}
+            onSelectionModelChange={(rowId) => (myCheckboxSelection = rowId)}
+            sortModel={sortModel}
+            onSortModelChange={(model) => setSortModel(model)}
+            components={{
+              Toolbar: CustomToolbar,
+              NoRowsOverlay: CustomNoRowsOverlay,
+              LoadingOverlay: LinearProgress,
+            }}
+            groupingColDef={groupingColDef}
+          />
+        </Box>
       </Box>
     </Box>
   );
