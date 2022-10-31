@@ -40,7 +40,17 @@ def null_value_to_space(serializer,request):
         logger.error(request=request, message=message_dict ,error="ValidationError null_value_to_space")
         raise ValidationError(message_dict)
 
-   
+def space_value_to_null(item,request):
+    try:
+        for keys,value in item.items():
+                if value == "":
+                    item[keys] = None
+        return item
+    except Exception as e:
+        message_dict = {"Message": e }
+        logger.error(request=request, message=message_dict ,error="ValidationError null_value_to_space")
+        raise ValidationError(message_dict)
+    
        
 def validate_value(validated_data,model,request):
     callback = []

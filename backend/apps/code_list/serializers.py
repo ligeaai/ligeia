@@ -3,6 +3,7 @@ from .models import code_list
 import uuid
 from utils.models_utils import (
                                 validate_model_not_null,
+                                space_value_to_null,
                                 validate_value)
 from rest_framework.exceptions import ValidationError 
 
@@ -50,23 +51,27 @@ class codeListNameSerializer(serializers.ModelSerializer):
 
 class CodeListCustomNewSerializer(serializers.Serializer):
     def save(self, validated_data):
-        data = validated_data.data.get('CODE_LIST')
-        for item in data:
-            qs = code_list.objects.filter(ROW_ID = item.get('ROW_ID'))
-            if qs:
-                try:
-                    validate_value(item,"CODE_LIST",validated_data)
-                    qs.update(**item)
-                except Exception as e:
-                    logger.error('Update Failed',validated_data,e,'FAULTS')
-                    raise ValidationError(e)
-            else: 
-                validate_model_not_null(item,"code_list",validated_data) 
-                item["VERSION"] = uuid.uuid4().hex
-                codeList = code_list.objects.create(**item)
-                codeList.save()
-        
-        return str(codeList) + "Code list Created and updated successful"
+        try:
+            data = validated_data.data.get('CODE_LIST')
+            for item in data:
+                space_value_to_null(item,validated_data)
+                qs = code_list.objects.filter(ROW_ID = item.get('ROW_ID'))
+                if qs:
+                    try:
+                        validate_value(item,"CODE_LIST",validated_data)
+                        qs.update(**item)
+                    except Exception as e:
+                        logger.error('Update Failed',validated_data,e,'FAULTS')
+                        raise ValidationError(e)
+                else: 
+                    validate_model_not_null(item,"code_list",validated_data) 
+                    item["VERSION"] = uuid.uuid4().hex
+                    codeList = code_list.objects.create(**item)
+                    codeList.save()
+            
+            return str(codeList) + "Code list Created and updated successful"
+        except:
+            raise ValidationError(e)
     
 class CodeListCustomSerializer(serializers.Serializer):
 
