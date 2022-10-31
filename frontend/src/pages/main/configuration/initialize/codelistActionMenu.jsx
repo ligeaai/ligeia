@@ -9,6 +9,7 @@ import { setConfirmation } from "../../../../services/reducers/confirmation";
 import {
   setIndex,
   setRefreshTreeMenu,
+  setRowId,
 } from "../../../../services/reducers/codeListChildReducer";
 import { ActionMenu } from "../../../../components";
 import {
@@ -38,6 +39,7 @@ const CodelistActionMenu = () => {
   const btnNew = () => {
     var uuid = uuidv4();
     dispatch(cleanDataGridItems());
+    dispatch(setRowId({ rowId: uuid.replace(/-/g, "") }));
     dispatch(
       setNewItem({
         uuid: uuid.replace(/-/g, ""),

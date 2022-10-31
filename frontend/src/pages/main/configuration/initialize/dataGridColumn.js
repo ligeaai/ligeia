@@ -1,16 +1,10 @@
 export const columns = [
-    {
-        field: "LIST_TYPE",
-        headerName: "List type",
-        editable: true,
-        width: 150
-    },
-    {
-        field: "CULTURE",
-        headerName: "Culture",
-        editable: true,
-        width: 100
-    },
+    // {
+    //     field: "LIST_TYPE",
+    //     headerName: "List type",
+    //     editable: true,
+    //     width: 150
+    // },
     {
         field: "CODE",
         headerName: "Code",
@@ -23,7 +17,6 @@ export const columns = [
         editable: true,
         width: 150
     },
-
     {
         field: "PARENT",
         headerName: "Parent",
@@ -179,7 +172,12 @@ export const columns = [
     //     width: 100,
     //     editable: true,
     // },
-
+    {
+        field: "CULTURE",
+        headerName: "Culture",
+        editable: true,
+        width: 100
+    },
     {
         field: "LAYER_NAME",
         headerName: "Layer Name",
