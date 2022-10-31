@@ -33,7 +33,8 @@ const Properties = ({ MyProperties, isLinkOpen = true }) => {
       <Grid
         item
         sx={{
-          px: 0.5,
+          pl: 0.5,
+          paddingRight: "6px",
           my: 0.5,
           borderRight: "1.2px solid",
           borderColor: "text.disabled",
@@ -115,6 +116,7 @@ const Properties = ({ MyProperties, isLinkOpen = true }) => {
         xs={12}
         sx={{
           mr: 1,
+          marginLeft: "2px",
           width: "calc(100% - 52px)",
         }}
       >

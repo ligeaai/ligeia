@@ -63,6 +63,7 @@ const CodelistActionMenu = () => {
           DATE2: "",
           CHAR1: "",
           CHAR2: "",
+          HIDDEN: "",
           LAYER_NAME: "",
           LAST_UPDT_USER: userEmail,
         },
@@ -87,8 +88,10 @@ const CodelistActionMenu = () => {
       e.DATE2,
       e.CHAR1,
       e.CHAR2,
+      e.HIDDEN,
       e.LAYER_NAME,
-      userEmail
+      userEmail,
+      codeListChild.rowId
     );
   };
   var saveDirection = 0;
@@ -108,7 +111,7 @@ const CodelistActionMenu = () => {
       })
     );
     Object.keys(childCodeList.deletedItems).map(async (a) => {
-      deleteCodeList(childCodeList.deletedItems[a]);
+      deleteCodeList(childCodeList.deletedItems[a], codeListChild.rowId);
     });
     dispatch(setRefreshTreeMenu());
     dispatch(
@@ -176,7 +179,7 @@ const CodelistActionMenu = () => {
     }
   };
   const deleteParentAgreeFunc = async () => {
-    await deleteCodeList(codeListChild.rowId);
+    await deleteCodeList(codeListChild.rowId, codeListChild.rowId);
     dispatch(setRefreshTreeMenu());
   };
   const deleteParent = async () => {

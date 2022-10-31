@@ -5,10 +5,9 @@ import AppRouter from "../routers/appRouter";
 
 import myTheme from "../themes/composeStyle";
 import Loading from "../components/loading/loading";
-import { loadUser } from "../services/actions/auth";
-import { ErrorBoundary } from "../components/errorMessage/errorBoundary"
 
-import history from "../routers/history";
+import { ErrorBoundary } from "../components/errorMessage/errorBoundary"
+import { setSelectedItem } from "../services/reducers/drawerReducer";
 import { LicenseInfo } from "@mui/x-data-grid-pro";
 
 LicenseInfo.setLicenseKey(
@@ -17,25 +16,16 @@ LicenseInfo.setLicenseKey(
 
 const App = () => {
   const dispatch = useDispatch();
-  const [isLoaded, setIsloaded] = React.useState(false)
   useEffect(() => {
-    if (localStorage.getItem('token')) {
-      dispatch(loadUser()).then(() => {
-        history.push(`${window.location.pathname}`)
-        setIsloaded(true)
-      })
-    }
-    else {
-      setIsloaded(true)
+    if (window.location.pathname === "/") {
+      dispatch(setSelectedItem("Home"))
     }
   }, [])
-  const MyAppRouter = () => {
-    return isLoaded ? <AppRouter /> : <></>
-  }
+
   return (
     <ErrorBoundary>
       <ThemeProvider theme={myTheme()}>
-        <Loading Element={<MyAppRouter />} />
+        <Loading Element={<AppRouter />} />
       </ThemeProvider>
     </ErrorBoundary>
   );
