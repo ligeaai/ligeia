@@ -47,8 +47,8 @@ class CodeListCustomSerializer(serializers.Serializer):
                 raise ValidationError(e)
         else: 
             validate_model_not_null(validated_data.data,"code_list",validated_data) 
-            validated_data["VERSION"] = uuid.uuid4().hex
-            codeList = code_list.objects.create(**validated_data)
+            validated_data.data["VERSION"] = uuid.uuid4().hex
+            codeList = code_list.objects.create(**validated_data.data)
             codeList.save()
             return str(codeList) + "Code list Created successful"
         
