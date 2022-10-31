@@ -1,11 +1,5 @@
 export const columns = [
     {
-        field: "LIST_TYPE",
-        headerName: "List type",
-        editable: false,
-        width: 150
-    },
-    {
         field: "CULTURE",
         headerName: "Culture",
         editable: false,

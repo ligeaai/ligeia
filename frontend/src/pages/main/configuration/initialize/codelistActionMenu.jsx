@@ -7,25 +7,14 @@ import {
 } from "../../../../services/api/djangoApi/codeList";
 import { setConfirmation } from "../../../../services/reducers/confirmation";
 import {
-  setParentCodeList,
-  setIsUpdated,
-} from "../../../../services/reducers/parentCodelist";
-import {
   setIndex,
-  setLastItemIndex,
-  setCodeListItems,
-  setRowId,
   setRefreshTreeMenu,
 } from "../../../../services/reducers/codeListChildReducer";
 import { ActionMenu } from "../../../../components";
 import {
-  setDataGridItems,
-  changeDataGridItems,
   cleanDataGridItems,
   setNewItem,
-  setDeletedItem,
   setRefreshDataGrid,
-  setLoading,
 } from "../../../../services/reducers/childCodeList";
 import {
   setConfirmDataGridItems,
@@ -53,7 +42,7 @@ const CodelistActionMenu = () => {
       setNewItem({
         uuid: uuid.replace(/-/g, ""),
         value: {
-          HIERARCHY: [`new`],
+          HIERARCHY: [`${uuid.replace(/-/g, "")}`],
           ROW_ID: uuid.replace(/-/g, ""),
           LIST_TYPE: "CODE_LIST",
           CULTURE: culture,
@@ -211,7 +200,15 @@ const CodelistActionMenu = () => {
     }
   };
   const deleteParentAgreeFunc = async () => {
-    await deleteCodeList(codeListChild.rowId, codeListChild.rowId);
+    if (codeListChild.index === -2) {
+      dispatch(
+        setIndex({
+          index: 0,
+        })
+      );
+    } else {
+      await deleteCodeList(codeListChild.rowId, codeListChild.rowId);
+    }
     dispatch(setRefreshTreeMenu());
   };
   const deleteParent = async () => {
@@ -232,6 +229,7 @@ const CodelistActionMenu = () => {
       saveGoNext={saveGoNext}
       btnDelete={deleteParent}
       dublicateIsActive={false}
+      infoIsActive={false}
     />
   );
 };
