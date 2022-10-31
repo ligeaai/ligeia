@@ -32,7 +32,7 @@ services:
     depends_on:
       - redis
       - postgres
-      # - es
+      - es
     ports:
       - "8000:8000"
     networks:
@@ -48,13 +48,18 @@ services:
       - COUCHDB_PASSWORD=${COUCHDB_PASSWORD}
     volumes:
       - couch-data:/opt/couchdb/data
-  # es:
-  #   image: elasticsearch:8.4.2
-  #   container_name: ligeiaai-es-1
-  #   environment:
-  #     - discovery.type=single-node
-  #   ports:
-  #     - "9200:9200"
+  es:
+    image: elasticsearch:8.4.2
+    container_name: ligeiaai-es-1
+    environment:
+      - discovery.type=single-node
+    ports:
+      - "9200:9200"
+    deploy:
+      resources: 
+        limits: 
+          cpus: "0.20"  # Use at most 50% of one CPU core
+          memory: 1GB
   postgres:
     restart: unless-stopped
     image: postgres:latest
