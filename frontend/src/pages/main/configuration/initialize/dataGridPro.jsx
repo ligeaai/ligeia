@@ -52,6 +52,9 @@ export default function TreeDataWithGap() {
     const codeListChildCurrentChild = useSelector(
       (state) => state.codeListChild.currentChild
     );
+    const codeListChildRowId = useSelector(
+      (state) => state.codeListChild.rowId
+    );
 
     const mySetNewItem = () => {
       var uuid = uuidv4();
@@ -60,7 +63,7 @@ export default function TreeDataWithGap() {
         setNewItem({
           uuid: uuid.replace(/-/g, ""),
           value: {
-            HIERARCHY: [`${codeListChildCurrentChild}`, `(New ${newItemNum})`],
+            HIERARCHY: [`${codeListChildRowId}`, `${uuid.replace(/-/g, "")}`],
             ROW_ID: uuid.replace(/-/g, ""),
             LIST_TYPE: codeListChildCurrentChild,
             CULTURE: culture,
@@ -83,7 +86,9 @@ export default function TreeDataWithGap() {
     };
     const myDeleteChild = () => {
       myCheckboxSelection.map((e) => {
-        dispatch(setDeletedItem(e));
+        dispatch(
+          setDeletedItem({ key: e, value: childCodeList.dataGridItems[e] })
+        );
       });
       myCheckboxSelection = [];
     };

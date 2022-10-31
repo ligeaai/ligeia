@@ -27,6 +27,11 @@ import {
   setRefreshDataGrid,
   setLoading,
 } from "../../../../services/reducers/childCodeList";
+import {
+  setConfirmDataGridItems,
+  cleanConfirmDataGridItems,
+} from "../../../../services/reducers/confirmCodeList";
+import ConfirmDataGrid from "./confirmDataGrid";
 const CodelistActionMenu = () => {
   const dispatch = useDispatch();
   const codeListChild = useSelector((state) => state.codeListChild);
@@ -111,7 +116,7 @@ const CodelistActionMenu = () => {
       })
     );
     Object.keys(childCodeList.deletedItems).map(async (a) => {
-      deleteCodeList(childCodeList.deletedItems[a], codeListChild.rowId);
+      deleteCodeList(a, codeListChild.rowId);
     });
     dispatch(setRefreshTreeMenu());
     dispatch(
@@ -125,14 +130,41 @@ const CodelistActionMenu = () => {
   };
   const changeDetector = () => {
     var changes = 0;
-    Object.keys(childCodeList.dataGridItems).map(async (e) => {
-      Object.keys(childCodeList.changedItems).map(async (a) => {
-        if (childCodeList.changedItems[a] === e) {
-          changes++;
-        }
-      });
+    dispatch(cleanConfirmDataGridItems());
+    Object.keys(childCodeList.newItems).map(async (e) => {
+      dispatch(
+        setConfirmDataGridItems({
+          key: e,
+          value: {
+            ...childCodeList.newItems[e],
+            requestMethod: "create",
+          },
+        })
+      );
+      changes++;
+    });
+    Object.keys(childCodeList.changedItems).map(async (a) => {
+      dispatch(
+        setConfirmDataGridItems({
+          key: childCodeList.changedItems[a],
+          value: {
+            ...childCodeList.dataGridItems[childCodeList.changedItems[a]],
+            requestMethod: "change",
+          },
+        })
+      );
+      changes++;
     });
     Object.keys(childCodeList.deletedItems).map(async (a) => {
+      dispatch(
+        setConfirmDataGridItems({
+          key: a,
+          value: {
+            ...childCodeList.deletedItems[a],
+            requestMethod: "delete",
+          },
+        })
+      );
       changes++;
     });
     if (changes > 0) {
@@ -146,7 +178,7 @@ const CodelistActionMenu = () => {
       dispatch(
         setConfirmation({
           title: "Are you sure you want to save this code list?",
-          body: "here will come the code list",
+          body: <ConfirmDataGrid />,
           agreefunction: saveConfirmed,
         })
       );

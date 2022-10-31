@@ -5,7 +5,7 @@ export const childCodeList = createSlice({
     initialState: {
         dataGridItems: {},
         changedItems: [],
-        deletedItems: [],
+        deletedItems: {},
         newItems: {},
         loading: true,
         refreshDataGrid: true,
@@ -22,13 +22,14 @@ export const childCodeList = createSlice({
             state.newItems[payload.payload.uuid] = payload.payload.value
         },
         setDeletedItem: (state, payload) => {
-            delete state.dataGridItems[payload.payload];
-            state.deletedItems = [...new Set([...state.deletedItems, payload.payload])]
+            console.log(payload.payload.value);
+            state.deletedItems[payload.payload.key] = payload.payload.value
+            delete state.dataGridItems[payload.payload.key];
         },
         cleanDataGridItems: (state) => {
             state.dataGridItems = {}
             state.changedItems = []
-            state.deletedItems = []
+            state.deletedItems = {}
             state.newItems = {}
         },
         changeDataGridItems: (state, payload) => {
