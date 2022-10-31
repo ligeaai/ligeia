@@ -19,6 +19,8 @@ from .views import (
     ResetForgetPassword,
     github_callback,
     logout,
+    GoogleRegister,
+    FacebookRegister
     
 )
 
@@ -33,11 +35,13 @@ urlpatterns = [
     path('github/', GitHubLogin.as_view()),
     path('github/callback/', github_callback, name='github_callback'),
     path('github/url/', views.oauth2_login,name = 'github-url'),
-    # path("", include("knox.urls")),
-    path('google/', GoogleLogin.as_view(),name="google"),
-    #path('github/', GithubLogin.as_view(),name="github"),
-    path("facebook/", FacebookLogin.as_view(), name="facebook"),
+    path('google/register', GoogleRegister.as_view(),name="google-register"),
+    path('google/login', GoogleLogin.as_view(),name="google-login"),
+    path('facebook/register', FacebookRegister.as_view(),name="google-register"),
+    path('facebook/login', FacebookLogin.as_view(),name="google-login"),
     path("login/", UserLoginView.as_view(), name="login"),
+    # path("", include("knox.urls")),
+    #path('github/', GithubLogin.as_view(),name="github"),
    #path("logout/", knox_views.LogoutView.as_view(), name="logout"),
    #path("logoutall/", knox_views.LogoutAllView.as_view(), name="logoutall"),
     path("register/", UserRegisterView.as_view(), name="register"),
