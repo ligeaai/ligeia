@@ -31,7 +31,8 @@ def _create_method(url,data):
         data = data.to_dict()
         try:
             data['LAST_UPDT_DATE'] = data.get('LAST_UPDT_DATE').split(' ')[0]
-            data['HIDDEN'] = str(data.get('HIDDEN'))
+            if data.get('HIDDEN'):
+                data['HIDDEN'] = str(data.get('HIDDEN'))
         except Exception as e:
             print('except', e)
         for keys,value in data.items():

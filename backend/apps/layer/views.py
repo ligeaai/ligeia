@@ -14,16 +14,26 @@ from .models import layer
 from .serializers import LayerSaveSerializer,LayerDropDownSerializer
 
 class LayerDropDownView(generics.ListAPIView):
-    queryset = layer.objects.all()
     permission_classes = [permissions.AllowAny]
-    serializer_class = [LayerDropDownSerializer,]
+    
+    def get_queryset(self):
+        return
+    def get(self, request, *args, **kwargs):
+        queryset = layer.objects.all()
+        serializer = LayerDropDownSerializer(data=queryset, many=True)
+        serializer.is_valid()
+        print(serializer.data)
+        return Response(
+            serializer.data,
+            status=status.HTTP_200_OK,
+        )
 
 class LayerSaveView(generics.CreateAPIView):
 
     permission_classes = [permissions.AllowAny]
 
     def create(self, request, *args, **kwargs):
-        validate_model_not_null(request.data, "LAYER")
+        validate_model_not_null(request.data, "LAYER",request=request)
         serializer = LayerSaveSerializer(data=request.data)
         serializer.is_valid()
         serializer.create(request.data)
