@@ -11,8 +11,12 @@ from utils.models_utils import (
 
 # Create your views here.
 from .models import layer
-from .serializers import LayerSaveSerializer
+from .serializers import LayerSaveSerializer,LayerDropDownSerializer
 
+class LayerDropDownView(generics.ListAPIView):
+    queryset = layer.objects.all()
+    permission_classes = [permissions.AllowAny]
+    serializer_class = [LayerDropDownSerializer,]
 
 class LayerSaveView(generics.CreateAPIView):
 

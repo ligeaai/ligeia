@@ -2,6 +2,10 @@ import uuid
 from rest_framework import serializers
 from .models import layer
 
+class LayerDropDownSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = layer
+        fields = 'LAYER_NAME'
 
 class LayerSaveSerializer(serializers.ModelSerializer):
     class Meta:

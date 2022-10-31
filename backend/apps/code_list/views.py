@@ -13,6 +13,8 @@ from .serializers import (
     CodeListDetailsSerializer,
     CodeListCustomSerializer,
     CodeListSaveSerializer,
+    CodeListDeleteSerializer,
+    CodeListCustomNewSerializer
 )
 from rest_framework.exceptions import ValidationError 
 from rest_framework.pagination import PageNumberPagination
@@ -24,7 +26,32 @@ from utils.models_utils import (
 
 logger = KafkaLogger()
 
-class CodeListSaveScriptView(generics.UpdateAPIView):
+class CodeListSaveScriptView(generics.CreateAPIView):
+    permission_classes = [permissions.AllowAny]
+    
+    def create(self, request, *args, **kwargs):
+        serializer = CodeListSaveSerializer(data = request.data)
+        serializer.is_valid()
+        serializer.save(request.data)
+        return Response('BAŞARILI')
+
+class CodeListSaveAndUpdateNewView(generics.UpdateAPIView):
+    permission_classes = [permissions.AllowAny]
+
+    def put(self, request, *args, **kwargs):
+        if request.data.get('CACHE_KEY') != "":
+            Red.delete(request.data.get('CACHE_KEY'))
+        request.data.pop('CACHE_KEY')
+        
+        serializer = CodeListCustomNewSerializer(data=request.data)
+        serializer.is_valid()
+        message=serializer.save(request)
+        logger.info(request=request, message = "message")
+        return Response(
+            {"Message": "message"}, status=status.HTTP_200_OK
+        )
+
+class CodeListSaveAndUpdateView(generics.UpdateAPIView):
     permission_classes = [permissions.AllowAny]
 
     def put(self, request, *args, **kwargs):
@@ -72,7 +99,53 @@ class CodeListDetailView(generics.CreateAPIView):
         logger.info(request=request, message="Code list details only one fields")
         return Response(serializer, status=status.HTTP_200_OK)
     
-    
+
+class CodeListDeleteChildView(generics.CreateAPIView):
+    permission_classes = [
+        permissions.AllowAny
+    ]
+    def post(self, request, *args, **kwargs):
+        message="Codelist deletion successful"
+        try:
+            rowIdList = request.data.get('ROW_ID')
+            for value in rowIdList:
+                queryset = code_list.objects.filter(ROW_ID = value)
+                validate_find(queryset,request=request)
+                queryset.delete()
+                logger.info(request=request, message=message)
+                Red.delete(request.data.get('CACHE_KEY'))
+            return Response(message, status=status.HTTP_200_OK)
+        except Exception as e:
+            logger.error(request=request, message=message,error=str(ValidationError(e)))
+            raise ValidationError(e)    
+
+class CodeListParentDeleteView(generics.CreateAPIView):
+    permission_classes = [
+        permissions.AllowAny
+    ]
+    def post(self, request, *args, **kwargs):
+        message="Codelist Parent deletion successful"
+        try:
+            queryset = code_list.objects.filter(ROW_ID = request.data.get('ROW_ID'))
+            validate_find(queryset,request=request)
+            serializer = CodeListDeleteSerializer(queryset, many=True)
+            self._delete_child(serializer.data)
+            logger.info(request=request, message=message)
+            # Red.delete(request.data.get('CACHE_KEY'))
+            return Response(message, status=status.HTTP_200_OK)
+        except Exception as e:
+            logger.error(request=request, message=message,error=str(ValidationError(e)))
+            raise ValidationError(e)
+    def _delete_child(self, data):
+        for item in data:
+            queryset = code_list.objects.filter(
+            ROW_ID=item.get("ROW_ID")
+            )
+            serializer = CodeListDetailsSerializer(queryset, many=True)
+            child_data = serializer.data
+            queryset.delete()
+            self._delete_child(serializer.data)
+        return True
     
 class CodeListDeleteView(generics.CreateAPIView):
     permission_classes = [
@@ -96,10 +169,10 @@ class CodeListDeepDetailView(generics.CreateAPIView):
 
     def post(self, request, *args, **kwargs):
         cache_key = request.data.get('ROW_ID')
-        cache_data = Red.get(cache_key)
-        if cache_data:
-            logger.info(request=request, message="Code list deep details (Parent-Child Relationship)")
-            return Response(cache_data, status=status.HTTP_200_OK)
+        # cache_data = Red.get(cache_key)
+        # if cache_data:
+        #     logger.info(request=request, message="Code list deep details (Parent-Child Relationship)")
+        #     return Response(cache_data, status=status.HTTP_200_OK)
         queryset = code_list.objects.filter(
             ROW_ID = request.data.get('ROW_ID')
         )
