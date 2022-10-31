@@ -37,11 +37,29 @@ import MyActionMenu from "./codelistActionMenu";
 import DataGridPro from "./dataGridPro";
 import history from "../../../../routers/history";
 import { LoadingComponent } from "../../../../components";
+
+import {
+  deleteCodeList,
+  putCodeList,
+} from "../../../../services/api/djangoApi/codeList";
+import { setConfirmation } from "../../../../services/reducers/confirmation";
+import { setRefreshTreeMenu } from "../../../../services/reducers/codeListChildReducer";
+
+import {
+  setConfirmDataGridItems,
+  cleanConfirmDataGridItems,
+} from "../../../../services/reducers/confirmCodeList";
+import ConfirmDataGrid from "./confirmDataGrid";
+
 function RenderRow(props) {
   const dispatch = useDispatch();
   const { data, index, style } = props;
   const selectedIndex = useSelector((state) => state.codeListChild.index);
 
+  const codeListChild = useSelector((state) => state.codeListChild);
+  const childCodeList = useSelector((state) => state.childCodeList);
+  const culture = useSelector((state) => state.lang.cultur);
+  const userEmail = useSelector((state) => state.auth.user.email);
   return (
     <ListItem
       style={style}
@@ -57,6 +75,108 @@ function RenderRow(props) {
       <ListItemButton
         selected={selectedIndex === index}
         onClick={(event) => {
+          const createPutBody = async (e) => {
+            await putCodeList(
+              e.CODE,
+              e.CODE_TEXT,
+              e.CULTURE,
+              e.LIST_TYPE,
+              e.ROW_ID,
+              e.PARENT,
+              e.LEGACY_CODE,
+              e.VAL1,
+              e.VAL2,
+              e.VAL3,
+              e.DATE1,
+              e.DATE2,
+              e.CHAR1,
+              e.CHAR2,
+              e.HIDDEN,
+              e.LAYER_NAME,
+              userEmail,
+              codeListChild.rowId
+            );
+          };
+          const saveConfirmed = async () => {
+            // await Promise.all(
+            //   Object.keys(childCodeList.newItems).map(async (e) => {
+            //     await createPutBody(childCodeList.newItems[e]);
+            //   })
+            // );
+            await Promise.all(
+              Object.keys(childCodeList.dataGridItems).map(async (e) => {
+                Object.keys(childCodeList.changedItems).map(async (a) => {
+                  if (childCodeList.changedItems[a] === e) {
+                    await createPutBody(childCodeList.dataGridItems[e]);
+                  }
+                });
+              })
+            );
+            Object.keys(childCodeList.deletedItems).map(async (a) => {
+              deleteCodeList(a, codeListChild.rowId);
+            });
+            dispatch(setRefreshTreeMenu());
+            //dispatch(setCodeListItems(parentCodeList.ROW_ID));
+          };
+          const changeDetector = () => {
+            var changes = 0;
+            dispatch(cleanConfirmDataGridItems());
+            Object.keys(childCodeList.newItems).map(async (e) => {
+              dispatch(
+                setConfirmDataGridItems({
+                  key: e,
+                  value: {
+                    ...childCodeList.newItems[e],
+                    requestMethod: "create",
+                  },
+                })
+              );
+              changes++;
+            });
+            Object.keys(childCodeList.changedItems).map(async (a) => {
+              dispatch(
+                setConfirmDataGridItems({
+                  key: childCodeList.changedItems[a],
+                  value: {
+                    ...childCodeList.dataGridItems[
+                      childCodeList.changedItems[a]
+                    ],
+                    requestMethod: "change",
+                  },
+                })
+              );
+              changes++;
+            });
+            Object.keys(childCodeList.deletedItems).map(async (a) => {
+              dispatch(
+                setConfirmDataGridItems({
+                  key: a,
+                  value: {
+                    ...childCodeList.deletedItems[a],
+                    requestMethod: "delete",
+                  },
+                })
+              );
+              changes++;
+            });
+            if (changes > 0) {
+              return true;
+            }
+            return false;
+          };
+
+          const save = async () => {
+            if (changeDetector()) {
+              dispatch(
+                setConfirmation({
+                  title: "Are you sure you want to save this code list?",
+                  body: <ConfirmDataGrid />,
+                  agreefunction: saveConfirmed,
+                })
+              );
+            }
+          };
+          save();
           dispatch(
             setIndex({
               index: index,

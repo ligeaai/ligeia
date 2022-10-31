@@ -7,26 +7,21 @@ import {
 } from "../../../../services/api/djangoApi/codeList";
 import { setConfirmation } from "../../../../services/reducers/confirmation";
 import {
-  setParentCodeList,
-  setIsUpdated,
-} from "../../../../services/reducers/parentCodelist";
-import {
   setIndex,
-  setLastItemIndex,
-  setCodeListItems,
-  setRowId,
   setRefreshTreeMenu,
+  setRowId,
 } from "../../../../services/reducers/codeListChildReducer";
 import { ActionMenu } from "../../../../components";
 import {
-  setDataGridItems,
-  changeDataGridItems,
   cleanDataGridItems,
   setNewItem,
-  setDeletedItem,
   setRefreshDataGrid,
-  setLoading,
 } from "../../../../services/reducers/childCodeList";
+import {
+  setConfirmDataGridItems,
+  cleanConfirmDataGridItems,
+} from "../../../../services/reducers/confirmCodeList";
+import ConfirmDataGrid from "./confirmDataGrid";
 const CodelistActionMenu = () => {
   const dispatch = useDispatch();
   const codeListChild = useSelector((state) => state.codeListChild);
@@ -44,11 +39,12 @@ const CodelistActionMenu = () => {
   const btnNew = () => {
     var uuid = uuidv4();
     dispatch(cleanDataGridItems());
+    dispatch(setRowId({ rowId: uuid.replace(/-/g, "") }));
     dispatch(
       setNewItem({
         uuid: uuid.replace(/-/g, ""),
         value: {
-          HIERARCHY: [`new`],
+          HIERARCHY: [`${uuid.replace(/-/g, "")}`],
           ROW_ID: uuid.replace(/-/g, ""),
           LIST_TYPE: "CODE_LIST",
           CULTURE: culture,
@@ -63,6 +59,7 @@ const CodelistActionMenu = () => {
           DATE2: "",
           CHAR1: "",
           CHAR2: "",
+          HIDDEN: "",
           LAYER_NAME: "",
           LAST_UPDT_USER: userEmail,
         },
@@ -87,8 +84,10 @@ const CodelistActionMenu = () => {
       e.DATE2,
       e.CHAR1,
       e.CHAR2,
+      e.HIDDEN,
       e.LAYER_NAME,
-      userEmail
+      userEmail,
+      codeListChild.rowId
     );
   };
   var saveDirection = 0;
@@ -108,7 +107,7 @@ const CodelistActionMenu = () => {
       })
     );
     Object.keys(childCodeList.deletedItems).map(async (a) => {
-      deleteCodeList(childCodeList.deletedItems[a]);
+      deleteCodeList(a, codeListChild.rowId);
     });
     dispatch(setRefreshTreeMenu());
     dispatch(
@@ -122,14 +121,41 @@ const CodelistActionMenu = () => {
   };
   const changeDetector = () => {
     var changes = 0;
-    Object.keys(childCodeList.dataGridItems).map(async (e) => {
-      Object.keys(childCodeList.changedItems).map(async (a) => {
-        if (childCodeList.changedItems[a] === e) {
-          changes++;
-        }
-      });
+    dispatch(cleanConfirmDataGridItems());
+    Object.keys(childCodeList.newItems).map(async (e) => {
+      dispatch(
+        setConfirmDataGridItems({
+          key: e,
+          value: {
+            ...childCodeList.newItems[e],
+            requestMethod: "create",
+          },
+        })
+      );
+      changes++;
+    });
+    Object.keys(childCodeList.changedItems).map(async (a) => {
+      dispatch(
+        setConfirmDataGridItems({
+          key: childCodeList.changedItems[a],
+          value: {
+            ...childCodeList.dataGridItems[childCodeList.changedItems[a]],
+            requestMethod: "change",
+          },
+        })
+      );
+      changes++;
     });
     Object.keys(childCodeList.deletedItems).map(async (a) => {
+      dispatch(
+        setConfirmDataGridItems({
+          key: a,
+          value: {
+            ...childCodeList.deletedItems[a],
+            requestMethod: "delete",
+          },
+        })
+      );
       changes++;
     });
     if (changes > 0) {
@@ -143,7 +169,7 @@ const CodelistActionMenu = () => {
       dispatch(
         setConfirmation({
           title: "Are you sure you want to save this code list?",
-          body: "here will come the code list",
+          body: <ConfirmDataGrid />,
           agreefunction: saveConfirmed,
         })
       );
@@ -176,7 +202,15 @@ const CodelistActionMenu = () => {
     }
   };
   const deleteParentAgreeFunc = async () => {
-    await deleteCodeList(codeListChild.rowId);
+    if (codeListChild.index === -2) {
+      dispatch(
+        setIndex({
+          index: 0,
+        })
+      );
+    } else {
+      await deleteCodeList(codeListChild.rowId, codeListChild.rowId);
+    }
     dispatch(setRefreshTreeMenu());
   };
   const deleteParent = async () => {
@@ -197,6 +231,7 @@ const CodelistActionMenu = () => {
       saveGoNext={saveGoNext}
       btnDelete={deleteParent}
       dublicateIsActive={false}
+      infoIsActive={false}
     />
   );
 };

@@ -56,8 +56,8 @@ export const getChildCodeList = async (LIST_TYPE, CULTURE) => {
 }
 
 
-export const deleteCodeList = async (ROW_ID) => {
-    const body = JSON.stringify({ ROW_ID });
+export const deleteCodeList = async (ROW_ID, CACHE_KEY) => {
+    const body = JSON.stringify({ ROW_ID, CACHE_KEY });
     console.log(body);
     try {
         let res = await instance
@@ -73,13 +73,12 @@ export const deleteCodeList = async (ROW_ID) => {
 }
 
 export const putCodeList = async (CODE, CODE_TEXT, CULTURE, LIST_TYPE, ROW_ID, PARENT, LEGACY_CODE, VAL1, VAL2, VAL3, DATE1,
-    DATE2, CHAR1, CHAR2, LAYER_NAME, LAST_UPDT_USER
+    DATE2, CHAR1, CHAR2, HIDDEN, LAYER_NAME, LAST_UPDT_USER, CACHE_KEY
 ) => {
     const body = JSON.stringify({
         LIST_TYPE, CULTURE, CODE, CODE_TEXT, ROW_ID, PARENT, LEGACY_CODE, VAL1, VAL2, VAL3,
         //DATE1, DATE2, 
-        CHAR1, CHAR2,
-        LAYER_NAME, LAST_UPDT_USER
+        CHAR1, CHAR2, HIDDEN, LAYER_NAME, LAST_UPDT_USER, CACHE_KEY
     });
     console.log(body);
     try {

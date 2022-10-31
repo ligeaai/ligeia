@@ -19,7 +19,7 @@ class type(models.Model):
 	BASE_TBL_NAME=models.CharField(max_length=50,null=True,)
 	TAG_TBL_NAME=models.CharField(max_length=50,null=True,) 
 	LAST_UPDT_USER=models.CharField(max_length=100,null=True,)
-	LAST_UPDT_DATE=models.DateField(default=timezone.now,null=True,)
+	LAST_UPDT_DATE=models.DateField(default=str(timezone.now()).split(' ')[0],null=True,)
 	VERSION=models.CharField(max_length=32,default=uuid.uuid4,null=False,)
 	DB_ID=models.CharField(max_length=32,null=True,)
 	ROW_ID=models.CharField(max_length=32,default=uuid.uuid4,null=False,db_index=True,)

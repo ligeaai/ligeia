@@ -5,10 +5,12 @@ import AppRouter from "../routers/appRouter";
 
 import myTheme from "../themes/composeStyle";
 import Loading from "../components/loading/loading";
-import { loadUser } from "../services/actions/auth";
-import { ErrorBoundary } from "../components/errorMessage/errorBoundary"
+
 
 import history from "../routers/history";
+import { loadUser } from "../services/actions/auth";
+import { ErrorBoundary } from "../components/errorMessage/errorBoundary"
+import { setSelectedItem } from "../services/reducers/drawerReducer";
 import { LicenseInfo } from "@mui/x-data-grid-pro";
 
 LicenseInfo.setLicenseKey(
@@ -23,6 +25,9 @@ const App = () => {
       dispatch(loadUser()).then(() => {
         history.push(`${window.location.pathname}`)
         setIsloaded(true)
+        if (window.location.pathname === "/") {
+          dispatch(setSelectedItem("Home"))
+        }
       })
     }
     else {

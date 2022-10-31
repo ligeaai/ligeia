@@ -52,6 +52,9 @@ export default function TreeDataWithGap() {
     const codeListChildCurrentChild = useSelector(
       (state) => state.codeListChild.currentChild
     );
+    const codeListChildRowId = useSelector(
+      (state) => state.codeListChild.rowId
+    );
 
     const mySetNewItem = () => {
       var uuid = uuidv4();
@@ -60,7 +63,7 @@ export default function TreeDataWithGap() {
         setNewItem({
           uuid: uuid.replace(/-/g, ""),
           value: {
-            HIERARCHY: [`${codeListChildCurrentChild}`, `(New ${newItemNum})`],
+            HIERARCHY: [`${codeListChildRowId}`, `${uuid.replace(/-/g, "")}`],
             ROW_ID: uuid.replace(/-/g, ""),
             LIST_TYPE: codeListChildCurrentChild,
             CULTURE: culture,
@@ -83,7 +86,9 @@ export default function TreeDataWithGap() {
     };
     const myDeleteChild = () => {
       myCheckboxSelection.map((e) => {
-        dispatch(setDeletedItem(e));
+        dispatch(
+          setDeletedItem({ key: e, value: childCodeList.dataGridItems[e] })
+        );
       });
       myCheckboxSelection = [];
     };
@@ -191,13 +196,15 @@ export default function TreeDataWithGap() {
   React.useEffect(() => {
     const myFunc = async () => {
       dispatch(setLoading(true));
-      let data = await getParentCode(culture, codeListChild.rowId);
-      dispatch(cleanDataGridItems());
-      data.data.map((e, i) => {
-        dispatch(
-          setDataGridItems({ key: data.data[i].ROW_ID, value: data.data[i] })
-        );
-      });
+      if (codeListChild.index >= 0) {
+        let data = await getParentCode(culture, codeListChild.rowId);
+        dispatch(cleanDataGridItems());
+        data.data.map((e, i) => {
+          dispatch(
+            setDataGridItems({ key: data.data[i].ROW_ID, value: data.data[i] })
+          );
+        });
+      }
       dispatch(setLoading(false));
     };
     myFunc();
@@ -210,11 +217,12 @@ export default function TreeDataWithGap() {
     dispatch(changeDataGridItems({ id, field, value }));
   };
   const groupingColDef = {
-    headerName: "group",
+    headerName: "",
     hideDescendantCount: true,
     valueFormatter: () => "",
-    width: 0,
-    minWidth: 0,
+    width: 50,
+    // minWidth: 0,
+
     resizable: false,
   };
   const [sortModel, setSortModel] = React.useState([
@@ -249,35 +257,52 @@ export default function TreeDataWithGap() {
           "& .super-app-theme--cell": {
             backgroundColor: grey[200],
           },
-          "& .MuiDataGrid-columnHeadersInner": {
-            "& div": {
-              "&>*:nth-of-type(2)": {
-                p: 0,
-              },
-            },
-          },
-          "& .MuiDataGrid-virtualScrollerRenderZone": {
-            div: {
-              "&>*:nth-of-type(2)": {
-                display: "none",
-              },
-            },
 
+          "& .MuiDataGrid-virtualScrollerRenderZone": {
             "&>*:nth-of-type(1)": {
               "&>*:nth-of-type(1)": {
-                display: "none",
-              },
-              "&>*:nth-of-type(2)": {
-                display: "flex",
-                minWidth: "50px !important",
-                maxWidth: "50px !important",
-                button: {
-                  position: "relative",
-                  left: "-2px",
+                svg: {
+                  display: "none",
                 },
               },
             },
           },
+
+          // ---------------------------------------------------------
+          // "& .MuiDataGrid-virtualScrollerRenderZone": {
+          //   "&>*:nth-of-type(1)": {
+          //     "&>*:nth-of-type(1)": {
+          //       svg: {
+          //         display: "none",
+          //       },
+          //     },
+          //   },
+          // },
+
+          // ---------------------------------------------------------
+
+          // "& .MuiDataGrid-virtualScrollerRenderZone": {
+          //   div: {
+          //     "&>*:nth-of-type(2)": {
+          //       display: "none",
+          //     },
+          //   },
+
+          //   "&>*:nth-of-type(1)": {
+          //     "&>*:nth-of-type(1)": {
+          //       display: "none",
+          //     },
+          //     "&>*:nth-of-type(2)": {
+          //       display: "flex",
+          //       minWidth: "50px !important",
+          //       maxWidth: "50px !important",
+          //       button: {
+          //         position: "relative",
+          //         left: "-2px",
+          //       },
+          //     },
+          //   },
+          // },
         }}
       >
         <DataGridPro
@@ -299,7 +324,7 @@ export default function TreeDataWithGap() {
             toolbarDensity: "",
             toolbarExport: "",
           }}
-          disableVirtualization={true}
+          //disableVirtualization={true}
           defaultGroupingExpansionDepth={1}
           hideFooter={true}
           treeData

@@ -8,6 +8,10 @@ from utils.models_utils import (
                                 validate_value)
 from rest_framework.exceptions import ValidationError 
 
+from services.logging.Handlers import KafkaLogger 
+logger = KafkaLogger()
+
+
 class TypePropertySaveSerializer(serializers.ModelSerializer):
     class Meta:
         model = type_property
@@ -37,20 +41,24 @@ class TypePropertySerializer(serializers.ModelSerializer):
 
 class TypePropertyCustomSaveSerializer(serializers.Serializer):
     def save(self, validated_data):
+        request = validated_data
+        validated_data = request.data.get('TYPE_PROPERTY')
         qs = type_property.objects.filter(ROW_ID = validated_data.get('ROW_ID'))
         if qs:
             try:
-                validate_value(validated_data,'TYPE_PROPERTY')
+                validate_value(validated_data,'TYPE_PROPERTY',request)
                 qs.update(**validated_data)
+                logger.info("Type Property object successfully updated",request= request)
             except Exception as e:
                 raise ValidationError(e)
         else: 
             try:
-                validate_model_not_null(validated_data,"TYPE_PROPERTY")
+                validate_model_not_null(validated_data,"TYPE_PROPERTY",request)
                 validated_data["VERSION"] = uuid.uuid4().hex
-                codeList = type_property.objects.create(**validated_data)
-                codeList.save()
-                return codeList
+                typeProperty = type_property.objects.create(**validated_data)
+                typeProperty.save()
+                logger.info("Type Property object successfully created",request= request)
+                return typeProperty
             except Exception as e:
                 raise ValidationError(e)
     

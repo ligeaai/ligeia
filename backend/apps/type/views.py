@@ -7,6 +7,7 @@ from apps.resource_list.serializers import (
     ResourceListSaveSerializer,
     ResourceListSerializer,
 )
+
 from apps.type_property.models import type_property
 from apps.type_property.serializers import (
     TypePropertySaveSerializer,
@@ -31,7 +32,8 @@ from .serializers import (
     TypeSerializer,
     TypeCustomSaveSerializer,
 )
-
+from services.logging.Handlers import KafkaLogger 
+logger = KafkaLogger()
 
 class TypeSaveView(generics.CreateAPIView):
 
@@ -44,25 +46,15 @@ class TypeAndPropertySaveView(generics.CreateAPIView):
     permission_classes = [permissions.AllowAny]
 
     def post(self, request, *args, **kwargs):
-        typeValue = request.data.get("TYPE")
-        typePropertyValue = request.data.get("TYPE_PROPERTY")
-        serializer = TypeCustomSaveSerializer(data=typeValue)
+        serializer = TypeCustomSaveSerializer(data=request.data)
         serializer.is_valid()
-        serializer.save(typeValue)
-        serializer = TypePropertyCustomSaveSerializer(data=typePropertyValue)
+        serializer.save(request)
+        serializer = TypePropertyCustomSaveSerializer(data=request.data)
         serializer.is_valid()
-        serializer.save(typePropertyValue)
-        return Response(request.data, status=status.HTTP_201_CREATED)
+        serializer.save(request)
+        return Response({"Message":"Successful"}, status=status.HTTP_201_CREATED)
 
 
-class TypeUpdateView(generics.UpdateAPIView):
-    serializer_class = TypeSaveSerializer
-    permission_classes = [permissions.AllowAny]
-
-    def put(self, request, *args, **kwargs):
-        data = request.data.get("ITEMS")
-        qs = Type.objects.filter(TYPE=request.data.get("FILTER_TYPE")).update(**data)
-        return Response({"Message": "Successful Update "}, status=status.HTTP_200_OK)
 
 
 class TypeDeleteView(generics.UpdateAPIView):
@@ -71,15 +63,11 @@ class TypeDeleteView(generics.UpdateAPIView):
 
     def post(self, request, *args, **kwargs):
         qs = Type.objects.filter(TYPE=request.data.get("Type")).delete()
-        if qs:
-            qs.delete()
-            return Response(
-                {"Message": "Successful Delete "}, status=status.HTTP_200_OK
-            )
-        else:
-            return Response(
-                {"Message": "data not found"}, status=status.HTTP_400_BAD_REQUEST
-            )
+        validate_find(qs)
+        qs.delete()
+        message = {"Message": "Successful Delete "}
+        logger.info(message,request=request)
+        return Response(message,status=status.HTTP_200_OK)
 
 
 
@@ -111,7 +99,7 @@ class TypeDetailView(generics.CreateAPIView):
         seriliazerResourceList = []
         try:
             typeQuary = Type.objects.filter(TYPE=request.data.get("TYPE"))
-            validate_find(typeQuary)
+            validate_find(typeQuary,request=request)
             serializerType = TypeSerializer(typeQuary, many=True)
             for typeValue in serializerType.data[0].values():
                 proertyQuery = type_property.objects.filter(TYPE=typeValue)
@@ -155,7 +143,6 @@ class TypeDetailView(generics.CreateAPIView):
                         value["CODE-LIST"] = parentserializerCodeList.data
                     if value.get('SORT_ORDER'):
                         value['SORT_ORDER'] = int(value.get('SORT_ORDER'))
-                    print(type(value.get('SORT_ORDER')))
                     value_label = value.get("LABEL_ID")
                     try:
                         index = label_id.index(value_label)
@@ -185,7 +172,7 @@ class TypeDetailView(generics.CreateAPIView):
             }
             
             cache_data = Red.set(cache_key, data)
-            
+            logger.info("Type and type property listed",request=request)
             return Response(data, status=status.HTTP_200_OK)
         except Exception as e:
             return Response(e)

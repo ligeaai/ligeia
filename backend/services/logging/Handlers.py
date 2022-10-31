@@ -63,7 +63,7 @@ class KafkaLogger():
         
         self.producer.send(os.environ.get('Kafka_Topic'), self.loggingTemplates)
     
-    def debug(self,message=None,request = None, debug = None,logType = "logging"):
+    def debug(self,message=None,request = None, debug = None,logType = "FAULTS"):
         try:
             self.json_message['debug'] = debug
             self._logging_template(message=message,request = request,level="DEBUG",logType = logType)
@@ -71,7 +71,7 @@ class KafkaLogger():
             self.json_message['ERROR'] = e
         self.producer.send(os.environ.get('Kafka_Topic'), self.loggingTemplates)
 
-    def error(self,message=None,request = None, error = None,logType = "logging"):
+    def error(self,message=None,request = None, error = None,logType = "FAULTS"):
         try:
             self.json_message['ERROR'] = error
             self._logging_template(message=message,request = request,level="ERROR",logType = logType)
