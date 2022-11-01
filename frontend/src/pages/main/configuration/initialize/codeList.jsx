@@ -42,7 +42,10 @@ import {
   deleteCodeList,
   putCodeList,
 } from "../../../../services/api/djangoApi/codeList";
-import { setConfirmation } from "../../../../services/reducers/confirmation";
+import {
+  setConfirmation,
+  setExtraBtn,
+} from "../../../../services/reducers/confirmation";
 import { setRefreshTreeMenu } from "../../../../services/reducers/codeListChildReducer";
 
 import {
@@ -50,7 +53,7 @@ import {
   cleanConfirmDataGridItems,
 } from "../../../../services/reducers/confirmCodeList";
 import ConfirmDataGrid from "./confirmDataGrid";
-
+import { add_error } from "../../../../services/actions/error";
 function RenderRow(props) {
   const dispatch = useDispatch();
   const { data, index, style } = props;
@@ -97,26 +100,77 @@ function RenderRow(props) {
               codeListChild.rowId
             );
           };
-          const saveConfirmed = async () => {
-            // await Promise.all(
-            //   Object.keys(childCodeList.newItems).map(async (e) => {
-            //     await createPutBody(childCodeList.newItems[e]);
-            //   })
-            // );
-            await Promise.all(
-              Object.keys(childCodeList.dataGridItems).map(async (e) => {
-                Object.keys(childCodeList.changedItems).map(async (a) => {
-                  if (childCodeList.changedItems[a] === e) {
-                    await createPutBody(childCodeList.dataGridItems[e]);
+          const checkMandatoryField = () => {
+            let returnVal = true;
+            Object.keys(childCodeList.newItems).map(async (e) => {
+              Object.keys(childCodeList.dataGridItems).map(async (a) => {
+                if (e === a) {
+                  if (
+                    childCodeList.dataGridItems[e].CODE_TEXT === "" ||
+                    childCodeList.dataGridItems[e].CODE === "" ||
+                    childCodeList.dataGridItems[e].HIDDEN === "" ||
+                    childCodeList.dataGridItems[e].LAYER_NAME === ""
+                  ) {
+                    returnVal = false;
                   }
-                });
-              })
-            );
-            Object.keys(childCodeList.deletedItems).map(async (a) => {
-              deleteCodeList(a, codeListChild.rowId);
+                }
+              });
             });
-            dispatch(setRefreshTreeMenu());
-            //dispatch(setCodeListItems(parentCodeList.ROW_ID));
+            Object.keys(childCodeList.dataGridItems).map(async (e) => {
+              Object.keys(childCodeList.changedItems).map(async (a) => {
+                if (childCodeList.changedItems[a] === e) {
+                  if (
+                    childCodeList.dataGridItems[e].CODE_TEXT === "" ||
+                    childCodeList.dataGridItems[e].CODE === "" ||
+                    childCodeList.dataGridItems[e].HIDDEN === "" ||
+                    childCodeList.dataGridItems[e].LAYER_NAME === ""
+                  ) {
+                    returnVal = false;
+                  }
+                }
+              });
+            });
+            return returnVal;
+          };
+          const saveConfirmed = async () => {
+            if (checkMandatoryField()) {
+              // await Promise.all(
+              //   Object.keys(childCodeList.newItems).map(async (e) => {
+              //     await createPutBody(childCodeList.newItems[e]);
+              //   })
+              // );
+              await Promise.all(
+                Object.keys(childCodeList.dataGridItems).map(async (e) => {
+                  Object.keys(childCodeList.changedItems).map(async (a) => {
+                    if (childCodeList.changedItems[a] === e) {
+                      await createPutBody(childCodeList.dataGridItems[e]);
+                    }
+                  });
+                })
+              );
+              Object.keys(childCodeList.deletedItems).map(async (a) => {
+                deleteCodeList(a, codeListChild.rowId);
+              });
+              dispatch(setRefreshTreeMenu());
+              //dispatch(setCodeListItems(parentCodeList.ROW_ID));
+              dispatch(
+                setIndex({
+                  index: index,
+                })
+              );
+              dispatch(
+                setCodeListChild({
+                  currentChild: data[index].CODE,
+                })
+              );
+              dispatch(setRefreshDataGrid());
+            } else {
+              dispatch(
+                add_error(
+                  "Mandatory Fiels: Code, Code Text, Layer Name , Hidden"
+                )
+              );
+            }
           };
           const changeDetector = () => {
             var changes = 0;
@@ -174,20 +228,39 @@ function RenderRow(props) {
                   agreefunction: saveConfirmed,
                 })
               );
+              dispatch(
+                setExtraBtn({
+                  extraBtnText: "Don't save, next",
+                  extrafunction: () => {
+                    dispatch(
+                      setIndex({
+                        index: index,
+                      })
+                    );
+                    dispatch(
+                      setCodeListChild({
+                        currentChild: data[index].CODE,
+                      })
+                    );
+                    dispatch(setRefreshDataGrid());
+                  },
+                })
+              );
+            } else {
+              dispatch(
+                setIndex({
+                  index: index,
+                })
+              );
+              dispatch(
+                setCodeListChild({
+                  currentChild: data[index].CODE,
+                })
+              );
+              dispatch(setRefreshDataGrid());
             }
           };
           save();
-          dispatch(
-            setIndex({
-              index: index,
-            })
-          );
-          dispatch(
-            setCodeListChild({
-              currentChild: data[index].CODE,
-            })
-          );
-          dispatch(setRefreshDataGrid());
         }}
       >
         <ListItemText

@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useSelector, useDispatch } from "react-redux";
-
+import { styled } from "@mui/material/styles";
 import { Box, Grid, IconButton, Tooltip, Typography } from "@mui/material";
 import { DataGridPro, GridToolbar } from "@mui/x-data-grid-pro";
 import { grey } from "@mui/material/colors";
@@ -212,6 +212,8 @@ export default function TreeDataWithGap() {
   React.useEffect(() => {
     history.push(`${codeListChild.currentChild.toLowerCase()}`);
   }, [childCodeList.refreshDataGrid, codeListChild.index]);
+  const [pageSize, setPageSize] = React.useState(100);
+
   const onCellEditCommit = (cellData) => {
     const { id, field, value } = cellData;
     dispatch(changeDataGridItems({ id, field, value }));
@@ -268,6 +270,9 @@ export default function TreeDataWithGap() {
             minHeight: "calc(500px - 36px - 16px - 40px )",
             height: "calc(100vh - 60px - 36px - 16px - 60px)",
             width: "100%",
+            "& .MuiInputBase-input": {
+              padding: "0px important",
+            },
             "& .MuiDataGrid-cellContent": {
               fontSize: "16px",
             },
@@ -334,15 +339,17 @@ export default function TreeDataWithGap() {
                 },
               },
             }}
-            sx={{}}
             localeText={{
               toolbarColumns: "",
               toolbarFilters: "",
               toolbarDensity: "",
               toolbarExport: "",
             }}
+            density="compact"
             defaultGroupingExpansionDepth={1}
-            hideFooter={true}
+            hideFooter={
+              parseInt(Object.values(childCodeList.dataGridItems).length) < 101
+            }
             treeData
             onCellEditCommit={onCellEditCommit}
             rows={Object.values(childCodeList.dataGridItems)}
@@ -362,6 +369,11 @@ export default function TreeDataWithGap() {
               LoadingOverlay: LinearProgress,
             }}
             groupingColDef={groupingColDef}
+            pageSize={pageSize}
+            onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
+            rowsPerPageOptions={[25, 50, 100]}
+            pagination
+            disableIgnoreModificationsIfProcessingProps
           />
         </Box>
       </Box>

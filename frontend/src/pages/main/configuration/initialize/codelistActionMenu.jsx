@@ -5,7 +5,10 @@ import {
   deleteCodeList,
   putCodeList,
 } from "../../../../services/api/djangoApi/codeList";
-import { setConfirmation } from "../../../../services/reducers/confirmation";
+import {
+  setConfirmation,
+  setExtraBtn,
+} from "../../../../services/reducers/confirmation";
 import {
   setIndex,
   setRefreshTreeMenu,
@@ -22,6 +25,8 @@ import {
   cleanConfirmDataGridItems,
 } from "../../../../services/reducers/confirmCodeList";
 import ConfirmDataGrid from "./confirmDataGrid";
+import { add_error } from "../../../../services/actions/error";
+import { ConstructionTwoTone } from "@mui/icons-material";
 const CodelistActionMenu = () => {
   const dispatch = useDispatch();
   const codeListChild = useSelector((state) => state.codeListChild);
@@ -91,41 +96,79 @@ const CodelistActionMenu = () => {
     );
   };
   var saveDirection = 0;
+  const checkMandatoryField = () => {
+    let returnVal = true;
+    Object.keys(childCodeList.newItems).map(async (e) => {
+      Object.keys(childCodeList.dataGridItems).map(async (a) => {
+        if (e === a) {
+          if (
+            childCodeList.dataGridItems[e].CODE_TEXT === "" ||
+            childCodeList.dataGridItems[e].CODE === "" ||
+            childCodeList.dataGridItems[e].HIDDEN === "" ||
+            childCodeList.dataGridItems[e].LAYER_NAME === ""
+          ) {
+            returnVal = false;
+          }
+        }
+      });
+    });
+    Object.keys(childCodeList.dataGridItems).map(async (e) => {
+      Object.keys(childCodeList.changedItems).map(async (a) => {
+        if (childCodeList.changedItems[a] === e) {
+          console.log(childCodeList.changedItems[a]);
+          if (
+            childCodeList.dataGridItems[e].CODE_TEXT === "" ||
+            childCodeList.dataGridItems[e].CODE === "" ||
+            childCodeList.dataGridItems[e].HIDDEN === "" ||
+            childCodeList.dataGridItems[e].LAYER_NAME === ""
+          ) {
+            returnVal = false;
+          }
+        }
+      });
+    });
+    return returnVal;
+  };
   const saveConfirmed = async () => {
     // await Promise.all(
     //   Object.keys(childCodeList.newItems).map(async (e) => {
     //     await createPutBody(childCodeList.newItems[e]);
     //   })
     // );
-    var parentCode = childCodeList.dataGridItems[codeListChild.rowId].CODE;
-    await Promise.all(
-      Object.keys(childCodeList.dataGridItems).map(async (e) => {
-        Object.keys(childCodeList.changedItems).map(async (a) => {
-          if (childCodeList.changedItems[a] === e) {
-            console.log(e);
-            if (childCodeList.dataGridItems[e].LIST_TYPE === "CODE_LIST") {
-              await createPutBody(childCodeList.dataGridItems[e]);
-            } else {
-              await createPutBody({
-                ...childCodeList.dataGridItems[e],
-                LIST_TYPE: parentCode,
-              });
+    if (checkMandatoryField()) {
+      var parentCode = childCodeList.dataGridItems[codeListChild.rowId].CODE;
+      await Promise.all(
+        Object.keys(childCodeList.dataGridItems).map(async (e) => {
+          Object.keys(childCodeList.changedItems).map(async (a) => {
+            if (childCodeList.changedItems[a] === e) {
+              if (childCodeList.dataGridItems[e].LIST_TYPE === "CODE_LIST") {
+                await createPutBody(childCodeList.dataGridItems[e]);
+              } else {
+                await createPutBody({
+                  ...childCodeList.dataGridItems[e],
+                  LIST_TYPE: parentCode,
+                });
+              }
             }
-          }
-        });
-      })
-    );
-    Object.keys(childCodeList.deletedItems).map(async (a) => {
-      deleteCodeList(a, codeListChild.rowId);
-    });
-    dispatch(setRefreshTreeMenu());
-    dispatch(
-      setIndex({
-        index: codeListChild.index + saveDirection,
-      })
-    );
-    dispatch(setRefreshDataGrid());
-    saveDirection = 0;
+          });
+        })
+      );
+      Object.keys(childCodeList.deletedItems).map(async (a) => {
+        deleteCodeList(a, codeListChild.rowId);
+      });
+      dispatch(setRefreshTreeMenu());
+      dispatch(
+        setIndex({
+          index: codeListChild.index + saveDirection,
+        })
+      );
+      dispatch(setRefreshDataGrid());
+      saveDirection = 0;
+    } else {
+      dispatch(
+        add_error("Mandatory Fiels: Code, Code Text, Layer Name , Hidden")
+      );
+    }
     //dispatch(setCodeListItems(parentCodeList.ROW_ID));
   };
   const changeDetector = () => {
@@ -182,6 +225,22 @@ const CodelistActionMenu = () => {
           agreefunction: saveConfirmed,
         })
       );
+      if (saveDirection !== 0) {
+        dispatch(
+          setExtraBtn({
+            extraBtnText: "Don't save, next",
+            extrafunction: () => {
+              dispatch(setRefreshTreeMenu());
+              dispatch(
+                setIndex({
+                  index: codeListChild.index + saveDirection,
+                })
+              );
+              dispatch(setRefreshDataGrid());
+            },
+          })
+        );
+      }
     }
   };
   const saveGoPrev = async () => {

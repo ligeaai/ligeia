@@ -1,3 +1,33 @@
+import * as React from 'react';
+import { styled } from '@mui/material/styles';
+import Box from '@mui/material/Box';
+import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
+import { DataGridPro, GridEditInputCell } from '@mui/x-data-grid-pro';
+
+
+
+
+
+
+function renderEditcell(params) {
+    return (
+        // <Tooltip
+        //     open={parseInt(params.formattedValue.length) === 0}
+        //     title={"Mandatory"}
+        //     componentsProps={{
+        //         tooltip: { sx: { backgroundColor: "primary.dark", position: "relative" } },
+        //     }}
+        // >
+        <GridEditInputCell {...params} placeholder="Mandatory" sx={{ padding: "0px important" }} />
+        // </Tooltip>
+    )
+}
+
+const preProcessEditCellProps = async (params) => {
+    const hasError = params.props.value.length === 0;
+    return { ...params.props, error: hasError };
+};
+
 export const columns = [
     // {
     //     field: "LIST_TYPE",
@@ -11,18 +41,24 @@ export const columns = [
         editable: true,
         width: 150,
         // cellClassName: "mandatory"
+        // "isValid": isInvalidBuildingTSI,
+        // "cellClassName": isInvalidBuildingTSI(param.value) ? "invalid" : ""
+        //preProcessEditCellProps,
+        renderCell: renderEditcell,
     },
     {
         field: "CODE_TEXT",
         headerName: "Code Text",
         editable: true,
-        width: 150
+        width: 150,
+        //preProcessEditCellProps,
+        renderCell: renderEditcell,
     },
     {
         field: "PARENT",
         headerName: "Parent",
         editable: true,
-        width: 100
+        width: 100,
     },
     {
         field: "LEGACY_CODE",
@@ -183,7 +219,9 @@ export const columns = [
         field: "LAYER_NAME",
         headerName: "Layer Name",
         editable: true,
-        width: 100
+        width: 100,
+        //preProcessEditCellProps,
+        renderCell: renderEditcell,
     },
     // {
     //     field: "DESCRIPTION_ID",
@@ -197,7 +235,9 @@ export const columns = [
         width: 100,
         editable: true,
         type: 'singleSelect',
-        valueOptions: ['True', 'False']
+        valueOptions: ['True', 'False'],
+        //preProcessEditCellProps,
+        renderCell: renderEditcell,
     },
     {
         field: "LAST_UPDT_USER",

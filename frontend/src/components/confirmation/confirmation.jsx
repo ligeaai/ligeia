@@ -27,6 +27,18 @@ export default function AlertDialog() {
         <DialogTitle id="alert-dialog-title">{confirmation.title}</DialogTitle>
         <DialogContent>{confirmation.body}</DialogContent>
         <DialogActions>
+          {confirmation.extraBtn ? (
+            <Button
+              onClick={() => {
+                confirmation.extrafunction();
+                handleClose();
+              }}
+            >
+              {confirmation.extraBtnText}
+            </Button>
+          ) : (
+            <></>
+          )}
           <Button onClick={handleClose}>Cancel</Button>
           <Button
             onClick={async () => {
