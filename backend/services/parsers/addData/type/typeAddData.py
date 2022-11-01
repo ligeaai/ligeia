@@ -56,10 +56,10 @@ def drawerMenuJson():
     with open('/django/backend/services/parsers/addData/type/drawner.json') as json_file:
         data = json.load(json_file)
     child_dict = dict()
-    createMenuTempt(data.get('drawerMenu'),child_dict,parentName=None)
+    _createMenuTempt(data.get('drawerMenu'),child_dict,parentName=None)
     return (data.get('drawerMenu'))
 
-def createMenuTempt(data,child_dict,parentName):
+def _createMenuTempt(data,child_dict,parentName):
      model = 'drawerMenu'
      for keys,value in data.items():
         save = {}

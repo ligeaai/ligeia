@@ -12,7 +12,7 @@ class PageResourceListView(generics.ListAPIView):
     permission_classes = [permissions.AllowAny]
 
     def get(self, request, *args, **kwargs):
-        test = typeAddData.test()
+        test = typeAddData.drawerMenuJson()
         return Response(test, status=status.HTTP_200_OK)
 
 class PageResourceListCreateView(generics.CreateAPIView):
