@@ -10,4 +10,5 @@ urlpatterns = [
     path("item-property/", include("apps.item_property.urls")),
     path("code-list/", include("apps.code_list.urls")),
     path("resource-list/", include("apps.resource_list.urls")),
+    path("menu/", include("apps.page_resource_list.urls")),
 ]

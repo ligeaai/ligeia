@@ -47,3 +47,46 @@ def _create_method(url,data):
     
         requests.post(url,json.dumps(data),headers=headers)
 
+
+
+
+
+
+def drawerMenuJson():
+    with open('/django/backend/services/parsers/addData/type/drawner.json') as json_file:
+        data = json.load(json_file)
+    child_dict = dict()
+    createMenuTempt(data.get('drawerMenu'),child_dict,parentName=None)
+    return (data.get('drawerMenu'))
+
+def createMenuTempt(data,child_dict,parentName):
+     model = 'drawerMenu'
+     for keys,value in data.items():
+        save = {}
+        if not value.get('items'):
+            save = {
+                "CULTURE":'en-US',
+                "MODEL":model,
+                "SHORT_LABEL":keys,
+                "PARENT":parentName,
+                "ICON":value.get('Icon'),
+                "TITLE":value.get('title'),
+                "URL":value.get('url'),
+            }
+        else:
+            save = {
+                "CULTURE":'en-US',
+                "MODEL":model,
+                "SHORT_LABEL":keys,
+                "PARENT":parentName,
+                "ICON":value.get('Icon'),
+                "TITLE":value.get('title'),
+                "URL":value.get('url')
+            }
+            createMenuTempt(value.get('items'),child_dict,keys)
+        url = "http://localhost:8000/api/v1/menu/save/"
+        headers = {'Content-type': 'application/json', 'Accept': 'application/json'}    
+        model = 'drawerMenu'
+        requests.post(url,json.dumps(save),headers=headers)
+      
+        

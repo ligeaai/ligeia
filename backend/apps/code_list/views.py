@@ -113,7 +113,10 @@ class CodeListDeleteChildView(generics.CreateAPIView):
                 validate_find(queryset,request=request)
                 queryset.delete()
                 logger.info(request=request, message=message)
-                Red.delete(request.data.get('CACHE_KEY'))
+                if (request.data.get('CACHE_KEY') != "" 
+                                and 
+                    request.data.get('CACHE_KEY') is not None):
+                        Red.delete(request.data.get('CACHE_KEY'))
             return Response(message, status=status.HTTP_200_OK)
         except Exception as e:
             logger.error(request=request, message=message,error=str(ValidationError(e)))
