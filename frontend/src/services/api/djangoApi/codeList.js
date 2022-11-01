@@ -84,7 +84,7 @@ export const putCodeList = async (CODE, CODE_TEXT, CULTURE, LIST_TYPE, ROW_ID, P
     try {
         let res = await instance
             .put(
-                "/code-list/save/",
+                "/code-list/save-update/",
                 body,
                 config
             )

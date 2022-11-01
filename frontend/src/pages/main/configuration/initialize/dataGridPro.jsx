@@ -253,7 +253,9 @@ export default function TreeDataWithGap() {
           "& .super-app-theme--cell": {
             backgroundColor: grey[200],
           },
-
+          // "& .mandatory": {
+          //   backgroundColor: "red",
+          // },
           button: {
             minWidth: "36px",
             height: "36px",
@@ -339,7 +341,6 @@ export default function TreeDataWithGap() {
               toolbarDensity: "",
               toolbarExport: "",
             }}
-            //disableVirtualization={true}
             defaultGroupingExpansionDepth={1}
             hideFooter={true}
             treeData
