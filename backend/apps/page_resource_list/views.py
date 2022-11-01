@@ -23,10 +23,12 @@ class PageResourceListCreateView(generics.CreateAPIView):
         return Response({"Message": "test"}, status=status.HTTP_200_OK)
     
 
-class PageResourceListDetailsView(generics.CreateAPIView):
+class PageResourceListDetailsView(generics.ListAPIView):
     permission_classes = [permissions.AllowAny]
-    def post(self, request, *args, **kwargs):
-        queryset = page_resource_list.objects.filter(MODEL = request.data.get('MODEL'),PARENT = None)
+    lookup_field = 'pk'
+    def list(self, request, *args, **kwargs):
+        model = self.kwargs['model']
+        queryset = page_resource_list.objects.filter(MODEL = model,PARENT = None)
         serializer = PageResourceListDetailsSerializer(queryset,many = True)
         tempt = {}
         self.getChild(serializer.data,tempt,0)
@@ -48,7 +50,7 @@ class PageResourceListDetailsView(generics.CreateAPIView):
                 tempt[item.get('SHORT_LABEL')] =  item
             self.getChild(serializer.data,tempt,1)
         
-        
+ 
 
 
 
