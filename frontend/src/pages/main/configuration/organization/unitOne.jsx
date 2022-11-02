@@ -18,11 +18,10 @@ import {
   ComponentErrorBody,
   PropLinkTabs,
   ItemSperatorLineXL,
-  DateBreak,
   ComponentError,
 } from "../../../../components";
 import DrawerMenu from "../../../../layout/main/asset/treeViewMenu";
-
+import DateBreak from "./dateBreak";
 import { loadCompanyName } from "../../../../services/api/couchApi/company";
 
 import AutoSizer from "react-virtualized-auto-sizer";
@@ -175,7 +174,7 @@ const UnitOne = (props) => {
             <DateBreak />
           </Grid>
           <ItemSperatorLineXL />
-          <Grid item xs={12}>
+          <Grid item xs={12} sx={{ mt: 1, mr: 1 }}>
             <PropLinkTabs
               MyProperties={<Properties type={type}></Properties>}
             />

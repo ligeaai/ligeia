@@ -3,7 +3,7 @@ import Breadcrumb from "./breadcrumb/breadcrumb";
 import Cards from "./cardGenerator/cards";
 import { ComponentError } from "./errorMessage/componentError"
 import ComponentErrorBody from "./errorMessage/componentErrorBody";
-import DateBreak from "./navigationComp/dateBreak";
+import DateBreak from "../pages/main/configuration/organization/dateBreak";
 import Drawer from "./drawer/drawer";
 import { ErrorBoundary } from "./errorMessage/errorBoundary"
 import ErrorMessage from "./errorMessage/errorMessage"

@@ -1,11 +1,11 @@
-import { instance, config } from "./baseUrl";
+import { instance, config } from "../../baseApi";
 
 
 export const loadDrawerMenu = async () => {
   try {
     let res = await instance
       .get(
-        "/drawermenu/421d561488633d5d467f77f34500069f",
+        "/menu/details/drawerMenu",
         config
       )
     return res;

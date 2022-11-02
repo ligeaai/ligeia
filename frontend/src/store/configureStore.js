@@ -21,6 +21,7 @@ import {
     authReducer,
     childCodeList,
     codeListChildReducer,
+    companyDataGrid,
     confirmation,
     confirmCodeList,
     cssUserSelect,
@@ -47,6 +48,7 @@ const rootReducer = combineReducers({
     auth: authReducer,
     childCodeList: childCodeList,
     codeListChild: codeListChildReducer,
+    companyDataGrid: companyDataGrid,
     confirmation: confirmation,
     confirmCodeList: confirmCodeList,
     cssUserSelect: cssUserSelect,
@@ -74,7 +76,7 @@ export const store = configureStore({
                 ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
             },
         }),
-    middleware: [thunk]
+    middleware: [thunk, logger]
 });
 
 export const persistor = persistStore(store);

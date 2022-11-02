@@ -1,6 +1,7 @@
 import authReducer from './authReducer';
 import childCodeList from './childCodeList';
 import codeListChildReducer from './codeListChildReducer';
+import companyDataGrid from "./company/datagrid"
 import confirmation from './confirmation';
 import confirmCodeList from './confirmCodeList';
 import cssUserSelect from './cssUserSelect';
@@ -18,6 +19,6 @@ import typeTextReducer from './typeTextReducer';
 
 
 export {
-    authReducer, childCodeList, codeListChildReducer, confirmation, confirmCodeList, cssUserSelect, drawerReducer, errorReducer, fullScreenReducer,
+    authReducer, childCodeList, codeListChildReducer, companyDataGrid, confirmation, confirmCodeList, cssUserSelect, drawerReducer, errorReducer, fullScreenReducer,
     langReducer, loaderReducer, parentCodelist, registerFormReducer, searchBarReducer, themeReducer, typeReducer, typeTextReducer
 };

@@ -1,5 +1,5 @@
 import React from "react";
-
+import { useDispatch } from "react-redux";
 import {
   Box,
   Grid,
@@ -17,37 +17,146 @@ import FolderCopyOutlinedIcon from "@mui/icons-material/FolderCopyOutlined";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-
-const SeperatorLineVertical = () => {
-  return (
-    <Box
-      sx={{
-        height: "26px",
-        width: "2px",
-        backgroundColor: "#4B4B4B",
-        marginX: "2px",
-      }}
-    />
+import {
+  addColum,
+  deleteColum,
+} from "../../../../services/actions/company/datagrid";
+import { MyTextField } from "./myTextField";
+function uuidv4() {
+  return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, (c) =>
+    (
+      c ^
+      (crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (c / 4)))
+    ).toString(16)
   );
+}
+
+export class column {
+  constructor(props) {
+    this.field = props.uuid;
+    this.headerName = "";
+    this.width = 150;
+    this.filterable = false;
+    this.sortable = false;
+    this.editable = true;
+    this.renderCell = MyTextField;
+    //return <MyTextField {...params} />;
+
+    // if (params.row.PROPERTY_TYPE === "INT") {
+    //   return (
+    //     <MyTextField myKey={`${params.row.LABEL_ID}`} textType="number" />
+    //   );
+    // }
+    // if (params.row.PROPERTY_TYPE === "BOOL") {
+    //   return (
+    //     <Checkbox
+    //       sx={{ margin: "auto" }}
+    //       checked={
+    //         typeRedux[`${params.row.LABEL_ID}`] === ""
+    //           ? false
+    //           : typeRedux[`${params.row.LABEL_ID}`]
+    //       }
+    //       onChange={(event) => {
+    //         dispatch(
+    //           changeValue({
+    //             key: params.row.LABEL_ID,
+    //             value: event.currentTarget.checked,
+    //           })
+    //         );
+    //       }}
+    //     />
+    //   );
+    // }
+    // if (params.row.PROPERTY_TYPE === "HISTORY") {
+    //   return (
+    //     <LocalizationProvider dateAdapter={AdapterDayjs}>
+    //       <DatePicker
+    //         value={typeRedux[`${params.row.LABEL_ID}`]}
+    //         onChange={(newValue) => {
+    //           dispatch(
+    //             changeValue({ key: params.row.LABEL_ID, value: newValue })
+    //           );
+    //         }}
+    //         InputProps={{
+    //           disableUnderline: true,
+    //         }}
+    //         renderInput={(params) => (
+    //           <TextField {...params} variant="standard" />
+    //         )}
+    //       />
+    //     </LocalizationProvider>
+    //   );
+    // }
+    // try {
+    //   if (params.row.PROPERTY_TYPE === "CODE") {
+    //     return (
+    //       <Box sx={{ minWidth: 120 }}>
+    //         <FormControl fullWidth>
+    //           <Select
+    //             labelId="code-list"
+    //             defaultValue={typeRedux[`${params.row.LABEL_ID}`]}
+    //             value={typeRedux[`${params.row.LABEL_ID}`]}
+    //             onChange={(event) => {
+    //               dispatch(
+    //                 changeValue({
+    //                   key: params.row.LABEL_ID,
+    //                   value: event.target.value,
+    //                 })
+    //               );
+    //             }}
+    //             sx={{
+    //               ".MuiOutlinedInput-notchedOutline": { border: "none" },
+    //               "::focus": {
+    //                 ".MuiOutlinedInput-notchedOutline": { border: "none" },
+    //               },
+    //             }}
+    //           >
+    //             {params.row["CODE-LIST"][0].CHILD.map((e, key) => {
+    //               return (
+    //                 <MenuItem key={key} value={e.CODE_TEXT}>
+    //                   {e.CODE_TEXT}
+    //                 </MenuItem>
+    //               );
+    //             })}
+    //           </Select>
+    //         </FormControl>
+    //       </Box>
+    //     );
+    //   }
+    // } catch {
+    //   return <Box>Empty List</Box>;
+    // }
+    //   };
+  }
+}
+
+const crateColumn = () => {
+  var uuid = uuidv4();
+  return { key: uuid, value: new column({ uuid }) };
 };
 
 const DateBreak = () => {
+  const dispatch = useDispatch();
   const instanttime = new Date();
   const [date, setDate] = React.useState(instanttime);
   return (
     <Grid container sx={{ alignItems: "center", height: "100%" }}>
       <Grid item sx={{ px: 1.5 }}>
         <Grid container sx={{ alignItems: "center" }}>
-          <Typography
+          <Button
             sx={{
               textTransform: "capitalize",
               fontSize: "12px",
               color: "#4B4B4B",
               pr: 1,
             }}
+            onClick={() => {
+              console.log("click");
+              dispatch(addColum(crateColumn()));
+            }}
           >
             Add a Date Break:
-          </Typography>
+          </Button>
           <Grid item>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DatePicker
