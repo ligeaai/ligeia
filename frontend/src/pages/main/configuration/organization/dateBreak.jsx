@@ -40,97 +40,18 @@ export class column {
     this.sortable = false;
     this.editable = true;
     this.renderCell = MyTextField;
-    //return <MyTextField {...params} />;
-
-    // if (params.row.PROPERTY_TYPE === "INT") {
-    //   return (
-    //     <MyTextField myKey={`${params.row.LABEL_ID}`} textType="number" />
-    //   );
-    // }
-    // if (params.row.PROPERTY_TYPE === "BOOL") {
-    //   return (
-    //     <Checkbox
-    //       sx={{ margin: "auto" }}
-    //       checked={
-    //         typeRedux[`${params.row.LABEL_ID}`] === ""
-    //           ? false
-    //           : typeRedux[`${params.row.LABEL_ID}`]
-    //       }
-    //       onChange={(event) => {
-    //         dispatch(
-    //           changeValue({
-    //             key: params.row.LABEL_ID,
-    //             value: event.currentTarget.checked,
-    //           })
-    //         );
-    //       }}
-    //     />
-    //   );
-    // }
-    // if (params.row.PROPERTY_TYPE === "HISTORY") {
-    //   return (
-    //     <LocalizationProvider dateAdapter={AdapterDayjs}>
-    //       <DatePicker
-    //         value={typeRedux[`${params.row.LABEL_ID}`]}
-    //         onChange={(newValue) => {
-    //           dispatch(
-    //             changeValue({ key: params.row.LABEL_ID, value: newValue })
-    //           );
-    //         }}
-    //         InputProps={{
-    //           disableUnderline: true,
-    //         }}
-    //         renderInput={(params) => (
-    //           <TextField {...params} variant="standard" />
-    //         )}
-    //       />
-    //     </LocalizationProvider>
-    //   );
-    // }
-    // try {
-    //   if (params.row.PROPERTY_TYPE === "CODE") {
-    //     return (
-    //       <Box sx={{ minWidth: 120 }}>
-    //         <FormControl fullWidth>
-    //           <Select
-    //             labelId="code-list"
-    //             defaultValue={typeRedux[`${params.row.LABEL_ID}`]}
-    //             value={typeRedux[`${params.row.LABEL_ID}`]}
-    //             onChange={(event) => {
-    //               dispatch(
-    //                 changeValue({
-    //                   key: params.row.LABEL_ID,
-    //                   value: event.target.value,
-    //                 })
-    //               );
-    //             }}
-    //             sx={{
-    //               ".MuiOutlinedInput-notchedOutline": { border: "none" },
-    //               "::focus": {
-    //                 ".MuiOutlinedInput-notchedOutline": { border: "none" },
-    //               },
-    //             }}
-    //           >
-    //             {params.row["CODE-LIST"][0].CHILD.map((e, key) => {
-    //               return (
-    //                 <MenuItem key={key} value={e.CODE_TEXT}>
-    //                   {e.CODE_TEXT}
-    //                 </MenuItem>
-    //               );
-    //             })}
-    //           </Select>
-    //         </FormControl>
-    //       </Box>
-    //     );
-    //   }
-    // } catch {
-    //   return <Box>Empty List</Box>;
-    // }
-    //   };
+    this.renderEditCell = MyTextField;
+    this.valueOptions = ({ row }) => {
+      var myList = [];
+      row["CODE-LIST"].map((e) => {
+        myList.push(e.CODE);
+      });
+      return myList;
+    };
   }
 }
 
-const crateColumn = () => {
+const crateColumn = (time) => {
   var uuid = uuidv4();
   return { key: uuid, value: new column({ uuid }) };
 };
@@ -151,8 +72,7 @@ const DateBreak = () => {
               pr: 1,
             }}
             onClick={() => {
-              console.log("click");
-              dispatch(addColum(crateColumn()));
+              dispatch(addColum(crateColumn(), date));
             }}
           >
             Add a Date Break:

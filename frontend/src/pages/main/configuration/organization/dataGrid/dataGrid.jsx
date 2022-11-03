@@ -2,18 +2,6 @@ import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import { DataGridPro } from "@mui/x-data-grid-pro";
-import { loadType } from "../../../../../services/api/type/type";
-
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-
-import MyTextField from "./../myTextField";
-import {
-  setValue,
-  changeValue,
-} from "../../../../../services/reducers/typeReducer";
-import { setTextValue } from "../../../../../services/reducers/typeTextReducer";
 
 import CustomColumnMenu from "./customColumnMenu";
 import CustomToolbar from "./customToolbar";
@@ -32,24 +20,10 @@ const MyDataGrid = ({ type }) => {
     },
   ]);
   const pinnedRows = {
-    top: [
-      {
-        PROPERTY_NAME: "",
-        CODE_LIST: null,
-        MANDATORY: "none",
-        LABEL_ID: "HISTORY",
-        PROP_GRP: "",
-        PROPERTY_TYPE: "HISTORY",
-        SORT_ORDER: "",
-        "RESOURCE-LIST": [
-          {
-            SHORT_LABEL: "",
-          },
-        ],
-      },
-    ],
+    top: [rows.HISTORY],
     bottom: [],
   };
+
   React.useEffect(() => {
     dispatch(loadRows("en-US", type));
   }, []);
@@ -57,7 +31,7 @@ const MyDataGrid = ({ type }) => {
     const { id, field, value } = cellData;
     dispatch(editRow(id, field, value));
   };
-  if (rows) {
+  if (Object.keys(rows).length !== 0) {
     return (
       <DataGridPro
         rows={Object.values(rows)}
@@ -74,6 +48,7 @@ const MyDataGrid = ({ type }) => {
         pinnedRows={pinnedRows}
         experimentalFeatures={{ rowPinning: true }}
         onCellEditCommit={onCellEditCommit}
+        disableSelectionOnClick={true}
       />
     );
   }

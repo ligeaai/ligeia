@@ -22,90 +22,7 @@ import {
 } from "../../../../components";
 import DrawerMenu from "../../../../layout/main/asset/treeViewMenu";
 import DateBreak from "./dateBreak";
-import { loadCompanyName } from "../../../../services/api/couchApi/company";
-
-import AutoSizer from "react-virtualized-auto-sizer";
 import Properties from "./properties";
-
-const TreeMenuItem = () => {
-  const [selectedIndex, setSelectedIndex] = React.useState(0);
-  function RenderRow(props) {
-    const { data, index, style } = props;
-    const handleListItemClick = (event, index) => {
-      setSelectedIndex(index);
-    };
-    return (
-      <ListItem
-        style={style}
-        key={index}
-        component="div"
-        disablePadding
-        sx={{
-          ".MuiButtonBase-root": {
-            py: 0.5,
-          },
-        }}
-      >
-        <ListItemButton
-          selected={selectedIndex === index}
-          onClick={(event) => handleListItemClick(event, index)}
-        >
-          <ListItemText
-            primary={`${data[index].name}`}
-            sx={{
-              span: { fontSize: "12px" },
-            }}
-          />
-        </ListItemButton>
-      </ListItem>
-    );
-  }
-  const dispatch = useDispatch();
-  const isFullScreen = useSelector((state) => state.fullScreen.isFullScreen);
-  const [treeItem, setTreeItem] = React.useState(false);
-  React.useEffect(() => {
-    const getData = async () => {
-      let data = await loadCompanyName();
-      setTreeItem(data);
-    };
-    getData();
-  }, []);
-  if (treeItem) {
-    return (
-      <ComponentError
-        errMsg={
-          <ComponentErrorBody
-            text="Something went wrong"
-            icon={<ErrorOutlineIcon />}
-          />
-        }
-      >
-        <Box
-          sx={{
-            height: isFullScreen
-              ? "calc(100vh - 85px)"
-              : "calc(100vh - 85px - 60px)",
-          }}
-        >
-          <AutoSizer>
-            {({ height, width }) => (
-              <FixedSizeList
-                height={height}
-                width={width}
-                itemSize={35}
-                itemCount={Object.keys(treeItem.data.companies).length}
-                itemData={treeItem.data.companies}
-                overscanCount={5}
-              >
-                {RenderRow}
-              </FixedSizeList>
-            )}
-          </AutoSizer>
-        </Box>
-      </ComponentError>
-    );
-  }
-};
 
 const UnitOne = (props) => {
   const { type } = props;
@@ -120,7 +37,7 @@ const UnitOne = (props) => {
       }}
     >
       <Grid item sx={{ minHeight: "500px", boxShadow: 3, mr: 0.5 }}>
-        <DrawerMenu Element={TreeMenuItem()} />
+        <DrawerMenu Element={<></>} />
       </Grid>
       <Grid
         item

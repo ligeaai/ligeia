@@ -8,10 +8,18 @@ import {
 import { instance, config } from '../../baseApi';
 
 //----------------COLUMN------------
-export const addColum = (column) => (dispatch, getState) => {
+export const addColum = (column, time) => (dispatch, getState) => {
     var newRows = {}
     Object.keys(getState().companyDataGrid.rows).map((e) => {
-        newRows[e] = { ...getState().companyDataGrid.rows[e], [column.key]: "" }
+        if (getState().companyDataGrid.rows[e].PROPERTY_TYPE === "BOOL") {
+            newRows[e] = { ...getState().companyDataGrid.rows[e], [column.key]: false }
+        }
+        else if (getState().companyDataGrid.rows[e].PROPERTY_TYPE === "HISTORY") {
+            newRows[e] = { ...getState().companyDataGrid.rows[e], [column.key]: time }
+        }
+        else {
+            newRows[e] = { ...getState().companyDataGrid.rows[e], [column.key]: "" }
+        }
     })
     dispatch({
         type: ADD_DATE_BREAK_COLUMN,
@@ -40,6 +48,20 @@ export const loadRows = (CULTURE, TYPE) => async (dispatch) => {
                 "/type/details/", body, config
             )
         var response = {}
+        response["HISTORY"] = {
+            PROPERTY_NAME: "",
+            CODE_LIST: null,
+            MANDATORY: "none",
+            LABEL_ID: "HISTORY",
+            PROP_GRP: "",
+            PROPERTY_TYPE: "HISTORY",
+            SORT_ORDER: "",
+            "RESOURCE-LIST": [
+                {
+                    SHORT_LABEL: "",
+                },
+            ],
+        };
         res.data.TYPE["TYPE PROPERTY COLUMNS"].TYPE.map(e => {
             response[e.LABEL_ID] = e
         })
