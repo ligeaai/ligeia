@@ -12,7 +12,7 @@ class item_property(models.Model):
 	PROPERTY_DATE=models.DateField(null=True,db_index=True,)
 	PROPERTY_STRING=models.CharField(max_length=200,null=True,db_index=True,)
 	PROPERTY_CODE=models.CharField(max_length=32,null=True,db_index=True,)
-	PROPERTY_BINARY=models.BinaryField(null=True,db_index=True,)
+	PROPERTY_BINARY=models.CharField(max_length=32,null=True,db_index=True,)
 	LAST_UPDT_USER=models.CharField(max_length=100,null=True,)
 	LAST_UPDT_DATE=models.DateField(default=timezone.now,null=True,)
 	VERSION=models.CharField(max_length=32,default=uuid.uuid4,null=False,)
