@@ -2,7 +2,7 @@ import time
 from django.shortcuts import render
 from rest_framework import generics, permissions, status
 from .models import item
-from .serializers import ItemSaveSerializer, ItemCustomSaveSerializer
+from .serializers import ItemSaveSerializer, ItemCustomSaveSerializer,ItemDetailsSerializer
 from rest_framework.response import Response
 from services.parsers.addData.type import typeAddData
 import uuid
@@ -47,4 +47,10 @@ class ItemView(generics.ListAPIView):
     def get(self, request, *args, **kwargs):
         typeAddData.import_data("ITEM")
         return Response({"Message":'Successful'}, status=status.HTTP_200_OK)
+
+class ItemDetailsView(generics.ListAPIView):
+    queryset = item.objects.all()
+    serializer_class = ItemDetailsSerializer
+    permission_classes = [permissions.AllowAny]
+  
 

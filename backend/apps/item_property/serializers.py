@@ -43,7 +43,8 @@ class ItemPropertyCustomSaveSerializer(serializers.Serializer):
             return_dict['ITEM_TYPE'] = validated_data.get('ITEM').get('ITEM_TYPE')
             return_dict['START_DATETIME'] = validated_data.get('ITEM').get('START_DATETIME')
             return_dict['LAST_UPDT_USER'] = validated_data.get('ITEM').get('LAST_UPDT_USER')
-            return_dict['PROPERTY_TYPE'] = value.get('VALUE_TYPE')
+            # property_type value.get('VALUE_TYPE') or keys
+            return_dict['PROPERTY_TYPE'] = keys
             typeValue = type_of_value.get(value.get('VALUE_TYPE'))
             return_dict[typeValue] = value.get('VALUE')
             return_dict['LAST_UPDT_DATE'] = str(datetime.now()).split(" ")[0]

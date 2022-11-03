@@ -35,4 +35,4 @@ class ItemCustomSaveSerializer(serializers.Serializer):
 class ItemDetailsSerializer(serializers.ModelSerializer):
     class Meta:
         model = item
-        fields = "__all__"
+        fields =["ITEM_ID","ITEM_TYPE","ROW_ID"]

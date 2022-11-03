@@ -37,10 +37,12 @@ class ItemPropertyView(generics.ListAPIView):
         return Response({"Message":'Successful'}, status=status.HTTP_200_OK)
     
 
-class ItemPropertyDetailsView(generics.ListAPIView):
-
-    queryset = item_property.objects.all()
-    serializer_class = ItemPropertyDetailsSerializer
+class ItemPropertyDetailsView(generics.CreateAPIView):
     permission_classes = [
         permissions.AllowAny
     ]
+    def post(self, request, *args, **kwargs):
+        queryset = item_property.objects.filter(ITEM_ID = request.data.get('ITEM_ID'))
+        print(queryset)
+        serializer = ItemPropertyDetailsSerializer(queryset,many = True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
