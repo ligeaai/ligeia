@@ -27,6 +27,14 @@ class ItemPropertyDetailsSerializer(serializers.ModelSerializer):
 
 class ItemPropertyCustomSaveSerializer(serializers.Serializer):
     def create(self, validated_data):
+        type_of_value = {
+            "TEXT":"PROPERTY_STRING",
+            "NUMBER":"PROPERTY_VALUE",
+            "INT":"PROPERTY_VALUE",
+            "BOOL":"PROPERTY_STRING",
+            "CODE":"PROPERTY_CODE",
+            "BLOB_ID":"PROPERTY_BINARY",
+        }
         temptDict = validated_data.get('PROPERTY')
         return_dict2 = dict()
         for keys,value in temptDict.items():
@@ -35,8 +43,9 @@ class ItemPropertyCustomSaveSerializer(serializers.Serializer):
             return_dict['ITEM_TYPE'] = validated_data.get('ITEM').get('ITEM_TYPE')
             return_dict['START_DATETIME'] = validated_data.get('ITEM').get('START_DATETIME')
             return_dict['LAST_UPDT_USER'] = validated_data.get('ITEM').get('LAST_UPDT_USER')
-            return_dict['PROPERTY_TYPE'] = keys
-            return_dict[value.get('VALUE_TYPE')] = value.get('VALUE')
+            return_dict['PROPERTY_TYPE'] = value.get('VALUE_TYPE')
+            typeValue = type_of_value.get(value.get('VALUE_TYPE'))
+            return_dict[typeValue] = value.get('VALUE')
             return_dict['LAST_UPDT_DATE'] = str(datetime.now()).split(" ")[0]
             return_dict['START_DATETIME'] = str(datetime.now()).split(" ")[0]
             return_dict['END_DATETIME'] = str(datetime.now()).split(" ")[0]  

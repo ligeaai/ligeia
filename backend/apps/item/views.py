@@ -10,6 +10,14 @@ from apps.item_property.views import ItemPropertyCustomSaveSerializer
 from utils.models_utils import (
                                 validate_model_not_null,
                                 )
+class ItemSaveView(generics.CreateAPIView):
+    permission_classes = [permissions.AllowAny]
+    def post(self, request, *args, **kwargs):
+        validate_model_not_null(request.data,"item",request)
+        serializer = ItemCustomSaveSerializer(data = request.data)
+        serializer.is_valid()
+        data = serializer.create(request.data)
+        return Response("Succsesfull",status=status.HTTP_201_CREATED)
 
 # Create your views here.
 class ItemScriptSaveView(generics.CreateAPIView):
@@ -17,18 +25,17 @@ class ItemScriptSaveView(generics.CreateAPIView):
 
     def post(self, request, *args, **kwargs):
         item_data = request.data['ITEM']
-        validate_model_not_null(item_data,"item")
+        validate_model_not_null(item_data,"item",request)
         serializer = ItemCustomSaveSerializer(data = item_data)
         serializer.is_valid()
         serializer.create(item_data)
         serializer_prop = ItemPropertyCustomSaveSerializer(data = request.data)
-        print(serializer.data)
         prop_item = request.data.get("PROPERTY")
         for keys,value in prop_item.items():
-            validate_model_not_null(value,"item_property")
+            validate_model_not_null(value,"item_property",request)
         serializer_prop.is_valid()
         deneme = serializer_prop.create(request.data)
-        return Response(serializer.data,status=status.HTTP_201_CREATED)
+        return Response("Succsesfull",status=status.HTTP_201_CREATED)
        
     
 

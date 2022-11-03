@@ -62,8 +62,8 @@ class TypeDeleteView(generics.UpdateAPIView):
     permission_classes = [permissions.AllowAny]
 
     def post(self, request, *args, **kwargs):
-        qs = Type.objects.filter(TYPE=request.data.get("Type")).delete()
-        validate_find(qs)
+        qs = Type.objects.filter(TYPE=request.data.get("TYPE"))
+        validate_find(qs,request)
         qs.delete()
         message = {"Message": "Successful Delete "}
         logger.info(message,request=request)
