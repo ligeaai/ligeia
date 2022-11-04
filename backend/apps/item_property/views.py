@@ -43,6 +43,22 @@ class ItemPropertyDetailsView(generics.CreateAPIView):
     ]
     def post(self, request, *args, **kwargs):
         queryset = item_property.objects.filter(ITEM_ID = request.data.get('ITEM_ID'))
-        
         serializer = ItemPropertyDetailsSerializer(queryset,many = True)
+        for index in range(0,len(serializer.data)):
+            new_dict = dict(serializer.data[index])
+            for keys,values in new_dict.items():
+                if not values:
+                    serializer.data[index].pop(keys)
+
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+class ItemPropertyDeleteView(generics.CreateAPIView):
+    permission_classes = [permissions.AllowAny]
+
+    def post(self, request, *args, **kwargs):
+        queryset = item_property.objects.filter(ROW_ID = request.data.get('ROW_ID'))
+        if queryset:
+            queryset.delete()
+   
+        return Response("Succsesful Delete",status=status.HTTP_200_OK)

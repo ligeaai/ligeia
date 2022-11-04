@@ -68,3 +68,16 @@ class ItemDetailsView(generics.ListAPIView):
         
         return Response(serializer.data,status=status.HTTP_200_OK)
 
+
+
+class ItemDeleteView(generics.CreateAPIView):
+    permission_classes = [permissions.AllowAny]
+
+    def post(self, request, *args, **kwargs):
+        queryset = item.objects.filter(ITEM_ID = request.data.get('ITEM_ID'))
+        if queryset:
+            queryset.delete()
+            queryset_prop = item_property.objects.filter(ITEM_ID = request.data.get('ITEM_ID'))
+            for data in queryset_prop:
+                data.delete()
+        return Response("Succsesful Delete",status=status.HTTP_200_OK)
