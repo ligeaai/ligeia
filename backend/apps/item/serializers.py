@@ -19,17 +19,23 @@ class ItemSaveSerializer(serializers.Serializer):
 
 
 class ItemCustomSaveSerializer(serializers.Serializer):
-    def create(self, validated_data):
-        validated_data['END_DATETIME'] = '9000-01-01'
-        validated_data['LAST_UPDT_DATE'] = str(datetime.now()).split(" ")[0]
-        validated_data['ROW_ID']  = uuid.uuid4().hex
-        validated_data['VERSION'] = uuid.uuid4().hex
-        validated_data['UPDATE_SOURCE'] = "x"
-        validated_data['CREATE_SOURCE'] = "x"
-        items = item.objects.create(**validated_data)
-        items.save()
+    def save(self, validated_data):
+        # ITEM_ID OR ROW_ID
+        queryset = item.objects.filter(ITEM_ID = validated_data['ITEM_ID'])
+        if queryset:
+            queryset.update(**validated_data)
+            return "Update ıtem"
+        else:
+            validated_data['END_DATETIME'] = '9000-01-01'
+            validated_data['LAST_UPDT_DATE'] = str(datetime.now()).split(" ")[0]
+            validated_data['VERSION'] = uuid.uuid4().hex
+            # validated_data['ROW_ID'] = uuid.uuid4().hex
+            validated_data['UPDATE_SOURCE'] = "x"
+            validated_data['CREATE_SOURCE'] = "x"
+            items = item.objects.create(**validated_data)
+            items.save()
 
-        return items
+            return "Created Item"
 
 
 class ItemDetailsSerializer(serializers.ModelSerializer):

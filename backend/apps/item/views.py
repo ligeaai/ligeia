@@ -6,7 +6,8 @@ from .serializers import ItemSaveSerializer, ItemCustomSaveSerializer,ItemDetail
 from rest_framework.response import Response
 from services.parsers.addData.type import typeAddData
 import uuid
-from apps.item_property.views import ItemPropertyCustomSaveSerializer
+from apps.item_property.serializers import ItemPropertyCustomSaveSerializer,ItemPropertyNameSerializer
+from apps.item_property.models import item_property
 from utils.models_utils import (
                                 validate_model_not_null,
                                 )
@@ -28,13 +29,14 @@ class ItemScriptSaveView(generics.CreateAPIView):
         validate_model_not_null(item_data,"item",request)
         serializer = ItemCustomSaveSerializer(data = item_data)
         serializer.is_valid()
-        serializer.create(item_data)
+        serializer.save(item_data)
         serializer_prop = ItemPropertyCustomSaveSerializer(data = request.data)
         prop_item = request.data.get("PROPERTY")
         for keys,value in prop_item.items():
             validate_model_not_null(value,"item_property",request)
         serializer_prop.is_valid()
-        deneme = serializer_prop.create(request.data)
+        
+        serializer_prop.save(request.data)
         return Response("Succsesfull",status=status.HTTP_201_CREATED)
        
     
@@ -52,5 +54,17 @@ class ItemDetailsView(generics.ListAPIView):
     queryset = item.objects.all()
     serializer_class = ItemDetailsSerializer
     permission_classes = [permissions.AllowAny]
-  
+    def list(self, request, *args, **kwargs):
+        queryset = item.objects.all()
+        serializer = ItemDetailsSerializer(queryset,many = True)
+        for index in range(0,len(serializer.data)):
+            property_queryset = item_property.objects.filter(ITEM_ID = serializer.data[index].get('ITEM_ID'),PROPERTY_TYPE = "NAME").order_by('-LAST_UPDT_DATE')
+            if property_queryset:
+                serializer_prop = ItemPropertyNameSerializer(property_queryset,many = True)
+                print(serializer_prop.data)
+                for value in serializer_prop.data[0].values():
+                    if value:
+                        serializer.data[index]['NAME'] = value
+        
+        return Response(serializer.data,status=status.HTTP_200_OK)
 

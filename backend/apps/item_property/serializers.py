@@ -18,6 +18,10 @@ class ItemPropertySaveSerializer(serializers.ModelSerializer):
         types.save()
         return types
 
+class ItemPropertyNameSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = item_property
+        fields = ["PROPERTY_VALUE","PROPERTY_DATE","PROPERTY_STRING","PROPERTY_CODE","PROPERTY_BINARY"]
 
 class ItemPropertyDetailsSerializer(serializers.ModelSerializer):
     class Meta:
@@ -26,7 +30,7 @@ class ItemPropertyDetailsSerializer(serializers.ModelSerializer):
 
 
 class ItemPropertyCustomSaveSerializer(serializers.Serializer):
-    def create(self, validated_data):
+    def save(self, validated_data):
         type_of_value = {
             "TEXT":"PROPERTY_STRING",
             "NUMBER":"PROPERTY_VALUE",
@@ -47,7 +51,7 @@ class ItemPropertyCustomSaveSerializer(serializers.Serializer):
             return_dict['PROPERTY_TYPE'] = keys
             typeValue = type_of_value.get(value.get('VALUE_TYPE'))
             return_dict[typeValue] = value.get('VALUE')
-            return_dict['LAST_UPDT_DATE'] = str(datetime.now()).split(" ")[0]
+            return_dict['LAST_UPDT_DATE'] = "2022-11-05"#str(datetime.now()).split(" ")[0]
             return_dict['START_DATETIME'] = str(datetime.now()).split(" ")[0]
             return_dict['END_DATETIME'] = str(datetime.now()).split(" ")[0]  
             return_dict['ROW_ID']  = uuid.uuid4().hex
@@ -55,7 +59,6 @@ class ItemPropertyCustomSaveSerializer(serializers.Serializer):
             return_dict['END_DATETIME'] = '9000-01-01'
             return_dict['UPDATE_SOURCE'] = "x"
             return_dict['CREATE_SOURCE'] = "x"
-            
             item_propertys = item_property.objects.create(**return_dict)
             item_propertys.save()
             return_dict2[keys] = return_dict
