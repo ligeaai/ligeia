@@ -65,7 +65,7 @@ def frozen_data_check(data_check):
     if valueType[-1] == valueType[-2]:
         if len(valueType) > 3:
             print(
-                "----------------YANLIŞ GİDEN BİŞELER VAR----------------------------"
+                "----------------------------THE DATA IS COMING SAME PLEASE CHECK----------------------------"
             )
     else:
         data_dict.get(data_check).clear()
