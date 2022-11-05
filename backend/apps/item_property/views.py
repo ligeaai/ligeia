@@ -14,6 +14,12 @@ from .serializers import (
 from rest_framework.response import Response
 from services.parsers.addData.type import typeAddData
 import uuid
+from utils.models_utils import (
+                                validate_find,
+                                )
+from services.logging.Handlers import KafkaLogger 
+logger = KafkaLogger()
+
 
 # Create your views here.
 class ItemPropertyScriptSaveView(generics.CreateAPIView):
@@ -24,7 +30,9 @@ class ItemPropertyScriptSaveView(generics.CreateAPIView):
         # serializer = ItemPropertyCustomSaveSerializer(data = request.data)
         # serializer.is_valid()
         # serializer.create(request.data)
-        return Response({"Message":"Succsesful"},status=status.HTTP_201_CREATED)
+        message = "Succsesful created item property"
+        logger.info(message,request)
+        return Response({"Message":message},status=status.HTTP_201_CREATED)
 
 
 class ItemPropertyView(generics.ListAPIView):
@@ -34,7 +42,9 @@ class ItemPropertyView(generics.ListAPIView):
 
     def get(self, request, *args, **kwargs):
         typeAddData.import_data("ITEM_PROPERTY")
-        return Response({"Message":'Successful'}, status=status.HTTP_200_OK)
+        message = "Succsesful created item property"
+        logger.info(message,request)
+        return Response({"Message":message}, status=status.HTTP_200_OK)
     
 
 class ItemPropertyDetailsView(generics.CreateAPIView):
@@ -42,14 +52,16 @@ class ItemPropertyDetailsView(generics.CreateAPIView):
         permissions.AllowAny
     ]
     def post(self, request, *args, **kwargs):
-        queryset = item_property.objects.filter(ITEM_ID = request.data.get('ITEM_ID'))
+        queryset = item_property.objects.filter(ITEM_ID = request.data.get('ITEM_ID')).order_by('-START_DATETIME')
+        validate_find(queryset)
         serializer = ItemPropertyDetailsSerializer(queryset,many = True)
         for index in range(0,len(serializer.data)):
             new_dict = dict(serializer.data[index])
             for keys,values in new_dict.items():
                 if not values:
                     serializer.data[index].pop(keys)
-
+        message = "Succsesful listed item property"
+        logger.info(message,request)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 
@@ -58,7 +70,8 @@ class ItemPropertyDeleteView(generics.CreateAPIView):
 
     def post(self, request, *args, **kwargs):
         queryset = item_property.objects.filter(ROW_ID = request.data.get('ROW_ID'))
-        if queryset:
-            queryset.delete()
-   
+        validate_find(queryset)
+        queryset.delete()
+        message = "Succsesful deleted item property"
+        logger.info(message,request)
         return Response("Succsesful Delete",status=status.HTTP_200_OK)

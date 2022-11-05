@@ -8,6 +8,7 @@ class item_property(models.Model):
 	START_DATETIME=models.DateField(null=False,db_index=True,)
 	END_DATETIME=models.DateField(default=timezone.now,null=False,db_index=True,)
 	PROPERTY_TYPE=models.CharField(max_length=15,null=False,db_index=True,)
+	PROPERTY_INFO=models.CharField(max_length=15,null=False,db_index=True,)
 	PROPERTY_VALUE=models.DecimalField(max_digits=28,decimal_places=12,null=True,db_index=True,)
 	PROPERTY_DATE=models.DateField(null=True,db_index=True,)
 	PROPERTY_STRING=models.CharField(max_length=200,null=True,db_index=True,)

@@ -23,10 +23,17 @@ class ItemPropertyNameSerializer(serializers.ModelSerializer):
         model = item_property
         fields = ["PROPERTY_VALUE","PROPERTY_DATE","PROPERTY_STRING","PROPERTY_CODE","PROPERTY_BINARY"]
 
+
+class ItemPropertyUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = item_property
+        fields = ["START_DATETIME","END_DATETIME"]
+
+
 class ItemPropertyDetailsSerializer(serializers.ModelSerializer):
     class Meta:
         model = item_property
-        fields = ["PROPERTY_VALUE","PROPERTY_DATE","PROPERTY_STRING","PROPERTY_CODE","PROPERTY_BINARY","ITEM_TYPE","ROW_ID","PROPERTY_TYPE"]
+        fields = ["ITEM_TYPE","PROPERTY_TYPE","PROPERTY_INFO","PROPERTY_VALUE","PROPERTY_DATE","PROPERTY_STRING","PROPERTY_CODE","PROPERTY_BINARY","ROW_ID","START_DATETIME","END_DATETIME"]
 
 
 class ItemPropertyCustomSaveSerializer(serializers.Serializer):
@@ -42,15 +49,24 @@ class ItemPropertyCustomSaveSerializer(serializers.Serializer):
         temptDict = validated_data.get('PROPERTY')
         return_dict2 = dict()
         for keys,value in temptDict.items():
+            queryset = item_property.objects.filter(ROW_ID = value.get('ROW_ID'))
+            if queryset:
+                serializers = ItemPropertyUpdateSerializer(queryset,many = True)
+                tempt = serializers.data[0].get("START_DATETIME")
+                serializers.data[0]["START_DATETIME"] = serializers.data[0].get('END_DATETIME')
+                serializers.data[0]["END_DATETIME"] = tempt
+                queryset.update(**serializers.data[0])
+            
             return_dict = dict()
             return_dict['ITEM_ID'] = validated_data.get('ITEM').get('ITEM_ID')
             #validated_data.get('ITEM').get('ITEM_TYPE')
-            return_dict['ITEM_TYPE'] = keys
+            return_dict['ITEM_TYPE'] = validated_data.get('ITEM').get('ITEM_TYPE')
             return_dict['START_DATETIME'] = validated_data.get('ITEM').get('START_DATETIME')
             return_dict['LAST_UPDT_USER'] = validated_data.get('ITEM').get('LAST_UPDT_USER')
             # property_type value.get('VALUE_TYPE') or keys
-            return_dict['PROPERTY_TYPE'] = value.get('VALUE_TYPE')
+            return_dict['PROPERTY_TYPE'] = keys
             typeValue = type_of_value.get(value.get('VALUE_TYPE'))
+            return_dict['PROPERTY_INFO']= value.get('VALUE_TYPE')
             return_dict[typeValue] = value.get('VALUE')
             return_dict['LAST_UPDT_DATE'] = str(datetime.now()).split(" ")[0]
             return_dict['START_DATETIME'] = str(datetime.now()).split(" ")[0]
@@ -64,5 +80,6 @@ class ItemPropertyCustomSaveSerializer(serializers.Serializer):
             item_propertys.save()
             return_dict2[keys] = return_dict
         return return_dict2
+                
     
 

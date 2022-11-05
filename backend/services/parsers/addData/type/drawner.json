@@ -49,6 +49,11 @@
                             "Icon": "",
                             "title": "Types",
                             "url": "/#"
+                        },
+                        "Tags": {
+                            "Icon": "DriveFileMoveOutlined",
+                            "title": "Tags",
+                            "url": "/#"
                         }
                     }
                 },
