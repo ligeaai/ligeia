@@ -15,6 +15,8 @@ from utils.models_utils import (
 
 from services.logging.Handlers import KafkaLogger 
 logger = KafkaLogger()
+
+
 class ItemSaveView(generics.CreateAPIView):
     permission_classes = [permissions.AllowAny]
     def post(self, request, *args, **kwargs):
@@ -26,25 +28,52 @@ class ItemSaveView(generics.CreateAPIView):
         logger.info(message,request = request)
         return Response("Succsesfull",status=status.HTTP_201_CREATED)
 
-# Create your views here.
 class ItemScriptSaveView(generics.CreateAPIView):
     permission_classes = [permissions.AllowAny]
 
     def post(self, request, *args, **kwargs):
-        item_data = request.data['ITEM']
-        validate_model_not_null(item_data,"item",request)
-        serializer = ItemCustomSaveSerializer(data = item_data)
-        serializer.is_valid()
-        serializer.save(item_data)
-        serializer_prop = ItemPropertyCustomSaveSerializer(data = request.data)
-        prop_item = request.data.get("PROPERTY")
-        for keys,value in prop_item.items():
-            validate_model_not_null(value,"item_property",request)
-        serializer_prop.is_valid()
-        serializer_prop.save(request.data)
-        message = "Succsesfull created for item and property"
-        logger.info(message,request = request)
-        return Response(message,status=status.HTTP_201_CREATED)
+       item_id = request.data.get('ITEM').get('ITEM_ID')
+       queryset = item.objects.filter(ITEM_ID = item_id).delete()
+       queryset = item_property.objects.filter(ITEM_ID = item_id).delete()
+       item_data = request.data['ITEM']
+       item_data['START_DATETIME'] = request.data.get('COLUMNS')[0].get('START_TIME')
+       validate_model_not_null(item_data,"item",request)
+       serializer = ItemCustomSaveSerializer(data = item_data)
+       serializer.is_valid()
+       serializer.save(item_data)
+       serializer_prop = ItemPropertyCustomSaveSerializer(data = request.data)
+       serializer_prop.is_valid()
+       serializer_prop.save(request.data)
+       return Response(request.data,status=status.HTTP_201_CREATED)
+
+
+
+
+
+
+
+
+
+
+# Create your views here.
+# class ItemScriptSaveView(generics.CreateAPIView):
+#     permission_classes = [permissions.AllowAny]
+
+#     def post(self, request, *args, **kwargs):
+#         item_data = request.data['ITEM']
+#         validate_model_not_null(item_data,"item",request)
+#         serializer = ItemCustomSaveSerializer(data = item_data)
+#         serializer.is_valid()
+#         serializer.save(item_data)
+#         serializer_prop = ItemPropertyCustomSaveSerializer(data = request.data)
+#         prop_item = request.data.get("PROPERTY")
+#         for keys,value in prop_item.items():
+#             validate_model_not_null(value,"item_property",request)
+#         serializer_prop.is_valid()
+#         serializer_prop.save(request.data)
+#         message = "Succsesfull created for item and property"
+#         logger.info(message,request = request)
+#         return Response(message,status=status.HTTP_201_CREATED)
        
     
 
@@ -63,11 +92,11 @@ class ItemDetailsView(generics.ListAPIView):
     permission_classes = [permissions.AllowAny]
     def list(self, request, *args, **kwargs):
         queryset = item.objects.all()
-        validate_find(queryset)
+        validate_find(queryset,request)
         serializer = ItemDetailsSerializer(queryset,many = True)
         for index in range(0,len(serializer.data)):
             property_queryset = item_property.objects.filter(ITEM_ID = serializer.data[index].get('ITEM_ID'),PROPERTY_TYPE = "NAME").order_by('-LAST_UPDT_DATE')
-            validate_find(property_queryset)
+            validate_find(property_queryset,request)
             serializer_prop = ItemPropertyNameSerializer(property_queryset,many = True)
             for value in serializer_prop.data[0].values():
                 if value:
@@ -83,11 +112,11 @@ class ItemDeleteView(generics.CreateAPIView):
 
     def post(self, request, *args, **kwargs):
         queryset = item.objects.filter(ITEM_ID = request.data.get('ITEM_ID'))
-        validate_find(queryset)
+        validate_find(queryset,request)
         queryset.delete()
         queryset_prop = item_property.objects.filter(ITEM_ID = request.data.get('ITEM_ID'))
         for data in queryset_prop:
-            validate_find(data)
+            validate_find(data,request)
             data.delete()
         message = "Succsesfull deleted for items"
         logger.info(message,request = request)
