@@ -65,22 +65,43 @@ class ItemPropertyDetailsView(generics.CreateAPIView):
                 if keys == "START_DATETIME":
                     tempt_dict[values] = new_dict
                     temp_data.append(tempt_dict)
-        deneme = dict()
+
+        tempt_key = []
+        tempt_dict = dict()
         for index in range(0,len(temp_data)):
-            try:
-                listt= []
-                keys = list(temp_data[index].keys())[0]
-                keys2 = list(temp_data[index+1].keys())[0]
-                if keys == keys2:
-                    listt.append(list(temp_data[index].values())[0])
-                    listt.append(list(temp_data[index+1].values())[0])
-                    deneme[keys] = listt
-            except:
-                pass
+            data = temp_data[index]
+            for key,value in data.items():
+                try:
+                    x = tempt_key.index(key)
+                    values = tempt_dict.get(key)
+                    values.append(value)
+                    tempt_dict[key] = values
+                    
+                except:
+                    tempt_key.append(key)
+                    values = []
+                    values.append(value)
+                    tempt_dict[key] = values
+
+        # deneme = dict()
+        # for index in range(1,len(temp_data)):
+        #     keys = list(temp_data[index].keys())[0]
+        #     listt= []
+        #     try:
+        #         keys2 = list(temp_data[index+1].keys())[0]
+        #         if keys == keys2:
+        #             print('GİRDİ',str(index))
+        #             listt.append(list(temp_data[index].values())[0])
+        #             listt.append(list(temp_data[index+1].values())[0])
+        #             deneme[keys] = listt
+        #     except:
+        #         keys2 = list(temp_data[index-1].keys())[0]
+        #         deneme.get(keys2).append(list(temp_data[index].values())[0])
+        #         pass
                 
         message = "Succsesful listed item property"
-        logger.info(message,request)
-        return Response(deneme, status=status.HTTP_200_OK)
+        # logger.info(message,request)
+        return Response(tempt_dict, status=status.HTTP_200_OK)
 
 
 class ItemPropertyDeleteView(generics.CreateAPIView):
