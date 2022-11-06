@@ -95,12 +95,12 @@ class ItemDetailsView(generics.ListAPIView):
         validate_find(queryset,request)
         serializer = ItemDetailsSerializer(queryset,many = True)
         for index in range(0,len(serializer.data)):
-            property_queryset = item_property.objects.filter(ITEM_ID = serializer.data[index].get('ITEM_ID'),PROPERTY_TYPE = "NAME").order_by('-LAST_UPDT_DATE')
-            validate_find(property_queryset,request)
+            property_queryset = item_property.objects.filter(ITEM_ID = serializer.data[index].get('ITEM_ID'),PROPERTY_TYPE = "NAME").order_by('START_DATETIME')
             serializer_prop = ItemPropertyNameSerializer(property_queryset,many = True)
-            for value in serializer_prop.data[0].values():
-                if value:
-                    serializer.data[index]['NAME'] = value
+            for data in serializer_prop.data:   
+                for value in data.values():
+                    if value:
+                        serializer.data[index]['NAME'] = value
         message = "Succsesfull listed for items"
         logger.info(message,request = request)
         return Response(serializer.data,status=status.HTTP_200_OK)
