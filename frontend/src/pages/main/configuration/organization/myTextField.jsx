@@ -1,5 +1,6 @@
 import React from "react";
-import { MenuItem } from "@mui/material";
+import { useSelector } from "react-redux";
+import { Box } from "@mui/material";
 import {
   GridEditInputCell,
   GridEditDateCell,
@@ -7,9 +8,63 @@ import {
   GridEditSingleSelectCell,
   GridCellCheckboxRenderer,
   GridBooleanCell,
+  GridCell,
 } from "@mui/x-data-grid-pro";
+
+const SingleSelectCell = (params) => {
+  const [isOpen, setIsOpen] = React.useState(false);
+  const setOpen = () => {
+    setIsOpen(true);
+  };
+
+  React.useEffect(() => {
+    if (isOpen) {
+      window.addEventListener("click", function (e) {
+        if (!e.target.closest(".selectItems")) {
+          setIsOpen(false);
+        }
+      });
+    }
+    if (!isOpen) {
+      window.removeEventListener("click", function (e) {
+        if (!e.target.closest(".selectItems")) {
+          setIsOpen(false);
+        }
+      });
+    }
+  }, [isOpen]);
+  return (
+    <Box
+      className="selectItems"
+      sx={{
+        width: "100%",
+        "& .MuiOutlinedInput-notchedOutline": {
+          border: "none",
+        },
+      }}
+    >
+      <GridEditSingleSelectCell
+        {...params}
+        defaultValue={""}
+        open={isOpen}
+        onClick={setOpen}
+        sx={{ border: "none" }}
+      />
+    </Box>
+  );
+};
+
+const InputCell = (params) => {
+  return (
+    <GridEditInputCell
+      type="number"
+      onKeyDown={(evt) => evt.key === "e" && evt.preventDefault()}
+      {...params}
+    />
+  );
+};
+
 export const MyTextField = (params) => {
-  //console.log(params.row);
   if (params.row.PROPERTY_TYPE === "TEXT") {
     return <GridEditInputCell {...params} />;
   } else if (params.row.PROPERTY_TYPE === "HISTORY") {
@@ -21,14 +76,31 @@ export const MyTextField = (params) => {
       />
     );
   } else if (params.row.PROPERTY_TYPE === "NUMBER") {
-    return <GridEditInputCell type="number" {...params} />;
+    return <InputCell {...params} />;
   } else if (params.row.PROPERTY_TYPE === "INT") {
-    return <GridEditInputCell type="number" {...params} />;
+    return <InputCell {...params} />;
   } else if (params.row.PROPERTY_TYPE === "BOOL") {
     return <GridEditBooleanCell checked={false} type="checkbox" {...params} />;
   } else if (params.row.PROPERTY_TYPE === "CODE") {
-    return <GridEditSingleSelectCell {...params} initialOpen={false} />;
+    return <SingleSelectCell {...params} />;
   } else {
     return <GridEditInputCell {...params} />;
+  }
+};
+
+export const MyTextFieldRender = (params) => {
+  if (params.row.PROPERTY_TYPE === "BOOL") {
+    return (
+      <GridBooleanCell disabled checked={false} type="checkbox" {...params} />
+    );
+  } else if (params.row.PROPERTY_TYPE === "HISTORY") {
+    var d = params.row[params.field].getDate();
+    var m = params.row[params.field].getMonth();
+    m += 1;
+    var y = params.row[params.field].getFullYear();
+    var newdate = d + "." + y + "." + m;
+    return <Box>{newdate}</Box>;
+  } else {
+    return <Box>{params.row[params.field]}</Box>;
   }
 };

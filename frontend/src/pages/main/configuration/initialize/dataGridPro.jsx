@@ -212,7 +212,6 @@ export default function TreeDataWithGap() {
   React.useEffect(() => {
     history.push(`${codeListChild.currentChild.toLowerCase()}`);
   }, [childCodeList.refreshDataGrid, codeListChild.index]);
-  const [pageSize, setPageSize] = React.useState(100);
 
   const onCellEditCommit = (cellData) => {
     const { id, field, value } = cellData;
@@ -347,9 +346,7 @@ export default function TreeDataWithGap() {
             }}
             density="compact"
             defaultGroupingExpansionDepth={1}
-            hideFooter={
-              parseInt(Object.values(childCodeList.dataGridItems).length) < 101
-            }
+            hideFooter={true}
             treeData
             onCellEditCommit={onCellEditCommit}
             rows={Object.values(childCodeList.dataGridItems)}
@@ -369,10 +366,6 @@ export default function TreeDataWithGap() {
               LoadingOverlay: LinearProgress,
             }}
             groupingColDef={groupingColDef}
-            pageSize={pageSize}
-            onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
-            rowsPerPageOptions={[25, 50, 100]}
-            pagination
             disableIgnoreModificationsIfProcessingProps
           />
         </Box>

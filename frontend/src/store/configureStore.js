@@ -28,14 +28,13 @@ import {
     drawerReducer,
     errorReducer,
     fullScreenReducer,
+    item,
     langReducer,
     loaderReducer,
     parentCodelist,
     registerFormReducer,
     searchBarReducer,
     themeReducer,
-    typeReducer,
-    typeTextReducer
 } from '../services/reducers'
 
 const persistConfig = {
@@ -55,14 +54,13 @@ const rootReducer = combineReducers({
     drawer: drawerReducer,
     error: errorReducer,
     fullScreen: fullScreenReducer,
+    item: item,
     lang: langReducer,
     loader: loaderReducer,
     parentCodelist: parentCodelist,
     registerForm: registerFormReducer,
     searchBar: searchBarReducer,
     theme: themeReducer,
-    type: typeReducer,
-    typeText: typeTextReducer
 })
 
 

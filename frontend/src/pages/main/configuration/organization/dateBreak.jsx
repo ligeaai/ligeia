@@ -1,5 +1,5 @@
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   Box,
   Grid,
@@ -21,7 +21,7 @@ import {
   addColum,
   deleteColum,
 } from "../../../../services/actions/company/datagrid";
-import { MyTextField } from "./myTextField";
+import { MyTextField, MyTextFieldRender } from "./myTextField";
 function uuidv4() {
   return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, (c) =>
     (
@@ -43,8 +43,9 @@ export class column {
     this.renderEditCell = MyTextField;
     this.valueOptions = ({ row }) => {
       var myList = [];
+      myList.push("");
       row["CODE-LIST"].map((e) => {
-        myList.push(e.CODE);
+        myList.push(e.CODE_TEXT);
       });
       return myList;
     };
@@ -60,6 +61,33 @@ const DateBreak = () => {
   const dispatch = useDispatch();
   const instanttime = new Date();
   const [date, setDate] = React.useState(instanttime);
+  const usedDates = useSelector((state) => state.companyDataGrid.rows.HISTORY);
+  const checkDateBreaks = (date) => {
+    var returnValue = true;
+    Object.keys(usedDates).map((e) => {
+      var d = date.getDate();
+      var m = date.getMonth();
+      m += 1;
+      var y = date.getFullYear();
+      var dateNew = y + "-" + m + "-" + d;
+      console.log(usedDates[e]);
+      try {
+        var d = usedDates[e].getDate();
+        var m = usedDates[e].getMonth();
+        m += 1;
+        var y = usedDates[e].getFullYear();
+        var usedDatesNew = y + "-" + m + "-" + d;
+      } catch {}
+      if (dateNew === usedDatesNew) {
+        dispatch({
+          type: "ADD_ERROR_SUCCESS",
+          payload: "The dates cannot be the same",
+        });
+        returnValue = false;
+      }
+    });
+    return returnValue;
+  };
   return (
     <Grid container sx={{ alignItems: "center", height: "100%" }}>
       <Grid item sx={{ px: 1.5 }}>
@@ -72,7 +100,9 @@ const DateBreak = () => {
               pr: 1,
             }}
             onClick={() => {
-              dispatch(addColum(crateColumn(), date));
+              if (checkDateBreaks(date)) {
+                dispatch(addColum(crateColumn(), date));
+              }
             }}
           >
             Add a Date Break:
@@ -82,7 +112,7 @@ const DateBreak = () => {
               <DatePicker
                 value={date}
                 onChange={(newValue) => {
-                  setDate(newValue);
+                  setDate(newValue.$d);
                 }}
                 components={{
                   OpenPickerIcon: CalendarTodayIcon,
@@ -118,7 +148,7 @@ const DateBreak = () => {
         </Grid>
       </Grid>
 
-      <Divider
+      {/* <Divider
         orientation="vertical"
         variant="middle"
         flexItem
@@ -148,7 +178,7 @@ const DateBreak = () => {
         >
           <DeleteForeverIcon fontSize="medium" /> Delete Selected Date Break
         </Button>
-      </Grid>
+      </Grid> */}
 
       <Divider
         orientation="vertical"

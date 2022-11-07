@@ -1,5 +1,5 @@
 import React from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import {
   Box,
@@ -11,18 +11,135 @@ import {
 
 import { FixedSizeList } from "react-window";
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
-import Main from "../../../../layout/main/main";
+import AutoSizer from "react-virtualized-auto-sizer";
+
 import {
   Breadcrumb,
-  ActionMenu,
-  ComponentErrorBody,
-  PropLinkTabs,
   ItemSperatorLineXL,
   ComponentError,
+  PropLinkTabs,
+  ComponentErrorBody,
+  LoadingComponent,
 } from "../../../../components";
+
 import DrawerMenu from "../../../../layout/main/asset/treeViewMenu";
 import DateBreak from "./dateBreak";
 import Properties from "./properties";
+import CompanyActionMenu from "./companyActionMenu";
+import {
+  showItem,
+  selectItem,
+  selectItemNoSave,
+  confirmDataGridDontSaveGo,
+} from "../../../../services/actions/company/item";
+
+function RenderRow(props) {
+  const dispatch = useDispatch();
+  const { data, index, style } = props;
+  const selectedIndex = useSelector(
+    (state) => state.item.selectedItem.selectedIndex
+  );
+  return (
+    <ListItem
+      style={style}
+      key={index}
+      component="div"
+      disablePadding
+      sx={{
+        ".MuiButtonBase-root": {
+          py: 0.5,
+        },
+      }}
+    >
+      <ListItemButton
+        selected={selectedIndex === index}
+        onClick={() => {
+          if (
+            !dispatch(
+              confirmDataGridDontSaveGo(
+                () => {
+                  dispatch(selectItem(index));
+                },
+                "Are you sure you want to save this?",
+                () => {
+                  dispatch(selectItemNoSave(index));
+                }
+              )
+            )
+          ) {
+            dispatch(selectItemNoSave(index));
+          }
+        }}
+      >
+        <ListItemText
+          primary={`${data[index].NAME}`}
+          sx={{
+            span: {
+              fontSize: "14px",
+              overflow: "hidden",
+              whiteSpace: "nowrap",
+              textOverflow: "ellipsis",
+            },
+          }}
+        />
+      </ListItemButton>
+    </ListItem>
+  );
+}
+
+const TreeMenuItem = () => {
+  const dispatch = useDispatch();
+  const treeItem = useSelector((state) => state.item.treeMenuItem);
+  const isFullScreen = useSelector((state) => state.fullScreen.isFullScreen);
+  React.useEffect(() => {
+    dispatch(showItem());
+  }, []);
+  console.log(treeItem);
+  if (treeItem) {
+    return (
+      <Box
+        sx={{
+          height: isFullScreen
+            ? "calc(100vh - 85px )"
+            : "calc(100vh - 85px - 60px - 4px)",
+          minHeight: "416px",
+        }}
+      >
+        <AutoSizer>
+          {({ height, width }) => (
+            <FixedSizeList
+              height={height}
+              width={width}
+              itemSize={35}
+              itemCount={treeItem.length}
+              itemData={treeItem}
+              overscanCount={5}
+            >
+              {RenderRow}
+            </FixedSizeList>
+          )}
+        </AutoSizer>
+      </Box>
+    );
+  } else {
+    return <LoadingComponent />;
+  }
+};
+
+const TreeMenuItems = () => {
+  return (
+    <ComponentError
+      errMsg={
+        <ComponentErrorBody
+          text="Something went wrong"
+          icon={<ErrorOutlineIcon />}
+        />
+      }
+    >
+      <TreeMenuItem />
+    </ComponentError>
+  );
+};
 
 const UnitOne = (props) => {
   const { type } = props;
@@ -37,7 +154,7 @@ const UnitOne = (props) => {
       }}
     >
       <Grid item sx={{ minHeight: "500px", boxShadow: 3, mr: 0.5 }}>
-        <DrawerMenu Element={<></>} />
+        <DrawerMenu Element={<TreeMenuItems />} />
       </Grid>
       <Grid
         item
@@ -77,7 +194,7 @@ const UnitOne = (props) => {
               alignItems: "center",
             }}
           >
-            <ActionMenu />
+            <CompanyActionMenu />
           </Grid>
           <ItemSperatorLineXL />
           <Grid

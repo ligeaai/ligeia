@@ -11,14 +11,14 @@ import {
 
 import { FixedSizeList } from "react-window";
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
-import Main from "../../../../layout/main/main";
+
 import {
-  ActionMenu,
   Breadcrumb,
   ItemSperatorLineXL,
   ComponentError,
   PropLinkTabs,
   ComponentErrorBody,
+  LoadingComponent,
 } from "../../../../components";
 import DrawerMenu from "../../../../layout/main/asset/treeViewMenu";
 
@@ -36,7 +36,6 @@ import { setRefreshDataGrid } from "../../../../services/reducers/childCodeList"
 import MyActionMenu from "./codelistActionMenu";
 import DataGridPro from "./dataGridPro";
 import history from "../../../../routers/history";
-import { LoadingComponent } from "../../../../components";
 
 import {
   deleteCodeList,
