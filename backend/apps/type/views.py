@@ -6,7 +6,9 @@ from apps.resource_list.models import resource_list
 from apps.resource_list.serializers import (
     ResourceListSaveSerializer,
     ResourceListSerializer,
+    ResourceListTypeSerializer
 )
+from apps.page_resource_list.serializers import PageResourceListDrawerSerializer
 
 from apps.type_property.models import type_property
 from apps.type_property.serializers import (
@@ -52,6 +54,13 @@ class TypeAndPropertySaveView(generics.CreateAPIView):
         serializer = TypePropertyCustomSaveSerializer(data=request.data)
         serializer.is_valid()
         serializer.save(request)
+        serializer = ResourceListTypeSerializer(data = request.data)
+        serializer.is_valid()
+        serializer.save(request)
+        if request.data.get('TYPE').get('LAYER_NAME') == 'OG_STD':
+            serializer = PageResourceListDrawerSerializer(data = request.data)
+            serializer.is_valid()
+            serializer.save(request)
         return Response({"Message":"Successful"}, status=status.HTTP_201_CREATED)
 
 
@@ -90,18 +99,20 @@ class TypeDetailView(generics.CreateAPIView):
     ]
 
     def post(self, request):
-        cache_key = request.data.get("TYPE") + "-" + request.data.get("CULTURE")
-        # cache_data = Red.get(cache_key)
-        # if cache_data:
-        #     return Response(cache_data, status=status.HTTP_200_OK)
+            cache_key = request.data.get("TYPE") + "-" + request.data.get("CULTURE")
+            # cache_data = Red.get(cache_key)
+            # if cache_data:
+            #     return Response(cache_data, status=status.HTTP_200_OK)
 
-        seriliazerPropertyList = []
-        seriliazerResourceList = []
-        try:
+            seriliazerPropertyList = []
+            seriliazerResourceList = []
             typeQuary = Type.objects.filter(TYPE=request.data.get("TYPE"))
+            
             validate_find(typeQuary,request=request)
+            
             serializerType = TypeSerializer(typeQuary, many=True)
             for typeValue in serializerType.data[0].values():
+                print(typeValue)
                 proertyQuery = type_property.objects.filter(TYPE=typeValue)
                 serializerProperty = TypePropertySerializer(proertyQuery, many=True)
                 seriliazerPropertyList.append(serializerProperty)
@@ -127,15 +138,15 @@ class TypeDetailView(generics.CreateAPIView):
                         childCodeListQuery = code_list.objects.filter(
                             LIST_TYPE=codeListValue, CULTURE=culture
                         )
-
+                        serializerCodeList = codeListNameSerializer(
+                                    childCodeListQuery, many=True
+                                )
                         if parentCodeListQuery:
                             parentserializerCodeList = codeListNameSerializer(
                                 childCodeListQuery, many=True
                             )
                             if childCodeListQuery:
-                                serializerCodeList = codeListNameSerializer(
-                                    childCodeListQuery, many=True
-                                )
+                                
                                 parentserializerCodeList.data[0][
                                     "CHILD"
                                 ] = serializerCodeList.data
@@ -174,5 +185,5 @@ class TypeDetailView(generics.CreateAPIView):
             cache_data = Red.set(cache_key, data)
             logger.info("Type and type property listed",request=request)
             return Response(data, status=status.HTTP_200_OK)
-        except Exception as e:
-            return Response(e)
+       
+           

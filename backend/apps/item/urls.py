@@ -8,5 +8,5 @@ urlpatterns = [
     path("item-and-property/", ItemScriptSaveView.as_view(), name="itemsave"),
     path("delete/", ItemDeleteView.as_view(), name="itemsave"),
     path("scripts/", ItemView.as_view(), name="itemscript"),
-    path("details/", ItemDetailsView.as_view(),name='typeDetails'),
+    path("details/<str:item>", ItemDetailsView.as_view(),name='typeDetails'),
 ]

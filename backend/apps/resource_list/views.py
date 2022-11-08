@@ -17,7 +17,7 @@ class ResourceListSaveView(generics.CreateAPIView):
 
     permission_classes = [permissions.AllowAny]
     def post(self, request, *args, **kwargs):
-        validate_model_not_null(request.data,"resource_list")
+        validate_model_not_null(request.data,"resource_list",request)
         serializer = ResourceListSaveSerializer(data = request.data)
         serializer.is_valid()
         serializer.create(request.data)
@@ -36,13 +36,21 @@ class ResourceListView(generics.ListAPIView):
         return Response({"Message": "successful"}, status=status.HTTP_200_OK)
 
 
+class ResourceLisAlltView(generics.ListAPIView):
+    queryset = resource_list.objects.filter(ID='TYPE.BATTERY')
+    serializer_class = ResourceListDetailsSerializer
+    permission_classes = [permissions.AllowAny]
+    
+
+
+
 class ResourceListDetailView(generics.CreateAPIView):
 
     authentication_classes = []
     permission_classes = []
-
+    
     def post(self, request):
         queryset = resource_list.objects.filter(ROW_ID = request.data.get("ROW_ID"))
-        validate_find(queryset)
+        validate_find(queryset,request)
         serializer = ResourceListDetailsSerializer(queryset,many = True)
         return Response({"Message": "successful","BODY":serializer.data}, status=status.HTTP_200_OK)

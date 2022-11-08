@@ -90,8 +90,9 @@ class ItemDetailsView(generics.ListAPIView):
     queryset = item.objects.all()
     serializer_class = ItemDetailsSerializer
     permission_classes = [permissions.AllowAny]
+    lookup_field = 'pk'
     def list(self, request, *args, **kwargs):
-        queryset = item.objects.all()
+        queryset = item.objects.filter(ITEM_TYPE=str(self.kwargs['item']).upper())
         validate_find(queryset,request)
         serializer = ItemDetailsSerializer(queryset,many = True)
         for index in range(0,len(serializer.data)):

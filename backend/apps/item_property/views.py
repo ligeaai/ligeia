@@ -100,7 +100,7 @@ class ItemPropertyDetailsView(generics.CreateAPIView):
         #         pass
                 
         message = "Succsesful listed item property"
-        # logger.info(message,request)
+        logger.info(message,request)
         return Response(tempt_dict, status=status.HTTP_200_OK)
 
 

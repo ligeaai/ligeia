@@ -18,7 +18,7 @@ def import_data(data):
         "ITEM":"item",
         "LAYER":"layer",
     }
-    base_url = "http://localhost:8000/api/v1/"+urlDict.get(data)+"/save/"
+    base_url = "http://34.125.157.200:8000/api/v1/"+urlDict.get(data)+"/save/"
     _create_method(base_url,data)
     
 
@@ -56,10 +56,10 @@ def drawerMenuJson():
     with open('/django/backend/services/parsers/addData/type/drawner.json') as json_file:
         data = json.load(json_file)
     child_dict = dict()
-    _createMenuTempt(data.get('drawerMenu'),child_dict,parentName=None)
+    createMenuTempt(data.get('drawerMenu'),child_dict,parentName=None)
     return (data.get('drawerMenu'))
 
-def _createMenuTempt(data,child_dict,parentName):
+def createMenuTempt(data,child_dict,parentName):
      model = 'drawerMenu'
      for keys,value in data.items():
         save = {}
@@ -84,7 +84,7 @@ def _createMenuTempt(data,child_dict,parentName):
                 "URL":value.get('url')
             }
             createMenuTempt(value.get('items'),child_dict,keys)
-        url = "http://localhost:8000/api/v1/menu/save/"
+        url = "http://34.125.157.200:8000/api/v1/menu/save/"
         headers = {'Content-type': 'application/json', 'Accept': 'application/json'}    
         model = 'drawerMenu'
         requests.post(url,json.dumps(save),headers=headers)

@@ -73,6 +73,7 @@ def validate_find(quaryset,request):
     if quaryset:
         return quaryset
     else:
+        print('DATA NOT FOUND')
         logger.error(request=request, message="Data not found",error="ValidationError validate_find")
         raise ValidationError(
                  {"Message": "Data not found"})
