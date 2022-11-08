@@ -16,18 +16,25 @@ const actionIcon = (props) => {
   const {
     btnNew = defaultFunction(),
     btnNewIsActive = true,
+    btnNewIsDisabled = false,
     dublicate = defaultFunction(),
     dublicateIsActive = true,
+    dublicateIsDisabled = false,
     save = defaultFunction(),
     saveIsActive = true,
+    saveIsDisabled = false,
     btnDelete = defaultFunction(),
     btnDeleteIsActive = true,
+    btnDeleteIsDisabled = false,
     saveGoPrev = defaultFunction(),
     saveGoPrevIsActive = true,
+    saveGoPrevIsDisabled = false,
     saveGoNext = defaultFunction(),
     saveGoNextIsActive = true,
+    saveGoNextIsDisabled = false,
     info = defaultFunction(),
     infoIsActive = true,
+    infoIsDisabled = false,
   } = props;
   const icons = [
     {
@@ -35,42 +42,49 @@ const actionIcon = (props) => {
       tooltip: "New",
       function: btnNew,
       isActive: btnNewIsActive,
+      isDisabled: btnNewIsDisabled,
     },
     {
       Icon: AddToPhotosOutlinedIcon,
       tooltip: "Duplicate",
       function: dublicate,
       isActive: dublicateIsActive,
+      isDisabled: dublicateIsDisabled,
     },
     {
       Icon: SaveOutlinedIcon,
       tooltip: "Save",
       function: save,
       isActive: saveIsActive,
+      isDisabled: saveIsDisabled,
     },
     {
       Icon: DeleteOutlineIcon,
       tooltip: "Delete",
       function: btnDelete,
       isActive: btnDeleteIsActive,
+      isDisabled: btnDeleteIsDisabled,
     },
     {
       Icon: ArrowCircleLeftOutlinedIcon,
       tooltip: "Save, Go Previous",
       function: saveGoPrev,
       isActive: saveGoPrevIsActive,
+      isDisabled: saveGoPrevIsDisabled,
     },
     {
       Icon: ArrowCircleRightOutlinedIcon,
       tooltip: "Save, Go Next",
       function: saveGoNext,
       isActive: saveGoNextIsActive,
+      isDisabled: saveGoNextIsDisabled,
     },
     {
       Icon: InfoOutlinedIcon,
       tooltip: "Item Info",
       function: info,
       isActive: infoIsActive,
+      isDisabled: infoIsDisabled,
     },
   ];
   return (
@@ -88,6 +102,7 @@ const actionIcon = (props) => {
             onClick={() => {
               Element.function();
             }}
+            disabled={Element.isDisabled}
           >
             <Element.Icon fontSize="small" sx={{ color: "#4B4B4B" }} />
           </IconButton>

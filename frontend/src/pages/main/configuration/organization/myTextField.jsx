@@ -48,7 +48,7 @@ const SingleSelectCell = (params) => {
         defaultValue={""}
         open={isOpen}
         onClick={setOpen}
-        sx={{ border: "none" }}
+        sx={{ border: "none", fontSize: "14px" }}
       />
     </Box>
   );

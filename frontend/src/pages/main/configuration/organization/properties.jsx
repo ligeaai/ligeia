@@ -15,11 +15,11 @@ const Properties = ({ type }) => {
       sx={{
         width: `100%`,
         minHeight: isFullScreen
-          ? "calc(500px - 60px - 50px - 36px )"
-          : "calc(500px - 50px - 36px - 32px - 42px)",
+          ? "calc(500px - 60px - 50px )"
+          : "calc(500px - 50px - 36px - 32px )",
         height: isFullScreen
-          ? "calc(100vh - 60px - 50px - 36px )"
-          : "calc(100vh - 60px - 50px - 36px - 32px - 42px)",
+          ? "calc(100vh - 60px - 50px )"
+          : "calc(100vh - 60px - 50px - 36px - 32px )",
         "& .super-app-theme--cell": {
           backgroundColor: grey[200],
         },

@@ -57,6 +57,7 @@ export const deleteColum = (field) => (dispatch) => {
 
 //----------------ROWS------------
 export const addItemType = (type) => async (dispatch) => {
+    console.log(type);
     dispatch({
         type: ADD_ITEM_TYPE,
         payload: type

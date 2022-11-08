@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import {
   Box,
+  Divider,
   Grid,
   ListItem,
   ListItemButton,
@@ -91,10 +92,11 @@ const TreeMenuItem = () => {
   const dispatch = useDispatch();
   const treeItem = useSelector((state) => state.item.treeMenuItem);
   const isFullScreen = useSelector((state) => state.fullScreen.isFullScreen);
+  const type = useSelector((state) => state.item.type);
   React.useEffect(() => {
     dispatch(showItem());
-  }, []);
-  console.log(treeItem);
+  }, [type]);
+
   if (treeItem) {
     return (
       <Box
@@ -187,7 +189,7 @@ const UnitOne = (props) => {
           <Grid
             item
             sx={{
-              mx: 1.5,
+              ml: 1.5,
               backgroundColor: "myBackgroundColor",
               height: "42px",
               display: "flex",
@@ -196,17 +198,28 @@ const UnitOne = (props) => {
           >
             <CompanyActionMenu />
           </Grid>
-          <ItemSperatorLineXL />
+          <Divider
+            orientation="vertical"
+            variant="middle"
+            flexItem
+            sx={{
+              marginX: "2px",
+              borderWidth: "0.2px",
+              borderColor: "#4B4B4B",
+              backgroundColor: "#4B4B4B",
+            }}
+          />
           <Grid
             item
             sx={{
-              mx: 1.5,
+              mr: 1.5,
               backgroundColor: "myBackgroundColor",
               height: "42px",
             }}
           >
             <DateBreak />
           </Grid>
+
           <ItemSperatorLineXL />
           <Grid item xs={12} sx={{ mt: 1, mr: 1 }}>
             <PropLinkTabs

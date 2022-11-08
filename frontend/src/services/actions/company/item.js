@@ -26,10 +26,12 @@ function _uuidv4() {
 }
 
 export const showItem = () => async (dispatch, getState) => {
+    const type = getState().item.type.toLowerCase()
+
     try {
         let res = await instance
             .get(
-                "/item/details/",
+                `/item/details/${type}`,
                 config
             )
 
@@ -42,6 +44,10 @@ export const showItem = () => async (dispatch, getState) => {
         dispatch(selectItem(getState().item.selectedItem.selectedIndex))
         return res
     } catch (err) {
+        dispatch({
+            type: LOAD_TREEVIEW_ITEM,
+            payload: []
+        });
         return err
     }
 }
@@ -150,12 +156,23 @@ export const saveItem = () => async (dispatch, getState) => {
     }
 }
 
+export const saveNewItem = () => async (dispatch, getState) => {
+    const field = getState().companyDataGrid.columns[Object.keys(getState().companyDataGrid.columns)[Object.keys(getState().companyDataGrid.columns).length - 1]].field
+    const temp = getState().companyDataGrid.rows.NAME[field]
+    await dispatch(saveItem())
+    await dispatch(showItem())
+    getState().item.treeMenuItem.map((e, i) => {
+        if (e.NAME === temp) {
+            dispatch(selectItemNoSave(i))
+        }
+    })
+}
+
 export const checkMandatoryFields = () => (dispatch, getState) => {
     var returnValue = true
     Object.keys(getState().companyDataGrid.rows).map((e) => {
         if (getState().companyDataGrid.rows[e].MANDATORY === "True") {
             Object.keys(getState().companyDataGrid.columns).map(async (a, i) => {
-                console.log(a);
                 if (i > 3) {
                     if (getState().companyDataGrid.rows[e][a] === "") {
                         returnValue = false
@@ -221,7 +238,8 @@ export class column {
         this.valueOptions = ({ row }) => {
             var myList = [];
             myList.push("");
-            row["CODE-LIST"].map((e) => {
+            var temp = row["CODE-LIST"].sort((a, b) => (a.CODE > b.CODE ? 1 : -1));
+            temp.map((e) => {
                 myList.push(e.CODE_TEXT);
             });
             return myList;

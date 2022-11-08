@@ -80,7 +80,11 @@ const MultiLevel = ({ item }) => {
   const { [item.ICON]: Icon } = Icons;
   const [open, setOpen] = useState(false);
   useEffect(() => {
-    setOpen(false);
+    if (isOpen) {
+      setOpen(true);
+    } else {
+      setOpen(false);
+    }
   }, [isOpen]);
 
   const handleClick = () => {

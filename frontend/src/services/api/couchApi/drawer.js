@@ -8,6 +8,7 @@ export const loadDrawerMenu = async () => {
         "/menu/details/drawerMenu",
         config
       )
+
     return res;
 
   } catch (err) {

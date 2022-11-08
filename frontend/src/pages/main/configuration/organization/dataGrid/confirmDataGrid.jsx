@@ -4,7 +4,7 @@ import { Box } from "@mui/material";
 import { DataGridPro } from "@mui/x-data-grid-pro";
 
 import CustomColumnMenu from "./customColumnMenu";
-import CustomToolbar from "./customToolbar";
+
 import {
   loadRows,
   editRow,
@@ -52,12 +52,12 @@ const MyDataGrid = ({ type }) => {
     return (
       <Box
         sx={{
-          width: `100%`,
+          width: `500px`,
           minHeight: "400px",
           height: "400px",
 
           button: { color: "#4B4B4B" },
-          m: 0.5,
+
           border: "0.5px solid",
 
           borderRadius: "5px",
@@ -71,7 +71,6 @@ const MyDataGrid = ({ type }) => {
           sortModel={sortModel}
           onSortModelChange={(model) => setSortModel(model)}
           components={{
-            Toolbar: CustomToolbar,
             ColumnMenu: CustomColumnMenu,
           }}
           getRowId={(row) => row.PROPERTY_NAME}

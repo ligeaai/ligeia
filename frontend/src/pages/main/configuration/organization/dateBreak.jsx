@@ -44,7 +44,8 @@ export class column {
     this.valueOptions = ({ row }) => {
       var myList = [];
       myList.push("");
-      row["CODE-LIST"].map((e) => {
+      var temp = row["CODE-LIST"].sort((a, b) => (a.CODE > b.CODE ? 1 : -1));
+      temp.map((e) => {
         myList.push(e.CODE_TEXT);
       });
       return myList;
@@ -90,7 +91,7 @@ const DateBreak = () => {
   };
   return (
     <Grid container sx={{ alignItems: "center", height: "100%" }}>
-      <Grid item sx={{ px: 1.5 }}>
+      <Grid item>
         <Grid container sx={{ alignItems: "center" }}>
           <Button
             sx={{

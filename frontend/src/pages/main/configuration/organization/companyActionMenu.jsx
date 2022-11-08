@@ -9,11 +9,20 @@ import {
   confirmDataGrid,
   selectItemNoSave,
   confirmDataGridDontSaveGo,
+  saveNewItem,
 } from "../../../../services/actions/company/item";
 const CompanyActionMenu = () => {
   const selectedIndex = useSelector(
     (state) => state.item.selectedItem.selectedIndex
   );
+  const [isNew, setIsNew] = React.useState(false);
+  React.useEffect(() => {
+    if (selectedIndex !== -2) {
+      setIsNew(false);
+    } else {
+      setIsNew(true);
+    }
+  }, [selectedIndex]);
   const dispatch = useDispatch();
   const btnNew = () => {
     if (
@@ -50,7 +59,11 @@ const CompanyActionMenu = () => {
   const save = () => {
     dispatch(
       confirmDataGrid(() => {
-        dispatch(saveItem());
+        if (isNew) {
+          dispatch(saveNewItem());
+        } else {
+          dispatch(saveItem());
+        }
       }, "Are you sure you want to save this?")
     );
   };
@@ -97,6 +110,8 @@ const CompanyActionMenu = () => {
       saveGoNext={saveGoNext}
       saveGoPrev={saveGoPrev}
       infoIsActive={false}
+      saveGoPrevIsDisabled={isNew}
+      saveGoNextIsDisabled={isNew}
       dublicateIsActive={false}
     />
   );
