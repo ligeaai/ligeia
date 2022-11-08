@@ -25,6 +25,7 @@ import {
     confirmation,
     confirmCodeList,
     cssUserSelect,
+    dataGridCodeList,
     drawerReducer,
     errorReducer,
     fullScreenReducer,
@@ -35,6 +36,7 @@ import {
     registerFormReducer,
     searchBarReducer,
     themeReducer,
+    treeviewCodelist,
 } from '../services/reducers'
 
 const persistConfig = {
@@ -51,6 +53,7 @@ const rootReducer = combineReducers({
     confirmation: confirmation,
     confirmCodeList: confirmCodeList,
     cssUserSelect: cssUserSelect,
+    dataGridCodeList: dataGridCodeList,
     drawer: drawerReducer,
     error: errorReducer,
     fullScreen: fullScreenReducer,
@@ -61,6 +64,7 @@ const rootReducer = combineReducers({
     registerForm: registerFormReducer,
     searchBar: searchBarReducer,
     theme: themeReducer,
+    treeviewCodelist: treeviewCodelist,
 })
 
 
