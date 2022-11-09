@@ -12,9 +12,8 @@ import history from "../../routers/history";
 import { setSelectedItem } from "../../services/reducers/drawerReducer";
 
 export default function App({ menu }) {
-  console.log(menu);
-  return Object.keys(menu.data).map((item, key) => (
-    <MenuItem key={key} item={menu.data[item]} />
+  return Object.keys(menu.data.drawerMenu).map((item, key) => (
+    <MenuItem key={key} item={menu.data.drawerMenu[item]} />
   ));
 }
 
@@ -26,11 +25,15 @@ const MenuItem = ({ item }) => {
 const SingleLevel = ({ item }) => {
   const dispatch = useDispatch();
   const isOpen = useSelector((state) => state.drawer.isOpen);
-  const { [item.ICON]: Icon } = Icons;
+  const { [item.Icon]: Icon } = Icons;
   const selectedItem = useSelector((state) => state.drawer.selectedItem);
   const handleClick = () => {
-    dispatch(setSelectedItem(item.TITLE));
-    history.push(item.URL);
+    dispatch(setSelectedItem(item.title));
+    if (item.type) {
+      history.push(`${item.url}/${item.type.toLowerCase()}/home`);
+    } else {
+      history.push(`${item.url}`);
+    }
   };
   return (
     <ListItem
@@ -39,18 +42,18 @@ const SingleLevel = ({ item }) => {
         borderRadius: 2,
         "&:hover": {
           backgroundColor:
-            item.TITLE === selectedItem ? "action.active" : "action.hover",
+            item.title === selectedItem ? "action.active" : "action.hover",
           opacity: "action.hoverOpacity",
         },
         backgroundColor:
-          item.TITLE === selectedItem ? "action.active" : "inherit",
+          item.title === selectedItem ? "action.active" : "inherit",
       }}
       onClick={handleClick}
     >
       {Icon ? (
         <Icon
           sx={{
-            color: item.TITLE === selectedItem ? "myReverseText" : "myBoldText",
+            color: item.title === selectedItem ? "myReverseText" : "myBoldText",
           }}
         />
       ) : (
@@ -62,13 +65,13 @@ const SingleLevel = ({ item }) => {
           mx: 1,
           pl: 0.5,
           display: isOpen ? "inline-block" : "none",
-          color: item.TITLE === selectedItem ? "myReverseText" : "myBoldText",
+          color: item.title === selectedItem ? "myReverseText" : "myBoldText",
           overflow: "hidden",
           whiteSpace: "nowrap",
           textOverflow: "ellipsis",
         }}
       >
-        {item.TITLE}
+        {item.title}
       </Typography>
     </ListItem>
   );
@@ -77,7 +80,7 @@ const SingleLevel = ({ item }) => {
 const MultiLevel = ({ item }) => {
   const isOpen = useSelector((state) => state.drawer.isOpen);
   const { items: children } = item;
-  const { [item.ICON]: Icon } = Icons;
+  const { [item.Icon]: Icon } = Icons;
   const [open, setOpen] = useState(false);
   useEffect(() => {
     if (isOpen) {
@@ -102,7 +105,7 @@ const MultiLevel = ({ item }) => {
           <Icon
             sx={{
               color:
-                item.URL === window.location.pathname
+                item.url === window.location.pathname
                   ? "myReverseText"
                   : "myBoldText",
             }}
@@ -118,7 +121,7 @@ const MultiLevel = ({ item }) => {
             pl: 1,
             display: isOpen ? "inline-block" : "none",
             color:
-              item.URL === window.location.pathname
+              item.url === window.location.pathname
                 ? "myReverseText"
                 : "myBoldText",
             overflow: "hidden",
@@ -126,7 +129,7 @@ const MultiLevel = ({ item }) => {
             textOverflow: "ellipsis",
           }}
         >
-          {item.TITLE}
+          {item.title}
         </Typography>
 
         {open ? (
@@ -136,7 +139,7 @@ const MultiLevel = ({ item }) => {
               right: "0px",
               mr: 1,
               color:
-                item.URL === window.location.pathname
+                item.url === window.location.pathname
                   ? "myReverseText"
                   : "myBoldText",
               typography: "body1",
@@ -150,7 +153,7 @@ const MultiLevel = ({ item }) => {
               right: "0px",
               mr: 1,
               color:
-                item.URL === window.location.pathname
+                item.url === window.location.pathname
                   ? "myReverseText"
                   : "myBoldText",
               typography: "body1",

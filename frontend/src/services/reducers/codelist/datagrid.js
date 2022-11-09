@@ -1,10 +1,12 @@
 import {
     LOAD_DATAGRID_ROW_CODELIST,
-    ON_CHANGE_CODELIST_CELL
+    ON_CHANGE_CODELIST_CELL,
+    CLEAN_AFTER_SAVE
 
 } from "../../actions/types"
 
 import { columns } from "../../../pages/main/configuration/initialize/dataGridColumn";
+
 
 const rows = []
 const initialState = {
@@ -31,7 +33,14 @@ export default function (state = initialState, action) {
         case ON_CHANGE_CODELIST_CELL:
             return {
                 ...state,
-                rows: payload
+                rows: payload.rows,
+                changedRows: payload.changedRows
+            }
+        case CLEAN_AFTER_SAVE:
+            return {
+                ...state,
+                changedRows: [],
+                deletedRows: []
             }
         default:
             return {

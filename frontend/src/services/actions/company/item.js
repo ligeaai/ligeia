@@ -16,6 +16,7 @@ import { MyTextField } from "../../../pages/main/configuration/organization/myTe
 import { loadRows } from "./datagrid";
 import ConfirmDataGrid from "../../../pages/main/configuration/organization/dataGrid/confirmDataGrid";
 import { instance, config } from '../../baseApi';
+import history from "../../../routers/history";
 function _uuidv4() {
     return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, (c) =>
         (
@@ -368,6 +369,7 @@ export const selectItem = (index) => async (dispatch, getState) => {
                 type: SET_SELECTED_ITEM,
                 payload: { ...getState().item.treeMenuItem[index], selectedIndex: index }
             })
+            history.push(`new`)
         }
         else {
             if (index < 0) {
@@ -382,6 +384,10 @@ export const selectItem = (index) => async (dispatch, getState) => {
             })
             dispatch(updateDataGrid())
         }
+        if (getState().item.selectedItem.NAME) {
+            history.push(`${getState().item.selectedItem.NAME}`)
+        }
+
     } else {
         dispatch({
             type: ADD_ERROR_SUCCESS,
@@ -401,6 +407,7 @@ export const selectItemNoSave = (index) => async (dispatch, getState) => {
             type: SET_SELECTED_ITEM,
             payload: { ...getState().item.treeMenuItem[index], selectedIndex: index }
         })
+        history.push(`new`)
     }
     else {
         if (index < 0) {
@@ -414,6 +421,10 @@ export const selectItemNoSave = (index) => async (dispatch, getState) => {
             payload: { ...getState().item.treeMenuItem[index], selectedIndex: index }
         })
         dispatch(updateDataGrid())
+    }
+
+    if (getState().item.selectedItem.NAME) {
+        history.push(`${getState().item.selectedItem.NAME}`)
     }
 
 }

@@ -44,9 +44,14 @@ export class column {
     this.valueOptions = ({ row }) => {
       var myList = [];
       myList.push("");
+
       var temp = row["CODE-LIST"].sort((a, b) => (a.CODE > b.CODE ? 1 : -1));
       temp.map((e) => {
-        myList.push(e.CODE_TEXT);
+        if (e.CODE_TEXT) {
+          myList.push(e.CODE_TEXT);
+        } else {
+          console.log(e);
+        }
       });
       return myList;
     };

@@ -119,7 +119,7 @@ export const login = (email, password) => async dispatch => {
         })
         dispatch({
             type: ADD_ERROR_SUCCESS,
-            payload: err.message
+            payload: "Username or password is incorrect"
         })
         dispatch(setLoaderFalse());
         setTimeout(() => {
