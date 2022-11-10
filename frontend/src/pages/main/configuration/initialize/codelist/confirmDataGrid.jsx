@@ -24,13 +24,13 @@ const groupingColDef = {
 
 export default function TreeDataWithGap() {
   const rows = useSelector((state) => state.dataGridCodeList.rows);
-  var columns = useSelector((state) => state.dataGridCodeList.columns);
+  const columns = useSelector((state) => state.dataGridCodeList.columns);
   const [myColumns, setMyColumns] = React.useState([]);
   React.useEffect(() => {
-    Object.keys(columns).map((e) => {
-      columns[e].editable = false;
-      delete columns[e].renderCell;
-      setMyColumns(columns);
+    setMyColumns(columns);
+    Object.keys(myColumns).map((e) => {
+      myColumns[e].editable = false;
+      delete myColumns[e].renderCell;
     });
   }, []);
   const [sortModel, setSortModel] = React.useState([

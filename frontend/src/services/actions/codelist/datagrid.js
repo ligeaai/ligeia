@@ -2,12 +2,16 @@ import {
     LOAD_DATAGRID_ROW_CODELIST,
     ON_CHANGE_CODELIST_CELL,
     ADD_ERROR_SUCCESS,
-    CLEAN_AFTER_SAVE
+    CLEAN_AFTER_SAVE,
+    SET_SELECTED_ROWS,
+    CLEAN_SELECTED_ROWS,
+    REFRESH_ROWS_CODELIST
 } from "../types"
 
 import { instance, config } from '../../baseApi';
 
-import { loadTreeviwItemCodelist } from "./treeview"
+import { loadTreeviewItemCodelist, selectTreeViewItemCoedlist } from "./treeview"
+import { ConstructionOutlined } from "@mui/icons-material";
 function _uuidv4() {
     return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, (c) =>
         (
@@ -89,8 +93,12 @@ export const onChangeCell = (id, field, value) => async (dispatch, getState) => 
     })
 }
 
-const _save = async (value, userEmail) => {
+const _save = (value, userEmail) => async (dispatch, getState) => {
     var temp = {}
+    if (value.ROW_ID !== getState().treeviewCodelist.selectedItem.ROW_ID) {
+        temp.LIST_TYPE = getState().treeviewCodelist.selectedItem.CODE
+    }
+
     if (value.DATE1 !== "") {
         var d = value.DATE1.getDate();
         var m = value.DATE1.getMonth();
@@ -132,55 +140,64 @@ const _save = async (value, userEmail) => {
                 body,
                 config
             )
+
         return res
     } catch (err) {
         return false
     }
+
 }
-const _checkMandatoryFields = (value) => {
-    if (value.CODE === "") {
-        return false
-    }
-    if (value.CODE_TEXT === "") {
-        return false
-    }
-    if (value.LAYER_NAME === "") {
-        return false
-    }
-    if (value.HIDDEN === "") {
-        return false
-    }
-    return true
+const _checkMandatoryFields = () => async (dispatch, getState) => {
+    const changedRows = getState().dataGridCodeList.changedRows
+    const rows = getState().dataGridCodeList.rows
+    var returnVal = true
+    changedRows.map(async e => {
+        Object.keys(rows).map(async a => {
+            if (e === a) {
+                if (rows[e].CODE === "") {
+                    returnVal = false
+                }
+                if (rows[e].CODE_TEXT === "") {
+                    returnVal = false
+                }
+                if (rows[e].LAYER_NAME === "") {
+                    returnVal = false
+                }
+                if (rows[e].HIDDEN === "") {
+                    returnVal = false
+                }
+            }
+        })
+    })
+
+    return returnVal
 }
 
 export const saveCodeList = () => async (dispatch, getState) => {
     const changedRows = getState().dataGridCodeList.changedRows
     const rows = getState().dataGridCodeList.rows
-    await Object.call(
-        changedRows.map(e => {
-            Object.keys(rows).map(async a => {
-                if (e === a) {
-                    if (_checkMandatoryFields(rows[e])) {
-                        _save(rows[e], getState().auth.user.email)
-                    } else {
-                        dispatch({
-                            type: ADD_ERROR_SUCCESS,
-                            payload: "Mandatory fields: Code, Code text, Layer Name, Hidden"
-                        })
-                    }
-                }
-            })
+    if (dispatch(_checkMandatoryFields())) {
+        await Promise.all(
+            changedRows.map(async e => {
+                await Promise.all(
+                    Object.keys(rows).map(async a => {
+                        if (e === a) {
+                            await dispatch(_save(rows[e], getState().auth.user.email))
+                        }
+                    }))
+            }))
+    } else {
+        dispatch({
+            type: ADD_ERROR_SUCCESS,
+            payload: "Mandatory fields: Code, Code text, Layer Name, Hidden"
         })
-    )
+    }
+    // todo delete child
     dispatch({
         type: CLEAN_AFTER_SAVE,
     })
-    dispatch(loadTreeviwItemCodelist())
-    // todo delete child
+    dispatch(loadTreeviewItemCodelist())
 }
-
-
-
 
 export const deleteCodeList = () => async (dispatch, getState) => {
     const ROW_ID = getState().treeviewCodelist.selectedItem.ROW_ID
@@ -196,5 +213,100 @@ export const deleteCodeList = () => async (dispatch, getState) => {
     } catch (err) {
         return false
     }
-    dispatch(loadTreeviwItemCodelist())
+    dispatch(loadTreeviewItemCodelist())
+}
+
+export const saveAndMoveCodeList = (index) => async (dispatch, getState) => {
+    if (index < 0) {
+        index = getState().item.treeviewCodelist.treeMenuItem.length - 1
+    }
+    else if (index > getState().item.treeMenuItem.length - 1) {
+        index = 0
+    }
+    dispatch(saveCodeList())
+    dispatch(selectTreeViewItemCoedlist(index));
+
+}
+
+
+const _createNewChild = () => (dispatch, getState) => {
+    const culture = getState().lang.cultur
+    const uuid = _uuidv4()
+    return {
+
+        "ROW_ID": uuid.replace(/-/g, ""),
+        "LIST_TYPE": getState().treeviewCodelist.selectedItem.CODE,
+        "CULTURE": culture,
+        "CODE": "",
+        "CODE_TEXT": "",
+        "PARENT": "",
+        "LEGACY_CODE": "",
+        "VAL1": "",
+        "VAL2": "",
+        "VAL3": "",
+        "DATE1": "",
+        "DATE2": "",
+        "CHAR1": "",
+        "CHAR2": "",
+        "LAYER_NAME": "",
+        "HIDDEN": "",
+        "LAST_UPDT_USER": "",
+        "LAST_UPDT_DATE": "",
+        "HIERARCHY": [
+            getState().treeviewCodelist.selectedItem.ROW_ID,
+            uuid.replace(/-/g, "")
+        ]
+
+    }
+}
+
+
+export const addChildCodeList = () => async (dispatch, getState) => {
+    const rows = getState().dataGridCodeList.rows
+    const newChild = dispatch(_createNewChild())
+    console.log(newChild);
+    var payload = []
+    Object.keys(rows).map((e) => {
+        payload.push(rows[e])
+    })
+    payload.push(newChild)
+
+    console.log(payload);
+    dispatch({
+        type: LOAD_DATAGRID_ROW_CODELIST,
+        payload: payload
+    })
+}
+
+export const setSelectedRows = (payload) => (dispatch) => {
+    dispatch({
+        type: SET_SELECTED_ROWS,
+        payload: payload
+    })
+}
+
+export const cleanSelectedRows = () => (dispatch) => {
+    dispatch({
+        type: CLEAN_SELECTED_ROWS
+    })
+}
+
+export const deleteChild = () => (dispatch, getState) => {
+    const selectedRows = getState().dataGridCodeList.selectedRows;
+    const rows = getState().dataGridCodeList.rows;
+    var temp = []
+    Object.keys(rows).map((e) => {
+        selectedRows.map((a) => {
+            if (e !== a) {
+                temp[rows[e].ROW_ID] = rows[e]
+            }
+        })
+    })
+    console.log(temp);
+    dispatch({
+        type: REFRESH_ROWS_CODELIST,
+        payload: temp
+    })
+
+
 }
