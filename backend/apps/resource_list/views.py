@@ -77,11 +77,11 @@ class ResourceListDrawerMenutView(generics.ListAPIView):
             tempt2 = {}
             queryset = resource_list.objects.filter(ID = item.get('LABEL_ID'),CULTURE = culture)
             serializer = ResourceListDetailsSerializer(queryset,many = True)
-            new_url =  url + '/'+str(item.get('TYPE')).lower()
-            print(url,'--------->',new_url)  
+            new_url =  url + '/'+str(item.get('TYPE')).lower()  
             serializer.data[0]['TYPE'] = item.get('TYPE')
             serializer.data[0]['URL'] = new_url
             tempt[serializer.data[0].get('SHORT_LABEL')] = serializer.data[0]
+            
 
 
 class ResourceListDetailView(generics.CreateAPIView):
