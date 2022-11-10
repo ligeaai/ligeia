@@ -28,6 +28,11 @@ class TypeDetailsSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class TypeResourceListManagerSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Type
+        fields = ['TYPE',"LABEL_ID"]
+
 
 class TypeSerializer(serializers.ModelSerializer):
     class Meta:

@@ -146,12 +146,12 @@ class TypeDetailView(generics.CreateAPIView):
                                 childCodeListQuery, many=True
                             )
                             if childCodeListQuery:
-                                
+
                                 parentserializerCodeList.data[0][
                                     "CHILD"
                                 ] = serializerCodeList.data
                         
-                        value["CODE-LIST"] = parentserializerCodeList.data
+                            value["CODE-LIST"] = parentserializerCodeList.data
                     if value.get('SORT_ORDER'):
                         value['SORT_ORDER'] = int(value.get('SORT_ORDER'))
                     value_label = value.get("LABEL_ID")
