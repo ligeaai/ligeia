@@ -13,7 +13,10 @@ import {
 import AddBoxIcon from "@mui/icons-material/AddBox";
 import DeleteIcon from "@mui/icons-material/Delete";
 
+import { addChildCodeList ,deleteChild} from "../../../../../services/actions/codelist/datagrid";
+
 export const CustomToolbar = () => {
+  const dispatch = useDispatch();
   return (
     <GridToolbarContainer>
       <Grid
@@ -27,7 +30,11 @@ export const CustomToolbar = () => {
               tooltip: { sx: { backgroundColor: "primary.dark" } },
             }}
           >
-            <IconButton onClick={() => {}}>
+            <IconButton
+              onClick={() => {
+                dispatch(addChildCodeList());
+              }}
+            >
               <AddBoxIcon fontSize="small" sx={{ color: "#4B4B4B" }} />
             </IconButton>
           </Tooltip>
@@ -38,7 +45,9 @@ export const CustomToolbar = () => {
               tooltip: { sx: { backgroundColor: "primary.dark" } },
             }}
           >
-            <IconButton onClick={() => {}}>
+            <IconButton onClick={() => {
+              dispatch(deleteChild())
+            }}>
               <DeleteIcon fontSize="small" sx={{ color: "#4B4B4B" }} />
             </IconButton>
           </Tooltip>

@@ -17,7 +17,7 @@
 import axios from "axios";
 
 export const instance = axios.create({
-  baseURL: 'http://localhost:5984'
+  baseURL: 'http://34.125.207.225:5984'
 });
 export const userName = "COUCHDB_USER"
 export const userPassword = "COUCHDB_PASSWORD"
@@ -32,7 +32,7 @@ export const loadDrawerMenu = async () => {
   try {
     let res = await instance
       .get(
-        "/drawermenu/f5d31d4d993e2e4a5498a0d7aa000cf9",
+        "/drawermenu/37b4548ead342d11d63531c74b000b93",
         config
       )
     console.log(res);

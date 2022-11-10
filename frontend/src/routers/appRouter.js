@@ -9,8 +9,8 @@ import history from "./history";
 
 import Administration from "../pages/main/administration/main";
 import Analytics from "../pages/main/asset/analytics";
-import CodeList from "../pages/main/configuration/initialize/codelist/codelist"
-// import CodeList from "../pages/main/configuration/initialize/codeList"
+// import CodeList from "../pages/main/configuration/initialize/codelist/codelist"
+import CodeList from "../pages/main/configuration/initialize/codeList"
 import ForgotPassword from "../pages/authorization/forgotPassword/forgotPassword";
 import ForgotPasswordConfirm from "../pages/authorization/forgotPassword/forgotPasswordConfirm";
 import Login from "../pages/authorization/login/login";
@@ -41,11 +41,6 @@ const AppRouter1 = () => {
           <Route path="/reporting" element={<Reporting />} />
           <Route path="/administration" element={<Administration />} />
           <Route exact path="/configuration/organization/:type/:item" element={<OrganizationAndItems />} />
-          {/* <Route path="/configuration/organization/company" element={<Company type="COMPANY" />} />
-          <Route path="/configuration/organization/org_unit_one" element={<Company type="ORG_UNIT1" />} />
-          <Route path="/configuration/organization/org_unit_two" element={<Company type="ORG_UNIT2" />} />
-          <Route path="/configuration/organization/org_unit_tree" element={<Company type="ORG_UNIT3" />} />
-          <Route path="/configuration/organization/org_unit_four" element={<Company type="ORG_UNIT4" />} /> */}
           <Route path="/configuration/items/:type/:item" element={<OrganizationAndItems />} />
           <Route exact path="/configuration/initialize/code_list_editor/:codelist" element={<CodeList />} />
           <Route path="/configuration/initialize/code_list_editor" element={<Navigate to="/configuration/initialize/code_list_editor/code_lists" />} />

@@ -9,7 +9,10 @@ import LinearProgress from "@mui/material/LinearProgress";
 
 import { CustomNoRowsOverlay } from "./customNoRowOwerlay";
 import { CustomToolbar } from "./codeListActionMenu";
-import { onChangeCell } from "../../../../../services/actions/codelist/datagrid";
+import {
+  onChangeCell,
+  setSelectedRows,
+} from "../../../../../services/actions/codelist/datagrid";
 const getTreeDataPath = (row) => row.HIERARCHY;
 
 const groupingColDef = {
@@ -26,7 +29,9 @@ export default function TreeDataWithGap() {
   const dispatch = useDispatch();
   const rows = useSelector((state) => state.dataGridCodeList.rows);
   const columns = useSelector((state) => state.dataGridCodeList.columns);
-
+  const selectedParent = useSelector(
+    (state) => state.treeviewCodelist.selectedItem.ROW_ID
+  );
   const onCellEditCommit = (cellData) => {
     const { id, field, value } = cellData;
     dispatch(onChangeCell(id, field, value));
@@ -38,7 +43,9 @@ export default function TreeDataWithGap() {
       sort: "asc",
     },
   ]);
-
+  React.useEffect(() => {
+    console.log(rows);
+  }, [rows]);
   return (
     <Box>
       <Box
@@ -109,10 +116,10 @@ export default function TreeDataWithGap() {
             getTreeDataPath={getTreeDataPath}
             getRowId={(row) => row.ROW_ID}
             //loading={childCodeList.loading}
-            //isRowSelectable={(rowId) => rowId.id !== codeListChild.rowId}
+            isRowSelectable={(rowId) => rowId.id !== selectedParent.rowId}
             checkboxSelection={true}
             disableSelectionOnClick={true}
-            //onSelectionModelChange={(rowId) => (myCheckboxSelection = rowId)}
+            onSelectionModelChange={(rowId) => dispatch(setSelectedRows(rowId))}
             sortModel={sortModel}
             onSortModelChange={(model) => setSortModel(model)}
             components={{

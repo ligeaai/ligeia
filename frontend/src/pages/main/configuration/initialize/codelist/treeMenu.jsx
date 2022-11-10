@@ -17,15 +17,27 @@ import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
 import { ComponentError, ComponentErrorBody } from "../../../../../components";
 
 import {
-  loadTreeviwItemCodelist,
+  loadTreeviewItemCodelist,
   selectTreeViewItemCoedlist,
 } from "../../../../../services/actions/codelist/treeview";
+
+import { saveAndMoveCodeList } from "../../../../../services/actions/codelist/datagrid";
+
+import {
+  setConfirmation,
+  setExtraBtn,
+} from "../../../../../services/reducers/confirmation";
+
+import ConfirmDataGrid from "./confirmDataGrid";
 
 function RenderRow(props) {
   const dispatch = useDispatch();
   const { data, index, style } = props;
   const selectedIndex = useSelector(
     (state) => state.treeviewCodelist.selectedItem.selectedIndex
+  );
+  const changedRows = useSelector(
+    (state) => state.dataGridCodeList.changedRows
   );
   return (
     <ListItem
@@ -42,7 +54,27 @@ function RenderRow(props) {
       <ListItemButton
         selected={selectedIndex === index}
         onClick={(event) => {
-          dispatch(selectTreeViewItemCoedlist(index));
+          if (changedRows.length !== 0) {
+            dispatch(
+              setConfirmation({
+                title: "Are you sure you want to save this code list?",
+                body: <ConfirmDataGrid />,
+                agreefunction: async () => {
+                  dispatch(saveAndMoveCodeList(index));
+                },
+              })
+            );
+            dispatch(
+              setExtraBtn({
+                extraBtnText: "Don't save go",
+                extrafunction: () => {
+                  dispatch(selectTreeViewItemCoedlist(index));
+                },
+              })
+            );
+          } else {
+            dispatch(selectTreeViewItemCoedlist(index));
+          }
         }}
       >
         <ListItemText
@@ -69,7 +101,7 @@ const TreeMenuItem = () => {
   );
 
   React.useEffect(() => {
-    dispatch(loadTreeviwItemCodelist());
+    dispatch(loadTreeviewItemCodelist());
   }, []);
   return (
     <Box
