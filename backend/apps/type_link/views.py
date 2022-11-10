@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from .models import type_link
 from services.parsers.addData.type import typeAddData
 
-from .serializers import TypeLinkSaveSerializer,TypeLinkDetailsSerializer
+from .serializers import TypeLinkSaveSerializer,TypeLinkDetailsSerializer,TypeLinkDetails2Serializer
 from utils.models_utils import (
                                 validate_model_not_null,
                                 validate_find
@@ -12,15 +12,15 @@ from utils.models_utils import (
 
 # Create your views here.
 class TypeLinkSaveView(generics.CreateAPIView):
-    
+    serializer_class = TypeLinkDetails2Serializer
     permission_classes = [
         permissions.AllowAny
     ]
-    def create(self, request, *args, **kwargs):
-        serializer = TypeLinkSaveSerializer(data = request.data)
-        serializer.is_valid()
-        serializer.save(request.data)
-        return Response({"Message": "successful"}, status=status.HTTP_200_OK)
+    # def create(self, request, *args, **kwargs):
+    #     serializer = TypeLinkSaveSerializer(data = request.data)
+    #     serializer.is_valid()
+    #     serializer.save(request.data)
+    #     return Response({"Message": "successful"}, status=status.HTTP_200_OK)
 
 
 class TypeLinkView(generics.ListAPIView):
@@ -49,7 +49,7 @@ class TypeLinkDetailsView(generics.CreateAPIView):
         }
         keys = list(request.data.keys())[0]
         type = type_link.objects.filter(obj.get(keys))
-        validate_find(type)
+        validate_find(type,request)
         serializer = TypeLinkDetailsSerializer(type, many=True)
      
         return Response(serializer.data, status=status.HTTP_200_OK)

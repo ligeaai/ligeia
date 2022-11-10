@@ -26,10 +26,14 @@ class TypeLinkSaveSerializer(serializers.Serializer):
             except Exception as e:
                 raise ValidationError(e) 
 
-        
+
+class TypeLinkDetails2Serializer(serializers.ModelSerializer):
+    class Meta:
+        model = type_link
+        fields = '__all__'
 class TypeLinkDetailsSerializer(serializers.ModelSerializer):
     class Meta:
         model = type_link
-        fields = ['TYPE','FROM_TYPE','FROM_CARDINALITY','TO_TYPE','TO_CARDINALITY',]
+        fields = ['TYPE','FROM_TYPE','FROM_CARDINALITY','TO_TYPE','TO_CARDINALITY',"ROW_ID"]
 
 
