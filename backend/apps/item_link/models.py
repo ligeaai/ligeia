@@ -19,5 +19,5 @@ class item_link(models.Model):
 	ROW_ID=models.CharField(max_length=32,default=uuid.uuid4,null=False,db_index=True,)
 	STATUS=models.CharField(max_length=10,null=True,)
 	REV_GRP_ID=models.CharField(max_length=32,null=True,)
-	UPDATE_SOURCE=models.CharField(max_length=1,default="SourceType",null=True,)
-	CREATE_SOURCE=models.CharField(max_length=1,default="SourceType",null=True,)
+	UPDATE_SOURCE=models.CharField(max_length=1,default="x",null=True,)
+	CREATE_SOURCE=models.CharField(max_length=1,default="x",null=True,)
