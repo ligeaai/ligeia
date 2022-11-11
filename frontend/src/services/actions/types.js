@@ -44,6 +44,8 @@ export const IS_CHANGED_HANDLER = "IS_CHANGED_HANDLER";
 export const ADD_COLUMN = "ADD_COLUMN";
 export const SET_LOADING = "SET_LOADING";
 export const CLEAN_ROWS = "CLEAN_ROWS";
+export const LOAD_LINK_EDITOR = "LOAD_LINK_EDITOR";
+export const LOAD_LINKS = "LOAD_LINKS";
 
 
 //-----------Code List-------------------

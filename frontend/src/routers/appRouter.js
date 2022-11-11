@@ -41,7 +41,9 @@ const AppRouter1 = () => {
           <Route path="/reporting" element={<Reporting />} />
           <Route path="/administration" element={<Administration />} />
           <Route exact path="/configuration/organization/:type/:item" element={<OrganizationAndItems />} />
-          <Route path="/configuration/items/:type/:item" element={<OrganizationAndItems />} />
+          <Route path="/configuration/organization/:type" element={<OrganizationAndItems />} />
+          <Route exact path="/configuration/items/:type/:item" element={<OrganizationAndItems />} />
+          <Route path="/configuration/items/:type" element={<OrganizationAndItems />} />
           <Route exact path="/configuration/initialize/code_list_editor/:codelist" element={<CodeList />} />
           <Route path="/configuration/initialize/code_list_editor" element={<Navigate to="/configuration/initialize/code_list_editor/code_lists" />} />
         </Route>

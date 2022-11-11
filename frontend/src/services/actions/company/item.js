@@ -369,7 +369,15 @@ export const selectItem = (index) => async (dispatch, getState) => {
                 type: SET_SELECTED_ITEM,
                 payload: { ...getState().item.treeMenuItem[index], selectedIndex: index }
             })
-            history.push(`new`)
+
+            var pathnames = window.location.pathname.split("/").filter((x) => x);
+            pathnames[3] = "new"
+            var routeTo = "";
+            pathnames.map(e => {
+                routeTo += `/${e}`
+            })
+            history.push(routeTo)
+
         }
         else {
             if (index < 0) {
@@ -385,7 +393,13 @@ export const selectItem = (index) => async (dispatch, getState) => {
             dispatch(updateDataGrid())
         }
         if (getState().item.selectedItem.NAME) {
-            history.push(`${getState().item.selectedItem.NAME}`)
+            var pathnames = window.location.pathname.split("/").filter((x) => x);
+            pathnames[3] = getState().item.selectedItem.NAME.toLowerCase()
+            var routeTo = "";
+            pathnames.map(e => {
+                routeTo += `/${e}`
+            })
+            history.push(routeTo)
         }
 
     } else {
@@ -407,7 +421,13 @@ export const selectItemNoSave = (index) => async (dispatch, getState) => {
             type: SET_SELECTED_ITEM,
             payload: { ...getState().item.treeMenuItem[index], selectedIndex: index }
         })
-        history.push(`new`)
+        var pathnames = window.location.pathname.split("/").filter((x) => x);
+        pathnames[3] = "new"
+        var routeTo = "";
+        pathnames.map(e => {
+            routeTo += `/${e}`
+        })
+        history.push(routeTo)
     }
     else {
         if (index < 0) {
@@ -424,7 +444,13 @@ export const selectItemNoSave = (index) => async (dispatch, getState) => {
     }
 
     if (getState().item.selectedItem.NAME) {
-        history.push(`${getState().item.selectedItem.NAME}`)
+        var pathnames = window.location.pathname.split("/").filter((x) => x);
+        pathnames[3] = getState().item.selectedItem.NAME.toLowerCase()
+        var routeTo = "";
+        pathnames.map(e => {
+            routeTo += `/${e}`
+        })
+        history.push(routeTo)
     }
 
 }

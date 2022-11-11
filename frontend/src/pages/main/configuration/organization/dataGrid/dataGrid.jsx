@@ -23,6 +23,7 @@ const MyDataGrid = ({ type }) => {
   const itemType = useSelector((state) => state.item.itemType);
   const loading = useSelector((state) => state.companyDataGrid.loading);
   const cultur = useSelector((state) => state.lang.cultur);
+  const selectedItem = useSelector((state) => state.item.selectedItem);
   const [sortModel, setSortModel] = React.useState([
     {
       field: "SORT_ORDER",
@@ -35,13 +36,17 @@ const MyDataGrid = ({ type }) => {
   };
 
   React.useEffect(() => {
+    if (type === selectedItem.ITEM_TYPE) {
+      dispatch(selectItem(selectedItem.selectedIndex));
+    } else {
+      dispatch({
+        type: "SET_SELECTED_ITEM",
+        payload: -3,
+      });
+    }
     dispatch(addItemType(type));
     dispatch({
       type: "CLEAN_ROWS",
-    });
-    dispatch({
-      type: "SET_SELECTED_ITEM",
-      payload: -3,
     });
   }, [type]);
 

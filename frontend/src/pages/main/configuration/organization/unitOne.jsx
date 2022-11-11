@@ -26,6 +26,7 @@ import {
 import DrawerMenu from "../../../../layout/main/asset/treeViewMenu";
 import DateBreak from "./dateBreak";
 import Properties from "./properties";
+import Links from "./links/link";
 import CompanyActionMenu from "./companyActionMenu";
 import {
   showItem,
@@ -224,6 +225,7 @@ const UnitOne = (props) => {
           <Grid item xs={12} sx={{ mt: 1, mr: 1 }}>
             <PropLinkTabs
               MyProperties={<Properties type={type}></Properties>}
+              MyLinks={<Links type={type}></Links>}
             />
           </Grid>
         </Grid>

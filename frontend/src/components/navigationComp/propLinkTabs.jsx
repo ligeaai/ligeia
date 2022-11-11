@@ -6,7 +6,7 @@ import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import DashboardCustomizeOutlinedIcon from "@mui/icons-material/DashboardCustomizeOutlined";
 
-const Properties = ({ MyProperties, isLinkOpen = true }) => {
+const Properties = ({ MyProperties, isLinkOpen = true, MyLinks }) => {
   const [view, setView] = React.useState("Properties");
   const [isHover, setIsHover] = React.useState("");
   const handleChange = (event, nextView) => {
@@ -121,7 +121,7 @@ const Properties = ({ MyProperties, isLinkOpen = true }) => {
         }}
       >
         {view === "Properties" ? MyProperties : <></>}
-        {view === "Links" ? <Grid>Links</Grid> : <></>}
+        {view === "Links" ? MyLinks : <></>}
       </Grid>
     </Grid>
   );

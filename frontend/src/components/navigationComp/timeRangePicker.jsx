@@ -20,7 +20,7 @@ const TimeRangePicker = () => {
       <Grid item>
         <Typography
           variant="caption"
-          sx={{ color: "text.primary", mx: 2, pb: 1.5 }}
+          sx={{ color: "text.primary", mr: 2, pb: 1.5 }}
         >
           Start:
         </Typography>
