@@ -12,7 +12,7 @@ class ItemLinkSaveSerializer(serializers.Serializer):
             validated_data.data['VERSION'] = uuid.uuid4().hex
             validated_data.data['UPDATE_SOURCE'] = "x"
             validated_data.data['CREATE_SOURCE'] = "x"
-            validate_model_not_null(validated_data.data,validated_data)
+            validate_model_not_null(validated_data.data,"ITEM_LINK",request = validated_data)
             items = item_link.objects.create(**validated_data.data)
             items.save()
         return "Succsessful"
