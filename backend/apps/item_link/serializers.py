@@ -10,6 +10,7 @@ class ItemLinkSaveSerializer(serializers.Serializer):
             item.update(**validated_data.data)
         else:
             validated_data.data['VERSION'] = uuid.uuid4().hex
+            validated_data.data['END_DATETIME'] = '9000-01-01'
             validated_data.data['UPDATE_SOURCE'] = "x"
             validated_data.data['CREATE_SOURCE'] = "x"
             validate_model_not_null(validated_data.data,"ITEM_LINK",request = validated_data)
@@ -21,4 +22,4 @@ class ItemLinkSaveSerializer(serializers.Serializer):
 class ItemLinkDetailsSerializer(serializers.ModelSerializer):
     class Meta:
         model = item_link
-        fields = ["LINK_ID","LINK_TYPE","FROM_ITEM_ID","FROM_ITEM_TYPE","TO_ITEM_ID","TO_ITEM_TYPE"]
+        fields = ["LINK_ID","LINK_TYPE","FROM_ITEM_ID","FROM_ITEM_TYPE","TO_ITEM_ID","TO_ITEM_TYPE","START_DATETIME","END_DATETIME"]

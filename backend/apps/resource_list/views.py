@@ -5,7 +5,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from .serializers import ResourceListDetailsSerializer, ResourceListSaveSerializer
 from apps.type.models import type as Type
-from apps.type.serializers import TypeResourceListManagerSerializer
+from apps.type.serializers import TypeResourceListManagerSerializer,TypeDetailsSerializer
 # Create your views here.
 from .models import resource_list
 from services.parsers.addData.type import typeAddData
@@ -40,13 +40,17 @@ class ResourceListView(generics.ListAPIView):
 class ResourceListDrawerMenutView(generics.ListAPIView):
     permission_classes = [permissions.AllowAny]
 
-
+    def get_queryset(self):
+        pass
     def get(self, request, *args, **kwargs):
+        # queryset = Type.objects.filter(LAYER_NAME = 'OG_STD')
+        # serializer = TypeDetailsSerializer(queryset,many = True)
+        # print(len(serializer.data))
         queryset = resource_list.objects.filter(ID = 'drawerMenu')
         serializer = ResourceListDetailsSerializer(queryset,many = True)
         new_dict = dict()
         self._getchild(serializer.data,new_dict,0)
-        return Response(new_dict, status=status.HTTP_200_OK)
+        return Response(serializer.data, status=status.HTTP_200_OK)
     
     def _getchild(self,data,new_dict,sart):
         for item in data:
@@ -56,30 +60,62 @@ class ResourceListDrawerMenutView(generics.ListAPIView):
                 tempt= {}
                 for value in serializer.data:
                     if value.get('LAYER_NAME') == 'TYPE.OG_STD':
-                        url = value.get('URL')
                         serializer.data.remove(value)
                         types = str(value.get('LAYER_NAME')).split('TYPE.')[1]
+                        url = url = value.get('URL')
                         queryset = Type.objects.filter(LAYER_NAME = types)
                         serializer = TypeResourceListManagerSerializer(queryset,many = True)
-                        self._getResourceLabel(serializer.data,tempt,value.get('CULTURE'),url)
+                        if value.get('ID')== "CONFIGURATION-ITEMS":
+                            self._getResourceLabel(value,tempt,serializer.data),
+                        elif value.get('ID')=="CONFIGURATION-ORGANIZATION":
+                            self._getOrganinationsMenu(value,tempt,serializer.data)
+                        
+                        # print(value.get('ID'))
+                        # self._getResourceLabel(serializer.data,tempt,value.get('CULTURE'),url)
                         # tempt = serializer.data
                     else:
                         tempt[value.get('SHORT_LABEL')] = value
                 item['Items'] = tempt
                 
-                print(new_dict.keys())
+                
             if sart == 0:
                 new_dict[item.get('SHORT_LABEL')] = item
             self._getchild(serializer.data,new_dict,1)
 
-    def _getResourceLabel(self,data,tempt,culture,url):
+    def _getOrganinationsMenu(self,value,tempt,data):
+        find_type = ['TYPE.COMPANY',"TYPE.ORG_UNIT1","TYPE.ORG_UNIT2","TYPE.ORG_UNIT3","TYPE.ORG_UNIT4"]
+        url = value.get('URL')
         for item in data:
-            tempt2 = {}
+            try:
+                x = find_type.index(item.get('LABEL_ID'))
+                new_url =  url + '/'+str(item.get('TYPE')).lower()
+                item['URL'] = new_url
+                item['ICON'] = ""
+                item['SHORT_LABEL'] = item.get('TYPE')
+                tempt[item.get('TYPE')] = item
+            except:
+                pass
+
+    def _getResourceLabel(self,value,tempt,data):
+        # find_type = ['TYPE.COMPANY',"TYPE.ORG_UNIT1","TYPE.ORG_UNIT2","TYPE.ORG_UNIT3","TYPE.ORG_UNIT4"]
+        url = value.get('URL')
+        culture = value.get('CULTURE')
+        for item in data:
+            # try:
+            #     x = find_type.index(item.get('LABEL_ID'))
+            # except:
             queryset = resource_list.objects.filter(ID = item.get('LABEL_ID'),CULTURE = culture)
             serializer = ResourceListDetailsSerializer(queryset,many = True)
-            new_url =  url + '/'+str(item.get('TYPE')).lower()  
+            new_url =  url + '/'+str(item.get('TYPE')).lower()
+            
             serializer.data[0]['TYPE'] = item.get('TYPE')
             serializer.data[0]['URL'] = new_url
+            if serializer.data[0].get('ID') == 'TYPE.ORG_UNIT2':
+                mobile_label = serializer.data[0].get('SHORT_LABEL')
+                # tempt[serializer.data[0].get('MOBILE_LABEL')] = serializer.data[0]
+                serializer.data[0]['SHORT_LABEL'] = serializer.data[0].get('MOBILE_LABEL')
+                serializer.data[0]['MOBILE_LABEL'] = mobile_label
+            
             tempt[serializer.data[0].get('SHORT_LABEL')] = serializer.data[0]
             
 

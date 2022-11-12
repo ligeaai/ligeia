@@ -29,7 +29,7 @@ def _create_method(url, data):
     headers = {"Content-type": "application/json", "Accept": "application/json"}
     dataset = dataset.fillna(value="None")
     for index in range(0, dataset.shape[0]):
-        data = dataset.iloc[index, 0:-1]
+        data = dataset.iloc[index, :]
         data = data.to_dict()
         try:
             data["LAST_UPDT_DATE"] = data.get("LAST_UPDT_DATE").split(" ")[0]
