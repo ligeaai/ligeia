@@ -185,6 +185,7 @@ REST_FRAMEWORK = {
         "rest_framework.parsers.FormParser",
         "rest_framework.parsers.MultiPartParser",
     ),
+    # 'COERCE_DECIMAL_TO_STRING': False # TYPE SORT_ORDER STRING TO DECIMAL
 }
 
 # ############ REST KNOX ########################

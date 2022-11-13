@@ -47,4 +47,4 @@ class ResourceListDetailsSerializer(serializers.ModelSerializer):
 class ResourceListSerializer(serializers.ModelSerializer):
     class Meta:
         model = resource_list
-        fields = ["CULTURE", "SHORT_LABEL"]
+        fields = ["CULTURE", "SHORT_LABEL","MOBILE_LABEL"]

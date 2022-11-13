@@ -55,9 +55,10 @@ class CodeListSaveAndUpdateView(generics.UpdateAPIView):
     permission_classes = [permissions.AllowAny]
 
     def put(self, request, *args, **kwargs):
-        if request.data.get('CACHE_KEY') != "":
-            Red.delete(request.data.get('CACHE_KEY'))
-        request.data.pop('CACHE_KEY')
+        if request.data.get('CACHE_KEY'):
+            if request.data.get('CACHE_KEY') != "":
+                Red.delete(request.data.get('CACHE_KEY'))
+            request.data.pop('CACHE_KEY')
         serializer = CodeListCustomSerializer(data=request.data)   
         serializer.is_valid()
         message=serializer.save(request)
