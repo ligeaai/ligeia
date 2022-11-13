@@ -97,26 +97,26 @@ class ResourceListDrawerMenutView(generics.ListAPIView):
                 pass
 
     def _getResourceLabel(self,value,tempt,data):
-        # find_type = ['TYPE.COMPANY',"TYPE.ORG_UNIT1","TYPE.ORG_UNIT2","TYPE.ORG_UNIT3","TYPE.ORG_UNIT4"]
+        find_type = ['TYPE.COMPANY',"TYPE.ORG_UNIT1","TYPE.ORG_UNIT2","TYPE.ORG_UNIT3","TYPE.ORG_UNIT4"]
         url = value.get('URL')
         culture = value.get('CULTURE')
         for item in data:
-            # try:
-            #     x = find_type.index(item.get('LABEL_ID'))
-            # except:
-            queryset = resource_list.objects.filter(ID = item.get('LABEL_ID'),CULTURE = culture)
-            serializer = ResourceListDetailsSerializer(queryset,many = True)
-            new_url =  url + '/'+str(item.get('TYPE')).lower()
-            
-            serializer.data[0]['TYPE'] = item.get('TYPE')
-            serializer.data[0]['URL'] = new_url
-            if serializer.data[0].get('ID') == 'TYPE.ORG_UNIT2':
-                mobile_label = serializer.data[0].get('SHORT_LABEL')
-                # tempt[serializer.data[0].get('MOBILE_LABEL')] = serializer.data[0]
-                serializer.data[0]['SHORT_LABEL'] = serializer.data[0].get('MOBILE_LABEL')
-                serializer.data[0]['MOBILE_LABEL'] = mobile_label
-            
-            tempt[serializer.data[0].get('SHORT_LABEL')] = serializer.data[0]
+            try:
+                x = find_type.index(item.get('LABEL_ID'))
+            except:
+                queryset = resource_list.objects.filter(ID = item.get('LABEL_ID'),CULTURE = culture,HIDDEN = False)
+                if queryset:
+                    serializer = ResourceListDetailsSerializer(queryset,many = True)
+                    new_url =  url + '/'+str(item.get('TYPE')).lower()
+                    serializer.data[0]['TYPE'] = item.get('TYPE')
+                    serializer.data[0]['URL'] = new_url
+                    if serializer.data[0].get('ID') == 'TYPE.ORG_UNIT2':
+                        mobile_label = serializer.data[0].get('SHORT_LABEL')
+                        # tempt[serializer.data[0].get('MOBILE_LABEL')] = serializer.data[0]
+                        serializer.data[0]['SHORT_LABEL'] = serializer.data[0].get('MOBILE_LABEL')
+                        serializer.data[0]['MOBILE_LABEL'] = mobile_label
+                    
+                    tempt[serializer.data[0].get('SHORT_LABEL')] = serializer.data[0]
             
 
 
