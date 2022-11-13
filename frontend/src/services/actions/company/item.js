@@ -57,7 +57,6 @@ export const saveItem = () => async (dispatch, getState) => {
         const uuid = _uuidv4()
         var COLUMNS = []
         var ITEM = {}
-        console.log("asdasd");
         Object.keys(getState().companyDataGrid.columns).map(async (a, i) => {
             if (i > 3) {
                 var d = getState().companyDataGrid.rows.HISTORY[a].getDate();
@@ -73,7 +72,6 @@ export const saveItem = () => async (dispatch, getState) => {
                     if (e !== "HISTORY") {
                         var propsRowUuid = _uuidv4()
                         if (getState().companyDataGrid.rows[e].PROPERTY_TYPE === "NUMBER" || getState().companyDataGrid.rows[e].PROPERTY_TYPE === "INT") {
-                            console.log(i);
                             COLUMNS[i - 4] = {
                                 ...COLUMNS[i - 4],
                                 [getState().companyDataGrid.rows[e].PROPERTY_NAME]: {
@@ -129,7 +127,6 @@ export const saveItem = () => async (dispatch, getState) => {
             }
         })
         const body = JSON.stringify({ ITEM, COLUMNS });
-        console.log(body);
         try {
             let res = await instance
                 .post(
@@ -241,12 +238,14 @@ export class column {
             var myList = [];
             myList.push("");
 
-            var temp = row["CODE-LIST"].sort((a, b) => (a.CODE > b.CODE ? 1 : -1));
+            var temp = row.CODE_LIST[0].CHILD.sort((a, b) =>
+                a.CODE > b.CODE ? 1 : -1
+            );
             temp.map((e) => {
                 if (e.CODE_TEXT) {
                     myList.push(e.CODE_TEXT);
                 } else {
-                    console.log(e);
+
                 }
             });
             return myList;
@@ -289,19 +288,18 @@ const updateDataGrid = () => async (dispatch, getState) => {
                 },
             ],
         };
-        res.data.TYPE["TYPE PROPERTY COLUMNS"].TYPE.map(e => {
-            response[e.PROPERTY_NAME] = e
+        Object.keys(res.data).map(e => {
+            res.data[e].map(a => {
+                response[a.PROPERTY_NAME] = a
+            })
         })
-        res.data.TYPE["TYPE PROPERTY COLUMNS"].BASETYPE.map(e => {
-            response[e.PROPERTY_NAME] = e
-        })
+
         rows = response
     } catch (err) {
         dispatch({
             type: SET_LOADING,
             payload: false
         })
-        console.log(err);
         return err
     }
     body = JSON.stringify({ ITEM_ID });
@@ -317,7 +315,7 @@ const updateDataGrid = () => async (dispatch, getState) => {
         })
         dispatch({
             type: ADD_ROW,
-            payload: rows
+            payload: { ...rows }
         });
         Object.keys(res.data).map(e => {
             var newUuid = _uuidv4()
@@ -347,7 +345,7 @@ const updateDataGrid = () => async (dispatch, getState) => {
 
         dispatch({
             type: ADD_ROW,
-            payload: rows
+            payload: { ...rows }
         });
 
     } catch (err) { }
@@ -474,6 +472,5 @@ export const deleteItem = () => async (dispatch, getState) => {
         dispatch(showItem())
     }
     catch (err) {
-        console.log(err);
     }
 }

@@ -94,18 +94,14 @@ export const loadRows = (CULTURE, TYPE) => async (dispatch) => {
                 },
             ],
         };
-        res.data.TYPE["TYPE PROPERTY COLUMNS"].TYPE.map(e => {
-            response[e.PROPERTY_NAME] = e
+        Object.keys(res.data).map(e => {
+            res.data[e].map(a => {
+                response[a.PROPERTY_NAME] = a
+            })
         })
-        res.data.TYPE["TYPE PROPERTY COLUMNS"].BASETYPE.map(e => {
-            response[e.PROPERTY_NAME] = e
-        })
-
-        type = res.data.TYPE["TYPE COLUMNS"][0].TYPE
-
         dispatch({
             type: ADD_ROW,
-            payload: response
+            payload: { ...response }
         });
     } catch (err) { }
     dispatch({
