@@ -39,6 +39,9 @@ function RenderRow(props) {
   const changedRows = useSelector(
     (state) => state.dataGridCodeList.changedRows
   );
+  const deletedRows = useSelector(
+    (state) => state.dataGridCodeList.deletedRows
+  );
   return (
     <ListItem
       style={style}
@@ -54,7 +57,7 @@ function RenderRow(props) {
       <ListItemButton
         selected={selectedIndex === index}
         onClick={(event) => {
-          if (changedRows.length !== 0) {
+          if (changedRows.length !== 0 || deletedRows.length !== 0) {
             dispatch(
               setConfirmation({
                 title: "Are you sure you want to save this code list?",

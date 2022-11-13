@@ -45,11 +45,3 @@ export const selectTreeViewItemCoedlist = (index) => async (dispatch, getState) 
         type: CLEAN_AFTER_SAVE,
     })
 }
-
-export const selectNewCodeListItem = () => async (dispatch, getState) => {
-    dispatch({
-        type: SELECT_TREEVIEW_ITEM_CODELIST,
-        payload: { selectedIndex: -2 }
-    });
-    dispatch(addNewCodeListItemSchema());
-}

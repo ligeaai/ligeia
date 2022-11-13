@@ -18,7 +18,6 @@ export default function App({ menu }) {
 }
 
 const MenuItem = ({ item }) => {
-  console.log(item);
   const Component = hasChildren(item) ? MultiLevel : SingleLevel;
   return <Component item={item} />;
 };
@@ -26,7 +25,7 @@ const MenuItem = ({ item }) => {
 const SingleLevel = ({ item }) => {
   const dispatch = useDispatch();
   const isOpen = useSelector((state) => state.drawer.isOpen);
-  const { [item.Icon]: Icon } = Icons;
+  const { [item.ICON]: Icon } = Icons;
   const selectedItem = useSelector((state) => state.drawer.selectedItem);
   const handleClick = () => {
     dispatch(setSelectedItem(item.SHORT_LABEL));
@@ -83,8 +82,8 @@ const SingleLevel = ({ item }) => {
 const MultiLevel = ({ item }) => {
   const isOpen = useSelector((state) => state.drawer.isOpen);
   const { Items: children } = item;
-  // const { [item.Icon]: Icon } = Icons;
-  const Icon = false;
+  const { [item.ICON]: Icon } = Icons;
+
   const [open, setOpen] = useState(false);
   useEffect(() => {
     if (isOpen) {
@@ -108,10 +107,7 @@ const MultiLevel = ({ item }) => {
         {Icon ? (
           <Icon
             sx={{
-              color:
-                item.URL === window.location.pathname
-                  ? "myReverseText"
-                  : "myBoldText",
+              color: "myBoldText",
             }}
           />
         ) : (
@@ -124,10 +120,7 @@ const MultiLevel = ({ item }) => {
             mx: 0.5,
             pl: 1,
             display: isOpen ? "inline-block" : "none",
-            color:
-              item.URL === window.location.pathname
-                ? "myReverseText"
-                : "myBoldText",
+            color: "myBoldText",
             overflow: "hidden",
             whiteSpace: "nowrap",
             textOverflow: "ellipsis",

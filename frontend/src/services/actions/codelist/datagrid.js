@@ -5,19 +5,20 @@ import {
     CLEAN_AFTER_SAVE,
     SET_SELECTED_ROWS,
     CLEAN_SELECTED_ROWS,
-    REFRESH_ROWS_CODELIST
+    SELECT_TREEVIEW_ITEM_CODELIST,
+    REFRESH_DELETECHILD_CODELIST,
+    ADD_NEW_CHILD_CODELIST
 } from "../types"
 
 import { instance, config } from '../../baseApi';
 
 import { loadTreeviewItemCodelist, selectTreeViewItemCoedlist } from "./treeview"
-import { ConstructionOutlined } from "@mui/icons-material";
 function _uuidv4() {
     return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, (c) =>
         (
             c ^
             (crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (c / 4)))
-        ).toString(16).replace(/-/g, "")
+        ).toString(16)
     );
 }
 
@@ -53,6 +54,10 @@ const _createNewParent = () => (dispatch, getState) => {
 
 export const addNewCodeListItemSchema = () => async (dispatch, getState) => {
     const payload = dispatch(_createNewParent())
+    dispatch({
+        type: SELECT_TREEVIEW_ITEM_CODELIST,
+        payload: { ...payload[0], selectedIndex: -2 }
+    });
     dispatch({
         type: LOAD_DATAGRID_ROW_CODELIST,
         payload: payload
@@ -95,8 +100,14 @@ export const onChangeCell = (id, field, value) => async (dispatch, getState) => 
 
 const _save = (value, userEmail) => async (dispatch, getState) => {
     var temp = {}
+    Object.keys(value).map(e => {
+        if (value[e] !== "" && e !== "HIERARCHY") {
+            temp[e] = value[e]
+        }
+    })
+
     if (value.ROW_ID !== getState().treeviewCodelist.selectedItem.ROW_ID) {
-        temp.LIST_TYPE = getState().treeviewCodelist.selectedItem.CODE
+        temp.LIST_TYPE = getState().dataGridCodeList.rows[getState().treeviewCodelist.selectedItem.ROW_ID].CODE
     }
 
     if (value.DATE1 !== "") {
@@ -124,11 +135,7 @@ const _save = (value, userEmail) => async (dispatch, getState) => {
     if (value.VAL3 !== "") {
         temp.VAL3 = parseInt(value.VAL3)
     }
-    Object.keys(value).map(e => {
-        if (value[e] !== "" && e !== "HIERARCHY") {
-            temp[e] = value[e]
-        }
-    })
+
     temp["CACHE_KEY"] = value.ROW_ID
     temp.LAST_UPDT_USER = userEmail
     const body = JSON.stringify({ ...temp })
@@ -175,6 +182,7 @@ const _checkMandatoryFields = () => async (dispatch, getState) => {
 
 export const saveCodeList = () => async (dispatch, getState) => {
     const changedRows = getState().dataGridCodeList.changedRows
+    const deletedRows = getState().dataGridCodeList.deletedRows
     const rows = getState().dataGridCodeList.rows
     if (dispatch(_checkMandatoryFields())) {
         await Promise.all(
@@ -186,21 +194,40 @@ export const saveCodeList = () => async (dispatch, getState) => {
                         }
                     }))
             }))
+        await Promise.all(
+            deletedRows.map(async e => {
+                var ROW_ID = e
+                var CACHE_KEY = e
+                var body = JSON.stringify({ ROW_ID, CACHE_KEY })
+                try {
+                    let res = await instance
+                        .post(
+                            "/code-list/delete/",
+                            body,
+                            config
+                        )
+                    return res
+                } catch (err) {
+
+                }
+            }))
+        dispatch({
+            type: CLEAN_AFTER_SAVE,
+        })
+        dispatch(loadTreeviewItemCodelist())
     } else {
         dispatch({
             type: ADD_ERROR_SUCCESS,
             payload: "Mandatory fields: Code, Code text, Layer Name, Hidden"
         })
     }
-    // todo delete child
-    dispatch({
-        type: CLEAN_AFTER_SAVE,
-    })
-    dispatch(loadTreeviewItemCodelist())
+
+
 }
 
 export const deleteCodeList = () => async (dispatch, getState) => {
     const ROW_ID = getState().treeviewCodelist.selectedItem.ROW_ID
+    const selectedIndex = getState().treeviewCodelist.selectedItem.selectedIndex
     const body = JSON.stringify({ ROW_ID, CACHE_KEY: ROW_ID });
     try {
         let res = await instance
@@ -213,7 +240,8 @@ export const deleteCodeList = () => async (dispatch, getState) => {
     } catch (err) {
         return false
     }
-    dispatch(loadTreeviewItemCodelist())
+    await dispatch(loadTreeviewItemCodelist())
+    dispatch(selectTreeViewItemCoedlist(selectedIndex))
 }
 
 export const saveAndMoveCodeList = (index) => async (dispatch, getState) => {
@@ -276,6 +304,10 @@ export const addChildCodeList = () => async (dispatch, getState) => {
         type: LOAD_DATAGRID_ROW_CODELIST,
         payload: payload
     })
+    dispatch({
+        type: ADD_NEW_CHILD_CODELIST,
+        payload: newChild.ROW_ID
+    })
 }
 
 export const setSelectedRows = (payload) => (dispatch) => {
@@ -292,21 +324,52 @@ export const cleanSelectedRows = () => (dispatch) => {
 }
 
 export const deleteChild = () => (dispatch, getState) => {
+    const newChildRows = getState().dataGridCodeList.newChildRows;
     const selectedRows = getState().dataGridCodeList.selectedRows;
+    const changedRows = getState().dataGridCodeList.changedRows;
+    var deletedRows = getState().dataGridCodeList.deletedRows;
     const rows = getState().dataGridCodeList.rows;
-    var temp = []
-    Object.keys(rows).map((e) => {
+    var changedNew = []
+    var tempRows = []
+    Object.keys(rows).map(e => {
+        var temp = true
         selectedRows.map((a) => {
-            if (e !== a) {
-                temp[rows[e].ROW_ID] = rows[e]
+            if (e === a) {
+                temp = false
             }
         })
+        if (temp) {
+            tempRows[e] = rows[e]
+        }
     })
-    console.log(temp);
+
+    changedRows.map((e, i) => {
+        var temp = true
+        selectedRows.map((a) => {
+            if (e === a) {
+                temp = false
+            }
+        })
+        if (temp) {
+            changedNew.push(e)
+        }
+    })
+    selectedRows.map(e => {
+        var temp = true
+        newChildRows.map(a => {
+            if (e === a) {
+                temp = false
+            }
+        })
+        if (temp) {
+            deletedRows.push(e)
+        }
+    })
     dispatch({
-        type: REFRESH_ROWS_CODELIST,
-        payload: temp
+        type: REFRESH_DELETECHILD_CODELIST,
+        payload: { tempRows, deletedRows, changedNew }
     })
+
 
 
 }

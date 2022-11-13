@@ -57,6 +57,7 @@ export const saveItem = () => async (dispatch, getState) => {
         const uuid = _uuidv4()
         var COLUMNS = []
         var ITEM = {}
+        console.log("asdasd");
         Object.keys(getState().companyDataGrid.columns).map(async (a, i) => {
             if (i > 3) {
                 var d = getState().companyDataGrid.rows.HISTORY[a].getDate();
@@ -239,9 +240,14 @@ export class column {
         this.valueOptions = ({ row }) => {
             var myList = [];
             myList.push("");
+
             var temp = row["CODE-LIST"].sort((a, b) => (a.CODE > b.CODE ? 1 : -1));
             temp.map((e) => {
-                myList.push(e.CODE_TEXT);
+                if (e.CODE_TEXT) {
+                    myList.push(e.CODE_TEXT);
+                } else {
+                    console.log(e);
+                }
             });
             return myList;
         };
@@ -332,7 +338,6 @@ const updateDataGrid = () => async (dispatch, getState) => {
                     }
 
                 } else if (res.data[e][a].PROPERTY_INFO === "CODE") {
-
                     rows[res.data[e][a].PROPERTY_TYPE][newUuid.replace(/-/g, "")] = res.data[e][a].PROPERTY_CODE
                 } else if (res.data[e][a].PROPERTY_INFO === "BLOB_ID") {
                     rows[res.data[e][a].PROPERTY_TYPE][newUuid.replace(/-/g, "")] = res.data[e][a].PROPERTY_BINARY

@@ -35,6 +35,7 @@ export default function TransferList({ props }) {
     (state) => state.item.selectedItem.ITEM_ID
   );
   React.useEffect(() => {
+    console.log("asdasdasdasdasds");
     const myFunc = async () => {
       const type = props.FROM_TYPE;
       let res = await instance.get(`/item/details/${type}`, config);
@@ -48,20 +49,20 @@ export default function TransferList({ props }) {
           config
         );
         var leftTemp = [];
-        var rightTemp = [];
+        // var rightTemp = [];
         res.data.map((e) => {
           console.log(e);
           itemLinkRes.data.map((a) => {
             if (e.ITEM_ID === a.FROM_ITEM_ID) {
-              rightTemp.push(e);
+              // rightTemp.push(e);
             } else {
               leftTemp.push(e);
             }
-            console.log(a);
           });
         });
         setLeft(leftTemp);
-        setRight(rightTemp);
+        setRight([]);
+        // setRight(rightTemp);
         console.log(itemLinkRes);
       } catch (err) {
         var temp = [];
@@ -69,6 +70,7 @@ export default function TransferList({ props }) {
           temp.push(e);
         });
         setLeft(temp);
+        setRight([]);
       }
     };
 
@@ -257,34 +259,30 @@ export default function TransferList({ props }) {
                   ).toString(16)
               );
             }
-            var d = date.getDate();
-            var m = date.getMonth();
-            m += 1;
-            var y = date.getFullYear();
-            var newdate = y + "-" + m + "-" + d;
-            const linkUuid = _uuidv4();
-            const rowUuid = _uuidv4();
-            const body = JSON.stringify({
-              LINK_ID: linkUuid.replace(/-/g, ""),
-              LINK_TYPE: props.TYPE,
-              START_DATETIME: newdate,
-              END_DATETIME: "9000-1-1",
-              FROM_ITEM_ID: right[0].ITEM_ID,
-              FROM_ITEM_TYPE: props.FROM_TYPE,
-              TO_ITEM_ID: selectedItemId,
-              TO_ITEM_TYPE: props.TO_TYPE,
-              ROW_ID: rowUuid.replace(/-/g, ""),
+            right.map(async (e) => {
+              var d = date.getDate();
+              var m = date.getMonth();
+              m += 1;
+              var y = date.getFullYear();
+              var newdate = y + "-" + m + "-" + d;
+              const linkUuid = _uuidv4();
+              const rowUuid = _uuidv4();
+              const body = JSON.stringify({
+                LINK_ID: linkUuid.replace(/-/g, ""),
+                LINK_TYPE: props.TYPE,
+                START_DATETIME: newdate,
+                END_DATETIME: "9000-1-1",
+                FROM_ITEM_ID: e.ITEM_ID,
+                FROM_ITEM_TYPE: props.FROM_TYPE,
+                TO_ITEM_ID: selectedItemId,
+                TO_ITEM_TYPE: props.TO_TYPE,
+                ROW_ID: rowUuid.replace(/-/g, ""),
+              });
+              try {
+                let res = await instance.post(`/item-link/save/`, body, config);
+                dispatch(loadLinkEditor());
+              } catch (err) {}
             });
-            console.log(body);
-            try {
-              let res = await instance.post(`/item-link/save/`, body, config);
-              console.log(res);
-              dispatch(loadLinkEditor());
-            } catch (err) {
-              console.log(err);
-            }
-            console.log(props);
-            console.log(right);
           }}
         >
           Save

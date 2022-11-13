@@ -4,7 +4,9 @@ import {
     CLEAN_AFTER_SAVE,
     SET_SELECTED_ROWS,
     CLEAN_SELECTED_ROWS,
-    REFRESH_ROWS_CODELIST
+    REFRESH_ROWS_CODELIST,
+    REFRESH_DELETECHILD_CODELIST,
+    ADD_NEW_CHILD_CODELIST
 } from "../../actions/types"
 
 import { columns } from "../../../pages/main/configuration/initialize/dataGridColumn";
@@ -17,6 +19,7 @@ const initialState = {
     changedRows: [],
     deletedRows: [],
     selectedRows: [],
+    newChildRows: [],
 };
 
 export default function (state = initialState, action) {
@@ -33,10 +36,25 @@ export default function (state = initialState, action) {
                 ...state,
                 rows: rows
             }
+        case ADD_NEW_CHILD_CODELIST:
+            return {
+                ...state,
+                newChildRows: [...state.newChildRows, payload]
+            }
         case REFRESH_ROWS_CODELIST:
+            console.log(payload);
             return {
                 ...state,
                 rows: payload
+            }
+        case REFRESH_DELETECHILD_CODELIST:
+            console.log(payload);
+            return {
+                ...state,
+                changedRows: payload.changedNew,
+                deletedRows: payload.deletedRows,
+                rows: payload.tempRows,
+                selectedRows: []
             }
         case ON_CHANGE_CODELIST_CELL:
             return {
@@ -48,7 +66,8 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 changedRows: [],
-                deletedRows: []
+                deletedRows: [],
+                newChildRows: []
             }
         case SET_SELECTED_ROWS:
             return {

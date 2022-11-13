@@ -11,6 +11,7 @@ import Dialog from "./dialog";
 import { loadLinkEditor } from "../../../../../services/actions/company/linkEditor";
 import { instance, config } from "../../../../../services/baseApi";
 const LinkEditor = ({ type }) => {
+  console.log(type);
   const dispatch = useDispatch();
   const res = useSelector((state) => state.linkEditor.data);
   const links = useSelector((state) => state.linkEditor.links);
@@ -30,7 +31,7 @@ const LinkEditor = ({ type }) => {
       type: "CLEAN_ROWS",
     });
     dispatch(loadLinkEditor());
-  }, [type]);
+  }, [window.location.pathname]);
 
   if (res && selectedItem.NAME && links) {
     return (
@@ -64,8 +65,15 @@ const LinkEditor = ({ type }) => {
                             borderRadius: "5px",
                           }}
                         >
-                          <Grid container sx={{ maxWidth: "350px" }}>
-                            <Grid item xs={12}>
+                          <Grid container sx={{ maxWidth: "250px" }}>
+                            <Grid
+                              item
+                              xs={12}
+                              sx={{
+                                width: "250px",
+                                borderBottom: "1px solid black",
+                              }}
+                            >
                               <Button
                                 onClick={async () => {
                                   await instance.post(
@@ -82,7 +90,24 @@ const LinkEditor = ({ type }) => {
                                 X
                               </Button>
                             </Grid>
-                            {a.FROM_ITEM_TYPE}
+                            <Grid
+                              item
+                              xs={6}
+                              sx={{ borderRight: "1px solid black", p: 1 }}
+                            >
+                              {a.FROM_ITEM_TYPE}
+                            </Grid>
+                            <Grid item xs={6} sx={{ p: 1 }}>
+                              <Grid container sx={{ fontSize: "12px" }}>
+                                <Grid item xs={12}>
+                                  Start:
+                                  {a.START_DATETIME}
+                                </Grid>
+                                <Grid item xs={12}>
+                                  End:{a.END_DATETIME}
+                                </Grid>
+                              </Grid>
+                            </Grid>
                           </Grid>
                         </Box>
                       );

@@ -9,8 +9,8 @@ import history from "./history";
 
 import Administration from "../pages/main/administration/main";
 import Analytics from "../pages/main/asset/analytics";
-// import CodeList from "../pages/main/configuration/initialize/codelist/codelist"
-import CodeList from "../pages/main/configuration/initialize/codeList"
+import CodeList from "../pages/main/configuration/initialize/codelist/codelist"
+// import CodeList from "../pages/main/configuration/initialize/codeList"
 import ForgotPassword from "../pages/authorization/forgotPassword/forgotPassword";
 import ForgotPasswordConfirm from "../pages/authorization/forgotPassword/forgotPasswordConfirm";
 import Login from "../pages/authorization/login/login";

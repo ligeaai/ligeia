@@ -7,6 +7,7 @@ import {
   deleteCodeList,
   saveCodeList,
   saveAndMoveCodeList,
+  addNewCodeListItemSchema,
 } from "../../../../../services/actions/codelist/datagrid";
 import {
   setConfirmation,
@@ -18,6 +19,9 @@ const CodelistActionMenu = () => {
   const changedRows = useSelector(
     (state) => state.dataGridCodeList.changedRows
   );
+  const deletedRows = useSelector(
+    (state) => state.dataGridCodeList.deletedRows
+  );
   const selectedIndex = useSelector(
     (state) => state.treeviewCodelist.selectedItem.selectedIndex
   );
@@ -26,14 +30,14 @@ const CodelistActionMenu = () => {
   );
   const dispatch = useDispatch();
   const btnNew = () => {
-    if (changedRows.length !== 0) {
+    if (changedRows.length !== 0 || deletedRows.length !== 0) {
       dispatch(
         setConfirmation({
           title: "Are you sure you want to save this code list?",
           body: <ConfirmDataGrid />,
           agreefunction: async () => {
             dispatch(saveCodeList());
-            dispatch(selectNewCodeListItem());
+            dispatch(addNewCodeListItemSchema());
           },
         })
       );
@@ -41,16 +45,16 @@ const CodelistActionMenu = () => {
         setExtraBtn({
           extraBtnText: "Don't save go",
           extrafunction: () => {
-            dispatch(selectNewCodeListItem());
+            dispatch(addNewCodeListItemSchema());
           },
         })
       );
     } else {
-      dispatch(selectNewCodeListItem());
+      dispatch(addNewCodeListItemSchema());
     }
   };
   const save = () => {
-    if (changedRows.length !== 0) {
+    if (changedRows.length !== 0 || deletedRows.length !== 0) {
       dispatch(
         setConfirmation({
           title: "Are you sure you want to save this code list?",
@@ -76,7 +80,7 @@ const CodelistActionMenu = () => {
   };
 
   const saveGoPrev = () => {
-    if (changedRows.length !== 0) {
+    if (changedRows.length !== 0 || deletedRows.length !== 0) {
       dispatch(
         setConfirmation({
           title: "Are you sure you want to save this code list?",
@@ -106,7 +110,7 @@ const CodelistActionMenu = () => {
   };
 
   const saveGoNext = () => {
-    if (changedRows.length !== 0) {
+    if (changedRows.length !== 0 || deletedRows.length !== 0) {
       dispatch(
         setConfirmation({
           title: "Are you sure you want to save this code list?",
