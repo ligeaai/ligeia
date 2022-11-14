@@ -40,6 +40,13 @@ class ItemLinkDetailsView(generics.CreateAPIView):
         except Exception as e:
             raise e
 
+class ItemLinkUpdateView(generics.UpdateAPIView):
+    permission_classes = [permissions.AllowAny]
+    def put(self, request, *args, **kwargs):
+        quaryset  = item_link.objects.filter(LINK_ID = request.data.get("LINK_ID"))
+        validate_find(quaryset,request)
+        quaryset.update(**request.data)
+        return Response("Succsesful",status=status.HTTP_200_OK)
 
             
             
