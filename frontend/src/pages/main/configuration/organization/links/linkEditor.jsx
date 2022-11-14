@@ -1,17 +1,26 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { Box, Grid, Typography, Divider, Button } from "@mui/material";
+import { Box, Grid, Typography, Divider, IconButton } from "@mui/material";
 
 import { addItemType } from "../../../../../services/actions/company/datagrid";
 import { TimeRangePicker } from "../../../../../components";
 import { selectItem } from "../../../../../services/actions/company/item";
 import Dialog from "./dialog";
 
+import DeleteIcon from "@mui/icons-material/Delete";
+import SaveIcon from "@mui/icons-material/Save";
+
 import { loadLinkEditor } from "../../../../../services/actions/company/linkEditor";
 import { instance, config } from "../../../../../services/baseApi";
+import {
+  deleteLinkItem,
+  updateItemLink,
+  saveLinkItem,
+} from "../../../../../services/actions/company/linkEditor";
+import DatePicker from "../../../../../components/datePicker/datePicker";
+
 const LinkEditor = ({ type }) => {
-  console.log(type);
   const dispatch = useDispatch();
   const res = useSelector((state) => state.linkEditor.data);
   const links = useSelector((state) => state.linkEditor.links);
@@ -36,11 +45,11 @@ const LinkEditor = ({ type }) => {
   if (res && selectedItem.NAME && links) {
     return (
       <Grid container>
-        <Grid item xs={12} sx={{ p: 1 }}>
+        {/* <Grid item xs={12} sx={{ p: 1 }}>
           <Typography>{selectedItem.NAME}</Typography>
           <Typography>{type}</Typography>
-          {/* <TimeRangePicker /> */}
-        </Grid>
+          <TimeRangePicker /> 
+        </Grid> */}
         <Grid item xs={12}>
           {res.map((e, i) => (
             <Box key={i}>
@@ -51,70 +60,121 @@ const LinkEditor = ({ type }) => {
                 </Box>
                 <Box sx={{ mb: 3, fontSize: "14px" }}>{e.SHORT_LABEL}</Box>
               </Box>
-              <Box>
-                {links.map((a, key) => {
-                  if (e.FROM_TYPE === a.FROM_ITEM_TYPE) {
-                    if (selectedItem.ITEM_ID === a.TO_ITEM_ID) {
+              <Grid container>
+                {Object.keys(links).map((a, key) => {
+                  if (e.FROM_TYPE === links[a].FROM_ITEM_TYPE) {
+                    if (selectedItem.ITEM_ID === links[a].TO_ITEM_ID) {
+                      const onChangeStartDateTime = (newDate) => {
+                        dispatch(
+                          updateItemLink(
+                            links[a].LINK_ID,
+                            "START_DATETIME",
+                            newDate
+                          )
+                        );
+                      };
+                      const onChangeEndDateTime = (newDate) => {
+                        dispatch(
+                          updateItemLink(
+                            links[a].LINK_ID,
+                            "END_DATETIME",
+                            newDate
+                          )
+                        );
+                      };
                       return (
-                        <Box
-                          key={key}
-                          sx={{
-                            boxShadow: 2,
-                            mx: 1,
-                            width: "min-content",
-                            borderRadius: "5px",
-                          }}
-                        >
-                          <Grid container sx={{ maxWidth: "250px" }}>
+                        <Grid item key={key}>
+                          <Grid
+                            container
+                            sx={{
+                              maxWidth: "278px",
+                              borderRadius: "5px",
+                              boxShadow: 2,
+                              mx: 1,
+                            }}
+                          >
                             <Grid
                               item
                               xs={12}
                               sx={{
-                                width: "250px",
+                                width: "278px",
                                 borderBottom: "1px solid black",
                               }}
                             >
-                              <Button
+                              <IconButton
                                 onClick={async () => {
-                                  await instance.post(
-                                    `/item-link/delete/`,
-                                    {
-                                      LINK_ID: a.LINK_ID,
+                                  const deleteFunc = async () => {
+                                    dispatch(deleteLinkItem(links[a].LINK_ID));
+                                  };
+                                  dispatch({
+                                    type: "confirmation/setConfirmation",
+                                    payload: {
+                                      title: "Are you sure you want to delete?",
+                                      body: `${links[a].FROM_ITEM_NAME} it will be deleted`,
+                                      agreefunction: deleteFunc,
                                     },
-                                    config
-                                  );
-                                  dispatch(loadLinkEditor());
-                                  console.log("delete");
+                                  });
                                 }}
                               >
-                                X
-                              </Button>
+                                <DeleteIcon fontSize="small" />
+                              </IconButton>
+                              <IconButton
+                                onClick={async () => {
+                                  const saveFunc = async () => {
+                                    dispatch(saveLinkItem(links[a].LINK_ID));
+                                  };
+                                  dispatch({
+                                    type: "confirmation/setConfirmation",
+                                    payload: {
+                                      title: "Are you sure you want to save?",
+                                      body: `Start date time will change`,
+                                      agreefunction: saveFunc,
+                                    },
+                                  });
+                                }}
+                              >
+                                <SaveIcon fontSize="small" />
+                              </IconButton>
                             </Grid>
                             <Grid
                               item
                               xs={6}
                               sx={{ borderRight: "1px solid black", p: 1 }}
                             >
-                              {a.FROM_ITEM_TYPE}
+                              <Grid container sx={{ fontSize: "14fpx" }}>
+                                <Grid item xs={12}>
+                                  {links[a].FROM_ITEM_TYPE}
+                                </Grid>
+                                <Grid item xs={12} sx={{ fontSize: "12px" }}>
+                                  {links[a].FROM_ITEM_NAME}
+                                </Grid>
+                              </Grid>
                             </Grid>
                             <Grid item xs={6} sx={{ p: 1 }}>
                               <Grid container sx={{ fontSize: "12px" }}>
                                 <Grid item xs={12}>
                                   Start:
-                                  {a.START_DATETIME}
+                                  <DatePicker
+                                    time={new Date(links[a].START_DATETIME)}
+                                    onChangeFunc={onChangeStartDateTime}
+                                  />
                                 </Grid>
                                 <Grid item xs={12}>
-                                  End:{a.END_DATETIME}
+                                  End:
+                                  <DatePicker
+                                    time={new Date(links[a].END_DATETIME)}
+                                    onChangeFunc={onChangeEndDateTime}
+                                  />
                                 </Grid>
                               </Grid>
                             </Grid>
                           </Grid>
-                        </Box>
+                        </Grid>
                       );
                     }
                   }
                 })}
-              </Box>
+              </Grid>
             </Box>
           ))}
         </Grid>

@@ -91,6 +91,7 @@ export const loadRows = (CULTURE, TYPE) => async (dispatch) => {
                 },
             ],
         };
+        console.log(res);
         Object.keys(res.data).map(e => {
             res.data[e].map(a => {
                 response[a.PROPERTY_NAME] = a

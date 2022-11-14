@@ -19,11 +19,8 @@ import {
 
 import {
     authReducer,
-    childCodeList,
-    codeListChildReducer,
     companyDataGrid,
     confirmation,
-    confirmCodeList,
     cssUserSelect,
     dataGridCodeList,
     drawerReducer,
@@ -33,7 +30,6 @@ import {
     langReducer,
     loaderReducer,
     linkEditor,
-    parentCodelist,
     registerFormReducer,
     searchBarReducer,
     themeReducer,
@@ -48,11 +44,8 @@ const persistConfig = {
 
 const rootReducer = combineReducers({
     auth: authReducer,
-    childCodeList: childCodeList,
-    codeListChild: codeListChildReducer,
     companyDataGrid: companyDataGrid,
     confirmation: confirmation,
-    confirmCodeList: confirmCodeList,
     cssUserSelect: cssUserSelect,
     dataGridCodeList: dataGridCodeList,
     drawer: drawerReducer,
@@ -62,7 +55,6 @@ const rootReducer = combineReducers({
     lang: langReducer,
     loader: loaderReducer,
     linkEditor: linkEditor,
-    parentCodelist: parentCodelist,
     registerForm: registerFormReducer,
     searchBar: searchBarReducer,
     theme: themeReducer,

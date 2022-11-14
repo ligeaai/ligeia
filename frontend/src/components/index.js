@@ -6,6 +6,7 @@ import { ComponentError } from "./errorMessage/componentError"
 import ComponentErrorBody from "./errorMessage/componentErrorBody";
 import { CustomNoRowsOverlay } from "./datagrid/customNoRowOwerlay";
 import DateBreak from "../pages/main/configuration/organization/dateBreak";
+import DatePicker from "./datePicker/datePicker";
 import Drawer from "./drawer/drawer";
 import { ErrorBoundary } from "./errorMessage/errorBoundary"
 import ErrorMessage from "./errorMessage/errorMessage"
@@ -25,6 +26,6 @@ import { TreeMenu } from "./treeMenu/treeMenu"
 
 
 export {
-    ActionMenu, Breadcrumb, Cards, Confirmation, ComponentError, ComponentErrorBody, CustomNoRowsOverlay, DateBreak, Drawer, ErrorBoundary, ErrorMessage, Loading, LoadingComponent,
-    PropLinkTabs, SocialButton, TimeRangePicker, TreeView, ItemSperatorLine, ItemSperatorLineXL, Items, SearchBar, SearchBarMobile, TreeMenu
+    ActionMenu, Breadcrumb, Cards, Confirmation, ComponentError, ComponentErrorBody, CustomNoRowsOverlay, DateBreak, DatePicker, Drawer, ErrorBoundary, ErrorMessage,
+    Loading, LoadingComponent, PropLinkTabs, SocialButton, TimeRangePicker, TreeView, ItemSperatorLine, ItemSperatorLineXL, Items, SearchBar, SearchBarMobile, TreeMenu
 }

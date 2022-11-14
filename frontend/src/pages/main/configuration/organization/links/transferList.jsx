@@ -52,18 +52,22 @@ export default function TransferList({ props }) {
         // var rightTemp = [];
         res.data.map((e) => {
           console.log(e);
+          var temp = true;
           itemLinkRes.data.map((a) => {
+            console.log(a);
+
             if (e.ITEM_ID === a.FROM_ITEM_ID) {
+              temp = false;
               // rightTemp.push(e);
-            } else {
-              leftTemp.push(e);
             }
           });
+          if (temp) {
+            leftTemp.push(e);
+          }
         });
         setLeft(leftTemp);
         setRight([]);
         // setRight(rightTemp);
-        console.log(itemLinkRes);
       } catch (err) {
         var temp = [];
         res.data.map((e) => {
@@ -259,29 +263,43 @@ export default function TransferList({ props }) {
                   ).toString(16)
               );
             }
-            right.map(async (e) => {
-              var d = date.getDate();
-              var m = date.getMonth();
-              m += 1;
-              var y = date.getFullYear();
-              var newdate = y + "-" + m + "-" + d;
-              const linkUuid = _uuidv4();
-              const rowUuid = _uuidv4();
-              const body = JSON.stringify({
-                LINK_ID: linkUuid.replace(/-/g, ""),
-                LINK_TYPE: props.TYPE,
-                START_DATETIME: newdate,
-                END_DATETIME: "9000-1-1",
-                FROM_ITEM_ID: e.ITEM_ID,
-                FROM_ITEM_TYPE: props.FROM_TYPE,
-                TO_ITEM_ID: selectedItemId,
-                TO_ITEM_TYPE: props.TO_TYPE,
-                ROW_ID: rowUuid.replace(/-/g, ""),
+            const saveFunc = async () => {
+              right.map(async (e) => {
+                var d = date.getDate();
+                var m = date.getMonth();
+                m += 1;
+                var y = date.getFullYear();
+                var newdate = y + "-" + m + "-" + d;
+                const linkUuid = _uuidv4();
+                const rowUuid = _uuidv4();
+                const body = JSON.stringify({
+                  LINK_ID: linkUuid.replace(/-/g, ""),
+                  LINK_TYPE: props.TYPE,
+                  START_DATETIME: newdate,
+                  END_DATETIME: "9000-1-1",
+                  FROM_ITEM_ID: e.ITEM_ID,
+                  FROM_ITEM_TYPE: props.FROM_TYPE,
+                  TO_ITEM_ID: selectedItemId,
+                  TO_ITEM_TYPE: props.TO_TYPE,
+                  ROW_ID: rowUuid.replace(/-/g, ""),
+                });
+                try {
+                  let res = await instance.post(
+                    `/item-link/save/`,
+                    body,
+                    config
+                  );
+                  dispatch(loadLinkEditor());
+                } catch (err) {}
               });
-              try {
-                let res = await instance.post(`/item-link/save/`, body, config);
-                dispatch(loadLinkEditor());
-              } catch (err) {}
+            };
+            dispatch({
+              type: "confirmation/setConfirmation",
+              payload: {
+                title: "Are you sure you want to save?",
+                body: <>{right.map((e) => e.NAME)}</>,
+                agreefunction: saveFunc,
+              },
             });
           }}
         >

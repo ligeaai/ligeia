@@ -127,6 +127,7 @@ export const saveItem = () => async (dispatch, getState) => {
             }
         })
         const body = JSON.stringify({ ITEM, COLUMNS });
+        console.log(body);
         try {
             let res = await instance
                 .post(

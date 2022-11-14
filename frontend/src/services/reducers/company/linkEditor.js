@@ -1,6 +1,7 @@
 import {
     LOAD_LINK_EDITOR,
-    LOAD_LINKS
+    LOAD_LINKS,
+    UPDATE_LINKS_VALUE
 } from "../../actions/types"
 const initialState = {
     data: false,
@@ -18,9 +19,20 @@ export default function (state = initialState, action) {
                 data: payload
             }
         case LOAD_LINKS:
+            var links = []
+            payload.map(e => {
+                links[e.LINK_ID] = e
+            })
+
             return {
                 ...state,
-                links: payload
+                links: links
+            }
+        case UPDATE_LINKS_VALUE:
+            console.log(payload);
+            state.links[payload.linkId][payload.key] = payload.value
+            return {
+                ...state,
             }
         default:
             return {
