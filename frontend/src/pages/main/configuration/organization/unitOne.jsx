@@ -20,6 +20,7 @@ import { TreeMenuItems } from "./treeMenu";
 const UnitOne = (props) => {
   const { type } = props;
   const isFullScreen = useSelector((state) => state.fullScreen.isFullScreen);
+  const isLinksActive = useSelector((state) => state.linkEditor.isLinksActive);
   return (
     <Grid
       container
@@ -70,30 +71,35 @@ const UnitOne = (props) => {
               alignItems: "center",
             }}
           >
-            <CompanyActionMenu />
+            <CompanyActionMenu isLinksActive={isLinksActive} />
           </Grid>
-          <Divider
-            orientation="vertical"
-            variant="middle"
-            flexItem
-            sx={{
-              marginX: "2px",
-              borderWidth: "0.2px",
-              borderColor: "#4B4B4B",
-              backgroundColor: "#4B4B4B",
-            }}
-          />
-          <Grid
-            item
-            sx={{
-              mr: 1.5,
-              backgroundColor: "myBackgroundColor",
-              height: "42px",
-            }}
-          >
-            <DateBreak />
-          </Grid>
-
+          {isLinksActive ? (
+            <></>
+          ) : (
+            <React.Fragment>
+              <Divider
+                orientation="vertical"
+                variant="middle"
+                flexItem
+                sx={{
+                  marginX: "2px",
+                  borderWidth: "0.2px",
+                  borderColor: "#4B4B4B",
+                  backgroundColor: "#4B4B4B",
+                }}
+              />
+              <Grid
+                item
+                sx={{
+                  mr: 1.5,
+                  backgroundColor: "myBackgroundColor",
+                  height: "42px",
+                }}
+              >
+                <DateBreak />
+              </Grid>
+            </React.Fragment>
+          )}
           <ItemSperatorLineXL />
           <Grid item xs={12} sx={{ mt: 1, mr: 1 }}>
             <PropLinkTabs

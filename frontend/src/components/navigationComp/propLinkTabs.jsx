@@ -5,8 +5,10 @@ import { Grid, Typography } from "@mui/material";
 import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import DashboardCustomizeOutlinedIcon from "@mui/icons-material/DashboardCustomizeOutlined";
+import { useDispatch } from "react-redux";
 
 const Properties = ({ MyProperties, isLinkOpen = true, MyLinks }) => {
+  const dispatch = useDispatch();
   const [view, setView] = React.useState("Properties");
   const [isHover, setIsHover] = React.useState("");
   const handleChange = (event, nextView) => {
@@ -20,6 +22,19 @@ const Properties = ({ MyProperties, isLinkOpen = true, MyLinks }) => {
   const handleMouseLeave = () => {
     setIsHover("");
   };
+  React.useEffect(() => {
+    if (view === "Properties") {
+      dispatch({
+        type: "SET_LINK_ACTIVE",
+        payload: false,
+      });
+    } else {
+      dispatch({
+        type: "SET_LINK_ACTIVE",
+        payload: true,
+      });
+    }
+  }, [view]);
   return (
     <Grid
       container

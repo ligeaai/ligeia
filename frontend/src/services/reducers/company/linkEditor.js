@@ -1,11 +1,14 @@
 import {
     LOAD_LINK_EDITOR,
     LOAD_LINKS,
-    UPDATE_LINKS_VALUE
+    UPDATE_LINKS_VALUE,
+    SET_LINK_ACTIVE
 } from "../../actions/types"
 const initialState = {
     data: false,
-    links: false
+    links: false,
+    changedLinks: new Set(),
+    isLinksActive: true
 };
 
 export default function (state = initialState, action) {
@@ -13,6 +16,11 @@ export default function (state = initialState, action) {
     const { type, payload } = action;
 
     switch (type) {
+        case SET_LINK_ACTIVE:
+            return {
+                ...state,
+                isLinksActive: payload
+            }
         case LOAD_LINK_EDITOR:
             return {
                 ...state,
@@ -29,8 +37,8 @@ export default function (state = initialState, action) {
                 links: links
             }
         case UPDATE_LINKS_VALUE:
-            console.log(payload);
             state.links[payload.linkId][payload.key] = payload.value
+            state.changedLinks.add(payload.linkId)
             return {
                 ...state,
             }

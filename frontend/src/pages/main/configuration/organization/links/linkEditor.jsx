@@ -24,6 +24,7 @@ const LinkEditor = ({ type }) => {
   const dispatch = useDispatch();
   const res = useSelector((state) => state.linkEditor.data);
   const links = useSelector((state) => state.linkEditor.links);
+  const changedLinks = useSelector((state) => state.linkEditor.changedLinks);
   const selectedItem = useSelector((state) => state.item.selectedItem);
 
   React.useEffect(() => {
@@ -55,10 +56,10 @@ const LinkEditor = ({ type }) => {
             <Box key={i}>
               <Divider />
               <Box sx={{ p: 1 }}>
+                <Box sx={{ mb: 3, fontSize: "14px" }}>{e.SHORT_LABEL}</Box>
                 <Box sx={{ mb: 1 }}>
                   <Dialog props={e} />
                 </Box>
-                <Box sx={{ mb: 3, fontSize: "14px" }}>{e.SHORT_LABEL}</Box>
               </Box>
               <Grid container>
                 {Object.keys(links).map((a, key) => {
@@ -123,14 +124,28 @@ const LinkEditor = ({ type }) => {
                                   const saveFunc = async () => {
                                     dispatch(saveLinkItem(links[a].LINK_ID));
                                   };
-                                  dispatch({
-                                    type: "confirmation/setConfirmation",
-                                    payload: {
-                                      title: "Are you sure you want to save?",
-                                      body: `Start date time will change`,
-                                      agreefunction: saveFunc,
-                                    },
-                                  });
+                                  if (changedLinks.has(links[a].LINK_ID)) {
+                                    if (
+                                      links[a].START_DATETIME <
+                                      links[a].END_DATETIME
+                                    ) {
+                                      dispatch({
+                                        type: "confirmation/setConfirmation",
+                                        payload: {
+                                          title:
+                                            "Are you sure you want to save?",
+                                          body: `Start date time will change`,
+                                          agreefunction: saveFunc,
+                                        },
+                                      });
+                                    } else {
+                                      dispatch({
+                                        type: "ADD_ERROR_SUCCESS",
+                                        payload:
+                                          "The initial time cannot exceed the deadline",
+                                      });
+                                    }
+                                  }
                                 }}
                               >
                                 <SaveIcon fontSize="small" />

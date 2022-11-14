@@ -47,7 +47,7 @@ export const CLEAN_ROWS = "CLEAN_ROWS";
 export const LOAD_LINK_EDITOR = "LOAD_LINK_EDITOR";
 export const LOAD_LINKS = "LOAD_LINKS";
 export const UPDATE_LINKS_VALUE = "UPDATE_LINKS_VALUE";
-
+export const SET_LINK_ACTIVE = "SET_LINK_ACTIVE";
 
 //-----------Code List-------------------
 export const LOAD_TREEVIEW_ITEM_CODELIST = "LOAD_TREEVIEW_ITEM_CODELIST";

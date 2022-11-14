@@ -185,7 +185,7 @@ const DateBreak = () => {
         </Button>
       </Grid> */}
 
-      <Divider
+      {/* <Divider
         orientation="vertical"
         variant="middle"
         flexItem
@@ -228,7 +228,7 @@ const DateBreak = () => {
           borderColor: "#4B4B4B",
           backgroundColor: "#4B4B4B",
         }}
-      />
+      /> */}
 
       {/* <Grid item>
         <Button

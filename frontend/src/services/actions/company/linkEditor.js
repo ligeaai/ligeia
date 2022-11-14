@@ -26,7 +26,10 @@ export const loadLinkEditor = () => async (dispatch, getState) => {
                 },
                 config
             );
-
+            itemLinkRes.data.map(e => {
+                e.END_DATETIME = new Date(e.END_DATETIME)
+                e.START_DATETIME = new Date(e.START_DATETIME)
+            })
             dispatch({
                 type: LOAD_LINKS,
                 payload: itemLinkRes.data
