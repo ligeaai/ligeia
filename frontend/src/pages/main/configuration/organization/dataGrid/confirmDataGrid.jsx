@@ -5,13 +5,8 @@ import { DataGridPro } from "@mui/x-data-grid-pro";
 
 import CustomColumnMenu from "./customColumnMenu";
 
-import {
-  loadRows,
-  editRow,
-} from "../../../../../services/actions/company/datagrid";
 import { MyTextFieldRender } from "../myTextField";
 const MyDataGrid = ({ type }) => {
-  const dispatch = useDispatch();
   const columns = useSelector((state) => state.companyDataGrid.columns);
   const rows = useSelector((state) => state.companyDataGrid.rows);
   const [myColumn, setMyColumn] = React.useState(false);
@@ -40,14 +35,12 @@ const MyDataGrid = ({ type }) => {
           ...columns[e],
         };
       }
-      console.log(temp);
       delete temp.renderEditCell;
       //delete temp.renderCell;
       myColumnsTemp[e] = temp;
       setMyColumn(myColumnsTemp);
     });
   }, []);
-  console.log(myColumn);
   if (Object.keys(rows).length !== 0 && myColumn) {
     return (
       <Box

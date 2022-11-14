@@ -139,7 +139,6 @@ const _save = (value, userEmail) => async (dispatch, getState) => {
     temp["CACHE_KEY"] = value.ROW_ID
     temp.LAST_UPDT_USER = userEmail
     const body = JSON.stringify({ ...temp })
-    console.log(body);
     try {
         let res = await instance
             .put(
@@ -292,14 +291,11 @@ const _createNewChild = () => (dispatch, getState) => {
 export const addChildCodeList = () => async (dispatch, getState) => {
     const rows = getState().dataGridCodeList.rows
     const newChild = dispatch(_createNewChild())
-    console.log(newChild);
     var payload = []
     Object.keys(rows).map((e) => {
         payload.push(rows[e])
     })
     payload.push(newChild)
-
-    console.log(payload);
     dispatch({
         type: LOAD_DATAGRID_ROW_CODELIST,
         payload: payload

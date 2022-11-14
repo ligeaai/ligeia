@@ -1,26 +1,12 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
-import {
-  Box,
-  Divider,
-  Grid,
-  ListItem,
-  ListItemButton,
-  ListItemText,
-} from "@mui/material";
-
-import { FixedSizeList } from "react-window";
-import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
-import AutoSizer from "react-virtualized-auto-sizer";
+import { Box, Divider, Grid } from "@mui/material";
 
 import {
   Breadcrumb,
   ItemSperatorLineXL,
-  ComponentError,
   PropLinkTabs,
-  ComponentErrorBody,
-  LoadingComponent,
 } from "../../../../components";
 
 import DrawerMenu from "../../../../layout/main/asset/treeViewMenu";
@@ -28,121 +14,8 @@ import DateBreak from "./dateBreak";
 import Properties from "./properties";
 import Links from "./links/link";
 import CompanyActionMenu from "./companyActionMenu";
-import {
-  showItem,
-  selectItem,
-  selectItemNoSave,
-  confirmDataGridDontSaveGo,
-} from "../../../../services/actions/company/item";
 
-function RenderRow(props) {
-  const dispatch = useDispatch();
-  const { data, index, style } = props;
-  const selectedIndex = useSelector(
-    (state) => state.item.selectedItem.selectedIndex
-  );
-  return (
-    <ListItem
-      style={style}
-      key={index}
-      component="div"
-      disablePadding
-      sx={{
-        ".MuiButtonBase-root": {
-          py: 0.5,
-        },
-      }}
-    >
-      <ListItemButton
-        selected={selectedIndex === index}
-        onClick={() => {
-          if (
-            !dispatch(
-              confirmDataGridDontSaveGo(
-                () => {
-                  dispatch(selectItem(index));
-                },
-                "Are you sure you want to save this?",
-                () => {
-                  dispatch(selectItemNoSave(index));
-                }
-              )
-            )
-          ) {
-            dispatch(selectItemNoSave(index));
-          }
-        }}
-      >
-        <ListItemText
-          primary={`${data[index].NAME}`}
-          sx={{
-            span: {
-              fontSize: "14px",
-              overflow: "hidden",
-              whiteSpace: "nowrap",
-              textOverflow: "ellipsis",
-            },
-          }}
-        />
-      </ListItemButton>
-    </ListItem>
-  );
-}
-
-const TreeMenuItem = () => {
-  const dispatch = useDispatch();
-  const treeItem = useSelector((state) => state.item.treeMenuItem);
-  const isFullScreen = useSelector((state) => state.fullScreen.isFullScreen);
-  const type = useSelector((state) => state.item.type);
-  React.useEffect(() => {
-    dispatch(showItem());
-  }, [type]);
-
-  if (treeItem) {
-    return (
-      <Box
-        sx={{
-          height: isFullScreen
-            ? "calc(100vh - 85px )"
-            : "calc(100vh - 85px - 60px - 4px)",
-          minHeight: "416px",
-        }}
-      >
-        <AutoSizer>
-          {({ height, width }) => (
-            <FixedSizeList
-              height={height}
-              width={width}
-              itemSize={35}
-              itemCount={treeItem.length}
-              itemData={treeItem}
-              overscanCount={5}
-            >
-              {RenderRow}
-            </FixedSizeList>
-          )}
-        </AutoSizer>
-      </Box>
-    );
-  } else {
-    return <LoadingComponent />;
-  }
-};
-
-const TreeMenuItems = () => {
-  return (
-    <ComponentError
-      errMsg={
-        <ComponentErrorBody
-          text="Something went wrong"
-          icon={<ErrorOutlineIcon />}
-        />
-      }
-    >
-      <TreeMenuItem />
-    </ComponentError>
-  );
-};
+import { TreeMenuItems } from "./treeMenu";
 
 const UnitOne = (props) => {
   const { type } = props;

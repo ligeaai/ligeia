@@ -57,14 +57,12 @@ export const deleteColum = (field) => (dispatch) => {
 
 //----------------ROWS------------
 export const addItemType = (type) => async (dispatch) => {
-    console.log(type);
     dispatch({
         type: ADD_ITEM_TYPE,
         payload: type
     });
 }
 export const loadRows = (CULTURE, TYPE) => async (dispatch) => {
-    var type = ""
     const body = JSON.stringify({
         TYPE,
         CULTURE
@@ -73,7 +71,6 @@ export const loadRows = (CULTURE, TYPE) => async (dispatch) => {
         type: SET_LOADING,
         payload: true
     })
-    console.log(body);
     try {
         let res = await instance
             .post(

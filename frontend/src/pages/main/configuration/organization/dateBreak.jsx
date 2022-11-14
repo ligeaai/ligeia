@@ -44,7 +44,6 @@ export class column {
     this.valueOptions = ({ row }) => {
       var myList = [];
       myList.push("");
-      console.log(row);
       var temp = row.CODE_LIST[0].CHILD.sort((a, b) =>
         a.CODE > b.CODE ? 1 : -1
       );
@@ -52,7 +51,6 @@ export class column {
         if (e.CODE_TEXT) {
           myList.push(e.CODE_TEXT);
         } else {
-          console.log(e);
         }
       });
       return myList;
@@ -78,7 +76,6 @@ const DateBreak = () => {
       m += 1;
       var y = date.getFullYear();
       var dateNew = y + "-" + m + "-" + d;
-      console.log(usedDates[e]);
       try {
         var d = usedDates[e].getDate();
         var m = usedDates[e].getMonth();
