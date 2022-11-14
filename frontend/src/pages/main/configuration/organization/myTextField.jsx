@@ -48,7 +48,19 @@ const SingleSelectCell = (params) => {
         defaultValue={""}
         open={isOpen}
         onClick={setOpen}
-        sx={{ border: "none", fontSize: "14px" }}
+        sx={{
+          border: "none",
+          fontSize: "14px",
+        }}
+        MenuProps={{
+          sx: {
+            "& .MuiList-root ": {
+              li: {
+                fontSize: "14px",
+              },
+            },
+          },
+        }}
       />
     </Box>
   );

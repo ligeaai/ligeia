@@ -16,7 +16,7 @@ const RenderRow = (props) => {
     index,
     style,
     selectFunc = () => {},
-    selectedIndex = 0,
+    selectedIndex = -999,
     primaryText = "",
   } = props;
 
