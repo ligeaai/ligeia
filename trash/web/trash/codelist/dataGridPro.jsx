@@ -23,12 +23,12 @@ import {
   cleanDataGridItems,
   setNewItem,
   setDeletedItem,
-} from "../../../../services/reducers/childCodeList";
-import { getParentCode } from "../../../../services/api/djangoApi/codeList";
+} from "../../../../frontend/src/services/reducers/childCodeList";
+import { getParentCode } from "../../../../frontend/src/services/api/djangoApi/codeList";
 import LinearProgress from "@mui/material/LinearProgress";
 
-import { columns } from "./dataGridColumn";
-import history from "../../../../routers/history";
+import { columns } from "../../../../frontend/src/pages/main/configuration/initialize/dataGridColumn";
+import history from "../../../../frontend/src/routers/history";
 import { CustomNoRowsOverlay } from "./customNoRowOwerlay";
 import DropDownMenu from "./dropDownMenu";
 const getTreeDataPath = (row) => row.HIERARCHY;

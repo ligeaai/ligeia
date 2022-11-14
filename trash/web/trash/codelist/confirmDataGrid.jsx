@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { darken, lighten } from "@mui/material/styles";
 import { Box } from "@mui/material";
 import { DataGridPro } from "@mui/x-data-grid-pro";
-import { columns } from "./confirmColumn";
+import { columns } from "../../../../frontend/src/pages/main/configuration/initialize/dataGridColumn";
 const getBackgroundColor = (color, mode) =>
   mode === "dark" ? darken(color, 0.6) : lighten(color, 0.6);
 

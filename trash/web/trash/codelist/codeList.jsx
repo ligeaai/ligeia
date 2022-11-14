@@ -19,11 +19,11 @@ import {
   PropLinkTabs,
   ComponentErrorBody,
   LoadingComponent,
-} from "../../../../components";
-import DrawerMenu from "../../../../layout/main/asset/treeViewMenu";
+} from "../../../../frontend/src/components";
+import DrawerMenu from "../../../../frontend/src/layout/main/asset/treeViewMenu";
 
 import AutoSizer from "react-virtualized-auto-sizer";
-import { getParentCodeList } from "../../../../services/api/djangoApi/codeList";
+import { getParentCodeList } from "../../../../frontend/src/services/api/djangoApi/codeList";
 import {
   setCodeListChild,
   setIndex,
@@ -31,28 +31,28 @@ import {
   setCodeListItems,
   setRowId,
   cleanCodeListItems,
-} from "../../../../services/reducers/codeListChildReducer";
-import { setRefreshDataGrid } from "../../../../services/reducers/childCodeList";
-import MyActionMenu from "./codelistActionMenu";
+} from "../../../../frontend/src/services/reducers/codeListChildReducer";
+import { setRefreshDataGrid } from "../../../../frontend/src/services/reducers/childCodeList";
+import MyActionMenu from "../../../../frontend/src/pages/main/configuration/initialize/codelistActionMenu";
 import DataGridPro from "./dataGridPro";
-import history from "../../../../routers/history";
+import history from "../../../../frontend/src/routers/history";
 
 import {
   deleteCodeList,
   putCodeList,
-} from "../../../../services/api/djangoApi/codeList";
+} from "../../../../frontend/src/services/api/djangoApi/codeList";
 import {
   setConfirmation,
   setExtraBtn,
-} from "../../../../services/reducers/confirmation";
-import { setRefreshTreeMenu } from "../../../../services/reducers/codeListChildReducer";
+} from "../../../../frontend/src/services/reducers/confirmation";
+import { setRefreshTreeMenu } from "../../../../frontend/src/services/reducers/codeListChildReducer";
 
 import {
   setConfirmDataGridItems,
   cleanConfirmDataGridItems,
-} from "../../../../services/reducers/confirmCodeList";
-import ConfirmDataGrid from "./confirmDataGrid";
-import { add_error } from "../../../../services/actions/error";
+} from "../../../../frontend/src/services/reducers/confirmCodeList";
+import ConfirmDataGrid from "../../../../frontend/src/pages/main/configuration/initialize/confirmDataGrid";
+import { add_error } from "../../../../frontend/src/services/actions/error";
 function RenderRow(props) {
   const dispatch = useDispatch();
   const { data, index, style } = props;

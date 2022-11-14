@@ -4,6 +4,7 @@ import Cards from "./cardGenerator/cards";
 import Confirmation from "./confirmation/confirmation"
 import { ComponentError } from "./errorMessage/componentError"
 import ComponentErrorBody from "./errorMessage/componentErrorBody";
+import { CustomNoRowsOverlay } from "./datagrid/customNoRowOwerlay";
 import DateBreak from "../pages/main/configuration/organization/dateBreak";
 import Drawer from "./drawer/drawer";
 import { ErrorBoundary } from "./errorMessage/errorBoundary"
@@ -24,6 +25,6 @@ import { TreeMenu } from "./treeMenu/treeMenu"
 
 
 export {
-    ActionMenu, Breadcrumb, Cards, Confirmation, ComponentError, ComponentErrorBody, DateBreak, Drawer, ErrorBoundary, ErrorMessage, Loading, LoadingComponent,
+    ActionMenu, Breadcrumb, Cards, Confirmation, ComponentError, ComponentErrorBody, CustomNoRowsOverlay, DateBreak, Drawer, ErrorBoundary, ErrorMessage, Loading, LoadingComponent,
     PropLinkTabs, SocialButton, TimeRangePicker, TreeView, ItemSperatorLine, ItemSperatorLineXL, Items, SearchBar, SearchBarMobile, TreeMenu
 }

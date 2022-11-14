@@ -5,24 +5,16 @@ import { DataGridPro } from "@mui/x-data-grid-pro";
 
 import CustomColumnMenu from "./customColumnMenu";
 import CustomToolbar from "./customToolbar";
-import {
-  loadRows,
-  editRow,
-} from "../../../../../services/actions/company/datagrid";
+import { editRow } from "../../../../../services/actions/company/datagrid";
 import { selectItem } from "../../../../../services/actions/company/item";
 import { addItemType } from "../../../../../services/actions/company/datagrid";
-import { CustomNoRowsOverlay } from "../../initialize/customNoRowOwerlay";
-import {
-  cleanDataGrid,
-  changeType,
-} from "../../../../../services/actions/company/datagrid";
+import { CustomNoRowsOverlay } from "../../../../../components";
+
 const MyDataGrid = ({ type }) => {
   const dispatch = useDispatch();
   const columns = useSelector((state) => state.companyDataGrid.columns);
   const rows = useSelector((state) => state.companyDataGrid.rows);
-  const itemType = useSelector((state) => state.item.itemType);
   const loading = useSelector((state) => state.companyDataGrid.loading);
-  const cultur = useSelector((state) => state.lang.cultur);
   const selectedItem = useSelector((state) => state.item.selectedItem);
   const [sortModel, setSortModel] = React.useState([
     {
