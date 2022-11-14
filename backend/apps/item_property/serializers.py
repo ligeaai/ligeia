@@ -45,6 +45,7 @@ class ItemPropertyCustomSaveSerializer(serializers.Serializer):
             "BOOL":"PROPERTY_STRING",
             "CODE":"PROPERTY_CODE",
             "BLOB_ID":"PROPERTY_BINARY",
+            "PERCENT":"PROPERTY_VALUE",
         }
         item_data = validated_data.get('ITEM')
         tempt_data = validated_data.get('COLUMNS')
@@ -56,24 +57,31 @@ class ItemPropertyCustomSaveSerializer(serializers.Serializer):
             time = tempt_data[index].get('START_TIME')
             tempt_data[index].pop("START_TIME")
             tempt_keys = tempt_data[index].keys()
-            for keys in tempt_keys:
-                tempt_data[index].get(keys)['START_DATETIME'] = time
-                tempt_data[index].get(keys)['ITEM_ID'] = item_data.get('ITEM_ID')
-                tempt_data[index].get(keys)['ITEM_TYPE'] = item_data.get('ITEM_TYPE')
-                tempt_data[index].get(keys)['CREATE_SOURCE'] = "x"
-                tempt_data[index].get(keys)['UPDATE_SOURCE'] = "x"
-                tempt_data[index].get(keys)['LAST_UPDT_USER'] = item_data.get('LAST_UPDT_USER')
-                tempt_data[index].get(keys)['LAST_UPDT_DATE'] = str(datetime.now()).split(" ")[0]
-                tempt_data[index].get(keys)['VERSION'] = uuid.uuid4().hex
-                tempt_data[index].get(keys)['END_DATETIME'] = end_time
-                tempt_data[index].get(keys)['PROPERTY_TYPE'] = keys
-                tempt_data[index].get(keys)['PROPERTY_INFO'] = tempt_data[index].get(keys).get('VALUE_TYPE')
-                typeValue = type_of_value.get(tempt_data[index].get(keys).get('VALUE_TYPE'))
-                tempt_data[index].get(keys)[typeValue] = tempt_data[index].get(keys).get('VALUE')
-                tempt_data[index].get(keys).pop('VALUE_TYPE')
-                tempt_data[index].get(keys).pop('VALUE')
-                item_propertys = item_property.objects.create(**tempt_data[index].get(keys))
-                item_propertys.save()
+            try:
+                for keys in tempt_keys:
+                    condition_value =tempt_data[index].get(keys).get('VALUE')
+                    if (condition_value == "" or condition_value == None ):
+                        continue
+                    tempt_data[index].get(keys)['START_DATETIME'] = time
+                    tempt_data[index].get(keys)['ITEM_ID'] = item_data.get('ITEM_ID')
+                    tempt_data[index].get(keys)['ITEM_TYPE'] = item_data.get('ITEM_TYPE')
+                    tempt_data[index].get(keys)['CREATE_SOURCE'] = "x"
+                    tempt_data[index].get(keys)['UPDATE_SOURCE'] = "x"
+                    tempt_data[index].get(keys)['LAST_UPDT_USER'] = item_data.get('LAST_UPDT_USER')
+                    tempt_data[index].get(keys)['LAST_UPDT_DATE'] = str(datetime.now()).split(" ")[0]
+                    tempt_data[index].get(keys)['VERSION'] = uuid.uuid4().hex
+                    tempt_data[index].get(keys)['END_DATETIME'] = end_time
+                    tempt_data[index].get(keys)['PROPERTY_TYPE'] = keys
+                    tempt_data[index].get(keys)['PROPERTY_INFO'] = tempt_data[index].get(keys).get('VALUE_TYPE')
+                    typeValue = type_of_value.get(tempt_data[index].get(keys).get('VALUE_TYPE'))
+                    tempt_data[index].get(keys)[typeValue] = tempt_data[index].get(keys).get('VALUE')
+                    tempt_data[index].get(keys).pop('VALUE_TYPE')
+                    tempt_data[index].get(keys).pop('VALUE')
+                    item_propertys = item_property.objects.create(**tempt_data[index].get(keys))
+                    item_propertys.save()
+            except Exception as e:
+                print(e)
+                print(keys)
         return tempt_data
 
 

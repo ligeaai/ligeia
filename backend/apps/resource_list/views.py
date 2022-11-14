@@ -69,6 +69,8 @@ class ResourceListDrawerMenutView(generics.ListAPIView):
                             self._getResourceLabel(value,tempt,serializer.data),
                         elif value.get('ID')=="CONFIGURATION-ORGANIZATION":
                             self._getOrganinationsMenu(value,tempt,serializer.data)
+                        elif value.get('ID')=="CONFIGURATION-GEOPGRAPHY":
+                            self._getGeographyMenu(value,tempt,serializer.data)
                         
                         # print(value.get('ID'))
                         # self._getResourceLabel(serializer.data,tempt,value.get('CULTURE'),url)
@@ -97,7 +99,8 @@ class ResourceListDrawerMenutView(generics.ListAPIView):
                 pass
 
     def _getResourceLabel(self,value,tempt,data):
-        find_type = ['TYPE.COMPANY',"TYPE.ORG_UNIT1","TYPE.ORG_UNIT2","TYPE.ORG_UNIT3","TYPE.ORG_UNIT4"]
+        find_type = ['TYPE.COMPANY',"TYPE.ORG_UNIT1","TYPE.ORG_UNIT2","TYPE.ORG_UNIT3","TYPE.ORG_UNIT4",
+                     'TYPE.GEO_UNIT1',"TYPE.GEO_UNIT1","TYPE.GEO_UNIT1","TYPE.ORG_UNIT3"]
         url = value.get('URL')
         culture = value.get('CULTURE')
         for item in data:
@@ -117,7 +120,25 @@ class ResourceListDrawerMenutView(generics.ListAPIView):
                         serializer.data[0]['MOBILE_LABEL'] = mobile_label
                     
                     tempt[serializer.data[0].get('SHORT_LABEL')] = serializer.data[0]
-            
+
+    def _getGeographyMenu(self,value,tempt,data):
+        find_type = ['TYPE.GEO_UNIT1',"TYPE.GEO_UNIT2","TYPE.GEO_UNIT3"]
+        url = value.get('URL')
+        culture = value.get('CULTURE')
+        for item in data:
+            try:
+                queryset = resource_list.objects.filter(ID = item.get('LABEL_ID'),CULTURE = culture,HIDDEN = False)
+                if queryset:
+                    serializer = ResourceListDetailsSerializer(queryset,many = True)
+                    x = find_type.index(item.get('LABEL_ID'))
+                    new_url =  url + '/'+str(item.get('TYPE')).lower()
+                    item['URL'] = new_url
+                    item['ICON'] = ""
+                    item['SHORT_LABEL'] = serializer.data[0].get('SHORT_LABEL')
+                    tempt[item.get('TYPE')] = item
+            except:
+                pass
+
 
 
 class ResourceListDetailView(generics.CreateAPIView):
