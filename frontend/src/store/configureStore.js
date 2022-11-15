@@ -20,6 +20,7 @@ import {
 import {
     authReducer,
     companyDataGrid,
+    companyCheckedList,
     confirmation,
     cssUserSelect,
     dataGridCodeList,
@@ -45,6 +46,7 @@ const persistConfig = {
 const rootReducer = combineReducers({
     auth: authReducer,
     companyDataGrid: companyDataGrid,
+    companyCheckedList: companyCheckedList,
     confirmation: confirmation,
     cssUserSelect: cssUserSelect,
     dataGridCodeList: dataGridCodeList,

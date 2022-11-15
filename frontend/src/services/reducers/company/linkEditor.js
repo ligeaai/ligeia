@@ -3,9 +3,11 @@ import {
     LOAD_LINKS,
     UPDATE_LINKS_VALUE,
     SET_LINK_ACTIVE,
-    CLEAN_ALL_LINK_EDITOR
+    CLEAN_ALL_LINK_EDITOR,
+    LOAD_LINK_EDITOR_SCHEMA
 } from "../../actions/types"
 const initialState = {
+    linkEditorSchema: false,
     data: false,
     links: false,
     changedLinks: new Set(),
@@ -29,10 +31,16 @@ export default function (state = initialState, action) {
                 ...state,
                 isLinksActive: payload
             }
+
         case LOAD_LINK_EDITOR:
             return {
                 ...state,
                 data: payload
+            }
+        case LOAD_LINK_EDITOR_SCHEMA:
+            return {
+                ...state,
+                linkEditorSchema: payload
             }
         case LOAD_LINKS:
             var links = []

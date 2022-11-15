@@ -1,5 +1,6 @@
 import authReducer from './authReducer';
 import companyDataGrid from "./company/datagrid"
+import companyCheckedList from './company/checkedList';
 import confirmation from './confirmation';
 import cssUserSelect from './cssUserSelect';
 import dataGridCodeList from "./codelist/datagrid"
@@ -17,6 +18,6 @@ import treeviewCodelist from './codelist/treeview';
 
 
 export {
-    authReducer, companyDataGrid, confirmation, cssUserSelect, dataGridCodeList, drawerMenu, errorReducer, fullScreenReducer,
+    authReducer, companyDataGrid, confirmation, companyCheckedList, cssUserSelect, dataGridCodeList, drawerMenu, errorReducer, fullScreenReducer,
     item, langReducer, loaderReducer, linkEditor, registerFormReducer, searchBarReducer, themeReducer, treeviewCodelist
 }

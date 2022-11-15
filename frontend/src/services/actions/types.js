@@ -30,7 +30,7 @@ export const CLEAN_ERROR_SUCCESS = 'CLEAN_ERROR_SUCCESS';
 export const CLEAN_ERROR_FAIL = 'CLEAN_ERROR_FAIL';
 
 
-//-----------Type Editor---------------------
+//-----------Type - item - link Editor---------------------
 export const ADD_DATE_BREAK_COLUMN = "ADD_DATE_BREAK_COLUMN";
 export const DELETE_DATE_BREAK_COLUMN = "DELETE_DATE_BREAK_COLUMN";
 export const ADD_ROW = "ADD_ROW";
@@ -51,6 +51,10 @@ export const SET_LINK_ACTIVE = "SET_LINK_ACTIVE";
 export const CLEAN_ALL_DATAGRID = "CLEAN_ALL_DATAGRID";
 export const CLEAN_ALL_TREEMENU = "CLEAN_ALL_TREEMENU";
 export const CLEAN_ALL_LINK_EDITOR = "CLEAN_ALL_LINK_EDITOR";
+export const LOAD_CHECKLIST = "LOAD_CHECKLIST";
+export const LOAD_LINK_EDITOR_SCHEMA = "LOAD_LINK_EDITOR_SCHEMA";
+export const SET_CHECKED_ITEMS = "SET_CHECKED_ITEMS";
+export const CLEAN_COMPANY_CHECKED_LIST = "CLEAN_COMPANY_CHECKED_LIST";
 
 //-----------Code List-------------------
 export const LOAD_TREEVIEW_ITEM_CODELIST = "LOAD_TREEVIEW_ITEM_CODELIST";

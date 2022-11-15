@@ -3,17 +3,20 @@ import PropTypes from "prop-types";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 
-import TransferList from "./transferList";
-
+import CheckList from "./checkList";
+import { useDispatch } from "react-redux";
+import { cleanCompanyCheckedList } from "../../../../../services/actions/company/checkedList";
 function SimpleDialog(props) {
+  const dispatch = useDispatch();
   const { onClose, open, data } = props;
   const handleClose = () => {
     onClose();
+    dispatch(cleanCompanyCheckedList());
   };
 
   return (
     <Dialog onClose={handleClose} open={open}>
-      <TransferList props={data} />
+      <CheckList {...props} />
     </Dialog>
   );
 }
@@ -21,7 +24,6 @@ function SimpleDialog(props) {
 SimpleDialog.propTypes = {
   onClose: PropTypes.func.isRequired,
   open: PropTypes.bool.isRequired,
-
   data: PropTypes.object.isRequired,
 };
 

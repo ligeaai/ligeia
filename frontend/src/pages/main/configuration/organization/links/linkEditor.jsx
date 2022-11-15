@@ -22,11 +22,12 @@ import DatePicker from "../../../../../components/datePicker/datePicker";
 
 const LinkEditor = ({ type }) => {
   const dispatch = useDispatch();
-  const res = useSelector((state) => state.linkEditor.data);
+  const res = useSelector((state) => state.linkEditor.linkEditorSchema);
   const links = useSelector((state) => state.linkEditor.links);
   const changedLinks = useSelector((state) => state.linkEditor.changedLinks);
   const selectedItem = useSelector((state) => state.item.selectedItem);
-
+  console.log(res);
+  console.log(links);
   React.useEffect(() => {
     if (type === selectedItem.ITEM_TYPE) {
       dispatch(selectItem(selectedItem.selectedIndex));
@@ -52,141 +53,137 @@ const LinkEditor = ({ type }) => {
           <TimeRangePicker /> 
         </Grid> */}
         <Grid item xs={12}>
-          {res.map((e, i) => (
+          {Object.keys(res).map((e, i) => (
             <Box key={i}>
               <Divider />
               <Box sx={{ p: 1 }}>
-                <Box sx={{ mb: 3, fontSize: "14px" }}>{e.SHORT_LABEL}</Box>
+                <Box sx={{ mb: 3, fontSize: "14px" }}>{res[e].SHORT_LABEL}</Box>
                 <Box sx={{ mb: 1 }}>
-                  <Dialog props={e} />
+                  <Dialog props={res[e]} />
                 </Box>
               </Box>
-              <Grid container>
+              <Grid container spacing={1} sx={{ p: 1 }}>
                 {Object.keys(links).map((a, key) => {
-                  if (e.FROM_TYPE === links[a].FROM_ITEM_TYPE) {
-                    if (selectedItem.ITEM_ID === links[a].TO_ITEM_ID) {
-                      const onChangeStartDateTime = (newDate) => {
-                        dispatch(
-                          updateItemLink(
-                            links[a].LINK_ID,
-                            "START_DATETIME",
-                            newDate
-                          )
-                        );
-                      };
-                      const onChangeEndDateTime = (newDate) => {
-                        dispatch(
-                          updateItemLink(
-                            links[a].LINK_ID,
-                            "END_DATETIME",
-                            newDate
-                          )
-                        );
-                      };
-                      return (
-                        <Grid item key={key}>
+                  if (res[e].TYPE === links[a].LINK_TYPE) {
+                    const onChangeStartDateTime = (newDate) => {
+                      dispatch(
+                        updateItemLink(
+                          links[a].LINK_ID,
+                          "START_DATETIME",
+                          newDate
+                        )
+                      );
+                    };
+                    const onChangeEndDateTime = (newDate) => {
+                      dispatch(
+                        updateItemLink(
+                          links[a].LINK_ID,
+                          "END_DATETIME",
+                          newDate
+                        )
+                      );
+                    };
+                    return (
+                      <Grid item key={key}>
+                        <Grid
+                          container
+                          sx={{
+                            maxWidth: "278px",
+                            borderRadius: "5px",
+                            boxShadow: 2,
+                          }}
+                        >
                           <Grid
-                            container
+                            item
+                            xs={12}
                             sx={{
-                              maxWidth: "278px",
-                              borderRadius: "5px",
-                              boxShadow: 2,
-                              mx: 1,
+                              width: "278px",
+                              borderBottom: "1px solid black",
                             }}
                           >
-                            <Grid
-                              item
-                              xs={12}
-                              sx={{
-                                width: "278px",
-                                borderBottom: "1px solid black",
+                            <IconButton
+                              onClick={async () => {
+                                const deleteFunc = async () => {
+                                  dispatch(deleteLinkItem(links[a].LINK_ID));
+                                };
+                                dispatch({
+                                  type: "confirmation/setConfirmation",
+                                  payload: {
+                                    title: "Are you sure you want to delete?",
+                                    body: `${links[a].FROM_ITEM_NAME} it will be deleted`,
+                                    agreefunction: deleteFunc,
+                                  },
+                                });
                               }}
                             >
-                              <IconButton
-                                onClick={async () => {
-                                  const deleteFunc = async () => {
-                                    dispatch(deleteLinkItem(links[a].LINK_ID));
-                                  };
-                                  dispatch({
-                                    type: "confirmation/setConfirmation",
-                                    payload: {
-                                      title: "Are you sure you want to delete?",
-                                      body: `${links[a].FROM_ITEM_NAME} it will be deleted`,
-                                      agreefunction: deleteFunc,
-                                    },
-                                  });
-                                }}
-                              >
-                                <DeleteIcon fontSize="small" />
-                              </IconButton>
-                              <IconButton
-                                onClick={async () => {
-                                  const saveFunc = async () => {
-                                    dispatch(saveLinkItem(links[a].LINK_ID));
-                                  };
-                                  if (changedLinks.has(links[a].LINK_ID)) {
-                                    if (
-                                      links[a].START_DATETIME <
-                                      links[a].END_DATETIME
-                                    ) {
-                                      dispatch({
-                                        type: "confirmation/setConfirmation",
-                                        payload: {
-                                          title:
-                                            "Are you sure you want to save?",
-                                          body: `Start date time will change`,
-                                          agreefunction: saveFunc,
-                                        },
-                                      });
-                                    } else {
-                                      dispatch({
-                                        type: "ADD_ERROR_SUCCESS",
-                                        payload:
-                                          "The initial time cannot exceed the deadline",
-                                      });
-                                    }
+                              <DeleteIcon fontSize="small" />
+                            </IconButton>
+                            <IconButton
+                              onClick={async () => {
+                                const saveFunc = async () => {
+                                  dispatch(saveLinkItem(links[a].LINK_ID));
+                                };
+                                if (changedLinks.has(links[a].LINK_ID)) {
+                                  if (
+                                    links[a].START_DATETIME <
+                                    links[a].END_DATETIME
+                                  ) {
+                                    dispatch({
+                                      type: "confirmation/setConfirmation",
+                                      payload: {
+                                        title: "Are you sure you want to save?",
+                                        body: `Start date time will change`,
+                                        agreefunction: saveFunc,
+                                      },
+                                    });
+                                  } else {
+                                    dispatch({
+                                      type: "ADD_ERROR_SUCCESS",
+                                      payload:
+                                        "The initial time cannot exceed the deadline",
+                                    });
                                   }
-                                }}
-                              >
-                                <SaveIcon fontSize="small" />
-                              </IconButton>
-                            </Grid>
-                            <Grid
-                              item
-                              xs={6}
-                              sx={{ borderRight: "1px solid black", p: 1 }}
+                                }
+                              }}
                             >
-                              <Grid container sx={{ fontSize: "14fpx" }}>
-                                <Grid item xs={12}>
-                                  {links[a].FROM_ITEM_TYPE}
-                                </Grid>
-                                <Grid item xs={12} sx={{ fontSize: "12px" }}>
-                                  {links[a].FROM_ITEM_NAME}
-                                </Grid>
+                              <SaveIcon fontSize="small" />
+                            </IconButton>
+                          </Grid>
+                          <Grid
+                            item
+                            xs={6}
+                            sx={{ borderRight: "1px solid black", p: 1 }}
+                          >
+                            <Grid container sx={{ fontSize: "14px" }}>
+                              <Grid item xs={12}>
+                                {links[a].FROM_ITEM_TYPE}
+                              </Grid>
+                              <Grid item xs={12} sx={{ fontSize: "12px" }}>
+                                {links[a].FROM_ITEM_NAME}
                               </Grid>
                             </Grid>
-                            <Grid item xs={6} sx={{ p: 1 }}>
-                              <Grid container sx={{ fontSize: "12px" }}>
-                                <Grid item xs={12}>
-                                  Start:
-                                  <DatePicker
-                                    time={new Date(links[a].START_DATETIME)}
-                                    onChangeFunc={onChangeStartDateTime}
-                                  />
-                                </Grid>
-                                <Grid item xs={12}>
-                                  End:
-                                  <DatePicker
-                                    time={new Date(links[a].END_DATETIME)}
-                                    onChangeFunc={onChangeEndDateTime}
-                                  />
-                                </Grid>
+                          </Grid>
+                          <Grid item xs={6} sx={{ p: 1 }}>
+                            <Grid container sx={{ fontSize: "12px" }}>
+                              <Grid item xs={12}>
+                                Start:
+                                <DatePicker
+                                  time={new Date(links[a].START_DATETIME)}
+                                  onChangeFunc={onChangeStartDateTime}
+                                />
+                              </Grid>
+                              <Grid item xs={12}>
+                                End:
+                                <DatePicker
+                                  time={new Date(links[a].END_DATETIME)}
+                                  onChangeFunc={onChangeEndDateTime}
+                                />
                               </Grid>
                             </Grid>
                           </Grid>
                         </Grid>
-                      );
-                    }
+                      </Grid>
+                    );
                   }
                 })}
               </Grid>

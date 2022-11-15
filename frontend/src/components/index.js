@@ -1,6 +1,7 @@
 import ActionMenu from "./navigationComp/actionMenu";
 import Breadcrumb from "./breadcrumb/breadcrumb";
 import Cards from "./cardGenerator/cards";
+import CheckboxList from "./checkList/checkList";
 import Confirmation from "./confirmation/confirmation"
 import { ComponentError } from "./errorMessage/componentError"
 import ComponentErrorBody from "./errorMessage/componentErrorBody";
@@ -27,6 +28,6 @@ import { TreeMenu } from "./treeMenu/treeMenu"
 
 
 export {
-    ActionMenu, Breadcrumb, Cards, Confirmation, ComponentError, ComponentErrorBody, CustomNoRowsOverlay, DateBreak, DatePicker, Drawer, ErrorBoundary, ErrorMessage,
+    ActionMenu, Breadcrumb, Cards, CheckboxList, Confirmation, ComponentError, ComponentErrorBody, CustomNoRowsOverlay, DateBreak, DatePicker, Drawer, ErrorBoundary, ErrorMessage,
     Loading, LoadingComponent, MyNavigator, PropLinkTabs, SocialButton, TimeRangePicker, TreeView, ItemSperatorLine, ItemSperatorLineXL, Items, SearchBar, SearchBarMobile, TreeMenu
 }

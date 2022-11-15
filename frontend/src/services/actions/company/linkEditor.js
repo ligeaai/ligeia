@@ -2,7 +2,8 @@ import {
     LOAD_LINK_EDITOR,
     LOAD_LINKS,
     UPDATE_LINKS_VALUE,
-    CLEAN_ALL_LINK_EDITOR
+    CLEAN_ALL_LINK_EDITOR,
+    LOAD_LINK_EDITOR_SCHEMA
 } from "../types"
 
 import { instance, config } from '../../baseApi';
@@ -31,6 +32,7 @@ export const loadLinkEditor = () => async (dispatch, getState) => {
                 e.END_DATETIME = new Date(e.END_DATETIME)
                 e.START_DATETIME = new Date(e.START_DATETIME)
             })
+            console.log(itemLinkRes.data);
             dispatch({
                 type: LOAD_LINKS,
                 payload: itemLinkRes.data
@@ -45,6 +47,15 @@ export const loadLinkEditor = () => async (dispatch, getState) => {
             type: LOAD_LINK_EDITOR,
             payload: res.data
         })
+        var temp = []
+        Object.keys(res.data).map(e => {
+            temp[res.data[e].TYPE] = res.data[e]
+        })
+        dispatch({
+            type: LOAD_LINK_EDITOR_SCHEMA,
+            payload: temp
+        })
+
 
     } catch {
 

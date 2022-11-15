@@ -7,18 +7,15 @@ import {
 } from "../../actions/types"
 
 
-var initialState = {}
-if (JSON.parse(JSON.parse(localStorage.getItem('persist:root')).drawerMenu)) {
-    initialState = JSON.parse(JSON.parse(localStorage.getItem('persist:root')).drawerMenu)
-} else {
-    initialState = {
-        isOpen: false,
-        temp: 0,//temporary value determines the drawer stat before the drawer hover
-        width: "68px",
-        selectedItem: "Configuration",
-        data: null
-    };
-}
+
+const initialState = {
+    isOpen: false,
+    temp: 0,//temporary value determines the drawer stat before the drawer hover
+    width: "68px",
+    selectedItem: "Home",
+    data: null
+};
+
 
 
 export default function (state = initialState, action) {
