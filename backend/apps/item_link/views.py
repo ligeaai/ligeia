@@ -48,8 +48,25 @@ class ItemLinkUpdateView(generics.UpdateAPIView):
         quaryset.update(**request.data)
         return Response("Succsesful",status=status.HTTP_200_OK)
 
-            
-            
+class ItemLinkDenemesView(generics.ListAPIView):
+    permission_classes = [permissions.AllowAny]
+    def get(self, request, *args, **kwargs):
+        quaryset  = item_link.objects.filter(TO_ITEM_TYPE = "COMPANY")
+        validate_find(quaryset,request)
+        serializer = ItemLinkDetailsSerializer(quaryset,many = True)
+        tempt ={}
+        self._getChild(serializer.data,tempt)
+        return Response(serializer.data)
+    
+    def _getChild(self,data,tempt):
+        for index in range(len(data)):
+            quaryset  = item_link.objects.filter(TO_ITEM_TYPE = data[index].get('FROM_ITEM_TYPE'))
+            if quaryset:
+                serializer = ItemLinkDetailsSerializer(quaryset,many = True)
+                data[index]['CHILD'] = serializer.data
+                self._getChild(serializer.data,tempt)
+        
+
 
 
 class ItemLinkDeleteView(generics.CreateAPIView):
