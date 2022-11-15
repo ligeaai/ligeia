@@ -2,10 +2,25 @@ import * as React from "react";
 import PropTypes from "prop-types";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
-
+import Paper from "@mui/material/Paper";
+import Draggable from "react-draggable";
 import CheckList from "./checkList";
 import { useDispatch } from "react-redux";
 import { cleanCompanyCheckedList } from "../../../../../services/actions/company/checkedList";
+
+function PaperComponent(props) {
+  const nodeRef = React.useRef(null);
+  return (
+    <Draggable
+      handle="#draggable-dialog-title"
+      cancel={'[class*="MuiDialogContent-root"]'}
+      nodeRef={nodeRef}
+    >
+      <Paper {...props} ref={nodeRef} />
+    </Draggable>
+  );
+}
+
 function SimpleDialog(props) {
   const dispatch = useDispatch();
   const { onClose, open, data } = props;
@@ -15,7 +30,12 @@ function SimpleDialog(props) {
   };
 
   return (
-    <Dialog onClose={handleClose} open={open}>
+    <Dialog
+      onClose={handleClose}
+      open={open}
+      PaperComponent={PaperComponent}
+      aria-labelledby="draggable-dialog-title"
+    >
       <CheckList {...props} />
     </Dialog>
   );

@@ -41,7 +41,11 @@ const MyCheckList = (props) => {
   return (
     <React.Fragment>
       <Box sx={{ m: 1 }}>
-        <Grid container sx={{ justifyContent: "space-between" }}>
+        <Grid
+          container
+          style={{ cursor: "move", justifyContent: "space-between" }}
+          id="draggable-dialog-title"
+        >
           <Grid item>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DatePicker

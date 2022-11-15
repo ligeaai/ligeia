@@ -12,6 +12,17 @@ const ErrorMessage = (props) => {
   const errMsgClose = () => {
     dispatch(clean_error());
   };
+  React.useEffect(() => {
+    let timer = setTimeout(() => {
+      dispatch({
+        type: "CLEAN_ERROR_SUCCESS",
+      });
+    }, 1500);
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [err.isError]);
   const action = (
     <React.Fragment>
       <IconButton
