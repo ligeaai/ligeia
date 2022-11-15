@@ -47,14 +47,6 @@ class ItemScriptSaveView(generics.CreateAPIView):
        return Response(request.data,status=status.HTTP_201_CREATED)
 
 
-
-
-
-
-
-
-
-
 # Create your views here.
 # class ItemScriptSaveView(generics.CreateAPIView):
 #     permission_classes = [permissions.AllowAny]
@@ -74,7 +66,6 @@ class ItemScriptSaveView(generics.CreateAPIView):
 #         message = "Succsesfull created for item and property"
 #         logger.info(message,request = request)
 #         return Response(message,status=status.HTTP_201_CREATED)
-       
     
 
 class ItemView(generics.ListAPIView):
