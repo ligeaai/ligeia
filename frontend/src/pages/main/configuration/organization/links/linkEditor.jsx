@@ -38,9 +38,6 @@ const LinkEditor = ({ type }) => {
       });
     }
     dispatch(addItemType(type));
-    dispatch({
-      type: "CLEAN_ROWS",
-    });
     dispatch(loadLinkEditor());
   }, [window.location.pathname]);
 
@@ -118,7 +115,7 @@ const LinkEditor = ({ type }) => {
                             >
                               <DeleteIcon fontSize="small" />
                             </IconButton>
-                            <IconButton
+                            {/* <IconButton
                               onClick={async () => {
                                 const saveFunc = async () => {
                                   dispatch(saveLinkItem(links[a].LINK_ID));
@@ -147,7 +144,7 @@ const LinkEditor = ({ type }) => {
                               }}
                             >
                               <SaveIcon fontSize="small" />
-                            </IconButton>
+                            </IconButton> */}
                           </Grid>
                           <Grid
                             item

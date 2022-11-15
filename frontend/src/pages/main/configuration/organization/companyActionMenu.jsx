@@ -11,7 +11,7 @@ import {
   confirmDataGridDontSaveGo,
   saveNewItem,
 } from "../../../../services/actions/company/item";
-const CompanyActionMenu = ({ isLinksActive }) => {
+const CompanyActionMenu = () => {
   const selectedIndex = useSelector(
     (state) => state.item.selectedItem.selectedIndex
   );
@@ -110,9 +110,6 @@ const CompanyActionMenu = ({ isLinksActive }) => {
       saveGoNext={saveGoNext}
       saveGoPrev={saveGoPrev}
       infoIsActive={false}
-      btnNewIsActive={!isLinksActive}
-      saveIsActive={!isLinksActive}
-      btnDeleteIsActive={!isLinksActive}
       saveGoPrevIsDisabled={isNew}
       saveGoNextIsDisabled={isNew}
       dublicateIsActive={false}

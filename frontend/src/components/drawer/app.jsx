@@ -96,7 +96,9 @@ const MultiLevel = ({ item }) => {
   }, [isOpen]);
 
   const handleClick = () => {
-    setOpen((prev) => !prev);
+    if (isOpen) {
+      setOpen((prev) => !prev);
+    }
     dispatch(setSelectedDrawerItem(item.SHORT_LABEL));
     history.push(`${item.URL}`);
   };

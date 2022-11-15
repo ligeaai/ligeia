@@ -3,23 +3,32 @@ import {
     LOAD_LINKS,
     UPDATE_LINKS_VALUE,
     CLEAN_ALL_LINK_EDITOR,
-    LOAD_LINK_EDITOR_SCHEMA
+    LOAD_LINK_EDITOR_SCHEMA,
+    ADD_ERROR_SUCCESS,
+    CLEAN_CHANGED_LIST_LINK_EDITOR
 } from "../types"
+import { Box } from "@mui/material";
 
 import { instance, config } from '../../baseApi';
+import React from "react";
 
 
 export const loadLinkEditor = () => async (dispatch, getState) => {
-    const TO_TYPE = getState().item.type
+    const TYPE = getState().item.type
     const CULTURE = getState().lang.cultur
     const selectedItem = getState().item.selectedItem.ITEM_ID
-    const body = JSON.stringify({ TO_TYPE, CULTURE })
+    const body = JSON.stringify({ TYPE })
+    dispatch({
+        type: LOAD_LINKS,
+        payload: []
+    })
     try {
         let res = await instance.post(
             "/type-link/details/",
             body,
             config
         );
+        console.log(res);
         try {
             let itemLinkRes = await instance.post(
                 `/item-link/details/`,
@@ -32,10 +41,13 @@ export const loadLinkEditor = () => async (dispatch, getState) => {
                 e.END_DATETIME = new Date(e.END_DATETIME)
                 e.START_DATETIME = new Date(e.START_DATETIME)
             })
-            console.log(itemLinkRes.data);
+            var links = []
+            itemLinkRes.data.map(e => {
+                links[e.LINK_ID] = e
+            })
             dispatch({
                 type: LOAD_LINKS,
-                payload: itemLinkRes.data
+                payload: links
             })
         } catch {
             dispatch({
@@ -45,11 +57,11 @@ export const loadLinkEditor = () => async (dispatch, getState) => {
         }
         dispatch({
             type: LOAD_LINK_EDITOR,
-            payload: res.data
+            payload: res.data.TO_TYPE
         })
         var temp = []
-        Object.keys(res.data).map(e => {
-            temp[res.data[e].TYPE] = res.data[e]
+        Object.keys(res.data.TO_TYPE).map(e => {
+            temp[res.data.TO_TYPE[e].TYPE] = res.data.TO_TYPE[e]
         })
         dispatch({
             type: LOAD_LINK_EDITOR_SCHEMA,
@@ -57,11 +69,7 @@ export const loadLinkEditor = () => async (dispatch, getState) => {
         })
 
 
-    } catch {
-
-    }
-
-
+    } catch { }
 }
 
 export const deleteLinkItem = (LINK_ID) => async dispatch => {
@@ -83,41 +91,96 @@ export const updateItemLink = (linkId, key, value) => async dispatch => {
     })
 }
 
-export const saveLinkItem = (linkId) => async (dispatch, getState) => {
-    const updatedItem = getState().linkEditor.links[linkId]
-    try {
-        var d = updatedItem.START_DATETIME.getDate();//todo create a utils folder for date converting
-        var m = updatedItem.START_DATETIME.getMonth();
-        m += 1;
-        var y = updatedItem.START_DATETIME.getFullYear();
-        var startDateTime = (y + "-" + m + "-" + d);
-    } catch {
-        var startDateTime = updatedItem.START_DATETIME
+export const saveLinkItem = () => async (dispatch, getState) => {
+    const links = getState().linkEditor.links
+    const changedLinks = getState().linkEditor.changedLinks
+    Object.keys(links).map(async e => {
+        if (changedLinks.has(e)) {
+            try {
+                var d = links[e].START_DATETIME.getDate();//todo create a utils folder for date converting
+                var m = links[e].START_DATETIME.getMonth();
+                m += 1;
+                var y = links[e].START_DATETIME.getFullYear();
+                var startDateTime = (y + "-" + m + "-" + d);
+            } catch {
+                var startDateTime = links[e].START_DATETIME
+            }
+
+
+            try {
+                var d = links[e].END_DATETIME.getDate();
+                var m = links[e].END_DATETIME.getMonth();
+                m += 1;
+                var y = links[e].END_DATETIME.getFullYear();
+                var endDateTime = (y + "-" + m + "-" + d);
+            } catch {
+                var endDateTime = links[e].END_DATETIME
+            }
+
+            const body = JSON.stringify({ LINK_ID: e, START_DATETIME: startDateTime, END_DATETIME: endDateTime })
+            try {
+                await instance.put(
+                    `/item-link/update/`,
+                    body,
+                    config
+                );
+            } catch { }
+        }
+    })
+
+    dispatch({
+        type: CLEAN_CHANGED_LIST_LINK_EDITOR,
+
+    })
+
+}
+
+const checkTheValues = () => async (dispatch, getState) => {
+    const links = getState().linkEditor.links
+    const changedLinks = getState().linkEditor.changedLinks
+    var returnVal = true
+    Object.keys(links).map(async e => {
+        if (changedLinks.has(e)) {
+            console.log(links[e].START_DATETIME);
+            if (links[e].START_DATETIME > links[e].END_DATETIME) {
+                returnVal = false
+            }
+        }
     }
+    )
+    return returnVal
+}
 
+export const saveAgreeFunc = (extraFunc = () => { }) => async (dispatch, getState) => {
+    const links = getState().linkEditor.links
+    const changedLinks = getState().linkEditor.changedLinks
+    var temp = []
+    Object.keys(links).map(async e => {
+        if (changedLinks.has(e)) {
+            temp.push(links[e].FROM_ITEM_NAME)
+        }
+    })
+    console.log(temp);
+    dispatch({
+        type: "confirmation/setConfirmation",
+        payload: {
+            title: "Are you sure you want to save?",
+            body: <>{temp.map(e => (<Box sx={{ width: "100%" }}>{e}</Box>))}</>,
+            agreefunction: async () => {
+                console.log(dispatch(checkTheValues()));
+                if (await dispatch(checkTheValues())) {
+                    dispatch(saveLinkItem());
+                    extraFunc();
+                } else {
+                    dispatch({
+                        type: ADD_ERROR_SUCCESS,
+                        payload: "The initial time cannot exceed the deadline"
+                    })
+                }
 
-    try {
-        var d = updatedItem.END_DATETIME.getDate();
-        var m = updatedItem.END_DATETIME.getMonth();
-        m += 1;
-        var y = updatedItem.END_DATETIME.getFullYear();
-        var endDateTime = (y + "-" + m + "-" + d);
-    } catch {
-        var endDateTime = updatedItem.END_DATETIME
-    }
-
-
-
-
-    const body = JSON.stringify({ LINK_ID: updatedItem.LINK_ID, START_DATETIME: startDateTime, END_DATETIME: endDateTime })
-    console.log(body);
-    try {
-        await instance.put(
-            `/item-link/update/`,
-            body,
-            config
-        );
-    } catch { }
+            },
+        },
+    });
 }
 
 export const cleanAllLinks = () => dispatch => {

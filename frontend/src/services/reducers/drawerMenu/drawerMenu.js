@@ -39,26 +39,26 @@ export default function (state = initialState, action) {
                 width: state.isOpen ? "68px" : "248px",
                 isOpen: !state.isOpen,
             }
-        case MOUSE_ENTER_DRAWER:
-            if (!state.isOpen) {
-                return {
-                    ...state,
-                    temp: 1,
-                    isOpen: true,
-                    width: "248px"
-                }
-            }
-            return { ...state }
-        case MOUSE_LEAVE_DRAWER:
-            if (state.temp === 1) {
-                return {
-                    ...state,
-                    temp: 0,
-                    isOpen: false,
-                    width: "68px"
-                }
-            }
-            return { ...state }
+        // case MOUSE_ENTER_DRAWER:
+        //     if (!state.isOpen) {
+        //         return {
+        //             ...state,
+        //             temp: 1,
+        //             isOpen: true,
+        //             width: "248px"
+        //         }
+        //     }
+        //     return { ...state }
+        // case MOUSE_LEAVE_DRAWER:
+        //     if (state.temp === 1) {
+        //         return {
+        //             ...state,
+        //             temp: 0,
+        //             isOpen: false,
+        //             width: "68px"
+        //         }
+        //     }
+        //     return { ...state }
         default:
             return {
                 ...state,

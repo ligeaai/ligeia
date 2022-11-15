@@ -2,10 +2,10 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { Box } from "@mui/material";
-import {
-  mouseEnterDrawer,
-  mouseLeaveDrawer,
-} from "../../services/actions/drawerMenu/drawerMenu";
+// import {
+//   mouseEnterDrawer,
+//   mouseLeaveDrawer,
+// } from "../../services/actions/drawerMenu/drawerMenu";
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
 import App from "./app";
 import { ComponentError, ComponentErrorBody } from "../index";
@@ -16,8 +16,8 @@ const Drawer = (props) => {
 
   return (
     <Box
-      onMouseEnter={() => dispatch(mouseEnterDrawer())}
-      onMouseLeave={() => dispatch(mouseLeaveDrawer())}
+      // onMouseEnter={() => dispatch(mouseEnterDrawer())}
+      // onMouseLeave={() => dispatch(mouseLeaveDrawer())}
       sx={{
         minWidth: isOpen ? "248px" : "68px",
         minHeight: "calc(100vh - 60px - 8px)",

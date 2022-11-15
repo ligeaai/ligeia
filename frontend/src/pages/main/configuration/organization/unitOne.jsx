@@ -14,6 +14,7 @@ import DateBreak from "./dateBreak";
 import Properties from "./properties";
 import Links from "./links/link";
 import CompanyActionMenu from "./companyActionMenu";
+import LinksActionMenu from "./links/linksActionMenu";
 
 import { TreeMenuItems } from "./treeMenu";
 
@@ -71,7 +72,7 @@ const UnitOne = (props) => {
               alignItems: "center",
             }}
           >
-            <CompanyActionMenu isLinksActive={isLinksActive} />
+            {!isLinksActive ? <CompanyActionMenu /> : <LinksActionMenu />}
           </Grid>
           {isLinksActive ? (
             <></>

@@ -8,21 +8,26 @@ import {
 
 import { instance, config } from '../../baseApi';
 
-export const loadDrawerMenu = () => async (dispatch) => {
+export const loadDrawerMenu = () => async (dispatch, getState) => {
+    const CULTURE = getState().lang.cultur
+    const body = JSON.stringify({ CULTURE })
+    console.log(body);
     try {
         let res = await instance
-            .get(
+            .post(
                 "/resource-list/menu/",
+                body,
                 config
             )
-        res.data[5].Items.Items.URL = "/configuration/items"
-        res.data[5].Items.Tools.URL = "/configuration/initialize"
+        res.data.Configuration.Items.Items.URL = "/configuration/items"
+        res.data.Configuration.Items.Tools.URL = "/configuration/initialize"
         dispatch({
             type: LOAD_DRAWER_MENU,
             payload: res.data
         })
 
     } catch (err) {
+        console.log(err);
         return err
     }
 }
@@ -41,13 +46,13 @@ export const toggleDrawerMenu = () => async (dispatch) => {
 }
 
 
-export const mouseEnterDrawer = () => async (dispatch) => {
-    dispatch({
-        type: MOUSE_ENTER_DRAWER
-    })
-}
-export const mouseLeaveDrawer = () => async (dispatch) => {
-    dispatch({
-        type: MOUSE_LEAVE_DRAWER
-    })
-}
+// export const mouseEnterDrawer = () => async (dispatch) => {
+//     dispatch({
+//         type: MOUSE_ENTER_DRAWER
+//     })
+// }
+// export const mouseLeaveDrawer = () => async (dispatch) => {
+//     dispatch({
+//         type: MOUSE_LEAVE_DRAWER
+//     })
+// }
