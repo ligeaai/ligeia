@@ -8,7 +8,8 @@ import {
     ADD_ROW,
     ADD_COLUMN,
     ADD_ERROR_SUCCESS,
-    SET_LOADING
+    SET_LOADING,
+    CLEAN_ALL_TREEMENU
 } from "../types"
 
 import { addColum } from "./datagrid"
@@ -276,7 +277,7 @@ const updateDataGrid = () => async (dispatch, getState) => {
             )
         var response = {}
         response["HISTORY"] = {
-            PROPERTY_NAME: "HISTORY",
+            PROPERTY_NAME: "",
             CODE_LIST: null,
             MANDATORY: "none",
             LABEL_ID: "HISTORY",
@@ -335,7 +336,6 @@ const updateDataGrid = () => async (dispatch, getState) => {
                     } else {
                         rows[res.data[e][a].PROPERTY_TYPE][newUuid.replace(/-/g, "")] = true
                     }
-
                 } else if (res.data[e][a].PROPERTY_INFO === "CODE") {
                     rows[res.data[e][a].PROPERTY_TYPE][newUuid.replace(/-/g, "")] = res.data[e][a].PROPERTY_CODE
                 } else if (res.data[e][a].PROPERTY_INFO === "BLOB_ID") {
@@ -474,4 +474,10 @@ export const deleteItem = () => async (dispatch, getState) => {
     }
     catch (err) {
     }
+}
+
+export const cleanAllTreeMenu = () => dispatch => {
+    dispatch({
+        type: CLEAN_ALL_TREEMENU
+    })
 }

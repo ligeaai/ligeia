@@ -13,7 +13,7 @@ import MenuOpenOutlinedIcon from "@mui/icons-material/MenuOpenOutlined";
 
 import { changeTheme } from "../../services/actions/theme";
 import { changeLanguage } from "../../services/actions/language";
-import { toggleDrawer } from "../../services/reducers/drawerReducer";
+import { toggleDrawerMenu } from "../../services/actions/drawerMenu/drawerMenu";
 import { SearchBarMobile, SearchBar } from "../../components";
 import NestedMenu from "./nestedMenu";
 
@@ -30,7 +30,7 @@ const Header = (props) => {
   const search = useSelector((state) => state.searchBar.isFocus);
   const theme = useSelector((state) => state.theme.theme);
   const lang = useSelector((state) => state.lang.lang);
-  const drawerIsOpen = useSelector((state) => state.drawer.isOpen);
+  const drawerIsOpen = useSelector((state) => state.drawerMenu.isOpen);
   const [settingsMenu, setSettingsMenu] = React.useState(false);
 
   window.addEventListener("click", function (e) {
@@ -121,7 +121,7 @@ const Header = (props) => {
                     color: "#ffffff",
                   }}
                   onClick={() => {
-                    dispatch(toggleDrawer());
+                    dispatch(toggleDrawerMenu());
                   }}
                 />
               ) : (
@@ -132,7 +132,7 @@ const Header = (props) => {
                     color: "#ffffff",
                   }}
                   onClick={() => {
-                    dispatch(toggleDrawer());
+                    dispatch(toggleDrawerMenu());
                   }}
                 />
               )}

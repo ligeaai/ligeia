@@ -9,20 +9,17 @@ import { Drawer, ComponentError, ComponentErrorBody } from "../../components";
 import Header from "./header";
 import { setIsFullScreen } from "../../services/reducers/fullScreenReducer";
 
-import { loadDrawerMenu } from "../../services/api/couchApi/drawer";
+import { loadDrawerMenu } from "../../services/actions/drawerMenu/drawerMenu";
 
 const Main = (props) => {
   const dispatch = useDispatch();
   const isFullScreen = useSelector((state) => state.fullScreen.isFullScreen);
   const { Element, delSearchBar } = props;
-  const [navItems, setNavItems] = React.useState(false);
-  const drawerWidth = useSelector((state) => state.drawer.width);
+  const navItems = useSelector((state) => state.drawerMenu.data);
+
+  const drawerWidth = useSelector((state) => state.drawerMenu.width);
   React.useEffect(() => {
-    const getData = async () => {
-      let data = await loadDrawerMenu();
-      setNavItems(data);
-    };
-    getData();
+    dispatch(loadDrawerMenu());
   }, []);
   if (navItems) {
     return isFullScreen ? (

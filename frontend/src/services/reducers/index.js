@@ -3,7 +3,7 @@ import companyDataGrid from "./company/datagrid"
 import confirmation from './confirmation';
 import cssUserSelect from './cssUserSelect';
 import dataGridCodeList from "./codelist/datagrid"
-import drawerReducer from './drawerReducer';
+import drawerMenu from './drawerMenu/drawerMenu';
 import errorReducer from './errorReducer';
 import fullScreenReducer from './fullScreenReducer';
 import item from "./company/item"
@@ -17,6 +17,6 @@ import treeviewCodelist from './codelist/treeview';
 
 
 export {
-    authReducer, companyDataGrid, confirmation, cssUserSelect, dataGridCodeList, drawerReducer, errorReducer, fullScreenReducer,
+    authReducer, companyDataGrid, confirmation, cssUserSelect, dataGridCodeList, drawerMenu, errorReducer, fullScreenReducer,
     item, langReducer, loaderReducer, linkEditor, registerFormReducer, searchBarReducer, themeReducer, treeviewCodelist
 }

@@ -12,6 +12,7 @@ import { ErrorBoundary } from "./errorMessage/errorBoundary"
 import ErrorMessage from "./errorMessage/errorMessage"
 import Loading from "./loading/loading";
 import LoadingComponent from "./loading/loadingComopnent";
+import MyNavigator from "./drawer/myNavigator";
 import PropLinkTabs from "./navigationComp/propLinkTabs"
 import SocialButton from "./buttons/socialButton";
 import TimeRangePicker from "./navigationComp/timeRangePicker";
@@ -27,5 +28,5 @@ import { TreeMenu } from "./treeMenu/treeMenu"
 
 export {
     ActionMenu, Breadcrumb, Cards, Confirmation, ComponentError, ComponentErrorBody, CustomNoRowsOverlay, DateBreak, DatePicker, Drawer, ErrorBoundary, ErrorMessage,
-    Loading, LoadingComponent, PropLinkTabs, SocialButton, TimeRangePicker, TreeView, ItemSperatorLine, ItemSperatorLineXL, Items, SearchBar, SearchBarMobile, TreeMenu
+    Loading, LoadingComponent, MyNavigator, PropLinkTabs, SocialButton, TimeRangePicker, TreeView, ItemSperatorLine, ItemSperatorLineXL, Items, SearchBar, SearchBarMobile, TreeMenu
 }

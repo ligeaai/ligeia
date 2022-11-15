@@ -7,7 +7,8 @@ import {
     IS_CHANGED_HANDLER,
     ADD_COLUMN,
     SET_LOADING,
-    CLEAN_ROWS
+    CLEAN_ROWS,
+    CLEAN_ALL_DATAGRID
 } from "../../actions/types"
 import { Checkbox, TextField } from "@mui/material"
 const columns = {
@@ -36,7 +37,7 @@ const columns = {
         field: "MANDATORY",
         headerName: "Mandatory",
         renderCell: (params) => {
-            if (params.row.PROPERTY_NAME === "HISTORY") {
+            if (params.row.LABEL_ID === "HISTORY") {
                 return <TextField disabled sx={{
                     "& .MuiOutlinedInput-notchedOutline": {
                         border: "none",
@@ -62,6 +63,13 @@ export default function (state = initialState, action) {
     const { type, payload } = action;
 
     switch (type) {
+        case CLEAN_ALL_DATAGRID:
+            return {
+                columns: columns,
+                rows: rows,
+                isChanged: false,
+                loading: false
+            }
         case SET_LOADING:
             return {
                 ...state,

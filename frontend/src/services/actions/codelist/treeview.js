@@ -1,12 +1,15 @@
 import {
     LOAD_TREEVIEW_ITEM_CODELIST,
     SELECT_TREEVIEW_ITEM_CODELIST,
-    CLEAN_AFTER_SAVE
+    CLEAN_AFTER_SAVE,
+    CLEAN_TREEVIEW_SELECT_CODELIST
 } from "../types"
 
 import { instance, config } from '../../baseApi';
 
 import { refreshDataGridCodelist, addNewCodeListItemSchema } from "./datagrid";
+import history from "../../../routers/history";
+
 export const loadTreeviewItemCodelist = () => async (dispatch, getState) => {
     const CULTURE = getState().lang.cultur;
     const LIST_TYPE = "CODE_LIST";
@@ -43,5 +46,18 @@ export const selectTreeViewItemCoedlist = (index) => async (dispatch, getState) 
     dispatch(refreshDataGridCodelist());
     dispatch({
         type: CLEAN_AFTER_SAVE,
+    })
+    var pathnames = window.location.pathname.split("/").filter((x) => x);
+    pathnames[3] = payload.CODE.toLowerCase()
+    var routeTo = "";
+    pathnames.map(e => {
+        routeTo += `/${e}`
+    })
+    history.push(routeTo)
+}
+
+export const cleanTreeMenuSelect = () => dispatch => {
+    dispatch({
+        type: CLEAN_TREEVIEW_SELECT_CODELIST
     })
 }

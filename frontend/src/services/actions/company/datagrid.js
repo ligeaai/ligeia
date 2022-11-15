@@ -6,8 +6,8 @@ import {
     ADD_ITEM_TYPE,
     IS_CHANGED_HANDLER,
     SET_LOADING,
-    CLEAN_DATA_GRID
-
+    CLEAN_DATA_GRID,
+    CLEAN_ALL_DATAGRID
 } from "../types"
 
 import { instance, config } from '../../baseApi';
@@ -78,7 +78,7 @@ export const loadRows = (CULTURE, TYPE) => async (dispatch) => {
             )
         var response = {}
         response["HISTORY"] = {
-            PROPERTY_NAME: "HISTORY",
+            PROPERTY_NAME: "",
             CODE_LIST: null,
             MANDATORY: "none",
             LABEL_ID: "HISTORY",
@@ -118,5 +118,11 @@ export const editRow = (rowId, colId, value) => async (dispatch) => {
     dispatch({
         type: IS_CHANGED_HANDLER,
         payload: true
+    })
+}
+
+export const cleanAllDataGrid = () => dispatch => {
+    dispatch({
+        type: CLEAN_ALL_DATAGRID
     })
 }

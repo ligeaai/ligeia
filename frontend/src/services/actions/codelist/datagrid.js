@@ -7,12 +7,15 @@ import {
     CLEAN_SELECTED_ROWS,
     SELECT_TREEVIEW_ITEM_CODELIST,
     REFRESH_DELETECHILD_CODELIST,
-    ADD_NEW_CHILD_CODELIST
+    ADD_NEW_CHILD_CODELIST,
+    CLEAN_ALL_DATAGRID_CODELIST
 } from "../types"
 
 import { instance, config } from '../../baseApi';
 
 import { loadTreeviewItemCodelist, selectTreeViewItemCoedlist } from "./treeview"
+import history from "../../../routers/history";
+
 function _uuidv4() {
     return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, (c) =>
         (
@@ -62,6 +65,13 @@ export const addNewCodeListItemSchema = () => async (dispatch, getState) => {
         type: LOAD_DATAGRID_ROW_CODELIST,
         payload: payload
     })
+    var pathnames = window.location.pathname.split("/").filter((x) => x);
+    pathnames[3] = "new"
+    var routeTo = "";
+    pathnames.map(e => {
+        routeTo += `/${e}`
+    })
+    history.push(routeTo)
 }
 
 export const refreshDataGridCodelist = () => async (dispatch, getState) => {
@@ -365,7 +375,11 @@ export const deleteChild = () => (dispatch, getState) => {
         type: REFRESH_DELETECHILD_CODELIST,
         payload: { tempRows, deletedRows, changedNew }
     })
+}
 
+export const cleanAllDataGrid = () => dispatch => {
+    dispatch({
+        type: CLEAN_ALL_DATAGRID_CODELIST,
 
-
+    })
 }

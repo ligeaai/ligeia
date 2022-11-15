@@ -6,7 +6,8 @@ import {
     CLEAN_SELECTED_ROWS,
     REFRESH_ROWS_CODELIST,
     REFRESH_DELETECHILD_CODELIST,
-    ADD_NEW_CHILD_CODELIST
+    ADD_NEW_CHILD_CODELIST,
+    CLEAN_ALL_DATAGRID_CODELIST
 } from "../../actions/types"
 
 import { columns } from "../../../pages/main/configuration/initialize/dataGridColumn";
@@ -78,6 +79,15 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 selectedRows: []
+            }
+        case CLEAN_ALL_DATAGRID_CODELIST:
+            return {
+                columns: columns,
+                rows: [],
+                changedRows: [],
+                deletedRows: [],
+                selectedRows: [],
+                newChildRows: [],
             }
         default:
             return {

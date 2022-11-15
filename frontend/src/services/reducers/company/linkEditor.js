@@ -2,7 +2,8 @@ import {
     LOAD_LINK_EDITOR,
     LOAD_LINKS,
     UPDATE_LINKS_VALUE,
-    SET_LINK_ACTIVE
+    SET_LINK_ACTIVE,
+    CLEAN_ALL_LINK_EDITOR
 } from "../../actions/types"
 const initialState = {
     data: false,
@@ -16,6 +17,13 @@ export default function (state = initialState, action) {
     const { type, payload } = action;
 
     switch (type) {
+        case CLEAN_ALL_LINK_EDITOR:
+            return {
+                ...state,
+                data: false,
+                links: false,
+                changedLinks: new Set(),
+            }
         case SET_LINK_ACTIVE:
             return {
                 ...state,

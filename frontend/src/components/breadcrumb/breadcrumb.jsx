@@ -27,6 +27,7 @@ const Breadcrumbs = () => {
         const routeTo = `/${pathnames.slice(0, index + 1).join("/")}`;
         const isLast = index === pathnames.length - 1;
         name = name.replace(/_/g, " ");
+        name = name.replace(/%20/g, " ");
         return isLast ? (
           <Typography
             key={name}

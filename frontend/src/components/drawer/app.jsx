@@ -9,11 +9,11 @@ import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import { hasChildren } from "./utils";
 import history from "../../routers/history";
 
-import { setSelectedItem } from "../../services/reducers/drawerReducer";
+import { setSelectedDrawerItem } from "../../services/actions/drawerMenu/drawerMenu";
 
 export default function App({ menu }) {
-  return Object.keys(menu.data).map((item, key) => (
-    <MenuItem key={key} item={menu.data[item]} />
+  return Object.keys(menu).map((item, key) => (
+    <MenuItem key={key} item={menu[item]} />
   ));
 }
 
@@ -24,11 +24,11 @@ const MenuItem = ({ item }) => {
 
 const SingleLevel = ({ item }) => {
   const dispatch = useDispatch();
-  const isOpen = useSelector((state) => state.drawer.isOpen);
+  const isOpen = useSelector((state) => state.drawerMenu.isOpen);
   const { [item.ICON]: Icon } = Icons;
-  const selectedItem = useSelector((state) => state.drawer.selectedItem);
+  const selectedItem = useSelector((state) => state.drawerMenu.selectedItem);
   const handleClick = () => {
-    dispatch(setSelectedItem(item.SHORT_LABEL));
+    dispatch(setSelectedDrawerItem(item.SHORT_LABEL));
     history.push(`${item.URL}`);
   };
   return (
@@ -80,7 +80,9 @@ const SingleLevel = ({ item }) => {
 };
 
 const MultiLevel = ({ item }) => {
-  const isOpen = useSelector((state) => state.drawer.isOpen);
+  const dispatch = useDispatch();
+  const selectedItem = useSelector((state) => state.drawerMenu.selectedItem);
+  const isOpen = useSelector((state) => state.drawerMenu.isOpen);
   const { Items: children } = item;
   const { [item.ICON]: Icon } = Icons;
 
@@ -95,6 +97,8 @@ const MultiLevel = ({ item }) => {
 
   const handleClick = () => {
     setOpen((prev) => !prev);
+    dispatch(setSelectedDrawerItem(item.SHORT_LABEL));
+    history.push(`${item.URL}`);
   };
 
   return (
@@ -102,12 +106,27 @@ const MultiLevel = ({ item }) => {
       <ListItem
         button
         onClick={handleClick}
-        sx={{ borderRadius: 2, position: "relative" }}
+        sx={{
+          borderRadius: 2,
+          position: "relative",
+          "&:hover": {
+            backgroundColor:
+              item.SHORT_LABEL === selectedItem
+                ? "action.active"
+                : "action.hover",
+            opacity: "action.hoverOpacity",
+          },
+          backgroundColor:
+            item.SHORT_LABEL === selectedItem ? "action.active" : "inherit",
+        }}
       >
         {Icon ? (
           <Icon
             sx={{
-              color: "myBoldText",
+              color:
+                item.SHORT_LABEL === selectedItem
+                  ? "myReverseText"
+                  : "myBoldText",
             }}
           />
         ) : (
@@ -120,7 +139,10 @@ const MultiLevel = ({ item }) => {
             mx: 0.5,
             pl: 1,
             display: isOpen ? "inline-block" : "none",
-            color: "myBoldText",
+            color:
+              item.SHORT_LABEL === selectedItem
+                ? "myReverseText"
+                : "myBoldText",
             overflow: "hidden",
             whiteSpace: "nowrap",
             textOverflow: "ellipsis",
@@ -136,7 +158,7 @@ const MultiLevel = ({ item }) => {
               right: "0px",
               mr: 1,
               color:
-                item.URL === window.location.pathname
+                item.SHORT_LABEL === selectedItem
                   ? "myReverseText"
                   : "myBoldText",
               typography: "body1",
@@ -150,7 +172,7 @@ const MultiLevel = ({ item }) => {
               right: "0px",
               mr: 1,
               color:
-                item.URL === window.location.pathname
+                item.SHORT_LABEL === selectedItem
                   ? "myReverseText"
                   : "myBoldText",
               typography: "body1",

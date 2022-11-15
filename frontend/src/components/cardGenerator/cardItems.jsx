@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Box, Grid, Typography } from "@mui/material";
 
+import { setSelectedDrawerItem } from "../../services/actions/drawerMenu/drawerMenu";
 import history from "../../routers/history";
 
 const CardItems = (props) => {
@@ -38,6 +39,7 @@ const CardItems = (props) => {
         setIsClick(false);
       }}
       onClick={() => {
+        dispatch(setSelectedDrawerItem(card.selectedDrawerItem));
         history.push(`${card.cardURL}`);
       }}
       onMouseDown={() => {

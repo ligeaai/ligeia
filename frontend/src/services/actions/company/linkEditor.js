@@ -1,7 +1,8 @@
 import {
     LOAD_LINK_EDITOR,
     LOAD_LINKS,
-    UPDATE_LINKS_VALUE
+    UPDATE_LINKS_VALUE,
+    CLEAN_ALL_LINK_EDITOR
 } from "../types"
 
 import { instance, config } from '../../baseApi';
@@ -108,3 +109,6 @@ export const saveLinkItem = (linkId) => async (dispatch, getState) => {
     } catch { }
 }
 
+export const cleanAllLinks = () => dispatch => {
+    dispatch({ type: CLEAN_ALL_LINK_EDITOR })
+}

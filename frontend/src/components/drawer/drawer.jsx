@@ -5,13 +5,13 @@ import { Box } from "@mui/material";
 import {
   mouseEnterDrawer,
   mouseLeaveDrawer,
-} from "../../services/reducers/drawerReducer";
+} from "../../services/actions/drawerMenu/drawerMenu";
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
 import App from "./app";
 import { ComponentError, ComponentErrorBody } from "../index";
 const Drawer = (props) => {
   const dispatch = useDispatch();
-  const isOpen = useSelector((state) => state.drawer.isOpen);
+  const isOpen = useSelector((state) => state.drawerMenu.isOpen);
   const { navItems } = props;
 
   return (

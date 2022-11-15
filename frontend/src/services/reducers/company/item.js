@@ -2,7 +2,8 @@ import {
     SAVE_ITEM,
     ADD_ITEM_TYPE,
     LOAD_TREEVIEW_ITEM,
-    SET_SELECTED_ITEM
+    SET_SELECTED_ITEM,
+    CLEAN_ALL_TREEMENU
 } from "../../actions/types"
 const initialState = {
     type: "",
@@ -15,6 +16,11 @@ export default function (state = initialState, action) {
     const { type, payload } = action;
 
     switch (type) {
+        case CLEAN_ALL_TREEMENU:
+            return {
+                ...state,
+                selectedItem: ""
+            }
         case ADD_ITEM_TYPE:
             return {
                 ...state,
