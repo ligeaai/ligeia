@@ -158,6 +158,7 @@ class TypeDetailNewView(generics.CreateAPIView):
                 self._getChildCodeList(serializer.data,culture)
 
 
+
 # class TypeDetailView(generics.CreateAPIView):
 #     permission_classes = [permissions.AllowAny]
 #     serializer_class = [

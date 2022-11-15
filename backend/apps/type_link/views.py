@@ -4,6 +4,8 @@ from rest_framework.response import Response
 from .models import type_link
 from services.parsers.addData.type import typeAddData
 from apps.resource_list.models import resource_list
+from apps.type.models import type as Type
+from apps.type.serializers import TypeResourceListManagerSerializer  
 from apps.resource_list.serializers import ResourceListDetailsSerializer
 from .serializers import TypeLinkSaveSerializer,TypeLinkDetailsSerializer,TypeLinkDetails2Serializer
 from utils.models_utils import (
@@ -44,19 +46,17 @@ class TypeLinkDetailsView(generics.CreateAPIView):
     def post(self, request, *args, **kwargs):
         from django.db.models import Q
         obj = {
-            "TYPE":Q(TYPE = request.data.get("TYPE") ),
-            "TO_TYPE":Q(TO_TYPE = request.data.get("TO_TYPE") ),
-            "FROM_TYPE":Q(FROM_TYPE = request.data.get("FROM_TYPE") )
+           "TO_TYPE":Q(TO_TYPE = request.data.get("TYPE") ),
+            "FROM_TYPE":Q(FROM_TYPE = request.data.get("TYPE") )
         }
-        keys = list(request.data.keys())[0]
-        type = type_link.objects.filter(obj.get(keys))
-        validate_find(type,request)
-        serializer = TypeLinkDetailsSerializer(type, many=True)
-        for index in range(0,len(serializer.data)):
-            res_id = 'TYPE.'+ serializer.data[index].get('TYPE')
-            res_list = resource_list.objects.filter(ID = res_id,CULTURE = request.data.get('CULTURE'))
-            validate_find(res_list,request)
-            res_serializer = ResourceListDetailsSerializer(res_list,many = True)
-            serializer.data[index]['SHORT_LABEL'] = res_serializer.data[0].get('SHORT_LABEL')
+        
+        new_dict = dict()
+        keys = ['TO_TYPE','FROM_TYPE']
+        for item in keys:
+            print(item)
+            types = type_link.objects.filter(obj.get(item))
+            validate_find(types,request)
+            serializer = TypeLinkDetailsSerializer(types, many=True)
+            new_dict[item] = serializer.data
 
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(new_dict, status=status.HTTP_200_OK)
