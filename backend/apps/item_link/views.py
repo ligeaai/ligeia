@@ -48,7 +48,7 @@ class ItemLinkUpdateView(generics.UpdateAPIView):
         quaryset.update(**request.data)
         return Response("Succsesful",status=status.HTTP_200_OK)
 
-class ItemLinkDenemesView(generics.ListAPIView):
+class ItemLinkHierarchyView(generics.ListAPIView):
     permission_classes = [permissions.AllowAny]
     def get(self, request, *args, **kwargs):
         quaryset  = item_link.objects.filter(TO_ITEM_TYPE = "COMPANY")
