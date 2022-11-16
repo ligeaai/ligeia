@@ -98,7 +98,11 @@ export const MyTextField = (params) => {
     return <GridEditBooleanCell checked={false} type="checkbox" {...params} />;
   } else if (params.row.PROPERTY_TYPE === "CODE") {
     return <SingleSelectCell {...params} />;
-  } else {
+  }
+  //  else if (params.row.PROPERTY_TYPE === "DATETIME") {
+  //   return <GridEditDateCell type="date" {...params} />;
+  // }
+  else {
     return <GridEditInputCell {...params} />;
   }
 };

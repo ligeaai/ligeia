@@ -1,13 +1,14 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 
-import { Box, Grid } from "@mui/material";
+import { Box, Divider, Grid } from "@mui/material";
 
 import {
   Breadcrumb,
   ItemSperatorLineXL,
   ComponentError,
   PropLinkTabs,
+  Select,
 } from "../../../../../components";
 import DrawerMenu from "../../../../../layout/main/asset/treeViewMenu";
 
@@ -15,10 +16,21 @@ import MyActionMenu from "./actionMenu";
 import { TreeMenuItems } from "./treeMenu";
 import DataGridPro from "./datagrid";
 import { cleanAllDataGrid } from "../../../../../services/actions/codelist/datagrid";
-import { cleanTreeMenuSelect } from "../../../../../services/actions/codelist/treeview";
+import {
+  cleanTreeMenuSelect,
+  setFilteredLayerName,
+} from "../../../../../services/actions/codelist/treeview";
+
 const CodeList = ({ isHome }) => {
   const dispatch = useDispatch();
   const isFullScreen = useSelector((state) => state.fullScreen.isFullScreen);
+  const filteredLayerName = useSelector(
+    (state) => state.treeviewCodelist.filteredLayerName
+  );
+  const selectHandleChangeFunc = (params) => {
+    dispatch(setFilteredLayerName(params));
+  };
+
   React.useEffect(() => {
     if (isHome) {
       dispatch(cleanAllDataGrid());
@@ -67,9 +79,31 @@ const CodeList = ({ isHome }) => {
             </Box>
           </Grid>
           <ItemSperatorLineXL />
-          <Box sx={{ ml: 2 }}>
-            <MyActionMenu />
-          </Box>
+
+          <Grid container sx={{ alignItems: "center", pl: 2 }}>
+            <Grid item>
+              <MyActionMenu />
+            </Grid>
+            <Divider
+              orientation="vertical"
+              variant="middle"
+              flexItem
+              sx={{
+                marginX: "2px",
+                borderWidth: "0.2px",
+                borderColor: "#4B4B4B",
+                backgroundColor: "#4B4B4B",
+              }}
+            />
+            <Grid item sx={{ ml: 1 }}>
+              <Select
+                values={["NONE", "OG_STD", "AVM"]}
+                defaultValue={filteredLayerName}
+                handleChangeFunc={selectHandleChangeFunc}
+              />
+            </Grid>
+          </Grid>
+
           <ItemSperatorLineXL />
           <Grid item xs={12} sx={{ mt: 1 }}>
             <ComponentError errMsg="Error">

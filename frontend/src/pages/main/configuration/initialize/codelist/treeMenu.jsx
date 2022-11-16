@@ -19,7 +19,9 @@ import ConfirmDataGrid from "./confirmDataGrid";
 
 export const TreeMenuItems = () => {
   const dispatch = useDispatch();
-  const treeItems = useSelector((state) => state.treeviewCodelist.treeMenuItem);
+  const filteredTreeItems = useSelector(
+    (state) => state.treeviewCodelist.filteredMenuItem
+  );
   const selectedIndex = useSelector(
     (state) => state.treeviewCodelist.selectedItem.selectedIndex
   );
@@ -58,7 +60,7 @@ export const TreeMenuItems = () => {
   }, []);
   return (
     <TreeMenu
-      items={treeItems}
+      items={filteredTreeItems}
       selectFunc={selectFunc}
       selectedIndex={selectedIndex}
       primaryText="CODE_TEXT"

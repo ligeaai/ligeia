@@ -2,13 +2,33 @@ import {
     LOAD_TREEVIEW_ITEM_CODELIST,
     SELECT_TREEVIEW_ITEM_CODELIST,
     CLEAN_AFTER_SAVE,
-    CLEAN_TREEVIEW_SELECT_CODELIST
+    CLEAN_TREEVIEW_SELECT_CODELIST,
+    LOAD_FILTERED_TREEVIEW_ITEM_CODELIST,
+    SET_FILTERED_LAYER_NAME_CODELIST
 } from "../types"
 
 import { instance, config } from '../../baseApi';
 
-import { refreshDataGridCodelist, addNewCodeListItemSchema } from "./datagrid";
+import { refreshDataGridCodelist, cleanAllDataGrid } from "./datagrid";
 import history from "../../../routers/history";
+
+export const loadFilteredTreeviewItem = () => async (dispatch, getState) => {
+    const treeMenuItem = getState().treeviewCodelist.treeMenuItem
+    const filteredLayerName = getState().treeviewCodelist.filteredLayerName
+    if (filteredLayerName !== "NONE") {
+        var filteredResponse = treeMenuItem.filter(a => a.LAYER_NAME === filteredLayerName)
+        dispatch({
+            type: LOAD_FILTERED_TREEVIEW_ITEM_CODELIST,
+            payload: filteredResponse
+        })
+    } else {
+        dispatch({
+            type: LOAD_FILTERED_TREEVIEW_ITEM_CODELIST,
+            payload: treeMenuItem
+        })
+    }
+
+}
 
 export const loadTreeviewItemCodelist = () => async (dispatch, getState) => {
     const CULTURE = getState().lang.cultur;
@@ -21,13 +41,14 @@ export const loadTreeviewItemCodelist = () => async (dispatch, getState) => {
                 body,
                 config
             )
+        var sortedResponse = res.data.sort((a, b) =>
+            a.CODE_TEXT > b.CODE_TEXT ? 1 : -1
+        )
         dispatch({
             type: LOAD_TREEVIEW_ITEM_CODELIST,
-            payload: res.data.sort((a, b) =>
-                a.CODE_TEXT > b.CODE_TEXT ? 1 : -1
-            )
+            payload: sortedResponse
         });
-
+        dispatch(loadFilteredTreeviewItem())
         return res
     } catch (err) {
         return err
@@ -36,7 +57,7 @@ export const loadTreeviewItemCodelist = () => async (dispatch, getState) => {
 
 export const selectTreeViewItemCoedlist = (index) => async (dispatch, getState) => {
 
-    var payload = getState().treeviewCodelist.treeMenuItem[parseInt(index)]
+    var payload = getState().treeviewCodelist.filteredMenuItem[parseInt(index)]
 
     payload = { ...payload, selectedIndex: index }
     dispatch({
@@ -60,4 +81,14 @@ export const cleanTreeMenuSelect = () => dispatch => {
     dispatch({
         type: CLEAN_TREEVIEW_SELECT_CODELIST
     })
+}
+
+export const setFilteredLayerName = (layerName = "NONE") => dispatch => {
+    dispatch({
+        type: SET_FILTERED_LAYER_NAME_CODELIST,
+        payload: layerName
+    })
+    dispatch(cleanAllDataGrid())
+    dispatch(cleanTreeMenuSelect())
+    dispatch(loadFilteredTreeviewItem())
 }

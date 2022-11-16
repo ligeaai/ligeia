@@ -100,7 +100,7 @@ const MultiLevel = ({ item }) => {
       setOpen((prev) => !prev);
     }
     dispatch(setSelectedDrawerItem(item.SHORT_LABEL));
-    history.push(`${item.URL}`);
+    //   history.push(`${item.URL}`);
   };
 
   return (

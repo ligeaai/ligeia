@@ -26,7 +26,7 @@ const CodelistActionMenu = () => {
     (state) => state.treeviewCodelist.selectedItem.selectedIndex
   );
   const treeMenuItemLenght = useSelector(
-    (state) => state.treeviewCodelist.treeMenuItem.length
+    (state) => state.treeviewCodelist.filteredMenuItem.length
   );
   const dispatch = useDispatch();
   const btnNew = () => {

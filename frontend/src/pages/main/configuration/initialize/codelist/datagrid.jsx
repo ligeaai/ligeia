@@ -42,9 +42,6 @@ export default function TreeDataWithGap() {
       sort: "asc",
     },
   ]);
-  React.useEffect(() => {
-    console.log(rows);
-  }, [rows]);
   return (
     <Box>
       <Box

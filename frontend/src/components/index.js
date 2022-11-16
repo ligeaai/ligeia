@@ -21,6 +21,7 @@ import TreeView from "./navigationComp/treeView";
 import { ItemSperatorLine, ItemSperatorLineXL, Items } from "./nestedMenu/nestedItems";
 import SearchBar from "./searchBar/searchBar";
 import SearchBarMobile from "./searchBar/searchBarMobile";
+import Select from "./select/select"
 import { TreeMenu } from "./treeMenu/treeMenu"
 
 
@@ -29,5 +30,6 @@ import { TreeMenu } from "./treeMenu/treeMenu"
 
 export {
     ActionMenu, Breadcrumb, Cards, CheckboxList, Confirmation, ComponentError, ComponentErrorBody, CustomNoRowsOverlay, DateBreak, DatePicker, Drawer, ErrorBoundary, ErrorMessage,
-    Loading, LoadingComponent, MyNavigator, PropLinkTabs, SocialButton, TimeRangePicker, TreeView, ItemSperatorLine, ItemSperatorLineXL, Items, SearchBar, SearchBarMobile, TreeMenu
+    Loading, LoadingComponent, MyNavigator, PropLinkTabs, SocialButton, TimeRangePicker, TreeView, ItemSperatorLine, ItemSperatorLineXL, Items, SearchBar, SearchBarMobile, Select,
+    TreeMenu
 }

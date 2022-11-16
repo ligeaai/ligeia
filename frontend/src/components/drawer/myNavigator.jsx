@@ -15,7 +15,7 @@ const MyNavigator = (props) => {
         navigateItem.Items[Object.keys(navigateItem.Items)[0]].SHORT_LABEL
       )
     );
-  });
+  }, []);
   const navigateItem = drawerDataConfiguration.Items[props.mykey];
 
   return (

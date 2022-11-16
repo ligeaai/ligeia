@@ -255,9 +255,9 @@ export const deleteCodeList = () => async (dispatch, getState) => {
 
 export const saveAndMoveCodeList = (index) => async (dispatch, getState) => {
     if (index < 0) {
-        index = getState().item.treeviewCodelist.treeMenuItem.length - 1
+        index = getState().item.treeviewCodelist.filteredMenuItem.length - 1
     }
-    else if (index > getState().item.treeMenuItem.length - 1) {
+    else if (index > getState().item.filteredMenuItem.length - 1) {
         index = 0
     }
     dispatch(saveCodeList())
