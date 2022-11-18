@@ -1,3 +1,5 @@
+from kafka import KafkaProducer
+import json
 from kafka import KafkaConsumer, TopicPartition
 from pprint import pprint
 import os
@@ -6,12 +8,17 @@ from ast import literal_eval
 import json
 
 host = "localhost:9092"
-topic = "rawData"
+topic = "test1"
 consumer = KafkaConsumer(
     group_id=topic,
     bootstrap_servers=host,
     enable_auto_commit=False,
     auto_offset_reset="earliest",
+)
+
+producer = KafkaProducer(
+    bootstrap_servers="localhost:9092",
+    value_serializer=lambda v: json.dumps(v).encode("ascii"),
 )
 
 tp = TopicPartition(topic, 0)
@@ -67,6 +74,7 @@ def frozen_data_check(data_check):
             print(
                 "----------------------------THE DATA IS COMING SAME PLEASE CHECK----------------------------"
             )
+            data["quality"] = data["quality"] - 50
     else:
         data_dict.get(data_check).clear()
     return valueType
@@ -79,5 +87,12 @@ for message in consumer:
     data = literal_eval(df.decode("utf8"))
     df2 = dict(data)
     data_check = get_value_type(df2)
-    if len(data_dict.get(data_check)) > 1:
+    print(len(data_dict.get(data_check)))
+    if len(data_dict.get(data_check)) > 3:
         frozen_data_check(data_check)
+    try:
+        del data[data_check]
+        producer.send("backorlive", value=data)
+        producer.flush()
+    except:
+        pass
