@@ -5,7 +5,8 @@ import {
     CLEAN_ALL_LINK_EDITOR,
     LOAD_LINK_EDITOR_SCHEMA,
     ADD_ERROR_SUCCESS,
-    CLEAN_CHANGED_LIST_LINK_EDITOR
+    CLEAN_CHANGED_LIST_LINK_EDITOR,
+    LOAD_LINK_EDITOR_SCHEMA_FROM_TYPE
 } from "../types"
 import { Box } from "@mui/material";
 
@@ -37,6 +38,7 @@ export const loadLinkEditor = () => async (dispatch, getState) => {
                 },
                 config
             );
+            console.log(itemLinkRes);
             itemLinkRes.data.map(e => {
                 e.END_DATETIME = new Date(e.END_DATETIME)
                 e.START_DATETIME = new Date(e.START_DATETIME)
@@ -57,11 +59,20 @@ export const loadLinkEditor = () => async (dispatch, getState) => {
         }
         dispatch({
             type: LOAD_LINK_EDITOR,
-            payload: res.data.TO_TYPE
+            payload: res.data
         })
         var temp = []
+        var tempFromType = []
         Object.keys(res.data.TO_TYPE).map(e => {
             temp[res.data.TO_TYPE[e].TYPE] = res.data.TO_TYPE[e]
+        })
+        Object.keys(res.data.FROM_TYPE).map(e => {
+            tempFromType[res.data.FROM_TYPE[e].TYPE] = res.data.FROM_TYPE[e]
+        })
+
+        dispatch({
+            type: LOAD_LINK_EDITOR_SCHEMA_FROM_TYPE,
+            payload: tempFromType
         })
         dispatch({
             type: LOAD_LINK_EDITOR_SCHEMA,

@@ -6,17 +6,19 @@ import { PersistGate } from 'redux-persist/integration/react'
 import { persistor, store } from './store/configureStore';
 
 import App from './pages/App';
-
+import { ErrorBoundary } from "./components/errorMessage/errorBoundary"
 const container = document.getElementById('root');
 const root = createRoot(container);
 
 root.render(
     <React.StrictMode>
-        <Provider store={store}>
-            <PersistGate loading={null} persistor={persistor}>
-                <App />
-            </PersistGate>
-        </Provider>
+        <ErrorBoundary>
+            <Provider store={store}>
+                <PersistGate loading={null} persistor={persistor}>
+                    <App />
+                </PersistGate>
+            </Provider>
+        </ErrorBoundary>
     </React.StrictMode>
 );
 

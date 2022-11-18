@@ -8,7 +8,6 @@ import { instance, config } from '../../baseApi';
 import { loadLinkEditor } from "./linkEditor";
 
 export const loadCheckedList = (fromType) => async (dispatch, getState) => {
-    console.log(fromType);
     let res = await instance.get(`/item/details/${fromType}`, config);
     const selectedItemId = getState().item.selectedItem.ITEM_ID;
     try {
@@ -69,12 +68,16 @@ function _uuidv4() {
             ).toString(16)
     );
 }
-export const saveLinks = (date, linkType) => async (dispatch, getState) => {
+export const saveLinks = (date, linkType, isOutCheck) => async (dispatch, getState) => {
     const checkedItems = getState().companyCheckedList.checkedItems
     const selectedItem = getState().item.selectedItem
 
     const saveFunc = async () => {
         checkedItems.map(async (e) => {
+            var isOut = false
+            if (isOutCheck === selectedItem.ITEM_TYPE) {
+                isOut = true
+            }
             var d = date.getDate();
             var m = date.getMonth();
             m += 1;
@@ -87,10 +90,10 @@ export const saveLinks = (date, linkType) => async (dispatch, getState) => {
                 LINK_TYPE: linkType,
                 START_DATETIME: newdate,
                 END_DATETIME: "9000-1-1",
-                FROM_ITEM_ID: e.ITEM_ID,
-                FROM_ITEM_TYPE: e.ITEM_TYPE,
-                TO_ITEM_ID: selectedItem.ITEM_ID,
-                TO_ITEM_TYPE: selectedItem.ITEM_TYPE,
+                FROM_ITEM_ID: isOut ? e.ITEM_ID : selectedItem.ITEM_ID,
+                FROM_ITEM_TYPE: isOut ? e.ITEM_TYPE : selectedItem.ITEM_TYPE,
+                TO_ITEM_ID: isOut ? selectedItem.ITEM_ID : e.ITEM_ID,
+                TO_ITEM_TYPE: isOut ? selectedItem.ITEM_TYPE : e.ITEM_TYPE,
                 ROW_ID: rowUuid.replace(/-/g, ""),
             });
             console.log(body);

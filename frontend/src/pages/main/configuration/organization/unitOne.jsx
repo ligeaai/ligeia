@@ -20,6 +20,7 @@ import { TreeMenuItems } from "./treeMenu";
 
 const UnitOne = (props) => {
   const { type } = props;
+  console.log(type);
   const isFullScreen = useSelector((state) => state.fullScreen.isFullScreen);
   const isLinksActive = useSelector((state) => state.linkEditor.isLinksActive);
   return (

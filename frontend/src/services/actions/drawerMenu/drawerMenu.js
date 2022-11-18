@@ -28,7 +28,7 @@ export const loadDrawerMenu = () => async (dispatch, getState) => {
 
     } catch (err) {
         console.log(err);
-        return err
+
     }
 }
 

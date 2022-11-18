@@ -35,22 +35,17 @@ const AppRouter1 = () => {
     <React.Fragment>
       <Routes>
         <Route exact path="/" element={<PrivateRoute />}>
-          <Route exact path="" element={<Main />} />
+          <Route exact path="/" element={<Main />} />
           <Route path="/overview" element={<Overview />} />
           <Route path="/analytics" element={<Analytics />} />
           <Route path="/reporting" element={<Reporting />} />
           <Route path="/administration" element={<Administration />} />
           <Route exact path="/configuration" element={<Configuration />} />
-          <Route exact path="/configuration/initialize" element={<MyNavigator mykey="Tools" />} />
-          <Route exact path="/configuration/items" element={<MyNavigator mykey="Items" />} />
-          <Route exact path="/configuration/organization" element={<MyNavigator mykey="Organization" />} />
-          <Route exact path="/configuration/organization/:type/:item" element={<OrganizationAndItems isHome={false} />} />
-          <Route path="/configuration/organization/:type" element={<OrganizationAndItems isHome={true} />} />
-          <Route exact path="/configuration/items/:type/:item" element={<OrganizationAndItems isHome={false} />} />
-          <Route path="/configuration/items/:type" element={<OrganizationAndItems isHome={true} />} />
-          <Route exact path="/configuration/initialize/code_list_editor" element={<CodeList isHome={true} />} />
-          <Route exact path="/configuration/initialize/code_list_editor/:codelist" element={<CodeList isHome={false} />} />
-          <Route path="/configuration/initialize/code_list_editor" element={<Navigate to="/configuration/initialize/code_list_editor/code_lists" />} />
+          <Route exact path="/configuration/:myKey" element={<MyNavigator />} />
+          <Route exact path="/configuration/tools/code_list" element={<CodeList isHome={true} />} />
+          <Route exact path="/configuration/tools/code_list/:codelist" element={<CodeList isHome={false} />} />
+          <Route exact path="/configuration/:myKey/:type/:item" element={<OrganizationAndItems isHome={false} />} />
+          <Route path="/configuration/:myKey/:type" element={<OrganizationAndItems isHome={true} />} />
         </Route>
         <Route exact path="/" element={<PublicRoute />}>
           <Route exact path="/home" element={<Start />} />

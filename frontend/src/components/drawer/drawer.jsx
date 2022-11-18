@@ -9,11 +9,15 @@ import { Box } from "@mui/material";
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
 import App from "./app";
 import { ComponentError, ComponentErrorBody } from "../index";
+import { loadDrawerMenu } from "../../services/actions/drawerMenu/drawerMenu";
+import { LoadingComponent } from "../../components";
 const Drawer = (props) => {
   const dispatch = useDispatch();
   const isOpen = useSelector((state) => state.drawerMenu.isOpen);
   const { navItems } = props;
-
+  React.useEffect(() => {
+    dispatch(loadDrawerMenu());
+  }, []);
   return (
     <Box
       // onMouseEnter={() => dispatch(mouseEnterDrawer())}
@@ -58,7 +62,11 @@ const Drawer = (props) => {
           />
         }
       >
-        <App menu={navItems} />
+        {navItems ? (
+          <App menu={navItems} />
+        ) : (
+          <LoadingComponent></LoadingComponent>
+        )}
       </ComponentError>
     </Box>
   );

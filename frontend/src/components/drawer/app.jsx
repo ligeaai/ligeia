@@ -10,26 +10,35 @@ import { hasChildren } from "./utils";
 import history from "../../routers/history";
 
 import { setSelectedDrawerItem } from "../../services/actions/drawerMenu/drawerMenu";
+import { useParams } from "react-router-dom";
 
 export default function App({ menu }) {
   return Object.keys(menu).map((item, key) => (
-    <MenuItem key={key} item={menu[item]} />
+    <MenuItem key={key} item={menu[item]} url="/" />
   ));
 }
 
-const MenuItem = ({ item }) => {
+const MenuItem = ({ item, url }) => {
   const Component = hasChildren(item) ? MultiLevel : SingleLevel;
-  return <Component item={item} />;
+  return <Component item={item} url={url} />;
 };
 
-const SingleLevel = ({ item }) => {
+const SingleLevel = ({ item, url }) => {
+  url = url + item.SHORT_LABEL.toLowerCase();
+  url = url.replace(/ /g, "_");
+  if (url === "/home") {
+    url = "/";
+  }
   const dispatch = useDispatch();
   const isOpen = useSelector((state) => state.drawerMenu.isOpen);
   const { [item.ICON]: Icon } = Icons;
-  const selectedItem = useSelector((state) => state.drawerMenu.selectedItem);
+  var selectedItem = useSelector(
+    (state) => state.drawerMenu.selectedItem.SHORT_LABEL
+  );
+
   const handleClick = () => {
-    dispatch(setSelectedDrawerItem(item.SHORT_LABEL));
-    history.push(`${item.URL}`);
+    dispatch(setSelectedDrawerItem(item));
+    history.push(`${url}`);
   };
   return (
     <ListItem
@@ -79,13 +88,12 @@ const SingleLevel = ({ item }) => {
   );
 };
 
-const MultiLevel = ({ item }) => {
-  const dispatch = useDispatch();
-  const selectedItem = useSelector((state) => state.drawerMenu.selectedItem);
+const MultiLevel = ({ item, url }) => {
+  url = url + item.SHORT_LABEL.toLowerCase() + "/";
+  const { params } = useParams();
   const isOpen = useSelector((state) => state.drawerMenu.isOpen);
   const { Items: children } = item;
   const { [item.ICON]: Icon } = Icons;
-
   const [open, setOpen] = useState(false);
   useEffect(() => {
     if (isOpen) {
@@ -99,7 +107,7 @@ const MultiLevel = ({ item }) => {
     if (isOpen) {
       setOpen((prev) => !prev);
     }
-    dispatch(setSelectedDrawerItem(item.SHORT_LABEL));
+    //dispatch(setSelectedDrawerItem(item.SHORT_LABEL));
     //   history.push(`${item.URL}`);
   };
 
@@ -113,20 +121,22 @@ const MultiLevel = ({ item }) => {
           position: "relative",
           "&:hover": {
             backgroundColor:
-              item.SHORT_LABEL === selectedItem
+              url.slice(0, -1) === window.location.pathname
                 ? "action.active"
                 : "action.hover",
             opacity: "action.hoverOpacity",
           },
           backgroundColor:
-            item.SHORT_LABEL === selectedItem ? "action.active" : "inherit",
+            url.slice(0, -1) === window.location.pathname
+              ? "action.active"
+              : "inherit",
         }}
       >
         {Icon ? (
           <Icon
             sx={{
               color:
-                item.SHORT_LABEL === selectedItem
+                url.slice(0, -1) === window.location.pathname
                   ? "myReverseText"
                   : "myBoldText",
             }}
@@ -142,7 +152,7 @@ const MultiLevel = ({ item }) => {
             pl: 1,
             display: isOpen ? "inline-block" : "none",
             color:
-              item.SHORT_LABEL === selectedItem
+              url.slice(0, -1) === window.location.pathname
                 ? "myReverseText"
                 : "myBoldText",
             overflow: "hidden",
@@ -160,7 +170,7 @@ const MultiLevel = ({ item }) => {
               right: "0px",
               mr: 1,
               color:
-                item.SHORT_LABEL === selectedItem
+                url.slice(0, -1) === window.location.pathname
                   ? "myReverseText"
                   : "myBoldText",
               typography: "body1",
@@ -174,7 +184,7 @@ const MultiLevel = ({ item }) => {
               right: "0px",
               mr: 1,
               color:
-                item.SHORT_LABEL === selectedItem
+                url.slice(0, -1) === window.location.pathname
                   ? "myReverseText"
                   : "myBoldText",
               typography: "body1",
@@ -191,7 +201,7 @@ const MultiLevel = ({ item }) => {
       >
         <List component="div" disablePadding>
           {Object.keys(children).map((child, key) => (
-            <MenuItem key={key} item={children[child]} />
+            <MenuItem key={key} item={children[child]} url={url} />
           ))}
         </List>
       </Collapse>

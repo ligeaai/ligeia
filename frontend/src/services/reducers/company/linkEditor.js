@@ -5,11 +5,14 @@ import {
     SET_LINK_ACTIVE,
     CLEAN_ALL_LINK_EDITOR,
     LOAD_LINK_EDITOR_SCHEMA,
-    CLEAN_CHANGED_LIST_LINK_EDITOR
+    CLEAN_CHANGED_LIST_LINK_EDITOR,
+    LOAD_LINK_EDITOR_SCHEMA_FROM_TYPE
 } from "../../actions/types"
 const initialState = {
     linkEditorSchema: false,
+    linkEditorSchemaFromType: false,
     data: false,
+    dataFromType: false,
     links: false,
     changedLinks: new Set(),
     isLinksActive: true
@@ -41,12 +44,18 @@ export default function (state = initialState, action) {
         case LOAD_LINK_EDITOR:
             return {
                 ...state,
-                data: payload
+                data: payload.TO_TYPE,
+                dataFromType: payload.FROM_TYPE
             }
         case LOAD_LINK_EDITOR_SCHEMA:
             return {
                 ...state,
                 linkEditorSchema: payload
+            }
+        case LOAD_LINK_EDITOR_SCHEMA_FROM_TYPE:
+            return {
+                ...state,
+                linkEditorSchemaFromType: payload
             }
         case LOAD_LINKS:
             return {

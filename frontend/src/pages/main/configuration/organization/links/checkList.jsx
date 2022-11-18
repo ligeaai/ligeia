@@ -29,7 +29,9 @@ const MyCheckList = (props) => {
   const [date, setDate] = React.useState(instanttime);
   const [selectedItem, setSelectedItem] = React.useState("");
   const data = useSelector((state) => state.companyCheckedList.listItem);
-  const linkEditorData = useSelector((state) => state.linkEditor.data);
+  const linkEditorData = useSelector(
+    (state) => state.linkEditor[props.dataSelectItemPath]
+  );
   const selectItems = linkEditorData.filter((e) => e.TYPE === props.data.TYPE);
   const handleChange = (event) => {
     setSelectedItem(event.target.value);
@@ -96,11 +98,21 @@ const MyCheckList = (props) => {
             >
               {selectItems.map((e) => (
                 <MenuItem
-                  key={e.FROM_TYPE}
-                  value={e.FROM_TYPE}
+                  key={
+                    props.dataSelectItemPath === "data"
+                      ? e.FROM_TYPE
+                      : e.TO_TYPE
+                  }
+                  value={
+                    props.dataSelectItemPath === "data"
+                      ? e.FROM_TYPE
+                      : e.TO_TYPE
+                  }
                   sx={{ fontSize: "14px" }}
                 >
-                  {e.FROM_TYPE}
+                  {props.dataSelectItemPath === "data"
+                    ? e.FROM_TYPE
+                    : e.TO_TYPE}
                 </MenuItem>
               ))}
             </Select>
@@ -124,7 +136,9 @@ const MyCheckList = (props) => {
         <Grid item>
           <Button
             onClick={() => {
-              dispatch(saveLinks(date, selectItems[0].TYPE));
+              dispatch(
+                saveLinks(date, selectItems[0].TYPE, selectItems[0].TO_TYPE)
+              );
               props.onClose();
             }}
           >

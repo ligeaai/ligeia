@@ -10,9 +10,9 @@ import {
 
 const initialState = {
     isOpen: false,
-    temp: 0,//temporary value determines the drawer stat before the drawer hover
+    // temp: 0,//temporary value determines the drawer stat before the drawer hover
     width: "68px",
-    selectedItem: "Home",
+    selectedItem: { SHORT_LABEL: "Home" },
     data: null
 };
 
@@ -23,6 +23,11 @@ export default function (state = initialState, action) {
     const { type, payload } = action;
 
     switch (type) {
+        case "persist/REHYDRATE":
+            return {
+                ...state,
+                selectedItem: payload.drawerMenu.selectedItem ? payload.drawerMenu.selectedItem : { SHORT_LABEL: "Home" }
+            }
         case LOAD_DRAWER_MENU:
             return {
                 ...state,

@@ -23,7 +23,7 @@ function PaperComponent(props) {
 
 function SimpleDialog(props) {
   const dispatch = useDispatch();
-  const { onClose, open, data } = props;
+  const { onClose, open, data, dataSelectItemPath } = props;
   const handleClose = () => {
     onClose();
     dispatch(cleanCompanyCheckedList());
@@ -45,9 +45,10 @@ SimpleDialog.propTypes = {
   onClose: PropTypes.func.isRequired,
   open: PropTypes.bool.isRequired,
   data: PropTypes.object.isRequired,
+  dataSelectItemPath: PropTypes.string.isRequired,
 };
 
-export default function SimpleDialogDemo({ props }) {
+export default function SimpleDialogDemo(props) {
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -63,7 +64,12 @@ export default function SimpleDialogDemo({ props }) {
       <Button variant="outlined" onClick={handleClickOpen}>
         New
       </Button>
-      <SimpleDialog open={open} onClose={handleClose} data={props} />
+      <SimpleDialog
+        open={open}
+        onClose={handleClose}
+        data={props.data}
+        dataSelectItemPath={props.dataSelectItemPath}
+      />
     </div>
   );
 }

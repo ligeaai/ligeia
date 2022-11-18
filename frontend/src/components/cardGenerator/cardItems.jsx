@@ -39,7 +39,6 @@ const CardItems = (props) => {
         setIsClick(false);
       }}
       onClick={() => {
-        dispatch(setSelectedDrawerItem(card.selectedDrawerItem));
         history.push(`${card.cardURL}`);
       }}
       onMouseDown={() => {

@@ -18,69 +18,65 @@ const Main = (props) => {
   const navItems = useSelector((state) => state.drawerMenu.data);
 
   const drawerWidth = useSelector((state) => state.drawerMenu.width);
-  React.useEffect(() => {
-    dispatch(loadDrawerMenu());
-  }, []);
-  if (navItems) {
-    return isFullScreen ? (
-      <React.Fragment>
-        <Box sx={{ minHeight: "100vh", borderRadius: "3px" }}>{Element}</Box>
 
-        <Box sx={{ position: "fixed", bottom: 0, right: 0, m: 2 }}>
-          <Button
-            onClick={() => {
-              dispatch(setIsFullScreen(false));
-            }}
-          >
-            <FullscreenExitIcon />
-          </Button>
-        </Box>
-      </React.Fragment>
-    ) : (
-      <React.Fragment>
-        <Box>
-          <Header delSearchBar={delSearchBar} />
-          <Grid container sx={{ flexWrap: "nowrap" }}>
-            <Grid
-              item
-              sx={{
-                backgroundColor: "myBackgroundColor",
-                zIndex: 2,
-                typography: {
-                  xs: {
-                    position: "absolute",
-                  },
-                  sm: { position: "relative" },
+  return isFullScreen ? (
+    <React.Fragment>
+      <Box sx={{ minHeight: "100vh", borderRadius: "3px" }}>{Element}</Box>
+
+      <Box sx={{ position: "fixed", bottom: 0, right: 0, m: 2 }}>
+        <Button
+          onClick={() => {
+            dispatch(setIsFullScreen(false));
+          }}
+        >
+          <FullscreenExitIcon />
+        </Button>
+      </Box>
+    </React.Fragment>
+  ) : (
+    <React.Fragment>
+      <Box>
+        <Header delSearchBar={delSearchBar} />
+        <Grid container sx={{ flexWrap: "nowrap" }}>
+          <Grid
+            item
+            sx={{
+              backgroundColor: "myBackgroundColor",
+              zIndex: 2,
+              typography: {
+                xs: {
+                  position: "absolute",
                 },
-              }}
-            >
-              <Drawer navItems={navItems} />
-            </Grid>
-            <Grid
-              item
-              sx={{
-                minHeight: "calc(100vh - 60px - 8px)",
-                height: "500px",
-                width: `calc(100vw - ${drawerWidth})`,
-                m: 0.5,
-              }}
-            >
-              {Element}
-            </Grid>
-          </Grid>
-        </Box>
-        <Box sx={{ position: "fixed", bottom: 0, right: 0, m: 2 }}>
-          <Button
-            onClick={() => {
-              dispatch(setIsFullScreen(true));
+                sm: { position: "relative" },
+              },
             }}
           >
-            <FullscreenIcon />
-          </Button>
-        </Box>
-      </React.Fragment>
-    );
-  }
+            <Drawer navItems={navItems} />
+          </Grid>
+          <Grid
+            item
+            sx={{
+              minHeight: "calc(100vh - 60px - 8px)",
+              height: "500px",
+              width: `calc(100vw - ${drawerWidth})`,
+              m: 0.5,
+            }}
+          >
+            {Element}
+          </Grid>
+        </Grid>
+      </Box>
+      <Box sx={{ position: "fixed", bottom: 0, right: 0, m: 2 }}>
+        <Button
+          onClick={() => {
+            dispatch(setIsFullScreen(true));
+          }}
+        >
+          <FullscreenIcon />
+        </Button>
+      </Box>
+    </React.Fragment>
+  );
 };
 
 export default Main;

@@ -9,7 +9,7 @@ import Loading from "../components/loading/loading";
 
 import history from "../routers/history";
 import { loadUser } from "../services/actions/auth";
-import { ErrorBoundary } from "../components/errorMessage/errorBoundary"
+
 import { setSelectedDrawerItem } from "../services/actions/drawerMenu/drawerMenu";
 import { LicenseInfo } from "@mui/x-data-grid-pro";
 
@@ -38,11 +38,9 @@ const App = () => {
     return isLoaded ? <AppRouter /> : <></>
   }
   return (
-    <ErrorBoundary>
-      <ThemeProvider theme={myTheme()}>
-        <Loading Element={<MyAppRouter />} />
-      </ThemeProvider>
-    </ErrorBoundary>
+    <ThemeProvider theme={myTheme()}>
+      <Loading Element={<MyAppRouter />} />
+    </ThemeProvider>
   );
 };
 

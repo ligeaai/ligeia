@@ -58,7 +58,7 @@ const SingleSelectCell = (params) => {
               li: {
                 fontSize: "14px",
               },
-              "& :first-child": {
+              "& :first-of-type": {
                 height: "27px",
               },
             },
