@@ -33,6 +33,7 @@ class LayerSaveView(generics.CreateAPIView):
     permission_classes = [permissions.AllowAny]
 
     def create(self, request, *args, **kwargs):
+        print(request.data)
         validate_model_not_null(request.data, "LAYER",request=request)
         serializer = LayerSaveSerializer(data=request.data)
         serializer.is_valid()
@@ -44,11 +45,14 @@ class LayerView(generics.ListAPIView):
     permission_classes = [permissions.AllowAny]
 
     def get(self, request, *args, **kwargs):
+ 
+
         typeAddData.import_data("LAYER")
         return Response({"Message": "Successful"}, status=status.HTTP_200_OK)
 
 
-# Create your views here.
+
+    
 class LayerModelViewSet(generics.ListAPIView):
     permission_classes = (permissions.AllowAny,)
 

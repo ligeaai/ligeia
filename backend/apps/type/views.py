@@ -8,7 +8,6 @@ from apps.resource_list.serializers import (
     ResourceListSerializer,
     ResourceListTypeSerializer
 )
-from apps.page_resource_list.serializers import PageResourceListDrawerSerializer
 
 from apps.type_property.models import type_property
 from apps.type_property.serializers import (
@@ -28,6 +27,7 @@ from utils.models_utils import (
                                 )
 # Create your views here.
 from .models import type as Type
+from apps.templates.orm_templates import getCodeList
 from .serializers import (
     TypeDetailsSerializer,
     TypeSaveSerializer,
@@ -57,10 +57,6 @@ class TypeAndPropertySaveView(generics.CreateAPIView):
         serializer = ResourceListTypeSerializer(data = request.data)
         serializer.is_valid()
         serializer.save(request)
-        if request.data.get('TYPE').get('LAYER_NAME') == 'OG_STD':
-            serializer = PageResourceListDrawerSerializer(data = request.data)
-            serializer.is_valid()
-            serializer.save(request)
         return Response({"Message":"Successful"}, status=status.HTTP_201_CREATED)
 
 
@@ -140,22 +136,39 @@ class TypeDetailNewView(generics.CreateAPIView):
                 data[index]['SHORT_LABEL'] = serializer.data[0].get('SHORT_LABEL')
                 data[index]['MOBILE_LABEL'] = serializer.data[0].get('MOBILE_LABEL')
 
+    
+                    
     def _getCodeList(self,data,culture):
         for index in range(0,len(data)):
             queryset = code_list.objects.filter(LIST_TYPE = "CODE_LIST",CODE=data[index].get('CODE_LIST'), CULTURE=culture)
-            if queryset:
-                serializer = codeListNameSerializer(queryset,many = True)
-                self._getChildCodeList(serializer.data,culture)
-                data[index]['CODE_LIST'] = serializer.data  
+            code_list = getCodeList(queryset,culture=culture,hierarchy=False)
+            data[index]['CODE'] = code_list
+    
             
             
-    def _getChildCodeList(self,data,culture):
-        for index in range(0,len(data)):
-            queryset = code_list.objects.filter(LIST_TYPE = data[index].get('CODE'), CULTURE=culture)
-            if queryset:
-                serializer = codeListNameSerializer(queryset,many = True)
-                data[index]['CHILD'] = serializer.data
-                self._getChildCodeList(serializer.data,culture)
+            
+            
+            
+            
+
+
+
+
+    #     for index in range(0,len(data)):
+    #         queryset = code_list.objects.filter(LIST_TYPE = "CODE_LIST",CODE=data[index].get('CODE_LIST'), CULTURE=culture)
+    #         if queryset:
+    #             serializer = codeListNameSerializer(queryset,many = True)
+    #             self._getChildCodeList(serializer.data,culture)
+    #             data[index]['CODE_LIST'] = serializer.data  
+            
+            
+    # def _getChildCodeList(self,data,culture):
+    #     for index in range(0,len(data)):
+    #         queryset = code_list.objects.filter(LIST_TYPE = data[index].get('CODE'), CULTURE=culture)
+    #         if queryset:
+    #             serializer = codeListNameSerializer(queryset,many = True)
+    #             data[index]['CHILD'] = serializer.data
+    #             self._getChildCodeList(serializer.data,culture)
 
 
 

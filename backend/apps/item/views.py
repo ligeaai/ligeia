@@ -14,6 +14,7 @@ from utils.models_utils import (
                                 )
 
 from services.logging.Handlers import KafkaLogger 
+from utils.utils import redisCaching as Red
 logger = KafkaLogger()
 
 
@@ -26,6 +27,8 @@ class ItemSaveView(generics.CreateAPIView):
         data = serializer.create(request.data)
         message = "Succsesfull created for item"
         logger.info(message,request = request)
+        cache_key = str(request.user) + request.data.get('ITEM_ID')
+        Red.delete(cache_key) 
         return Response("Succsesfull",status=status.HTTP_201_CREATED)
 
 class ItemScriptSaveView(generics.CreateAPIView):
@@ -33,6 +36,7 @@ class ItemScriptSaveView(generics.CreateAPIView):
 
     def post(self, request, *args, **kwargs):
        item_id = request.data.get('ITEM').get('ITEM_ID')
+       cache_key = str(request.user) + item_id
        queryset = item.objects.filter(ITEM_ID = item_id).delete()
        queryset = item_property.objects.filter(ITEM_ID = item_id).delete()
        item_data = request.data['ITEM']
@@ -44,6 +48,7 @@ class ItemScriptSaveView(generics.CreateAPIView):
        serializer_prop = ItemPropertyCustomSaveSerializer(data = request.data)
        serializer_prop.is_valid()
        serializer_prop.save(request.data)
+       Red.delete(cache_key)
        return Response(request.data,status=status.HTTP_201_CREATED)
 
 
@@ -83,6 +88,10 @@ class ItemDetailsView(generics.ListAPIView):
     permission_classes = [permissions.AllowAny]
     lookup_field = 'pk'
     def list(self, request, *args, **kwargs):
+        cache_key = str(request.user) + self.kwargs['item']
+        cache_data = Red.get(cache_key)
+        if cache_data:
+            Response(cache_data,status=status.HTTP_200_OK)
         queryset = item.objects.filter(ITEM_TYPE=str(self.kwargs['item']).upper())
         validate_find(queryset,request)
         serializer = ItemDetailsSerializer(queryset,many = True)
@@ -95,6 +104,7 @@ class ItemDetailsView(generics.ListAPIView):
                         serializer.data[index]['NAME'] = value
         message = "Succsesfull listed for items"
         logger.info(message,request = request)
+        Red.set(serializer.data,cache_key)
         return Response(serializer.data,status=status.HTTP_200_OK)
 
 
@@ -112,4 +122,6 @@ class ItemDeleteView(generics.CreateAPIView):
             data.delete()
         message = "Succsesfull deleted for items"
         logger.info(message,request = request)
+        cache_key = str(request.user) + request.data.get('ITEM_ID')
+        Red.delete(cache_key)
         return Response(message,status=status.HTTP_200_OK)

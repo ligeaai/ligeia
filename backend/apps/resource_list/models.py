@@ -10,7 +10,7 @@ class resource_list(models.Model):
 	SHORT_LABEL=models.CharField(max_length=200,null=True,)
 	MOBILE_LABEL=models.CharField(max_length=200,null=True,)
 	ICON=models.CharField(max_length=100,null=True,)
-	URL=models.CharField(max_length=500,null=True,)
+	PARENT=models.CharField(max_length=500,null=True,)
 	LAYER_NAME=models.CharField(max_length=50,null=False,)
 	HIDDEN=models.CharField(max_length=5,null=True,)
 	LAST_UPDT_USER=models.CharField(max_length=100,null=True,)

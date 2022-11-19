@@ -18,8 +18,10 @@ def validate_model_not_null(data,model,request):
         callback = []
         model = str(model).upper()
         for keys in models.get(model):
-            if not data.get(keys):
-                callback.append(keys)
+            if data.get(keys) != 0:
+                if not data.get(keys):
+                    print(data.get(keys))
+                    callback.append(keys)
        
         if callback:
             message_dict = {"Message":"These lines need to be filled " + str(callback)}

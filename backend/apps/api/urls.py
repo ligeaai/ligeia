@@ -11,5 +11,5 @@ urlpatterns = [
     path("code-list/", include("apps.code_list.urls")),
     path("resource-list/", include("apps.resource_list.urls")),
     path("item-link/", include("apps.item_link.urls")),
-    path("menu/", include("apps.page_resource_list.urls")),
+    # path("menu/", include("apps.page_resource_list.urls")),
 ]

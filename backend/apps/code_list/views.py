@@ -4,6 +4,7 @@ from django.shortcuts import render
 from rest_framework import generics, permissions, status
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.response import Response
+from apps.templates.orm_templates import getCodeList
 from services.logging.Handlers import KafkaLogger
 from services.parsers.addData.type import typeAddData
 from utils.utils import redisCaching as Red
@@ -39,14 +40,12 @@ class CodeListSaveAndUpdateNewView(generics.UpdateAPIView):
     permission_classes = [permissions.AllowAny]
 
     def put(self, request, *args, **kwargs):
-        if request.data.get('CACHE_KEY') != "":
-            Red.delete(request.data.get('CACHE_KEY'))
-        request.data.pop('CACHE_KEY')
         
         serializer = CodeListCustomNewSerializer(data=request.data)
         serializer.is_valid()
         message=serializer.save(request)
         logger.info(request=request, message = "message")
+        Red.delete(str(request.user)+request.data.get('ROW_ID'))
         return Response(
             {"Message": "message"}, status=status.HTTP_200_OK
         )
@@ -55,14 +54,11 @@ class CodeListSaveAndUpdateView(generics.UpdateAPIView):
     permission_classes = [permissions.AllowAny]
 
     def put(self, request, *args, **kwargs):
-        if request.data.get('CACHE_KEY'):
-            if request.data.get('CACHE_KEY') != "":
-                Red.delete(request.data.get('CACHE_KEY'))
-            request.data.pop('CACHE_KEY')
         serializer = CodeListCustomSerializer(data=request.data)   
         serializer.is_valid()
         message=serializer.save(request)
         logger.info(request=request, message = message)
+        Red.delete(str(request.user)+request.data.get('ROW_ID'))
         return Response(
             {"Message": message}, status=status.HTTP_200_OK
         )
@@ -73,7 +69,6 @@ class CodeListView(generics.ListAPIView):
     permission_classes = [permissions.AllowAny]
 
     def get(self, request, *args, **kwargs):
-
         typeAddData.import_data("CODE_LIST")
         return Response({"Message": "successful"}, status=status.HTTP_200_OK)
 
@@ -85,6 +80,20 @@ class CodeListDetailView(generics.CreateAPIView):
     permission_classes = []
 
     def post(self, request, *args, **kwargs):
+
+        if request.data.get('ROW_ID'):
+            cache_key = str(request.user) + request.data.get('ROW_ID')
+        else:
+            list_types=request.data.get('LIST_TYPE')
+            culture=request.data.get("CULTURE")
+            cache_key = str(request.user) + list_types + culture
+        
+        cache_data = Red.get(cache_key)
+        
+        if cache_data:
+            logger.info(request=request, message="Code list details")
+            return Response(cache_data, status=status.HTTP_200_OK)
+        
         if request.data.get('ROW_ID'):
             queryset = code_list.objects.filter(
                 ROW_ID=request.data.get('ROW_ID'),
@@ -98,6 +107,7 @@ class CodeListDetailView(generics.CreateAPIView):
         serializer = CodeListDetailsSerializer(queryset, many=True)
         serializer = null_value_to_space(serializer.data,request=request)
         logger.info(request=request, message="Code list details only one fields")
+        Red.set(cache_key, serializer)
         return Response(serializer, status=status.HTTP_200_OK)
     
 
@@ -114,10 +124,7 @@ class CodeListDeleteChildView(generics.CreateAPIView):
                 validate_find(queryset,request=request)
                 queryset.delete()
                 logger.info(request=request, message=message)
-                if (request.data.get('CACHE_KEY') != "" 
-                                and 
-                    request.data.get('CACHE_KEY') is not None):
-                        Red.delete(request.data.get('CACHE_KEY'))
+                Red.delete(request.data+value)
             return Response(message, status=status.HTTP_200_OK)
         except Exception as e:
             logger.error(request=request, message=message,error=str(ValidationError(e)))
@@ -135,11 +142,12 @@ class CodeListParentDeleteView(generics.CreateAPIView):
             serializer = CodeListDeleteSerializer(queryset, many=True)
             self._delete_child(serializer.data)
             logger.info(request=request, message=message)
-            # Red.delete(request.data.get('CACHE_KEY'))
+            Red.delete(str(request.user)+request.data.get('ROW_ID'))
             return Response(message, status=status.HTTP_200_OK)
         except Exception as e:
             logger.error(request=request, message=message,error=str(ValidationError(e)))
             raise ValidationError(e)
+    
     def _delete_child(self, data):
         for item in data:
             queryset = code_list.objects.filter(
@@ -162,7 +170,7 @@ class CodeListDeleteView(generics.CreateAPIView):
             validate_find(qs,request=request)
             qs.delete()
             logger.info(request=request, message=message)
-            Red.delete(request.data.get('CACHE_KEY'))
+            Red.delete(str(request.user)+request.data.get('ROW_ID'))
             return Response(message, status=status.HTTP_200_OK)
         except Exception as e:
             logger.error(request=request, message=message,error=str(ValidationError(e)))
@@ -172,44 +180,49 @@ class CodeListDeepDetailView(generics.CreateAPIView):
     permission_classes = [permissions.AllowAny]
 
     def post(self, request, *args, **kwargs):
-        cache_key = request.data.get('ROW_ID')
-        # cache_data = Red.get(cache_key)
+        
+        cache_key = str(request.user) + request.data.get('ROW_ID')
+        cache_data = Red.get(cache_key)
         # if cache_data:
         #     logger.info(request=request, message="Code list deep details (Parent-Child Relationship)")
         #     return Response(cache_data, status=status.HTTP_200_OK)
+        
         queryset = code_list.objects.filter(
             ROW_ID = request.data.get('ROW_ID')
         )
         validate_find(queryset,request)
         serializer = CodeListDetailsSerializer(queryset, many=True)
         respons_value = []
-        respons_value = self._get_child(serializer.data,respons_value,0,None)
+        culture = serializer.data[0].get('CULTURE')
+        respons_value = getCodeList(queryset,culture=culture,hierarchy=True)
         respons_value = null_value_to_space(respons_value,request)
         Red.set(cache_key, respons_value)
         logger.info(request=request, message="Code list deep details (Parent-Child Relationship)")
         return Response(respons_value, status=status.HTTP_200_OK)
 
-    def _get_child(self, data,respons_value,index,parent):
-        for item in data:
-            childItem = []
-            if parent is not None:
-                for data in parent:
-                    childItem.append(data)
+    
+    # def _get_child(self, data,respons_value,index,parent):
+    #     for item in data:
+    #         childItem = []
+    #         if parent is not None:
+    #             for data in parent:
+    #                 childItem.append(data)
            
-            childItem.append(item.get('ROW_ID'))
+    #         childItem.append(item.get('ROW_ID'))
                 
-            item['HIERARCHY'] = childItem
-            if item.get('LIST_TYPE') != 'CODE_LIST':    
-                respons_value.append(item)
+    #         item['HIERARCHY'] = childItem
+         
+    #         if index == 0:
+    #             respons_value.append(item)
             
-            if index == 0:
-                respons_value.append(item)
-            queryset = code_list.objects.filter(
-            LIST_TYPE=item.get("CODE"), CULTURE=item.get("CULTURE")
-            )
-            serializer = CodeListDetailsSerializer(queryset, many=True)
-            self._get_child(serializer.data,respons_value,1,childItem)
-        return respons_value
+
+    #         queryset = code_list.objects.filter(
+    #                 LIST_TYPE=item.get("CODE"),
+    #                 CULTURE=item.get("CULTURE")
+    #             )
+    #         serializer = CodeListDetailsSerializer(queryset, many=True)
+    #         self._get_child(serializer.data,respons_value,1,childItem)
+    #     return respons_value
         
         
         

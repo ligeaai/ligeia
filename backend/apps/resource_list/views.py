@@ -51,25 +51,26 @@ class ResourceListDrawerMenutView(generics.CreateAPIView):
     
     def _getchild(self,data,new_dict,sart,culture):
         for item in data:
-            queryset = resource_list.objects.filter(ID = item.get('LAYER_NAME'),CULTURE = culture)
+            queryset = resource_list.objects.filter(ID = item.get('PARENT'),CULTURE = culture)
             serializer = ResourceListDetailsSerializer(queryset,many = True)
             if queryset:
                 tempt= {}
+                print(item.get('PARENT'))
                 for value in serializer.data:
-                    layer = value.get('LAYER_NAME')
+                    layer = value.get('PARENT')
                     if  str(layer).split('.')[0] == 'TYPE':
-                        url = value.get('URL')
                         try:
                             serializer.data.remove(value)
                         except:
                             pass
                         types = layer.split('.')[1]
+                        # print(types)
                         if types == 'OG_STD':
                             queryset = Type.objects.filter(LAYER_NAME = types)
                         else:
                             queryset = Type.objects.filter(LABEL_ID = layer)
                         serializer = TypeResourceListManagerSerializer(queryset,many = True)
-                        self._getResourceLabel(serializer.data,tempt,value.get('CULTURE'),url,types)
+                        self._getResourceLabel(serializer.data,tempt,value.get('CULTURE'),types)
                         
                     else:
                         tempt[value.get('SHORT_LABEL')] = value
@@ -79,11 +80,11 @@ class ResourceListDrawerMenutView(generics.CreateAPIView):
                 new_dict[item.get('SHORT_LABEL')] = item
             self._getchild(serializer.data,new_dict,1,culture)
 
-    def _getResourceLabel(self,data,tempt,culture,url,types):
+    def _getResourceLabel(self,data,tempt,culture,types):
         find_type = []
         if types == 'OG_STD':
             find_type = ['TYPE.COMPANY',"TYPE.ORG_UNIT1","TYPE.ORG_UNIT2","TYPE.ORG_UNIT3","TYPE.ORG_UNIT4",
-                     'TYPE.GEO_UNIT1',"TYPE.GEO_UNIT1","TYPE.GEO_UNIT1","TYPE.ORG_UNIT3"]
+                     'TYPE.GEO_UNIT1',"TYPE.GEO_UNIT1","TYPE.GEO_UNIT2","TYPE.ORG_UNIT3"]
         for item in data:
             try:
                 x = find_type.index(item.get('LABEL_ID'))
@@ -91,9 +92,7 @@ class ResourceListDrawerMenutView(generics.CreateAPIView):
                 tempt2 = {}
                 queryset = resource_list.objects.filter(ID = item.get('LABEL_ID'),CULTURE = culture)
                 serializer = ResourceListDetailsSerializer(queryset,many = True)
-                new_url =  url + '/'+str(item.get('TYPE')).lower()  
                 serializer.data[0]['TYPE'] = item.get('TYPE')
-                serializer.data[0]['URL'] = new_url
                 if item.get('LABEL_ID') == 'TYPE.ORG_UNIT2':
                     short_label = serializer.data[0].get('SHORT_LABEL')
                     serializer.data[0]['SHORT_LABEL'] = serializer.data[0].get('MOBILE_LABEL')

@@ -10,5 +10,4 @@ modelApp = [
     "apps.type_uom",
     "apps.item_version",
     "apps.layer",
-    "apps.page_resource_list",
 ]
