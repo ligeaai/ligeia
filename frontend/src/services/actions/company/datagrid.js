@@ -9,6 +9,7 @@ import {
     CLEAN_DATA_GRID,
     CLEAN_ALL_DATAGRID
 } from "../types"
+import axios from "axios";
 
 import { instance, config } from '../../baseApi';
 
@@ -62,6 +63,7 @@ export const addItemType = (type) => async (dispatch) => {
         payload: type
     });
 }
+let cancelToken;
 export const loadRows = (CULTURE, TYPE) => async (dispatch) => {
     const body = JSON.stringify({
         TYPE,
@@ -71,10 +73,15 @@ export const loadRows = (CULTURE, TYPE) => async (dispatch) => {
         type: SET_LOADING,
         payload: true
     })
+    if (cancelToken) {
+        cancelToken.cancel()
+    }
+    cancelToken = axios.CancelToken.source();
+    let res;
     try {
-        let res = await instance
+        res = await instance
             .post(
-                "/type/details/", body, config
+                "/type/details/", body, { ...config, cancelToken: cancelToken.token }
             )
         var response = {}
         response["HISTORY"] = {
@@ -91,7 +98,6 @@ export const loadRows = (CULTURE, TYPE) => async (dispatch) => {
                 },
             ],
         };
-        console.log(res);
         Object.keys(res.data).map(e => {
             res.data[e].map(a => {
                 response[a.PROPERTY_NAME] = a

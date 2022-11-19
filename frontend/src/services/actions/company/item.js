@@ -11,6 +11,7 @@ import {
     SET_LOADING,
     CLEAN_ALL_TREEMENU
 } from "../types"
+import axios from "axios";
 
 import { addColum } from "./datagrid"
 import { MyTextField } from "../../../pages/main/configuration/organization/myTextField";
@@ -255,13 +256,8 @@ export class column {
     }
 }
 
-
+let cancelToken;
 const updateDataGrid = () => async (dispatch, getState) => {
-
-    dispatch({
-        type: SET_LOADING,
-        payload: true
-    })
     const ITEM_ID = getState().item.selectedItem.ITEM_ID
     const CULTURE = getState().lang.cultur
     const TYPE = getState().item.type
@@ -270,10 +266,19 @@ const updateDataGrid = () => async (dispatch, getState) => {
         TYPE,
     });
     var rows = {}
+    if (cancelToken) {
+        cancelToken.cancel()
+    }
+    cancelToken = axios.CancelToken.source();
+    let res;
     try {
+        dispatch({
+            type: SET_LOADING,
+            payload: true
+        })
         let res = await instance
             .post(
-                "/type/details/", body, config
+                "/type/details/", body, { ...config, cancelToken: cancelToken.token }
             )
         var response = {}
         response["HISTORY"] = {
@@ -310,7 +315,7 @@ const updateDataGrid = () => async (dispatch, getState) => {
             .post(
                 "/item-property/details/",
                 body,
-                config
+                { ...config, cancelToken: cancelToken.token }
             )
         dispatch({
             type: CLEAN_DATA_GRID,

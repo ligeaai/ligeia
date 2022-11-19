@@ -6,18 +6,24 @@ import {
     LOAD_DRAWER_MENU
 } from "../types"
 
+import axios from "axios";
 import { instance, config } from '../../baseApi';
 
+let cancelToken;
 export const loadDrawerMenu = () => async (dispatch, getState) => {
     const CULTURE = getState().lang.cultur
     const body = JSON.stringify({ CULTURE })
-    console.log(body);
+    if (cancelToken) {
+        cancelToken.cancel()
+    }
+    cancelToken = axios.CancelToken.source();
+    let res;
     try {
         let res = await instance
             .post(
                 "/resource-list/menu/",
                 body,
-                config
+                { ...config, cancelToken: cancelToken.token }
             )
         res.data.Configuration.Items.Items.URL = "/configuration/items"
         res.data.Configuration.Items.Tools.URL = "/configuration/initialize"

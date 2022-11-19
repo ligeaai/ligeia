@@ -7,6 +7,7 @@ import {
     SET_FILTERED_LAYER_NAME_CODELIST
 } from "../types"
 
+import axios from "axios";
 import { instance, config } from '../../baseApi';
 
 import { refreshDataGridCodelist, cleanAllDataGrid } from "./datagrid";
@@ -30,16 +31,22 @@ export const loadFilteredTreeviewItem = () => async (dispatch, getState) => {
 
 }
 
+let cancelToken;
 export const loadTreeviewItemCodelist = () => async (dispatch, getState) => {
     const CULTURE = getState().lang.cultur;
     const LIST_TYPE = "CODE_LIST";
     const body = JSON.stringify({ CULTURE, LIST_TYPE });
+    if (cancelToken) {
+        cancelToken.cancel()
+    }
+    cancelToken = axios.CancelToken.source();
+    let res;
     try {
-        let res = await instance
+        res = await instance
             .post(
                 "/code-list/details/",
                 body,
-                config
+                { ...config, cancelToken: cancelToken.token }
             )
         var sortedResponse = res.data.sort((a, b) =>
             a.CODE_TEXT > b.CODE_TEXT ? 1 : -1

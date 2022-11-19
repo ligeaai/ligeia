@@ -15,7 +15,8 @@ import { instance, config } from '../../baseApi';
 
 import { loadTreeviewItemCodelist, selectTreeViewItemCoedlist } from "./treeview"
 import history from "../../../routers/history";
-
+import { gridColumnsTotalWidthSelector } from "@mui/x-data-grid";
+import axios from "axios";
 function _uuidv4() {
     return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, (c) =>
         (
@@ -73,22 +74,27 @@ export const addNewCodeListItemSchema = () => async (dispatch, getState) => {
     })
     history.push(routeTo)
 }
-
+let cancelToken;
 export const refreshDataGridCodelist = () => async (dispatch, getState) => {
     const ROW_ID = getState().treeviewCodelist.selectedItem.ROW_ID;
     const body = JSON.stringify({ ROW_ID });
+    if (cancelToken) {
+        cancelToken.cancel()
+    }
+    cancelToken = axios.CancelToken.source();
+    let res;
     try {
-        let res = await instance
+        res = await instance
             .post(
                 "/code-list/deep-details/",
                 body,
-                config
+                { ...config, cancelToken: cancelToken.token }
             )
         dispatch({
             type: LOAD_DATAGRID_ROW_CODELIST,
             payload: res.data
         })
-        return res
+
     } catch (err) {
         return err
     }

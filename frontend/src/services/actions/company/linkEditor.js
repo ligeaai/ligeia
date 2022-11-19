@@ -8,28 +8,32 @@ import {
     CLEAN_CHANGED_LIST_LINK_EDITOR,
     LOAD_LINK_EDITOR_SCHEMA_FROM_TYPE
 } from "../types"
+import axios from "axios";
 import { Box } from "@mui/material";
 
 import { instance, config } from '../../baseApi';
 import React from "react";
 
-
+let cancelToken;
 export const loadLinkEditor = () => async (dispatch, getState) => {
     const TYPE = getState().item.type
-    const CULTURE = getState().lang.cultur
     const selectedItem = getState().item.selectedItem.ITEM_ID
     const body = JSON.stringify({ TYPE })
     dispatch({
         type: LOAD_LINKS,
         payload: []
     })
+    if (cancelToken) {
+        cancelToken.cancel()
+    }
+    cancelToken = axios.CancelToken.source();
+    let res;
     try {
-        let res = await instance.post(
+        res = await instance.post(
             "/type-link/details/",
             body,
-            config
+            { ...config, cancelToken: cancelToken.token }
         );
-        console.log(res);
         try {
             let itemLinkRes = await instance.post(
                 `/item-link/details/`,

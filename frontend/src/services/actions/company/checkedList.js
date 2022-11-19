@@ -3,50 +3,60 @@ import {
     SET_CHECKED_ITEMS,
     CLEAN_COMPANY_CHECKED_LIST
 } from "../types"
+import axios from "axios";
 
 import { instance, config } from '../../baseApi';
 import { loadLinkEditor } from "./linkEditor";
 
+let cancelToken;
 export const loadCheckedList = (fromType) => async (dispatch, getState) => {
-    let res = await instance.get(`/item/details/${fromType}`, config);
-    const selectedItemId = getState().item.selectedItem.ITEM_ID;
+    if (cancelToken) {
+        cancelToken.cancel()
+    }
+    cancelToken = axios.CancelToken.source();
+    let res;
     try {
-        let itemLinkRes = await instance.post(
-            `/item-link/details/`,
-            {
-                TO_ITEM_ID: selectedItemId,
-            },
-            config
-        );
-        var data = [];
-        res.data.map((e) => {
-            console.log(e);
-            var temp = true;
-            itemLinkRes.data.map((a) => {
+        res = await instance.get(`/item/details/${fromType}`,
+            { ...config, cancelToken: cancelToken.token });
+        const selectedItemId = getState().item.selectedItem.ITEM_ID;
+        try {
+            let itemLinkRes = await instance.post(
+                `/item-link/details/`,
+                {
+                    TO_ITEM_ID: selectedItemId,
+                },
+                config
+            );
+            var data = [];
+            res.data.map((e) => {
+                var temp = true;
+                itemLinkRes.data.map((a) => {
 
-                if (e.ITEM_ID === a.FROM_ITEM_ID) {
-                    temp = false;
+                    if (e.ITEM_ID === a.FROM_ITEM_ID) {
+                        temp = false;
+                    }
+                });
+                if (temp) {
+                    data.push(e);
                 }
             });
-            if (temp) {
+            dispatch({
+                type: LOAD_CHECKLIST,
+                payload: data
+            })
+        } catch (err) {
+            console.log(err);
+            var data = [];
+            res.data.map((e) => {
                 data.push(e);
-            }
-        });
-        console.log(data);
-        dispatch({
-            type: LOAD_CHECKLIST,
-            payload: data
-        })
-    } catch (err) {
-        var data = [];
-        res.data.map((e) => {
-            data.push(e);
-        });
-        console.log(data);
-        dispatch({
-            type: LOAD_CHECKLIST,
-            payload: data
-        })
+            });
+            dispatch({
+                type: LOAD_CHECKLIST,
+                payload: data
+            })
+        }
+    } catch {
+
     }
 }
 
