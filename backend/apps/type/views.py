@@ -27,7 +27,7 @@ from utils.models_utils import (
                                 )
 # Create your views here.
 from .models import type as Type
-from apps.templates.orm_templates import getCodeList
+from apps.templates.orm_CodeList import CodeListORM
 from .serializers import (
     TypeDetailsSerializer,
     TypeSaveSerializer,
@@ -141,8 +141,8 @@ class TypeDetailNewView(generics.CreateAPIView):
     def _getCodeList(self,data,culture):
         for index in range(0,len(data)):
             queryset = code_list.objects.filter(LIST_TYPE = "CODE_LIST",CODE=data[index].get('CODE_LIST'), CULTURE=culture)
-            code_list = getCodeList(queryset,culture=culture,hierarchy=False)
-            data[index]['CODE'] = code_list
+            child_code = CodeListORM.getCodeList(queryset,culture=culture,hierarchy=False)
+            data[index]['CODE'] = child_code
     
             
             

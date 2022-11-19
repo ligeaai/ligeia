@@ -4,7 +4,8 @@ from apps.code_list.serializers import CodeListDetailsSerializer
  
 
                 
-def getCodeList(queryset,culture,hierarchy = False):
+class CodeListORM():
+    def getCodeList(queryset,culture,hierarchy = False):
         if queryset:
             serializer = CodeListDetailsSerializer(queryset,many = True)
             values = []
@@ -35,7 +36,6 @@ def _getChildCodeList(data,culture,parent,hierarchy,response_value):
 def _CodeListHierarchy(data,childItem):
      data['HIERARCHY'] = childItem
      return data
-
 
 
 

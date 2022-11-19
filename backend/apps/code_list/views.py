@@ -4,7 +4,7 @@ from django.shortcuts import render
 from rest_framework import generics, permissions, status
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.response import Response
-from apps.templates.orm_templates import getCodeList
+from apps.templates.orm_CodeList import CodeListORM
 from services.logging.Handlers import KafkaLogger
 from services.parsers.addData.type import typeAddData
 from utils.utils import redisCaching as Red
@@ -156,7 +156,7 @@ class CodeListParentDeleteView(generics.CreateAPIView):
             serializer = CodeListDetailsSerializer(queryset, many=True)
             child_data = serializer.data
             queryset.delete()
-            self._delete_child(serializer.data)
+            CodeListORM.getCodeList()
         return True
     
 class CodeListDeleteView(generics.CreateAPIView):
@@ -183,9 +183,9 @@ class CodeListDeepDetailView(generics.CreateAPIView):
         
         cache_key = str(request.user) + request.data.get('ROW_ID')
         cache_data = Red.get(cache_key)
-        # if cache_data:
-        #     logger.info(request=request, message="Code list deep details (Parent-Child Relationship)")
-        #     return Response(cache_data, status=status.HTTP_200_OK)
+        if cache_data:
+            logger.info(request=request, message="Code list deep details (Parent-Child Relationship)")
+            return Response(cache_data, status=status.HTTP_200_OK)
         
         queryset = code_list.objects.filter(
             ROW_ID = request.data.get('ROW_ID')
@@ -194,7 +194,7 @@ class CodeListDeepDetailView(generics.CreateAPIView):
         serializer = CodeListDetailsSerializer(queryset, many=True)
         respons_value = []
         culture = serializer.data[0].get('CULTURE')
-        respons_value = getCodeList(queryset,culture=culture,hierarchy=True)
+        respons_value = CodeListORM.getCodeList(queryset,culture=culture,hierarchy=True)
         respons_value = null_value_to_space(respons_value,request)
         Red.set(cache_key, respons_value)
         logger.info(request=request, message="Code list deep details (Parent-Child Relationship)")
