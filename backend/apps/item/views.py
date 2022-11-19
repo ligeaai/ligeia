@@ -83,12 +83,13 @@ class ItemView(generics.ListAPIView):
         return Response({"Message":'Successful'}, status=status.HTTP_200_OK)
 
 class ItemDetailsView(generics.ListAPIView):
-    queryset = item.objects.all()
-    serializer_class = ItemDetailsSerializer
+    
+    
     permission_classes = [permissions.AllowAny]
     lookup_field = 'pk'
     def list(self, request, *args, **kwargs):
-        cache_key = str(request.user) + self.kwargs['item']
+        cache_key = str(request.user) + str(self.kwargs['item'])
+        print(str(cache_key))
         cache_data = Red.get(cache_key)
         if cache_data:
             Response(cache_data,status=status.HTTP_200_OK)
@@ -104,7 +105,8 @@ class ItemDetailsView(generics.ListAPIView):
                         serializer.data[index]['NAME'] = value
         message = "Succsesfull listed for items"
         logger.info(message,request = request)
-        Red.set(serializer.data,cache_key)
+        
+        Red.set(cache_key,(serializer.data))
         return Response(serializer.data,status=status.HTTP_200_OK)
 
 
