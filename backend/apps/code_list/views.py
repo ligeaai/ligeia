@@ -72,6 +72,28 @@ class CodeListView(generics.ListAPIView):
         typeAddData.import_data("CODE_LIST")
         return Response({"Message": "successful"}, status=status.HTTP_200_OK)
 
+    
+class CodeListParentView(generics.CreateAPIView):
+    serializer_class = CodeListDetailsSerializer
+    authentication_classes = []
+    permission_classes = []
+    
+    def post(self, request, *args, **kwargs):
+        list_types='CODE_LIST'
+        culture=request.data.get("CULTURE")
+        cache_key = str(request.user) + list_types + culture
+        
+        queryset = code_list.objects.filter(
+                    LIST_TYPE=list_types,
+                    CULTURE=culture,
+                    )
+        validate_find(queryset,request=request)
+        serializer = CodeListDetailsSerializer(queryset, many=True)
+        serializer = null_value_to_space(serializer.data,request=request)
+        logger.info(request=request, message="Code list details only one fields")
+        # Red.set(cache_key, serializer)
+        return Response(serializer, status=status.HTTP_200_OK)
+
 
 class CodeListDetailView(generics.CreateAPIView):
 
@@ -139,10 +161,16 @@ class CodeListParentDeleteView(generics.CreateAPIView):
         try:
             queryset = code_list.objects.filter(ROW_ID = request.data.get('ROW_ID'))
             validate_find(queryset,request=request)
+            
+            
             serializer = CodeListDeleteSerializer(queryset, many=True)
+            list_types=serializer.data[0].get('LIST_TYPE')
+            culture=serializer.data[0].get('CULTURE')
+            cache_key = str(request.user) + list_types + culture
             self._delete_child(serializer.data)
             logger.info(request=request, message=message)
             Red.delete(str(request.user)+request.data.get('ROW_ID'))
+            Red.delete(cache_key)
             return Response(message, status=status.HTTP_200_OK)
         except Exception as e:
             logger.error(request=request, message=message,error=str(ValidationError(e)))
