@@ -77,6 +77,8 @@ class CodeListCustomNewSerializer(serializers.Serializer):
 class CodeListCustomSerializer(serializers.Serializer):
 
     def save(self, validated_data):
+        if validated_data.data.get('HIERARCHY'):
+                    validated_data.data.pop('HIERARCHY')
         qs = code_list.objects.filter(ROW_ID = validated_data.data.get('ROW_ID'))
         if qs:
             try:
@@ -89,6 +91,7 @@ class CodeListCustomSerializer(serializers.Serializer):
         else: 
             validate_model_not_null(validated_data.data,"code_list",validated_data) 
             validated_data.data["VERSION"] = uuid.uuid4().hex
+            
             codeList = code_list.objects.create(**validated_data.data)
             codeList.save()
             return str(codeList) + "Code list Created successful"

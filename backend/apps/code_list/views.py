@@ -45,7 +45,7 @@ class CodeListSaveAndUpdateNewView(generics.UpdateAPIView):
         serializer.is_valid()
         message=serializer.save(request)
         logger.info(request=request, message = "message")
-        Red.delete(str(request.user)+request.data.get('HIERARCHY')[0])
+        # Red.delete(str(request.user)+request.data.get('HIERARCHY')[0])
         return Response(
             {"Message": "message"}, status=status.HTTP_200_OK
         )
@@ -54,11 +54,13 @@ class CodeListSaveAndUpdateView(generics.UpdateAPIView):
     permission_classes = [permissions.AllowAny]
 
     def put(self, request, *args, **kwargs):
-        serializer = CodeListCustomSerializer(data=request.data)   
+        
+        serializer = CodeListCustomSerializer(data=request.data) 
+        Red.delete("aa"+request.data.get('HIERARCHY')[0])
         serializer.is_valid()
         message=serializer.save(request)
         logger.info(request=request, message = message)
-        Red.delete(str(request.user)+request.data.get('ROW_ID'))
+        
         return Response(
             {"Message": message}, status=status.HTTP_200_OK
         )
