@@ -45,7 +45,7 @@ class CodeListSaveAndUpdateNewView(generics.UpdateAPIView):
         serializer.is_valid()
         message=serializer.save(request)
         logger.info(request=request, message = "message")
-        Red.delete(str(request.user)+request.data.get('ROW_ID'))
+        Red.delete(str(request.user)+request.data.get('HIERARCHY')[0])
         return Response(
             {"Message": "message"}, status=status.HTTP_200_OK
         )
@@ -105,10 +105,7 @@ class CodeListDetailView(generics.CreateAPIView):
 
         if request.data.get('ROW_ID'):
             cache_key = str(request.user) + request.data.get('ROW_ID')
-        else:
-            list_types=request.data.get('LIST_TYPE')
-            culture=request.data.get("CULTURE")
-            cache_key = str(request.user) + list_types + culture
+        
         
         cache_data = Red.get(cache_key)
         
@@ -116,15 +113,11 @@ class CodeListDetailView(generics.CreateAPIView):
             logger.info(request=request, message="Code list details")
             return Response(cache_data, status=status.HTTP_200_OK)
         
-        if request.data.get('ROW_ID'):
-            queryset = code_list.objects.filter(
+        
+        queryset = code_list.objects.filter(
                 ROW_ID=request.data.get('ROW_ID'),
                 )
-        else:
-            queryset = code_list.objects.filter(
-                    LIST_TYPE=request.data.get('LIST_TYPE'),
-                    CULTURE=request.data.get("CULTURE"),
-                    )
+        
         validate_find(queryset,request=request)
         serializer = CodeListDetailsSerializer(queryset, many=True)
         serializer = null_value_to_space(serializer.data,request=request)
