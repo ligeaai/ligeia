@@ -36,7 +36,7 @@ export const showItem = () => async (dispatch, getState) => {
         let res = await instance
             .get(
                 `/item/details/${type}`,
-                config
+                config()
             )
 
         dispatch({
@@ -136,7 +136,7 @@ export const saveItem = () => async (dispatch, getState) => {
                 .post(
                     "/item/item-and-property/",
                     body,
-                    config
+                    config()
                 )
             dispatch({
                 type: SAVE_ITEM,
@@ -285,7 +285,7 @@ const updateDataGrid = () => async (dispatch, getState) => {
         })
         let res = await instance
             .post(
-                "/type/details/", body, { ...config, cancelToken: cancelToken.token }
+                "/type/details/", body, { ...config(), cancelToken: cancelToken.token }
             )
         var response = {}
         response["HISTORY"] = {
@@ -322,7 +322,7 @@ const updateDataGrid = () => async (dispatch, getState) => {
             .post(
                 "/item-property/details/",
                 body,
-                { ...config, cancelToken: cancelToken.token }
+                { ...config(), cancelToken: cancelToken.token }
             )
         dispatch({
             type: CLEAN_DATA_GRID,
@@ -480,7 +480,7 @@ export const deleteItem = () => async (dispatch, getState) => {
             .post(
                 "/item/delete/",
                 body,
-                config
+                config()
             )
         dispatch(showItem())
     }

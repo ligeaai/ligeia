@@ -81,7 +81,7 @@ export const loadRows = (CULTURE, TYPE) => async (dispatch) => {
     try {
         res = await instance
             .post(
-                "/type/details/", body, { ...config, cancelToken: cancelToken.token }
+                "/type/details/", body, { ...config(), cancelToken: cancelToken.token }
             )
         var response = {}
         response["HISTORY"] = {

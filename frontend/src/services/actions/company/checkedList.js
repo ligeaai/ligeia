@@ -17,7 +17,7 @@ export const loadCheckedList = (fromType) => async (dispatch, getState) => {
     let res;
     try {
         res = await instance.get(`/item/details/${fromType}`,
-            { ...config, cancelToken: cancelToken.token });
+            { ...config(), cancelToken: cancelToken.token });
         const selectedItemId = getState().item.selectedItem.ITEM_ID;
         try {
             let itemLinkRes = await instance.post(
@@ -25,7 +25,7 @@ export const loadCheckedList = (fromType) => async (dispatch, getState) => {
                 {
                     ID: selectedItemId,
                 },
-                config
+                config()
             );
             var data = [];
             console.log(itemLinkRes.data);
@@ -152,7 +152,7 @@ export const cardinalityCheck = (selectItems, selectedItemFromType) => async (di
                         let res = await instance.post(
                             `/item-link/cardinalty/`,
                             body,
-                            config
+                            config()
                         );
                         if (res.data) {
                             returnVal = false
@@ -178,7 +178,7 @@ export const cardinalityCheck = (selectItems, selectedItemFromType) => async (di
             let res = await instance.post(
                 `/item-link/cardinalty/`,
                 body,
-                config
+                config()
             );
             if (res.data) {
                 return false
@@ -194,7 +194,7 @@ export const cardinalityCheck = (selectItems, selectedItemFromType) => async (di
                     let res = await instance.post(
                         `/item-link/cardinalty/`,
                         body,
-                        config
+                        config()
                     );
                     if (res.data) {
                         returnVal = false
@@ -217,7 +217,7 @@ export const cardinalityCheck = (selectItems, selectedItemFromType) => async (di
                     let res = await instance.post(
                         `/item-link/cardinalty/`,
                         body,
-                        config
+                        config()
                     );
                     console.log(res);
                     if (res.data) {
@@ -270,7 +270,7 @@ export const saveLinks = (date, linkType, isOutCheck) => async (dispatch, getSta
                 let res = await instance.post(
                     `/item-link/save/`,
                     body,
-                    config
+                    config()
                 );
                 dispatch(loadLinkEditor());
             } catch (err) { }

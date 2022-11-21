@@ -88,7 +88,7 @@ export const refreshDataGridCodelist = () => async (dispatch, getState) => {
             .post(
                 "/code-list/deep-details/",
                 body,
-                { ...config, cancelToken: cancelToken.token }
+                { ...config(), cancelToken: cancelToken.token }
             )
         dispatch({
             type: LOAD_DATAGRID_ROW_CODELIST,
@@ -161,7 +161,7 @@ const _save = (value, userEmail) => async (dispatch, getState) => {
             .put(
                 "/code-list/save-update/",
                 body,
-                config
+                config()
             )
 
         return res
@@ -218,7 +218,7 @@ export const saveCodeList = () => async (dispatch, getState) => {
                         .post(
                             "/code-list/delete/",
                             body,
-                            config
+                            config()
                         )
                     return res
                 } catch (err) {
@@ -248,7 +248,7 @@ export const deleteCodeList = () => async (dispatch, getState) => {
             .post(
                 "/code-list/delete/",
                 body,
-                config
+                config()
             )
 
     } catch (err) {

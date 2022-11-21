@@ -45,7 +45,7 @@ export const loadTreeviewItemCodelist = () => async (dispatch, getState) => {
             .post(
                 "/code-list/details/parent",
                 body,
-                { ...config, cancelToken: cancelToken.token }
+                { ...config(), cancelToken: cancelToken.token }
             )
         console.log(res);
         var sortedResponse = res.data.sort((a, b) =>

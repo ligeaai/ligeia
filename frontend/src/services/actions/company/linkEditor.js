@@ -33,7 +33,7 @@ export const loadLinkEditor = () => async (dispatch, getState) => {
         res = await instance.post(
             "/type-link/details/",
             body,
-            { ...config, cancelToken: cancelToken.token }
+            { ...config(), cancelToken: cancelToken.token }
         );
         console.log(res);
         try {
@@ -43,7 +43,7 @@ export const loadLinkEditor = () => async (dispatch, getState) => {
                 {
                     ID: selectedItem,
                 },
-                config
+                config()
             );
             console.log(itemLinkRes);
             itemLinkRes.data.TO_ITEM_ID.map(e => {
@@ -103,7 +103,7 @@ export const deleteLinkItem = (LINK_ID) => async dispatch => {
         await instance.post(
             `/item-link/delete/`,
             body,
-            config
+            config()
         );
         dispatch(loadLinkEditor());
     } catch { }
@@ -148,7 +148,7 @@ export const saveLinkItem = () => async (dispatch, getState) => {
                 await instance.put(
                     `/item-link/update/`,
                     body,
-                    config
+                    config()
                 );
             } catch { }
         }
