@@ -9,6 +9,6 @@ urlpatterns = [
     path("delete/", ItemLinkDeleteView.as_view(), name="itemlinkdelete"),
     path("details/", ItemLinkDetailsView.as_view(), name="itemlinkdetails"),
     path("hierarchy/", ItemLinkHierarchyView.as_view(), name="hierarchy"),
-    path("hierarchy/", ItemLinkCardinaltyView.as_view(), name="cardinalty"),
+    path("cardinalty/", ItemLinkCardinaltyView.as_view(), name="cardinalty"),
    
 ]
