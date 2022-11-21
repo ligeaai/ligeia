@@ -36,7 +36,7 @@ function myMemoFunction(params) {
   return <MemoizedInputBaseEditInputCell {...params} />;
 }
 
-const DateBreak = () => {
+const DateBreak = ({ props }) => {
   const dispatch = useDispatch();
   const instanttime = new Date();
   const [date, setDate] = React.useState(instanttime);
@@ -117,6 +117,7 @@ const DateBreak = () => {
               color: "#4B4B4B",
               pr: 1,
             }}
+            disabled={props}
             onClick={() => {
               if (checkDateBreaks(date)) {
                 dispatch(addColum(crateColumn(), date));
@@ -132,6 +133,7 @@ const DateBreak = () => {
                 onChange={(newValue) => {
                   setDate(newValue.$d);
                 }}
+                disabled={props}
                 components={{
                   OpenPickerIcon: CalendarTodayIcon,
                 }}

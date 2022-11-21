@@ -33,6 +33,19 @@ export const loadCheckedList = (fromType) => async (dispatch, getState) => {
                 var temp = true;
                 itemLinkRes.data.TO_ITEM_ID.map((a) => {
                     if (e.ITEM_ID === a.FROM_ITEM_ID) {
+                        console.log(e.ITEM_ID == a.TO_ITEM_ID);
+                        console.log(e);
+                        console.log(a);
+                        temp = false;
+                    }
+                    else {
+                        console.log(e.ITEM_ID === a.TO_ITEM_ID);
+                        console.log(e.ITEM_ID);
+                        console.log(a.TO_ITEM_ID);
+                    }
+                });
+                itemLinkRes.data.FROM_ITEM_ID.map((a) => {
+                    if (e.ITEM_ID === a.TO_ITEM_ID) {
                         temp = false;
                     }
                 });
@@ -78,6 +91,152 @@ function _uuidv4() {
             ).toString(16)
     );
 }
+
+export const cardinalityCheck = (selectItems, selectedItemFromType) => async (dispatch, getState) => {
+    console.log(selectItems);
+    const selectedItem = getState().item.selectedItem
+    const links = getState().linkEditor.links
+    const checkedItemLength = getState().companyCheckedList.checkedItems.length
+    const checkedItem = getState().companyCheckedList.checkedItems
+    var isOut = false
+    if (selectItems[0].TO_TYPE === selectedItem.ITEM_TYPE) {
+        isOut = true
+    }
+    var mySelectItem = []
+    console.log(selectedItemFromType);
+    console.log(selectItems);
+    if (isOut) {
+        selectItems.map(e => {
+            if (e.FROM_TYPE === selectedItemFromType) {
+                mySelectItem = e
+            }
+        })
+    }
+    else {
+        selectItems.map(e => {
+            if (e.TO_TYPE === selectedItemFromType) {
+                mySelectItem = e
+            }
+        })
+    }
+    if (mySelectItem.TO_CARDINALITY === "*" && mySelectItem.FROM_CARDINALITY === "*")
+        return true
+
+    //------ in
+    if (isOut && mySelectItem.TO_CARDINALITY === "1" && mySelectItem.FROM_CARDINALITY === "*") {
+        let returnVal = true
+        if (parseInt(checkedItemLength) > 1) {
+            return false
+        }
+        Object.keys(links).map(e => {
+            if (links[e].FROM_ITEM_TYPE === mySelectItem.FROM_TYPE) {
+                returnVal = false
+            }
+        })
+        return returnVal
+    }
+    if (isOut && mySelectItem.TO_CARDINALITY === "*" && mySelectItem.FROM_CARDINALITY === "1") {
+        try {
+            if (parseInt(checkedItemLength) > 1) {
+                return false
+            }
+            const TO_ITEM_TYPE = mySelectItem.TO_TYPE
+            var returnVal = true
+            await Promise.all(
+                Object.keys(checkedItem).map(async e => {
+                    var FROM_ITEM_ID = checkedItem[e].ITEM_ID
+                    const LINK_TYPE = mySelectItem.TYPE
+                    const body = JSON.stringify({ TO_ITEM_TYPE, FROM_ITEM_ID, LINK_TYPE })
+                    console.log(body);
+                    try {
+                        let res = await instance.post(
+                            `/item-link/cardinalty/`,
+                            body,
+                            config
+                        );
+                        if (res.data) {
+                            returnVal = false
+                        }
+                    } catch { }
+                }))
+            return returnVal
+        } catch (err) {
+            console.log(err);
+        }
+    }
+    if (isOut && mySelectItem.TO_CARDINALITY === "1" && mySelectItem.FROM_CARDINALITY === "1") {
+        if (parseInt(checkedItemLength) > 1) {
+            return false
+        }
+        const LINK_TYPE = mySelectItem.TYPE
+        var returnVal = true
+        const FROM_ITEM_TYPE = mySelectItem.FROM_TYPE
+        var TO_ITEM_ID = selectedItem.ITEM_ID
+        const body = JSON.stringify({ FROM_ITEM_TYPE, TO_ITEM_ID, LINK_TYPE })
+        console.log(body);
+        try {
+            let res = await instance.post(
+                `/item-link/cardinalty/`,
+                body,
+                config
+            );
+            if (res.data) {
+                return false
+            }
+        } catch { }
+        await Promise.all(
+            Object.keys(checkedItem).map(async e => {
+                const TO_ITEM_TYPE = mySelectItem.TO_TYPE
+                var FROM_ITEM_ID = checkedItem[e].ITEM_ID
+                const body = JSON.stringify({ TO_ITEM_TYPE, FROM_ITEM_ID, LINK_TYPE })
+                console.log(body);
+                try {
+                    let res = await instance.post(
+                        `/item-link/cardinalty/`,
+                        body,
+                        config
+                    );
+                    if (res.data) {
+                        returnVal = false
+                    }
+                } catch { }
+            }))
+        return returnVal
+    }
+    //---------out
+    if (!isOut && mySelectItem.TO_CARDINALITY === "1" && mySelectItem.FROM_CARDINALITY === "*") {
+        var returnVal = true
+        await Promise.all(
+            Object.keys(checkedItem).map(async e => {
+                const LINK_TYPE = mySelectItem.TYPE
+                const FROM_ITEM_TYPE = mySelectItem.FROM_TYPE
+                var TO_ITEM_ID = checkedItem[e].ITEM_ID
+                const body = JSON.stringify({ FROM_ITEM_TYPE, TO_ITEM_ID, LINK_TYPE })
+                console.log(body);
+                try {
+                    let res = await instance.post(
+                        `/item-link/cardinalty/`,
+                        body,
+                        config
+                    );
+                    console.log(res);
+                    if (res.data) {
+                        returnVal = false
+                    }
+                } catch { }
+            }))
+        return returnVal
+
+    }
+    if (!isOut && mySelectItem.TO_CARDINALITY === "*" && mySelectItem.FROM_CARDINALITY === "1") {
+
+    }
+    if (!isOut && mySelectItem.TO_CARDINALITY === "1" && mySelectItem.FROM_CARDINALITY === "1") {
+
+    }
+    return true
+}
+
 export const saveLinks = (date, linkType, isOutCheck) => async (dispatch, getState) => {
     const checkedItems = getState().companyCheckedList.checkedItems
     const selectedItem = getState().item.selectedItem

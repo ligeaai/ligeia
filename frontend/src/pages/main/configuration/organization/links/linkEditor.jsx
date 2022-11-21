@@ -28,6 +28,7 @@ const LinkEditor = ({ type }) => {
   );
   const links = useSelector((state) => state.linkEditor.links);
   const changedLinks = useSelector((state) => state.linkEditor.changedLinks);
+  const isFullScreen = useSelector((state) => state.fullScreen.isFullScreen);
   const selectedItem = useSelector((state) => state.item.selectedItem);
   console.log(res);
   console.log(links);
@@ -52,18 +53,20 @@ const LinkEditor = ({ type }) => {
           <Typography>{type}</Typography>
           <TimeRangePicker /> 
         </Grid> */}
-        <Grid item xs={6}>
-          <Box sx={{ width: "100%", textAlign: "center" }}>In</Box>
+        <Grid item xs={12} md={6}>
+          <Box sx={{ width: "100%", textAlign: "center", fontWeight: "bold" }}>
+            In
+          </Box>
           {Object.keys(res).map((e, i) => (
             <Box key={i}>
               <Divider />
               <Box sx={{ p: 1 }}>
-                <Box sx={{ mb: 3, fontSize: "14px" }}>{res[e].TYPE}</Box>
-                <Box sx={{ mb: 1 }}>
+                <Box sx={{ mb: 1, fontSize: "14px" }}>{res[e].TYPE}</Box>
+                <Box>
                   <Dialog data={res[e]} dataSelectItemPath="data" />
                 </Box>
               </Box>
-              <Grid container spacing={1} sx={{ p: 1 }}>
+              <Grid container spacing={1} sx={{ p: 1, pt: 0 }}>
                 {Object.keys(links).map((a, key) => {
                   if (links[a].TO_ITEM_TYPE === selectedItem.ITEM_TYPE) {
                     if (res[e].TYPE === links[a].LINK_TYPE) {
@@ -163,16 +166,34 @@ const LinkEditor = ({ type }) => {
             </Box>
           ))}
         </Grid>
-        <Grid item xs={6}>
-          <Box sx={{ width: "100%", textAlign: "center" }}>Out</Box>
+        <Grid item sx={{ position: "relative" }}>
+          <Divider
+            sx={{
+              position: "absolute",
+              left: "50%",
+              borderWidth: "0.1px",
+              minHeight: isFullScreen
+                ? "calc(500px - 60px - 51px )"
+                : "calc(500px - 50px - 36px - 33px)",
+              height: isFullScreen
+                ? "calc(100vh - 60px - 51px )"
+                : "calc(100vh - 60px - 50px - 36px - 33px)",
+              backgroundColor: "secondary",
+            }}
+          />
+        </Grid>
+        <Grid item xs={12} md={6}>
+          <Box sx={{ width: "100%", textAlign: "center", fontWeight: "bold" }}>
+            Out
+          </Box>
           {Object.keys(resFromType).map((e, i) => (
             <Box key={i}>
               <Divider />
               <Box sx={{ p: 1 }}>
-                <Box sx={{ mb: 3, fontSize: "14px" }}>
+                <Box sx={{ mb: 1, fontSize: "14px" }}>
                   {resFromType[e].TYPE}
                 </Box>
-                <Box sx={{ mb: 1 }}>
+                <Box>
                   <Dialog
                     data={resFromType[e]}
                     dataSelectItemPath="dataFromType"

@@ -16,9 +16,10 @@ import React from "react";
 
 let cancelToken;
 export const loadLinkEditor = () => async (dispatch, getState) => {
-    const TYPE = getState().item.type
-    const selectedItem = getState().item.selectedItem.ITEM_ID
-    const body = JSON.stringify({ TYPE })
+    const TYPE = getState().item.type;
+    const CULTURE = getState().lang.cultur;
+    const selectedItem = getState().item.selectedItem.ITEM_ID;
+    const body = JSON.stringify({ TYPE, CULTURE });
     dispatch({
         type: LOAD_LINKS,
         payload: []
@@ -36,6 +37,7 @@ export const loadLinkEditor = () => async (dispatch, getState) => {
         );
         console.log(res);
         try {
+            console.log(selectedItem);
             let itemLinkRes = await instance.post(
                 `/item-link/details/`,
                 {

@@ -22,6 +22,7 @@ import {
   loadCheckedList,
   saveLinks,
   toggleChecked,
+  cardinalityCheck,
 } from "../../../../../services/actions/company/checkedList";
 const MyCheckList = (props) => {
   const dispatch = useDispatch();
@@ -29,6 +30,9 @@ const MyCheckList = (props) => {
   const [date, setDate] = React.useState(instanttime);
   const [selectedItem, setSelectedItem] = React.useState("");
   const data = useSelector((state) => state.companyCheckedList.listItem);
+  const checkedItemsLen = useSelector(
+    (state) => state.companyCheckedList.checkedItems.length
+  );
   const linkEditorData = useSelector(
     (state) => state.linkEditor[props.dataSelectItemPath]
   );
@@ -131,19 +135,45 @@ const MyCheckList = (props) => {
         sx={{ justifyContent: "space-between", alignItems: "center" }}
       >
         <Grid item sx={{ pl: 1 }}>
-          Selected Items Count:0
+          Selected Items Count:{checkedItemsLen}
         </Grid>
         <Grid item>
-          <Button
-            onClick={() => {
-              dispatch(
-                saveLinks(date, selectItems[0].TYPE, selectItems[0].TO_TYPE)
-              );
-              props.onClose();
-            }}
-          >
-            Save
-          </Button>
+          <Grid container>
+            <Grid item>
+              <Button
+                onClick={() => {
+                  props.onClose();
+                }}
+              >
+                Cancel
+              </Button>
+            </Grid>
+            <Grid item>
+              <Button
+                onClick={async () => {
+                  if (
+                    await dispatch(cardinalityCheck(selectItems, selectedItem))
+                  ) {
+                    dispatch(
+                      saveLinks(
+                        date,
+                        selectItems[0].TYPE,
+                        selectItems[0].TO_TYPE
+                      )
+                    );
+                    props.onClose();
+                  } else {
+                    dispatch({
+                      type: "ADD_ERROR_SUCCESS",
+                      payload: "Cardinality error",
+                    });
+                  }
+                }}
+              >
+                Save
+              </Button>
+            </Grid>
+          </Grid>
         </Grid>
       </Grid>
     </React.Fragment>
