@@ -17,6 +17,20 @@ class ItemLinkSaveView(generics.CreateAPIView):
         serializer.is_valid()
         serializer.save(request)
         return Response("Created SUCCSESFUL",status=status.HTTP_201_CREATED)
+
+class ItemLinkCardinaltyView(generics.CreateAPIView):
+    permission_classes = [permissions.AllowAny]
+
+    def post(self, request, *args, **kwargs):
+        quaryset  = item_link.objects.filter(
+        FROM_ITEM_TYPE = request.data.get("FROM_ITEM_TYPE"),
+        LINK_TYPE = request.data.get("LINK_TYPE"),
+        TO_ITEM_TYPE =request.data.get("TO_ITEM_TYPE") )
+        if quaryset:
+            return Response(True,status=status.HTTP_200_OK)
+        else:
+            return Response(False,status=status.HTTP_400_BAD_REQUEST)
+        
         
 
 class ItemLinkDetailsView(generics.CreateAPIView):
