@@ -23,11 +23,20 @@ class ItemLinkDetailsView(generics.CreateAPIView):
     permission_classes = [permissions.AllowAny]
 
     def post(self, request, *args, **kwargs):
-        quaryset  = item_link.objects.filter(TO_ITEM_ID = request.data.get("TO_ITEM_ID"))
-        validate_find(quaryset,request)
+        tempt = []
+        quaryset  = item_link.objects.filter(TO_ITEM_ID = request.data.get("ID"))
+        quaryset2  = item_link.objects.filter(FROM_ITEM_ID = request.data.get("ID"))
+        # validate_find(quaryset,request)
         serializer = ItemLinkDetailsSerializer(quaryset,many = True)
-        self._getFromItemName(serializer.data,request)
-        return Response(serializer.data,status=status.HTTP_200_OK)
+        serializer2 = ItemLinkDetailsSerializer(quaryset2,many = True)
+        data1 = self._getFromItemName(serializer.data,request)
+        data2 = self._getFromItemName(serializer2.data,request)
+        new_dict = {
+            "TO_ITEM_ID":data1,
+            "FROM_ITEM_ID":data2
+        }
+        return Response(new_dict,status=status.HTTP_200_OK)
+    
     
     def _getFromItemName(self,data,request):
         try:
@@ -37,6 +46,7 @@ class ItemLinkDetailsView(generics.CreateAPIView):
                 validate_find(property,request)
                 serializer = ItemPropertyNameSerializer(property,many = True)
                 data[index]['FROM_ITEM_NAME'] = serializer.data[0].get('PROPERTY_STRING')
+            return data
         except Exception as e:
             raise e
 

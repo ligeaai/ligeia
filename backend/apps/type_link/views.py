@@ -53,7 +53,6 @@ class TypeLinkDetailsView(generics.CreateAPIView):
         new_dict = dict()
         keys = ['TO_TYPE','FROM_TYPE']
         for item in keys:
-            print(item)
             types = type_link.objects.filter(obj.get(item))
             validate_find(types,request)
             serializer = TypeLinkDetailsSerializer(types, many=True)

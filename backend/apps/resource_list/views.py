@@ -42,7 +42,7 @@ class ResourceListDrawerMenutView(generics.CreateAPIView):
     
     def post(self, request, *args, **kwargs):
         culture = request.data.get('CULTURE')
-        queryset = resource_list.objects.filter(ID = 'drawerMenu',CULTURE = culture)
+        queryset = resource_list.objects.filter(ID = 'drawerMenu',CULTURE = culture,HIDDEN = False)
         validate_find(queryset,request)
         serializer = ResourceListDetailsSerializer(queryset,many = True)
         new_dict = dict()
@@ -51,7 +51,7 @@ class ResourceListDrawerMenutView(generics.CreateAPIView):
     
     def _getchild(self,data,new_dict,sart,culture):
         for item in data:
-            queryset = resource_list.objects.filter(ID = item.get('PARENT'),CULTURE = culture)
+            queryset = resource_list.objects.filter(ID = item.get('PARENT'),CULTURE = culture,HIDDEN = False)
             serializer = ResourceListDetailsSerializer(queryset,many = True)
             if queryset:
                 tempt= {}
@@ -90,7 +90,7 @@ class ResourceListDrawerMenutView(generics.CreateAPIView):
                 x = find_type.index(item.get('LABEL_ID'))
             except:
                 tempt2 = {}
-                queryset = resource_list.objects.filter(ID = item.get('LABEL_ID'),CULTURE = culture)
+                queryset = resource_list.objects.filter(ID = item.get('LABEL_ID'),CULTURE = culture,HIDDEN = False)
                 serializer = ResourceListDetailsSerializer(queryset,many = True)
                 serializer.data[0]['TYPE'] = item.get('TYPE')
                 if item.get('LABEL_ID') == 'TYPE.ORG_UNIT2':
