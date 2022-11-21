@@ -30,44 +30,57 @@ function uuidv4() {
     ).toString(16)
   );
 }
+const MemoizedInputBaseEditInputCell = React.memo(MyTextField);
 
-export class column {
-  constructor(props) {
-    this.field = props.uuid;
-    this.headerName = "";
-    this.width = 150;
-    this.filterable = false;
-    this.sortable = false;
-    this.editable = true;
-    this.renderCell = MyTextField;
-    this.renderEditCell = MyTextField;
-    this.valueOptions = ({ row }) => {
-      var myList = [];
-      myList.push("");
-      var temp = row.CODE_LIST[0].CHILD.sort((a, b) =>
-        a.CODE > b.CODE ? 1 : -1
-      );
-      temp.map((e) => {
-        if (e.CODE_TEXT) {
-          myList.push(e.CODE_TEXT);
-        } else {
-        }
-      });
-      return myList;
-    };
-  }
+function myMemoFunction(params) {
+  return <MemoizedInputBaseEditInputCell {...params} />;
 }
-
-const crateColumn = (time) => {
-  var uuid = uuidv4();
-  return { key: uuid, value: new column({ uuid }) };
-};
 
 const DateBreak = () => {
   const dispatch = useDispatch();
   const instanttime = new Date();
   const [date, setDate] = React.useState(instanttime);
   const usedDates = useSelector((state) => state.companyDataGrid.rows.HISTORY);
+  const tempMemo = React.useMemo(
+    () => (row) => {
+      return row.row.CODE.sort((a, b) => (a.CODE > b.CODE ? 1 : -1));
+    },
+    []
+  );
+  const valOptionsMemo = React.useMemo(
+    () => (temp) => {
+      var myList = [];
+      myList.push({ value: "", label: "" });
+      console.log(temp);
+      temp.map((e) => {
+        if (e.CODE_TEXT) {
+          myList.push({ value: e.ROW_ID, label: e.CODE_TEXT });
+        }
+      });
+      return myList;
+    },
+    []
+  );
+  const column = (props) => {
+    return {
+      field: props.uuid,
+      headerName: "",
+      width: 150,
+      filterable: false,
+      sortable: false,
+      editable: true,
+      renderCell: myMemoFunction,
+      renderEditCell: myMemoFunction,
+      valueOptions: (row) => {
+        var temp = tempMemo(row);
+        return valOptionsMemo(temp);
+      },
+    };
+  };
+  const crateColumn = () => {
+    var uuid = uuidv4();
+    return { key: uuid, value: column({ uuid }) };
+  };
   const checkDateBreaks = (date) => {
     var returnValue = true;
     Object.keys(usedDates).map((e) => {

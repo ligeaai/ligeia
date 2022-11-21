@@ -20,7 +20,6 @@ export default function CheckboxList(props) {
     } else {
       newChecked.splice(currentIndex, 1);
     }
-    console.log(newChecked);
     handleToggleFunc(newChecked);
     setChecked(newChecked);
   };

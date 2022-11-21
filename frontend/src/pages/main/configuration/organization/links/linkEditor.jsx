@@ -244,10 +244,10 @@ const LinkEditor = ({ type }) => {
                             >
                               <Grid container sx={{ fontSize: "14px" }}>
                                 <Grid item xs={12}>
-                                  {links[a].FROM_ITEM_TYPE}
+                                  {links[a].TO_ITEM_TYPE}
                                 </Grid>
                                 <Grid item xs={12} sx={{ fontSize: "12px" }}>
-                                  {links[a].FROM_ITEM_NAME}
+                                  {links[a].TO_ITEM_TYPE}
                                 </Grid>
                               </Grid>
                             </Grid>

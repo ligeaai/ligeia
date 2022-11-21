@@ -66,7 +66,7 @@ const MyDataGrid = ({ type }) => {
         experimentalFeatures={{ rowPinning: true }}
         onCellEditCommit={onCellEditCommit}
         disableSelectionOnClick={true}
-        disableVirtualization={true}
+        //disableVirtualization={true}
       />
     );
   } else {

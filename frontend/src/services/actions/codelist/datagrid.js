@@ -15,7 +15,7 @@ import { instance, config } from '../../baseApi';
 
 import { loadTreeviewItemCodelist, selectTreeViewItemCoedlist } from "./treeview"
 import history from "../../../routers/history";
-import { gridColumnsTotalWidthSelector } from "@mui/x-data-grid";
+
 import axios from "axios";
 function _uuidv4() {
     return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, (c) =>
@@ -152,9 +152,10 @@ const _save = (value, userEmail) => async (dispatch, getState) => {
         temp.VAL3 = parseInt(value.VAL3)
     }
 
-    temp["CACHE_KEY"] = value.ROW_ID
+    temp["HIERARCHY"] = [getState().treeviewCodelist.selectedItem.ROW_ID]
     temp.LAST_UPDT_USER = userEmail
     const body = JSON.stringify({ ...temp })
+    console.log(body);
     try {
         let res = await instance
             .put(
@@ -169,7 +170,7 @@ const _save = (value, userEmail) => async (dispatch, getState) => {
     }
 
 }
-const _checkMandatoryFields = () => async (dispatch, getState) => {
+const _checkMandatoryFields = () => (dispatch, getState) => {
     const changedRows = getState().dataGridCodeList.changedRows
     const rows = getState().dataGridCodeList.rows
     var returnVal = true
@@ -191,7 +192,6 @@ const _checkMandatoryFields = () => async (dispatch, getState) => {
             }
         })
     })
-
     return returnVal
 }
 
@@ -212,8 +212,7 @@ export const saveCodeList = () => async (dispatch, getState) => {
         await Promise.all(
             deletedRows.map(async e => {
                 var ROW_ID = e
-                var CACHE_KEY = e
-                var body = JSON.stringify({ ROW_ID, CACHE_KEY })
+                var body = JSON.stringify({ ROW_ID })
                 try {
                     let res = await instance
                         .post(
@@ -243,7 +242,7 @@ export const saveCodeList = () => async (dispatch, getState) => {
 export const deleteCodeList = () => async (dispatch, getState) => {
     const ROW_ID = getState().treeviewCodelist.selectedItem.ROW_ID
     const selectedIndex = getState().treeviewCodelist.selectedItem.selectedIndex
-    const body = JSON.stringify({ ROW_ID, CACHE_KEY: ROW_ID });
+    const body = JSON.stringify({ ROW_ID });
     try {
         let res = await instance
             .post(

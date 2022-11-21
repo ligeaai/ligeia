@@ -23,15 +23,15 @@ export const loadCheckedList = (fromType) => async (dispatch, getState) => {
             let itemLinkRes = await instance.post(
                 `/item-link/details/`,
                 {
-                    TO_ITEM_ID: selectedItemId,
+                    ID: selectedItemId,
                 },
                 config
             );
             var data = [];
+            console.log(itemLinkRes.data);
             res.data.map((e) => {
                 var temp = true;
-                itemLinkRes.data.map((a) => {
-
+                itemLinkRes.data.TO_ITEM_ID.map((a) => {
                     if (e.ITEM_ID === a.FROM_ITEM_ID) {
                         temp = false;
                     }

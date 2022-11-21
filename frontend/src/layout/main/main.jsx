@@ -15,7 +15,6 @@ const Main = (props) => {
   const dispatch = useDispatch();
   const isFullScreen = useSelector((state) => state.fullScreen.isFullScreen);
   const { Element, delSearchBar } = props;
-  const navItems = useSelector((state) => state.drawerMenu.data);
 
   const drawerWidth = useSelector((state) => state.drawerMenu.width);
 
@@ -51,7 +50,7 @@ const Main = (props) => {
               },
             }}
           >
-            <Drawer navItems={navItems} />
+            <Drawer />
           </Grid>
           <Grid
             item

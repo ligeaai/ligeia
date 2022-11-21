@@ -24,10 +24,19 @@ export default function (state = initialState, action) {
 
     switch (type) {
         case "persist/REHYDRATE":
-            return {
-                ...state,
-                selectedItem: payload.drawerMenu.selectedItem ? payload.drawerMenu.selectedItem : { SHORT_LABEL: "Home" }
+            try {
+                return {
+                    ...state,
+                    selectedItem: payload.drawerMenu.selectedItem
+                }
+            } catch {
+                console.log("catch");
+                return {
+                    ...state,
+                    selectedItem: { SHORT_LABEL: "Home" }
+                }
             }
+
         case LOAD_DRAWER_MENU:
             return {
                 ...state,

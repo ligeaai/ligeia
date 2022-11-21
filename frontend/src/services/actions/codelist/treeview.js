@@ -34,8 +34,7 @@ export const loadFilteredTreeviewItem = () => async (dispatch, getState) => {
 let cancelToken;
 export const loadTreeviewItemCodelist = () => async (dispatch, getState) => {
     const CULTURE = getState().lang.cultur;
-    const LIST_TYPE = "CODE_LIST";
-    const body = JSON.stringify({ CULTURE, LIST_TYPE });
+    const body = JSON.stringify({ CULTURE });
     if (cancelToken) {
         cancelToken.cancel()
     }
@@ -44,10 +43,11 @@ export const loadTreeviewItemCodelist = () => async (dispatch, getState) => {
     try {
         res = await instance
             .post(
-                "/code-list/details/",
+                "/code-list/details/parent",
                 body,
                 { ...config, cancelToken: cancelToken.token }
             )
+        console.log(res);
         var sortedResponse = res.data.sort((a, b) =>
             a.CODE_TEXT > b.CODE_TEXT ? 1 : -1
         )

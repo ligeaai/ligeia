@@ -11,6 +11,7 @@ import DatePicker from "./datePicker/datePicker";
 import Drawer from "./drawer/drawer";
 import { ErrorBoundary } from "./errorMessage/errorBoundary"
 import ErrorMessage from "./errorMessage/errorMessage"
+import Loadable from "./loading/loadable";
 import Loading from "./loading/loading";
 import LoadingComponent from "./loading/loadingComopnent";
 import MyNavigator from "./drawer/myNavigator";
@@ -29,7 +30,7 @@ import { TreeMenu } from "./treeMenu/treeMenu"
 
 
 export {
-    ActionMenu, Breadcrumb, Cards, CheckboxList, Confirmation, ComponentError, ComponentErrorBody, CustomNoRowsOverlay, DateBreak, DatePicker, Drawer, ErrorBoundary, ErrorMessage,
+    ActionMenu, Breadcrumb, Cards, CheckboxList, Confirmation, ComponentError, ComponentErrorBody, CustomNoRowsOverlay, DateBreak, DatePicker, Drawer, ErrorBoundary, ErrorMessage, Loadable,
     Loading, LoadingComponent, MyNavigator, PropLinkTabs, SocialButton, TimeRangePicker, TreeView, ItemSperatorLine, ItemSperatorLineXL, Items, SearchBar, SearchBarMobile, Select,
     TreeMenu
 }

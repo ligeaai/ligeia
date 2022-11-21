@@ -23,7 +23,12 @@ export const loadDrawerMenu = () => async (dispatch, getState) => {
             .post(
                 "/resource-list/menu/",
                 body,
-                { ...config, cancelToken: cancelToken.token }
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Token ${localStorage.getItem('token')}`,
+                    }
+                }
             )
         res.data.Configuration.Items.Items.URL = "/configuration/items"
         res.data.Configuration.Items.Tools.URL = "/configuration/initialize"
