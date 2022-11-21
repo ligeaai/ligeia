@@ -56,6 +56,19 @@ class TypeLinkDetailsView(generics.CreateAPIView):
             types = type_link.objects.filter(obj.get(item))
             validate_find(types,request)
             serializer = TypeLinkDetailsSerializer(types, many=True)
-            new_dict[item] = serializer.data
+            tempt = []
+            for items in serializer.data:
+                tempt.append(self._getResourceLabel(items,request.data.get('CULTURE'),items.get('FROM_TYPE')))
+            new_dict[item] = tempt
 
         return Response(new_dict, status=status.HTTP_200_OK)
+
+    def _getResourceLabel(self,data,culture,types):
+        qs_Type = Type.objects.filter(TYPE = types)
+        type_serializer = TypeResourceListManagerSerializer(qs_Type,many = True)
+        for index in range(len(data)):
+            qs = resource_list.objects.filter(ID = type_serializer.data[0].get('LABEL_ID'),CULTURE = culture)
+            resource_list_serialzer = ResourceListDetailsSerializer(qs,many = True)
+            data['SHORT_LABEL'] = resource_list_serialzer.data[0].get('SHORT_LABEL')
+            data['MOBILE_LABEL'] = resource_list_serialzer.data[0].get('MOBILE_LABEL')
+        return data
