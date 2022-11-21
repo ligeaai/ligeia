@@ -1,3 +1,4 @@
+import React from "react";
 import {
     SAVE_ITEM,
     ADD_ITEM_TYPE,
@@ -227,6 +228,12 @@ export const confirmDataGridDontSaveGo = (confirmFunc, title = "", dontSaveNextF
     }
 }
 
+const MemoizedInputBaseEditInputCell = React.memo(MyTextField);
+
+function myMemoFunction(params) {
+    return <MemoizedInputBaseEditInputCell {...params} />;
+}
+
 export class column {
     constructor(props) {
         this.field = props.newUuid;
@@ -235,18 +242,18 @@ export class column {
         this.filterable = false;
         this.sortable = false;
         this.editable = true;
-        this.renderCell = MyTextField;
-        this.renderEditCell = MyTextField;
+        this.renderCell = myMemoFunction;
+        this.renderEditCell = myMemoFunction;
         this.valueOptions = ({ row }) => {
             var myList = [];
-            myList.push("");
-
-            var temp = row.CODE_LIST[0].CHILD.sort((a, b) =>
+            myList.push({ value: "", label: "" });
+            console.log(row);
+            var temp = row.CODE.sort((a, b) =>
                 a.CODE > b.CODE ? 1 : -1
             );
             temp.map((e) => {
                 if (e.CODE_TEXT) {
-                    myList.push(e.CODE_TEXT);
+                    myList.push({ value: e.ROW_ID, label: e.CODE_TEXT });
                 } else {
 
                 }

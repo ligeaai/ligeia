@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { Box } from "@mui/material";
+import { Box, MenuItem } from "@mui/material";
 import {
   GridEditInputCell,
   GridEditDateCell,
@@ -17,6 +17,18 @@ const SingleSelectCell = (params) => {
     setIsOpen(true);
   };
 
+  // var myList = [];
+  // myList.push("");
+  // console.log(params);
+  // var temp = params.row.CODE.sort((a, b) => (a.CODE > b.CODE ? 1 : -1));
+  // console.log(temp);
+  // temp.map((e) => {
+  //   if (e.CODE_TEXT) {
+  //     myList.push(e.CODE_TEXT);
+  //   } else {
+  //   }
+  // });
+  // console.log(myList);
   React.useEffect(() => {
     if (isOpen) {
       window.addEventListener("click", function (e) {
@@ -45,6 +57,7 @@ const SingleSelectCell = (params) => {
     >
       <GridEditSingleSelectCell
         {...params}
+        // valueOptions={myList}
         defaultValue={""}
         open={isOpen}
         onClick={setOpen}
@@ -64,7 +77,11 @@ const SingleSelectCell = (params) => {
             },
           },
         }}
-      />
+      >
+        {/* {myList.map((e) => (
+          <MenuItem value={e}>{e}</MenuItem>
+        ))} */}
+      </GridEditSingleSelectCell>
     </Box>
   );
 };
@@ -80,6 +97,34 @@ const InputCell = (params) => {
 };
 
 export const MyTextField = (params) => {
+  //console.log(params);
+  // const deneme = {
+  //   TEXT: <GridEditInputCell {...params} />,
+  //   HISTORY: (
+  //     <GridEditDateCell
+  //       type="date"
+  //       value={params.row[params.field]}
+  //       {...params}
+  //     />
+  //   ),
+  //   NUMBER: <InputCell {...params} />,
+  //   INT: <InputCell {...params} />,
+  //   BOOL: <GridEditBooleanCell checked={false} type="checkbox" {...params} />,
+  //   CODE: <SingleSelectCell {...params} />,
+  // };
+
+  // return (
+  //   <>
+  //     {React.useMemo(() => {
+  //       try {
+  //         return deneme[params.row.PROPERTY_TYPE];
+  //       } catch {
+  //         return <GridEditInputCell {...params} />;
+  //       }
+  //     })}
+  //   </>
+  // );
+
   if (params.row.PROPERTY_TYPE === "TEXT") {
     return <GridEditInputCell {...params} />;
   } else if (params.row.PROPERTY_TYPE === "HISTORY") {

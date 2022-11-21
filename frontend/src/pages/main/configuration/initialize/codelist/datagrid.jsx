@@ -31,10 +31,14 @@ export default function TreeDataWithGap() {
   const selectedParent = useSelector(
     (state) => state.treeviewCodelist.selectedItem.ROW_ID
   );
-  const onCellEditCommit = (cellData) => {
-    const { id, field, value } = cellData;
-    dispatch(onChangeCell(id, field, value));
-  };
+  console.log("datGrid");
+  const onCellEditCommit = React.useMemo(
+    () => (cellData) => {
+      const { id, field, value } = cellData;
+      dispatch(onChangeCell(id, field, value));
+    },
+    []
+  );
 
   const [sortModel, setSortModel] = React.useState([
     {

@@ -34,21 +34,29 @@ export const loadLinkEditor = () => async (dispatch, getState) => {
             body,
             { ...config, cancelToken: cancelToken.token }
         );
+        console.log(res);
         try {
             let itemLinkRes = await instance.post(
                 `/item-link/details/`,
                 {
-                    TO_ITEM_ID: selectedItem,
+                    ID: selectedItem,
                 },
                 config
             );
             console.log(itemLinkRes);
-            itemLinkRes.data.map(e => {
+            itemLinkRes.data.TO_ITEM_ID.map(e => {
+                e.END_DATETIME = new Date(e.END_DATETIME)
+                e.START_DATETIME = new Date(e.START_DATETIME)
+            })
+            itemLinkRes.data.FROM_ITEM_ID.map(e => {
                 e.END_DATETIME = new Date(e.END_DATETIME)
                 e.START_DATETIME = new Date(e.START_DATETIME)
             })
             var links = []
-            itemLinkRes.data.map(e => {
+            itemLinkRes.data.TO_ITEM_ID.map(e => {
+                links[e.LINK_ID] = e
+            })
+            itemLinkRes.data.FROM_ITEM_ID.map(e => {
                 links[e.LINK_ID] = e
             })
             dispatch({
@@ -133,6 +141,7 @@ export const saveLinkItem = () => async (dispatch, getState) => {
             }
 
             const body = JSON.stringify({ LINK_ID: e, START_DATETIME: startDateTime, END_DATETIME: endDateTime })
+            console.log(body);
             try {
                 await instance.put(
                     `/item-link/update/`,

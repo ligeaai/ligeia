@@ -11,13 +11,14 @@ import App from "./app";
 import { ComponentError, ComponentErrorBody } from "../index";
 import { loadDrawerMenu } from "../../services/actions/drawerMenu/drawerMenu";
 import { LoadingComponent } from "../../components";
-const Drawer = (props) => {
+const Drawer = () => {
   const dispatch = useDispatch();
   const isOpen = useSelector((state) => state.drawerMenu.isOpen);
-  const { navItems } = props;
+  const navItems = useSelector((state) => state.drawerMenu.data);
+  const isAuth = useSelector((state) => state.auth.isAuthenticated);
   React.useEffect(() => {
     dispatch(loadDrawerMenu());
-  }, []);
+  }, [isAuth]);
   return (
     <Box
       // onMouseEnter={() => dispatch(mouseEnterDrawer())}

@@ -34,7 +34,7 @@ const MyNavigator = () => {
       }
     });
   } else {
-    history.push(`/home`);
+    history.push(`/`);
   }
   return <Navigate to={`${url}`}></Navigate>;
 

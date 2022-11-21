@@ -11,7 +11,6 @@ import { cleanConfirmationState } from "../../services/reducers/confirmation";
 export default function AlertDialog() {
   const dispatch = useDispatch();
   const confirmation = useSelector((state) => state.confirmation);
-
   const handleClose = () => {
     dispatch(cleanConfirmationState());
   };
