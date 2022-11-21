@@ -22,14 +22,11 @@ class ItemLinkCardinaltyView(generics.CreateAPIView):
     permission_classes = [permissions.AllowAny]
 
     def post(self, request, *args, **kwargs):
-        quaryset  = item_link.objects.filter(
-        FROM_ITEM_TYPE = request.data.get("FROM_ITEM_TYPE"),
-        LINK_TYPE = request.data.get("LINK_TYPE"),
-        TO_ITEM_TYPE =request.data.get("TO_ITEM_TYPE") )
+        quaryset  = item_link.objects.filter(FROM_ITEM_ID=request.data.get('FROM_ITEM_ID'),TO_ITEM_TYPE = request.data.get('TO_ITEM_TYPE') )
         if quaryset:
             return Response(True,status=status.HTTP_200_OK)
         else:
-            return Response(False,status=status.HTTP_400_BAD_REQUEST)
+            return Response(request.data,status=status.HTTP_400_BAD_REQUEST)
         
         
 
