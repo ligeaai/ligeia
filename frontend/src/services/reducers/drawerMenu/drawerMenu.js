@@ -27,13 +27,17 @@ export default function (state = initialState, action) {
             try {
                 return {
                     ...state,
-                    selectedItem: payload.drawerMenu.selectedItem
+                    selectedItem: payload.drawerMenu.selectedItem,
+                    width: payload.drawerMenu.width,
+                    data: payload.drawerMenu.data
                 }
             } catch {
                 console.log("catch");
                 return {
                     ...state,
-                    selectedItem: { SHORT_LABEL: "Home" }
+                    selectedItem: { SHORT_LABEL: "Home" },
+                    width: "68px",
+                    data: null
                 }
             }
 

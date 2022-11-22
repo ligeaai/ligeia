@@ -32,7 +32,7 @@ const UnitOne = (props) => {
       }}
     >
       <Grid item sx={{ minHeight: "500px", boxShadow: 3, mr: 0.5 }}>
-        <DrawerMenu Element={<TreeMenuItems />} />
+        <DrawerMenu Element={<TreeMenuItems isLinksActive={isLinksActive} />} />
       </Grid>
       <Grid
         item

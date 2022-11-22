@@ -10,13 +10,16 @@ import {
   confirmDataGridDontSaveGo,
 } from "../../../../services/actions/company/item";
 
-export const TreeMenuItems = () => {
+import { saveAgreeFunc } from "../../../../services/actions/company/linkEditor";
+
+export const TreeMenuItems = ({ isLinksActive }) => {
   const dispatch = useDispatch();
   const treeItems = useSelector((state) => state.item.treeMenuItem);
   const type = useSelector((state) => state.item.type);
   const selectedIndex = useSelector(
     (state) => state.item.selectedItem.selectedIndex
   );
+  const changedLinks = useSelector((state) => state.linkEditor.changedLinks);
   const selectFunc = (index) => {
     if (
       !dispatch(
@@ -34,6 +37,20 @@ export const TreeMenuItems = () => {
       dispatch(selectItemNoSave(index));
     }
   };
+  const linkSelectFunc = (index) => {
+    if (changedLinks.size !== 0) {
+      dispatch(saveAgreeFunc(() => dispatch(selectItemNoSave(index))));
+      dispatch({
+        type: "confirmation/setExtraBtn",
+        payload: {
+          extraBtnText: "Don't save, next",
+          extrafunction: () => dispatch(selectItemNoSave(index)),
+        },
+      });
+    } else {
+      dispatch(selectItemNoSave(index));
+    }
+  };
 
   React.useEffect(() => {
     dispatch(showItem());
@@ -42,7 +59,7 @@ export const TreeMenuItems = () => {
   return (
     <TreeMenu
       items={treeItems}
-      selectFunc={selectFunc}
+      selectFunc={isLinksActive ? linkSelectFunc : selectFunc}
       selectedIndex={selectedIndex}
       primaryText="NAME"
     />

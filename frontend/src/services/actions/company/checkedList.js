@@ -10,6 +10,7 @@ import { loadLinkEditor } from "./linkEditor";
 
 let cancelToken;
 export const loadCheckedList = (type, inOut) => async (dispatch, getState) => {
+    console.log(inOut);
     console.log(type);
     if (cancelToken) {
         cancelToken.cancel()
@@ -17,7 +18,7 @@ export const loadCheckedList = (type, inOut) => async (dispatch, getState) => {
     cancelToken = axios.CancelToken.source();
     let res;
     try {
-        res = await instance.get(`/item/details/${inOut === "DATA" ? type.FROM_TYPE : type.TO_TYPE}`,
+        res = await instance.get(`/item/details/${inOut === "data" ? type.FROM_TYPE : type.TO_TYPE}`,
             { ...config(), cancelToken: cancelToken.token });
         const selectedItemId = getState().item.selectedItem.ITEM_ID;
         console.log(res);
