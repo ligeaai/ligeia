@@ -29,7 +29,7 @@ class ItemLinkCardinaltyView(generics.CreateAPIView):
         if quaryset:
             return Response(True,status=status.HTTP_200_OK)
         else:
-            return Response(request.data,status=status.HTTP_400_BAD_REQUEST)
+            return Response(False,status=status.HTTP_400_BAD_REQUEST)
         
         
 
@@ -57,9 +57,12 @@ class ItemLinkDetailsView(generics.CreateAPIView):
             for index in range(len(data)):
                 item = data[index]
                 property = item_property.objects.filter(ITEM_ID = item.get('FROM_ITEM_ID'),PROPERTY_TYPE = 'NAME')
+                property2 = item_property.objects.filter(ITEM_ID = item.get('TO_ITEM_ID'),PROPERTY_TYPE = 'NAME')
                 validate_find(property,request)
                 serializer = ItemPropertyNameSerializer(property,many = True)
+                serializer2 = ItemPropertyNameSerializer(property2,many = True)
                 data[index]['FROM_ITEM_NAME'] = serializer.data[0].get('PROPERTY_STRING')
+                data[index]['TO_ITEM_NAME'] = serializer2.data[0].get('PROPERTY_STRING')
             return data
         except Exception as e:
             raise e

@@ -13,3 +13,4 @@ urlpatterns = [
     path("item-link/", include("apps.item_link.urls")),
     # path("menu/", include("apps.page_resource_list.urls")),
 ]
+
