@@ -120,8 +120,8 @@ const MyCheckList = (props) => {
                   sx={{ fontSize: "14px" }}
                 >
                   {props.dataSelectItemPath === "data"
-                    ? e.SHORT_LABEL
-                    : e.TO_TYPE}
+                    ? e.FROM_SHORT_LABEL
+                    : e.TO_SHORT_LABEL}
                 </MenuItem>
               ))}
             </Select>

@@ -29,7 +29,6 @@ export default function (state = initialState, action) {
                     ...state,
                     selectedItem: payload.drawerMenu.selectedItem,
                     width: payload.drawerMenu.width,
-                    data: payload.drawerMenu.data,
                     isOpen: payload.drawerMenu.isOpen
                 }
             } catch {
@@ -38,7 +37,6 @@ export default function (state = initialState, action) {
                     ...state,
                     selectedItem: { SHORT_LABEL: "Home" },
                     width: "68px",
-                    data: null,
                     isOpen: false,
                 }
             }
