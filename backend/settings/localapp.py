@@ -10,4 +10,5 @@ modelApp = [
     "apps.type_uom",
     "apps.item_version",
     "apps.layer",
+    "apps.tags",
 ]
