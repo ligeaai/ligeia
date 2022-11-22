@@ -38,9 +38,13 @@ const MyCheckList = (props) => {
   );
   const selectItems = linkEditorData.filter((e) => e.TYPE === props.data.TYPE);
   const handleChange = (event) => {
-    const e = selectItems.find((e) => e.FROM_TYPE === event.target.value);
+    const e = selectItems.find((e) =>
+      props.dataSelectItemPath === "data"
+        ? e.FROM_TYPE === event.target.value
+        : e.TO_TYPE === event.target.value
+    );
     setSelectedItem(event.target.value);
-    dispatch(loadCheckedList(e));
+    dispatch(loadCheckedList(e, props.dataSelectItemPath));
   };
   const handleToggleFunc = (data) => {
     dispatch(toggleChecked(data));
