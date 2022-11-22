@@ -29,7 +29,7 @@ class ItemLinkCardinaltyView(generics.CreateAPIView):
         if quaryset:
             return Response(True,status=status.HTTP_200_OK)
         else:
-            return Response(request.data,status=status.HTTP_400_BAD_REQUEST)
+            return Response(False,status=status.HTTP_400_BAD_REQUEST)
         
         
 
