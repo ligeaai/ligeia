@@ -40,7 +40,7 @@ import {
 const persistConfig = {
     key: 'root',
     storage,
-    whitelist: ['drawerMenu',]
+    whitelist: ['drawerMenu', 'item']
 }
 
 const rootReducer = combineReducers({

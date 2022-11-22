@@ -16,6 +16,22 @@ export default function (state = initialState, action) {
     const { type, payload } = action;
 
     switch (type) {
+        case "persist/REHYDRATE":
+            try {
+                return {
+                    ...state,
+                    type: payload.item.type,
+                    treeMenuItem: payload.item.treeMenuItem,
+                    selectedItem: payload.item.selectedItem
+                }
+            } catch {
+                return {
+                    ...state,
+                    type: "",
+                    treeMenuItem: [],
+                    selectedItem: ""
+                }
+            }
         case CLEAN_ALL_TREEMENU:
             return {
                 ...state,
