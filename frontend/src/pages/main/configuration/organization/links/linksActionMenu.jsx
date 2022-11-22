@@ -65,10 +65,10 @@ const CompanyActionMenu = () => {
       save={save}
       saveGoNext={saveGoNext}
       saveGoPrev={saveGoPrev}
-      infoIsDisabled={true}
       btnDeleteIsDisabled={true}
       btnNewIsDisabled={true}
-      dublicateIsDisabled={true}
+      infoIsActive={false}
+      dublicateIsActive={false}
     />
   );
 };

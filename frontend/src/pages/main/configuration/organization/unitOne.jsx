@@ -99,8 +99,15 @@ const UnitOne = (props) => {
           <ItemSperatorLineXL />
           <Grid item xs={12} sx={{ mt: 1, mr: 1 }}>
             <PropLinkTabs
-              MyProperties={<Properties type={type}></Properties>}
-              MyLinks={<Links type={type}></Links>}
+              MyProperties={
+                <Properties
+                  type={type}
+                  isLinksActive={isLinksActive}
+                ></Properties>
+              }
+              MyLinks={
+                <Links type={type} isLinksActive={isLinksActive}></Links>
+              }
             />
           </Grid>
         </Grid>

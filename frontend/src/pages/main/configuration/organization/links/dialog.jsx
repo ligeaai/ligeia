@@ -35,6 +35,11 @@ function SimpleDialog(props) {
       open={open}
       PaperComponent={PaperComponent}
       aria-labelledby="draggable-dialog-title"
+      sx={{
+        ".MuiDialog-paper": {
+          width: "500px",
+        },
+      }}
     >
       <CheckList {...props} />
     </Dialog>

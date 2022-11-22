@@ -1,4 +1,5 @@
 import * as React from "react";
+import Box from "@mui/material/Box";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
@@ -29,12 +30,16 @@ export default function CheckboxList(props) {
       sx={{
         width: "100%",
         minWidth: 360,
-        maxWidth: 360,
+
         height: "500px",
         bgcolor: "background.paper",
       }}
     >
-      {data.length === 0 ? <React.Fragment>No Data</React.Fragment> : <></>}
+      {data.length === 0 ? (
+        <Box sx={{ width: "100%", textAlign: "center" }}>No Data</Box>
+      ) : (
+        <></>
+      )}
       {data.map((value) => {
         const labelId = `checkbox-list-label-${value}`;
 

@@ -38,8 +38,9 @@ const MyCheckList = (props) => {
   );
   const selectItems = linkEditorData.filter((e) => e.TYPE === props.data.TYPE);
   const handleChange = (event) => {
+    const e = selectItems.find((e) => e.FROM_TYPE === event.target.value);
     setSelectedItem(event.target.value);
-    dispatch(loadCheckedList(event.target.value));
+    dispatch(loadCheckedList(e));
   };
   const handleToggleFunc = (data) => {
     dispatch(toggleChecked(data));
@@ -115,7 +116,7 @@ const MyCheckList = (props) => {
                   sx={{ fontSize: "14px" }}
                 >
                   {props.dataSelectItemPath === "data"
-                    ? e.FROM_TYPE
+                    ? e.SHORT_LABEL
                     : e.TO_TYPE}
                 </MenuItem>
               ))}
@@ -135,7 +136,7 @@ const MyCheckList = (props) => {
         sx={{ justifyContent: "space-between", alignItems: "center" }}
       >
         <Grid item sx={{ pl: 1 }}>
-          Selected Items Count:{checkedItemsLen}
+          Selected Items:{checkedItemsLen}
         </Grid>
         <Grid item>
           <Grid container>

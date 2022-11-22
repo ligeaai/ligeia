@@ -8,7 +8,7 @@ import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
 import { ComponentError, ComponentErrorBody } from "../../../../components";
 
 import DataGrid from "./dataGrid/dataGrid";
-const Properties = ({ type }) => {
+const Properties = ({ type, isLinksActive }) => {
   const isFullScreen = useSelector((state) => state.fullScreen.isFullScreen);
   return (
     <Box
@@ -38,7 +38,7 @@ const Properties = ({ type }) => {
           />
         }
       >
-        <DataGrid type={type} />
+        <DataGrid type={type} isLinksActive={isLinksActive} />
       </ComponentError>
     </Box>
   );

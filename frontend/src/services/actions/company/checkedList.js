@@ -9,16 +9,18 @@ import { instance, config } from '../../baseApi';
 import { loadLinkEditor } from "./linkEditor";
 
 let cancelToken;
-export const loadCheckedList = (fromType) => async (dispatch, getState) => {
+export const loadCheckedList = (type) => async (dispatch, getState) => {
+    console.log(type);
     if (cancelToken) {
         cancelToken.cancel()
     }
     cancelToken = axios.CancelToken.source();
     let res;
     try {
-        res = await instance.get(`/item/details/${fromType}`,
+        res = await instance.get(`/item/details/${type.FROM_TYPE}`,
             { ...config(), cancelToken: cancelToken.token });
         const selectedItemId = getState().item.selectedItem.ITEM_ID;
+        console.log(res);
         try {
             let itemLinkRes = await instance.post(
                 `/item-link/details/`,
@@ -27,17 +29,22 @@ export const loadCheckedList = (fromType) => async (dispatch, getState) => {
                 },
                 config()
             );
+            console.log(itemLinkRes);
             var data = [];
             res.data.map((e) => {
                 var temp = true;
                 itemLinkRes.data.TO_ITEM_ID.map((a) => {
                     if (e.ITEM_ID === a.FROM_ITEM_ID) {
-                        temp = false;
+                        if (type.TYPE === a.LINK_TYPE) {
+                            temp = false;
+                        }
                     }
                 });
                 itemLinkRes.data.FROM_ITEM_ID.map((a) => {
                     if (e.ITEM_ID === a.TO_ITEM_ID) {
-                        temp = false;
+                        if (type.TYPE === a.LINK_TYPE) {
+                            temp = false;
+                        }
                     }
                 });
                 if (temp) {
@@ -116,8 +123,12 @@ export const cardinalityCheck = (selectItems, selectedItemFromType) => async (di
             return false
         }
         Object.keys(links).map(e => {
+            console.log(links);
             if (links[e].FROM_ITEM_TYPE === mySelectItem.FROM_TYPE) {
-                returnVal = false
+                if (links[e].LINK_TYPE === mySelectItem.TYPE) {
+                    returnVal = false
+                }
+
             }
         })
         return returnVal
@@ -157,7 +168,9 @@ export const cardinalityCheck = (selectItems, selectedItemFromType) => async (di
         var returnVal = true
         Object.keys(links).map(e => {
             if (links[e].FROM_ITEM_TYPE === mySelectItem.FROM_TYPE) {
-                returnVal = false
+                if (links[e].LINK_TYPE === mySelectItem.TYPE) {
+                    returnVal = false
+                }
             }
         })
         if (!returnVal) {
@@ -229,7 +242,9 @@ export const cardinalityCheck = (selectItems, selectedItemFromType) => async (di
         }
         Object.keys(links).map(e => {
             if (links[e].TO_ITEM_TYPE === mySelectItem.TO_TYPE) {
-                returnVal = false
+                if (links[e].LINK_TYPE === mySelectItem.TYPE) {
+                    returnVal = false
+                }
             }
         })
         return returnVal
@@ -240,7 +255,9 @@ export const cardinalityCheck = (selectItems, selectedItemFromType) => async (di
         }
         Object.keys(links).map(e => {
             if (links[e].TO_ITEM_TYPE === mySelectItem.TO_TYPE) {
-                returnVal = false
+                if (links[e].LINK_TYPE === mySelectItem.TYPE) {
+                    returnVal = false
+                }
             }
         })
         var returnVal = true

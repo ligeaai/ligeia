@@ -10,7 +10,7 @@ import { selectItem } from "../../../../../services/actions/company/item";
 import { addItemType } from "../../../../../services/actions/company/datagrid";
 import { CustomNoRowsOverlay } from "../../../../../components";
 
-const MyDataGrid = ({ type }) => {
+const MyDataGrid = ({ type, isLinksActive }) => {
   const dispatch = useDispatch();
   const columns = useSelector((state) => state.companyDataGrid.columns);
   const rows = useSelector((state) => state.companyDataGrid.rows);
@@ -28,18 +28,20 @@ const MyDataGrid = ({ type }) => {
   };
 
   React.useEffect(() => {
-    if (type === selectedItem.ITEM_TYPE) {
-      dispatch(selectItem(selectedItem.selectedIndex));
-    } else {
+    if (!isLinksActive) {
+      if (type === selectedItem.ITEM_TYPE) {
+        dispatch(selectItem(selectedItem.selectedIndex));
+      } else {
+        dispatch({
+          type: "SET_SELECTED_ITEM",
+          payload: -3,
+        });
+      }
+      dispatch(addItemType(type));
       dispatch({
-        type: "SET_SELECTED_ITEM",
-        payload: -3,
+        type: "CLEAN_ROWS",
       });
     }
-    dispatch(addItemType(type));
-    dispatch({
-      type: "CLEAN_ROWS",
-    });
   }, [type]);
 
   const onCellEditCommit = (cellData) => {

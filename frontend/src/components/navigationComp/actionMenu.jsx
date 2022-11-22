@@ -89,26 +89,34 @@ const actionIcon = (props) => {
   ];
   return (
     <Grid container sx={{ alignItems: "center" }}>
-      {icons.map((Element, key) => (
-        <Tooltip
-          key={key}
-          title={Element.tooltip}
-          componentsProps={{
-            tooltip: { sx: { backgroundColor: "primary.dark" } },
-          }}
-          sx={{ display: Element.isActive ? "flex" : "none" }}
-        >
-          <IconButton
-            onClick={() => {
-              Element.function();
-            }}
-            disabled={Element.isDisabled}
-            sx={{ ".Mui-disabled": { backgroundColor: "red" } }}
-          >
-            <Element.Icon fontSize="small" sx={{ color: "#4B4B4B" }} />
-          </IconButton>
-        </Tooltip>
-      ))}
+      {icons.map((Element, key) => {
+        if (!Element.isDisabled) {
+          return (
+            <Tooltip
+              key={key}
+              title={Element.tooltip}
+              componentsProps={{
+                tooltip: { sx: { backgroundColor: "primary.dark" } },
+              }}
+              sx={{ display: Element.isActive ? "flex" : "none" }}
+            >
+              <IconButton
+                onClick={() => {
+                  Element.function();
+                }}
+              >
+                <Element.Icon fontSize="small" sx={{ color: "#4B4B4B" }} />
+              </IconButton>
+            </Tooltip>
+          );
+        } else {
+          return (
+            <IconButton disabled={true}>
+              <Element.Icon fontSize="small" />
+            </IconButton>
+          );
+        }
+      })}
     </Grid>
   );
 };
