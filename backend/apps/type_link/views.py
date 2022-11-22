@@ -58,17 +58,24 @@ class TypeLinkDetailsView(generics.CreateAPIView):
             serializer = TypeLinkDetailsSerializer(types, many=True)
             tempt = []
             for items in serializer.data:
-                tempt.append(self._getResourceLabel(items,request.data.get('CULTURE'),items.get('FROM_TYPE')))
+                tempt.append(self._getResourceLabel(items,request.data.get('CULTURE'),items.get('FROM_TYPE'),items.get('TO_TYPE')))
+                print(items.get('FROM_TYPE'))
             new_dict[item] = tempt
 
         return Response(new_dict, status=status.HTTP_200_OK)
 
-    def _getResourceLabel(self,data,culture,types):
-        qs_Type = Type.objects.filter(TYPE = types)
-        type_serializer = TypeResourceListManagerSerializer(qs_Type,many = True)
+    def _getResourceLabel(self,data,culture,Fromtypes,ToTypes):
+        qs_FromType = Type.objects.filter(TYPE = Fromtypes)
+        FromType_serializer = TypeResourceListManagerSerializer(qs_FromType,many = True)
+        qs_ToType = Type.objects.filter(TYPE = ToTypes)
+        ToType_serializer = TypeResourceListManagerSerializer(qs_ToType,many = True)
         for index in range(len(data)):
-            qs = resource_list.objects.filter(ID = type_serializer.data[0].get('LABEL_ID'),CULTURE = culture)
-            resource_list_serialzer = ResourceListDetailsSerializer(qs,many = True)
-            data['SHORT_LABEL'] = resource_list_serialzer.data[0].get('SHORT_LABEL')
-            data['MOBILE_LABEL'] = resource_list_serialzer.data[0].get('MOBILE_LABEL')
+            qsFrom = resource_list.objects.filter(ID = FromType_serializer.data[0].get('LABEL_ID'),CULTURE = culture)
+            resource_list_Fromserialzer = ResourceListDetailsSerializer(qsFrom,many = True)
+            qsTo = resource_list.objects.filter(ID = ToType_serializer.data[0].get('LABEL_ID'),CULTURE = culture)
+            resource_list_Toserialzer = ResourceListDetailsSerializer(qsTo,many = True)
+            data['FROM_SHORT_LABEL'] = resource_list_Fromserialzer.data[0].get('SHORT_LABEL')
+            data['FROM_MOBILE_LABEL'] = resource_list_Fromserialzer.data[0].get('MOBILE_LABEL')
+            data['TO_SHORT_LABEL'] = resource_list_Toserialzer.data[0].get('SHORT_LABEL')
+            data['TO_MOBILE_LABEL'] = resource_list_Toserialzer.data[0].get('MOBILE_LABEL')
         return data

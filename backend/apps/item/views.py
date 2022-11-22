@@ -122,18 +122,18 @@ class ItemDeleteView(generics.CreateAPIView):
         validate_find(queryset,request)
         queryset.delete()
         queryset_prop = item_property.objects.filter(ITEM_ID = request.data.get('ITEM_ID'))
-        self.deleteItems(queryset_prop)
+        self._deleteItems(queryset_prop,request)
         queryset_to_item = item_link.objects.filter(TO_ITEM_ID = request.data.get('ITEM_ID'))
-        self.deleteItems(queryset_to_item)
+        self._deleteItems(queryset_to_item,request)
         queryset_from_item = item_link.objects.filter(FROM_ITEM_ID = request.data.get('ITEM_ID'))
-        self.deleteItems(queryset_from_item)
+        self._deleteItems(queryset_from_item,request)
         message = "Succsesfull deleted for items"
         logger.info(message,request = request)
         cache_key = str(request.user) + request.data.get('ITEM_ID')
         Red.delete(cache_key)
         return Response(message,status=status.HTTP_200_OK)
 
-    def _deleteItems(self,qs):
+    def _deleteItems(self,qs,request):
         for data in qs:
             validate_find(data,request)
             data.delete()
