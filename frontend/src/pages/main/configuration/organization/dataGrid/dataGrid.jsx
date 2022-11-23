@@ -46,7 +46,12 @@ const MyDataGrid = ({ type, isLinksActive }) => {
 
   const onCellEditCommit = (cellData) => {
     const { id, field, value } = cellData;
-    dispatch(editRow(id, field, value));
+    let myId = id;
+    if (id === "") {
+      //todo find better way
+      myId = "HISTORY";
+    }
+    dispatch(editRow(myId, field, value));
   };
   if (Object.keys(rows).length !== 0) {
     return (

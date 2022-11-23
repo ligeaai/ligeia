@@ -8,6 +8,7 @@ import {
   confirmDataGrid,
   selectItemNoSave,
   confirmDataGridDontSaveGo,
+  deleteItem,
 } from "../../../../../services/actions/company/item";
 
 import {
@@ -59,13 +60,27 @@ const CompanyActionMenu = () => {
       dispatch(selectItemNoSave(selectedIndex - 1));
     }
   };
-
+  const btnDelete = () => {
+    dispatch({
+      type: "IS_CHANGED_HANDLER",
+      payload: true,
+    });
+    dispatch(
+      confirmDataGrid(() => {
+        dispatch(deleteItem());
+      }, "Are you sure you want to delete this?")
+    );
+    dispatch({
+      type: "IS_CHANGED_HANDLER",
+      payload: false,
+    });
+  };
   return (
     <ActionMenu
       save={save}
       saveGoNext={saveGoNext}
       saveGoPrev={saveGoPrev}
-      btnDeleteIsDisabled={true}
+      btnDelete={btnDelete}
       btnNewIsDisabled={true}
       infoIsActive={false}
       dublicateIsActive={false}
