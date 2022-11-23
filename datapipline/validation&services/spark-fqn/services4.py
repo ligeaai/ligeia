@@ -1,18 +1,18 @@
 from services3 import *
 
 query = (
-    df17.writeStream.format("json")
+    dffqn.writeStream.format("json")
     .option("path", "app/fqn")
     .option("checkpointLocation", "app/check1")
     .option("maxRecordsPerFile", 1)
     .start()
 )
-
+df19.printSchema()
 query2 = (
     df19.selectExpr("CAST(id AS STRING) AS key", "to_json(struct(*)) AS value")
     .writeStream.format("kafka")
     .option("kafka.bootstrap.servers", "broker:29092")
-    .option("topic", "test1")
+    .option("topic", "frozendata")
     .option(
         "checkpointLocation",
         "app/check2",
