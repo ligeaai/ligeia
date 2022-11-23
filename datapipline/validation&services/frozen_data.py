@@ -8,7 +8,7 @@ from ast import literal_eval
 import json
 
 host = "localhost:9092"
-topic = "test1"
+topic = "frozendata"
 consumer = KafkaConsumer(
     group_id=topic,
     bootstrap_servers=host,

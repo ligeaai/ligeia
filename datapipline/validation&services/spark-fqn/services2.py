@@ -6,7 +6,7 @@ lines = (
     .option("kafka.bootstrap.servers", "broker:29092")
     .option("startingOffsets", "earliest")
     .option("failOnDataLoss", False)
-    .option("subscribe", "rawdata")
+    .option("subscribe", "raw-data")
     .load()
 )
 df = lines.select("*")
