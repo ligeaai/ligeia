@@ -3,6 +3,8 @@ import MyBox from "./box/box"
 import Breadcrumb from "./breadcrumb/breadcrumb";
 import Cards from "./cardGenerator/cards";
 import CheckboxList from "./checkList/checkList";
+import MyCheckBox from "./checkbox/checkbox"
+import MyNumberTextField from "./textfield/numberTextField"
 import Confirmation from "./confirmation/confirmation"
 import { ComponentError } from "./errorMessage/componentError"
 import ComponentErrorBody from "./errorMessage/componentErrorBody";
@@ -18,6 +20,7 @@ import LoadingComponent from "./loading/loadingComopnent";
 import MyNavigator from "./drawer/myNavigator";
 import PropLinkTabs from "./navigationComp/propLinkTabs"
 import SocialButton from "./buttons/socialButton";
+import MyTextField from "./textfield/textfield";
 import TimeRangePicker from "./navigationComp/timeRangePicker";
 import TreeView from "./navigationComp/treeView";
 import { ItemSperatorLine, ItemSperatorLineXL, Items } from "./nestedMenu/nestedItems";
@@ -32,6 +35,6 @@ import { TreeMenu } from "./treeMenu/treeMenu"
 
 export {
     ActionMenu, Breadcrumb, Cards, CheckboxList, Confirmation, ComponentError, ComponentErrorBody, CustomNoRowsOverlay, DateBreak, DatePicker, Drawer, ErrorBoundary, ErrorMessage, Loadable,
-    Loading, LoadingComponent, MyBox, MyNavigator, PropLinkTabs, SocialButton, TimeRangePicker, TreeView, ItemSperatorLine, ItemSperatorLineXL, Items, SearchBar, SearchBarMobile, Select,
+    Loading, LoadingComponent, MyBox, MyCheckBox, MyNavigator, MyNumberTextField, MyTextField, PropLinkTabs, SocialButton, TimeRangePicker, TreeView, ItemSperatorLine, ItemSperatorLineXL, Items, SearchBar, SearchBarMobile, Select,
     TreeMenu
 }

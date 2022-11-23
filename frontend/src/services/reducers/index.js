@@ -13,11 +13,13 @@ import loaderReducer from './loaderReducer';
 import linkEditor from './company/linkEditor';
 import registerFormReducer from './registerFormReducer';
 import searchBarReducer from './searchBarReducer';
+import tags from "./tags/tags"
+import tagsTreeview from './tags/tagsTreeview';
 import themeReducer from './themeReducer';
 import treeviewCodelist from './codelist/treeview';
 
 
 export {
     authReducer, companyDataGrid, confirmation, companyCheckedList, cssUserSelect, dataGridCodeList, drawerMenu, errorReducer, fullScreenReducer,
-    item, langReducer, loaderReducer, linkEditor, registerFormReducer, searchBarReducer, themeReducer, treeviewCodelist
+    item, langReducer, loaderReducer, linkEditor, registerFormReducer, searchBarReducer, tags, tagsTreeview, themeReducer, treeviewCodelist
 }

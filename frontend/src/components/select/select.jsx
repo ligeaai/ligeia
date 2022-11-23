@@ -6,11 +6,17 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 
 export default function MySelect(props) {
-  const { values = [], handleChangeFunc = () => {}, defaultValue = "" } = props;
+  const {
+    values = [],
+    dataTextPath = null,
+    handleChangeFunc = () => {},
+    defaultValue = "",
+  } = props;
   const [selectedItem, setSelectedItem] = React.useState(defaultValue);
 
   const handleChange = (event) => {
     setSelectedItem(event.target.value);
+    console.log(event.target.value);
     handleChangeFunc(event.target.value);
   };
 
@@ -27,7 +33,7 @@ export default function MySelect(props) {
         >
           {values.map((e, key) => (
             <MenuItem key={key} value={e}>
-              {e}
+              {dataTextPath ? e[dataTextPath] : e}
             </MenuItem>
           ))}
         </Select>
