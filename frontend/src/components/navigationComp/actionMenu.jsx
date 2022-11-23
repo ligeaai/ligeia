@@ -14,25 +14,25 @@ import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 const actionIcon = (props) => {
   const defaultFunction = () => {};
   const {
-    btnNew = defaultFunction(),
+    btnNew = defaultFunction,
     btnNewIsActive = true,
     btnNewIsDisabled = false,
-    dublicate = defaultFunction(),
+    dublicate = defaultFunction,
     dublicateIsActive = true,
     dublicateIsDisabled = false,
-    save = defaultFunction(),
+    save = defaultFunction,
     saveIsActive = true,
     saveIsDisabled = false,
-    btnDelete = defaultFunction(),
+    btnDelete = defaultFunction,
     btnDeleteIsActive = true,
     btnDeleteIsDisabled = false,
-    saveGoPrev = defaultFunction(),
+    saveGoPrev = defaultFunction,
     saveGoPrevIsActive = true,
     saveGoPrevIsDisabled = false,
-    saveGoNext = defaultFunction(),
+    saveGoNext = defaultFunction,
     saveGoNextIsActive = true,
     saveGoNextIsDisabled = false,
-    info = defaultFunction(),
+    info = defaultFunction,
     infoIsActive = true,
     infoIsDisabled = false,
   } = props;
@@ -111,7 +111,7 @@ const actionIcon = (props) => {
           );
         } else {
           return (
-            <IconButton disabled={true}>
+            <IconButton disabled={true} key={key}>
               <Element.Icon fontSize="small" />
             </IconButton>
           );

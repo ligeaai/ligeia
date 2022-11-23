@@ -45,7 +45,6 @@ const Breadcrumbs = () => {
           <Typography
             key={name}
             onClick={() => {
-              console.log(routeTo);
               history.push(routeTo);
             }}
             sx={{

@@ -1,26 +1,13 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  Box,
-  Grid,
-  Button,
-  TextField,
-  Typography,
-  Divider,
-} from "@mui/material";
+import { Grid, Button, TextField } from "@mui/material";
 
-import { grey } from "@mui/material/colors";
-import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
-import FolderCopyOutlinedIcon from "@mui/icons-material/FolderCopyOutlined";
 
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import {
-  addColum,
-  deleteColum,
-} from "../../../../services/actions/company/datagrid";
+import { addColum } from "../../../../services/actions/company/datagrid";
 import { MyTextField, MyTextFieldRender } from "./myTextField";
 function uuidv4() {
   return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, (c) =>

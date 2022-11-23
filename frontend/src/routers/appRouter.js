@@ -32,6 +32,7 @@ const Overview = Loadable(React.lazy(() => import("../pages/main/asset/overview"
 const Register = Loadable(React.lazy(() => import("../pages/authorization/register/register")));
 const RegisterPageTwo = Loadable(React.lazy(() => import("../pages/authorization/register/registerPageTwo")));
 const Reporting = Loadable(React.lazy(() => import("../pages/main/asset/reporting")));
+const Tags = Loadable(React.lazy(() => import("../pages/main/configuration/tags/tags")));
 
 
 const AppRouter1 = () => {
@@ -49,6 +50,7 @@ const AppRouter1 = () => {
             <Route path="/administration" element={<Administration />} />
             <Route exact path="/configuration" element={<Configuration />} />
             <Route exact path="/configuration/:myKey" element={<MyNavigator />} />
+            <Route exact path="/configuration/tools/tags" element={<Tags isHome={true} />} />
             <Route exact path="/configuration/tools/code_list" element={<CodeList isHome={true} />} />
             <Route exact path="/configuration/tools/code_list/:codelist" element={<CodeList isHome={false} />} />
             <Route exact path="/configuration/:myKey/:type/:item" element={<OrganizationAndItems isHome={false} />} />
