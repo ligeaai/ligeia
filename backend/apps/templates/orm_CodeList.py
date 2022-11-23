@@ -1,13 +1,13 @@
 
 from apps.code_list.models import code_list
-from apps.code_list.serializers import CodeListDetailsSerializer
+from apps.code_list.serializers import CodeListSerializer
  
 
                 
 class CodeListORM():
     def getCodeList(queryset,culture,hierarchy = False):
         if queryset:
-            serializer = CodeListDetailsSerializer(queryset,many = True)
+            serializer = CodeListSerializer(queryset,many = True)
             values = []
             _getChildCodeList(serializer.data,culture,None,hierarchy,values)
             return values  
@@ -22,7 +22,7 @@ def _getChildCodeList(data,culture,parent,hierarchy,response_value):
             
         childItem.append(data[index].get('ROW_ID'))
         queryset = code_list.objects.filter(LIST_TYPE = data[index].get('CODE'), CULTURE=culture)
-        serializer = CodeListDetailsSerializer(queryset,many = True)
+        serializer = CodeListSerializer(queryset,many = True)
          
         if hierarchy:
              data[index] = _CodeListHierarchy(data[index],childItem)
