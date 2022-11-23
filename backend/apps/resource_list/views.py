@@ -2,12 +2,15 @@ from django.shortcuts import render
 from rest_framework.authentication import TokenAuthentication
 from rest_framework import generics, permissions
 from rest_framework.response import Response
+import uuid
 from rest_framework import status
 from .serializers import ResourceListDetailsSerializer, ResourceListSaveSerializer
 from apps.type.models import type as Type
 from apps.type.serializers import TypeResourceListManagerSerializer,TypeDetailsSerializer
 # Create your views here.
 from .models import resource_list
+from apps.type_link.models import type_link
+from apps.type_link.serializers import TypeLinkDetails2Serializer
 from services.parsers.addData.type import typeAddData
 from utils.models_utils import (
                                 validate_model_not_null,
@@ -26,6 +29,7 @@ class ResourceListSaveView(generics.CreateAPIView):
 
 
 
+
 class ResourceListView(generics.ListAPIView):
 
     serializer_class = ResourceListSaveSerializer
@@ -34,7 +38,29 @@ class ResourceListView(generics.ListAPIView):
     def get(self, request, *args, **kwargs):
 
         typeAddData.import_data("RESOURCE_LIST")
-        return Response({"Message": "successful"}, status=status.HTTP_200_OK)
+        qs = type_link.objects.all().distinct('TYPE')
+        serializer = TypeLinkDetails2Serializer(qs,many = True)
+        self._reFormatter(serializer.data)
+        return Response({"Message": serializer.data[0]}, status=status.HTTP_200_OK)
+
+    def _reFormatter(self,data):
+        for index in range(0,len(data)):
+            tempt = ""
+            tempt = data[index].get('TYPE')
+            tempt = str(tempt).replace('_'," ")
+            tempt = tempt.title()
+            data[index]['SHORT_LABEL'] = tempt
+            new_dict = {
+                "CULTURE":'en-US',
+                "ID":data[index].get('TYPE'),
+                "SHORT_LABEL" : tempt,
+                "MOBILE_LABEL" : tempt,
+                "LAYER_NAME" : "OG_STD",
+                "ROW_ID":uuid.uuid4().hex
+
+            }
+            rs_list = resource_list.objects.create(**new_dict)
+            rs_list.save()
 
 
 class ResourceListDrawerMenutView(generics.CreateAPIView):
