@@ -1,7 +1,14 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { Box, Grid, Typography, Divider, IconButton } from "@mui/material";
+import {
+  Box,
+  Grid,
+  Typography,
+  Divider,
+  IconButton,
+  TextField,
+} from "@mui/material";
 
 import { addItemType } from "../../../../../services/actions/company/datagrid";
 import { TimeRangePicker } from "../../../../../components";
@@ -48,11 +55,6 @@ const LinkEditor = ({ type }) => {
   if (res && selectedItem.NAME && links) {
     return (
       <Grid container>
-        {/* <Grid item xs={12} sx={{ p: 1 }}>
-          <Typography>{selectedItem.NAME}</Typography>
-          <Typography>{type}</Typography>
-          <TimeRangePicker /> 
-        </Grid> */}
         <Grid item xs={12} md={6}>
           <Box sx={{ width: "100%", textAlign: "center", fontWeight: "bold" }}>
             In
@@ -147,7 +149,20 @@ const LinkEditor = ({ type }) => {
                                     onChangeFunc={onChangeStartDateTime}
                                   />
                                 </Grid>
-                                <Grid item xs={12}>
+                                <Grid
+                                  item
+                                  xs={12}
+                                  sx={{
+                                    "& div": {
+                                      "& div": {
+                                        fieldset: {
+                                          borderColor:
+                                            "rgba(0, 0, 0, 0.23) !important",
+                                        },
+                                      },
+                                    },
+                                  }}
+                                >
                                   End:
                                   <DatePicker
                                     time={new Date(links[a].END_DATETIME)}
@@ -281,7 +296,20 @@ const LinkEditor = ({ type }) => {
                                     onChangeFunc={onChangeStartDateTime}
                                   />
                                 </Grid>
-                                <Grid item xs={12}>
+                                <Grid
+                                  item
+                                  xs={12}
+                                  sx={{
+                                    "& div": {
+                                      "& div": {
+                                        fieldset: {
+                                          borderColor:
+                                            "rgba(0, 0, 0, 0.23) !important",
+                                        },
+                                      },
+                                    },
+                                  }}
+                                >
                                   End:
                                   <DatePicker
                                     time={new Date(links[a].END_DATETIME)}

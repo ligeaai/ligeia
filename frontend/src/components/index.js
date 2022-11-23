@@ -1,4 +1,5 @@
 import ActionMenu from "./navigationComp/actionMenu";
+import MyBox from "./box/box"
 import Breadcrumb from "./breadcrumb/breadcrumb";
 import Cards from "./cardGenerator/cards";
 import CheckboxList from "./checkList/checkList";
@@ -31,6 +32,6 @@ import { TreeMenu } from "./treeMenu/treeMenu"
 
 export {
     ActionMenu, Breadcrumb, Cards, CheckboxList, Confirmation, ComponentError, ComponentErrorBody, CustomNoRowsOverlay, DateBreak, DatePicker, Drawer, ErrorBoundary, ErrorMessage, Loadable,
-    Loading, LoadingComponent, MyNavigator, PropLinkTabs, SocialButton, TimeRangePicker, TreeView, ItemSperatorLine, ItemSperatorLineXL, Items, SearchBar, SearchBarMobile, Select,
+    Loading, LoadingComponent, MyBox, MyNavigator, PropLinkTabs, SocialButton, TimeRangePicker, TreeView, ItemSperatorLine, ItemSperatorLineXL, Items, SearchBar, SearchBarMobile, Select,
     TreeMenu
 }

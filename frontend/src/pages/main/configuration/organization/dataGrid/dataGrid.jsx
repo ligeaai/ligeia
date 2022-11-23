@@ -51,6 +51,17 @@ const MyDataGrid = ({ type, isLinksActive }) => {
   if (Object.keys(rows).length !== 0) {
     return (
       <DataGridPro
+        componentsProps={{
+          basePopper: {
+            sx: {
+              ".MuiDataGrid-columnsPanel": {
+                "&>*:nth-of-type(n+5)": {
+                  display: "none",
+                },
+              },
+            },
+          },
+        }}
         rows={Object.values(rows)}
         density="compact"
         columns={Object.values(columns)}

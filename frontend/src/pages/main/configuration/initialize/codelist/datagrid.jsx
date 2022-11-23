@@ -31,7 +31,6 @@ export default function TreeDataWithGap() {
   const selectedParent = useSelector(
     (state) => state.treeviewCodelist.selectedItem.ROW_ID
   );
-  console.log("datGrid");
   const onCellEditCommit = React.useMemo(
     () => (cellData) => {
       const { id, field, value } = cellData;

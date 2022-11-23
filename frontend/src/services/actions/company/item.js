@@ -376,7 +376,16 @@ export const selectItem = (index) => async (dispatch, getState) => {
         if (getState().companyDataGrid.isChanged) {
             dispatch(saveItem())
         }
-        if (index === -2) {
+        if (index === -3) {
+            dispatch({
+                type: CLEAN_DATA_GRID,
+            })
+            dispatch({
+                type: SET_SELECTED_ITEM,
+                payload: ""
+            })
+        }
+        else if (index === -2) {
             dispatch({
                 type: CLEAN_DATA_GRID,
             })
