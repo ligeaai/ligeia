@@ -20,6 +20,7 @@ class tags(models.Model):
 	SOURCE_NAME=models.CharField(max_length=100,null=True,)
 	STEPPED=models.CharField(max_length=100,null=True,)
 	DATA_ACCESS_TYPE=models.CharField(max_length=200,null=True,)
+	LAYER_NAME=models.CharField(max_length=50,null=False,)
 	NODE_DUMP=models.CharField(max_length=2000,null=True,)
 	NORMAL_MAXIMUM=models.DecimalField(max_digits=28,decimal_places=12,null=True)
 	NORMAL_MINIMUM=models.DecimalField(max_digits=28,decimal_places=12,null=True)
