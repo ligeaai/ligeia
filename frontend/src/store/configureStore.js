@@ -33,6 +33,8 @@ import {
     linkEditor,
     registerFormReducer,
     searchBarReducer,
+    tags,
+    tagsTreeview,
     themeReducer,
     treeviewCodelist,
 } from '../services/reducers'
@@ -59,6 +61,8 @@ const rootReducer = combineReducers({
     linkEditor: linkEditor,
     registerForm: registerFormReducer,
     searchBar: searchBarReducer,
+    tags: tags,
+    tagsTreeview: tagsTreeview,
     theme: themeReducer,
     treeviewCodelist: treeviewCodelist,
 })
