@@ -54,13 +54,11 @@ export const TreeMenuItems = () => {
       dispatch(selectTreeViewItemCoedlist(index));
     }
   };
-  console.log("sdasd");
   React.useEffect(() => {
     dispatch(loadTreeviewItemCodelist());
   }, []);
   return (
     <>
-      {console.log("return tree")}
       <TreeMenu
         items={filteredTreeItems}
         selectFunc={selectFunc}

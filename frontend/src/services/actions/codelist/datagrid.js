@@ -90,6 +90,7 @@ export const refreshDataGridCodelist = () => async (dispatch, getState) => {
                 body,
                 { ...config(), cancelToken: cancelToken.token }
             )
+        console.log(body);
         console.log(res);
         dispatch({
             type: LOAD_DATAGRID_ROW_CODELIST,

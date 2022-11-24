@@ -6,6 +6,7 @@ import cssUserSelect from './cssUserSelect';
 import dataGridCodeList from "./codelist/datagrid"
 import drawerMenu from './drawerMenu/drawerMenu';
 import errorReducer from './errorReducer';
+import highchart from './overview/highchart';
 import fullScreenReducer from './fullScreenReducer';
 import item from "./company/item"
 import langReducer from './langReducer';
@@ -20,6 +21,6 @@ import treeviewCodelist from './codelist/treeview';
 
 
 export {
-    authReducer, companyDataGrid, confirmation, companyCheckedList, cssUserSelect, dataGridCodeList, drawerMenu, errorReducer, fullScreenReducer,
+    authReducer, companyDataGrid, confirmation, companyCheckedList, cssUserSelect, dataGridCodeList, drawerMenu, errorReducer, highchart, fullScreenReducer,
     item, langReducer, loaderReducer, linkEditor, registerFormReducer, searchBarReducer, tags, tagsTreeview, themeReducer, treeviewCodelist
 }

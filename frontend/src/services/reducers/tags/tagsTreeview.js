@@ -1,5 +1,6 @@
 import {
-    SELECT_TREEVIEW_ITEM_TAGS
+    SELECT_TREEVIEW_ITEM_TAGS,
+    CLEAN_ALL_TREEVIEW_TAGS
 } from "../../actions/types"
 
 
@@ -20,6 +21,12 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 selectedItem: payload
+            }
+        case CLEAN_ALL_TREEVIEW_TAGS:
+            return {
+                ...state,
+                treeMenuItem: [],
+                selectedItem: {}
             }
         default:
             return {

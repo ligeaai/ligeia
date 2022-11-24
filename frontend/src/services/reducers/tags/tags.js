@@ -1,13 +1,16 @@
 import {
     LOAD_TAGS_LABEL,
-    SET_TAG_SAVE_VALUES
+    SET_TAG_SAVE_VALUES,
+    CLEAN_ALL_TAGS,
+    TOGGLE_CHANGES_TAGS
 } from "../../actions/types"
 
 
 
 const initialState = {
     tagValues: [],
-    saveValues: {}
+    saveValues: {},
+    anyChanges: false
 };
 
 
@@ -26,6 +29,17 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 saveValues: { ...state.saveValues, [payload.key]: payload.value }
+            }
+        case TOGGLE_CHANGES_TAGS:
+            return {
+                ...state,
+                anyChanges: payload
+            }
+        case CLEAN_ALL_TAGS:
+            return {
+                ...state,
+                tagValues: [],
+                saveValues: {}
             }
         default:
             return {

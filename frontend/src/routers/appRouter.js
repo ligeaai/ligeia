@@ -28,7 +28,7 @@ const ForgotPasswordConfirm = Loadable(React.lazy(() => import("../pages/authori
 const Login = Loadable(React.lazy(() => import("../pages/authorization/login/login")));
 const NotFoundPage = Loadable(React.lazy(() => import("../pages/error/notFound")));
 const OrganizationAndItems = Loadable(React.lazy(() => import("../pages/main/configuration/organization/organizationAndItems")));
-const Overview = Loadable(React.lazy(() => import("../pages/main/asset/overview")));
+const Overview = Loadable(React.lazy(() => import("../pages/main/overview/overview")));
 const Project = Loadable(React.lazy(() => import("../pages/main/configuration/project/project")));
 const Register = Loadable(React.lazy(() => import("../pages/authorization/register/register")));
 const RegisterPageTwo = Loadable(React.lazy(() => import("../pages/authorization/register/registerPageTwo")));
@@ -52,6 +52,7 @@ const AppRouter1 = () => {
             <Route exact path="/configuration" element={<Configuration />} />
             <Route exact path="/configuration/:myKey" element={<MyNavigator />} />
             <Route exact path="/configuration/tools/tags" element={<Tags isHome={true} />} />
+            <Route exact path="/configuration/tools/tags/:tags" element={<Tags isHome={false} />} />
             <Route exact path="/configuration/tools/project" element={<Project isHome={true} />} />
             <Route exact path="/configuration/tools/code_list" element={<CodeList isHome={true} />} />
             <Route exact path="/configuration/tools/code_list/:codelist" element={<CodeList isHome={false} />} />
