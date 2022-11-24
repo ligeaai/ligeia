@@ -63,7 +63,7 @@ const LinkEditor = ({ type }) => {
             <Box key={i}>
               <Divider />
               <Box sx={{ p: 1 }}>
-                <Box sx={{ mb: 1, fontSize: "14px" }}>{res[e].TYPE}</Box>
+                <Box sx={{ mb: 1, fontSize: "14px" }}>{res[e].TYPE_LABEL}</Box>
                 <Box>
                   <Dialog data={res[e]} dataSelectItemPath="data" />
                 </Box>
@@ -206,7 +206,7 @@ const LinkEditor = ({ type }) => {
               <Divider />
               <Box sx={{ p: 1 }}>
                 <Box sx={{ mb: 1, fontSize: "14px" }}>
-                  {resFromType[e].TYPE}
+                  {resFromType[e].TYPE_LABEL}
                 </Box>
                 <Box>
                   <Dialog

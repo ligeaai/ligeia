@@ -13,8 +13,18 @@ import DrawerMenu from "../../../../layout/main/asset/treeViewMenu";
 import TagsActionMenu from "./tagsActionMenu";
 import DateBreak from "./dateBreak";
 import Properties from "./properties";
-const Tags = () => {
+
+import { cleanAllTags } from "../../../../services/actions/tags/tags";
+import { cleanTreeMenuSelect } from "../../../../services/actions/tags/tagsTreeview";
+const Tags = ({ isHome }) => {
+  const dispatch = useDispatch();
   const isFullScreen = useSelector((state) => state.fullScreen.isFullScreen);
+  React.useEffect(() => {
+    if (isHome) {
+      dispatch(cleanAllTags());
+      dispatch(cleanTreeMenuSelect());
+    }
+  }, [isHome]);
   return (
     <Grid
       container
@@ -93,6 +103,7 @@ const Tags = () => {
           <Grid item xs={12} sx={{ mt: 1, mr: 1 }}>
             <PropLinkTabs
               MyProperties={<Properties></Properties>}
+              isLinkOpen={false}
               // MyLinks={<Links></Links>}
             />
           </Grid>

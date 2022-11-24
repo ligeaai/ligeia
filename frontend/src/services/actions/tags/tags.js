@@ -1,7 +1,9 @@
 import {
     SELECT_TREEVIEW_ITEM_TAGS,
     LOAD_TAGS_LABEL,
-    SET_TAG_SAVE_VALUES
+    SET_TAG_SAVE_VALUES,
+    CLEAN_ALL_TAGS,
+    TOGGLE_CHANGES_TAGS
 } from "../types"
 
 import axios from "axios";
@@ -29,6 +31,10 @@ const _fillUuids = (rows) => async (dispatch, getState) => {
 
 }
 export const addNewTag = () => async (dispatch, getState) => {
+    dispatch({
+        type: TOGGLE_CHANGES_TAGS,
+        payload: true
+    })
     try {
         const CULTURE = getState().lang.cultur
         const TYPE = "TAG_CACHE"
@@ -57,3 +63,26 @@ export const addSaveTagValue = (key, value) => (dispatch) => {
     })
 }
 
+export const cleanAllTags = (key, value) => dispatch => {
+    dispatch({
+        type: CLEAN_ALL_TAGS
+    })
+}
+
+
+export const saveTag = () => async (dispatch, getState) => {
+    dispatch({
+        type: TOGGLE_CHANGES_TAGS,
+        payload: false
+    })
+    try {
+        const saveValues = getState().tags.saveValues
+        const body = JSON.stringify({ ...saveValues })
+        let res = await instance
+            .post(
+                "/type/save/",
+                body,
+                config()
+            )
+    } catch { }
+}

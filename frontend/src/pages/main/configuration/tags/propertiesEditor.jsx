@@ -40,6 +40,9 @@ const useStyles = makeStyles((theme) => {
 const TextFields = (props) => {
   const dispatch = useDispatch();
   const { row } = props;
+  const defaultValue = useSelector(
+    (state) => state.tags.saveValues[row.PROPERTY_NAME]
+  );
   const codeHandleChangeFunc = (value) => {
     dispatch(addSaveTagValue(row.PROPERTY_NAME, value.ROW_ID));
   };
@@ -56,6 +59,7 @@ const TextFields = (props) => {
     return (
       <Select
         values={row.CODE}
+        defaultValue={defaultValue}
         dataTextPath="CODE_TEXT"
         handleChangeFunc={codeHandleChangeFunc}
       />
