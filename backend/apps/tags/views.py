@@ -40,13 +40,24 @@ class TagsDetailsView(generics.ListAPIView):
         queryset = tags.objects.all()
         serializer = TagsDetiailsSerializer(queryset,many = True)
         return Response(serializer.data,status=status.HTTP_200_OK)
+
+class TagsSpesificDetailsView(generics.CreateAPIView):
+
+    permission_classes = [permissions.AllowAny]
+    def get_queryset(self):
+        pass
+    def post(self, request, *args, **kwargs):
+        queryset = tags.objects.filter(TAG_ID = request.data.get('TAG_ID'))
+        serializer = TagsDetiailsSerializer(queryset,many = True)
+        return Response(serializer.data,status=status.HTTP_200_OK)
+
     
 class TagsDeleteView(generics.CreateAPIView):
 
     permission_classes = [permissions.AllowAny]
 
     def post(self, request, *args, **kwargs):
-        qs = tags.objects.filter(ITEM_ID = request.data.get('ITEM_ID'))
+        qs = tags.objects.filter(TAG_ID = request.data.get('TAG_ID'))
         if qs:
             qs.delete
         return Response("Succsessful",status=status.HTTP_200_OK)

@@ -99,7 +99,6 @@ services:
       - "6379:6379"
     networks:
       - net
-      
   zookeeper:
     image: confluentinc/cp-zookeeper:5.3.1
     hostname: zookeeper
