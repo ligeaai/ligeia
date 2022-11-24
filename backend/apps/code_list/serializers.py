@@ -29,7 +29,7 @@ class CodeListSaveSerializer(serializers.ModelSerializer):
 class CodeListDetailsSerializer(serializers.ModelSerializer):
     class Meta:
         model = code_list
-        fields = ['ROW_ID','CODE','CODE_TEXT','LIST_TYPE',"CULTURE"]
+        fields = ['ROW_ID','CODE','CODE_TEXT','LIST_TYPE',"CULTURE",'LAYER_NAME']
 
 
 class CodeListSerializer(serializers.ModelSerializer):

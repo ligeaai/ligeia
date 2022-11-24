@@ -68,7 +68,8 @@ class ResourceListDrawerMenutView(generics.CreateAPIView):
     
     def post(self, request, *args, **kwargs):
         culture = request.data.get('CULTURE')
-        queryset = resource_list.objects.filter(ID = 'drawerMenu',CULTURE = culture,HIDDEN = False)
+        queryset = resource_list.objects.filter(ID = 'drawerMenu',CULTURE = culture,HIDDEN = False).order_by('SORT_ORDER')
+        print(queryset)
         validate_find(queryset,request)
         serializer = ResourceListDetailsSerializer(queryset,many = True)
         new_dict = dict()

@@ -23,8 +23,8 @@ class TypePropertyView(generics.ListAPIView):
 
     def get(self, request, *args, **kwargs):
 
-        typeAddData.import_data("TYPE_PROPERTY")
-        return Response({"Message": "successful"}, status=status.HTTP_200_OK)
+       typeAddData.import_data("TYPE_PROPERTY")
+       return Response({"Message": serializer.data}, status=status.HTTP_200_OK)
 
 
 class TypePropertyDetailView(generics.CreateAPIView):

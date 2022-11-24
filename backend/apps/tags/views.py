@@ -23,10 +23,11 @@ class TagsSaveView(generics.CreateAPIView):
 class TagsDetailsView(generics.ListAPIView):
 
     permission_classes = [permissions.AllowAny]
-
-    def post(self, request, *args, **kwargs):
-        qs = tags.objects.all()
-        serializer = TagsDetiailsSerializer(qs,many = True)
+    def get_queryset(self):
+        pass
+    def get(self, request, *args, **kwargs):
+        queryset = tags.objects.all()
+        serializer = TagsDetiailsSerializer(queryset,many = True)
         return Response(serializer.data,status=status.HTTP_200_OK)
     
 class TagsDeleteView(generics.CreateAPIView):
@@ -43,17 +44,25 @@ class TagsDeleteView(generics.CreateAPIView):
 class TagsPropertysView(generics.CreateAPIView):
     permission_classes = [permissions.AllowAny]
     def post(self, request, *args, **kwargs):
-        qs = type_property.objects.filter(TYPE ='TAG_CACHE')
-        serializer = TypePropertyDetailsSerializer(qs,many = True)
-        new_dict = dict()
-        new_list = []
-        for item in (serializer.data):
-            qs_resource = resource_list.objects.filter(ID = item.get('LABEL_ID'),CULTURE = request.data.get('CULTURE'))
-            print(qs_resource)
+        new_dict = {} 
+        queryset = type_property.objects.filter(TYPE = 'TAG_CACHE')
+        serializer = TypePropertyDetailsSerializer(queryset,many = True)
+        queryset_map = type_property.objects.filter(TYPE = 'TAG_MAP')
+        serializer_map = TypePropertyDetailsSerializer(queryset_map,many = True)
+        tag_cache = []
+        tag_map = []
+        self._resourceLabel(serializer.data,tag_cache,request.data.get('CULTURE'))
+        self._resourceLabel(serializer_map.data,tag_map,request.data.get('CULTURE'))
+        new_dict = {
+            "TAG_CACHE":tag_cache,
+            "TAG_MAP":tag_map
+        }
+        return Response(new_dict,status=status.HTTP_200_OK)
+    def _resourceLabel(self,data,dataList,culture):
+        for item in (data):
+            qs_resource = resource_list.objects.filter(ID = item.get('LABEL_ID'),CULTURE = culture)
             if qs_resource:
                 serializer_rs = ResourceListSerializer(qs_resource,many = True)
                 item['SHORT_LABEL'] = serializer_rs.data[0].get('SHORT_LABEL')
                 item['SHORT_LABEL'] = serializer_rs.data[0].get('MOBILE_LABEL')
-                new_list.append(item)
-        return Response(new_list,status=status.HTTP_200_OK)
-        
+                dataList.append(item)

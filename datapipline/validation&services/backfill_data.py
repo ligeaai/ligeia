@@ -33,7 +33,7 @@ def checkBackData(message_type, time_difference):
         message_type = "backfill_data"
         key1 = str.encode(data["id"])
         try:
-            del data1["DiffInHours"]
+            del data["DiffInHours"]
             producer.send("backfill_data", value=data, key=key1)
             producer.flush()
         except:
@@ -43,7 +43,7 @@ def checkBackData(message_type, time_difference):
         message_type = "live_data"
         key1 = str.encode(data["id"])
         try:
-            del data1["DiffInHours"]
+            del data["DiffInHours"]
             producer.send("live_data", value=data, key=key1)
             producer.flush()
         except:
@@ -55,5 +55,5 @@ for message in consumer:
     df = message.value
     data = literal_eval(df.decode("utf8"))
     # print(data1)
-    checkBackData(data["message_Type"], data["DiffInHours"])
+    checkBackData(data["message_type"], data["DiffInHours"])
     # print(data)

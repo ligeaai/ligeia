@@ -138,7 +138,7 @@ df16 = (
         "DiffInHours",
     )
     .select(
-        concat_ws(" ", df7.message_Type1).alias("message_Type"),
+        concat_ws(" ", df7.message_Type1).alias("message_type"),
         "id",
         "fqn",
         "insert",
@@ -159,9 +159,9 @@ df16 = (
         "DiffInHours",
     )
     .select(
-        concat_ws(" ", df6.timestamp).alias("createdTime"),
+        concat_ws(" ", df6.timestamp).alias("createdtime"),
         "id",
-        "message_Type",
+        "message_type",
         "insert",
         "fqn",
         "temperature",
@@ -189,8 +189,8 @@ df16 = (
             df6.vibration_motor,
         ).alias("v"),
         "id",
-        "createdTime",
-        "message_Type",
+        "createdtime",
+        "message_type",
         "insert",
         "fqn",
         "temperature",
@@ -212,8 +212,8 @@ df16 = (
         concat_ws(" ", df15.date, df15.time1).alias("t"),
         "v",
         "id",
-        "createdTime",
-        "message_Type",
+        "createdtime",
+        "message_type",
         "insert",
         "fqn",
         "temperature",
@@ -241,8 +241,8 @@ df17 = (
         F.struct(
             F.col("version"),
             F.col("created_by"),
-            F.col("createdTime"),
-            F.col("message_Type"),
+            F.col("createdtime"),
+            F.col("message_type"),
         ),
     )
     .withColumn("vqts", F.struct(F.col("q"), F.col("t"), F.col("v"), F.col("id")))
@@ -272,8 +272,8 @@ df18 = df17.select(
     df17.payload.insert.vqts.id,
     df17.header.version,
     df17.header.created_by,
-    df17.header.createdTime,
-    df17.header.message_Type,
+    df17.header.createdtime,
+    df17.header.message_type,
     df17.payload.insert.fqn,
     df17.payload.insert.vqts.t,
     df17.payload.insert.vqts.q,
@@ -284,8 +284,8 @@ df19 = (
     df18.withColumnRenamed("payload.insert.vqts.id", "id")
     .withColumnRenamed("header.version", "version")
     .withColumnRenamed("header.created_by", "created_by")
-    .withColumnRenamed("header.createdTime", "createdTime")
-    .withColumnRenamed("header.message_Type", "message_Type")
+    .withColumnRenamed("header.createdtime", "createdtime")
+    .withColumnRenamed("header.message_type", "message_type")
     .withColumnRenamed("payload.insert.fqn", "fqn")
     .withColumnRenamed("payload.insert.vqts.t", "timestamp")
     .withColumnRenamed("payload.insert.vqts.q", "quality")
@@ -294,8 +294,8 @@ df19 = (
         "id",
         "version",
         "created_by",
-        "createdTime",
-        "message_Type",
+        "createdtime",
+        "message_type",
         "fqn",
         "timestamp",
         "quality",

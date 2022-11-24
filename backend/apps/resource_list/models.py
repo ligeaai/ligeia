@@ -19,4 +19,5 @@ class resource_list(models.Model):
 	DB_ID=models.CharField(max_length=32,null=True,)
 	ROW_ID=models.CharField(max_length=32,default=uuid.uuid4().hex,null=False,db_index=True,)
 	STATUS=models.CharField(max_length=10,null=True,)
+	SORT_ORDER=models.DecimalField(max_digits=18,decimal_places=0,null=True,)
 	REV_GRP_ID=models.CharField(max_length=32,null=True,)
