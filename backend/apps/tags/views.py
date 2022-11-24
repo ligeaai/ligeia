@@ -25,12 +25,13 @@ class TagsSaveView(generics.CreateAPIView):
         tags_dict = request.data
         link_dict = dict()
         try:
-            links_list = ['LINK_ID', 'LINK_TYPE', 'START_DATETIME', 'END_DATETIME', 'FROM_ITEM_ID', 'FROM_ITEM_TYPE', 'TO_ITEM_ID', 'TO_ITEM_TYPE']
+            links_list = ['LINK_ID', 'LINK_TYPE',  'END_DATETIME', 'FROM_ITEM_ID', 'FROM_ITEM_TYPE', 'TO_ITEM_ID', 'TO_ITEM_TYPE']
             for keys in links_list:
                 link_dict[keys] = request.data.get(keys)
                 tags_dict.pop(keys)
         except:
             pass 
+        link_dict['START_DATETIME'] = tags_dict.get('START_DATETIME')
         link_dict['ROW_ID'] = uuid.uuid4().hex
         validate_model_not_null(tags_dict,'tags',request = request)
         validate_model_not_null(link_dict,"ITEM_LINK",request = request)
