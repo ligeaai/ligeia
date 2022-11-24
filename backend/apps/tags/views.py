@@ -44,20 +44,14 @@ class TagsDeleteView(generics.CreateAPIView):
 class TagsPropertysView(generics.CreateAPIView):
     permission_classes = [permissions.AllowAny]
     def post(self, request, *args, **kwargs):
-        new_dict = {} 
         queryset = type_property.objects.filter(TYPE = 'TAG_CACHE')
         serializer = TypePropertyDetailsSerializer(queryset,many = True)
         queryset_map = type_property.objects.filter(TYPE = 'TAG_MAP')
         serializer_map = TypePropertyDetailsSerializer(queryset_map,many = True)
         tag_cache = []
-        tag_map = []
         self._resourceLabel(serializer.data,tag_cache,request.data.get('CULTURE'))
-        self._resourceLabel(serializer_map.data,tag_map,request.data.get('CULTURE'))
-        new_dict = {
-            "TAG_CACHE":tag_cache,
-            "TAG_MAP":tag_map
-        }
-        return Response(new_dict,status=status.HTTP_200_OK)
+      
+        return Response(tag_cache,status=status.HTTP_200_OK)
     def _resourceLabel(self,data,dataList,culture):
         for item in (data):
             qs_resource = resource_list.objects.filter(ID = item.get('LABEL_ID'),CULTURE = culture)
