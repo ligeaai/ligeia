@@ -7,6 +7,9 @@ from apps.type_property.models import type_property
 from apps.resource_list.models import resource_list 
 from apps.resource_list.serializers import ResourceListSerializer 
 from apps.type_property.serializers import TypePropertyDetailsSerializer
+from apps.item_link.models import item_link 
+from apps.item_link.serializers import ItemLinkSaveSerializer
+from utils.models_utils import validate_model_not_null
 # Create your views here.
 
 class TagsSaveView(generics.CreateAPIView):
@@ -14,9 +17,15 @@ class TagsSaveView(generics.CreateAPIView):
     permission_classes = [permissions.AllowAny]
 
     def post(self, request, *args, **kwargs):
+        validate_model_not_null(request.data.get('TAGS'),'tags',request = request)
+        validate_model_not_null(request.data.get('LINK'),"ITEM_LINK",request = request)
         serializer = TagsSaveSerializer(data = request)
         serializer.is_valid()
-        message = serializer.save(request)
+        message = serializer.save(request.data.get('TAGS'))
+        link_serializer = ItemLinkSaveSerializer(data = request.data.get('LINK'))
+        link_serializer.is_valid()
+        message = link_serializer.save(request.data.get('LINK'))
+        
         return Response(message,status=status.HTTP_200_OK)
     
 

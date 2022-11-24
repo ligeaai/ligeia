@@ -11,14 +11,12 @@ logger = KafkaLogger()
 
 class TagsSaveSerializer(serializers.Serializer):
 
-    def save(self, validated_data): # validated data = requst
-        data = validated_data.data
-        qs = tags.objects.filter(TAG_ID = data.get('TAG_ID'))
+    def save(self, validated_data): # 
+        qs = tags.objects.filter(TAG_ID = validated_data.get('TAG_ID'))
         if qs:
-            qs.update(**data)
+            qs.update(**validated_data)
         else:
-            validate_model_not_null(data,'tags',validated_data)
-            tagss = tags.objects.create(**data)
+            tagss = tags.objects.create(**validated_data)
             tagss.save()
         return 'Succsessful'
         # return super().create(validated_data)

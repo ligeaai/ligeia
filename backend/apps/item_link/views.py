@@ -5,6 +5,7 @@ from .models import item_link
 from .serializers import ItemLinkSaveSerializer,ItemLinkDetailsSerializer
 from utils.models_utils import validate_find
 from apps.item_property.models import item_property 
+from utils.models_utils import validate_model_not_null
 from apps.item_property.serializers import ItemPropertyNameSerializer
 # Create your views here.
 
@@ -13,9 +14,10 @@ class ItemLinkSaveView(generics.CreateAPIView):
     permission_classes = [permissions.AllowAny]
 
     def post(self, request, *args, **kwargs):
+        validate_model_not_null(request.data,"ITEM_LINK",request = request)
         serializer = ItemLinkSaveSerializer(data = request.data)
         serializer.is_valid()
-        serializer.save(request)
+        serializer.save(request.data)
         return Response("Created SUCCSESFUL",status=status.HTTP_201_CREATED)
 
 class ItemLinkCardinaltyView(generics.CreateAPIView):

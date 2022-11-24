@@ -6,7 +6,7 @@ class tags(models.Model):
 	ITEM_ID=models.CharField(max_length=32,default=uuid.uuid4().hex,null=False,db_index=True,)
 	EVENT_TYPE=models.CharField(max_length=14,null=False,)
 	TAG_ID=models.CharField(max_length=32,default=uuid.uuid4().hex,null=False,)
-	START_DATE_TIME=models.DateField(default=timezone.now,null=False,)
+	START_DATETIME=models.DateField(default=timezone.now,null=False,)
 	PARENT_TAG_ID=models.CharField(max_length=32,null=True,)
 	NAME=models.CharField(max_length=100,null=True,)
 	DESCRIPTION=models.CharField(max_length=1000,null=True,)
