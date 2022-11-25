@@ -7,7 +7,7 @@ df3 = df2.select(
     json_tuple(
         col("value"),
         "id",
-        "tarih",
+        "name",
         "time",
         "quality",
         "temperature",
@@ -25,7 +25,7 @@ df3 = df2.select(
 ).toDF(
     "value",
     "id",
-    "tarih",
+    "name",
     "time",
     "quality",
     "temperature",
@@ -94,8 +94,8 @@ df5 = (
         ).otherwise(col("quality")),
     )
 )
-df6 = df5.withColumn("org_unit4", split(col("tarih"), ",").getItem(0)).withColumn(
-    "asset", split(col("tarih"), ",").getItem(1)
+df6 = df5.withColumn("org_unit4", split(col("name"), ",").getItem(0)).withColumn(
+    "asset", split(col("name"), ",").getItem(1)
 )
 
 df7 = (
