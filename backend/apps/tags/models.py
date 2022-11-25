@@ -39,5 +39,7 @@ class tags(models.Model):
 	ROW_ID=models.CharField(max_length=32,default=uuid.uuid4().hex,null=True,db_index=True,)
 	STATUS=models.CharField(max_length=10,null=True,)
 	REV_GRP_ID=models.CharField(max_length=32,null=True,)
+	TRANSACTION_TYPE = models.CharField(max_length=2000,null=True,)
+	TRANSACTION_PROPERTY = models.CharField(max_length=2000,null=True,)
 	UPDATE_SOURCE=models.CharField(max_length=1,default="x",null=True,)
 	CREATE_SOURCE=models.CharField(max_length=1,default="x",null=True,)

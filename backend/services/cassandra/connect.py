@@ -1,13 +1,16 @@
 
 import environ
 env = environ.Env(DEBUG=(bool, False))
+cassandra_host = "34.70.46.54"
+cassandra_port = 9092
 from cassandra.cluster import Cluster
-cassandra_host = env('CASSANDRA_HOST')
-cassandra_port = env('CASSANDRA_PORT')
-CASSANDRA_TABLENAME = env(CASSANDRA_TABLENAME)
-cluster = Cluster(host = cassandra_host,port=cassandra_port)
-session = cluster.connect(CASSANDRA_TABLENAME) # ,wait_for_all_pools=True
-session.execute()
-rows = session.execute('SELECT * FROM users')
+
+from cassandra.auth import PlainTextAuthProvider
+
+auth_provider = PlainTextAuthProvider(username ='cassandra', password='cassandra')
+
+cluster=Cluster(['cassandra'], auth_provider=auth_provider)
+session = cluster.connect('backfilldata')
+rows = session.execute('SELECT * FROM backfilldata')
 for row in rows:
-    print(row.age,row.name,row.username)
+    print([row.id,row.created_by,row.createdtime,row.fqn,row.message_type,row.quality,row.timestamp,row.value,row.version]) 

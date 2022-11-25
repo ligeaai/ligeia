@@ -41,7 +41,7 @@ class ResourceListView(generics.ListAPIView):
         qs = type_link.objects.all().distinct('TYPE')
         serializer = TypeLinkDetails2Serializer(qs,many = True)
         self._reFormatter(serializer.data)
-        return Response({"Message": serializer.data[0]}, status=status.HTTP_200_OK)
+        return Response({"Message": "Succsessfull"}, status=status.HTTP_200_OK)
 
     def _reFormatter(self,data):
         for index in range(0,len(data)):
