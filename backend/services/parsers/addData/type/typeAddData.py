@@ -18,7 +18,7 @@ def import_data(data):
         "ITEM": "item",
         "LAYER": "layer",
     }
-    base_url = "http://34.70.46.54:8000/api/v1/" + urlDict.get(data) + "/save/"
+    base_url = "http://34.125.220.112:8000/api/v1/" + urlDict.get(data) + "/save/"
     _create_method(base_url, data)
 
 
