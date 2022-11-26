@@ -107,11 +107,12 @@ class TagsPropertysView(generics.CreateAPIView):
                 item['CODE'] = CodeListORM.getCodeList(qs_codeList,culture=culture,hierarchy=False)
 
             qs_resource = resource_list.objects.filter(ID = item.get('LABEL_ID'),CULTURE = culture)
+            
             if qs_resource:
                 serializer_rs = ResourceListSerializer(qs_resource,many = True)
                 item['SHORT_LABEL'] = serializer_rs.data[0].get('SHORT_LABEL')
                 item['MOBILE_LABEL'] = serializer_rs.data[0].get('MOBILE_LABEL')
-                dataList.append(item)
+            dataList.append(item)
 
 
 class TagsTypeLinkView(generics.ListAPIView):
