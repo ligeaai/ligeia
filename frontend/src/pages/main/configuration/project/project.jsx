@@ -23,10 +23,6 @@ const Project = () => {
         flexWrap: "nowrap",
       }}
     >
-      <Grid item sx={{ minHeight: "500px", boxShadow: 3, mr: 0.5 }}>
-        <DrawerMenu Element={<></>} />
-      </Grid>
-
       <Grid
         item
         xs={12}

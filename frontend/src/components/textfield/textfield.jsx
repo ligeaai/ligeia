@@ -1,14 +1,24 @@
 import React from "react";
 import { TextField } from "@mui/material";
 const MyTextfield = (props) => {
-  const { handleChangeFunc = () => {}, defaultValue = "" } = props;
+  const {
+    handleChangeFunc = () => {},
+    defaultValue = "",
+    errFunc = () => {
+      return false;
+    },
+  } = props;
   const [value, setValue] = React.useState(defaultValue);
   const handleChange = (e) => {
     setValue(e.target.value);
     handleChangeFunc(e.target.value);
   };
+  React.useEffect(() => {
+    setValue(defaultValue);
+  }, [defaultValue]);
   return (
     <TextField
+      error={errFunc()}
       variant="outlined"
       value={value}
       onChange={handleChange}

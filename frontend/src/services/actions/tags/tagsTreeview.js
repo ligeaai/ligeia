@@ -1,6 +1,8 @@
 import {
     SELECT_TREEVIEW_ITEM_TAGS,
-    CLEAN_ALL_TREEVIEW_TAGS
+    CLEAN_ALL_TREEVIEW_TAGS,
+    LOAD_TREEVIEW_TAGS,
+    FILL_SAVE_VALUES_TAGS
 } from "../types"
 
 import axios from "axios";
@@ -13,13 +15,44 @@ import {
     setExtraBtn,
 } from "../../reducers/confirmation";
 
-import { saveTag } from "./tags"
+import { saveTag, cleanAllTags, _fillTagData } from "./tags"
+import { idID } from "@mui/material/locale";
 
 let cancelToken;
 
+export const loadTreeView = () => async (dispatch, getState) => {
 
-const _goIndex = (index) => dispatch => {
+    try {
+        const CULTURE = getState().lang.lang
+        let res = await instance
+            .get(
+                "/tags/details/",
+                config()
+            )
+        console.log(res);
+        var sortedResponse = res.data.sort((a, b) =>
+            a.NAME > b.NAME ? 1 : -1
+        )
+        dispatch({
+            type: LOAD_TREEVIEW_TAGS,
+            payload: sortedResponse
+        })
+    } catch {
+        console.log("castrsad");
+    }
+}
+
+
+const _goIndex = (index) => (dispatch, getState) => {
     if (index === -2) {
+        dispatch({
+            type: SELECT_TREEVIEW_ITEM_TAGS,
+            payload: { selectedIndex: -2 }
+        })
+        dispatch({
+            type: FILL_SAVE_VALUES_TAGS,
+            payload: {}
+        })
         dispatch(addNewTag());
         var pathnames = window.location.pathname.split("/").filter((x) => x);
         pathnames[3] = "new"
@@ -29,25 +62,74 @@ const _goIndex = (index) => dispatch => {
         })
         history.push(routeTo)
     }
-}
-
-const _saveAndGoToIndex = (index) => dispatch => {
-    if (index === -2) {
-        dispatch(saveTag())
-        dispatch(_goIndex(index));
+    else {
+        const tag = getState().tagsTreeview.treeMenuItem[parseInt(index)]
+        dispatch({
+            type: SELECT_TREEVIEW_ITEM_TAGS,
+            payload: { ...tag, selectedIndex: index }
+        })
+        var pathnames = window.location.pathname.split("/").filter((x) => x);
+        pathnames[3] = tag.NAME.toLowerCase();
+        var routeTo = "";
+        pathnames.map(e => {
+            routeTo += `/${e}`
+        });
+        history.push(routeTo);
+        dispatch(_fillTagData(tag.TAG_ID))
     }
 }
 
+const _saveAndGoToIndex = (index) => (dispatch, getState) => {
+    const saveValues = getState().tags.saveValues
+
+    dispatch(saveTag(saveValues))
+    dispatch(loadTreeView());
+    dispatch(_goIndex(index));
+
+}
+const mandatoryFields = (properties) => {
+    return properties.filter(e => e.MANDATORY === "True")
+}
+
+export const _checkmandatoryFields = (values, properties) => {
+    console.log(values);
+    var myProp = mandatoryFields(properties);
+    var returnval = true
+    console.log(myProp);
+    console.log(values);
+    myProp.map(e => {
+        if (!values[e.PROPERTY_NAME] && e.PROPERTY_NAME !== "ITEM_ID") {
+            console.log(e);
+            returnval = false
+        }
+    })
+    return returnval
+}
 
 export const selectTreeview = (index) => async (dispatch, getState) => {
     const anyChanges = getState().tags.anyChanges
+    const values = getState().tags.saveValues
+    const properties = getState().tags.tagValues
     if (anyChanges) {
         dispatch(
             setConfirmation({
                 title: "Are you sure you want to save this?",
-                body: <>asd</>,
+                body: <></>,
                 agreefunction: async () => {
-                    dispatch(_saveAndGoToIndex(index));
+                    console.log(_checkmandatoryFields(values, properties));
+                    if (_checkmandatoryFields(values, properties)) {
+                        // dispatch(cleanAllTags())
+                        console.log("asldksaldklaskdlş-------");
+                        dispatch(_saveAndGoToIndex(index));
+                    }
+                    else {
+                        dispatch({
+                            type: "ADD_ERROR_SUCCESS",
+                            payload: "Pleas check mandatory fields"
+                        })
+                    }
+
+
                 },
             })
         );
@@ -55,6 +137,7 @@ export const selectTreeview = (index) => async (dispatch, getState) => {
             setExtraBtn({
                 extraBtnText: "Don't save go",
                 extrafunction: () => {
+                    dispatch(cleanAllTags())
                     dispatch(_goIndex(index));
                 },
             })
@@ -62,8 +145,6 @@ export const selectTreeview = (index) => async (dispatch, getState) => {
     } else {
         dispatch(_goIndex(index));
     }
-
-
 }
 
 

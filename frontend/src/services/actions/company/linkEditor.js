@@ -30,6 +30,7 @@ export const loadLinkEditor = () => async (dispatch, getState) => {
     cancelToken = axios.CancelToken.source();
     let res;
     try {
+        console.log(body);
         res = await instance.post(
             "/type-link/details/",
             body,
