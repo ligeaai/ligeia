@@ -8,22 +8,30 @@ import Select from "@mui/material/Select";
 export default function MySelect(props) {
   const {
     values = [],
+    valuesPath = null,
     dataTextPath = null,
     handleChangeFunc = () => {},
     defaultValue = "",
+    errFunc = () => {
+      return false;
+    },
+    disabled = false,
   } = props;
   const [selectedItem, setSelectedItem] = React.useState(defaultValue);
-
   const handleChange = (event) => {
     setSelectedItem(event.target.value);
     console.log(event.target.value);
     handleChangeFunc(event.target.value);
   };
-
+  React.useEffect(() => {
+    setSelectedItem(defaultValue);
+  }, [defaultValue]);
   return (
     <Box sx={{ minWidth: 120, display: "inline-block" }}>
       <FormControl fullWidth>
         <Select
+          disabled={disabled}
+          error={errFunc()}
           value={selectedItem}
           onChange={handleChange}
           sx={{
@@ -32,7 +40,7 @@ export default function MySelect(props) {
           }}
         >
           {values.map((e, key) => (
-            <MenuItem key={key} value={e}>
+            <MenuItem key={key} value={valuesPath ? e[valuesPath] : e}>
               {dataTextPath ? e[dataTextPath] : e}
             </MenuItem>
           ))}

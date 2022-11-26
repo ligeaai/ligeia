@@ -14,15 +14,32 @@ import TagsActionMenu from "./tagsActionMenu";
 import DateBreak from "./dateBreak";
 import Properties from "./properties";
 
-import { cleanAllTags } from "../../../../services/actions/tags/tags";
-import { cleanTreeMenuSelect } from "../../../../services/actions/tags/tagsTreeview";
+import {
+  cleanAllTags,
+  loadTagsLabel,
+  forceCleanAll,
+} from "../../../../services/actions/tags/tags";
+import {
+  cleanTreeMenuSelect,
+  loadTreeView,
+} from "../../../../services/actions/tags/tagsTreeview";
+
+import { TreeMenuItems } from "./treeMenu";
 const Tags = ({ isHome }) => {
   const dispatch = useDispatch();
   const isFullScreen = useSelector((state) => state.fullScreen.isFullScreen);
   React.useEffect(() => {
     if (isHome) {
       dispatch(cleanAllTags());
-      dispatch(cleanTreeMenuSelect());
+      dispatch({ type: "SELECT_TREEVIEW_ITEM_TAGS", payload: {} });
+      dispatch({ type: "LOAD_TAGS_LABEL", payload: [] });
+      // dispatch(cleanTreeMenuSelect());
+      dispatch({
+        type: "TOGGLE_CHANGES_TAGS",
+        payload: false,
+      });
+    } else {
+      dispatch(loadTagsLabel());
     }
   }, [isHome]);
   return (
@@ -35,7 +52,7 @@ const Tags = ({ isHome }) => {
       }}
     >
       <Grid item sx={{ minHeight: "500px", boxShadow: 3, mr: 0.5 }}>
-        <DrawerMenu Element={<></>} />
+        <DrawerMenu Element={<TreeMenuItems></TreeMenuItems>} />
       </Grid>
 
       <Grid
@@ -78,7 +95,7 @@ const Tags = ({ isHome }) => {
           >
             <TagsActionMenu />
           </Grid>
-          <Divider
+          {/* <Divider
             orientation="vertical"
             variant="middle"
             flexItem
@@ -98,7 +115,7 @@ const Tags = ({ isHome }) => {
             }}
           >
             <DateBreak />
-          </Grid>
+          </Grid> */}
           <ItemSperatorLineXL />
           <Grid item xs={12} sx={{ mt: 1, mr: 1 }}>
             <PropLinkTabs

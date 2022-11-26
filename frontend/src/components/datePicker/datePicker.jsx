@@ -11,9 +11,13 @@ import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 const MaterialUIPickers = ({
   time = "9000-10-10",
   onChangeFunc = () => {},
+  errFunc = () => false,
 }) => {
   const [date, setDate] = React.useState(time);
 
+  React.useEffect(() => {
+    setDate(time);
+  }, [time]);
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <DatePicker
