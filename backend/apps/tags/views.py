@@ -84,10 +84,18 @@ class TagsDeleteView(generics.CreateAPIView)    :
 class TagsPropertysView(generics.CreateAPIView):
     permission_classes = [permissions.AllowAny]
     def post(self, request, *args, **kwargs):
-        queryset = type_property.objects.filter(TYPE = 'TAG_CACHE')
+        queryset = type_property.objects.filter(TYPE = 'TAG_INFO')
         serializer = TypePropertyDetailsSerializer(queryset,many = True)
-        tag_cache = []
-        self._resourceLabel(serializer.data,tag_cache,request.data.get('CULTURE'))
+        queryset_link = type_property.objects.filter(TYPE = 'TAG_LINK')
+        serializer_link = TypePropertyDetailsSerializer(queryset_link,many = True)
+        tag_INFO = []
+        tag_LINK = []
+        self._resourceLabel(serializer.data,tag_INFO,request.data.get('CULTURE'))
+        self._resourceLabel(serializer.data,tag_LINK,request.data.get('CULTURE'))
+        new_dict = {
+            "TAG_INFORMATIONS":tag_INFO,
+            "TAG_LINK":tag_LINK
+        }
         return Response(tag_cache,status=status.HTTP_200_OK)
 
     def _resourceLabel(self,data,dataList,culture):
