@@ -25,6 +25,10 @@ channels
 # Kafka-Python
 kafka-python
 
+
+#cassandra
+cassandra-driver
+
 # Sentry
 raven
 

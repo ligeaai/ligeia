@@ -31,7 +31,7 @@ class tags(models.Model):
 	HISTORIZING=models.CharField(max_length=10,null=True,)
 	MINIMUM_SAMPLING_INTERVAL=models.DecimalField(max_digits=28,decimal_places=12,null=True)
 	PERIOD=models.CharField(max_length=20,null=True,)
-	END_DATE_TIME=models.DateField(default = '9000-01-01',null=False,)
+	END_DATETIME=models.DateField(default = '9000-01-01',null=False,)
 	LAST_UPDATE_USER=models.CharField(max_length=100,null=True,)
 	LAST_UPDATE_DATE=models.DateField(default=timezone.now,null=False,)
 	VERSION=models.CharField(max_length=32,default=uuid.uuid4().hex,null=True,)

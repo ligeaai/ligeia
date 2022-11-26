@@ -1,12 +1,13 @@
 
 import json
-
+import environ
+env = environ.Env(DEBUG=(bool, False))
 import redis
 from django.core.exceptions import ValidationError
 from django.core.validators import validate_email as django_validate_email
 from django.db import transaction
 
-rds = redis.StrictRedis('ligeiaai-redis-1',port=6379,db=0)
+rds = redis.StrictRedis(env('REDIS_HOST'),port=6379,db=0)
 def validate_email(value):
     """Validate a single email."""
     if not value:

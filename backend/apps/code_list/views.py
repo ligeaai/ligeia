@@ -45,7 +45,7 @@ class CodeListSaveAndUpdateNewView(generics.UpdateAPIView):
         serializer.is_valid()
         message=serializer.save(request)
         logger.info(request=request, message = "message")
-        # Red.delete(str(request.user)+request.data.get('HIERARCHY')[0])
+        Red.delete(str(request.user)+request.data.get('HIERARCHY')[0])
         return Response(
             {"Message": "message"}, status=status.HTTP_200_OK
         )

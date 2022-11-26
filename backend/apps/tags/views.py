@@ -9,7 +9,7 @@ from apps.resource_list.models import resource_list
 from apps.resource_list.serializers import ResourceListSerializer 
 from apps.type_property.serializers import TypePropertyDetailsSerializer
 from apps.item_link.models import item_link 
-from apps.item_link.serializers import ItemLinkSaveSerializer
+from apps.item_link.serializers import ItemLinkSaveSerializer,ItemLinkDetailsSerializer
 from apps.type_link.models import type_link 
 from apps.code_list.models import code_list
 from apps.templates.orm_CodeList import CodeListORM
@@ -63,17 +63,21 @@ class TagsSpesificDetailsView(generics.CreateAPIView):
     def post(self, request, *args, **kwargs):
         queryset = tags.objects.filter(TAG_ID = request.data.get('TAG_ID'))
         serializer = TagsDetiailsSerializer(queryset,many = True)
+        qs_item = item_link.objects.filter(FROM_ITEM_ID = request.data.get('TAG_ID'))
+        if qs_item:
+            item_serializer = ItemLinkDetailsSerializer(qs_item,many =True)
+            serializer.data[0]['LINK_ID'] =item_serializer.data[0].get('LINK_ID')
         return Response(serializer.data,status=status.HTTP_200_OK)
 
     
-class TagsDeleteView(generics.CreateAPIView):
+class TagsDeleteView(generics.CreateAPIView)    :
 
     permission_classes = [permissions.AllowAny]
 
     def post(self, request, *args, **kwargs):
         qs = tags.objects.filter(TAG_ID = request.data.get('TAG_ID'))
         if qs:
-            qs.delete
+            qs.delete()
         return Response("Succsessful",status=status.HTTP_200_OK)
 
 
