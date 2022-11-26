@@ -96,7 +96,7 @@ class TagsPropertysView(generics.CreateAPIView):
             "TAG_INFORMATIONS":tag_INFO,
             "TAG_LINK":tag_LINK
         }
-        return Response(tag_cache,status=status.HTTP_200_OK)
+        return Response(new_dict,status=status.HTTP_200_OK)
 
     def _resourceLabel(self,data,dataList,culture):
         for item in (data):
