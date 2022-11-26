@@ -91,12 +91,12 @@ class TagsPropertysView(generics.CreateAPIView):
         tag_INFO = []
         tag_LINK = []
         self._resourceLabel(serializer.data,tag_INFO,request.data.get('CULTURE'))
-        self._resourceLabel(serializer.data,tag_LINK,request.data.get('CULTURE'))
+        self._resourceLabel(serializer_link.data,tag_LINK,request.data.get('CULTURE'))
         new_dict = {
             "TAG_INFORMATIONS":tag_INFO,
             "TAG_LINK":tag_LINK
         }
-        return Response(tag_cache,status=status.HTTP_200_OK)
+        return Response(new_dict,status=status.HTTP_200_OK)
 
     def _resourceLabel(self,data,dataList,culture):
         for item in (data):
