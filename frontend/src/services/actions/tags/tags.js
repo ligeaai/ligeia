@@ -153,7 +153,8 @@ const _newTagSave = async (saveValues) => {
     console.log(saveValues);
     const body = JSON.stringify({
         ...saveValues,
-        "LINK_ID": newUuid.replace(/-/g, ""),
+        "END_DATETIME": "9000-01-01",
+        "LINK_ID": saveValues.LINK_ID ? saveValues.LINK_ID : newUuid.replace(/-/g, ""),
         "FROM_ITEM_ID": saveValues.TAG_ID,
         "FROM_ITEM_TYPE": "TAG_CACHE",
         "LINK_TYPE": "TAG_ITEM",

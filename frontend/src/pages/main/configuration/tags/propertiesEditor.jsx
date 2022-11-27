@@ -52,7 +52,16 @@ const PropertiesEditor = () => {
             </Grid>
 
             {Object.keys(tagValues.TAG_INFORMATIONS).map((e, key) => {
-              if (tagValues.TAG_INFORMATIONS[e].PROPERTY_TYPE !== "GUID") {
+              if (
+                tagValues.TAG_INFORMATIONS[e].PROPERTY_TYPE !== "GUID" &&
+                tagValues.TAG_INFORMATIONS[e].PROPERTY_NAME !==
+                  "END_DATETIME" &&
+                tagValues.TAG_INFORMATIONS[e].PROPERTY_NAME !==
+                  "LAST_UPDT_USER" &&
+                tagValues.TAG_INFORMATIONS[e].PROPERTY_NAME !==
+                  "LAST_UPDT_DATE" &&
+                tagValues.TAG_INFORMATIONS[e].PROPERTY_NAME !== "LOAD"
+              ) {
                 return (
                   <Grid item xs={12} key={key}>
                     <Grid container className={classes.selectBox}>

@@ -44,6 +44,7 @@ export const loadTreeView = () => async (dispatch, getState) => {
 
 
 export const _goIndex = (index) => (dispatch, getState) => {
+    dispatch(cleanAllTags())
     if (index === -2) {
         dispatch({
             type: SELECT_TREEVIEW_ITEM_TAGS,

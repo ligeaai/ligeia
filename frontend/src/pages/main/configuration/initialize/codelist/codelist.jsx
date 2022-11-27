@@ -36,10 +36,13 @@ const CodeList = ({ isHome }) => {
       try {
         let res = await instance.get(`/layer/layer-dropdown/`, config());
         console.log(res);
-        setLayerValues(["NONE", ...[...[res.data].LAYER_NAME]]);
+        var myRes = [];
+        res.data.map((e) => {
+          myRes.push(e.LAYER_NAME);
+        });
+        setLayerValues(["NONE", ...myRes]);
       } catch {}
     };
-
     myFunc();
   }, []);
   React.useEffect(() => {
