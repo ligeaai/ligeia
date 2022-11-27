@@ -20,17 +20,31 @@ import {
   cleanTreeMenuSelect,
   setFilteredLayerName,
 } from "../../../../../services/actions/codelist/treeview";
-
+import { instance, config } from "../../../../../services/baseApi";
 const CodeList = ({ isHome }) => {
   const dispatch = useDispatch();
   const isFullScreen = useSelector((state) => state.fullScreen.isFullScreen);
   const filteredLayerName = useSelector(
     (state) => state.treeviewCodelist.filteredLayerName
   );
+  const [layerValues, setLayerValues] = React.useState(["NONE"]);
   const selectHandleChangeFunc = (params) => {
     dispatch(setFilteredLayerName(params));
   };
-
+  React.useEffect(() => {
+    const myFunc = async () => {
+      try {
+        let res = await instance.get(`/layer/layer-dropdown/`, config());
+        console.log(res);
+        var myRes = [];
+        res.data.map((e) => {
+          myRes.push(e.LAYER_NAME);
+        });
+        setLayerValues(["NONE", ...myRes]);
+      } catch {}
+    };
+    myFunc();
+  }, []);
   React.useEffect(() => {
     if (isHome) {
       dispatch(cleanAllDataGrid());
@@ -97,7 +111,7 @@ const CodeList = ({ isHome }) => {
             />
             <Grid item sx={{ ml: 1 }}>
               <Select
-                values={["NONE", "OG_STD", "AVM"]}
+                values={layerValues}
                 defaultValue={filteredLayerName}
                 handleChangeFunc={selectHandleChangeFunc}
               />

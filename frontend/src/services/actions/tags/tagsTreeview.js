@@ -43,7 +43,8 @@ export const loadTreeView = () => async (dispatch, getState) => {
 }
 
 
-const _goIndex = (index) => (dispatch, getState) => {
+export const _goIndex = (index) => (dispatch, getState) => {
+    dispatch(cleanAllTags())
     if (index === -2) {
         dispatch({
             type: SELECT_TREEVIEW_ITEM_TAGS,
@@ -62,7 +63,15 @@ const _goIndex = (index) => (dispatch, getState) => {
         })
         history.push(routeTo)
     }
+    // else if (index === -3) { }
     else {
+        const treeLen = getState().tagsTreeview.treeMenuItem.length
+        if (index < 0) {
+            index = treeLen - 1
+        }
+        if (index >= treeLen) {
+            index = 0
+        }
         const tag = getState().tagsTreeview.treeMenuItem[parseInt(index)]
         dispatch({
             type: SELECT_TREEVIEW_ITEM_TAGS,
@@ -83,6 +92,7 @@ const _saveAndGoToIndex = (index) => (dispatch, getState) => {
     const saveValues = getState().tags.saveValues
 
     dispatch(saveTag(saveValues))
+    dispatch(cleanAllTags())
     dispatch(loadTreeView());
     dispatch(_goIndex(index));
 
@@ -92,12 +102,19 @@ const mandatoryFields = (properties) => {
 }
 
 export const _checkmandatoryFields = (values, properties) => {
-    console.log(values);
-    var myProp = mandatoryFields(properties);
+    console.log(properties);
+    var myPropInformation = mandatoryFields(properties.TAG_INFORMATIONS);
+    var myPropLink = mandatoryFields(properties.TAG_LINK);
     var returnval = true
-    console.log(myProp);
+
     console.log(values);
-    myProp.map(e => {
+    myPropInformation.map(e => {
+        if (!values[e.PROPERTY_NAME] && e.PROPERTY_NAME !== "ITEM_ID") {
+            console.log(e);
+            returnval = false
+        }
+    })
+    myPropLink.map(e => {
         if (!values[e.PROPERTY_NAME] && e.PROPERTY_NAME !== "ITEM_ID") {
             console.log(e);
             returnval = false
@@ -118,9 +135,9 @@ export const selectTreeview = (index) => async (dispatch, getState) => {
                 agreefunction: async () => {
                     console.log(_checkmandatoryFields(values, properties));
                     if (_checkmandatoryFields(values, properties)) {
-                        // dispatch(cleanAllTags())
-                        console.log("asldksaldklaskdlş-------");
+
                         dispatch(_saveAndGoToIndex(index));
+
                     }
                     else {
                         dispatch({
@@ -128,8 +145,6 @@ export const selectTreeview = (index) => async (dispatch, getState) => {
                             payload: "Pleas check mandatory fields"
                         })
                     }
-
-
                 },
             })
         );

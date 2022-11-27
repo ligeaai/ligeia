@@ -25,7 +25,6 @@ import {
     FACEBOOK_AUTH_SUCCESS,
     FACEBOOK_AUTH_FAIL,
     LOGOUT,
-
     ADD_ERROR_SUCCESS,
     CLEAN_ERROR_SUCCESS
 } from './types';
@@ -312,10 +311,10 @@ export const logout = () => async dispatch => {
 };
 
 
-export const myFacebookLogin = (accesstoken) => async (dispatch) => {
+export const myFacebookLogin = (accesstoken, path) => async (dispatch) => {
     try {
         let res = await instance.post(
-            "/auth/facebook/",
+            `/auth/facebook/${path}`,
             {
                 access_token: accesstoken,
             }
@@ -334,10 +333,11 @@ export const myFacebookLogin = (accesstoken) => async (dispatch) => {
 
 };
 
-export const myGoogleLogin = (response) => async (dispatch) => {
+export const myGoogleLogin = (response, path) => async (dispatch) => {
+    console.log(path);
     try {
         let res = await instance.post(
-            "/auth/google/",
+            `/auth/google/${path}`,
             {
                 access_token: response.accessToken,
             }
@@ -355,11 +355,11 @@ export const myGoogleLogin = (response) => async (dispatch) => {
     }
 };
 
-export const myGithubLogin = (access_token) => async (dispatch) => {
+export const myGithubLogin = (access_token, path) => async (dispatch) => {
     console.log(access_token);
     try {
         let res = await instance.post(
-            "/auth/github/",
+            `/auth/github/${path}`,
             {
                 access_token: access_token,
             }
@@ -376,5 +376,4 @@ export const myGithubLogin = (access_token) => async (dispatch) => {
         })
         dispatch(setLoaderFalse())
     }
-
 };

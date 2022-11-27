@@ -11,7 +11,7 @@ import history from "../../routers/history";
 
 function FacebookSocialAuth(props) {
   const dispatch = useDispatch();
-  const { Element } = props;
+  const { Element, isSignInPanel } = props;
 
   return (
     <FacebookLogin
@@ -29,7 +29,12 @@ function FacebookSocialAuth(props) {
             short_name"
       callback={(response) => {
         dispatch(setLoaderTrue());
-        dispatch(myFacebookLogin(response.accessToken)).then(() => {
+        dispatch(
+          myFacebookLogin(
+            response.accessToken,
+            isSignInPanel ? "login" : "register"
+          )
+        ).then(() => {
           history.push("/");
         });
       }}

@@ -14,43 +14,26 @@ import { useDispatch, useSelector } from "react-redux";
 import { instance, config } from "../../../../services/baseApi";
 import { addSaveTagValue } from "../../../../services/actions/tags/tags";
 import axios from "axios";
-const useStyles = makeStyles((theme) => {
-  console.log(theme);
-  return {
-    box: {
-      boxShadow: theme.shadows[1],
-      padding: "8px",
-      borderRadius: "3px",
-      margin: "8px",
-    },
-    selectBox: {
-      alignItems: "center",
-      marginBottom: "4px",
-    },
-    label: {
-      width: "180px",
-    },
-    textfield: {
-      fontSize: "14px",
-      "& .MuiOutlinedInput-input": { paddingTop: "4px", paddingBottom: "4px" },
-      width: 120,
-    },
-  };
-});
+
 const TransactionPropertySelect = ({ defaultValue }) => {
   const dispatch = useDispatch();
   const values = useSelector((state) => state.tags.items);
+  const selectedValue = useSelector(
+    (state) => state.tagsTreeview.selectedItem.selectedIndex
+  );
+
   const handleChangeFunc = async (value) => {
     dispatch(addSaveTagValue("TO_ITEM_ID", value));
     dispatch(addSaveTagValue("ITEM_ID", value));
     dispatch(addSaveTagValue("TRANSACTION_PROPERTY", value));
   };
   React.useEffect(() => {
+    console.log(selectedValue);
     dispatch({
       type: "SET_TAG_SAVE_VALUES",
       payload: { key: "TO_ITEM_ID", value: defaultValue },
     });
-  }, [defaultValue]);
+  }, [defaultValue, selectedValue]);
   return (
     <Select
       disabled={values.length === 0 ? true : false}

@@ -10,16 +10,26 @@ import FacebookSocialAuth from "./faceSocialAuth";
 import GoogleSocialAuth from "./googleSocialAuth";
 import GitHubSocialAuth from "./githubSocialAuth";
 
-const social = () => {
+const social = ({ isSignInPanel }) => {
+  console.log(isSignInPanel);
   return (
     <Grid container spacing={1} sx={{ justifyContent: "center" }}>
       <Grid item>
         <FacebookSocialAuth
-          Element={<SocialButton Logo={FacebookRoundedIcon} />}
+          Element={
+            <SocialButton
+              Logo={FacebookRoundedIcon}
+              isSignInPanel={isSignInPanel}
+            />
+          }
+          isSignInPanel={isSignInPanel}
         />
       </Grid>
       <Grid item>
-        <GoogleSocialAuth Element={<SocialButton Logo={GoogleIcon} />} />
+        <GoogleSocialAuth
+          Element={<SocialButton Logo={GoogleIcon} />}
+          isSignInPanel={isSignInPanel}
+        />
       </Grid>
       <Grid
         item
@@ -30,7 +40,10 @@ const social = () => {
           },
         }}
       >
-        <GitHubSocialAuth Element={<SocialButton Logo={GitHubIcon} />} />
+        <GitHubSocialAuth
+          Element={<SocialButton Logo={GitHubIcon} />}
+          isSignInPanel={isSignInPanel}
+        />
       </Grid>
     </Grid>
   );
