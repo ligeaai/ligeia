@@ -41,5 +41,5 @@ class tags(models.Model):
 	REV_GRP_ID=models.CharField(max_length=32,null=True,)
 	TRANSACTION_TYPE = models.CharField(max_length=2000,null=True,)
 	TRANSACTION_PROPERTY = models.CharField(max_length=2000,null=True,)
-	UPDATE_SOURCE=models.CharField(max_length=1,default="x",null=True,)
-	CREATE_SOURCE=models.CharField(max_length=1,default="x",null=True,)
+	UPDATE_SOURCE=models.CharField(max_length=100,default="x",null=True,)
+	CREATE_SOURCE=models.CharField(max_length=100,default="x",null=True,)
