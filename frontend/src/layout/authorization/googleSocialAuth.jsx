@@ -13,7 +13,7 @@ import { setLoaderTrue } from "../../services/actions/loader";
 
 function GoogleSocialAuth(props) {
   const dispatch = useDispatch();
-  const { Element } = props;
+  const { Element, isSignInPanel } = props;
   useEffect(() => {
     function start() {
       gapi.client.init({
@@ -33,7 +33,9 @@ function GoogleSocialAuth(props) {
       )}
       onSuccess={(response) => {
         dispatch(setLoaderTrue());
-        dispatch(myGoogleLogin(response)).then(() => {
+        dispatch(
+          myGoogleLogin(response, isSignInPanel ? "login" : "register")
+        ).then(() => {
           history.push("/");
         });
       }}

@@ -25,6 +25,7 @@ const MyTextfield = (props) => {
       sx={{
         fontSize: "14px",
         "& .MuiOutlinedInput-input": {
+          fontSize: "14px",
           paddingTop: "4px",
           paddingBottom: "4px",
         },

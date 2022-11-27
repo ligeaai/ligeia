@@ -13,7 +13,7 @@ import {
     setConfirmation,
     setExtraBtn,
 } from "../../reducers/confirmation";
-import { loadTreeView, _checkmandatoryFields } from "./tagsTreeview"
+import { loadTreeView, _checkmandatoryFields, _goIndex } from "./tagsTreeview"
 
 
 let cancelToken;
@@ -78,9 +78,17 @@ export const loadTagsLabel = () => async (dispatch, getState) => {
                 config()
             )
         console.log(res);
+        var sortedTagInfo = res.data.TAG_INFORMATIONS.sort((a, b) =>
+            parseInt(a.SORT_ORDER) > parseInt(b.SORT_ORDER) ? 1 : -1
+        )
+        var sortedTagLink = res.data.TAG_LINK.sort((a, b) =>
+            parseInt(a.SORT_ORDER) > parseInt(b.SORT_ORDER) ? 1 : -1
+        )
+
+
         dispatch({
             type: LOAD_TAGS_LABEL,
-            payload: res.data
+            payload: { "TAG_INFORMATIONS": sortedTagInfo, "TAG_LINK": sortedTagLink }
         })
 
     } catch (err) {
@@ -105,11 +113,18 @@ export const addNewTag = () => async (dispatch, getState) => {
                 config()
             )
         console.log(res);
+        var sortedTagInfo = res.data.TAG_INFORMATIONS.sort((a, b) =>
+            parseInt(a.SORT_ORDER) > parseInt(b.SORT_ORDER) ? 1 : -1
+        )
+        var sortedTagLink = res.data.TAG_LINK.sort((a, b) =>
+            parseInt(a.SORT_ORDER) > parseInt(b.SORT_ORDER) ? 1 : -1
+        )
+
         dispatch({
             type: LOAD_TAGS_LABEL,
-            payload: res.data
+            payload: { "TAG_INFORMATIONS": sortedTagInfo, "TAG_LINK": sortedTagLink }
         })
-        dispatch(_fillUuids(res.data))
+        dispatch(_fillUuids(sortedTagInfo.concat(sortedTagLink)))
     } catch (err) {
         console.log(err);
 
@@ -135,16 +150,17 @@ export const cleanAllTags = (key, value) => dispatch => {
 
 const _newTagSave = async (saveValues) => {
     var newUuid = _uuidv4()
+    console.log(saveValues);
+    const body = JSON.stringify({
+        ...saveValues,
+        "LINK_ID": newUuid.replace(/-/g, ""),
+        "FROM_ITEM_ID": saveValues.TAG_ID,
+        "FROM_ITEM_TYPE": "TAG_CACHE",
+        "LINK_TYPE": "TAG_ITEM",
+    })
+    console.log(body);
     try {
-        console.log(saveValues);
-        const body = JSON.stringify({
-            ...saveValues,
-            "LINK_ID": newUuid.replace(/-/g, ""),
-            "FROM_ITEM_ID": saveValues.TAG_ID,
-            "FROM_ITEM_TYPE": "TAGS_CACHE",
-            "LINK_TYPE": "TAGS",
-        })
-        console.log(body);
+
         let res = await instance
             .post(
                 "/tags/save/",
@@ -220,7 +236,7 @@ async function _deleteTag(TAG_ID) {
 
 export const deleteTag = () => async (dispatch, getState) => {
     const tagId = getState().tagsTreeview.selectedItem.TAG_ID
-
+    const selectedIndex = getState().tagsTreeview.selectedItem.selectedIndex
 
     dispatch(
         setConfirmation({
@@ -234,7 +250,8 @@ export const deleteTag = () => async (dispatch, getState) => {
                 })
                 dispatch(cleanAllTags())
                 await _deleteTag(tagId)
-                dispatch(loadTreeView());
+                await dispatch(loadTreeView());
+                dispatch(_goIndex(selectedIndex))
             },
         })
     );

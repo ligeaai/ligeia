@@ -16,7 +16,14 @@ const MyCheckbox = (props) => {
     handleChangeFunc(!value);
     setValue(!value);
   };
-  return <Checkbox checked={value} onChange={handleChange} error={errFunc()} />;
+  return (
+    <Checkbox
+      checked={value}
+      onChange={handleChange}
+      error={errFunc()}
+      sx={{ fontSize: "14px" }}
+    />
+  );
 };
 
 export default MyCheckbox;

@@ -24,6 +24,8 @@ const useStyles = makeStyles((theme) => {
     },
     label: {
       width: "180px",
+      fontSize: "14px",
+      fontFamily: theme.typography.fontFamily,
     },
     textfield: {
       fontSize: "14px",
@@ -36,8 +38,8 @@ const useStyles = makeStyles((theme) => {
 const PropertiesEditor = () => {
   const classes = useStyles();
   const tagValues = useSelector((state) => state.tags.tagValues);
-
-  if (tagValues.length > 0) {
+  console.log(tagValues);
+  if (Object.keys(tagValues).length > 0) {
     return (
       <Grid container>
         <Grid item xs={12} className={classes.box}>
@@ -49,19 +51,44 @@ const PropertiesEditor = () => {
               Tag Information
             </Grid>
 
-            {Object.keys(tagValues).map((e, key) => {
-              if (
-                tagValues.length > 0 &&
-                tagValues[e].PROPERTY_TYPE !== "GUID"
-              ) {
+            {Object.keys(tagValues.TAG_INFORMATIONS).map((e, key) => {
+              if (tagValues.TAG_INFORMATIONS[e].PROPERTY_TYPE !== "GUID") {
                 return (
                   <Grid item xs={12} key={key}>
                     <Grid container className={classes.selectBox}>
                       <Grid item className={classes.label}>
-                        {tagValues[e].SHORT_LABEL}
+                        {tagValues.TAG_INFORMATIONS[e].SHORT_LABEL}
                       </Grid>
                       <Grid item>
-                        <TextFields row={tagValues[e]} />
+                        <TextFields row={tagValues.TAG_INFORMATIONS[e]} />
+                      </Grid>
+                    </Grid>
+                  </Grid>
+                );
+              }
+            })}
+          </Grid>
+        </Grid>
+
+        <Grid item xs={12} className={classes.box}>
+          {/* <Grid container>
+            <LinkSelect />
+          </Grid> */}
+          <Grid container>
+            <Grid item xs={12} sx={{ fontWeight: "bold" }}>
+              Tag Link
+            </Grid>
+
+            {Object.keys(tagValues.TAG_LINK).map((e, key) => {
+              if (tagValues.TAG_LINK[e].PROPERTY_TYPE !== "GUID") {
+                return (
+                  <Grid item xs={12} key={key}>
+                    <Grid container className={classes.selectBox}>
+                      <Grid item className={classes.label}>
+                        {tagValues.TAG_LINK[e].SHORT_LABEL}
+                      </Grid>
+                      <Grid item>
+                        <TextFields row={tagValues.TAG_LINK[e]} />
                       </Grid>
                     </Grid>
                   </Grid>

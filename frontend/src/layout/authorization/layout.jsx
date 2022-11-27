@@ -29,7 +29,7 @@ const layout = (props) => {
       >
         <Header isSignInPanel={isSignInPanel} />
         <Box sx={{ height: "44px" }} />
-        <Social />
+        <Social isSignInPanel={isSignInPanel} />
         <Typography
           sx={{
             typography: "body2",

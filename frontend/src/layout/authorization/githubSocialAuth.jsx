@@ -8,14 +8,17 @@ import { setLoaderTrue } from "../../services/actions/loader";
 import history from "../../routers/history";
 function GithubSocialAuth(props) {
   const dispatch = useDispatch();
-  const { Element } = props;
+  const { Element, isSignInPanel } = props;
+
   return (
     <GitHubLogin
       clientId="18aca4fc69e6c0c27eae"
       onSuccess={(response) => {
         console.log(response);
         dispatch(setLoaderTrue());
-        dispatch(myGithubLogin(response.code)).then(() => {
+        dispatch(
+          myGithubLogin(response.code, isSignInPanel ? "login" : "register")
+        ).then(() => {
           history.push("/");
         });
       }}

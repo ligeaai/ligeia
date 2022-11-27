@@ -8,7 +8,7 @@ import {
 
 const initialState = {
     treeMenuItem: [],
-    selectedItem: {}
+    selectedItem: { selectedIndex: -3 }
 };
 
 
