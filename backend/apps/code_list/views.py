@@ -66,6 +66,16 @@ class CodeListSaveAndUpdateView(generics.UpdateAPIView):
         )
 
 
+class CodeListCultureView(generics.ListAPIView):
+    serializer_class = CodeListSaveSerializer
+    permission_classes = [permissions.AllowAny]
+
+    def get(self, request, *args, **kwargs):
+        queryset = code_list.objects.filter(LIST_TYPE ='CODE_LIST',CODE = 'CULTURES')
+        serializer = CodeListDetailsSerializer(queryset,many =True)
+        return Response({"Message": serializer.data}, status=status.HTTP_200_OK)
+
+
 class CodeListView(generics.ListAPIView):
     serializer_class = CodeListSaveSerializer
     permission_classes = [permissions.AllowAny]
@@ -198,6 +208,8 @@ class CodeListDeleteView(generics.CreateAPIView):
         except Exception as e:
             logger.error(request=request, message=message,error=str(ValidationError(e)))
             raise ValidationError(e)
+
+            
             
 class CodeListDeepDetailView(generics.CreateAPIView):
     permission_classes = [permissions.AllowAny]

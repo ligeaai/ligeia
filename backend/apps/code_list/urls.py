@@ -6,11 +6,13 @@ from .views import (CodeListSaveScriptView,
                     CodeListSaveAndUpdateView,
                     CodeListDeleteChildView,
                     CodeListSaveAndUpdateNewView,
+                    CodeListCultureView,
                     CodeListParentView,)
 from django.urls.resolvers import URLPattern 
 urlpatterns = [
     # path("codelistchild/",CodeListSaveView.as_view(),name='code-list-and-child-create'),
     path("save/", CodeListSaveScriptView.as_view(),name='code-list-save'),
+    path("culture/", CodeListCultureView.as_view(),name='code-list-culture'),
     path("save-update/", CodeListSaveAndUpdateView.as_view(),name='code-list-save-update'),
     path("save-update-new/", CodeListSaveAndUpdateNewView.as_view(),name='code-list-save-update'),
     path("scripts/", CodeListView.as_view(),name='code-list'),
