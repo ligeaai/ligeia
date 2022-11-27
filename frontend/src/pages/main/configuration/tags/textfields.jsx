@@ -201,7 +201,7 @@ const TextFields = (props) => {
       />
     );
   }
-  if (row.PROPERTY_TYPE === "NUMBER") {
+  if (row.PROPERTY_TYPE === "NUMBER" || row.PROPERTY_TYPE === "DURATION") {
     return (
       <MyNumberTextField
         errFunc={errFunc}

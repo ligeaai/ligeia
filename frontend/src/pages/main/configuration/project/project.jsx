@@ -51,7 +51,7 @@ const Project = () => {
             </Box>
           </Grid>
           <ItemSperatorLineXL />
-          <Grid
+          {/* <Grid
             item
             sx={{
               ml: 1.5,
@@ -62,7 +62,7 @@ const Project = () => {
             }}
           >
             <ProjectActionMenu />
-          </Grid>
+          </Grid> */}
           {/* <Divider
             orientation="vertical"
             variant="middle"
@@ -84,14 +84,14 @@ const Project = () => {
           >
             <DateBreak /> 
           </Grid>*/}
-          <ItemSperatorLineXL />
+          {/* <ItemSperatorLineXL /> */}
           {/* <Grid item xs={12} sx={{ mt: 1, mr: 1 }}>
             <PropLinkTabs
               MyProperties={<Properties></Properties>}
               // MyLinks={<Links></Links>}
             />
           </Grid> */}
-          <Grid item xs={12} sx={{ mt: 1, mr: 1 }}>
+          <Grid item xs={12} sx={{ mt: 1, ml: 1, mr: 2 }}>
             <ProjectEditor />
           </Grid>
         </Grid>

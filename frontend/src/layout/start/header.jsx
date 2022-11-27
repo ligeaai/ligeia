@@ -272,7 +272,7 @@ const Header = () => {
                 sx={{
                   color: "#ffffff",
                   cursor: "pointer",
-                  typography: "body1",
+                  fontSize: "14px",
                 }}
                 onClick={() => history.push("/signin")}
               >
