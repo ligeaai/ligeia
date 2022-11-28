@@ -181,46 +181,51 @@ const NestedMenu = (props) => {
                 </Grid>
               </Grid>
               <ItemSperatorLine />
-              {menuItems[i].subtable.map((subValue, subKey) => {
-                return (
-                  <Grid
-                    item
-                    key={subKey}
-                    sx={{
-                      cursor: "pointer",
-                      "&:hover": {
-                        backgroundColor:
-                          themeMode === "dark" ? "#ffffff22" : "#00000022",
-                      },
-                      padding: "8px",
-                      width: "100%",
-                    }}
-                    onClick={() => {
-                      menuItems[i].functions(subValue);
-                    }}
-                  >
-                    <Grid container>
-                      <Grid item sx={{ mx: 1 }}>
-                        {subValue === menuItems[i].text ? (
-                          <DoneIcon sx={{ color: "text.primary" }} />
-                        ) : (
-                          <DoneIcon sx={{ visibility: "hidden" }} />
-                        )}
-                      </Grid>
-                      <Grid item>
-                        <Typography
-                          sx={{
-                            textTransform: "capitalize",
-                            color: "text.primary",
-                          }}
-                        >
-                          {subValue}
-                        </Typography>
+              {menuItems[i].subtable.length > 0 ? (
+                menuItems[i].subtable.map((subValue, subKey) => {
+                  console.log(subValue);
+                  return (
+                    <Grid
+                      item
+                      key={subKey}
+                      sx={{
+                        cursor: "pointer",
+                        "&:hover": {
+                          backgroundColor:
+                            themeMode === "dark" ? "#ffffff22" : "#00000022",
+                        },
+                        padding: "8px",
+                        width: "100%",
+                      }}
+                      onClick={() => {
+                        menuItems[i].functions(subValue);
+                      }}
+                    >
+                      <Grid container>
+                        <Grid item sx={{ mx: 1 }}>
+                          {subValue === menuItems[i].text ? (
+                            <DoneIcon sx={{ color: "text.primary" }} />
+                          ) : (
+                            <DoneIcon sx={{ visibility: "hidden" }} />
+                          )}
+                        </Grid>
+                        <Grid item>
+                          <Typography
+                            sx={{
+                              textTransform: "capitalize",
+                              color: "text.primary",
+                            }}
+                          >
+                            {subValue}
+                          </Typography>
+                        </Grid>
                       </Grid>
                     </Grid>
-                  </Grid>
-                );
-              })}
+                  );
+                })
+              ) : (
+                <></>
+              )}
             </Grid>
           ))}
         </React.Fragment>

@@ -95,3 +95,7 @@ export const TOGGLE_DRAWER_MENU = "TOGGLE_DRAWER_MENU";
 // export const MOUSE_ENTER_DRAWER = "MOUSE_ENTER_DRAWER";
 // export const MOUSE_LEAVE_DRAWER = "MOUSE_LEAVE_DRAWER";
 export const LOAD_DRAWER_MENU = "LOAD_DRAWER_MENU";
+
+//-----------Project ---------------------
+export const CHANGE_VALUE_PROJECT = "CHANGE_VALUE_PROJECT";
+export const CLEAN_VALUE_PROJECT = "CLEAN_VALUE_PROJECT"

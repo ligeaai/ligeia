@@ -16,7 +16,8 @@ import { changeLanguage } from "../../services/actions/language";
 import { toggleDrawerMenu } from "../../services/actions/drawerMenu/drawerMenu";
 import { SearchBarMobile, SearchBar } from "../../components";
 import NestedMenu from "./nestedMenu";
-
+import { instance, config } from "../../services/baseApi";
+import history from "../../routers/history";
 const searchBarSize = {
   sm: { focus: "28ch", blur: "16ch" },
   md: { focus: "60ch", blur: "34ch" },
@@ -29,10 +30,23 @@ const Header = (props) => {
   const user = useSelector((state) => state.auth.user);
   const search = useSelector((state) => state.searchBar.isFocus);
   const theme = useSelector((state) => state.theme.theme);
-  const lang = useSelector((state) => state.lang.lang);
+  const lang = useSelector((state) => state.lang.cultur);
   const drawerIsOpen = useSelector((state) => state.drawerMenu.isOpen);
   const [settingsMenu, setSettingsMenu] = React.useState(false);
-
+  const [langItems, setLangItems] = React.useState([]);
+  React.useEffect(() => {
+    const myFunc = async () => {
+      try {
+        let res = await instance.get(`/code-list/culture/`, config());
+        var myRes = [];
+        res.data.Message.map((e) => {
+          myRes.push(e.CULTURE);
+        });
+        setLangItems([...myRes]);
+      } catch {}
+    };
+    myFunc();
+  }, []);
   window.addEventListener("click", function (e) {
     if (!e.target.closest(".settingsMenu")) {
       setSettingsMenu(false);
@@ -44,6 +58,9 @@ const Header = (props) => {
   };
   const langSelect = (language) => {
     dispatch(changeLanguage(language));
+    setTimeout(() => {
+      window.location.reload();
+    }, 500);
   };
   const locationSelect = (location) => {};
 
@@ -246,7 +263,7 @@ const Header = (props) => {
                       icon: <TranslateIcon />,
                       fixedText: "Language",
                       text: lang,
-                      subtable: ["English", "Kazakça", "Rusça", "Türkçe"],
+                      subtable: langItems,
                       functions: langSelect,
                     },
                     {

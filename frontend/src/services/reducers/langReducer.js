@@ -6,7 +6,7 @@ export const langReducer = createSlice({
     initialState: { lang: "English", cultur: "en-US" },
     reducers: {
         changeLang(state, action) {
-            return { ...state, lang: action.payload };
+            return { ...state, cultur: action.payload };
         }
     }
 })

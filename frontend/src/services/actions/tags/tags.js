@@ -148,11 +148,13 @@ export const cleanAllTags = (key, value) => dispatch => {
     })
 }
 
-const _newTagSave = async (saveValues) => {
+const _newTagSave = async (saveValues, user) => {
     var newUuid = _uuidv4()
     console.log(saveValues);
     const body = JSON.stringify({
         ...saveValues,
+        // "LAST_UPDT_USER": user,
+        // "LAST_UPDT_DATE": new Date(),
         "END_DATETIME": "9000-01-01",
         "LINK_ID": saveValues.LINK_ID ? saveValues.LINK_ID : newUuid.replace(/-/g, ""),
         "FROM_ITEM_ID": saveValues.TAG_ID,
@@ -180,6 +182,7 @@ export const saveNewTag = () => async (dispatch, getState) => {
     const anyChanges = getState().tags.anyChanges
     const values = getState().tags.saveValues
     const properties = getState().tags.tagValues
+    var user = getState().auth.user.email
     if (anyChanges) {
         dispatch(
             setConfirmation({
@@ -192,7 +195,7 @@ export const saveNewTag = () => async (dispatch, getState) => {
                             type: TOGGLE_CHANGES_TAGS,
                             payload: false
                         })
-                        await _newTagSave(saveValues)
+                        await _newTagSave(saveValues, user)
 
                         dispatch(loadTreeView())
                     } else {
@@ -210,12 +213,12 @@ export const saveNewTag = () => async (dispatch, getState) => {
 
 
 export const saveTag = (saveValues) => async (dispatch, getState) => {
-
+    var user = getState().auth.user.email
     dispatch({
         type: TOGGLE_CHANGES_TAGS,
         payload: false
     })
-    _newTagSave(saveValues)
+    _newTagSave(saveValues, user)
 
 }
 

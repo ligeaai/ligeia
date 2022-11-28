@@ -26,6 +26,7 @@ import {
     dataGridCodeList,
     drawerMenu,
     errorReducer,
+    project,
     highchart,
     fullScreenReducer,
     item,
@@ -43,7 +44,7 @@ import {
 const persistConfig = {
     key: 'root',
     storage,
-    whitelist: ['drawerMenu', 'item']
+    whitelist: ['drawerMenu', 'item', "lang"]
 }
 
 const rootReducer = combineReducers({
@@ -55,6 +56,7 @@ const rootReducer = combineReducers({
     dataGridCodeList: dataGridCodeList,
     drawerMenu: drawerMenu,
     error: errorReducer,
+    project: project,
     highchart: highchart,
     fullScreen: fullScreenReducer,
     item: item,
