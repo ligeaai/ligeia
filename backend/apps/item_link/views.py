@@ -58,13 +58,15 @@ class ItemLinkDetailsView(generics.CreateAPIView):
         try:
             for index in range(len(data)):
                 item = data[index]
-                property = item_property.objects.filter(ITEM_ID = item.get('FROM_ITEM_ID'),PROPERTY_TYPE = 'NAME')
+                propertys = item_property.objects.filter(ITEM_ID = item.get('FROM_ITEM_ID'),PROPERTY_TYPE = 'NAME')
                 property2 = item_property.objects.filter(ITEM_ID = item.get('TO_ITEM_ID'),PROPERTY_TYPE = 'NAME')
-                validate_find(property,request)
-                serializer = ItemPropertyNameSerializer(property,many = True)
+                # validate_find(property,request)
+                serializer = ItemPropertyNameSerializer(propertys,many = True)
                 serializer2 = ItemPropertyNameSerializer(property2,many = True)
-                data[index]['FROM_ITEM_NAME'] = serializer.data[0].get('PROPERTY_STRING')
-                data[index]['TO_ITEM_NAME'] = serializer2.data[0].get('PROPERTY_STRING')
+                if propertys:
+                    data[index]['FROM_ITEM_NAME'] = serializer.data[0].get('PROPERTY_STRING')
+                if property2:
+                    data[index]['TO_ITEM_NAME'] = serializer2.data[0].get('PROPERTY_STRING')
             return data
         except Exception as e:
             raise e
