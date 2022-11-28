@@ -9,6 +9,7 @@ import {
   MyTextField,
   MyCheckBox,
   MyNumberTextField,
+  MyMultilineTextField,
 } from "../../../../components";
 import { useDispatch, useSelector } from "react-redux";
 import { instance, config } from "../../../../services/baseApi";
@@ -184,13 +185,16 @@ const TextFields = (props) => {
     );
   }
   if (row.PROPERTY_TYPE === "TEXT") {
-    return (
-      <MyTextField
-        errFunc={errFunc}
-        defaultValue={myDefaultValue}
-        handleChangeFunc={handleChangeFunc}
-      />
-    );
+    if (row.PROPERTY_NAME !== "DESCRIPTION") {
+      return (
+        <MyTextField
+          errFunc={errFunc}
+          defaultValue={myDefaultValue}
+          handleChangeFunc={handleChangeFunc}
+        />
+      );
+    }
+    return <MyMultilineTextField />;
   }
   if (row.PROPERTY_TYPE === "BOOL") {
     return (

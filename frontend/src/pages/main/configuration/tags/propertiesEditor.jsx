@@ -21,6 +21,10 @@ const useStyles = makeStyles((theme) => {
     selectBox: {
       alignItems: "center",
       marginBottom: "4px",
+      width: "100%",
+    },
+    field: {
+      width: "calc(100% - 180px)",
     },
     label: {
       width: "180px",
@@ -48,43 +52,6 @@ const PropertiesEditor = () => {
           </Grid> */}
           <Grid container>
             <Grid item xs={12} sx={{ fontWeight: "bold" }}>
-              Tag Information
-            </Grid>
-
-            {Object.keys(tagValues.TAG_INFORMATIONS).map((e, key) => {
-              if (
-                tagValues.TAG_INFORMATIONS[e].PROPERTY_TYPE !== "GUID" &&
-                tagValues.TAG_INFORMATIONS[e].PROPERTY_NAME !==
-                  "END_DATETIME" &&
-                tagValues.TAG_INFORMATIONS[e].PROPERTY_NAME !==
-                  "LAST_UPDT_USER" &&
-                tagValues.TAG_INFORMATIONS[e].PROPERTY_NAME !==
-                  "LAST_UPDT_DATE" &&
-                tagValues.TAG_INFORMATIONS[e].PROPERTY_NAME !== "LOAD"
-              ) {
-                return (
-                  <Grid item xs={12} key={key}>
-                    <Grid container className={classes.selectBox}>
-                      <Grid item className={classes.label}>
-                        {tagValues.TAG_INFORMATIONS[e].SHORT_LABEL}
-                      </Grid>
-                      <Grid item>
-                        <TextFields row={tagValues.TAG_INFORMATIONS[e]} />
-                      </Grid>
-                    </Grid>
-                  </Grid>
-                );
-              }
-            })}
-          </Grid>
-        </Grid>
-
-        <Grid item xs={12} className={classes.box}>
-          {/* <Grid container>
-            <LinkSelect />
-          </Grid> */}
-          <Grid container>
-            <Grid item xs={12} sx={{ fontWeight: "bold" }}>
               Tag Link
             </Grid>
 
@@ -98,6 +65,47 @@ const PropertiesEditor = () => {
                       </Grid>
                       <Grid item>
                         <TextFields row={tagValues.TAG_LINK[e]} />
+                      </Grid>
+                    </Grid>
+                  </Grid>
+                );
+              }
+            })}
+          </Grid>
+        </Grid>
+        <Grid item xs={12} className={classes.box}>
+          {/* <Grid container>
+            <LinkSelect />
+          </Grid> */}
+          <Grid container>
+            <Grid item xs={12} sx={{ fontWeight: "bold" }}>
+              Tag Information
+            </Grid>
+
+            {Object.keys(tagValues.TAG_INFORMATIONS).map((e, key) => {
+              if (
+                tagValues.TAG_INFORMATIONS[e].PROPERTY_TYPE !== "GUID" &&
+                tagValues.TAG_INFORMATIONS[e].PROPERTY_NAME !==
+                  "END_DATETIME" &&
+                tagValues.TAG_INFORMATIONS[e].PROPERTY_NAME !==
+                  "LAST_UPDT_USER" &&
+                tagValues.TAG_INFORMATIONS[e].PROPERTY_NAME !==
+                  "LAST_UPDT_DATE" &&
+                tagValues.TAG_INFORMATIONS[e].PROPERTY_NAME !== "LOAD" &&
+                tagValues.TAG_INFORMATIONS[e].PROPERTY_NAME !== "ITEM_ID" &&
+                tagValues.TAG_INFORMATIONS[e].PROPERTY_NAME !== "TARGET_ID" &&
+                tagValues.TAG_INFORMATIONS[e].PROPERTY_NAME !==
+                  "FULL_INTERVAL" &&
+                tagValues.TAG_INFORMATIONS[e].PROPERTY_NAME !== "ACCESS"
+              ) {
+                return (
+                  <Grid item xs={12} key={key}>
+                    <Grid container className={classes.selectBox}>
+                      <Grid item className={classes.label}>
+                        {tagValues.TAG_INFORMATIONS[e].SHORT_LABEL}
+                      </Grid>
+                      <Grid item className={classes.field}>
+                        <TextFields row={tagValues.TAG_INFORMATIONS[e]} />
                       </Grid>
                     </Grid>
                   </Grid>

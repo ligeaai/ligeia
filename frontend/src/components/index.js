@@ -5,6 +5,7 @@ import Cards from "./cardGenerator/cards";
 import CheckboxList from "./checkList/checkList";
 import MyCheckBox from "./checkbox/checkbox"
 import MyNumberTextField from "./textfield/numberTextField"
+import MyMultilineTextField from "./textfield/multilineTextField"
 import Confirmation from "./confirmation/confirmation"
 import { ComponentError } from "./errorMessage/componentError"
 import ComponentErrorBody from "./errorMessage/componentErrorBody";
@@ -35,6 +36,6 @@ import { TreeMenu } from "./treeMenu/treeMenu"
 
 export {
     ActionMenu, Breadcrumb, Cards, CheckboxList, Confirmation, ComponentError, ComponentErrorBody, CustomNoRowsOverlay, DateBreak, DatePicker, Drawer, ErrorBoundary, ErrorMessage, Loadable,
-    Loading, LoadingComponent, MyBox, MyCheckBox, MyNavigator, MyNumberTextField, MyTextField, PropLinkTabs, SocialButton, TimeRangePicker, TreeView, ItemSperatorLine, ItemSperatorLineXL, Items, SearchBar, SearchBarMobile, Select,
+    Loading, LoadingComponent, MyBox, MyCheckBox, MyNavigator, MyNumberTextField, MyTextField, MyMultilineTextField, PropLinkTabs, SocialButton, TimeRangePicker, TreeView, ItemSperatorLine, ItemSperatorLineXL, Items, SearchBar, SearchBarMobile, Select,
     TreeMenu
 }

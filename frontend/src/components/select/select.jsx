@@ -36,11 +36,17 @@ export default function MySelect(props) {
           onChange={handleChange}
           sx={{
             fontSize: "14px",
-            "& .MuiOutlinedInput-input": { py: 0.5 },
+            "& .MuiOutlinedInput-input": { py: 0.5, fontSize: "14px" },
           }}
         >
           {values.map((e, key) => (
-            <MenuItem key={key} value={valuesPath ? e[valuesPath] : e}>
+            <MenuItem
+              key={key}
+              value={valuesPath ? e[valuesPath] : e}
+              sx={{
+                fontSize: "14px",
+              }}
+            >
               {dataTextPath ? e[dataTextPath] : e}
             </MenuItem>
           ))}
