@@ -71,7 +71,7 @@ class CodeListCultureView(generics.ListAPIView):
     permission_classes = [permissions.AllowAny]
 
     def get(self, request, *args, **kwargs):
-        queryset = code_list.objects.filter(LIST_TYPE ='CODE_LIST',CODE = 'CULTURES')
+        queryset = code_list.objects.filter(LIST_TYPE ='CULTURES')
         serializer = CodeListDetailsSerializer(queryset,many =True)
         return Response({"Message": serializer.data}, status=status.HTTP_200_OK)
 

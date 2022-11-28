@@ -36,6 +36,7 @@ class TypePropertySerializer(serializers.ModelSerializer):
             "PROP_GRP",
             "PROPERTY_TYPE",
             "SORT_ORDER",
+            "ROW_ID",
         ]
 
 

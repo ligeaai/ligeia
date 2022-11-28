@@ -75,6 +75,51 @@ class TypeDeleteView(generics.UpdateAPIView):
         return Response(message,status=status.HTTP_200_OK)
 
 
+class TypeEditorPropertyView(generics.CreateAPIView):
+
+    serializer_class = TypeSaveSerializer
+    permission_classes = [permissions.AllowAny]
+
+    def post(self, request, *args, **kwargs):
+        queryset  = Type.objects.filter(TYPE = request.data.get('TYPE'))
+        serializer = TypeDetailsSerializer(queryset,many = True)
+        queryset_types_prop = type_property.objects.filter(TYPE = serializer.data[0].get('TYPE'))
+        new_list = []
+        serializer_prop = TypePropertySerializer(queryset_types_prop,many = True)
+        serializer.data[0]['HIEARCHY'] = serializer.data[0].get('ROW_ID')
+        new_list.append(serializer.data[0])
+        for index in range(len(serializer_prop.data)):
+            serializer_prop.data[index]['HIEARCHY'] = [serializer.data[0].get('ROW_ID'),serializer_prop.data[index].get('ROW_ID')]
+            new_list.append(serializer_prop.data[index])
+        return Response(new_list, status=status.HTTP_200_OK)
+
+
+
+class TypeEditorBaseView(generics.CreateAPIView):
+
+    serializer_class = TypeSaveSerializer
+    permission_classes = [permissions.AllowAny]
+
+    def post(self, request, *args, **kwargs):
+
+        queryset  = Type.objects.all()
+        serializer = TypeDetailsSerializer(queryset,many = True)
+        self._getResourceList(serializer.data,request.data.get('CULTURE'))
+        return Response({"Message": serializer.data}, status=status.HTTP_200_OK)
+   
+    def _getResourceList(self,data,culture):
+        for index in range(0,len(data)):
+            # queryset_types_prop = type_property.objects.filter(TYPE = data[index].get('TYPE'))
+            # serializer_prop = TypePropertySerializer(queryset_types_prop,many = True)
+            
+            if data[index].get('SORT_ORDER'):
+                data[index]['SORT_ORDER'] = int(data[index].get('SORT_ORDER')) 
+            queryset = resource_list.objects.filter(ID = data[index].get('LABEL_ID'),CULTURE = culture)
+            if queryset:
+                serializer = ResourceListSerializer(queryset,many = True)
+                data[index]['SHORT_LABEL'] = serializer.data[0].get('SHORT_LABEL')
+                data[index]['MOBILE_LABEL'] = serializer.data[0].get('MOBILE_LABEL')
+
 
 class TypeView(generics.ListAPIView):
 
