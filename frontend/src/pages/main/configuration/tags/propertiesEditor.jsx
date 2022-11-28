@@ -96,15 +96,16 @@ const PropertiesEditor = () => {
                 tagValues.TAG_INFORMATIONS[e].PROPERTY_NAME !== "TARGET_ID" &&
                 tagValues.TAG_INFORMATIONS[e].PROPERTY_NAME !==
                   "FULL_INTERVAL" &&
-                tagValues.TAG_INFORMATIONS[e].PROPERTY_NAME !== "ACCESS"
+                tagValues.TAG_INFORMATIONS[e].PROPERTY_NAME !== "ACCESS" &&
+                tagValues.TAG_INFORMATIONS[e].PROPERTY_NAME !== "DESCRIPTION"
               ) {
                 return (
-                  <Grid item xs={12} key={key}>
+                  <Grid item xs={6} key={key}>
                     <Grid container className={classes.selectBox}>
                       <Grid item className={classes.label}>
                         {tagValues.TAG_INFORMATIONS[e].SHORT_LABEL}
                       </Grid>
-                      <Grid item className={classes.field}>
+                      <Grid item>
                         <TextFields row={tagValues.TAG_INFORMATIONS[e]} />
                       </Grid>
                     </Grid>
@@ -112,6 +113,16 @@ const PropertiesEditor = () => {
                 );
               }
             })}
+            <Grid item xs={12} key={"description"}>
+              <Grid container className={classes.selectBox}>
+                <Grid item className={classes.label}>
+                  {tagValues.TAG_INFORMATIONS[6].SHORT_LABEL}
+                </Grid>
+                <Grid item className={classes.field}>
+                  <TextFields row={tagValues.TAG_INFORMATIONS[6]} />
+                </Grid>
+              </Grid>
+            </Grid>
           </Grid>
         </Grid>
       </Grid>

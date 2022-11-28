@@ -27,7 +27,7 @@ export default function MySelect(props) {
     setSelectedItem(defaultValue);
   }, [defaultValue]);
   return (
-    <Box sx={{ minWidth: 120, display: "inline-block" }}>
+    <Box sx={{ minWidth: 125, display: "inline-block" }}>
       <FormControl fullWidth>
         <Select
           disabled={disabled}
@@ -45,6 +45,14 @@ export default function MySelect(props) {
               value={valuesPath ? e[valuesPath] : e}
               sx={{
                 fontSize: "14px",
+                paddingTop:
+                  key === 0 && (valuesPath ? e[valuesPath] : e) === ""
+                    ? "14px"
+                    : "6px",
+                paddingBottom:
+                  key === 0 && (valuesPath ? e[valuesPath] : e) === ""
+                    ? "14px"
+                    : "6px",
               }}
             >
               {dataTextPath ? e[dataTextPath] : e}

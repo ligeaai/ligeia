@@ -31,7 +31,7 @@ const MyNumberTextField = (props) => {
           paddingTop: "4px",
           paddingBottom: "4px",
         },
-        width: 120,
+        width: 125,
       }}
     />
   );
