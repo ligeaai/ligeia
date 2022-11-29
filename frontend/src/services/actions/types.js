@@ -98,4 +98,12 @@ export const LOAD_DRAWER_MENU = "LOAD_DRAWER_MENU";
 
 //-----------Project ---------------------
 export const CHANGE_VALUE_PROJECT = "CHANGE_VALUE_PROJECT";
-export const CLEAN_VALUE_PROJECT = "CLEAN_VALUE_PROJECT"
+export const CLEAN_VALUE_PROJECT = "CLEAN_VALUE_PROJECT";
+
+
+//------------TYPE -------------------
+export const SET_ROW_DATAGRID_TYPE = "SET_ROW_DATAGRID_TYPE";
+export const SET_CHANGE_VALUE_CELL_TAG = "SET_CHANGE_VALUE_CELL_TAG";
+export const LAOD_TREEVIEW_TYPE = "LAOD_TREEVIEW_TYPE";
+export const SELECT_TREEVIEW_ITEM_TYPE = "SELECT_TREEVIEW_ITEM_TYPE";
+export const AFTER_GO_INDEX_TYPE = "AFTER_GO_INDEX_TYPE";

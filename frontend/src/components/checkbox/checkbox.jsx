@@ -18,7 +18,7 @@ const MyCheckbox = (props) => {
     setValue(!value);
   };
   return (
-    <Box sx={{ minWidth: "125px" }}>
+    <Box sx={{ minWidth: "125px", width: "100%" }}>
       <Checkbox
         size="small"
         checked={value}

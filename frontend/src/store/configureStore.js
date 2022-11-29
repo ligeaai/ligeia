@@ -24,6 +24,7 @@ import {
     confirmation,
     cssUserSelect,
     dataGridCodeList,
+    dataGridType,
     drawerMenu,
     errorReducer,
     project,
@@ -39,6 +40,7 @@ import {
     tagsTreeview,
     themeReducer,
     treeviewCodelist,
+    treeviewType,
 } from '../services/reducers'
 
 const persistConfig = {
@@ -54,6 +56,7 @@ const rootReducer = combineReducers({
     confirmation: confirmation,
     cssUserSelect: cssUserSelect,
     dataGridCodeList: dataGridCodeList,
+    dataGridType: dataGridType,
     drawerMenu: drawerMenu,
     error: errorReducer,
     project: project,
@@ -69,6 +72,7 @@ const rootReducer = combineReducers({
     tagsTreeview: tagsTreeview,
     theme: themeReducer,
     treeviewCodelist: treeviewCodelist,
+    treeviewType: treeviewType,
 })
 
 

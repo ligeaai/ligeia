@@ -34,7 +34,8 @@ const MaterialUIPickers = ({
             {...params}
             variant="outlined"
             sx={{
-              width: "125px",
+              minWidth: "125px",
+              width: "100%",
               border: "none",
               ".MuiInputAdornment-root": {
                 pl: 0,

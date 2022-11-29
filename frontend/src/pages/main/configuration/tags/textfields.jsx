@@ -159,7 +159,10 @@ const TextFields = (props) => {
   if (row.PROPERTY_TYPE === "CODE") {
     if (row.CODE) {
       var values = [{ ROW_ID: "", CODE_TEXT: "" }];
-      values = values.concat(row.CODE);
+      const sortedCode = row.CODE.sort((a, b) =>
+        a.CODE_TEXT > b.CODE_TEXT ? 1 : -1
+      );
+      values = values.concat(sortedCode);
       return (
         <Select
           errFunc={errFunc}

@@ -29,7 +29,8 @@ const MyTextfield = (props) => {
           paddingTop: "4px",
           paddingBottom: "4px",
         },
-        width: 125,
+        width: "100%",
+        minWidth: 125,
       }}
     />
   );

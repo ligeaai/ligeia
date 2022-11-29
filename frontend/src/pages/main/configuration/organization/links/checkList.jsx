@@ -36,7 +36,9 @@ const MyCheckList = (props) => {
   const linkEditorData = useSelector(
     (state) => state.linkEditor[props.dataSelectItemPath]
   );
-  const selectItems = linkEditorData.filter((e) => e.TYPE === props.data.TYPE);
+  const selectItems = linkEditorData
+    ? linkEditorData.filter((e) => e.TYPE === props.data.TYPE)
+    : [];
   const handleChange = (event) => {
     const e = selectItems.find((e) =>
       props.dataSelectItemPath === "data"
