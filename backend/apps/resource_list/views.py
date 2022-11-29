@@ -119,13 +119,14 @@ class ResourceListDrawerMenutView(generics.CreateAPIView):
                 tempt2 = {}
                 queryset = resource_list.objects.filter(ID = item.get('LABEL_ID'),CULTURE = culture,HIDDEN = False)
                 serializer = ResourceListDetailsSerializer(queryset,many = True)
-                serializer.data[0]['TYPE'] = item.get('TYPE')
+                
                 if item.get('LABEL_ID') == 'TYPE.ORG_UNIT2':
                     short_label = serializer.data[0].get('SHORT_LABEL')
                     serializer.data[0]['SHORT_LABEL'] = serializer.data[0].get('MOBILE_LABEL')
                     serializer.data[0]['MOBILE_LABEL'] = short_label
-                    
-                tempt[serializer.data[0].get('SHORT_LABEL')] = serializer.data[0]
+                if queryset:
+                    serializer.data[0]['TYPE'] = item.get('TYPE') 
+                    tempt[serializer.data[0].get('SHORT_LABEL')] = serializer.data[0]
     
         
 

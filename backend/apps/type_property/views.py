@@ -7,7 +7,7 @@ from services.parsers.addData.type import typeAddData
 
 # Create your views here.
 from .models import type_property
-from .serializers import TypePropertyDetailsSerializer, TypePropertySaveSerializer
+from .serializers import TypePropertyDetailsSerializer, TypePropertySaveSerializer,TypePropertySaveUpdateSerializer
 
 
 class TypePropertySaveView(generics.CreateAPIView):
@@ -40,23 +40,21 @@ class TypePropertyDetailView(generics.CreateAPIView):
        
 
 
-class TypePropertyUpdateView(generics.UpdateAPIView):
+class TypePropertyUpdateView(generics.CreateAPIView):
+    serializer_class = TypePropertySaveUpdateSerializer
+    permission_classes = [permissions.AllowAny]
+
+    def post(self, request, *args, **kwargs):
+        serializer = TypePropertySaveUpdateSerializer(data = request)
+        serializer.save(request)
+        return Response({"Message": "Successful"}, status=status.HTTP_200_OK)
+
+class TypeDeleteeView(generics.CreateAPIView):
     serializer_class = TypePropertySaveSerializer
     permission_classes = [permissions.AllowAny]
 
-    def put(self, request, *args, **kwargs):
-        filter = request.data.get("FILTER")
-        data = request.data.get("ITEMS")
-        qs = type_property.objects.filter(**data).update
-    
-        return Response({"Message": "Successful Update "}, status=status.HTTP_200_OK)
-
-
-class TypeDeleteeView(generics.DestroyAPIView):
-    serializer_class = TypePropertySaveSerializer
-    permission_classes = [permissions.AllowAny]
-
-    def delete(self, request, *args, **kwargs):
-        filter = request.data.get("FILTER")
-        qs = type_property.objects.filter(**filter).delete()
+    def post(self, request, *args, **kwargs): 
+        qs = type_property.objects.filter(ROW_ID = request.data.get("ROW_ID"))
+        if qs:
+            qs.delete()
         return Response({"Message": "Successful Delete "}, status=status.HTTP_200_OK)
