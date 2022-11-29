@@ -31,20 +31,22 @@ class TypeDetailsSerializer(serializers.ModelSerializer):
 class TypeEditorSaveSerializer(serializers.Serializer):
     def save(self, validated_data):
         qs = Type.objects.filter(TYPE = validated_data.data.get('TYPE'))
+        print(qs)
         if qs:
             try:
                 validate_value(validated_data.data,'TYPE',validated_data)
                 qs.update(**validated_data.data)
-                logger.info("Type  object successfully updated",request= request)
+                logger.info("Type  object successfully updated",request= validated_data)
             except Exception as e:
                 raise ValidationError(e)
         else: 
             try:
-                validate_model_not_null(validated_data,"TYPE",request)
-                validated_data["VERSION"] = uuid.uuid4().hex
+                validate_model_not_null(validated_data.data,"TYPE",request=validated_data) 
+                validated_data.data["VERSION"] = uuid.uuid4().hex
+                validated_data.data["DB_ID"] = uuid.uuid4().hex
                 types = Type.objects.create(**validated_data.data)
                 types.save()
-                logger.info("Type  object successfully created",request= request)
+                logger.info("Type  object successfully created",request= validated_data)
                 return types
             except Exception as e:
                 raise ValidationError(e)

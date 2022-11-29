@@ -47,16 +47,17 @@ class TypePropertySaveUpdateSerializer(serializers.Serializer):
             try:
                 validate_value(validated_data.data,'TYPE_PROPERTY',validated_data)
                 qs.update(**validated_data.data)
-                logger.info("Type Property object successfully updated",request= request)
+                logger.info("Type Property object successfully updated",request= validated_data)
             except Exception as e:
                 raise ValidationError(e)
         else: 
             try:
-                validate_model_not_null(validated_data,"TYPE_PROPERTY",request)
+                validate_model_not_null(validated_data.data,"TYPE_PROPERTY",validated_data)
                 validated_data["VERSION"] = uuid.uuid4().hex
+                validated_data["DB_ID"] = uuid.uuid4().hex
                 typeProperty = type_property.objects.create(**validated_data.data)
                 typeProperty.save()
-                logger.info("Type Property object successfully created",request= request)
+                logger.info("Type Property object successfully created",request= validated_data)
                 return typeProperty
             except Exception as e:
                 raise ValidationError(e)

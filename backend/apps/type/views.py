@@ -33,6 +33,7 @@ from .serializers import (
     TypeSaveSerializer,
     TypeSerializer,
     TypeCustomSaveSerializer,
+    TypeEditorSaveSerializer
 )
 from services.logging.Handlers import KafkaLogger 
 logger = KafkaLogger()
@@ -52,7 +53,7 @@ class TypeEditorSaveView(generics.CreateAPIView):
         serializer = TypeEditorSaveSerializer(data = request)
         serializer.is_valid()
         serializer.save(request)
-        return Response(message,status=status.HTTP_200_OK)
+        return Response({"Message":"Successful"},status=status.HTTP_200_OK)
 
 
 class TypeAndPropertySaveView(generics.CreateAPIView):
