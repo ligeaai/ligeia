@@ -42,6 +42,17 @@ class TypeSaveView(generics.CreateAPIView):
     serializer_class = TypeSaveSerializer
     res = ResourceListSaveSerializer
     permission_classes = [permissions.AllowAny]
+    
+
+
+class TypeEditorSaveView(generics.CreateAPIView):
+    permission_classes = [permissions.AllowAny]
+
+    def post(self, request, *args, **kwargs):
+        serializer = TypeEditorSaveSerializer(data = request)
+        serializer.is_valid()
+        serializer.save(request)
+        return Response(message,status=status.HTTP_200_OK)
 
 
 class TypeAndPropertySaveView(generics.CreateAPIView):

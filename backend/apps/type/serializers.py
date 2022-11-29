@@ -28,6 +28,27 @@ class TypeDetailsSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class TypeEditorSaveSerializer(serializers.Serializer):
+    def save(self, validated_data):
+        qs = Type.objects.filter(TYPE = validated_data.data.get('TYPE'))
+        if qs:
+            try:
+                validate_value(validated_data.data,'TYPE',validated_data)
+                qs.update(**validated_data.data)
+                logger.info("Type  object successfully updated",request= request)
+            except Exception as e:
+                raise ValidationError(e)
+        else: 
+            try:
+                validate_model_not_null(validated_data,"TYPE",request)
+                validated_data["VERSION"] = uuid.uuid4().hex
+                types = Type.objects.create(**validated_data.data)
+                types.save()
+                logger.info("Type  object successfully created",request= request)
+                return types
+            except Exception as e:
+                raise ValidationError(e)
+
 class TypeResourceListManagerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Type

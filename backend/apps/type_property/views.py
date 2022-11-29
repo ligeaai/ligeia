@@ -7,7 +7,7 @@ from services.parsers.addData.type import typeAddData
 
 # Create your views here.
 from .models import type_property
-from .serializers import TypePropertyDetailsSerializer, TypePropertySaveSerializer
+from .serializers import TypePropertyDetailsSerializer, TypePropertySaveSerializer,TypePropertySaveUpdateSerializer
 
 
 class TypePropertySaveView(generics.CreateAPIView):
@@ -24,7 +24,7 @@ class TypePropertyView(generics.ListAPIView):
     def get(self, request, *args, **kwargs):
 
         typeAddData.import_data("TYPE_PROPERTY")
-        return Response({"Message": "succsesful"}, status=status.HTTP_200_OK)
+        return Response({"Message": "Succsesful"}, status=status.HTTP_200_OK)
 
 
 class TypePropertyDetailView(generics.CreateAPIView):
@@ -38,17 +38,17 @@ class TypePropertyDetailView(generics.CreateAPIView):
         serializer = TypePropertyDetailsSerializer(queryset, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
+class TypePropertyEditorSaveView(generics.CreateAPIView):
 
-class TypePropertyUpdateView(generics.UpdateAPIView):
-    serializer_class = TypePropertySaveSerializer
     permission_classes = [permissions.AllowAny]
 
-    def put(self, request, *args, **kwargs):
-        filter = request.data.get("FILTER")
-        data = request.data.get("ITEMS")
-        qs = type_property.objects.filter(**data).update
+    def post(self, request):
+        serializer = TypePropertySaveUpdateSerializer(request)
+        serializer.is_valid()
+        serializer.save(request)
+        
+        return Response({"Message": "Succsesful"}, status=status.HTTP_200_OK)
 
-        return Response({"Message": "Successful Update "}, status=status.HTTP_200_OK)
 
 
 class TypeDeleteeView(generics.DestroyAPIView):

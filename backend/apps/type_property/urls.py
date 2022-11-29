@@ -4,13 +4,13 @@ from django.urls.resolvers import URLPattern
 from .views import (
     TypePropertyDetailView,
     TypePropertySaveView,
-    TypePropertyUpdateView,
+    TypePropertyEditorSaveView,
     TypePropertyView,
 )
 
 urlpatterns = [
     path("save/", TypePropertySaveView.as_view(), name="PropertySave"),
-    path("save-update/", TypePropertyUpdateView.as_view(), name="PropertyUpdate"),
+    path("save-update/", TypePropertyEditorSaveView.as_view(), name="PropertyUpdate"),
     path("scripts/", TypePropertyView.as_view(), name="PropertyScript"),
     path("details/", TypePropertyDetailView.as_view(), name="PropertyDetails"),
 ]
