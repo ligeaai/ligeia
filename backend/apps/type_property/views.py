@@ -7,7 +7,7 @@ from services.parsers.addData.type import typeAddData
 
 # Create your views here.
 from .models import type_property
-from .serializers import TypePropertyDetailsSerializer, TypePropertySaveSerializer,TypePropertySaveUpdateSerializer
+from .serializers import TypePropertyDetailsSerializer, TypePropertySaveSerializer
 
 
 class TypePropertySaveView(generics.CreateAPIView):
@@ -23,8 +23,8 @@ class TypePropertyView(generics.ListAPIView):
 
     def get(self, request, *args, **kwargs):
 
-       typeAddData.import_data("TYPE_PROPERTY")
-       return Response({"Message": "succsesful"}, status=status.HTTP_200_OK)
+        typeAddData.import_data("TYPE_PROPERTY")
+        return Response({"Message": "succsesful"}, status=status.HTTP_200_OK)
 
 
 class TypePropertyDetailView(generics.CreateAPIView):
@@ -32,29 +32,30 @@ class TypePropertyDetailView(generics.CreateAPIView):
     permission_classes = [permissions.AllowAny]
 
     def post(self, request):
-        
-        queryset = type_property.objects.filter(ROW_ID=request.data.get('ROW_ID'))
+
+        queryset = type_property.objects.filter(ROW_ID=request.data.get("ROW_ID"))
         validate_find(queryset)
         serializer = TypePropertyDetailsSerializer(queryset, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
-       
 
 
-class TypePropertyUpdateView(generics.CreateAPIView):
-    serializer_class = TypePropertySaveUpdateSerializer
-    permission_classes = [permissions.AllowAny]
-
-    def post(self, request, *args, **kwargs):
-        serializer = TypePropertySaveUpdateSerializer(data = request)
-        serializer.save(request)
-        return Response({"Message": "Successful"}, status=status.HTTP_200_OK)
-
-class TypeDeleteeView(generics.CreateAPIView):
+class TypePropertyUpdateView(generics.UpdateAPIView):
     serializer_class = TypePropertySaveSerializer
     permission_classes = [permissions.AllowAny]
 
-    def post(self, request, *args, **kwargs): 
-        qs = type_property.objects.filter(ROW_ID = request.data.get("ROW_ID"))
-        if qs:
-            qs.delete()
+    def put(self, request, *args, **kwargs):
+        filter = request.data.get("FILTER")
+        data = request.data.get("ITEMS")
+        qs = type_property.objects.filter(**data).update
+
+        return Response({"Message": "Successful Update "}, status=status.HTTP_200_OK)
+
+
+class TypeDeleteeView(generics.DestroyAPIView):
+    serializer_class = TypePropertySaveSerializer
+    permission_classes = [permissions.AllowAny]
+
+    def delete(self, request, *args, **kwargs):
+        filter = request.data.get("FILTER")
+        qs = type_property.objects.filter(**filter).delete()
         return Response({"Message": "Successful Delete "}, status=status.HTTP_200_OK)
