@@ -50,7 +50,7 @@ const PropertiesEditor = () => {
             <LinkSelect />
           </Grid> */}
           <Grid container>
-            <Grid item xs={12} sx={{ fontWeight: "bold" }}>
+            <Grid item xs={12} sx={{ fontWeight: "bold", mb: 0.5 }}>
               Tag Link
             </Grid>
             <Grid item xs={12} md={6}>
@@ -72,14 +72,20 @@ const PropertiesEditor = () => {
           </Grid>
         </Grid>
         <Grid item xs={12} className={classes.box}>
-          {/* <Grid container>
-            <LinkSelect />
-          </Grid> */}
           <Grid container>
-            <Grid item xs={12} sx={{ fontWeight: "bold" }}>
+            <Grid item xs={12} sx={{ fontWeight: "bold", mb: 0.5 }}>
               Tag Information
             </Grid>
-
+            <Grid item xs={12} key={"startdatetime"}>
+              <Grid container className={classes.selectBox}>
+                <Grid item className={classes.label}>
+                  {tagValues.TAG_INFORMATIONS[0].SHORT_LABEL}
+                </Grid>
+                <Grid item className={classes.field}>
+                  <TextFields row={tagValues.TAG_INFORMATIONS[0]} />
+                </Grid>
+              </Grid>
+            </Grid>
             {Object.keys(tagValues.TAG_INFORMATIONS).map((e, key) => {
               if (
                 tagValues.TAG_INFORMATIONS[e].PROPERTY_TYPE !== "GUID" &&
@@ -95,7 +101,8 @@ const PropertiesEditor = () => {
                 tagValues.TAG_INFORMATIONS[e].PROPERTY_NAME !==
                   "FULL_INTERVAL" &&
                 tagValues.TAG_INFORMATIONS[e].PROPERTY_NAME !== "ACCESS" &&
-                tagValues.TAG_INFORMATIONS[e].PROPERTY_NAME !== "DESCRIPTION"
+                tagValues.TAG_INFORMATIONS[e].PROPERTY_NAME !== "DESCRIPTION" &&
+                tagValues.TAG_INFORMATIONS[e].PROPERTY_NAME !== "START_DATETIME"
               ) {
                 return (
                   <Grid item xs={12} md={6} key={key}>

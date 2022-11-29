@@ -23,8 +23,10 @@ const MaterialUIPickers = ({
       <DatePicker
         value={date}
         onChange={(newValue) => {
-          setDate(newValue.$d);
-          onChangeFunc(newValue.$d);
+          try {
+            setDate(newValue.$d);
+            onChangeFunc(newValue.$d);
+          } catch {}
         }}
         components={{
           OpenPickerIcon: CalendarTodayIcon,

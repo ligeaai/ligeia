@@ -75,7 +75,7 @@ export default function TreeDataWithGap() {
             "& .super-app-theme--cell": {
               backgroundColor: grey[200],
             },
-
+            "& .MuiDataGrid-cellContent": { fontSize: "12px" },
             "& .MuiDataGrid-virtualScrollerRenderZone": {
               "&>*:nth-of-type(1)": {
                 "&>*:nth-of-type(1)": {

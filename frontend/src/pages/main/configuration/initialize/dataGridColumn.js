@@ -18,7 +18,7 @@ function renderEditcell(params) {
         //         tooltip: { sx: { backgroundColor: "primary.dark", position: "relative" } },
         //     }}
         // >
-        <GridEditInputCell {...params} placeholder="Mandatory" sx={{ padding: "0px important" }} />
+        <GridEditInputCell {...params} placeholder="Mandatory" sx={{ padding: "0px important", fontSize: "12px" }} />
         // </Tooltip>
     )
 }
