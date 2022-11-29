@@ -77,12 +77,16 @@ const PropertiesEditor = () => {
               Tag Information
             </Grid>
             <Grid item xs={12} key={"startdatetime"}>
-              <Grid container className={classes.selectBox}>
-                <Grid item className={classes.label}>
-                  {tagValues.TAG_INFORMATIONS[0].SHORT_LABEL}
-                </Grid>
-                <Grid item className={classes.field}>
-                  <TextFields row={tagValues.TAG_INFORMATIONS[0]} />
+              <Grid container>
+                <Grid item xs={6}>
+                  <Grid container className={classes.selectBox}>
+                    <Grid item className={classes.label}>
+                      {tagValues.TAG_INFORMATIONS[0].SHORT_LABEL}
+                    </Grid>
+                    <Grid item className={classes.field}>
+                      <TextFields row={tagValues.TAG_INFORMATIONS[0]} />
+                    </Grid>
+                  </Grid>
                 </Grid>
               </Grid>
             </Grid>

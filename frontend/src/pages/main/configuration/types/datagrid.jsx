@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { Box } from "@mui/material";
 import { DataGridPro } from "@mui/x-data-grid-pro";
 import { grey } from "@mui/material/colors";
+import { Stack, Paper, Typography, Grid } from "@mui/material";
 
 import LinearProgress from "@mui/material/LinearProgress";
 
@@ -10,35 +11,68 @@ import { CustomToolbar } from "./datagridActionMenu";
 
 import { CustomNoRowsOverlay } from "../../../../components";
 import { columns } from "./column";
-import { onChangeCell } from "../../../../services/actions/type/datagrid";
+import { propColumns } from "./propColumn";
+import { onChangeTypeCell } from "../../../../services/actions/type/datagrid";
 
-const getTreeDataPath = (row) => row.HIERARCHY;
-
-const groupingColDef = {
-  headerName: "",
-  hideDescendantCount: true,
-  valueFormatter: () => "",
-  width: 50,
-  // minWidth: 0,
-
-  resizable: false,
-};
+function DetailPanelContent() {
+  const dispatch = useDispatch();
+  const onCellEditCommit = React.useMemo(
+    () => (cellData) => {
+      const { id, field, value } = cellData;
+      dispatch(onChangeTypeCell(id, field, value));
+    },
+    []
+  );
+  return (
+    <Stack
+      sx={{ py: 2, height: "100%", boxSizing: "border-box" }}
+      direction="column"
+    >
+      <Paper sx={{ flex: 1, mx: "auto", width: "90%", p: 1 }}>
+        <Stack direction="column" spacing={1} sx={{ height: 1 }}>
+          <DataGridPro
+            localeText={{
+              toolbarColumns: "",
+              toolbarFilters: "",
+              toolbarDensity: "",
+              toolbarExport: "",
+            }}
+            density="compact"
+            defaultGroupingExpansionDepth={1}
+            onCellEditCommit={onCellEditCommit}
+            checkboxSelection={true}
+            disableSelectionOnClick={true}
+            components={{
+              Toolbar: CustomToolbar,
+              NoRowsOverlay: CustomNoRowsOverlay,
+              LoadingOverlay: LinearProgress,
+            }}
+            columns={propColumns}
+            rows={[]}
+            sx={{ flex: 1 }}
+            hideFooter
+          />
+        </Stack>
+      </Paper>
+    </Stack>
+  );
+}
 
 export default function TreeDataWithGap() {
   const dispatch = useDispatch();
   const rows = useSelector((state) => state.dataGridType.rows);
 
-  const selectedParent = useSelector(
-    (state) => state.treeviewCodelist.selectedItem.ROW_ID
-  );
   const onCellEditCommit = React.useMemo(
     () => (cellData) => {
       const { id, field, value } = cellData;
-      dispatch(onChangeCell(id, field, value));
+      dispatch(onChangeTypeCell(id, field, value));
     },
     []
   );
-
+  const getDetailPanelContent = React.useCallback(
+    ({ row }) => <DetailPanelContent row={row} />,
+    []
+  );
   //   const [sortModel, setSortModel] = React.useState([
   //     {
   //       field: "CODE",
@@ -76,15 +110,15 @@ export default function TreeDataWithGap() {
               backgroundColor: grey[200],
             },
 
-            "& .MuiDataGrid-virtualScrollerRenderZone": {
-              "&>*:nth-of-type(1)": {
-                "&>*:nth-of-type(1)": {
-                  svg: {
-                    display: "none",
-                  },
-                },
-              },
-            },
+            // "& .MuiDataGrid-virtualScrollerRenderZone": {
+            //   "&>*:nth-of-type(1)": {
+            //     "&>*:nth-of-type(1)": {
+            //       svg: {
+            //         display: "none",
+            //       },
+            //     },
+            //   },
+            // },
           }}
         >
           <DataGridPro
@@ -108,25 +142,26 @@ export default function TreeDataWithGap() {
             density="compact"
             defaultGroupingExpansionDepth={1}
             hideFooter={true}
-            treeData
+            // treeData
+            // getTreeDataPath={getTreeDataPath}
             onCellEditCommit={onCellEditCommit}
             rows={Object.values(rows)}
             columns={columns}
-            getTreeDataPath={getTreeDataPath}
             getRowId={(row) => row.ROW_ID}
             //loading={childCodeList.loading}
             //  isRowSelectable={(rowId) => rowId.id !== selectedParent.rowId}
-            checkboxSelection={true}
+            //checkboxSelection={true}
             disableSelectionOnClick={true}
             //onSelectionModelChange={(rowId) => dispatch(setSelectedRows(rowId))}
             //sortModel={sortModel}
             //onSortModelChange={(model) => setSortModel(model)}
             components={{
-              Toolbar: CustomToolbar,
+              //Toolbar: CustomToolbar,
               NoRowsOverlay: CustomNoRowsOverlay,
               LoadingOverlay: LinearProgress,
             }}
-            groupingColDef={groupingColDef}
+            // groupingColDef={groupingColDef}
+            getDetailPanelContent={getDetailPanelContent}
             disableIgnoreModificationsIfProcessingProps
           />
         </Box>

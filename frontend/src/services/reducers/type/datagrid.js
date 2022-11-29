@@ -1,6 +1,6 @@
 import {
     SET_ROW_DATAGRID_TYPE,
-    SET_CHANGE_VALUE_CELL_TAG,
+    SET_CHANGE_TYPE_VALUE_CELL_TAG,
     AFTER_GO_INDEX_TYPE
 } from "../../actions/types"
 
@@ -8,11 +8,13 @@ import {
 const rows = []
 const initialState = {
     rows: rows,
+    propertyRows: rows,
     changedRows: [],
     deletedRows: [],
     selectedRows: [],
     newChildRows: [],
-    anyChanges: false
+    anyChangesType: false,
+    anyChangesProperty: false
 };
 
 export default function (state = initialState, action) {
@@ -30,7 +32,7 @@ export default function (state = initialState, action) {
                 ...state,
                 rows: rows
             }
-        case SET_CHANGE_VALUE_CELL_TAG:
+        case SET_CHANGE_TYPE_VALUE_CELL_TAG:
             return {
                 ...state,
                 rows: {
@@ -38,11 +40,11 @@ export default function (state = initialState, action) {
                         ...state.rows[payload.id], [payload.field]: payload.value
                     }
                 },
-                changedRows: {
-                    ...state.changedRows, [payload.id]: {
-                        ...state.changedRows[payload.id], [payload.field]: payload.value
-                    }
-                },
+                // changedRows: {
+                //     ...state.changedRows, [payload.id]: {
+                //         ...state.changedRows[payload.id], [payload.field]: payload.value
+                //     }
+                // },
                 anyChanges: true
             }
         case AFTER_GO_INDEX_TYPE:
@@ -52,7 +54,8 @@ export default function (state = initialState, action) {
                 deletedRows: [],
                 selectedRows: [],
                 newChildRows: [],
-                anyChanges: false
+                anyChanges: false,
+                anyChangesProperty: false
             }
         default:
             return {

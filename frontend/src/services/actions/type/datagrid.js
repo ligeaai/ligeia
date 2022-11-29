@@ -1,7 +1,7 @@
 import { uuidv4 } from "../../utils/uuidGenerator"
 import {
     SET_ROW_DATAGRID_TYPE,
-    SET_CHANGE_VALUE_CELL_TAG
+    SET_CHANGE_TYPE_VALUE_CELL_TAG
 } from "../types"
 
 import { selectType } from "./treeview"
@@ -43,9 +43,9 @@ export const addNewType = () => dispatch => {
 }
 
 
-export const onChangeCell = (id, field, value) => dispatch => {
+export const onChangeTypeCell = (id, field, value) => dispatch => {
     dispatch({
-        type: SET_CHANGE_VALUE_CELL_TAG,
+        type: SET_CHANGE_TYPE_VALUE_CELL_TAG,
         payload: { id: id, field: field, value: value }
     })
 }

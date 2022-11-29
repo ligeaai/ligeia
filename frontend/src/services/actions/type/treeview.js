@@ -59,19 +59,19 @@ const _goIndex = (index) => async (dispatch, getState) => {
         })
         myHistoryPush(3, treeItem.TYPE.toLowerCase())
         const selectedItem = getState().treeviewType.selectedItem
-        var aa = []
+        var type = []
         Object.keys(selectedItem).map(e => {
             if (selectedItem[e]) {
-                aa[e] = selectedItem[e]
+                type[e] = selectedItem[e]
             }
             else {
-                aa[e] = ""
+                type[e] = ""
             }
         })
-        aa["HIERARCHY"] = ["deneme"]
+        type["HIERARCHY"] = [type.ROW_ID]
         dispatch({
             type: SET_ROW_DATAGRID_TYPE,
-            payload: [{ ...aa }]
+            payload: [{ ...type }]
         })
     }
     dispatch({
@@ -91,8 +91,8 @@ const _saveAndGoToIndex = (index) => (dispatch, getState) => {
 
 export const selectType = (index) => async (dispatch, getState) => {
     const anyChanges = getState().dataGridType.anyChanges
-
-    if (anyChanges) {
+    const anyChangesProperty = getState().dataGridType.anyChangesProperty
+    if (anyChanges || anyChangesProperty) {
         dispatch(
             setConfirmation({
                 title: "Are you sure you want to save this?",
