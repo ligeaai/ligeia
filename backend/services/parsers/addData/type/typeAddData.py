@@ -18,7 +18,7 @@ def import_data(data):
         "ITEM": "item",
         "LAYER": "layer",
     }
-    base_url = "http://34.70.46.54:8000/api/v1/" + urlDict.get(data) + "/save/"
+    base_url = "http://34.125.220.112:8000/api/v1/" + urlDict.get(data) + "/save/"
     _create_method(base_url, data)
 
 
@@ -38,7 +38,7 @@ def _create_method(url, data):
         except Exception as e:
             print("except", e)
         for keys, value in data.items():
-            
+
             if value == "None":
                 data[keys] = None
             if type(value) == type(bool(True)):
@@ -48,4 +48,3 @@ def _create_method(url, data):
                 data[keys] = int(value)
 
         requests.post(url, json.dumps(data), headers=headers)
-

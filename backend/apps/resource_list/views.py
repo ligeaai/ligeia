@@ -6,28 +6,29 @@ import uuid
 from rest_framework import status
 from .serializers import ResourceListDetailsSerializer, ResourceListSaveSerializer
 from apps.type.models import type as Type
-from apps.type.serializers import TypeResourceListManagerSerializer,TypeDetailsSerializer
+from apps.type.serializers import (
+    TypeResourceListManagerSerializer,
+    TypeDetailsSerializer,
+)
+
 # Create your views here.
 from .models import resource_list
 from apps.type_link.models import type_link
 from apps.type_link.serializers import TypeLinkDetails2Serializer
 from services.parsers.addData.type import typeAddData
-from utils.models_utils import (
-                                validate_model_not_null,
-                                validate_find
-                                )
+from utils.models_utils import validate_model_not_null, validate_find
+
 
 class ResourceListSaveView(generics.CreateAPIView):
 
     permission_classes = [permissions.AllowAny]
+
     def post(self, request, *args, **kwargs):
-        validate_model_not_null(request.data,"resource_list",request)
-        serializer = ResourceListSaveSerializer(data = request.data)
+        validate_model_not_null(request.data, "resource_list", request)
+        serializer = ResourceListSaveSerializer(data=request.data)
         serializer.is_valid()
         serializer.create(request.data)
         return Response({"Message": "successful"}, status=status.HTTP_200_OK)
-
-
 
 
 class ResourceListView(generics.ListAPIView):
@@ -38,26 +39,25 @@ class ResourceListView(generics.ListAPIView):
     def get(self, request, *args, **kwargs):
 
         typeAddData.import_data("RESOURCE_LIST")
-        qs = type_link.objects.all().distinct('TYPE')
-        serializer = TypeLinkDetails2Serializer(qs,many = True)
+        qs = type_link.objects.all().distinct("TYPE")
+        serializer = TypeLinkDetails2Serializer(qs, many=True)
         self._reFormatter(serializer.data)
         return Response({"Message": "Succsessfull"}, status=status.HTTP_200_OK)
 
-    def _reFormatter(self,data):
-        for index in range(0,len(data)):
+    def _reFormatter(self, data):
+        for index in range(0, len(data)):
             tempt = ""
-            tempt = data[index].get('TYPE')
-            tempt = str(tempt).replace('_'," ")
+            tempt = data[index].get("TYPE")
+            tempt = str(tempt).replace("_", " ")
             tempt = tempt.title()
-            data[index]['SHORT_LABEL'] = tempt
+            data[index]["SHORT_LABEL"] = tempt
             new_dict = {
-                "CULTURE":'en-US',
-                "ID":data[index].get('TYPE'),
-                "SHORT_LABEL" : tempt,
-                "MOBILE_LABEL" : tempt,
-                "LAYER_NAME" : "OG_STD",
-                "ROW_ID":uuid.uuid4().hex
-
+                "CULTURE": "en-US",
+                "ID": data[index].get("TYPE"),
+                "SHORT_LABEL": tempt,
+                "MOBILE_LABEL": tempt,
+                "LAYER_NAME": "OG_STD",
+                "ROW_ID": uuid.uuid4().hex,
             }
             rs_list = resource_list.objects.create(**new_dict)
             rs_list.save()
@@ -65,79 +65,100 @@ class ResourceListView(generics.ListAPIView):
 
 class ResourceListDrawerMenutView(generics.CreateAPIView):
     permission_classes = [permissions.AllowAny]
-    
+
     def post(self, request, *args, **kwargs):
-        culture = request.data.get('CULTURE')
-        queryset = resource_list.objects.filter(ID = 'drawerMenu',CULTURE = culture,HIDDEN = False).order_by('SORT_ORDER')
+        culture = request.data.get("CULTURE")
+        queryset = resource_list.objects.filter(
+            ID="drawerMenu", CULTURE=culture, HIDDEN=False
+        ).order_by("SORT_ORDER")
         print(queryset)
-        validate_find(queryset,request)
-        serializer = ResourceListDetailsSerializer(queryset,many = True)
+        validate_find(queryset, request)
+        serializer = ResourceListDetailsSerializer(queryset, many=True)
         new_dict = dict()
-        self._getchild(serializer.data,new_dict,0,culture)
+        self._getchild(serializer.data, new_dict, 0, culture)
         return Response(new_dict, status=status.HTTP_200_OK)
-    
-    def _getchild(self,data,new_dict,sart,culture):
+
+    def _getchild(self, data, new_dict, sart, culture):
         for item in data:
-            queryset = resource_list.objects.filter(ID = item.get('PARENT'),CULTURE = culture,HIDDEN = False)
-            serializer = ResourceListDetailsSerializer(queryset,many = True)
+            queryset = resource_list.objects.filter(
+                ID=item.get("PARENT"), CULTURE=culture, HIDDEN=False
+            )
+            serializer = ResourceListDetailsSerializer(queryset, many=True)
             if queryset:
-                tempt= {}
-                print(item.get('PARENT'))
+                tempt = {}
+                print(item.get("PARENT"))
                 for value in serializer.data:
-                    layer = value.get('PARENT')
-                    if  str(layer).split('.')[0] == 'TYPE':
+                    layer = value.get("PARENT")
+                    if str(layer).split(".")[0] == "TYPE":
                         try:
                             serializer.data.remove(value)
                         except:
                             pass
-                        types = layer.split('.')[1]
+                        types = layer.split(".")[1]
                         # print(types)
-                        if types == 'OG_STD':
-                            queryset = Type.objects.filter(LAYER_NAME = types)
+                        if types == "OG_STD":
+                            queryset = Type.objects.filter(LAYER_NAME=types)
                         else:
-                            queryset = Type.objects.filter(LABEL_ID = layer)
-                        serializer = TypeResourceListManagerSerializer(queryset,many = True)
-                        self._getResourceLabel(serializer.data,tempt,value.get('CULTURE'),types)
-                        
-                    else:
-                        tempt[value.get('SHORT_LABEL')] = value
-                item['Items'] = tempt
-                
-            if sart == 0:
-                new_dict[item.get('SHORT_LABEL')] = item
-            self._getchild(serializer.data,new_dict,1,culture)
+                            queryset = Type.objects.filter(LABEL_ID=layer)
+                        serializer = TypeResourceListManagerSerializer(
+                            queryset, many=True
+                        )
+                        self._getResourceLabel(
+                            serializer.data, tempt, value.get("CULTURE"), types
+                        )
 
-    def _getResourceLabel(self,data,tempt,culture,types):
+                    else:
+                        tempt[value.get("SHORT_LABEL")] = value
+                item["Items"] = tempt
+
+            if sart == 0:
+                new_dict[item.get("SHORT_LABEL")] = item
+            self._getchild(serializer.data, new_dict, 1, culture)
+
+    def _getResourceLabel(self, data, tempt, culture, types):
         find_type = []
-        if types == 'OG_STD':
-            find_type = ['TYPE.COMPANY',"TYPE.ORG_UNIT1","TYPE.ORG_UNIT2","TYPE.ORG_UNIT3","TYPE.ORG_UNIT4",
-                     'TYPE.GEO_UNIT1',"TYPE.GEO_UNIT1","TYPE.GEO_UNIT2","TYPE.ORG_UNIT3"]
+        if types == "OG_STD":
+            find_type = [
+                "TYPE.COMPANY",
+                "TYPE.ORG_UNIT1",
+                "TYPE.ORG_UNIT2",
+                "TYPE.ORG_UNIT3",
+                "TYPE.ORG_UNIT4",
+                "TYPE.GEO_UNIT1",
+                "TYPE.GEO_UNIT1",
+                "TYPE.GEO_UNIT2",
+                "TYPE.ORG_UNIT3",
+            ]
         for item in data:
             try:
-                x = find_type.index(item.get('LABEL_ID'))
+                x = find_type.index(item.get("LABEL_ID"))
             except:
                 tempt2 = {}
-                queryset = resource_list.objects.filter(ID = item.get('LABEL_ID'),CULTURE = culture,HIDDEN = False)
-                serializer = ResourceListDetailsSerializer(queryset,many = True)
-                
-                if item.get('LABEL_ID') == 'TYPE.ORG_UNIT2':
-                    short_label = serializer.data[0].get('SHORT_LABEL')
-                    serializer.data[0]['SHORT_LABEL'] = serializer.data[0].get('MOBILE_LABEL')
-                    serializer.data[0]['MOBILE_LABEL'] = short_label
-                if queryset:
-                    serializer.data[0]['TYPE'] = item.get('TYPE') 
-                    tempt[serializer.data[0].get('SHORT_LABEL')] = serializer.data[0]
-    
-        
+                queryset = resource_list.objects.filter(
+                    ID=item.get("LABEL_ID"), CULTURE=culture, HIDDEN=False
+                )
+                serializer = ResourceListDetailsSerializer(queryset, many=True)
+                serializer.data[0]["TYPE"] = item.get("TYPE")
+                if item.get("LABEL_ID") == "TYPE.ORG_UNIT2":
+                    short_label = serializer.data[0].get("SHORT_LABEL")
+                    serializer.data[0]["SHORT_LABEL"] = serializer.data[0].get(
+                        "MOBILE_LABEL"
+                    )
+                    serializer.data[0]["MOBILE_LABEL"] = short_label
+
+                tempt[serializer.data[0].get("SHORT_LABEL")] = serializer.data[0]
 
 
 class ResourceListDetailView(generics.CreateAPIView):
 
     authentication_classes = []
     permission_classes = []
-    
+
     def post(self, request):
-        queryset = resource_list.objects.filter(ROW_ID = request.data.get("ROW_ID"))
-        validate_find(queryset,request)
-        serializer = ResourceListDetailsSerializer(queryset,many = True)
-        return Response({"Message": "successful","BODY":serializer.data}, status=status.HTTP_200_OK)
+        queryset = resource_list.objects.filter(ROW_ID=request.data.get("ROW_ID"))
+        validate_find(queryset, request)
+        serializer = ResourceListDetailsSerializer(queryset, many=True)
+        return Response(
+            {"Message": "successful", "BODY": serializer.data},
+            status=status.HTTP_200_OK,
+        )

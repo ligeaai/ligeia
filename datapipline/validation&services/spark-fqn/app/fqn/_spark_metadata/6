@@ -1,3 +1,0 @@
-v1
-{"path":"file:///app/datapipline/validation&services/spark-fqn/app/fqn/part-00000-9510f0ca-4630-4743-8591-818c82dc4933-c000.json","size":277,"isDir":false,"modificationTime":1669511462000,"blockReplication":1,"blockSize":33554432,"action":"add"}
-{"path":"file:///app/datapipline/validation&services/spark-fqn/app/fqn/part-00000-d81a9183-c476-4c43-aba6-9a060ae29659-c001.json","size":278,"isDir":false,"modificationTime":1669511462000,"blockReplication":1,"blockSize":33554432,"action":"add"}
