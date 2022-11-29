@@ -1,3 +1,4 @@
+
 import uuid
 
 from rest_framework import serializers
@@ -39,6 +40,26 @@ class TypePropertySerializer(serializers.ModelSerializer):
             "ROW_ID",
         ]
 
+class TypePropertySaveUpdateSerializer(serializers.Serializer):
+    def save(self, validated_data):
+        qs = type_property.objects.filter(ROW_ID = validated_data.data.get('ROW_ID'))
+        if qs:
+            try:
+                validate_value(validated_data.data,'TYPE_PROPERTY',validated_data)
+                qs.update(**validated_data.data)
+                logger.info("Type Property object successfully updated",request= request)
+            except Exception as e:
+                raise ValidationError(e)
+        else: 
+            try:
+                validate_model_not_null(validated_data,"TYPE_PROPERTY",request)
+                validated_data["VERSION"] = uuid.uuid4().hex
+                typeProperty = type_property.objects.create(**validated_data.data)
+                typeProperty.save()
+                logger.info("Type Property object successfully created",request= request)
+                return typeProperty
+            except Exception as e:
+                raise ValidationError(e)
 
 class TypePropertyCustomSaveSerializer(serializers.Serializer):
     def save(self, validated_data):

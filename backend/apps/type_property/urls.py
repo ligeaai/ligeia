@@ -10,7 +10,8 @@ from .views import (
 
 urlpatterns = [
     path("save/", TypePropertySaveView.as_view(), name="PropertySave"),
-    path("update/", TypePropertyUpdateView.as_view(), name="PropertyUpdate"),
+    path("save-update/", TypePropertyUpdateView.as_view(), name="PropertyUpdate"),
     path("scripts/", TypePropertyView.as_view(), name="PropertyScript"),
     path("details/", TypePropertyDetailView.as_view(), name="PropertyDetails"),
 ]
+
