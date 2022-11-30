@@ -221,7 +221,7 @@ export const saveTypeAndProperty = () => async (dispatch, getState) => {
         var saveVal = getState().dataGridType.rows[Object.keys(getState().dataGridType.rows)[0]]
         var mySaveVal = {}
         Object.keys(saveVal).map(e => {
-            if (saveVal[e] !== "" && e !== "HIERARCHY") {
+            if (saveVal[e] !== "" && e !== "HIERARCHY" && e !== "selectedIndex") {
                 mySaveVal[e] = saveVal[e]
             }
         })
