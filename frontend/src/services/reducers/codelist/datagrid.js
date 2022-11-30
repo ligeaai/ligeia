@@ -43,13 +43,11 @@ export default function (state = initialState, action) {
                 newChildRows: [...state.newChildRows, payload]
             }
         case REFRESH_ROWS_CODELIST:
-            console.log(payload);
             return {
                 ...state,
                 rows: payload
             }
         case REFRESH_DELETECHILD_CODELIST:
-            console.log(payload);
             return {
                 ...state,
                 changedRows: payload.changedNew,

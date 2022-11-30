@@ -13,6 +13,11 @@ import {
 import AddBoxIcon from "@mui/icons-material/AddBox";
 import DeleteIcon from "@mui/icons-material/Delete";
 
+import {
+  deleteProperty,
+  addNewProperty,
+} from "../../../../services/actions/type/datagrid";
+
 export const CustomToolbar = () => {
   const dispatch = useDispatch();
 
@@ -29,7 +34,11 @@ export const CustomToolbar = () => {
               tooltip: { sx: { backgroundColor: "primary.dark" } },
             }}
           >
-            <IconButton onClick={() => {}}>
+            <IconButton
+              onClick={() => {
+                dispatch(addNewProperty());
+              }}
+            >
               <AddBoxIcon fontSize="small" sx={{ color: "#4B4B4B" }} />
             </IconButton>
           </Tooltip>
@@ -40,7 +49,11 @@ export const CustomToolbar = () => {
               tooltip: { sx: { backgroundColor: "primary.dark" } },
             }}
           >
-            <IconButton onClick={() => {}}>
+            <IconButton
+              onClick={() => {
+                dispatch(deleteProperty());
+              }}
+            >
               <DeleteIcon fontSize="small" sx={{ color: "#4B4B4B" }} />
             </IconButton>
           </Tooltip>

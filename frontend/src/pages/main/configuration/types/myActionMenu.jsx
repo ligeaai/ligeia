@@ -2,7 +2,11 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ActionMenu } from "../../../../components";
 
-import { addNewType } from "../../../../services/actions/type/datagrid";
+import {
+  addNewType,
+  saveTypeFunc,
+  deleteType,
+} from "../../../../services/actions/type/datagrid";
 import { selectType } from "../../../../services/actions/type/treeview";
 const CodelistActionMenu = () => {
   const selectedIndex = useSelector(
@@ -18,13 +22,20 @@ const CodelistActionMenu = () => {
   const saveGoNext = () => {
     dispatch(selectType(selectedIndex + 1));
   };
+  const save = () => {
+    dispatch(saveTypeFunc());
+  };
+
+  const btnDelete = () => {
+    dispatch(deleteType());
+  };
   return (
     <ActionMenu
       //   dublicateIsActive={false}
       //   infoIsActive={false}
       btnNew={btnNew}
-      //   save={save}
-      //   btnDelete={btnDelete}
+      save={save}
+      btnDelete={btnDelete}
       saveGoPrev={saveGoPrev}
       saveGoNext={saveGoNext}
     />

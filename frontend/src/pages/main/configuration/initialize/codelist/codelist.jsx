@@ -109,13 +109,24 @@ const CodeList = ({ isHome }) => {
                 backgroundColor: "#4B4B4B",
               }}
             />
-            <Grid item sx={{ ml: 1 }}>
+            <Grid item sx={{ mx: 1 }}>
               <Select
                 values={layerValues}
                 defaultValue={filteredLayerName}
                 handleChangeFunc={selectHandleChangeFunc}
               />
             </Grid>
+            <Divider
+              orientation="vertical"
+              variant="middle"
+              flexItem
+              sx={{
+                marginX: "2px",
+                borderWidth: "0.2px",
+                borderColor: "#4B4B4B",
+                backgroundColor: "#4B4B4B",
+              }}
+            />
           </Grid>
 
           <ItemSperatorLineXL />

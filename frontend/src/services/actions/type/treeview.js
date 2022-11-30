@@ -4,7 +4,9 @@ import {
     LAOD_TREEVIEW_TYPE,
     SELECT_TREEVIEW_ITEM_TYPE,
     AFTER_GO_INDEX_TYPE,
-    SET_ROW_DATAGRID_TYPE
+    SET_ROW_DATAGRID_TYPE,
+    LOAD_FILTERED_TREEVIEW_ITEM_TYPE,
+    SET_FILTERED_LAYER_NAME_TYPE
 } from "../types"
 
 import {
@@ -12,9 +14,33 @@ import {
     setExtraBtn,
 } from "../../reducers/confirmation";
 import { myHistoryPush } from "../../utils/historyPush";
-
+import { fillPropertyTable, saveTypeAndProperty } from "./datagrid"
 import history from "../../../routers/history";
 
+export const loadFilteredTreeviewItem = () => async (dispatch, getState) => {
+    const treeMenuItem = getState().treeviewType.treeMenuItem
+    const filteredLayerName = getState().treeviewType.filteredLayerName
+    if (filteredLayerName !== "NONE") {
+        var filteredResponse = treeMenuItem.filter(a => a.LAYER_NAME === filteredLayerName)
+        dispatch({
+            type: LOAD_FILTERED_TREEVIEW_ITEM_TYPE,
+            payload: filteredResponse
+        })
+    } else {
+        dispatch({
+            type: LOAD_FILTERED_TREEVIEW_ITEM_TYPE,
+            payload: treeMenuItem
+        })
+    }
+}
+export const setFilteredLayerName = (layerName = "NONE") => dispatch => {
+    dispatch({
+        type: SET_FILTERED_LAYER_NAME_TYPE,
+        payload: layerName
+    })
+
+    dispatch(loadFilteredTreeviewItem())
+}
 export const loadTreeView = () => async (dispatch, getState) => {
     const CULTURE = getState().lang.lang
     const body = JSON.stringify({ CULTURE })
@@ -27,17 +53,17 @@ export const loadTreeView = () => async (dispatch, getState) => {
             type: LAOD_TREEVIEW_TYPE,
             payload: sortedTreeMenu
         })
-
+        dispatch(loadFilteredTreeviewItem())
         return Promise.resolve(res.data);
     } catch (err) {
         return Promise.reject(err);
     }
 }
-const _checkmandatoryFields = () => {
+export const checkmandatoryFields = () => {
     return true
 }
 
-const _goIndex = (index) => async (dispatch, getState) => {
+export const _goIndex = (index) => async (dispatch, getState) => {
     if (index === -2) {
         dispatch({
             type: SELECT_TREEVIEW_ITEM_TYPE,
@@ -68,11 +94,11 @@ const _goIndex = (index) => async (dispatch, getState) => {
                 type[e] = ""
             }
         })
-        type["HIERARCHY"] = [type.ROW_ID]
         dispatch({
             type: SET_ROW_DATAGRID_TYPE,
             payload: [{ ...type }]
         })
+        dispatch(fillPropertyTable(type.TYPE))
     }
     dispatch({
         type: AFTER_GO_INDEX_TYPE,
@@ -80,25 +106,22 @@ const _goIndex = (index) => async (dispatch, getState) => {
 }
 
 const _saveAndGoToIndex = (index) => (dispatch, getState) => {
-    // const saveValues = getState().tags.saveValues
-
-    // dispatch(saveTag(saveValues))
-    //dispatch(cleanAllTags())
+    dispatch(saveTypeAndProperty())
     dispatch(loadTreeView());
     dispatch(_goIndex(index));
 
 }
 
 export const selectType = (index) => async (dispatch, getState) => {
-    const anyChanges = getState().dataGridType.anyChanges
+    const anyChangesType = getState().dataGridType.anyChangesType
     const anyChangesProperty = getState().dataGridType.anyChangesProperty
-    if (anyChanges || anyChangesProperty) {
+    if (anyChangesType || anyChangesProperty) {
         dispatch(
             setConfirmation({
                 title: "Are you sure you want to save this?",
                 body: <></>,
                 agreefunction: async () => {
-                    if (_checkmandatoryFields()) {
+                    if (checkmandatoryFields()) {
                         dispatch(_saveAndGoToIndex(index));
                     }
                     else {

@@ -3,60 +3,14 @@ import { useSelector, useDispatch } from "react-redux";
 import { Box } from "@mui/material";
 import { DataGridPro } from "@mui/x-data-grid-pro";
 import { grey } from "@mui/material/colors";
-import { Stack, Paper, Typography, Grid } from "@mui/material";
 
 import LinearProgress from "@mui/material/LinearProgress";
-
-import { CustomToolbar } from "./datagridActionMenu";
 
 import { CustomNoRowsOverlay } from "../../../../components";
 import { columns } from "./column";
 import { propColumns } from "./propColumn";
 import { onChangeTypeCell } from "../../../../services/actions/type/datagrid";
-
-function DetailPanelContent() {
-  const dispatch = useDispatch();
-  const onCellEditCommit = React.useMemo(
-    () => (cellData) => {
-      const { id, field, value } = cellData;
-      dispatch(onChangeTypeCell(id, field, value));
-    },
-    []
-  );
-  return (
-    <Stack
-      sx={{ py: 2, height: "100%", boxSizing: "border-box" }}
-      direction="column"
-    >
-      <Paper sx={{ flex: 1, mx: "auto", width: "90%", p: 1 }}>
-        <Stack direction="column" spacing={1} sx={{ height: 1 }}>
-          <DataGridPro
-            localeText={{
-              toolbarColumns: "",
-              toolbarFilters: "",
-              toolbarDensity: "",
-              toolbarExport: "",
-            }}
-            density="compact"
-            defaultGroupingExpansionDepth={1}
-            onCellEditCommit={onCellEditCommit}
-            checkboxSelection={true}
-            disableSelectionOnClick={true}
-            components={{
-              Toolbar: CustomToolbar,
-              NoRowsOverlay: CustomNoRowsOverlay,
-              LoadingOverlay: LinearProgress,
-            }}
-            columns={propColumns}
-            rows={[]}
-            sx={{ flex: 1 }}
-            hideFooter
-          />
-        </Stack>
-      </Paper>
-    </Stack>
-  );
-}
+import DetailPanelContent from "./propertyDataGrid";
 
 export default function TreeDataWithGap() {
   const dispatch = useDispatch();
@@ -109,16 +63,6 @@ export default function TreeDataWithGap() {
             "& .super-app-theme--cell": {
               backgroundColor: grey[200],
             },
-
-            // "& .MuiDataGrid-virtualScrollerRenderZone": {
-            //   "&>*:nth-of-type(1)": {
-            //     "&>*:nth-of-type(1)": {
-            //       svg: {
-            //         display: "none",
-            //       },
-            //     },
-            //   },
-            // },
           }}
         >
           <DataGridPro
@@ -149,14 +93,8 @@ export default function TreeDataWithGap() {
             columns={columns}
             getRowId={(row) => row.ROW_ID}
             //loading={childCodeList.loading}
-            //  isRowSelectable={(rowId) => rowId.id !== selectedParent.rowId}
-            //checkboxSelection={true}
             disableSelectionOnClick={true}
-            //onSelectionModelChange={(rowId) => dispatch(setSelectedRows(rowId))}
-            //sortModel={sortModel}
-            //onSortModelChange={(model) => setSortModel(model)}
             components={{
-              //Toolbar: CustomToolbar,
               NoRowsOverlay: CustomNoRowsOverlay,
               LoadingOverlay: LinearProgress,
             }}

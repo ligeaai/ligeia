@@ -1,13 +1,14 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
-import { Box, Grid } from "@mui/material";
+import { Box, Grid, Divider } from "@mui/material";
 
 import {
   Breadcrumb,
   ItemSperatorLineXL,
   ComponentError,
   PropLinkTabs,
+  Select,
 } from "../../../../components";
 import DrawerMenu from "../../../../layout/main/asset/treeViewMenu";
 
@@ -15,8 +16,34 @@ import MyActionMenu from "./myActionMenu";
 import { TreeMenuItems } from "./treeMenu";
 import DataGridPro from "./datagrid";
 
+import { setFilteredLayerName } from "../../../../services/actions/type/treeview";
+
+import { instance, config } from "../../../../services/baseApi";
+
 const CodeList = ({ isHome }) => {
+  const dispatch = useDispatch();
   const isFullScreen = useSelector((state) => state.fullScreen.isFullScreen);
+  const filteredLayerName = useSelector(
+    (state) => state.treeviewCodelist.filteredLayerName
+  );
+  const [layerValues, setLayerValues] = React.useState(["NONE"]);
+  const selectHandleChangeFunc = (params) => {
+    dispatch(setFilteredLayerName(params));
+  };
+  React.useEffect(() => {
+    const myFunc = async () => {
+      try {
+        let res = await instance.get(`/layer/layer-dropdown/`, config());
+        console.log(res);
+        var myRes = [];
+        res.data.map((e) => {
+          myRes.push(e.LAYER_NAME);
+        });
+        setLayerValues(["NONE", ...myRes]);
+      } catch {}
+    };
+    myFunc();
+  }, []);
 
   return (
     <Grid
@@ -65,6 +92,35 @@ const CodeList = ({ isHome }) => {
             <Grid item>
               <MyActionMenu />
             </Grid>
+            <Divider
+              orientation="vertical"
+              variant="middle"
+              flexItem
+              sx={{
+                marginX: "2px",
+                borderWidth: "0.2px",
+                borderColor: "#4B4B4B",
+                backgroundColor: "#4B4B4B",
+              }}
+            />
+            <Grid item sx={{ mx: 1 }}>
+              <Select
+                values={layerValues}
+                defaultValue={filteredLayerName}
+                handleChangeFunc={selectHandleChangeFunc}
+              />
+            </Grid>
+            <Divider
+              orientation="vertical"
+              variant="middle"
+              flexItem
+              sx={{
+                marginX: "2px",
+                borderWidth: "0.2px",
+                borderColor: "#4B4B4B",
+                backgroundColor: "#4B4B4B",
+              }}
+            />
           </Grid>
 
           <ItemSperatorLineXL />

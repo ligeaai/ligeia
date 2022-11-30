@@ -8,7 +8,7 @@ import {
 } from "../../../../services/actions/type/treeview";
 export const TreeMenuItems = () => {
   const dispatch = useDispatch();
-  const treeItems = useSelector((state) => state.treeviewType.treeMenuItem);
+  const treeItems = useSelector((state) => state.treeviewType.filteredMenuItem);
   const selectedIndex = useSelector(
     (state) => state.treeviewType.selectedItem.selectedIndex
   );

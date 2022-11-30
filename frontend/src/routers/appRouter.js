@@ -51,8 +51,8 @@ const AppRouter1 = () => {
             <Route path="/administration" element={<Administration />} />
             <Route exact path="/configuration" element={<Configuration />} />
             <Route exact path="/configuration/:myKey" element={<MyNavigator />} />
-            <Route exact path="/configuration/tools/tags" element={<Tags isHome={true} />} />
-            <Route exact path="/configuration/tools/tags/:tags" element={<Tags isHome={false} />} />
+            <Route exact path="/configuration/tags/tag_manager" element={<Tags isHome={true} />} />
+            <Route exact path="/configuration/tags/tag_manager/:tags" element={<Tags isHome={false} />} />
             <Route exact path="/configuration/tools/types" element={<Types isHome={true} />} />
             <Route exact path="/configuration/tools/types/:tags" element={<Types isHome={false} />} />
             <Route exact path="/configuration/tools/project" element={<Project isHome={true} />} />
