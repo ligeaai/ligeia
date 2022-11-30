@@ -12,7 +12,7 @@ import LanguageIcon from "@mui/icons-material/Language";
 import MenuOpenOutlinedIcon from "@mui/icons-material/MenuOpenOutlined";
 
 import { changeTheme } from "../../services/actions/theme";
-import { changeLanguage } from "../../services/actions/language";
+import { changeLanguage, changeLangs } from "../../services/actions/language";
 import { toggleDrawerMenu } from "../../services/actions/drawerMenu/drawerMenu";
 import { SearchBarMobile, SearchBar } from "../../components";
 import NestedMenu from "./nestedMenu";
@@ -30,9 +30,11 @@ const Header = (props) => {
   const user = useSelector((state) => state.auth.user);
   const search = useSelector((state) => state.searchBar.isFocus);
   const theme = useSelector((state) => state.theme.theme);
-  const lang = useSelector((state) => state.lang.cultur);
+  const lang = useSelector((state) => state.lang.lang);
+  const langShort = useSelector((state) => state.lang.cultur);
   const drawerIsOpen = useSelector((state) => state.drawerMenu.isOpen);
   const [settingsMenu, setSettingsMenu] = React.useState(false);
+  const [languages, setLanguages] = React.useState(false);
   const [langItems, setLangItems] = React.useState([]);
   React.useEffect(() => {
     const myFunc = async () => {
@@ -40,8 +42,9 @@ const Header = (props) => {
         let res = await instance.get(`/code-list/culture/`, config());
         var myRes = [];
         res.data.Message.map((e) => {
-          myRes.push(e.CULTURE);
+          myRes.push(e.CODE_TEXT);
         });
+        setLanguages(res.data.Message);
         setLangItems([...myRes]);
       } catch {}
     };
@@ -57,7 +60,13 @@ const Header = (props) => {
     dispatch(changeTheme(theme));
   };
   const langSelect = (language) => {
-    dispatch(changeLanguage(language));
+    languages.map((e) => {
+      if (e.CODE_TEXT === language) {
+        console.log(e);
+        dispatch(changeLanguage(e.CULTURE));
+        dispatch(changeLangs(e.CODE_TEXT));
+      }
+    });
     setTimeout(() => {
       window.location.reload();
     }, 500);
