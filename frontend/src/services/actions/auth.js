@@ -347,10 +347,18 @@ export const myGoogleLogin = (response, path) => async (dispatch) => {
         await dispatch(setLoaderFalse())
     } catch (err) {
         dispatch({ type: GOOGLE_AUTH_FAIL })
-        dispatch({
-            type: ADD_ERROR_SUCCESS,
-            payload: err.message
-        })
+        if (path === "register") {
+            dispatch({
+                type: ADD_ERROR_SUCCESS,
+                payload: err.message
+            })
+        }
+        else {
+            dispatch({
+                type: ADD_ERROR_SUCCESS,
+                payload: "You must register first"
+            })
+        }
         dispatch(setLoaderFalse())
     }
 };
