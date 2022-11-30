@@ -43,7 +43,7 @@ class TypePropertyEditorSaveView(generics.CreateAPIView):
     permission_classes = [permissions.AllowAny]
 
     def post(self, request):
-        serializer = TypePropertySaveUpdateSerializer(request)
+        serializer = TypePropertySaveUpdateSerializer( data = request)
         serializer.is_valid()
         serializer.save(request)
         
@@ -51,11 +51,13 @@ class TypePropertyEditorSaveView(generics.CreateAPIView):
 
 
 
-class TypeDeleteeView(generics.DestroyAPIView):
+class TypeDeleteView(generics.CreateAPIView):
     serializer_class = TypePropertySaveSerializer
     permission_classes = [permissions.AllowAny]
 
-    def delete(self, request, *args, **kwargs):
-        filter = request.data.get("FILTER")
-        qs = type_property.objects.filter(**filter).delete()
+    def post(self, request, *args, **kwargs):
+       
+        qs = type_property.objects.filter(ROW_ID = request.data.get('ROW_ID'))
+        validate_find(qs,request)
+        qs.delete()
         return Response({"Message": "Successful Delete "}, status=status.HTTP_200_OK)

@@ -6,6 +6,7 @@ from .views import (
     TypePropertySaveView,
     TypePropertyEditorSaveView,
     TypePropertyView,
+    TypeDeleteView
 )
 
 urlpatterns = [
@@ -13,5 +14,6 @@ urlpatterns = [
     path("save-update/", TypePropertyEditorSaveView.as_view(), name="PropertyUpdate"),
     path("scripts/", TypePropertyView.as_view(), name="PropertyScript"),
     path("details/", TypePropertyDetailView.as_view(), name="PropertyDetails"),
+    path("delete/", TypeDeleteView.as_view(), name="PropertyDelete"),
 ]
 
