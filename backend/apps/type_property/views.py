@@ -42,8 +42,8 @@ class TypePropertyEditorSaveView(generics.CreateAPIView):
 
     permission_classes = [permissions.AllowAny]
 
-    def post(self, request):
-        serializer = TypePropertySaveUpdateSerializer( data = request)
+    def post(self, request, *args, **kwargs):
+        serializer = TypePropertySaveUpdateSerializer(data = request)
         serializer.is_valid()
         serializer.save(request)
         
