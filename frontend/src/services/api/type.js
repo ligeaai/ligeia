@@ -20,7 +20,9 @@ const deleteType = (body) => {
     return instance.post("/type/delete/", body, config());
 };
 
-
+const deleteProperty = (body) => {
+    return instance.post("/type-property/delete/", body, config());
+};
 
 
 
@@ -29,7 +31,8 @@ const TypeService = {
     getTypeAndProperty,
     createUpdateType,
     createUpdateProperty,
-    deleteType
+    deleteType,
+    deleteProperty
 };
 
 

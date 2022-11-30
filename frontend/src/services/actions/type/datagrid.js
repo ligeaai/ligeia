@@ -101,9 +101,7 @@ export const fillPropertyTable = (TYPE) => async (dispatch, getState) => {
             type: SET_PROPERTY_ROW,
             payload: res.data
         })
-        console.log(res.data);
     } catch {
-        console.log("esads");
     }
 }
 
@@ -134,7 +132,7 @@ export const deleteProperty = () => (dispatch, getState) => {
         }
     })
 
-    Object.keys(changedRows).map((e, i) => {
+    changedRows.map((e, i) => {
         var temp = true
         selectedRows.map((a) => {
             if (e === a) {
@@ -228,12 +226,7 @@ export const saveTypeAndProperty = () => async (dispatch, getState) => {
 
         const body = JSON.stringify({ ...mySaveVal, LAST_UPDT_USER: lastUpdateUser, LAST_UPDT_DATE: newdate })
         try {
-            console.log(body);
             let res = await TypeService.createUpdateType(body);
-            dispatch(loadTreeView())
-            dispatch({
-                type: AFTER_GO_INDEX_TYPE
-            })
         } catch (err) {
             return Promise.reject(err)
         }
@@ -246,7 +239,8 @@ export const saveTypeAndProperty = () => async (dispatch, getState) => {
         var changedKeys = Object.keys(changedRows)
         await Promise.all(
             Object.keys(propertyRows).map(async e => {
-                if (changedKeys.some(s => s === e)) {
+                if (changedRows.some(s => s === e)) {
+                    delete propertyRows[e]["HIEARCHY"]
                     var body = JSON.stringify({ ...propertyRows[e] })
                     try {
                         let res = await TypeService.createUpdateProperty(body);
@@ -254,8 +248,16 @@ export const saveTypeAndProperty = () => async (dispatch, getState) => {
                     catch { }
                 }
             }))
-
+        await Promise.all(
+            deletedRows.map(async e => {
+                var body = JSON.stringify({ ROW_ID: e })
+                let res = await TypeService.deleteProperty(body);
+            }))
     }
+    dispatch(loadTreeView())
+    dispatch({
+        type: AFTER_GO_INDEX_TYPE
+    })
 }
 
 export const saveTypeFunc = () => (dispatch, getState) => {

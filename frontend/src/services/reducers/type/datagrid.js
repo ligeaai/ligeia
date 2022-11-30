@@ -45,6 +45,7 @@ export default function (state = initialState, action) {
                 anyChangesProperty: true
             }
         case SET_CHANGE_PROPERTY_VALUE_CELL_TAG:
+
             return {
                 ...state,
                 propertyRows: {
@@ -52,11 +53,7 @@ export default function (state = initialState, action) {
                         ...state.propertyRows[payload.id], [payload.field]: payload.value
                     }
                 },
-                changedRows: {
-                    ...state.changedRows, [payload.id]: {
-                        ...state.changedRows[payload.id], [payload.field]: payload.value
-                    }
-                },
+                changedRows: [...new Set([...state.changedRows, payload.id])],
                 anyChangesProperty: true
             }
         case CHANGE_SELECTED_ROW_PROPERTY:

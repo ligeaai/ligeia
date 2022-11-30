@@ -34,7 +34,6 @@ const CodeList = ({ isHome }) => {
     const myFunc = async () => {
       try {
         let res = await instance.get(`/layer/layer-dropdown/`, config());
-        console.log(res);
         var myRes = [];
         res.data.map((e) => {
           myRes.push(e.LAYER_NAME);
