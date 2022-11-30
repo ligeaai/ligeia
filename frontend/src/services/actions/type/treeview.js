@@ -71,14 +71,14 @@ export const _goIndex = (index) => async (dispatch, getState) => {
         })
         myHistoryPush(3, "new")
     } else {
-        const treeLen = getState().treeviewType.treeMenuItem.length
+        const treeLen = getState().treeviewType.filteredMenuItem.length
         if (index < 0) {
             index = treeLen - 1
         }
         if (index >= treeLen) {
             index = 0
         }
-        const treeItem = getState().treeviewType.treeMenuItem[parseInt(index)]
+        const treeItem = getState().treeviewType.filteredMenuItem[parseInt(index)]
         dispatch({
             type: SELECT_TREEVIEW_ITEM_TYPE,
             payload: { ...treeItem, selectedIndex: index }
