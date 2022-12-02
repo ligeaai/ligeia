@@ -14,7 +14,7 @@ import {
   setExtraBtn,
 } from "../../../../../services/reducers/confirmation";
 import ConfirmDataGrid from "./confirmDataGrid";
-import { selectTreeViewItemCoedlist } from "../../../../../services/actions/codelist/treeview";
+import { selectTreeViewItem } from "../../../../../services/actions/treeview/treeview";
 const CodelistActionMenu = () => {
   const changedRows = useSelector(
     (state) => state.dataGridCodeList.changedRows
@@ -23,10 +23,10 @@ const CodelistActionMenu = () => {
     (state) => state.dataGridCodeList.deletedRows
   );
   const selectedIndex = useSelector(
-    (state) => state.treeviewCodelist.selectedItem.selectedIndex
+    (state) => state.treeview.selectedItem.selectedIndex
   );
   const treeMenuItemLenght = useSelector(
-    (state) => state.treeviewCodelist.filteredMenuItem.length
+    (state) => state.treeview.filteredMenuItem.length
   );
   const dispatch = useDispatch();
   const btnNew = () => {
@@ -94,7 +94,7 @@ const CodelistActionMenu = () => {
         setExtraBtn({
           extraBtnText: "Don't save go",
           extrafunction: () => {
-            dispatch(selectTreeViewItemCoedlist(selectedIndex - 1));
+            dispatch(selectTreeViewItem(selectedIndex - 1, "CODE"));
           },
         })
       );
@@ -105,7 +105,7 @@ const CodelistActionMenu = () => {
       } else if (index > treeMenuItemLenght - 1) {
         index = 0;
       }
-      dispatch(selectTreeViewItemCoedlist(index));
+      dispatch(selectTreeViewItem(index, "CODE"));
     }
   };
 
@@ -124,7 +124,7 @@ const CodelistActionMenu = () => {
         setExtraBtn({
           extraBtnText: "Don't save go",
           extrafunction: () => {
-            dispatch(selectTreeViewItemCoedlist(selectedIndex + 1));
+            dispatch(selectTreeViewItem(selectedIndex + 1, "CODE"));
           },
         })
       );
@@ -135,7 +135,7 @@ const CodelistActionMenu = () => {
       } else if (index > treeMenuItemLenght - 1) {
         index = 0;
       }
-      dispatch(selectTreeViewItemCoedlist(index));
+      dispatch(selectTreeViewItem(index, "CODE"));
     }
   };
 

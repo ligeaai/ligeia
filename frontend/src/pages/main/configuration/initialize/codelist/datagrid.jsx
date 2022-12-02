@@ -10,8 +10,16 @@ import { CustomToolbar } from "./codeListActionMenu";
 import {
   onChangeCell,
   setSelectedRows,
+  refreshDataGridCodelist,
+  saveCodeList,
 } from "../../../../../services/actions/codelist/datagrid";
 import { CustomNoRowsOverlay } from "../../../../../components";
+import {
+  setBodyConfirmation,
+  setSaveFunctonConfirmation,
+  setTitleConfirmation,
+} from "../../../../../services/actions/confirmation/historyConfirmation";
+
 const getTreeDataPath = (row) => row.HIERARCHY;
 
 const groupingColDef = {
@@ -29,7 +37,10 @@ export default function TreeDataWithGap() {
   const rows = useSelector((state) => state.dataGridCodeList.rows);
   const columns = useSelector((state) => state.dataGridCodeList.columns);
   const selectedParent = useSelector(
-    (state) => state.treeviewCodelist.selectedItem.ROW_ID
+    (state) => state.treeview.selectedItem.ROW_ID
+  );
+  const selectedIndex = useSelector(
+    (state) => state.treeview.selectedItem.selectedIndex
   );
   const onCellEditCommit = React.useMemo(
     () => (cellData) => {
@@ -39,6 +50,18 @@ export default function TreeDataWithGap() {
     []
   );
 
+  React.useEffect(() => {
+    dispatch(setSaveFunctonConfirmation(saveCodeList));
+    dispatch(
+      setTitleConfirmation("Are you sure you want to save this code list ? ")
+    );
+    dispatch(setBodyConfirmation("body"));
+  }, []);
+  React.useEffect(() => {
+    if (selectedIndex >= 0) {
+      dispatch(refreshDataGridCodelist());
+    }
+  }, [selectedIndex]);
   const [sortModel, setSortModel] = React.useState([
     {
       field: "CODE",
@@ -68,9 +91,6 @@ export default function TreeDataWithGap() {
             width: "100%",
             "& .MuiInputBase-input": {
               padding: "0px important",
-            },
-            "& .MuiDataGrid-cellContent": {
-              fontSize: "16px",
             },
             "& .super-app-theme--cell": {
               backgroundColor: grey[200],

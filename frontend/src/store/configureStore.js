@@ -22,6 +22,7 @@ import {
     companyDataGrid,
     companyCheckedList,
     confirmation,
+    historyConfirmation,
     cssUserSelect,
     dataGridCodeList,
     dataGridType,
@@ -39,6 +40,7 @@ import {
     tags,
     tagsTreeview,
     themeReducer,
+    treeview,
     treeviewCodelist,
     treeviewType,
 } from '../services/reducers'
@@ -54,6 +56,7 @@ const rootReducer = combineReducers({
     companyDataGrid: companyDataGrid,
     companyCheckedList: companyCheckedList,
     confirmation: confirmation,
+    historyConfirmation: historyConfirmation,
     cssUserSelect: cssUserSelect,
     dataGridCodeList: dataGridCodeList,
     dataGridType: dataGridType,
@@ -71,6 +74,7 @@ const rootReducer = combineReducers({
     tags: tags,
     tagsTreeview: tagsTreeview,
     theme: themeReducer,
+    treeview: treeview,
     treeviewCodelist: treeviewCodelist,
     treeviewType: treeviewType,
 })

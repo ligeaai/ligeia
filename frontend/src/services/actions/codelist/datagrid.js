@@ -5,10 +5,11 @@ import {
     CLEAN_AFTER_SAVE,
     SET_SELECTED_ROWS,
     CLEAN_SELECTED_ROWS,
-    SELECT_TREEVIEW_ITEM_CODELIST,
+    SELECT_TREEVIEW_ITEM,
     REFRESH_DELETECHILD_CODELIST,
     ADD_NEW_CHILD_CODELIST,
-    CLEAN_ALL_DATAGRID_CODELIST
+    CLEAN_ALL_DATAGRID_CODELIST,
+    SET_IS_ACTIVE_CONFIRMATION
 } from "../types"
 
 import { instance, config } from '../../baseApi';
@@ -17,18 +18,12 @@ import { loadTreeviewItemCodelist, selectTreeViewItemCoedlist } from "./treeview
 import history from "../../../routers/history";
 
 import axios from "axios";
-function _uuidv4() {
-    return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, (c) =>
-        (
-            c ^
-            (crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (c / 4)))
-        ).toString(16)
-    );
-}
+
+import { uuidv4 } from "../../utils/uuidGenerator"
 
 const _createNewParent = () => (dispatch, getState) => {
     const culture = getState().lang.cultur
-    const uuid = _uuidv4()
+    const uuid = uuidv4()
     return [
         {
             "ROW_ID": uuid.replace(/-/g, ""),
@@ -59,7 +54,7 @@ const _createNewParent = () => (dispatch, getState) => {
 export const addNewCodeListItemSchema = () => async (dispatch, getState) => {
     const payload = dispatch(_createNewParent())
     dispatch({
-        type: SELECT_TREEVIEW_ITEM_CODELIST,
+        type: SELECT_TREEVIEW_ITEM,
         payload: { ...payload[0], selectedIndex: -2 }
     });
     dispatch({
@@ -76,7 +71,7 @@ export const addNewCodeListItemSchema = () => async (dispatch, getState) => {
 }
 let cancelToken;
 export const refreshDataGridCodelist = () => async (dispatch, getState) => {
-    const ROW_ID = getState().treeviewCodelist.selectedItem.ROW_ID;
+    const ROW_ID = getState().treeview.selectedItem.ROW_ID;
     const body = JSON.stringify({ ROW_ID });
     if (cancelToken) {
         cancelToken.cancel()
@@ -90,8 +85,6 @@ export const refreshDataGridCodelist = () => async (dispatch, getState) => {
                 body,
                 { ...config(), cancelToken: cancelToken.token }
             )
-        console.log(body);
-        console.log(res);
         dispatch({
             type: LOAD_DATAGRID_ROW_CODELIST,
             payload: res.data
@@ -114,6 +107,10 @@ export const onChangeCell = (id, field, value) => async (dispatch, getState) => 
         type: ON_CHANGE_CODELIST_CELL,
         payload: { rows: rows, changedRows: changedRows.filter(onlyUnique) }
     })
+    dispatch({
+        type: SET_IS_ACTIVE_CONFIRMATION,
+        payload: true
+    })
 }
 
 const _save = (value, userEmail) => async (dispatch, getState) => {
@@ -124,8 +121,8 @@ const _save = (value, userEmail) => async (dispatch, getState) => {
         }
     })
 
-    if (value.ROW_ID !== getState().treeviewCodelist.selectedItem.ROW_ID) {
-        temp.LIST_TYPE = getState().dataGridCodeList.rows[getState().treeviewCodelist.selectedItem.ROW_ID].CODE
+    if (value.ROW_ID !== getState().treeview.selectedItem.ROW_ID) {
+        temp.LIST_TYPE = getState().dataGridCodeList.rows[getState().treeview.selectedItem.ROW_ID].CODE
     }
 
     if (value.DATE1 !== "") {
@@ -154,7 +151,7 @@ const _save = (value, userEmail) => async (dispatch, getState) => {
         temp.VAL3 = parseInt(value.VAL3)
     }
 
-    temp["HIERARCHY"] = [getState().treeviewCodelist.selectedItem.ROW_ID]
+    temp["HIERARCHY"] = [getState().treeview.selectedItem.ROW_ID]
     temp.LAST_UPDT_USER = userEmail
     const body = JSON.stringify({ ...temp })
     console.log(body);
@@ -242,8 +239,8 @@ export const saveCodeList = () => async (dispatch, getState) => {
 }
 
 export const deleteCodeList = () => async (dispatch, getState) => {
-    const ROW_ID = getState().treeviewCodelist.selectedItem.ROW_ID
-    const selectedIndex = getState().treeviewCodelist.selectedItem.selectedIndex
+    const ROW_ID = getState().treeview.selectedItem.ROW_ID
+    const selectedIndex = getState().treeview.selectedItem.selectedIndex
     const body = JSON.stringify({ ROW_ID });
     try {
         let res = await instance
@@ -262,7 +259,7 @@ export const deleteCodeList = () => async (dispatch, getState) => {
 
 export const saveAndMoveCodeList = (index) => async (dispatch, getState) => {
     if (index < 0) {
-        index = getState().item.treeviewCodelist.filteredMenuItem.length - 1
+        index = getState().item.treeview.filteredMenuItem.length - 1
     }
     else if (index > getState().item.filteredMenuItem.length - 1) {
         index = 0
@@ -275,11 +272,11 @@ export const saveAndMoveCodeList = (index) => async (dispatch, getState) => {
 
 const _createNewChild = () => (dispatch, getState) => {
     const culture = getState().lang.cultur
-    const uuid = _uuidv4()
+    const uuid = uuidv4()
     return {
 
         "ROW_ID": uuid.replace(/-/g, ""),
-        "LIST_TYPE": getState().treeviewCodelist.selectedItem.CODE,
+        "LIST_TYPE": getState().treeview.selectedItem.CODE,
         "CULTURE": culture,
         "CODE": "",
         "CODE_TEXT": "",
@@ -297,7 +294,7 @@ const _createNewChild = () => (dispatch, getState) => {
         "LAST_UPDT_USER": "",
         "LAST_UPDT_DATE": "",
         "HIERARCHY": [
-            getState().treeviewCodelist.selectedItem.ROW_ID,
+            getState().treeview.selectedItem.ROW_ID,
             uuid.replace(/-/g, "")
         ]
 

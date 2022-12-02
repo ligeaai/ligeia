@@ -13,7 +13,7 @@ import PublicRoute from "./publicRouter";
 import Start from "../pages/start/start";
 
 import Main from "../pages/main/main";
-import { Confirmation, MyNavigator, Loadable } from "../components";
+import { Confirmation, MyNavigator, Loadable, HistoryConfirmation } from "../components";
 import ErrorMessage from "../components/errorMessage/errorMessage";
 
 import { setLoaderTrue } from "../services/actions/loader";
@@ -87,6 +87,7 @@ const AppRouter = () => {
       <Box sx={{ userSelect: cssUserSelect ? "none" : "text" }}>
         <ErrorMessage Element={AppRouter1} />
         <Confirmation />
+        <HistoryConfirmation />
       </Box>
     </HistoryRouter>
   );

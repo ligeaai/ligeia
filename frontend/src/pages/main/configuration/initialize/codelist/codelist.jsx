@@ -16,16 +16,18 @@ import MyActionMenu from "./actionMenu";
 import { TreeMenuItems } from "./treeMenu";
 import DataGridPro from "./datagrid";
 import { cleanAllDataGrid } from "../../../../../services/actions/codelist/datagrid";
-import {
-  cleanTreeMenuSelect,
-  setFilteredLayerName,
-} from "../../../../../services/actions/codelist/treeview";
+import { cleanTreeMenuSelect } from "../../../../../services/actions/codelist/treeview";
+import { setFilteredLayerName } from "../../../../../services/actions/treeview/treeview";
 import { instance, config } from "../../../../../services/baseApi";
+
 const CodeList = ({ isHome }) => {
   const dispatch = useDispatch();
   const isFullScreen = useSelector((state) => state.fullScreen.isFullScreen);
   const filteredLayerName = useSelector(
     (state) => state.treeviewCodelist.filteredLayerName
+  );
+  const selectedIndex = useSelector(
+    (state) => state.treeview.selectedItem.selectedIndex
   );
   const [layerValues, setLayerValues] = React.useState(["NONE"]);
   const selectHandleChangeFunc = (params) => {
@@ -45,12 +47,18 @@ const CodeList = ({ isHome }) => {
     };
     myFunc();
   }, []);
+
   React.useEffect(() => {
     if (isHome) {
       dispatch(cleanAllDataGrid());
       dispatch(cleanTreeMenuSelect());
     }
   }, [isHome]);
+  React.useEffect(() => {
+    return () => {
+      console.log("codelist page");
+    };
+  }, [selectedIndex]);
   return (
     <Grid
       container

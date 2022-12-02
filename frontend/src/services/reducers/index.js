@@ -1,6 +1,7 @@
 import authReducer from './authReducer';
 import companyDataGrid from "./company/datagrid"
 import companyCheckedList from './company/checkedList';
+import historyConfirmation from './confirmation/historyConfirmation';
 import confirmation from './confirmation';
 import cssUserSelect from './cssUserSelect';
 import dataGridCodeList from "./codelist/datagrid"
@@ -19,11 +20,12 @@ import searchBarReducer from './searchBarReducer';
 import tags from "./tags/tags"
 import tagsTreeview from './tags/tagsTreeview';
 import themeReducer from './themeReducer';
+import treeview from './treeview/treeview';
 import treeviewCodelist from './codelist/treeview';
 import treeviewType from "./type/treeview"
 
 
 export {
-    authReducer, companyDataGrid, confirmation, companyCheckedList, cssUserSelect, dataGridCodeList, dataGridType, drawerMenu, errorReducer, project, highchart, fullScreenReducer,
-    item, langReducer, loaderReducer, linkEditor, registerFormReducer, searchBarReducer, tags, tagsTreeview, themeReducer, treeviewCodelist, treeviewType
+    authReducer, companyDataGrid, confirmation, historyConfirmation, companyCheckedList, cssUserSelect, dataGridCodeList, dataGridType, drawerMenu, errorReducer, project, highchart, fullScreenReducer,
+    item, langReducer, loaderReducer, linkEditor, registerFormReducer, searchBarReducer, tags, tagsTreeview, themeReducer, treeview, treeviewCodelist, treeviewType
 }

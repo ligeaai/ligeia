@@ -1,10 +1,14 @@
 import React from "react";
+import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import { Breadcrumbs as MUIBreadcrumbs, Typography } from "@mui/material";
 import HomeIcon from "@mui/icons-material/Home";
 import history from "../../routers/history";
 
+import { confirmationPushHistory } from "../../services/utils/historyPush";
+import { setGoFunctionConfirmation } from "../../services/actions/confirmation/historyConfirmation";
 const Breadcrumbs = () => {
+  const dispatch = useDispatch();
   var pathnames = window.location.pathname.split("/").filter((x) => x);
   const { params } = useParams(); //  important for updating breadcrumb
   return (
@@ -20,7 +24,10 @@ const Breadcrumbs = () => {
       <HomeIcon
         fontSize="small"
         sx={{ position: "relative", top: "3px", cursor: "pointer" }}
-        onClick={() => history.push("/home")}
+        onClick={() => {
+          dispatch(setGoFunctionConfirmation(() => history.push("home")));
+          dispatch(confirmationPushHistory());
+        }}
       />
 
       {pathnames.map((name, index) => {
@@ -45,7 +52,8 @@ const Breadcrumbs = () => {
           <Typography
             key={name}
             onClick={() => {
-              history.push(routeTo);
+              dispatch(setGoFunctionConfirmation(() => history.push(routeTo)));
+              dispatch(confirmationPushHistory());
             }}
             sx={{
               fontSize: "14px",

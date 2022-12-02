@@ -3,6 +3,7 @@ import MyBox from "./box/box"
 import Breadcrumb from "./breadcrumb/breadcrumb";
 import Cards from "./cardGenerator/cards";
 import CheckboxList from "./checkList/checkList";
+import HistoryConfirmation from "./confirmation/historyConfirmation"
 import MyCheckBox from "./checkbox/checkbox"
 import MyNumberTextField from "./textfield/numberTextField"
 import MyMultilineTextField from "./textfield/multilineTextField"
@@ -37,5 +38,5 @@ import { TreeMenu } from "./treeMenu/treeMenu"
 export {
     ActionMenu, Breadcrumb, Cards, CheckboxList, Confirmation, ComponentError, ComponentErrorBody, CustomNoRowsOverlay, DateBreak, DatePicker, Drawer, ErrorBoundary, ErrorMessage, Loadable,
     Loading, LoadingComponent, MyBox, MyCheckBox, MyNavigator, MyNumberTextField, MyTextField, MyMultilineTextField, PropLinkTabs, SocialButton, TimeRangePicker, TreeView, ItemSperatorLine, ItemSperatorLineXL, Items, SearchBar, SearchBarMobile, Select,
-    TreeMenu
+    TreeMenu, HistoryConfirmation
 }

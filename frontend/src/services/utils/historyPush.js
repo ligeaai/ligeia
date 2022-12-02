@@ -1,4 +1,5 @@
 import history from "../../routers/history";
+import { setIsOpenConfirmation } from "../actions/confirmation/historyConfirmation";
 export const myHistoryPush = (index, value) => {
     var pathnames = window.location.pathname.split("/").filter((x) => x);
     pathnames[index] = value
@@ -7,4 +8,15 @@ export const myHistoryPush = (index, value) => {
         routeTo += `/${e}`
     });
     history.push(routeTo);
+}
+
+
+export const confirmationPushHistory = () => (dispatch, getState) => {
+    console.log("sadjalksjd");
+    const confirmation = getState().historyConfirmation
+    if (confirmation.isActive) {
+        dispatch(setIsOpenConfirmation(true))
+    } else {
+        confirmation.gofunction();
+    }
 }

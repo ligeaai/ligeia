@@ -12,6 +12,9 @@ import history from "../../routers/history";
 import { setSelectedDrawerItem } from "../../services/actions/drawerMenu/drawerMenu";
 import { useParams } from "react-router-dom";
 
+import { confirmationPushHistory } from "../../services/utils/historyPush";
+import { setGoFunctionConfirmation } from "../../services/actions/confirmation/historyConfirmation";
+
 export default function App({ menu }) {
   return Object.keys(menu).map((item, key) => (
     <MenuItem key={key} item={menu[item]} url="/" />
@@ -37,8 +40,12 @@ const SingleLevel = ({ item, url }) => {
   );
 
   const handleClick = () => {
-    dispatch(setSelectedDrawerItem(item));
-    history.push(`${url}`);
+    function goFunction() {
+      dispatch(setSelectedDrawerItem(item));
+      history.push(`${url}`);
+    }
+    dispatch(setGoFunctionConfirmation(goFunction));
+    dispatch(confirmationPushHistory());
   };
   return (
     <ListItem

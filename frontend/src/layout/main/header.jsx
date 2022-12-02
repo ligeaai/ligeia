@@ -18,60 +18,52 @@ import { SearchBarMobile, SearchBar } from "../../components";
 import NestedMenu from "./nestedMenu";
 import { instance, config } from "../../services/baseApi";
 import history from "../../routers/history";
+
+import SettingMenu from "./settingsMenu";
+
 const searchBarSize = {
   sm: { focus: "28ch", blur: "16ch" },
   md: { focus: "60ch", blur: "34ch" },
   lg: { focus: "60ch", blur: "34ch" },
   xl: { focus: "60ch", blur: "34ch" },
 };
-const Header = (props) => {
-  const { delSearchBar } = props;
-  const dispatch = useDispatch();
-  const user = useSelector((state) => state.auth.user);
-  const search = useSelector((state) => state.searchBar.isFocus);
-  const theme = useSelector((state) => state.theme.theme);
-  const lang = useSelector((state) => state.lang.lang);
-  const langShort = useSelector((state) => state.lang.cultur);
-  const drawerIsOpen = useSelector((state) => state.drawerMenu.isOpen);
-  const [settingsMenu, setSettingsMenu] = React.useState(false);
-  const [languages, setLanguages] = React.useState(false);
-  const [langItems, setLangItems] = React.useState([]);
-  React.useEffect(() => {
-    const myFunc = async () => {
-      try {
-        let res = await instance.get(`/code-list/culture/`, config());
-        var myRes = [];
-        res.data.Message.map((e) => {
-          myRes.push(e.CODE_TEXT);
-        });
-        setLanguages(res.data.Message);
-        setLangItems([...myRes]);
-      } catch {}
-    };
-    myFunc();
-  }, []);
-  window.addEventListener("click", function (e) {
-    if (!e.target.closest(".settingsMenu")) {
-      setSettingsMenu(false);
-    }
-  });
 
-  const themeSelect = (theme) => {
-    dispatch(changeTheme(theme));
-  };
-  const langSelect = (language) => {
-    languages.map((e) => {
-      if (e.CODE_TEXT === language) {
-        console.log(e);
-        dispatch(changeLanguage(e.CULTURE));
-        dispatch(changeLangs(e.CODE_TEXT));
-      }
-    });
-    setTimeout(() => {
-      window.location.reload();
-    }, 500);
-  };
-  const locationSelect = (location) => {};
+const DrawerIcon = () => {
+  const dispatch = useDispatch();
+  const drawerIsOpen = useSelector((state) => state.drawerMenu.isOpen);
+  return (
+    <Grid item>
+      {!drawerIsOpen ? (
+        <MenuIcon
+          sx={{
+            mx: "9px",
+            typography: "h4",
+            color: "#ffffff",
+          }}
+          onClick={() => {
+            dispatch(toggleDrawerMenu());
+          }}
+        />
+      ) : (
+        <MenuOpenOutlinedIcon
+          sx={{
+            mx: "9px",
+            typography: "h4",
+            color: "#ffffff",
+          }}
+          onClick={() => {
+            dispatch(toggleDrawerMenu());
+          }}
+        />
+      )}
+    </Grid>
+  );
+};
+
+const Header = (props) => {
+  const search = useSelector((state) => state.searchBar.isFocus);
+  const { delSearchBar } = props;
+  const theme = useSelector((state) => state.theme.theme);
 
   const MyBox = styled(Grid)(({ theme }) => ({
     backgroundColor: "#7E99AA",
@@ -114,7 +106,9 @@ const Header = (props) => {
     }
     `
   );
-
+  React.useEffect(() => {
+    console.log("dkasdkl");
+  }, []);
   return (
     <React.Fragment>
       <MyBox
@@ -139,31 +133,7 @@ const Header = (props) => {
         <Grid item>
           <Grid container spacing={2.5} alignItems="center">
             <Grid item>
-              {!drawerIsOpen ? (
-                <MenuIcon
-                  sx={{
-                    mx: "9px",
-                    typography: "h4",
-                    color: "#ffffff",
-                  }}
-                  onClick={() => {
-                    dispatch(toggleDrawerMenu());
-                  }}
-                />
-              ) : (
-                <MenuOpenOutlinedIcon
-                  sx={{
-                    mx: "9px",
-                    typography: "h4",
-                    color: "#ffffff",
-                  }}
-                  onClick={() => {
-                    dispatch(toggleDrawerMenu());
-                  }}
-                />
-              )}
-            </Grid>
-            <Grid item>
+              <DrawerIcon />
               {delSearchBar ? null : (
                 <SearchBar
                   searchBarSize={searchBarSize}
@@ -192,102 +162,7 @@ const Header = (props) => {
                 </StyledBadge>
               </Button>
             </Grid>
-            <Grid item className="settingsMenu">
-              <Grid
-                container
-                alignItems="center"
-                onClick={(e) => {
-                  setSettingsMenu(!settingsMenu);
-                }}
-              >
-                <Grid item sx={{ mr: 1.5 }}>
-                  <Grid
-                    container
-                    sx={{
-                      flexDirection: "column",
-                      alignItems: "flex-end",
-                      justifyContent: "center",
-                    }}
-                  >
-                    <Grid item>
-                      <Typography
-                        variant="body2"
-                        sx={{
-                          fontWeight: "500",
-                          textTransform: "capitalize",
-                          color: "#ffffff",
-                        }}
-                      >
-                        {user
-                          ? // ? user.first_name.concat(" ", user.last_name)
-                            user.first_name
-                          : "name"}
-                      </Typography>
-                    </Grid>
-                    <Grid item>
-                      <Typography
-                        variant="caption"
-                        sx={{
-                          color: "#ffffffAA",
-                          textTransform: "capitalize",
-                        }}
-                      >
-                        role
-                      </Typography>{" "}
-                      {/* //todo add role */}
-                    </Grid>
-                  </Grid>
-                </Grid>
-                <Grid item>
-                  <Avatar
-                    alt={
-                      user
-                        ? user.first_name.concat(" ", user.last_name)
-                        : "name"
-                    }
-                    src="/"
-                  />
-                </Grid>
-              </Grid>
-              <Box
-                sx={{
-                  display: settingsMenu ? "flex" : "none",
-                  position: "absolute",
-                  right: { xs: "0" },
-                  top: "62px",
-                  boxShadow: "0px 1px 5px rgba(0, 0, 0, 0.1)",
-                  zIndex: 3,
-                }}
-              >
-                <NestedMenu
-                  menuItems={[
-                    {
-                      icon: <Brightness2OutlinedIcon />,
-                      fixedText: "Appearance",
-                      text: theme,
-                      subtable: ["dark", "light"],
-                      functions: themeSelect,
-                    },
-                    {
-                      icon: <TranslateIcon />,
-                      fixedText: "Language",
-                      text: lang,
-                      subtable: langItems,
-                      functions: langSelect,
-                    },
-                    {
-                      icon: <LanguageIcon />,
-                      fixedText: "Location",
-                      text: "Canada",
-                      subtable: ["Canada", "Kazakistan", "Türkiye"],
-                      functions: locationSelect,
-                    },
-                  ]}
-                  isSubmenuOpen={settingsMenu}
-                  themeMode={theme}
-                />
-              </Box>
-            </Grid>
+            <SettingMenu />
           </Grid>
         </Grid>
       </MyBox>
@@ -295,4 +170,4 @@ const Header = (props) => {
   );
 };
 
-export default Header;
+export default React.memo(Header);
