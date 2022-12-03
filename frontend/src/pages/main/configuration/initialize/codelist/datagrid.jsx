@@ -5,13 +5,14 @@ import { DataGridPro } from "@mui/x-data-grid-pro";
 import { grey } from "@mui/material/colors";
 
 import LinearProgress from "@mui/material/LinearProgress";
-
+import ConfirmDataGrid from "./confirmDataGrid";
 import { CustomToolbar } from "./codeListActionMenu";
 import {
   onChangeCell,
   setSelectedRows,
   refreshDataGridCodelist,
   saveCodeList,
+  addNewCodeListItemSchema,
 } from "../../../../../services/actions/codelist/datagrid";
 import { CustomNoRowsOverlay } from "../../../../../components";
 import {
@@ -55,10 +56,12 @@ export default function TreeDataWithGap() {
     dispatch(
       setTitleConfirmation("Are you sure you want to save this code list ? ")
     );
-    dispatch(setBodyConfirmation("body"));
+    dispatch(setBodyConfirmation(<ConfirmDataGrid />));
   }, []);
   React.useEffect(() => {
-    if (selectedIndex >= 0) {
+    if (selectedIndex === -2) {
+      dispatch(addNewCodeListItemSchema());
+    } else if (selectedIndex >= 0) {
       dispatch(refreshDataGridCodelist());
     }
   }, [selectedIndex]);

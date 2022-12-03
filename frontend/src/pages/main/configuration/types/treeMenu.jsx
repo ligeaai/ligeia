@@ -3,21 +3,28 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { TreeMenu } from "../../../../components";
 import {
-  loadTreeView,
-  selectType,
-} from "../../../../services/actions/type/treeview";
+  loadTreeviewItem,
+  selectTreeViewItem,
+  cleanTreeview,
+} from "../../../../services/actions/treeview/treeview";
+
+import TypeService from "../../../../services/api/type";
+
 export const TreeMenuItems = () => {
   const dispatch = useDispatch();
-  const treeItems = useSelector((state) => state.treeviewType.filteredMenuItem);
+  const treeItems = useSelector((state) => state.treeview.filteredMenuItem);
   const selectedIndex = useSelector(
-    (state) => state.treeviewType.selectedItem.selectedIndex
+    (state) => state.treeview.selectedItem.selectedIndex
   );
   React.useEffect(() => {
-    dispatch(loadTreeView());
+    dispatch(loadTreeviewItem(TypeService.getAll, "TYPE"));
   }, []);
 
   const selectFunc = (index) => {
-    dispatch(selectType(index));
+    dispatch(selectTreeViewItem(index, "TYPE"));
+    return async () => {
+      dispatch(await cleanTreeview());
+    };
   };
 
   return (

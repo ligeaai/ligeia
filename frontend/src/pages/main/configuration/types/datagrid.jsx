@@ -9,13 +9,28 @@ import LinearProgress from "@mui/material/LinearProgress";
 import { CustomNoRowsOverlay } from "../../../../components";
 import { columns } from "./column";
 import { propColumns } from "./propColumn";
-import { onChangeTypeCell } from "../../../../services/actions/type/datagrid";
+import {
+  onChangeTypeCell,
+  refreshDataGridType,
+} from "../../../../services/actions/type/datagrid";
 import DetailPanelContent from "./propertyDataGrid";
+import {
+  saveTypeFunc,
+  addNewType,
+} from "../../../../services/actions/type/datagrid";
+import {
+  setBodyConfirmation,
+  setSaveFunctonConfirmation,
+  setTitleConfirmation,
+} from "../../../../services/actions/confirmation/historyConfirmation";
 
 export default function TreeDataWithGap() {
   const dispatch = useDispatch();
   const rows = useSelector((state) => state.dataGridType.rows);
-
+  const selectedIndex = useSelector(
+    (state) => state.treeview.selectedItem.selectedIndex
+  );
+  const type = useSelector((state) => state.treeview.selectedItem.TYPE);
   const onCellEditCommit = React.useMemo(
     () => (cellData) => {
       const { id, field, value } = cellData;
@@ -27,6 +42,18 @@ export default function TreeDataWithGap() {
     ({ row }) => <DetailPanelContent row={row} />,
     []
   );
+  React.useEffect(() => {
+    dispatch(setSaveFunctonConfirmation(saveTypeFunc));
+    dispatch(setTitleConfirmation("Are you sure you want to save ? "));
+    dispatch(setBodyConfirmation("body"));
+  }, []);
+  React.useEffect(() => {
+    if (selectedIndex === -2) {
+      dispatch(addNewType());
+    } else if (selectedIndex >= 0) {
+      dispatch(refreshDataGridType());
+    }
+  }, [selectedIndex, type]);
   //   const [sortModel, setSortModel] = React.useState([
   //     {
   //       field: "CODE",

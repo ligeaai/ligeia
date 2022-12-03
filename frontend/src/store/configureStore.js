@@ -41,8 +41,7 @@ import {
     tagsTreeview,
     themeReducer,
     treeview,
-    treeviewCodelist,
-    treeviewType,
+
 } from '../services/reducers'
 
 const persistConfig = {
@@ -75,8 +74,7 @@ const rootReducer = combineReducers({
     tagsTreeview: tagsTreeview,
     theme: themeReducer,
     treeview: treeview,
-    treeviewCodelist: treeviewCodelist,
-    treeviewType: treeviewType,
+
 })
 
 

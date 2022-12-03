@@ -16,15 +16,15 @@ import MyActionMenu from "./myActionMenu";
 import { TreeMenuItems } from "./treeMenu";
 import DataGridPro from "./datagrid";
 
-import { setFilteredLayerName } from "../../../../services/actions/type/treeview";
+import { setFilteredLayerName } from "../../../../services/actions/treeview/treeview";
 
 import { instance, config } from "../../../../services/baseApi";
-
-const CodeList = ({ isHome }) => {
+import { cleanAllDataGrid } from "../../../../services/actions/type/datagrid";
+const CodeList = () => {
   const dispatch = useDispatch();
   const isFullScreen = useSelector((state) => state.fullScreen.isFullScreen);
   const filteredLayerName = useSelector(
-    (state) => state.treeviewCodelist.filteredLayerName
+    (state) => state.treeview.filteredLayerName
   );
   const [layerValues, setLayerValues] = React.useState(["NONE"]);
   const selectHandleChangeFunc = (params) => {
@@ -42,6 +42,9 @@ const CodeList = ({ isHome }) => {
       } catch {}
     };
     myFunc();
+    return () => {
+      dispatch(cleanAllDataGrid());
+    };
   }, []);
 
   return (

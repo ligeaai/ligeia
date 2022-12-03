@@ -43,8 +43,9 @@ export default function AlertDialog() {
           <Button onClick={handleCancel}>Cancel</Button>
           <Button
             onClick={async () => {
-              await dispatch(confirmation.okfunction());
-              confirmation.gofunction();
+              if (await dispatch(confirmation.okfunction())) {
+                confirmation.gofunction();
+              }
               handleClose();
             }}
             autoFocus

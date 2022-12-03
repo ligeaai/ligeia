@@ -14,12 +14,17 @@ import {
 
 import { instance, config } from '../../baseApi';
 
-import { loadTreeviewItemCodelist, selectTreeViewItemCoedlist } from "./treeview"
+
 import history from "../../../routers/history";
 
 import axios from "axios";
 
 import { uuidv4 } from "../../utils/uuidGenerator"
+
+import { loadTreeviewItem, selectTreeViewItem } from "../treeview/treeview"
+
+import CodelistService from "../../api/codeList";
+
 
 const _createNewParent = () => (dispatch, getState) => {
     const culture = getState().lang.cultur
@@ -91,7 +96,7 @@ export const refreshDataGridCodelist = () => async (dispatch, getState) => {
         })
 
     } catch (err) {
-        return err
+        return Promise.reject(err)
     }
 }
 
@@ -219,7 +224,6 @@ export const saveCodeList = () => async (dispatch, getState) => {
                             body,
                             config()
                         )
-                    return res
                 } catch (err) {
 
                 }
@@ -227,12 +231,14 @@ export const saveCodeList = () => async (dispatch, getState) => {
         dispatch({
             type: CLEAN_AFTER_SAVE,
         })
-        dispatch(loadTreeviewItemCodelist())
+        dispatch(loadTreeviewItem(CodelistService.getAllTreeitem, "CODE_TEXT"))
+        return true
     } else {
         dispatch({
             type: ADD_ERROR_SUCCESS,
             payload: "Mandatory fields: Code, Code text, Layer Name, Hidden"
         })
+        return false
     }
 
 
@@ -253,8 +259,8 @@ export const deleteCodeList = () => async (dispatch, getState) => {
     } catch (err) {
         return false
     }
-    await dispatch(loadTreeviewItemCodelist())
-    dispatch(selectTreeViewItemCoedlist(selectedIndex))
+    await dispatch(loadTreeviewItem(CodelistService.getAllTreeitem, "CODE_TEXT"))
+    dispatch(selectTreeViewItem(selectedIndex))
 }
 
 export const saveAndMoveCodeList = (index) => async (dispatch, getState) => {
@@ -265,7 +271,7 @@ export const saveAndMoveCodeList = (index) => async (dispatch, getState) => {
         index = 0
     }
     dispatch(saveCodeList())
-    dispatch(selectTreeViewItemCoedlist(index));
+    dispatch(selectTreeViewItem(index));
 
 }
 

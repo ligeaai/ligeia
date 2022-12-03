@@ -2,7 +2,6 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ActionMenu } from "../../../../../components";
 
-import { selectNewCodeListItem } from "../../../../../services/actions/codelist/treeview";
 import {
   deleteCodeList,
   saveCodeList,
@@ -15,6 +14,7 @@ import {
 } from "../../../../../services/reducers/confirmation";
 import ConfirmDataGrid from "./confirmDataGrid";
 import { selectTreeViewItem } from "../../../../../services/actions/treeview/treeview";
+import { setIsActiveConfirmation } from "../../../../../services/actions/confirmation/historyConfirmation";
 const CodelistActionMenu = () => {
   const changedRows = useSelector(
     (state) => state.dataGridCodeList.changedRows
@@ -38,6 +38,7 @@ const CodelistActionMenu = () => {
           agreefunction: async () => {
             dispatch(saveCodeList());
             dispatch(addNewCodeListItemSchema());
+            dispatch(setIsActiveConfirmation(false));
           },
         })
       );
@@ -46,6 +47,7 @@ const CodelistActionMenu = () => {
           extraBtnText: "Don't save go",
           extrafunction: () => {
             dispatch(addNewCodeListItemSchema());
+            dispatch(setIsActiveConfirmation(false));
           },
         })
       );
@@ -61,6 +63,7 @@ const CodelistActionMenu = () => {
           body: <ConfirmDataGrid />,
           agreefunction: async () => {
             dispatch(saveCodeList());
+            dispatch(setIsActiveConfirmation(false));
           },
         })
       );
@@ -74,69 +77,18 @@ const CodelistActionMenu = () => {
         body: <ConfirmDataGrid />,
         agreefunction: () => {
           dispatch(deleteCodeList());
+          dispatch(setIsActiveConfirmation(false));
         },
       })
     );
   };
 
   const saveGoPrev = () => {
-    if (changedRows.length !== 0 || deletedRows.length !== 0) {
-      dispatch(
-        setConfirmation({
-          title: "Are you sure you want to save this code list?",
-          body: <ConfirmDataGrid />,
-          agreefunction: async () => {
-            dispatch(saveAndMoveCodeList(selectedIndex - 1));
-          },
-        })
-      );
-      dispatch(
-        setExtraBtn({
-          extraBtnText: "Don't save go",
-          extrafunction: () => {
-            dispatch(selectTreeViewItem(selectedIndex - 1, "CODE"));
-          },
-        })
-      );
-    } else {
-      var index = selectedIndex - 1;
-      if (index < 0) {
-        index = treeMenuItemLenght - 1;
-      } else if (index > treeMenuItemLenght - 1) {
-        index = 0;
-      }
-      dispatch(selectTreeViewItem(index, "CODE"));
-    }
+    dispatch(selectTreeViewItem(selectedIndex - 1, "CODE"));
   };
 
   const saveGoNext = () => {
-    if (changedRows.length !== 0 || deletedRows.length !== 0) {
-      dispatch(
-        setConfirmation({
-          title: "Are you sure you want to save this code list?",
-          body: <ConfirmDataGrid />,
-          agreefunction: async () => {
-            dispatch(saveAndMoveCodeList(selectedIndex + 1));
-          },
-        })
-      );
-      dispatch(
-        setExtraBtn({
-          extraBtnText: "Don't save go",
-          extrafunction: () => {
-            dispatch(selectTreeViewItem(selectedIndex + 1, "CODE"));
-          },
-        })
-      );
-    } else {
-      var index = selectedIndex + 1;
-      if (index < 0) {
-        index = treeMenuItemLenght - 1;
-      } else if (index > treeMenuItemLenght - 1) {
-        index = 0;
-      }
-      dispatch(selectTreeViewItem(index, "CODE"));
-    }
+    dispatch(selectTreeViewItem(selectedIndex + 1, "CODE"));
   };
 
   return (

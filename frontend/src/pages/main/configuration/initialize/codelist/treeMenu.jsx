@@ -9,14 +9,6 @@ import {
   cleanTreeview,
 } from "../../../../../services/actions/treeview/treeview";
 
-import { saveAndMoveCodeList } from "../../../../../services/actions/codelist/datagrid";
-
-import {
-  setConfirmation,
-  setExtraBtn,
-} from "../../../../../services/reducers/confirmation";
-
-import ConfirmDataGrid from "./confirmDataGrid";
 import CodelistService from "../../../../../services/api/codeList";
 
 export const TreeMenuItems = () => {
@@ -27,19 +19,14 @@ export const TreeMenuItems = () => {
   const selectedIndex = useSelector(
     (state) => state.treeview.selectedItem.selectedIndex
   );
-  const changedRows = useSelector(
-    (state) => state.dataGridCodeList.changedRows
-  );
-  const deletedRows = useSelector(
-    (state) => state.dataGridCodeList.deletedRows
-  );
   const selectFunc = (index) => {
     dispatch(selectTreeViewItem(index, "CODE"));
   };
   React.useEffect(() => {
     dispatch(loadTreeviewItem(CodelistService.getAllTreeitem, "CODE_TEXT"));
-    return () => {
-      dispatch(cleanTreeview());
+    return async () => {
+      console.log("return");
+      dispatch(await cleanTreeview());
     };
   }, []);
   return (

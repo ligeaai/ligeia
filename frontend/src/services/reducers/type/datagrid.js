@@ -6,14 +6,15 @@ import {
     CHANGE_SELECTED_ROW_PROPERTY,
     SET_CHANGE_PROPERTY_VALUE_CELL_TAG,
     DELETE_SELECTED_ITEM_PROPERTY,
-    ADD_NEW_PROPERTY
+    ADD_NEW_PROPERTY,
+    CLEAN_ALL_DATAGRID_TYPE
 } from "../../actions/types"
 
 
-const rows = []
+
 const initialState = {
-    rows: rows,
-    propertyRows: rows,
+    rows: [],
+    propertyRows: [],
     changedRows: [],
     deletedRows: [],
     selectedRows: [],
@@ -27,6 +28,18 @@ export default function (state = initialState, action) {
     const { type, payload } = action;
 
     switch (type) {
+        case CLEAN_ALL_DATAGRID_TYPE: {
+            return {
+                rows: [],
+                propertyRows: [],
+                changedRows: [],
+                deletedRows: [],
+                selectedRows: [],
+                newChildRows: [],
+                anyChangesType: false,
+                anyChangesProperty: false
+            }
+        }
         case ADD_NEW_PROPERTY:
             console.log(payload);
             return {

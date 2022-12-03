@@ -7,7 +7,10 @@ import {
     SET_CHANGE_PROPERTY_VALUE_CELL_TAG,
     DELETE_SELECTED_ITEM_PROPERTY,
     ADD_NEW_PROPERTY,
-    AFTER_GO_INDEX_TYPE
+    AFTER_GO_INDEX_TYPE,
+    SELECT_TREEVIEW_ITEM,
+    CLEAN_ALL_DATAGRID_TYPE,
+    SET_IS_ACTIVE_CONFIRMATION
 } from "../types"
 
 import {
@@ -15,11 +18,10 @@ import {
     setExtraBtn,
 } from "../../reducers/confirmation";
 
-import { selectType, loadTreeView, checkmandatoryFields, _goIndex } from "./treeview"
+import { loadTreeviewItem, selectTreeViewItem } from "../treeview/treeview"
 
 import TypeService from "../../api/type"
 const _createNewType = () => {
-
     const uuid = uuidv4()
     return [
         {
@@ -46,7 +48,6 @@ const _createNewType = () => {
 }
 
 const _createNewProperty = (type) => {
-
     const uuid = uuidv4()
     return {
         "TYPE": type,
@@ -59,7 +60,6 @@ const _createNewProperty = (type) => {
         "SORT_ORDER": "",
         "ROW_ID": uuid.replace(/-/g, ""),
     }
-
 }
 
 export const addNewType = () => dispatch => {
@@ -73,14 +73,23 @@ export const addNewType = () => dispatch => {
         type: SET_PROPERTY_ROW,
         payload: []
     })
-    dispatch(selectType(-2))
+    dispatch({
+        type: SELECT_TREEVIEW_ITEM,
+        payload: { ...newType[0], selectedIndex: -2 }
+    });
 }
-
+export const checkmandatoryFields = () => {
+    return true
+}
 
 export const onChangeTypeCell = (id, field, value) => dispatch => {
     dispatch({
         type: SET_CHANGE_TYPE_VALUE_CELL_TAG,
         payload: { id: id, field: field, value: value }
+    })
+    dispatch({
+        type: SET_IS_ACTIVE_CONFIRMATION,
+        payload: true
     })
 }
 
@@ -88,6 +97,10 @@ export const onChangePropertyCell = (id, field, value) => dispatch => {
     dispatch({
         type: SET_CHANGE_PROPERTY_VALUE_CELL_TAG,
         payload: { id: id, field: field, value: value }
+    })
+    dispatch({
+        type: SET_IS_ACTIVE_CONFIRMATION,
+        payload: true
     })
 }
 
@@ -102,6 +115,9 @@ export const fillPropertyTable = (TYPE) => async (dispatch, getState) => {
             payload: res.data
         })
     } catch {
+        dispatch({
+            type: CLEAN_ALL_DATAGRID_TYPE
+        })
     }
 }
 
@@ -159,6 +175,10 @@ export const deleteProperty = () => (dispatch, getState) => {
         type: DELETE_SELECTED_ITEM_PROPERTY,
         payload: { tempRows, deletedRows, changedNew }
     })
+    dispatch({
+        type: SET_IS_ACTIVE_CONFIRMATION,
+        payload: true
+    })
 
 }
 
@@ -180,7 +200,7 @@ const _deleteType = async (body) => {
 
 export const deleteType = () => (dispatch, getState) => {
     const TYPE = getState().dataGridType.rows[Object.keys(getState().dataGridType.rows)[0]].TYPE
-    const selectedIndex = getState().treeviewType.selectedItem.selectedIndex
+    const selectedIndex = getState().treeview.selectedItem.selectedIndex
     const body = JSON.stringify({ TYPE })
     dispatch(
         setConfirmation({
@@ -189,8 +209,9 @@ export const deleteType = () => (dispatch, getState) => {
             agreefunction: async () => {
                 if (checkmandatoryFields()) {
                     await _deleteType(body)
-                    await dispatch(loadTreeView())
-                    dispatch(_goIndex(selectedIndex))
+                    await dispatch(loadTreeviewItem(TypeService.getAll, "TYPE"))
+                    dispatch(selectTreeViewItem(selectedIndex, "TYPE"))
+                    //  dispatch(_goIndex(selectedIndex))
                 }
                 else {
                     dispatch({
@@ -202,8 +223,6 @@ export const deleteType = () => (dispatch, getState) => {
         })
     );
 }
-
-
 
 export const saveTypeAndProperty = () => async (dispatch, getState) => {
     const anyChangesType = getState().dataGridType.anyChangesType
@@ -236,7 +255,6 @@ export const saveTypeAndProperty = () => async (dispatch, getState) => {
         const changedRows = getState().dataGridType.changedRows
         const propertyRows = getState().dataGridType.propertyRows
         const deletedRows = getState().dataGridType.deletedRows
-        var changedKeys = Object.keys(changedRows)
         await Promise.all(
             Object.keys(propertyRows).map(async e => {
                 if (changedRows.some(s => s === e)) {
@@ -254,33 +272,46 @@ export const saveTypeAndProperty = () => async (dispatch, getState) => {
                 let res = await TypeService.deleteProperty(body);
             }))
     }
-    dispatch(loadTreeView())
+    dispatch(loadTreeviewItem(TypeService.getAll, "TYPE"))
     dispatch({
         type: AFTER_GO_INDEX_TYPE
     })
 }
 
 export const saveTypeFunc = () => (dispatch, getState) => {
-    const anyChangesType = getState().dataGridType.anyChangesType
-    const anyChangesProperty = getState().dataGridType.anyChangesProperty
-    if (anyChangesType || anyChangesProperty) {
-        dispatch(
-            setConfirmation({
-                title: "Are you sure you want to save this?",
-                body: <></>,
-                agreefunction: async () => {
-                    if (checkmandatoryFields()) {
-                        dispatch(saveTypeAndProperty())
-                    }
-                    else {
-                        dispatch({
-                            type: "ADD_ERROR_SUCCESS",
-                            payload: "Pleas check mandatory fields"
-                        })
-                    }
-                },
-            })
-        );
+    if (checkmandatoryFields()) {
+        dispatch(saveTypeAndProperty())
+        return true
     }
+    else {
+        dispatch({
+            type: "ADD_ERROR_SUCCESS",
+            payload: "Pleas check mandatory fields"
+        })
+        return false
+    }
+}
 
+export const refreshDataGridType = () => (dispatch, getState) => {
+    const selectedItem = getState().treeview.selectedItem
+    var type = []
+    Object.keys(selectedItem).map(e => {
+        if (selectedItem[e]) {
+            type[e] = selectedItem[e]
+        }
+        else {
+            type[e] = ""
+        }
+    })
+    dispatch({
+        type: SET_ROW_DATAGRID_TYPE,
+        payload: [{ ...type }]
+    })
+    dispatch(fillPropertyTable(type.TYPE))
+}
+
+export const cleanAllDataGrid = () => dispatch => {
+    dispatch({
+        type: CLEAN_ALL_DATAGRID_TYPE
+    })
 }

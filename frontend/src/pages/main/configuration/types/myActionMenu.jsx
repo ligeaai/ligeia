@@ -7,23 +7,25 @@ import {
   saveTypeFunc,
   deleteType,
 } from "../../../../services/actions/type/datagrid";
-import { selectType } from "../../../../services/actions/type/treeview";
+import { selectTreeViewItem } from "../../../../services/actions/treeview/treeview";
+import { confirmationPushHistory } from "../../../../services/utils/historyPush";
+import { setGoFunctionConfirmation } from "../../../../services/actions/confirmation/historyConfirmation";
 const CodelistActionMenu = () => {
   const selectedIndex = useSelector(
-    (state) => state.treeviewType.selectedItem.selectedIndex
+    (state) => state.treeview.selectedItem.selectedIndex
   );
   const dispatch = useDispatch();
   const btnNew = () => {
-    dispatch(addNewType());
+    dispatch(selectTreeViewItem(-2, "new"));
   };
   const saveGoPrev = () => {
-    dispatch(selectType(selectedIndex - 1));
+    dispatch(selectTreeViewItem(selectedIndex - 1, "TYPE"));
   };
   const saveGoNext = () => {
-    dispatch(selectType(selectedIndex + 1));
+    dispatch(selectTreeViewItem(selectedIndex + 1, "TYPE"));
   };
   const save = () => {
-    dispatch(saveTypeFunc());
+    dispatch(confirmationPushHistory());
   };
 
   const btnDelete = () => {
@@ -31,8 +33,8 @@ const CodelistActionMenu = () => {
   };
   return (
     <ActionMenu
-      //   dublicateIsActive={false}
-      //   infoIsActive={false}
+      dublicateIsActive={false}
+      infoIsActive={false}
       btnNew={btnNew}
       save={save}
       btnDelete={btnDelete}

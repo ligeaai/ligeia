@@ -27,7 +27,6 @@ export const loadFilteredTreeviewItem = () => async (dispatch, getState) => {
             payload: treeMenuItem
         })
     }
-
 }
 
 export const loadTreeviewItem = (path, sortPath) => async (dispatch, getState) => {
@@ -36,9 +35,16 @@ export const loadTreeviewItem = (path, sortPath) => async (dispatch, getState) =
     let res;
     try {
         let res = await path(body);
-        var sortedResponse = res.data.sort((a, b) =>
-            a[sortPath] > b[sortPath] ? 1 : -1
-        )
+        if (sortPath === "TYPE") {//todo need to change api end point 
+            var sortedResponse = res.data.Message.sort((a, b) =>
+                a[sortPath] > b[sortPath] ? 1 : -1
+            )
+        } else {
+            var sortedResponse = res.data.sort((a, b) =>
+                a[sortPath] > b[sortPath] ? 1 : -1
+            )
+        }
+
         dispatch({
             type: LOAD_TREEVIEW_ITEMS,
             payload: sortedResponse
@@ -46,6 +52,7 @@ export const loadTreeviewItem = (path, sortPath) => async (dispatch, getState) =
         dispatch(loadFilteredTreeviewItem())
         return res
     } catch (err) {
+        console.log(err);
         return err
     }
 }
@@ -53,18 +60,35 @@ export const loadTreeviewItem = (path, sortPath) => async (dispatch, getState) =
 
 
 export const selectTreeViewItem = (index, breadcrumbPath) => async (dispatch, getState) => {
+    console.log(index);
     const goFunction = () => {
-        var payload = getState().treeview.filteredMenuItem[parseInt(index)]
+        if (index === -2) {
+            dispatch({
+                type: SELECT_TREEVIEW_ITEM,
+                payload: { selectedIndex: -2 }
+            });
+            dispatch(setGoFunctionConfirmation(() => { }));
+            myHistoryPush(3, "new")
+        } else {
+            if (index < 0) {
+                index = getState().treeview.filteredMenuItem.length - 1
+            }
+            if (index >= getState().treeview.filteredMenuItem.length) {
+                index = 0
+            }
+            var payload = getState().treeview.filteredMenuItem[parseInt(index)]
 
-        payload = { ...payload, selectedIndex: index }
-        dispatch({
-            type: SELECT_TREEVIEW_ITEM,
-            payload: payload
-        });
-        dispatch({
-            type: CLEAN_AFTER_SAVE,
-        })
-        myHistoryPush(3, payload[breadcrumbPath].toLowerCase())
+            payload = { ...payload, selectedIndex: index }
+            dispatch({
+                type: SELECT_TREEVIEW_ITEM,
+                payload: payload
+            });
+            dispatch({
+                type: CLEAN_AFTER_SAVE,
+            })
+            myHistoryPush(3, payload[breadcrumbPath].toLowerCase())
+
+        }
     }
     dispatch(setGoFunctionConfirmation(goFunction))
     dispatch(confirmationPushHistory())
@@ -86,8 +110,9 @@ export const setFilteredLayerName = (layerName = "NONE") => dispatch => {
     dispatch(loadFilteredTreeviewItem())
 }
 
-export const cleanTreeview = () => dispatch => {
+export const cleanTreeview = async () => async dispatch => {
     dispatch({
         type: CLEAN_TREEVIEW,
     })
+
 }

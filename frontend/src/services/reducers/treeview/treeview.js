@@ -10,7 +10,7 @@ const initialState = {
     treeMenuItem: [],
     filteredMenuItem: [],
     filteredLayerName: "NONE",
-    selectedItem: {}
+    selectedItem: { selectedIndex: -3 }
 };
 
 export default function (state = initialState, action) {
@@ -24,7 +24,7 @@ export default function (state = initialState, action) {
                 treeMenuItem: [],
                 filteredMenuItem: [],
                 filteredLayerName: "NONE",
-                selectedItem: {}
+                selectedItem: { selectedIndex: -3 }
             }
         case LOAD_TREEVIEW_ITEMS:
             return {

@@ -12,7 +12,6 @@ export const myHistoryPush = (index, value) => {
 
 
 export const confirmationPushHistory = () => (dispatch, getState) => {
-    console.log("sadjalksjd");
     const confirmation = getState().historyConfirmation
     if (confirmation.isActive) {
         dispatch(setIsOpenConfirmation(true))
