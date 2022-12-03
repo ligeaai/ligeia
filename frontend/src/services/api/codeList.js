@@ -15,7 +15,7 @@ const getCodelistDetail = (body) => {
 };
 
 const createUpdate = (body) => {
-    return instance.post("/code-list/save-update/", body, config());
+    return instance.put("/code-list/save-update/", body, config());
 };
 
 const remove = (body) => {

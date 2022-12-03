@@ -9,17 +9,20 @@ import {
   ComponentError,
   PropLinkTabs,
   Select,
+  TreeMenuItems,
 } from "../../../../components";
 import DrawerMenu from "../../../../layout/main/asset/treeViewMenu";
 
 import MyActionMenu from "./myActionMenu";
-import { TreeMenuItems } from "./treeMenu";
+
 import DataGridPro from "./datagrid";
 
 import { setFilteredLayerName } from "../../../../services/actions/treeview/treeview";
 
 import { instance, config } from "../../../../services/baseApi";
 import { cleanAllDataGrid } from "../../../../services/actions/type/datagrid";
+
+import TypeService from "../../../../services/api/type";
 const CodeList = () => {
   const dispatch = useDispatch();
   const isFullScreen = useSelector((state) => state.fullScreen.isFullScreen);
@@ -57,7 +60,9 @@ const CodeList = () => {
       }}
     >
       <Grid item sx={{ minHeight: "500px", boxShadow: 3, mr: 0.5 }}>
-        <DrawerMenu Element={<TreeMenuItems />} />
+        <DrawerMenu
+          Element={<TreeMenuItems path={TypeService.getAll} textPath="TYPE" />}
+        />
       </Grid>
 
       <Grid

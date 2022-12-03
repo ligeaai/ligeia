@@ -96,7 +96,7 @@ export default function TreeDataWithGap() {
             hideFooter={true}
             treeData
             rows={Object.values(rows)}
-            columns={columns}
+            columns={myColumns}
             getTreeDataPath={getTreeDataPath}
             getRowId={(row) => row.ROW_ID}
             sortModel={sortModel}

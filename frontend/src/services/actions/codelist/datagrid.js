@@ -215,8 +215,6 @@ export const saveCodeList = () => async (dispatch, getState) => {
         })
         return false
     }
-
-
 }
 
 export const deleteCodeList = () => async (dispatch, getState) => {
@@ -226,7 +224,7 @@ export const deleteCodeList = () => async (dispatch, getState) => {
     try {
         let res = await CodelistService.remove(body);
         await dispatch(loadTreeviewItem(CodelistService.getAllTreeitem, "CODE_TEXT"))
-        dispatch(selectTreeViewItem(selectedIndex))
+        dispatch(selectTreeViewItem(selectedIndex, "CODE"))
         return Promise.resolve(res.data)
 
     } catch (err) {

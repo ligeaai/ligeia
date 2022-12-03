@@ -1,11 +1,17 @@
 import { instance, config } from "../baseApi"
-
-const getAll = (body) => {
-    return instance.post("/type/all/", body, config());
+import axios from "axios";
+const getAll = (body, cancelToken) => {
+    return instance.post("/type/all/", body, { ...config(), cancelToken: cancelToken.token });
 };
-
+let cancelToken;
 const getTypeAndProperty = (body) => {
-    return instance.post("/type/editor/", body, config());
+    console.log("sadklsş");
+    if (cancelToken) {
+        console.log(cancelToken);
+        cancelToken.cancel()
+    }
+    cancelToken = axios.CancelToken.source();
+    return instance.post("/type/editor/", body, { ...config(), cancelToken: cancelToken.token });
 };
 
 const createUpdateType = (body) => {

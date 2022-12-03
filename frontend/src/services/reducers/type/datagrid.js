@@ -77,7 +77,6 @@ export default function (state = initialState, action) {
         case SET_PROPERTY_ROW:
             const propertyRows = []
             payload.map((e) => {
-                console.log(e);
                 propertyRows[e.ROW_ID] = e
             })
             return {

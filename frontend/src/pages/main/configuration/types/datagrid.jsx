@@ -8,7 +8,7 @@ import LinearProgress from "@mui/material/LinearProgress";
 
 import { CustomNoRowsOverlay } from "../../../../components";
 import { columns } from "./column";
-import { propColumns } from "./propColumn";
+
 import {
   onChangeCell,
   refreshDataGridType,
@@ -23,8 +23,9 @@ import {
   setSaveFunctonConfirmation,
   setTitleConfirmation,
 } from "../../../../services/actions/confirmation/historyConfirmation";
-
-export default function TreeDataWithGap() {
+import { useIsMount } from "../../../../hooks/useIsMount";
+function TreeDataWithGap() {
+  const isMount = useIsMount();
   const dispatch = useDispatch();
   const rows = useSelector((state) => state.dataGridType.rows);
   const selectedIndex = useSelector(
@@ -42,24 +43,18 @@ export default function TreeDataWithGap() {
     ({ row }) => <DetailPanelContent row={row} />,
     []
   );
+
   React.useEffect(() => {
-    dispatch(setSaveFunctonConfirmation(saveTypeFunc));
-    dispatch(setTitleConfirmation("Are you sure you want to save ? "));
-    dispatch(setBodyConfirmation("body"));
-  }, []);
-  React.useEffect(() => {
-    if (selectedIndex === -2) {
+    if (isMount) {
+      dispatch(setSaveFunctonConfirmation(saveTypeFunc));
+      dispatch(setTitleConfirmation("Are you sure you want to save ? "));
+      dispatch(setBodyConfirmation("body"));
+    } else if (selectedIndex === -2) {
       dispatch(addNewType());
     } else if (selectedIndex >= 0) {
       dispatch(refreshDataGridType());
     }
   }, [selectedIndex, type]);
-  //   const [sortModel, setSortModel] = React.useState([
-  //     {
-  //       field: "CODE",
-  //       sort: "asc",
-  //     },
-  //   ]);
   return (
     <Box>
       <Box
@@ -113,8 +108,6 @@ export default function TreeDataWithGap() {
             density="compact"
             defaultGroupingExpansionDepth={1}
             hideFooter={true}
-            // treeData
-            // getTreeDataPath={getTreeDataPath}
             onCellEditCommit={onCellEditCommit}
             rows={Object.values(rows)}
             columns={columns}
@@ -125,7 +118,6 @@ export default function TreeDataWithGap() {
               NoRowsOverlay: CustomNoRowsOverlay,
               LoadingOverlay: LinearProgress,
             }}
-            // groupingColDef={groupingColDef}
             getDetailPanelContent={getDetailPanelContent}
             disableIgnoreModificationsIfProcessingProps
           />
@@ -134,3 +126,4 @@ export default function TreeDataWithGap() {
     </Box>
   );
 }
+export default TreeDataWithGap;

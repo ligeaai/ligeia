@@ -20,7 +20,7 @@ import {
   setSaveFunctonConfirmation,
   setTitleConfirmation,
 } from "../../../../../services/actions/confirmation/historyConfirmation";
-
+import { useIsMount } from "../../../../../hooks/useIsMount";
 const getTreeDataPath = (row) => row.HIERARCHY;
 
 const groupingColDef = {
@@ -34,6 +34,7 @@ const groupingColDef = {
 };
 
 export default function TreeDataWithGap() {
+  const isMount = useIsMount();
   const dispatch = useDispatch();
   const rows = useSelector((state) => state.dataGridCodeList.rows);
   const columns = useSelector((state) => state.dataGridCodeList.columns);
@@ -43,6 +44,7 @@ export default function TreeDataWithGap() {
   const selectedIndex = useSelector(
     (state) => state.treeview.selectedItem.selectedIndex
   );
+  const rowId = useSelector((state) => state.treeview.selectedItem.ROW_ID);
   const onCellEditCommit = React.useMemo(
     () => (cellData) => {
       const { id, field, value } = cellData;
@@ -52,19 +54,22 @@ export default function TreeDataWithGap() {
   );
 
   React.useEffect(() => {
-    dispatch(setSaveFunctonConfirmation(saveCodeList));
-    dispatch(
-      setTitleConfirmation("Are you sure you want to save this code list ? ")
-    );
-    dispatch(setBodyConfirmation(<ConfirmDataGrid />));
-  }, []);
-  React.useEffect(() => {
     if (selectedIndex === -2) {
       dispatch(addNewCodeListItemSchema());
-    } else if (selectedIndex >= 0) {
-      dispatch(refreshDataGridCodelist());
     }
   }, [selectedIndex]);
+  React.useEffect(() => {
+    if (isMount) {
+      console.log("sadasd");
+      dispatch(setSaveFunctonConfirmation(saveCodeList));
+      dispatch(
+        setTitleConfirmation("Are you sure you want to save this code list ? ")
+      );
+      dispatch(setBodyConfirmation(<ConfirmDataGrid />));
+    } else if (selectedIndex !== -2) {
+      dispatch(refreshDataGridCodelist());
+    }
+  }, [rowId]);
   const [sortModel, setSortModel] = React.useState([
     {
       field: "CODE",

@@ -9,16 +9,17 @@ import {
   ComponentError,
   PropLinkTabs,
   Select,
+  TreeMenuItems,
 } from "../../../../../components";
 import DrawerMenu from "../../../../../layout/main/asset/treeViewMenu";
 
 import MyActionMenu from "./actionMenu";
-import { TreeMenuItems } from "./treeMenu";
 import DataGridPro from "./datagrid";
 import { cleanAllDataGrid } from "../../../../../services/actions/codelist/datagrid";
 
 import { setFilteredLayerName } from "../../../../../services/actions/treeview/treeview";
 import { instance, config } from "../../../../../services/baseApi";
+import CodelistService from "../../../../../services/api/codeList";
 
 const CodeList = ({ isHome }) => {
   const dispatch = useDispatch();
@@ -61,7 +62,14 @@ const CodeList = ({ isHome }) => {
       }}
     >
       <Grid item sx={{ minHeight: "500px", boxShadow: 3, mr: 0.5 }}>
-        <DrawerMenu Element={<TreeMenuItems />} />
+        <DrawerMenu
+          Element={
+            <TreeMenuItems
+              path={CodelistService.getAllTreeitem}
+              textPath="CODE_TEXT"
+            />
+          }
+        />
       </Grid>
 
       <Grid
@@ -141,4 +149,4 @@ const CodeList = ({ isHome }) => {
   );
 };
 
-export default CodeList;
+export default React.memo(CodeList);

@@ -8,6 +8,8 @@ import {
     CLEAN_TREEVIEW
 } from "../types"
 
+import axios from "axios"
+
 import { confirmationPushHistory, myHistoryPush } from "../../utils/historyPush"
 import { setGoFunctionConfirmation } from "../confirmation/historyConfirmation"
 
@@ -28,12 +30,16 @@ export const loadFilteredTreeviewItem = () => async (dispatch, getState) => {
         })
     }
 }
-
+let cancelToken;
 export const loadTreeviewItem = (path, sortPath) => async (dispatch, getState) => {
     const CULTURE = getState().lang.cultur;
     const body = JSON.stringify({ CULTURE });
     try {
-        let res = await path(body);
+        if (cancelToken) {
+            cancelToken.cancel()
+        }
+        cancelToken = axios.CancelToken.source();
+        let res = await path(body, cancelToken);
         if (sortPath === "TYPE") {//todo need to change api end point 
             var sortedResponse = res.data.Message.sort((a, b) =>
                 a[sortPath] > b[sortPath] ? 1 : -1

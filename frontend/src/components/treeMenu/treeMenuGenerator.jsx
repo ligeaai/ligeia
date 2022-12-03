@@ -1,17 +1,15 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 
-import { TreeMenu } from "../../../../../components";
+import { TreeMenu } from "./treeMenu";
 
 import {
   loadTreeviewItem,
   selectTreeViewItem,
   cleanTreeview,
-} from "../../../../../services/actions/treeview/treeview";
+} from "../../services/actions/treeview/treeview";
 
-import CodelistService from "../../../../../services/api/codeList";
-
-export const TreeMenuItems = () => {
+export const TreeMenuItems = ({ path, textPath }) => {
   const dispatch = useDispatch();
   const filteredTreeItems = useSelector(
     (state) => state.treeview.filteredMenuItem
@@ -20,12 +18,11 @@ export const TreeMenuItems = () => {
     (state) => state.treeview.selectedItem.selectedIndex
   );
   const selectFunc = (index) => {
-    dispatch(selectTreeViewItem(index, "CODE"));
+    dispatch(selectTreeViewItem(index, textPath));
   };
   React.useEffect(() => {
-    dispatch(loadTreeviewItem(CodelistService.getAllTreeitem, "CODE_TEXT"));
+    dispatch(loadTreeviewItem(path, textPath));
     return async () => {
-      console.log("return");
       dispatch(await cleanTreeview());
     };
   }, []);
@@ -35,7 +32,7 @@ export const TreeMenuItems = () => {
         items={filteredTreeItems}
         selectFunc={selectFunc}
         selectedIndex={selectedIndex}
-        primaryText="CODE_TEXT"
+        primaryText={textPath}
       />
     </>
   );

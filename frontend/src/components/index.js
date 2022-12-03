@@ -30,6 +30,7 @@ import SearchBar from "./searchBar/searchBar";
 import SearchBarMobile from "./searchBar/searchBarMobile";
 import Select from "./select/select"
 import { TreeMenu } from "./treeMenu/treeMenu"
+import { TreeMenuItems } from "./treeMenu/treeMenuGenerator"
 
 
 
@@ -38,5 +39,5 @@ import { TreeMenu } from "./treeMenu/treeMenu"
 export {
     ActionMenu, Breadcrumb, Cards, CheckboxList, Confirmation, ComponentError, ComponentErrorBody, CustomNoRowsOverlay, DateBreak, DatePicker, Drawer, ErrorBoundary, ErrorMessage, Loadable,
     Loading, LoadingComponent, MyBox, MyCheckBox, MyNavigator, MyNumberTextField, MyTextField, MyMultilineTextField, PropLinkTabs, SocialButton, TimeRangePicker, TreeView, ItemSperatorLine, ItemSperatorLineXL, Items, SearchBar, SearchBarMobile, Select,
-    TreeMenu, HistoryConfirmation
+    TreeMenu, TreeMenuItems, HistoryConfirmation
 }
