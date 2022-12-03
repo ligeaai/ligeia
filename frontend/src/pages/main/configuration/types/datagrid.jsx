@@ -10,7 +10,7 @@ import { CustomNoRowsOverlay } from "../../../../components";
 import { columns } from "./column";
 import { propColumns } from "./propColumn";
 import {
-  onChangeTypeCell,
+  onChangeCell,
   refreshDataGridType,
 } from "../../../../services/actions/type/datagrid";
 import DetailPanelContent from "./propertyDataGrid";
@@ -34,7 +34,7 @@ export default function TreeDataWithGap() {
   const onCellEditCommit = React.useMemo(
     () => (cellData) => {
       const { id, field, value } = cellData;
-      dispatch(onChangeTypeCell(id, field, value));
+      dispatch(onChangeCell(id, field, value, 0));
     },
     []
   );

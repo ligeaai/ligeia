@@ -15,7 +15,6 @@ import {
 
 import {
     setConfirmation,
-    setExtraBtn,
 } from "../../reducers/confirmation";
 
 import { loadTreeviewItem, selectTreeViewItem } from "../treeview/treeview"
@@ -78,24 +77,14 @@ export const addNewType = () => dispatch => {
         payload: { ...newType[0], selectedIndex: -2 }
     });
 }
-export const checkmandatoryFields = () => {
+export const checkmandatoryFields = () => {//todo fill the function
     return true
 }
 
-export const onChangeTypeCell = (id, field, value) => dispatch => {
+export const onChangeCell = (id, field, value, dispatchIndex) => dispatch => {
+    const dispatchType = [SET_CHANGE_TYPE_VALUE_CELL_TAG, SET_CHANGE_PROPERTY_VALUE_CELL_TAG]
     dispatch({
-        type: SET_CHANGE_TYPE_VALUE_CELL_TAG,
-        payload: { id: id, field: field, value: value }
-    })
-    dispatch({
-        type: SET_IS_ACTIVE_CONFIRMATION,
-        payload: true
-    })
-}
-
-export const onChangePropertyCell = (id, field, value) => dispatch => {
-    dispatch({
-        type: SET_CHANGE_PROPERTY_VALUE_CELL_TAG,
+        type: dispatchType[dispatchIndex],
         payload: { id: id, field: field, value: value }
     })
     dispatch({

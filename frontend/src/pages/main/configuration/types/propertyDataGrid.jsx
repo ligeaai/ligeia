@@ -13,7 +13,7 @@ import { CustomNoRowsOverlay } from "../../../../components";
 import { columns } from "./column";
 import { propColumns } from "./propColumn";
 import {
-  onChangePropertyCell,
+  onChangeCell,
   setSelectedRows,
 } from "../../../../services/actions/type/datagrid";
 const DetailPanelContent = () => {
@@ -22,7 +22,7 @@ const DetailPanelContent = () => {
   const onCellEditCommit = React.useMemo(
     () => (cellData) => {
       const { id, field, value } = cellData;
-      dispatch(onChangePropertyCell(id, field, value));
+      dispatch(onChangeCell(id, field, value, 1));
     },
     []
   );

@@ -32,7 +32,6 @@ export const loadFilteredTreeviewItem = () => async (dispatch, getState) => {
 export const loadTreeviewItem = (path, sortPath) => async (dispatch, getState) => {
     const CULTURE = getState().lang.cultur;
     const body = JSON.stringify({ CULTURE });
-    let res;
     try {
         let res = await path(body);
         if (sortPath === "TYPE") {//todo need to change api end point 
@@ -50,10 +49,9 @@ export const loadTreeviewItem = (path, sortPath) => async (dispatch, getState) =
             payload: sortedResponse
         });
         dispatch(loadFilteredTreeviewItem())
-        return res
+        return Promise.resolve(res.data)
     } catch (err) {
-        console.log(err);
-        return err
+        return Promise.reject(err)
     }
 }
 

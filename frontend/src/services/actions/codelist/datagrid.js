@@ -12,12 +12,7 @@ import {
     SET_IS_ACTIVE_CONFIRMATION
 } from "../types"
 
-import { instance, config } from '../../baseApi';
-
-
 import history from "../../../routers/history";
-
-import axios from "axios";
 
 import { uuidv4 } from "../../utils/uuidGenerator"
 
@@ -74,27 +69,18 @@ export const addNewCodeListItemSchema = () => async (dispatch, getState) => {
     })
     history.push(routeTo)
 }
-let cancelToken;
+
 export const refreshDataGridCodelist = () => async (dispatch, getState) => {
     const ROW_ID = getState().treeview.selectedItem.ROW_ID;
     const body = JSON.stringify({ ROW_ID });
-    if (cancelToken) {
-        cancelToken.cancel()
-    }
-    cancelToken = axios.CancelToken.source();
-    let res;
+
     try {
-        res = await instance
-            .post(
-                "/code-list/deep-details/",
-                body,
-                { ...config(), cancelToken: cancelToken.token }
-            )
+        let res = await CodelistService.getCodelistDetail(body);
         dispatch({
             type: LOAD_DATAGRID_ROW_CODELIST,
             payload: res.data
         })
-
+        return Promise.resolve(res.data);
     } catch (err) {
         return Promise.reject(err)
     }
@@ -159,18 +145,11 @@ const _save = (value, userEmail) => async (dispatch, getState) => {
     temp["HIERARCHY"] = [getState().treeview.selectedItem.ROW_ID]
     temp.LAST_UPDT_USER = userEmail
     const body = JSON.stringify({ ...temp })
-    console.log(body);
     try {
-        let res = await instance
-            .put(
-                "/code-list/save-update/",
-                body,
-                config()
-            )
-
-        return res
+        let res = await CodelistService.createUpdate(body);
+        return Promise.resolve(res.data)
     } catch (err) {
-        return false
+        return Promise.reject(err)
     }
 
 }
@@ -218,14 +197,10 @@ export const saveCodeList = () => async (dispatch, getState) => {
                 var ROW_ID = e
                 var body = JSON.stringify({ ROW_ID })
                 try {
-                    let res = await instance
-                        .post(
-                            "/code-list/delete/",
-                            body,
-                            config()
-                        )
+                    let res = await CodelistService.remove(body);
+                    return Promise.resolve(res.data)
                 } catch (err) {
-
+                    return Promise.reject(err)
                 }
             }))
         dispatch({
@@ -249,18 +224,15 @@ export const deleteCodeList = () => async (dispatch, getState) => {
     const selectedIndex = getState().treeview.selectedItem.selectedIndex
     const body = JSON.stringify({ ROW_ID });
     try {
-        let res = await instance
-            .post(
-                "/code-list/delete/",
-                body,
-                config()
-            )
+        let res = await CodelistService.remove(body);
+        await dispatch(loadTreeviewItem(CodelistService.getAllTreeitem, "CODE_TEXT"))
+        dispatch(selectTreeViewItem(selectedIndex))
+        return Promise.resolve(res.data)
 
     } catch (err) {
-        return false
+        return Promise.reject(err)
     }
-    await dispatch(loadTreeviewItem(CodelistService.getAllTreeitem, "CODE_TEXT"))
-    dispatch(selectTreeViewItem(selectedIndex))
+
 }
 
 export const saveAndMoveCodeList = (index) => async (dispatch, getState) => {
