@@ -1,5 +1,4 @@
 import {
-    SELECT_TREEVIEW_ITEM_TAGS,
     LOAD_TAGS_LABEL,
     SET_TAG_SAVE_VALUES,
     CLEAN_ALL_TAGS,
@@ -7,36 +6,29 @@ import {
     FILL_SAVE_VALUES_TAGS
 } from "../types"
 
-import { instance, config } from '../../baseApi';
+
 import {
     setConfirmation,
-    setExtraBtn,
 } from "../../reducers/confirmation";
 
 import TagService from "../../api/tags";
 
 import { loadTreeviewItem, selectTreeViewItem } from "../treeview/treeview";
 import { setIsActiveConfirmation } from "../confirmation/historyConfirmation";
-function _uuidv4() {
-    return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, (c) =>
-        (
-            c ^
-            (crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (c / 4)))
-        ).toString(16)
-    );
-}
+import { uuidv4 } from "../../utils/uuidGenerator"
+
 const _fillUuids = (rows) => async (dispatch, getState) => {
     console.log("Girdi");
     Object.keys(rows).map(e => {
         if (rows[e].PROPERTY_TYPE === "GUID") {
-            var newUuid = _uuidv4()
+            var newUuid = uuidv4()
             dispatch({
                 type: SET_TAG_SAVE_VALUES,
                 payload: { key: rows[e].PROPERTY_NAME, value: newUuid.replace(/-/g, "") }
             })
         }
     })
-    var newUuid = _uuidv4()
+    var newUuid = uuidv4()
     dispatch({
         type: SET_TAG_SAVE_VALUES,
         payload: { key: "TAG_ID", value: newUuid.replace(/-/g, "") }
@@ -45,40 +37,26 @@ const _fillUuids = (rows) => async (dispatch, getState) => {
 }
 
 export const _fillTagData = (tagId) => async (dispatch, getState) => {
-    // var newUuid = _uuidv4()
-    // dispatch({
-    //     type: SET_TAG_SAVE_VALUES,
-    //     payload: { key: "TAG_ID", value: newUuid.replace(/-/g, "") }
-    // })
     try {
         const body = JSON.stringify({ TAG_ID: tagId })
-        console.log(body);
-        let res = await instance
-            .post(
-                "/tags/item/",
-                body,
-                config()
-            )
+
+        let res = await TagService.getTagItem(body)
+
         dispatch({
             type: FILL_SAVE_VALUES_TAGS,
             payload: res.data[0]
         })
-        console.log(res);
-    } catch {
-
+        return Promise.resolve(res.data)
+    } catch (err) {
+        return Promise.reject(err)
     }
 }
 export const loadTagsLabel = () => async (dispatch, getState) => {
     try {
         const CULTURE = getState().lang.cultur
         const body = JSON.stringify({ CULTURE })
-        let res = await instance
-            .post(
-                "/tags/tags-property/",
-                body,
-                config()
-            )
-        console.log(res);
+        let res = await TagService.getTagsProperty(body)
+
         var sortedTagInfo = res.data.TAG_INFORMATIONS.sort((a, b) =>
             parseInt(a.SORT_ORDER) > parseInt(b.SORT_ORDER) ? 1 : -1
         )
@@ -91,9 +69,9 @@ export const loadTagsLabel = () => async (dispatch, getState) => {
             type: LOAD_TAGS_LABEL,
             payload: { "TAG_INFORMATIONS": sortedTagInfo, "TAG_LINK": sortedTagLink }
         })
-
+        return Promise.resolve(res.data)
     } catch (err) {
-        console.log(err);
+        return Promise.reject(err)
 
     }
 }
@@ -111,13 +89,7 @@ export const addNewTag = () => async (dispatch, getState) => {
     try {
         const CULTURE = getState().lang.cultur
         const body = JSON.stringify({ CULTURE })
-        let res = await instance
-            .post(
-                "/tags/tags-property/",
-                body,
-                config()
-            )
-        console.log(res);
+        let res = await TagService.getTagsProperty(body)
         var sortedTagInfo = res.data.TAG_INFORMATIONS.sort((a, b) =>
             parseInt(a.SORT_ORDER) > parseInt(b.SORT_ORDER) ? 1 : -1
         )
@@ -130,14 +102,14 @@ export const addNewTag = () => async (dispatch, getState) => {
             payload: { "TAG_INFORMATIONS": sortedTagInfo, "TAG_LINK": sortedTagLink }
         })
         dispatch(_fillUuids(sortedTagInfo.concat(sortedTagLink)))
+        return Promise.resolve(res.data)
     } catch (err) {
-        console.log(err);
+        return Promise.reject(err);
 
     }
 }
 
 export const addSaveTagValue = (key, value) => (dispatch) => {
-    console.log("Girdi");
     dispatch({
         type: TOGGLE_CHANGES_TAGS,
         payload: true
@@ -155,7 +127,7 @@ export const cleanAllTags = () => dispatch => {
 }
 
 const _newTagSave = async (saveValues, user) => {
-    var newUuid = _uuidv4()
+    var newUuid = uuidv4()
 
     const body = JSON.stringify({
         ...saveValues,
@@ -168,18 +140,11 @@ const _newTagSave = async (saveValues, user) => {
         "FROM_ITEM_TYPE": "TAG_CACHE",
         "LINK_TYPE": "TAG_ITEM",
     })
-    console.log(body);
     try {
-
-        let res = await instance
-            .post(
-                "/tags/save/",
-                body,
-                config()
-            )
-
-    } catch {
-
+        let res = await TagService.createAndUpdate(body)
+        return Promise.resolve(res.data)
+    } catch (err) {
+        return Promise.reject(err)
     }
 }
 
@@ -246,17 +211,10 @@ export const saveTag = () => async (dispatch, getState) => {
 
 async function _deleteTag(TAG_ID) {
     try {
-        console.log(TAG_ID);
         const body = JSON.stringify({ TAG_ID })
-        console.log(body);
-        let res = await instance
-            .post(
-                "/tags/delete/",
-                body,
-                config()
-            )
-        console.log(res);
-    } catch { console.log("sadsad"); }
+        let res = await TagService.remove(body)
+        return Promise.resolve(res.data)
+    } catch (err) { return Promise.reject(err); }
 }
 
 export const deleteTag = () => async (dispatch, getState) => {
