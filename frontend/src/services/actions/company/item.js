@@ -20,14 +20,9 @@ import { loadRows } from "./datagrid";
 import ConfirmDataGrid from "../../../pages/main/configuration/organization/dataGrid/confirmDataGrid";
 import { instance, config } from '../../baseApi';
 import history from "../../../routers/history";
-function _uuidv4() {
-    return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, (c) =>
-        (
-            c ^
-            (crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (c / 4)))
-        ).toString(16)
-    );
-}
+
+import { uuidv4 } from "../../utils/uuidGenerator";
+import { dateFormatter } from "../../utils/dateFormatter";
 
 export const showItem = () => async (dispatch, getState) => {
     const type = getState().item.type.toLowerCase()
@@ -57,23 +52,19 @@ export const showItem = () => async (dispatch, getState) => {
 }
 export const saveItem = () => async (dispatch, getState) => {
     if (dispatch(checkMandatoryFields())) {
-        const uuid = _uuidv4()
+        const uuid = uuidv4()
         var COLUMNS = []
         var ITEM = {}
         Object.keys(getState().companyDataGrid.columns).map(async (a, i) => {
             if (i > 3) {
-                var d = getState().companyDataGrid.rows.HISTORY[a].getDate();
-                var m = getState().companyDataGrid.rows.HISTORY[a].getMonth();
-                m += 1;
-                var y = getState().companyDataGrid.rows.HISTORY[a].getFullYear();
-                var newdate = (y + "-" + m + "-" + d);
+                var newdate = dateFormatter(getState().companyDataGrid.rows.HISTORY[a]);
                 COLUMNS.push({
                     "START_TIME": newdate,
                 })
                 Object.keys(getState().companyDataGrid.rows).map((e) => {
                     //&& getState().companyDataGrid.rows[e][a] === null && getState().companyDataGrid.rows[e][a] === ""
                     if (e !== "HISTORY") {
-                        var propsRowUuid = _uuidv4()
+                        var propsRowUuid = uuidv4()
                         if (getState().companyDataGrid.rows[e].PROPERTY_TYPE === "NUMBER" || getState().companyDataGrid.rows[e].PROPERTY_TYPE === "INT") {
                             COLUMNS[i - 4] = {
                                 ...COLUMNS[i - 4],
@@ -118,7 +109,7 @@ export const saveItem = () => async (dispatch, getState) => {
                     }
                 })
 
-                var rowUuid = _uuidv4()
+                var rowUuid = uuidv4()
                 ITEM = {
                     "ITEM_ID": getState().item.selectedItem.ITEM_ID ? getState().item.selectedItem.ITEM_ID : uuid.replace(/-/g, ""),
                     "ITEM_TYPE": getState().item.type,
@@ -332,7 +323,7 @@ const updateDataGrid = () => async (dispatch, getState) => {
             payload: { ...rows }
         });
         Object.keys(res.data).map(e => {
-            var newUuid = _uuidv4()
+            var newUuid = uuidv4()
             dispatch(addColum({ key: newUuid.replace(/-/g, ""), value: new column({ newUuid: newUuid.replace(/-/g, "") }) }, new Date(e)));
             rows["HISTORY"][newUuid.replace(/-/g, "")] = new Date(e)
             Object.keys(res.data[e]).map(a => {

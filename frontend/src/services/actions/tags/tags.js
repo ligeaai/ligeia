@@ -18,7 +18,6 @@ import { setIsActiveConfirmation } from "../confirmation/historyConfirmation";
 import { uuidv4 } from "../../utils/uuidGenerator"
 
 const _fillUuids = (rows) => async (dispatch, getState) => {
-    console.log("Girdi");
     Object.keys(rows).map(e => {
         if (rows[e].PROPERTY_TYPE === "GUID") {
             var newUuid = uuidv4()
@@ -63,8 +62,6 @@ export const loadTagsLabel = () => async (dispatch, getState) => {
         var sortedTagLink = res.data.TAG_LINK.sort((a, b) =>
             parseInt(a.SORT_ORDER) > parseInt(b.SORT_ORDER) ? 1 : -1
         )
-
-
         dispatch({
             type: LOAD_TAGS_LABEL,
             payload: { "TAG_INFORMATIONS": sortedTagInfo, "TAG_LINK": sortedTagLink }
@@ -72,7 +69,6 @@ export const loadTagsLabel = () => async (dispatch, getState) => {
         return Promise.resolve(res.data)
     } catch (err) {
         return Promise.reject(err)
-
     }
 }
 
@@ -86,27 +82,10 @@ export const addNewTag = () => async (dispatch, getState) => {
         type: FILL_SAVE_VALUES_TAGS,
         payload: {}
     })
-    try {
-        const CULTURE = getState().lang.cultur
-        const body = JSON.stringify({ CULTURE })
-        let res = await TagService.getTagsProperty(body)
-        var sortedTagInfo = res.data.TAG_INFORMATIONS.sort((a, b) =>
-            parseInt(a.SORT_ORDER) > parseInt(b.SORT_ORDER) ? 1 : -1
-        )
-        var sortedTagLink = res.data.TAG_LINK.sort((a, b) =>
-            parseInt(a.SORT_ORDER) > parseInt(b.SORT_ORDER) ? 1 : -1
-        )
-
-        dispatch({
-            type: LOAD_TAGS_LABEL,
-            payload: { "TAG_INFORMATIONS": sortedTagInfo, "TAG_LINK": sortedTagLink }
-        })
-        dispatch(_fillUuids(sortedTagInfo.concat(sortedTagLink)))
-        return Promise.resolve(res.data)
-    } catch (err) {
-        return Promise.reject(err);
-
-    }
+    await dispatch(loadTagsLabel())
+    const sortedTagLink = getState().tags.tagValues.TAG_LINK
+    const sortedTagInfo = getState().tags.tagValues.TAG_INFORMATIONS
+    dispatch(_fillUuids(sortedTagInfo.concat(sortedTagLink)))
 }
 
 export const addSaveTagValue = (key, value) => (dispatch) => {
@@ -235,6 +214,7 @@ export const deleteTag = () => async (dispatch, getState) => {
                 await _deleteTag(tagId)
                 await dispatch(loadTreeviewItem(TagService.getAll, "NAME"));
                 dispatch(selectTreeViewItem(selectedIndex, "NAME"))
+                dispatch(loadTagsLabel())
             },
         })
     );
@@ -250,7 +230,6 @@ const _checkmandatoryFields = (values, properties) => {
     var myPropLink = mandatoryFields(properties.TAG_LINK);
     var returnval = true
 
-    console.log(values);
     myPropInformation.map(e => {
         if (!values[e.PROPERTY_NAME] && e.PROPERTY_NAME !== "ITEM_ID") {
             console.log(e);

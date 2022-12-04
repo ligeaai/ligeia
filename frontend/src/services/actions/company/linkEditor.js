@@ -13,6 +13,7 @@ import { Box } from "@mui/material";
 
 import { instance, config } from '../../baseApi';
 import React from "react";
+import { dateFormatter } from "../../utils/dateFormatter"
 
 let cancelToken;
 export const loadLinkEditor = () => async (dispatch, getState) => {
@@ -123,28 +124,16 @@ export const saveLinkItem = () => async (dispatch, getState) => {
     Object.keys(links).map(async e => {
         if (changedLinks.has(e)) {
             try {
-                var d = links[e].START_DATETIME.getDate();//todo create a utils folder for date converting
-                var m = links[e].START_DATETIME.getMonth();
-                m += 1;
-                var y = links[e].START_DATETIME.getFullYear();
-                var startDateTime = (y + "-" + m + "-" + d);
+                var startDateTime = dateFormatter(links[e].START_DATETIME);
             } catch {
                 var startDateTime = links[e].START_DATETIME
             }
-
-
             try {
-                var d = links[e].END_DATETIME.getDate();
-                var m = links[e].END_DATETIME.getMonth();
-                m += 1;
-                var y = links[e].END_DATETIME.getFullYear();
-                var endDateTime = (y + "-" + m + "-" + d);
+                var endDateTime = dateFormatter(links[e].END_DATETIME);
             } catch {
                 var endDateTime = links[e].END_DATETIME
             }
-
             const body = JSON.stringify({ LINK_ID: e, START_DATETIME: startDateTime, END_DATETIME: endDateTime })
-            console.log(body);
             try {
                 await instance.put(
                     `/item-link/update/`,
@@ -154,7 +143,6 @@ export const saveLinkItem = () => async (dispatch, getState) => {
             } catch { }
         }
     })
-
     dispatch({
         type: CLEAN_CHANGED_LIST_LINK_EDITOR,
 

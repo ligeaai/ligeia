@@ -1,8 +1,6 @@
 import {
     SET_SELECTED_DRAWER_ITEM,
     TOGGLE_DRAWER_MENU,
-    MOUSE_ENTER_DRAWER,
-    MOUSE_LEAVE_DRAWER,
     LOAD_DRAWER_MENU
 } from "../types"
 
@@ -50,15 +48,3 @@ export const toggleDrawerMenu = () => async (dispatch) => {
         type: TOGGLE_DRAWER_MENU
     })
 }
-
-
-// export const mouseEnterDrawer = () => async (dispatch) => {
-//     dispatch({
-//         type: MOUSE_ENTER_DRAWER
-//     })
-// }
-// export const mouseLeaveDrawer = () => async (dispatch) => {
-//     dispatch({
-//         type: MOUSE_LEAVE_DRAWER
-//     })
-// }

@@ -20,6 +20,9 @@ import {
 import { loadTreeviewItem, selectTreeViewItem } from "../treeview/treeview"
 
 import TypeService from "../../api/type"
+
+import { dateFormatter } from "../../utils/dateFormatter";
+
 const _createNewType = () => {
     const uuid = uuidv4()
     return [
@@ -219,11 +222,7 @@ export const saveTypeAndProperty = () => async (dispatch, getState) => {
     if (anyChangesType) {
         const lastUpdateUser = getState().auth.user.email
         const now = new Date();
-        var d = now.getDate();
-        var m = now.getMonth();
-        m += 1;
-        var y = now.getFullYear();
-        var newdate = (y + "-" + m + "-" + d);
+        var newdate = dateFormatter(now);
         var saveVal = getState().dataGridType.rows[Object.keys(getState().dataGridType.rows)[0]]
         var mySaveVal = {}
         Object.keys(saveVal).map(e => {

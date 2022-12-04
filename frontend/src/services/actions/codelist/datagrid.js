@@ -19,7 +19,7 @@ import { uuidv4 } from "../../utils/uuidGenerator"
 import { loadTreeviewItem, selectTreeViewItem } from "../treeview/treeview"
 
 import CodelistService from "../../api/codeList";
-
+import { dateFormatter } from "../../utils/dateFormatter"
 
 const _createNewParent = () => (dispatch, getState) => {
     const culture = getState().lang.cultur
@@ -117,20 +117,10 @@ const _save = (value, userEmail) => async (dispatch, getState) => {
     }
 
     if (value.DATE1 !== "") {
-        var d = value.DATE1.getDate();
-        var m = value.DATE1.getMonth();
-        m += 1;
-        var y = value.DATE1.getFullYear();
-        var newdate = (y + "-" + m + "-" + d);
-        temp.DATE1 = newdate
+        temp.DATE1 = dateFormatter(value.DATE1)
     }
     if (value.DATE2 !== "") {
-        d = value.DATE2.getDate();
-        m = value.DATE2.getMonth();
-        m += 1;
-        y = value.DATE2.getFullYear();
-        newdate = (y + "-" + m + "-" + d);
-        temp.DATE2 = newdate
+        temp.DATE2 = dateFormatter(value.DATE2)
     }
     if (value.VAL1 !== "") {
         temp.VAL1 = parseInt(value.VAL1)

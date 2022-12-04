@@ -8,10 +8,10 @@ import axios from "axios";
 import { instance, config } from '../../baseApi';
 import { loadLinkEditor } from "./linkEditor";
 
+import { dateFormatter } from "../../utils/dateFormatter"
+
 let cancelToken;
 export const loadCheckedList = (type, inOut) => async (dispatch, getState) => {
-    console.log(inOut);
-    console.log(type);
     if (cancelToken) {
         cancelToken.cancel()
     }
@@ -314,17 +314,12 @@ export const saveLinks = (date, linkType, isOutCheck) => async (dispatch, getSta
             if (isOutCheck === selectedItem.ITEM_TYPE) {
                 isOut = true
             }
-            var d = date.getDate();
-            var m = date.getMonth();
-            m += 1;
-            var y = date.getFullYear();
-            var newdate = y + "-" + m + "-" + d;
             const linkUuid = _uuidv4();
             const rowUuid = _uuidv4();
             const body = JSON.stringify({
                 LINK_ID: linkUuid.replace(/-/g, ""),
                 LINK_TYPE: linkType,
-                START_DATETIME: newdate,
+                START_DATETIME: dateFormatter(date),
                 END_DATETIME: "9000-1-1",
                 FROM_ITEM_ID: isOut ? e.ITEM_ID : selectedItem.ITEM_ID,
                 FROM_ITEM_TYPE: isOut ? e.ITEM_TYPE : selectedItem.ITEM_TYPE,
