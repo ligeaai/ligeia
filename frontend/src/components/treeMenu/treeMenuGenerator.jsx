@@ -9,7 +9,7 @@ import {
   cleanTreeview,
 } from "../../services/actions/treeview/treeview";
 
-export const TreeMenuItems = ({ path, textPath }) => {
+const TreeMenuItems = ({ path, textPath }) => {
   const dispatch = useDispatch();
   const filteredTreeItems = useSelector(
     (state) => state.treeview.filteredMenuItem
@@ -37,3 +37,5 @@ export const TreeMenuItems = ({ path, textPath }) => {
     </>
   );
 };
+
+export default TreeMenuItems;

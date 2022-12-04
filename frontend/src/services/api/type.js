@@ -5,9 +5,7 @@ const getAll = (body, cancelToken) => {
 };
 let cancelToken;
 const getTypeAndProperty = (body) => {
-    console.log("sadklsş");
     if (cancelToken) {
-        console.log(cancelToken);
         cancelToken.cancel()
     }
     cancelToken = axios.CancelToken.source();

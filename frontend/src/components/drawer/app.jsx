@@ -15,7 +15,7 @@ import { useParams } from "react-router-dom";
 import { confirmationPushHistory } from "../../services/utils/historyPush";
 import { setGoFunctionConfirmation } from "../../services/actions/confirmation/historyConfirmation";
 
-export default function App({ menu }) {
+function App({ menu }) {
   return Object.keys(menu).map((item, key) => (
     <MenuItem key={key} item={menu[item]} url="/" />
   ));
@@ -215,3 +215,5 @@ const MultiLevel = ({ item, url }) => {
     </React.Fragment>
   );
 };
+
+export default React.memo(App);

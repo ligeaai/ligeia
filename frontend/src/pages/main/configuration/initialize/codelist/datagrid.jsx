@@ -60,7 +60,6 @@ export default function TreeDataWithGap() {
   }, [selectedIndex]);
   React.useEffect(() => {
     if (isMount) {
-      console.log("sadasd");
       dispatch(setSaveFunctonConfirmation(saveCodeList));
       dispatch(
         setTitleConfirmation("Are you sure you want to save this code list ? ")

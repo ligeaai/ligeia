@@ -30,7 +30,7 @@ import SearchBar from "./searchBar/searchBar";
 import SearchBarMobile from "./searchBar/searchBarMobile";
 import Select from "./select/select"
 import { TreeMenu } from "./treeMenu/treeMenu"
-import { TreeMenuItems } from "./treeMenu/treeMenuGenerator"
+import TreeMenuItems from "./treeMenu/treeMenuGenerator"
 
 
 

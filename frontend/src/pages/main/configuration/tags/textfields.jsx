@@ -15,25 +15,30 @@ import { useDispatch, useSelector } from "react-redux";
 import { instance, config } from "../../../../services/baseApi";
 import { addSaveTagValue } from "../../../../services/actions/tags/tags";
 import axios from "axios";
-
+import { setIsActiveConfirmation } from "../../../../services/actions/confirmation/historyConfirmation";
+import { useIsMount } from "../../../../hooks/useIsMount";
 const TransactionPropertySelect = ({ defaultValue }) => {
+  const isMount = useIsMount();
   const dispatch = useDispatch();
   const values = useSelector((state) => state.tags.items);
   const selectedValue = useSelector(
-    (state) => state.tagsTreeview.selectedItem.selectedIndex
+    (state) => state.treeview.selectedItem.selectedIndex
   );
 
   const handleChangeFunc = async (value) => {
+    dispatch(setIsActiveConfirmation(true));
     dispatch(addSaveTagValue("TO_ITEM_ID", value));
     dispatch(addSaveTagValue("ITEM_ID", value));
     dispatch(addSaveTagValue("TRANSACTION_PROPERTY", value));
   };
   React.useEffect(() => {
-    console.log(selectedValue);
-    dispatch({
-      type: "SET_TAG_SAVE_VALUES",
-      payload: { key: "TO_ITEM_ID", value: defaultValue },
-    });
+    if (!isMount && selectedValue !== -3) {
+      console.log(selectedValue);
+      dispatch({
+        type: "SET_TAG_SAVE_VALUES",
+        payload: { key: "TO_ITEM_ID", value: defaultValue },
+      });
+    }
   }, [defaultValue, selectedValue]);
   return (
     <Select
@@ -49,6 +54,10 @@ const TransactionPropertySelect = ({ defaultValue }) => {
 };
 
 const TransactionTypeSelect = ({ row, defaultValue }) => {
+  console.log("renddered  ");
+  const selectedIndex = useSelector(
+    (state) => state.treeview.selectedItem.selectedIndex
+  );
   const dispatch = useDispatch();
   const [values, setvalues] = React.useState([]);
 
@@ -113,12 +122,15 @@ const TransactionTypeSelect = ({ row, defaultValue }) => {
         loadItems(defaultValue);
       }
     };
+    if (selectedIndex !== -3) {
+      console.log(selectedIndex);
+      myFunc();
+    }
 
-    myFunc();
     return () => {
       ignore = true;
     };
-  }, [defaultValue]);
+  }, [defaultValue, selectedIndex]);
   return (
     <Select
       //errFunc={errFunc}
@@ -135,9 +147,11 @@ const TextFields = (props) => {
   const dispatch = useDispatch();
   const { row } = props;
   const handleChangeFunc = (value) => {
+    dispatch(setIsActiveConfirmation(true));
     dispatch(addSaveTagValue(row.PROPERTY_NAME, value));
   };
   const historyHandleChangeFunc = (value) => {
+    dispatch(setIsActiveConfirmation(true));
     var d = value.getDate();
     var m = value.getMonth();
     m += 1;

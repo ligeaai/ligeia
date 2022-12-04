@@ -40,12 +40,13 @@ export const loadTreeviewItem = (path, sortPath) => async (dispatch, getState) =
         }
         cancelToken = axios.CancelToken.source();
         let res = await path(body, cancelToken);
+        var sortedResponse;
         if (sortPath === "TYPE") {//todo need to change api end point 
-            var sortedResponse = res.data.Message.sort((a, b) =>
+            sortedResponse = res.data.Message.sort((a, b) =>
                 a[sortPath] > b[sortPath] ? 1 : -1
             )
         } else {
-            var sortedResponse = res.data.sort((a, b) =>
+            sortedResponse = res.data.sort((a, b) =>
                 a[sortPath] > b[sortPath] ? 1 : -1
             )
         }
@@ -57,6 +58,7 @@ export const loadTreeviewItem = (path, sortPath) => async (dispatch, getState) =
         dispatch(loadFilteredTreeviewItem())
         return Promise.resolve(res.data)
     } catch (err) {
+        dispatch(await cleanTreeview())
         return Promise.reject(err)
     }
 }
@@ -64,7 +66,6 @@ export const loadTreeviewItem = (path, sortPath) => async (dispatch, getState) =
 
 
 export const selectTreeViewItem = (index, breadcrumbPath) => async (dispatch, getState) => {
-    console.log(index);
     const goFunction = () => {
         if (index === -2) {
             dispatch({
@@ -83,6 +84,7 @@ export const selectTreeViewItem = (index, breadcrumbPath) => async (dispatch, ge
             var payload = getState().treeview.filteredMenuItem[parseInt(index)]
 
             payload = { ...payload, selectedIndex: index }
+            console.log(payload);
             dispatch({
                 type: SELECT_TREEVIEW_ITEM,
                 payload: payload

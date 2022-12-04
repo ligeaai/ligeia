@@ -25,9 +25,6 @@ const CodelistActionMenu = () => {
   const selectedIndex = useSelector(
     (state) => state.treeview.selectedItem.selectedIndex
   );
-  const treeMenuItemLenght = useSelector(
-    (state) => state.treeview.filteredMenuItem.length
-  );
   const dispatch = useDispatch();
   const btnNew = () => {
     if (changedRows.length !== 0 || deletedRows.length !== 0) {

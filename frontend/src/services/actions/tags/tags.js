@@ -7,16 +7,16 @@ import {
     FILL_SAVE_VALUES_TAGS
 } from "../types"
 
-import axios from "axios";
 import { instance, config } from '../../baseApi';
 import {
     setConfirmation,
     setExtraBtn,
 } from "../../reducers/confirmation";
-import { loadTreeView, _checkmandatoryFields, _goIndex } from "./tagsTreeview"
 
+import TagService from "../../api/tags";
 
-let cancelToken;
+import { loadTreeviewItem, selectTreeViewItem } from "../treeview/treeview";
+import { setIsActiveConfirmation } from "../confirmation/historyConfirmation";
 function _uuidv4() {
     return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, (c) =>
         (
@@ -26,6 +26,7 @@ function _uuidv4() {
     );
 }
 const _fillUuids = (rows) => async (dispatch, getState) => {
+    console.log("Girdi");
     Object.keys(rows).map(e => {
         if (rows[e].PROPERTY_TYPE === "GUID") {
             var newUuid = _uuidv4()
@@ -103,6 +104,10 @@ export const addNewTag = () => async (dispatch, getState) => {
         type: TOGGLE_CHANGES_TAGS,
         payload: true
     })
+    dispatch({
+        type: FILL_SAVE_VALUES_TAGS,
+        payload: {}
+    })
     try {
         const CULTURE = getState().lang.cultur
         const body = JSON.stringify({ CULTURE })
@@ -132,6 +137,7 @@ export const addNewTag = () => async (dispatch, getState) => {
 }
 
 export const addSaveTagValue = (key, value) => (dispatch) => {
+    console.log("Girdi");
     dispatch({
         type: TOGGLE_CHANGES_TAGS,
         payload: true
@@ -142,7 +148,7 @@ export const addSaveTagValue = (key, value) => (dispatch) => {
     })
 }
 
-export const cleanAllTags = (key, value) => dispatch => {
+export const cleanAllTags = () => dispatch => {
     dispatch({
         type: CLEAN_ALL_TAGS
     })
@@ -150,11 +156,12 @@ export const cleanAllTags = (key, value) => dispatch => {
 
 const _newTagSave = async (saveValues, user) => {
     var newUuid = _uuidv4()
-    console.log(saveValues);
+
     const body = JSON.stringify({
         ...saveValues,
         // "LAST_UPDT_USER": user,
         // "LAST_UPDT_DATE": new Date(),
+        "TO_ITEM_TYPE": saveValues.TRANSACTION_TYPE,
         "END_DATETIME": "9000-01-01",
         "LINK_ID": saveValues.LINK_ID ? saveValues.LINK_ID : newUuid.replace(/-/g, ""),
         "FROM_ITEM_ID": saveValues.TAG_ID,
@@ -190,14 +197,13 @@ export const saveNewTag = () => async (dispatch, getState) => {
                 body: <></>,
                 agreefunction: async () => {
                     if (_checkmandatoryFields(values, properties)) {
-                        console.log("sadsadasd");
                         dispatch({
                             type: TOGGLE_CHANGES_TAGS,
                             payload: false
                         })
                         await _newTagSave(saveValues, user)
-
-                        dispatch(loadTreeView())
+                        dispatch(setIsActiveConfirmation(false))
+                        dispatch(loadTreeviewItem(TagService.getAll, "NAME"))
                     } else {
                         dispatch({
                             type: "ADD_ERROR_SUCCESS",
@@ -212,13 +218,28 @@ export const saveNewTag = () => async (dispatch, getState) => {
 }
 
 
-export const saveTag = (saveValues) => async (dispatch, getState) => {
-    var user = getState().auth.user.email
-    dispatch({
-        type: TOGGLE_CHANGES_TAGS,
-        payload: false
-    })
-    _newTagSave(saveValues, user)
+export const saveTag = () => async (dispatch, getState) => {
+    const values = getState().tags.saveValues
+    const properties = getState().tags.tagValues
+    if (_checkmandatoryFields(values, properties)) {
+        var user = getState().auth.user.email
+        const saveValues = getState().tags.saveValues
+        dispatch({
+            type: TOGGLE_CHANGES_TAGS,
+            payload: false
+        })
+        await _newTagSave(saveValues, user)
+        dispatch(loadTreeviewItem(TagService.getAll, "NAME"))
+        dispatch(setIsActiveConfirmation(false))
+        return true
+    }
+    else {
+        dispatch({
+            type: "ADD_ERROR_SUCCESS",
+            payload: "Pleas check mandatory fields"
+        })
+        return false
+    }
 
 }
 
@@ -239,8 +260,8 @@ async function _deleteTag(TAG_ID) {
 }
 
 export const deleteTag = () => async (dispatch, getState) => {
-    const tagId = getState().tagsTreeview.selectedItem.TAG_ID
-    const selectedIndex = getState().tagsTreeview.selectedItem.selectedIndex
+    const tagId = getState().treeview.selectedItem.TAG_ID
+    const selectedIndex = getState().treeview.selectedItem.selectedIndex
 
     dispatch(
         setConfirmation({
@@ -254,9 +275,35 @@ export const deleteTag = () => async (dispatch, getState) => {
                 })
                 dispatch(cleanAllTags())
                 await _deleteTag(tagId)
-                await dispatch(loadTreeView());
-                dispatch(_goIndex(selectedIndex))
+                await dispatch(loadTreeviewItem(TagService.getAll, "NAME"));
+                dispatch(selectTreeViewItem(selectedIndex, "NAME"))
             },
         })
     );
+}
+
+const mandatoryFields = (properties) => {
+    return properties.filter(e => e.MANDATORY === "True")
+}
+
+const _checkmandatoryFields = (values, properties) => {
+    console.log(properties);
+    var myPropInformation = mandatoryFields(properties.TAG_INFORMATIONS);
+    var myPropLink = mandatoryFields(properties.TAG_LINK);
+    var returnval = true
+
+    console.log(values);
+    myPropInformation.map(e => {
+        if (!values[e.PROPERTY_NAME] && e.PROPERTY_NAME !== "ITEM_ID") {
+            console.log(e);
+            returnval = false
+        }
+    })
+    myPropLink.map(e => {
+        if (!values[e.PROPERTY_NAME] && e.PROPERTY_NAME !== "ITEM_ID") {
+            console.log(e);
+            returnval = false
+        }
+    })
+    return returnval
 }

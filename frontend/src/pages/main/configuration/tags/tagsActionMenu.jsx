@@ -2,19 +2,15 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { ActionMenu } from "../../../../components";
-import { selectTreeview } from "../../../../services/actions/tags/tagsTreeview";
-import {
-  saveTag,
-  deleteTag,
-  saveNewTag,
-} from "../../../../services/actions/tags/tags";
+import { selectTreeViewItem } from "../../../../services/actions/treeview/treeview";
+import { deleteTag, saveNewTag } from "../../../../services/actions/tags/tags";
 const TagsActionMenu = () => {
   const dispatch = useDispatch();
   const selectedIndex = useSelector(
-    (state) => state.tagsTreeview.selectedItem.selectedIndex
+    (state) => state.treeview.selectedItem.selectedIndex
   );
   const btnNew = () => {
-    dispatch(selectTreeview(-2));
+    dispatch(selectTreeViewItem(-2, "new"));
   };
   const save = () => {
     dispatch(saveNewTag());
@@ -23,10 +19,10 @@ const TagsActionMenu = () => {
     dispatch(deleteTag());
   };
   const saveGoPrev = () => {
-    dispatch(selectTreeview(selectedIndex - 1));
+    dispatch(selectTreeViewItem(selectedIndex - 1, "NAME"));
   };
   const saveGoNext = () => {
-    dispatch(selectTreeview(selectedIndex + 1));
+    dispatch(selectTreeViewItem(selectedIndex + 1, "NAME"));
   };
   return (
     <ActionMenu

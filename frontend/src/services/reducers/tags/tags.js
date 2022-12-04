@@ -34,7 +34,6 @@ export default function (state = initialState, action) {
                 tagValues: payload
             }
         case SET_TAG_SAVE_VALUES:
-            console.log({ ...state.saveValues });
             return {
                 ...state,
                 saveValues: { ...state.saveValues, [payload.key]: payload.value }
@@ -53,7 +52,8 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 saveValues: {},
-                anyChanges: false
+                anyChanges: false,
+                tagValues: [],
             }
         default:
             return {

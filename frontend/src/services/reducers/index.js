@@ -18,7 +18,6 @@ import linkEditor from './company/linkEditor';
 import registerFormReducer from './registerFormReducer';
 import searchBarReducer from './searchBarReducer';
 import tags from "./tags/tags"
-import tagsTreeview from './tags/tagsTreeview';
 import themeReducer from './themeReducer';
 import treeview from './treeview/treeview';
 
@@ -26,5 +25,5 @@ import treeview from './treeview/treeview';
 
 export {
     authReducer, companyDataGrid, confirmation, historyConfirmation, companyCheckedList, cssUserSelect, dataGridCodeList, dataGridType, drawerMenu, errorReducer, project, highchart, fullScreenReducer,
-    item, langReducer, loaderReducer, linkEditor, registerFormReducer, searchBarReducer, tags, tagsTreeview, themeReducer, treeview
+    item, langReducer, loaderReducer, linkEditor, registerFormReducer, searchBarReducer, tags, themeReducer, treeview
 }
