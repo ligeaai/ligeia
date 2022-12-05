@@ -11,4 +11,5 @@ modelApp = [
     "apps.item_version",
     "apps.layer",
     "apps.tags",
-]
+    "apps.notifications",
+    ]
