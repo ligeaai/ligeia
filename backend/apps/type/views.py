@@ -197,7 +197,8 @@ class TypeDetailNewView(generics.CreateAPIView):
                     
     def _getCodeList(self,data,culture):
         for index in range(0,len(data)):
-            queryset = code_list.objects.filter(LIST_TYPE = "CODE_LIST",CODE=data[index].get('CODE_LIST'), CULTURE=culture)
+            # queryset = code_list.objects.filter(LIST_TYPE = "CODE_LIST",CODE=data[index].get('CODE_LIST'), CULTURE=culture)
+            queryset = code_list.objects.filter(LIST_TYPE=data[index].get('CODE_LIST'), CULTURE=culture)
             child_code = CodeListORM.getCodeList(queryset,culture=culture,hierarchy=False)
             data[index]['CODE'] = child_code
     
