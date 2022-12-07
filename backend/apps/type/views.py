@@ -37,6 +37,7 @@ from .serializers import (
 )
 from services.logging.Handlers import KafkaLogger 
 logger = KafkaLogger()
+from utils.utils import redisCaching as Red
 
 class TypeSaveView(generics.CreateAPIView):
 
@@ -152,7 +153,15 @@ class TypeDetailNewView(generics.CreateAPIView):
         TypePropertySerializer,
     ]
     def post(self, request):
+        cache_key = str(request.user) + str(request.data.get('CULTURE'))+str(request.data.get('TYPE'))
+        cache_data = Red.get(cache_key)
+        if cache_data:
+            logger.info(request=request, message="Type details")
+            print('CACHE')
+            return Response(cache_data, status=status.HTTP_200_OK) 
+        
         TypePropertys = self._baseModels(request)
+        Red.set(cache_key,TypePropertys)
         return Response(TypePropertys, status=status.HTTP_200_OK)
     
     
@@ -179,7 +188,7 @@ class TypeDetailNewView(generics.CreateAPIView):
             queryset = type_property.objects.filter(TYPE = item)
             serializer = TypePropertySerializer(queryset,many = True)
             self._getResourceList(serializer.data,culture)
-            self._getCodeList(serializer.data,culture)
+            # self._getCodeList(serializer.data,culture)
             propertys[item] = serializer.data
         
 
@@ -195,12 +204,12 @@ class TypeDetailNewView(generics.CreateAPIView):
 
     
                     
-    def _getCodeList(self,data,culture):
-        for index in range(0,len(data)):
-            # queryset = code_list.objects.filter(LIST_TYPE = "CODE_LIST",CODE=data[index].get('CODE_LIST'), CULTURE=culture)
-            queryset = code_list.objects.filter(LIST_TYPE=data[index].get('CODE_LIST'), CULTURE=culture)
-            child_code = CodeListORM.getCodeList(queryset,culture=culture,hierarchy=False)
-            data[index]['CODE'] = child_code
+    # def _getCodeList(self,data,culture):
+    #     for index in range(0,len(data)):
+    #         # queryset = code_list.objects.filter(LIST_TYPE = "CODE_LIST",CODE=data[index].get('CODE_LIST'), CULTURE=culture)
+    #         queryset = code_list.objects.filter(LIST_TYPE=data[index].get('CODE_LIST'), CULTURE=culture)
+    #         child_code = CodeListORM.getCodeList(queryset,culture=culture,hierarchy=False)
+    #         data[index]['CODE'] = child_code
     
             
             

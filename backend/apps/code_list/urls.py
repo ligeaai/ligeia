@@ -7,7 +7,8 @@ from .views import (CodeListSaveScriptView,
                     CodeListDeleteChildView,
                     CodeListSaveAndUpdateNewView,
                     CodeListCultureView,
-                    CodeListParentView,)
+                    CodeListParentView,
+                    CodeListTypeDetailView,)
 from django.urls.resolvers import URLPattern 
 urlpatterns = [
     # path("codelistchild/",CodeListSaveView.as_view(),name='code-list-and-child-create'),
@@ -22,5 +23,7 @@ urlpatterns = [
     path("delete-child/", CodeListDeleteChildView.as_view(),name='code-list-delete-child'),
     path("delete/", CodeListDeleteView.as_view(),name='code-list-delete-child'),
     path("delete-parent/", CodeListParentDeleteView.as_view(),name='code-list-delete-parent'),
+    path("property-code/", CodeListTypeDetailView.as_view(),name='PropertyCode'),
+    
     
 ] 

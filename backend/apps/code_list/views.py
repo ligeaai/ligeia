@@ -94,7 +94,6 @@ class CodeListParentView(generics.CreateAPIView):
         list_types='CODE_LIST'
         culture=request.data.get("CULTURE")
         cache_key = str(request.user) + list_types + culture
-        
         queryset = code_list.objects.filter(
                     LIST_TYPE=list_types,
                     CULTURE=culture,
@@ -285,3 +284,15 @@ class CodeListDeepDetailView(generics.CreateAPIView):
     #         self._get_child(serializer.data,respons_value,1,childItem[0])
     #     return respons_value
  
+
+
+
+class CodeListTypeDetailView(generics.CreateAPIView):
+    permission_classes = [permissions.AllowAny]
+
+    def post(self, request, *args, **kwargs):
+        culture = request.data.get('CULTURE')
+        queryset = code_list.objects.filter(LIST_TYPE=request.data.get('CODE_LIST'), CULTURE=culture)
+        print(queryset)
+        child_code = CodeListORM.getCodeList(queryset,culture=culture,hierarchy=False)
+        return Response(child_code, status=status.HTTP_200_OK)
