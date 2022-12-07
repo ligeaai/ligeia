@@ -101,7 +101,16 @@ const UnitOne = (props) => {
           >
             <DateBreak props={isLinksActive} />
           </Grid>
-
+          <Divider
+            orientation="vertical"
+            variant="middle"
+            flexItem
+            sx={{
+              borderWidth: "0.2px",
+              borderColor: "#4B4B4B",
+              backgroundColor: "#4B4B4B",
+            }}
+          />
           <ItemSperatorLineXL />
           <Grid item xs={12} sx={{ mt: 1, mr: 1 }}>
             <PropLinkTabs
