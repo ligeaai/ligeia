@@ -1,8 +1,6 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-
-import Grid from "@mui/material/grid";
-import Button from "@mui/material/button";
+import { Button, Grid } from "@mui/material";
 
 import { Select, InputGenerator } from "../../../components";
 import {
