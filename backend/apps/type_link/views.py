@@ -66,21 +66,36 @@ class TypeLinkDetailsView(generics.CreateAPIView):
     def _getResourceLabel(self,data,culture,Fromtypes,ToTypes,linkType):
         qs_FromType = Type.objects.filter(TYPE = Fromtypes)
         FromType_serializer = TypeResourceListManagerSerializer(qs_FromType,many = True)
+        
+        from_label_id = ''
+        if qs_FromType:
+            from_label_id = FromType_serializer.data[0].get('LABEL_ID')
+        
         qs_ToType = Type.objects.filter(TYPE = ToTypes)
         ToType_serializer = TypeResourceListManagerSerializer(qs_ToType,many = True)
         qsLinkType = resource_list.objects.filter(ID = linkType,CULTURE = culture)
         resource_list_LinkTypeserialzer = ResourceListDetailsSerializer(qsLinkType,many = True)
+        
+        to_label_id = ''
+        if qs_ToType:
+            to_label_id = ToType_serializer.data[0].get('LABEL_ID')
+
         for index in range(len(data)):
-            qsFrom = resource_list.objects.filter(ID = FromType_serializer.data[0].get('LABEL_ID'),CULTURE = culture)
-            resource_list_Fromserialzer = ResourceListDetailsSerializer(qsFrom,many = True)
-            qsTo = resource_list.objects.filter(ID = ToType_serializer.data[0].get('LABEL_ID'),CULTURE = culture)
-            resource_list_Toserialzer = ResourceListDetailsSerializer(qsTo,many = True)
-            if qsFrom:
-                data['FROM_SHORT_LABEL'] = resource_list_Fromserialzer.data[0].get('SHORT_LABEL')
-                data['FROM_MOBILE_LABEL'] = resource_list_Fromserialzer.data[0].get('MOBILE_LABEL')
-            if qsTo:
-                data['TO_SHORT_LABEL'] = resource_list_Toserialzer.data[0].get('SHORT_LABEL')
-                data['TO_MOBILE_LABEL'] = resource_list_Toserialzer.data[0].get('MOBILE_LABEL')
-            if qsLinkType:
-                data['TYPE_LABEL'] = resource_list_LinkTypeserialzer.data[0].get('SHORT_LABEL')
-        return data
+            try:
+                qsFrom = resource_list.objects.filter(ID = from_label_id,CULTURE = culture)
+                resource_list_Fromserialzer = ResourceListDetailsSerializer(qsFrom,many = True)
+                qsTo = resource_list.objects.filter(ID = to_label_id,CULTURE = culture)
+                resource_list_Toserialzer = ResourceListDetailsSerializer(qsTo,many = True)
+                if qsFrom:
+                    data['FROM_SHORT_LABEL'] = resource_list_Fromserialzer.data[0].get('SHORT_LABEL')
+                    data['FROM_MOBILE_LABEL'] = resource_list_Fromserialzer.data[0].get('MOBILE_LABEL')
+                if qsTo:
+                    data['TO_SHORT_LABEL'] = resource_list_Toserialzer.data[0].get('SHORT_LABEL')
+                    data['TO_MOBILE_LABEL'] = resource_list_Toserialzer.data[0].get('MOBILE_LABEL')
+                if qsLinkType:
+                    data['TYPE_LABEL'] = resource_list_LinkTypeserialzer.data[0].get('SHORT_LABEL')
+                return data
+            except:
+                pass
+                
+               
