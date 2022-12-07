@@ -1,6 +1,6 @@
 import React from "react";
 import { TextField } from "@mui/material";
-const MyTextfield = (props) => {
+const ColorTextfield = (props) => {
   const {
     handleChangeFunc = () => {},
     defaultValue = "",
@@ -8,7 +8,6 @@ const MyTextfield = (props) => {
       return false;
     },
   } = props;
-  console.log(defaultValue);
   const [value, setValue] = React.useState(defaultValue);
   const handleChange = (e) => {
     setValue(e.target.value);
@@ -22,6 +21,7 @@ const MyTextfield = (props) => {
       error={errFunc()}
       variant="outlined"
       value={value}
+      type="color"
       onChange={handleChange}
       sx={{
         fontSize: "14px",
@@ -30,11 +30,11 @@ const MyTextfield = (props) => {
           paddingTop: "4px",
           paddingBottom: "4px",
         },
-        width: "100%",
-        minWidth: 125,
+        width: 75,
+        minWidth: 75,
       }}
     />
   );
 };
 
-export default MyTextfield;
+export default ColorTextfield;

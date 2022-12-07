@@ -1,24 +1,22 @@
 import {
-    SET_CHART_TYPE_OVERVIEW
+    LOAD_COLLAPSABLE_MENU_ITEMS
 } from "../../actions/types"
 
 
 
 const initialState = {
-    chartType: "spline"
+    menuItems: []
 };
-
-
 
 export default function (state = initialState, action) {
 
     const { type, payload } = action;
 
     switch (type) {
-        case SET_CHART_TYPE_OVERVIEW:
+        case LOAD_COLLAPSABLE_MENU_ITEMS:
             return {
                 ...state,
-                chartType: payload
+                menuItems: payload
             }
         default:
             return {

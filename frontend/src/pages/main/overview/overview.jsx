@@ -1,32 +1,27 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { Box, Grid, Typography, Divider } from "@mui/material";
+import { Box, Grid } from "@mui/material";
 
 import {
-  TreeView,
   Breadcrumb,
   ItemSperatorLineXL,
-  Select,
+  CollapsableMenu,
 } from "../../../components";
-import { menu } from "./owerviewMenu";
 
 import DrawerMenu from "../../../layout/main/asset/treeViewMenu";
-import OverviewEditor from "./overviewEditor";
-import OverviewActionMenu from "./overviewActionMenu";
+import TreeView from "./treeview";
 
-import {
-  changeChartType,
-  loadChartData,
-} from "../../../services/actions/overview/highchar";
+import Tabs from "./tabs";
+import { loadCollapseMenu } from "../../../services/actions/collapseMenu/collapseMenu";
+import ItemLinkService from "../../../services/api/itemLink";
+
 const Overview = () => {
   const dispatch = useDispatch();
+
   const isFullScreen = useSelector((state) => state.fullScreen.isFullScreen);
-  const selectHandleChangeFunc = (chartType) => {
-    dispatch(changeChartType(chartType));
-  };
   React.useEffect(() => {
-    dispatch(loadChartData());
+    dispatch(loadCollapseMenu(ItemLinkService.hierarchy));
   }, []);
   return (
     <Grid
@@ -38,7 +33,7 @@ const Overview = () => {
       }}
     >
       <Grid item sx={{ minHeight: "500px", boxShadow: 3, mr: 0.5 }}>
-        <DrawerMenu Element={<TreeView menu={menu} />} />
+        <DrawerMenu Element={<CollapsableMenu />} />
       </Grid>
 
       <Grid
@@ -69,33 +64,10 @@ const Overview = () => {
             </Box>
           </Grid>
           <ItemSperatorLineXL />
-          <Grid container sx={{ alignItems: "center", pl: 2 }}>
-            <Grid item>
-              <OverviewActionMenu />
-            </Grid>
-            <Divider
-              orientation="vertical"
-              variant="middle"
-              flexItem
-              sx={{
-                marginX: "2px",
-                borderWidth: "0.2px",
-                borderColor: "#4B4B4B",
-                backgroundColor: "#4B4B4B",
-              }}
-            />
-            <Grid item sx={{ ml: 1 }}>
-              <Select
-                values={["spline", "column"]}
-                defaultValue={"spline"}
-                handleChangeFunc={selectHandleChangeFunc}
-              />
-            </Grid>
-          </Grid>
-          <ItemSperatorLineXL />
-          <Grid item xs={12} sx={{ mt: 1, mr: 1 }}>
+          <Tabs />
+          {/*<Grid item xs={12} sx={{ mt: 1, mr: 1 }}>
             <OverviewEditor />
-          </Grid>
+          </Grid> */}
         </Grid>
       </Grid>
     </Grid>

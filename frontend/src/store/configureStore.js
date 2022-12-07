@@ -22,6 +22,7 @@ import {
     companyDataGrid,
     companyCheckedList,
     confirmation,
+    collapseMenu,
     historyConfirmation,
     cssUserSelect,
     dataGridCodeList,
@@ -29,12 +30,12 @@ import {
     drawerMenu,
     errorReducer,
     project,
-    highchart,
     fullScreenReducer,
     item,
     langReducer,
     loaderReducer,
     linkEditor,
+    overviewDialog,
     registerFormReducer,
     searchBarReducer,
     tags,
@@ -54,6 +55,7 @@ const rootReducer = combineReducers({
     companyDataGrid: companyDataGrid,
     companyCheckedList: companyCheckedList,
     confirmation: confirmation,
+    collapseMenu: collapseMenu,
     historyConfirmation: historyConfirmation,
     cssUserSelect: cssUserSelect,
     dataGridCodeList: dataGridCodeList,
@@ -61,12 +63,12 @@ const rootReducer = combineReducers({
     drawerMenu: drawerMenu,
     error: errorReducer,
     project: project,
-    highchart: highchart,
     fullScreen: fullScreenReducer,
     item: item,
     lang: langReducer,
     loader: loaderReducer,
     linkEditor: linkEditor,
+    overviewDialog: overviewDialog,
     registerForm: registerFormReducer,
     searchBar: searchBarReducer,
     tags: tags,
@@ -90,5 +92,3 @@ export const store = configureStore({
 });
 
 export const persistor = persistStore(store);
-
-

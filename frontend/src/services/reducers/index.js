@@ -1,6 +1,7 @@
 import authReducer from './authReducer';
 import companyDataGrid from "./company/datagrid"
 import companyCheckedList from './company/checkedList';
+import collapseMenu from './collapseMenu/collapseMenu';
 import historyConfirmation from './confirmation/historyConfirmation';
 import confirmation from './confirmation';
 import cssUserSelect from './cssUserSelect';
@@ -9,12 +10,12 @@ import dataGridType from "./type/datagrid"
 import drawerMenu from './drawerMenu/drawerMenu';
 import errorReducer from './errorReducer';
 import project from './project/project';
-import highchart from './overview/highchart';
 import fullScreenReducer from './fullScreenReducer';
 import item from "./company/item"
 import langReducer from './langReducer';
 import loaderReducer from './loaderReducer';
 import linkEditor from './company/linkEditor';
+import overviewDialog from "./overview/overviewDialog";
 import registerFormReducer from './registerFormReducer';
 import searchBarReducer from './searchBarReducer';
 import tags from "./tags/tags"
@@ -24,6 +25,6 @@ import treeview from './treeview/treeview';
 
 
 export {
-    authReducer, companyDataGrid, confirmation, historyConfirmation, companyCheckedList, cssUserSelect, dataGridCodeList, dataGridType, drawerMenu, errorReducer, project, highchart, fullScreenReducer,
-    item, langReducer, loaderReducer, linkEditor, registerFormReducer, searchBarReducer, tags, themeReducer, treeview
+    authReducer, companyDataGrid, confirmation, collapseMenu, historyConfirmation, companyCheckedList, cssUserSelect, dataGridCodeList, dataGridType, drawerMenu, errorReducer, project, fullScreenReducer,
+    item, langReducer, loaderReducer, linkEditor, overviewDialog, registerFormReducer, searchBarReducer, tags, themeReducer, treeview
 }
