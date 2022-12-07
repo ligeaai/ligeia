@@ -58,8 +58,8 @@ class ItemLinkDetailsView(generics.CreateAPIView):
         try:
             for index in range(len(data)):
                 item = data[index]
-                propertys = item_property.objects.filter(ITEM_ID = item.get('FROM_ITEM_ID'),PROPERTY_TYPE = 'NAME')
-                property2 = item_property.objects.filter(ITEM_ID = item.get('TO_ITEM_ID'),PROPERTY_TYPE = 'NAME')
+                propertys = item_property.objects.filter(ITEM_ID = item.get('FROM_ITEM_ID'),PROPERTY_TYPE = 'NAME').order_by('START_DATETIME')
+                property2 = item_property.objects.filter(ITEM_ID = item.get('TO_ITEM_ID'),PROPERTY_TYPE = 'NAME').order_by('START_DATETIME')
                 # validate_find(property,request)
                 serializer = ItemPropertyNameSerializer(propertys,many = True)
                 serializer2 = ItemPropertyNameSerializer(property2,many = True)
@@ -91,6 +91,12 @@ class ItemLinkHierarchyView(generics.ListAPIView):
     
     def _getChild(self,data,tempt):
         for index in range(len(data)):
+            quaryset_from = item_property.objects.filter(ITEM_ID = data[index].get('FROM_ITEM_ID'),PROPERTY_TYPE = 'NAME').order_by('START_DATETIME')
+            quaryset_to = item_property.objects.filter(ITEM_ID = data[index].get('TO_ITEM_ID'),PROPERTY_TYPE = 'NAME').order_by('START_DATETIME')
+            serializer_from = ItemPropertyNameSerializer(quaryset_from,many = True)
+            serializer_to = ItemPropertyNameSerializer(quaryset_to,many = True)
+            data[index]['FROM_ITEM_NAME'] = serializer_from.data[0].get("PROPERTY_STRING")
+            data[index]['TO_ITEM_NAME'] = serializer_to.data[0].get("PROPERTY_STRING")
             quaryset  = item_link.objects.filter(TO_ITEM_TYPE = data[index].get('FROM_ITEM_TYPE'))
             if quaryset:
                 serializer = ItemLinkDetailsSerializer(quaryset,many = True)
