@@ -1,10 +1,10 @@
 import React from "react";
-import { useSelector } from "react-redux";
-import { Box, MenuItem } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
+import { Box, MenuItem, Button } from "@mui/material";
 import { Select } from "../../../../../components";
 
 import CodelistService from "../../../../../services/api/codeList";
-
+import { editDataGridCell } from "../../../../../services/actions/item/itemDataGrid";
 import {
   GridEditInputCell,
   GridEditDateCell,
@@ -16,6 +16,8 @@ import {
 } from "@mui/x-data-grid-pro";
 
 const SingleSelectCell = (params) => {
+  const dispatch = useDispatch();
+  const CULTURE = useSelector((state) => state.lang.cultur);
   const [values, setValues] = React.useState([
     {
       ROW_ID: "",
@@ -43,10 +45,29 @@ const SingleSelectCell = (params) => {
   }, []);
 
   const handleClick = async () => {
-    const body = JSON.stringify({ ROW_ID: params.row.ROW_ID });
+    console.log(params);
+
+    const body = JSON.stringify({ CULTURE, CODE_LIST: params.row.CODE_LIST });
+
     try {
-      let res = await CodelistService.getCodelistDetail(body);
-      console.log(res.data);
+      let res = await CodelistService.getItemPropCode(body);
+      let data = [
+        {
+          ROW_ID: "",
+          CODE: "",
+          CODE_TEXT: "",
+          LIST_TYPE: "",
+          CULTURE: "",
+          LAYER_NAME: "",
+        },
+      ];
+      let sortedResponse = res.data.sort((a, b) =>
+        a.CODE_TEXT > b.CODE_TEXT ? 1 : -1
+      );
+      sortedResponse.map((e) => {
+        data.push(e);
+      });
+      setValues(data);
       return Promise.resolve(res.data);
     } catch (err) {
       return Promise.reject(err);
@@ -54,22 +75,14 @@ const SingleSelectCell = (params) => {
   };
 
   return (
-    <Box
-      className="selectItems"
-      sx={{
-        width: "100%",
-        "& .MuiOutlinedInput-notchedOutline": {
-          border: "none",
-        },
-      }}
-      onClick={handleClick}
-    >
+    <Box onMouseUp={handleClick} {...params}>
       <Select
-        {...params}
         values={values}
         valuesPath={"ROW_ID"}
         dataTextPath={"CODE_TEXT"}
-        handleChangeFunc={() => {}}
+        handleChangeFunc={(value) => {
+          dispatch(editDataGridCell(params.id, params.field, value));
+        }}
         defaultValue={`${params.value}`}
       />
     </Box>

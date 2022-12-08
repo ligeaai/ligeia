@@ -27,13 +27,19 @@ const details = (body) => {
     return instance.post("/code-list/details/", body, config());
 };
 
+const getItemPropCode = (body) => {
+    return instance.post("code-list/property-code/", body, config());
+};
+
+
 
 const CodelistService = {
     getAllTreeitem,
     getCodelistDetail,
     createUpdate,
     remove,
-    details
+    details,
+    getItemPropCode
 };
 
 
