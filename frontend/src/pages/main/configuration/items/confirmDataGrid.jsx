@@ -3,10 +3,10 @@ import { useSelector, useDispatch } from "react-redux";
 import { Box } from "@mui/material";
 import { DataGridPro } from "@mui/x-data-grid-pro";
 
-import CustomColumnMenu from "./customColumnMenu";
+import CustomColumnMenu from "../organization/dataGrid/customColumnMenu";
 
-import { MyTextFieldRender } from "../myTextField";
-const MyDataGrid = ({ type }) => {
+import { MyTextFieldRender } from "../organization/myTextField";
+const MyDataGrid = () => {
   const columns = useSelector((state) => state.companyDataGrid.columns);
   const rows = useSelector((state) => state.companyDataGrid.rows);
   const [myColumn, setMyColumn] = React.useState(false);

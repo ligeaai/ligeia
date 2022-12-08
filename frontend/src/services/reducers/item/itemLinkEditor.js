@@ -1,12 +1,11 @@
 import {
+    LOAD_LINK_EDITOR_SCHEMA_ITEM,
+    LOAD_LINK_EDITOR_SCHEMA_FROM_TYPE_ITEM,
     LOAD_LINK_EDITOR,
-    LOAD_LINKS,
+    SET_IS_LINK_ACTIVE,
+    LOAD_LINK_LINKS,
     UPDATE_LINKS_VALUE,
-    SET_LINK_ACTIVE,
-    CLEAN_ALL_LINK_EDITOR,
-    LOAD_LINK_EDITOR_SCHEMA,
-    CLEAN_CHANGED_LIST_LINK_EDITOR,
-    LOAD_LINK_EDITOR_SCHEMA_FROM_TYPE
+    CLEAN_CHANGED_LINK
 } from "../../actions/types"
 const initialState = {
     linkEditorSchema: false,
@@ -15,7 +14,7 @@ const initialState = {
     dataFromType: false,
     links: false,
     changedLinks: new Set(),
-    isLinksActive: true
+    isLinksActive: false
 };
 
 export default function (state = initialState, action) {
@@ -23,50 +22,43 @@ export default function (state = initialState, action) {
     const { type, payload } = action;
 
     switch (type) {
-        case CLEAN_CHANGED_LIST_LINK_EDITOR:
+        case CLEAN_CHANGED_LINK:
             return {
                 ...state,
                 changedLinks: new Set(),
-            }
-        case CLEAN_ALL_LINK_EDITOR:
-            return {
-                ...state,
-                data: false,
-                links: false,
-                changedLinks: new Set(),
-            }
-        case SET_LINK_ACTIVE:
-            return {
-                ...state,
-                isLinksActive: payload
-            }
-
-        case LOAD_LINK_EDITOR:
-            return {
-                ...state,
-                data: payload.TO_TYPE,
-                dataFromType: payload.FROM_TYPE
-            }
-        case LOAD_LINK_EDITOR_SCHEMA:
-            return {
-                ...state,
-                linkEditorSchema: payload
-            }
-        case LOAD_LINK_EDITOR_SCHEMA_FROM_TYPE:
-            return {
-                ...state,
-                linkEditorSchemaFromType: payload
-            }
-        case LOAD_LINKS:
-            return {
-                ...state,
-                links: payload
             }
         case UPDATE_LINKS_VALUE:
             state.links[payload.linkId][payload.key] = payload.value
             state.changedLinks.add(payload.linkId)
             return {
                 ...state,
+            }
+        case LOAD_LINK_LINKS: {
+            return {
+                ...state,
+                links: payload
+            }
+        }
+        case SET_IS_LINK_ACTIVE:
+            return {
+                ...state,
+                isLinksActive: payload
+            }
+        case LOAD_LINK_EDITOR:
+            return {
+                ...state,
+                data: payload.TO_TYPE,
+                dataFromType: payload.FROM_TYPE
+            }
+        case LOAD_LINK_EDITOR_SCHEMA_ITEM:
+            return {
+                ...state,
+                linkEditorSchema: payload
+            }
+        case LOAD_LINK_EDITOR_SCHEMA_FROM_TYPE_ITEM:
+            return {
+                ...state,
+                linkEditorSchemaFromType: payload
             }
         default:
             return {

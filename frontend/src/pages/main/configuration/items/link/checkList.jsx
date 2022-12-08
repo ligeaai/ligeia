@@ -23,18 +23,18 @@ import {
   saveLinks,
   toggleChecked,
   cardinalityCheck,
-} from "../../../../../services/actions/company/checkedList";
+} from "../../../../../services/actions/item/checkedList";
 const MyCheckList = (props) => {
   const dispatch = useDispatch();
   const instanttime = new Date();
   const [date, setDate] = React.useState(instanttime);
   const [selectedItem, setSelectedItem] = React.useState("");
-  const data = useSelector((state) => state.companyCheckedList.listItem);
+  const data = useSelector((state) => state.checkedList.listItem);
   const checkedItemsLen = useSelector(
-    (state) => state.companyCheckedList.checkedItems.length
+    (state) => state.checkedList.checkedItems.length
   );
   const linkEditorData = useSelector(
-    (state) => state.linkEditor[props.dataSelectItemPath]
+    (state) => state.itemLinkEditor[props.dataSelectItemPath]
   );
   const selectItems = linkEditorData
     ? linkEditorData.filter((e) => e.TYPE === props.data.TYPE)
@@ -141,7 +141,7 @@ const MyCheckList = (props) => {
         container
         sx={{ justifyContent: "space-between", alignItems: "center" }}
       >
-        <Grid item sx={{ pl: 1 }}>
+        <Grid item sx={{ pl: 1, fontSize: "14px" }}>
           Selected Items:{checkedItemsLen}
         </Grid>
         <Grid item>
@@ -149,6 +149,7 @@ const MyCheckList = (props) => {
             <Grid item>
               <Button
                 onClick={() => {
+                  console.log(props);
                   props.onClose();
                 }}
               >

@@ -4,7 +4,7 @@ import { Box, Divider, Button } from "@mui/material";
 
 import { GridColumnMenuContainer, GridColumnMenu } from "@mui/x-data-grid-pro";
 
-import { deleteColum } from "../../../../../services/actions/company/datagrid";
+import { deleteColum } from "../../../../../services/actions/item/itemDataGrid";
 
 const CustomColumnMenu = (props) => {
   const dispatch = useDispatch();

@@ -3,8 +3,8 @@ import React from "react";
 import { MyBox } from "../../../../../components";
 
 import LinkEditor from "./linkEditor";
-const Links = ({ type }) => {
-  return <MyBox Element={<LinkEditor type={type} />} />;
+const Link = () => {
+  return <MyBox Element={<LinkEditor />} />;
 };
 
-export default Links;
+export default Link;

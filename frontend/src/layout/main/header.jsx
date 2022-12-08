@@ -106,9 +106,6 @@ const Header = (props) => {
     }
     `
   );
-  React.useEffect(() => {
-    console.log("dkasdkl");
-  }, []);
   return (
     <React.Fragment>
       <MyBox

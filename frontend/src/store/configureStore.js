@@ -19,8 +19,7 @@ import {
 
 import {
     authReducer,
-    companyDataGrid,
-    companyCheckedList,
+    checkedList,
     confirmation,
     collapseMenu,
     historyConfirmation,
@@ -31,10 +30,10 @@ import {
     errorReducer,
     project,
     fullScreenReducer,
-    item,
+    itemDataGrid,
+    itemLinkEditor,
     langReducer,
     loaderReducer,
-    linkEditor,
     overviewDialog,
     registerFormReducer,
     searchBarReducer,
@@ -47,13 +46,12 @@ import {
 const persistConfig = {
     key: 'root',
     storage,
-    whitelist: ['drawerMenu', 'item', "lang"]
+    whitelist: ['drawerMenu', "lang"]
 }
 
 const rootReducer = combineReducers({
     auth: authReducer,
-    companyDataGrid: companyDataGrid,
-    companyCheckedList: companyCheckedList,
+    checkedList: checkedList,
     confirmation: confirmation,
     collapseMenu: collapseMenu,
     historyConfirmation: historyConfirmation,
@@ -64,10 +62,10 @@ const rootReducer = combineReducers({
     error: errorReducer,
     project: project,
     fullScreen: fullScreenReducer,
-    item: item,
+    itemDataGrid: itemDataGrid,
+    itemLinkEditor: itemLinkEditor,
     lang: langReducer,
     loader: loaderReducer,
-    linkEditor: linkEditor,
     overviewDialog: overviewDialog,
     registerForm: registerFormReducer,
     searchBar: searchBarReducer,
