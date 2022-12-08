@@ -5,6 +5,7 @@ import Cards from "./cardGenerator/cards";
 import CheckboxList from "./checkList/checkList";
 import ColorTextfield from "./textfield/colortextfield";
 import CollapsableMenu from "./treeMenu/collapsableMenu"
+import MyDivider from "./divider/divider";
 import HistoryConfirmation from "./confirmation/historyConfirmation"
 import MyCheckBox from "./checkbox/checkbox"
 import MyNumberTextField from "./textfield/numberTextField"
@@ -42,7 +43,7 @@ import TreeMenuItems from "./treeMenu/treeMenuGenerator"
 
 
 export {
-    ActionMenu, Breadcrumb, Cards, CheckboxList, ColorTextfield, CollapsableMenu, Confirmation, ComponentError, ComponentErrorBody, CustomNoRowsOverlay, CustomToolbar, DatePicker, Drawer, ErrorBoundary,
+    ActionMenu, Breadcrumb, Cards, CheckboxList, ColorTextfield, CollapsableMenu, Confirmation, ComponentError, ComponentErrorBody, CustomNoRowsOverlay, CustomToolbar, MyDivider, DatePicker, Drawer, ErrorBoundary,
     ErrorMessage, InputGenerator, Loadable, Loading, LoadingComponent, MyBox, MyCheckBox, MyNavigator, MyNumberTextField, MyTextField, MyMultilineTextField, PropLinkTabs, SocialButton, TimeRangePicker, TreeView,
     ItemSperatorLine, ItemSperatorLineXL, Items, SearchBar, SearchBarMobile, Select, TreeMenu, MyDialog, MyTabs, TreeMenuItems, HistoryConfirmation
 }

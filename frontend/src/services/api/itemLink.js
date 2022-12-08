@@ -1,4 +1,3 @@
-
 import { instance, config } from "../baseApi"
 
 const hierarchy = () => {

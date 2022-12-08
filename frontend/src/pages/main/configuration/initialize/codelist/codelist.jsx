@@ -9,6 +9,7 @@ import {
   ComponentError,
   PropLinkTabs,
   Select,
+  MyDivider,
   TreeMenuItems,
 } from "../../../../../components";
 import DrawerMenu from "../../../../../layout/main/asset/treeViewMenu";
@@ -106,17 +107,7 @@ const CodeList = ({ isHome }) => {
             <Grid item>
               <MyActionMenu />
             </Grid>
-            <Divider
-              orientation="vertical"
-              variant="middle"
-              flexItem
-              sx={{
-                marginX: "2px",
-                borderWidth: "0.2px",
-                borderColor: "#4B4B4B",
-                backgroundColor: "#4B4B4B",
-              }}
-            />
+            <MyDivider />
             <Grid item sx={{ mx: 1 }}>
               <Select
                 values={layerValues}
@@ -124,17 +115,7 @@ const CodeList = ({ isHome }) => {
                 handleChangeFunc={selectHandleChangeFunc}
               />
             </Grid>
-            <Divider
-              orientation="vertical"
-              variant="middle"
-              flexItem
-              sx={{
-                marginX: "2px",
-                borderWidth: "0.2px",
-                borderColor: "#4B4B4B",
-                backgroundColor: "#4B4B4B",
-              }}
-            />
+            <MyDivider />
           </Grid>
 
           <ItemSperatorLineXL />

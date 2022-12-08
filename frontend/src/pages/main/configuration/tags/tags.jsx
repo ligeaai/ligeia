@@ -84,7 +84,6 @@ const Tags = ({ isHome }) => {
             sx={{
               ml: 1.5,
               backgroundColor: "myBackgroundColor",
-              height: "42px",
               display: "flex",
               alignItems: "center",
             }}

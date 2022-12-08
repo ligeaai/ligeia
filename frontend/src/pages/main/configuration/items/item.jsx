@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { Box, Divider, Grid } from "@mui/material";
+import { Box, Grid } from "@mui/material";
 
 import {
   Breadcrumb,
@@ -9,6 +9,7 @@ import {
   PropLinkTabs,
   TreeMenuItems,
   ComponentError,
+  MyDivider,
 } from "../../../../components";
 
 import DrawerMenu from "../../../../layout/main/asset/treeViewMenu";
@@ -121,35 +122,15 @@ const UnitOne = ({ isHome }) => {
             <Grid item>
               {isLinksActive ? <LinkActionMenu /> : <MyActionMenu />}
             </Grid>
-            <Divider
-              orientation="vertical"
-              variant="middle"
-              flexItem
-              sx={{
-                marginX: "2px",
-                borderWidth: "0.2px",
-                borderColor: "#4B4B4B",
-                backgroundColor: "#4B4B4B",
-              }}
-            />
+            <MyDivider />
             <Grid item>
               {isLinksActive ? <DateBreak props={true} /> : <DateBreak />}
             </Grid>
-            <Divider
-              orientation="vertical"
-              variant="middle"
-              flexItem
-              sx={{
-                marginX: "2px",
-                borderWidth: "0.2px",
-                borderColor: "#4B4B4B",
-                backgroundColor: "#4B4B4B",
-              }}
-            />
+            <MyDivider />
           </Grid>
 
           <ItemSperatorLineXL />
-          <Grid item xs={12} sx={{ mt: 1 }}>
+          <Grid item xs={12} sx={{ mt: 1, mr: 1 }}>
             <ComponentError errMsg="Error">
               <PropLinkTabs
                 MyProperties={<Properties></Properties>}
