@@ -98,9 +98,9 @@ class ItemLinkHierarchyView(generics.ListAPIView):
             quaryset_to = item_property.objects.filter(ITEM_ID = data[index].get('TO_ITEM_ID'),PROPERTY_TYPE = 'NAME').order_by('START_DATETIME')
             serializer_from = ItemPropertyNameSerializer(quaryset_from,many = True)
             serializer_to = ItemPropertyNameSerializer(quaryset_to,many = True)
-            if serializer_from:
+            if quaryset_from:
                 data[index]['FROM_ITEM_NAME'] = serializer_from.data[0].get("PROPERTY_STRING")
-            if serializer_to:
+            if quaryset_to:
                 data[index]['TO_ITEM_NAME'] = serializer_to.data[0].get("PROPERTY_STRING")
             quaryset  = item_link.objects.filter(TO_ITEM_TYPE = data[index].get('FROM_ITEM_TYPE'))
             if quaryset:
