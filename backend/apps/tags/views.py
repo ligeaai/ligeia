@@ -47,7 +47,7 @@ class TagsSaveView(generics.CreateAPIView):
         
         couchdb_tags  = {
             "HEADERS":{
-                "_id":tags_dict.get('NAME')
+                "_id":tags_dict.get('NAME'),
                 "CREATED_TIME":datetime.datetime.now(),
                 "CREATED_BY":str(request.user),
 
