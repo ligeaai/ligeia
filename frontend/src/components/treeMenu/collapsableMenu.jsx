@@ -71,7 +71,7 @@ const StyledTreeItem = styled((props) => (
   },
 }));
 
-export default function CustomizedTreeView() {
+function CustomizedTreeView() {
   const items = useSelector((state) => state.collapseMenu.menuItems);
   console.log(items);
   var uuid = -1;
@@ -81,11 +81,11 @@ export default function CustomizedTreeView() {
       console.log(e);
       try {
         return (
-          <StyledTreeItem nodeId={`${uuidv4()}`} label={e.TO_ITEM_TYPE}>
+          <StyledTreeItem nodeId={`${uuidv4()}`} label={e.TO_ITEM_NAME}>
             {myStyledTreeItem(e.CHILD)}
             <StyledTreeItem
               nodeId={`${uuidv4()}`}
-              label={e.TO_ITEM_TYPE}
+              label={e.TO_ITEM_NAME}
             ></StyledTreeItem>
           </StyledTreeItem>
         );
@@ -93,7 +93,7 @@ export default function CustomizedTreeView() {
         return (
           <StyledTreeItem
             nodeId={`${uuid}`}
-            label={e.TO_ITEM_TYPE}
+            label={e.TO_ITEM_NAME}
           ></StyledTreeItem>
         );
       }
@@ -106,7 +106,6 @@ export default function CustomizedTreeView() {
       defaultCollapseIcon={<MinusSquare />}
       defaultExpandIcon={<PlusSquare />}
       defaultEndIcon={<CloseSquare />}
-      sx={{ height: 264, flexGrow: 1, maxWidth: 400, overflowY: "auto" }}
     >
       {myStyledTreeItem(items)}
       {/* <StyledTreeItem nodeId="asd" label="Main">
@@ -138,3 +137,5 @@ export default function CustomizedTreeView() {
     </TreeView>
   );
 }
+
+export default React.memo(CustomizedTreeView);
