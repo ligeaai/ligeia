@@ -38,6 +38,7 @@ import {
     registerFormReducer,
     searchBarReducer,
     tags,
+    tapsOverview,
     themeReducer,
     treeview,
 
@@ -70,6 +71,7 @@ const rootReducer = combineReducers({
     registerForm: registerFormReducer,
     searchBar: searchBarReducer,
     tags: tags,
+    tapsOverview: tapsOverview,
     theme: themeReducer,
     treeview: treeview,
 

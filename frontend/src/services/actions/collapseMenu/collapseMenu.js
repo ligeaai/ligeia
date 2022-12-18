@@ -1,4 +1,4 @@
-import { LOAD_COLLAPSABLE_MENU_ITEMS } from "../types"
+import { LOAD_COLLAPSABLE_MENU_ITEMS, SET_SELECTED_COLLAPSE_MENU_ITEM } from "../types"
 
 
 export const loadCollapseMenu = (path) => async dispatch => {
@@ -14,4 +14,11 @@ export const loadCollapseMenu = (path) => async dispatch => {
     } catch (err) {
         return Promise.reject(err)
     }
+}
+
+export const setSelectedCollapseMenu = async (value) => dispatch => {
+    dispatch({
+        type: SET_SELECTED_COLLAPSE_MENU_ITEM,
+        payload: value
+    })
 }

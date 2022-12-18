@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import PropTypes from "prop-types";
 import SvgIcon from "@mui/material/SvgIcon";
@@ -8,7 +8,11 @@ import TreeView from "@mui/lab/TreeView";
 import TreeItem, { treeItemClasses } from "@mui/lab/TreeItem";
 import Collapse from "@mui/material/Collapse";
 import { uuidv4 } from "../../services/utils/uuidGenerator";
-
+import { setSelectedCollapseMenu } from "../../services/actions/collapseMenu/collapseMenu";
+import {
+  loadTapsOverview,
+  cleanTabs,
+} from "../../services/actions/overview/taps";
 // web.cjs is required for IE11 support
 //import { useSpring, animated } from 'react-spring/web.cjs';
 
@@ -72,28 +76,36 @@ const StyledTreeItem = styled((props) => (
 }));
 
 function CustomizedTreeView() {
+  const dispatch = useDispatch();
   const items = useSelector((state) => state.collapseMenu.menuItems);
-  console.log(items);
-  var uuid = -1;
+  React.useEffect(() => {
+    return () => {
+      dispatch(cleanTabs());
+    };
+  }, []);
+
   function myStyledTreeItem(myItems) {
-    return myItems.map((e) => {
-      uuid++;
-      console.log(e);
+    return myItems.map((e, i) => {
       try {
         return (
-          <StyledTreeItem nodeId={`${uuidv4()}`} label={e.TO_ITEM_NAME}>
+          <StyledTreeItem key={i} nodeId={`${uuidv4()}`} label={e.TO_ITEM_NAME}>
             {myStyledTreeItem(e.CHILD)}
-            <StyledTreeItem
+            {/* <StyledTreeItem
               nodeId={`${uuidv4()}`}
               label={e.TO_ITEM_NAME}
-            ></StyledTreeItem>
+            ></StyledTreeItem> */}
           </StyledTreeItem>
         );
       } catch {
         return (
           <StyledTreeItem
-            nodeId={`${uuid}`}
+            key={i}
+            nodeId={`${uuidv4()}`}
             label={e.TO_ITEM_NAME}
+            onClick={async () => {
+              dispatch(await setSelectedCollapseMenu(e));
+              dispatch(loadTapsOverview());
+            }}
           ></StyledTreeItem>
         );
       }
@@ -108,32 +120,6 @@ function CustomizedTreeView() {
       defaultEndIcon={<CloseSquare />}
     >
       {myStyledTreeItem(items)}
-      {/* <StyledTreeItem nodeId="asd" label="Main">
-        <StyledTreeItem nodeId="2" label="Subtree with children">
-          <StyledTreeItem nodeId="3" label="Hello" />
-          <StyledTreeItem nodeId="4" label="Sub-subtree with children">
-            <StyledTreeItem nodeId="5" label="Child 1" />
-            <StyledTreeItem nodeId="6" label="Child 2" />
-            <StyledTreeItem nodeId="7" label="Child 3" />
-          </StyledTreeItem>
-          <StyledTreeItem nodeId="8" label="Hello" />
-        </StyledTreeItem>
-        <StyledTreeItem nodeId="9" label="World" />
-        <StyledTreeItem nodeId="10" label="Something something" />
-      </StyledTreeItem> */}
-      {/* <StyledTreeItem nodeId="2" label="Main">
-        <StyledTreeItem nodeId="3" label="Subtree with children">
-          <StyledTreeItem nodeId="6" label="Hello" />
-          <StyledTreeItem nodeId="7" label="Sub-subtree with children">
-            <StyledTreeItem nodeId="9" label="Child 1" />
-            <StyledTreeItem nodeId="10" label="Child 2" />
-            <StyledTreeItem nodeId="11" label="Child 3" />
-          </StyledTreeItem>
-          <StyledTreeItem nodeId="8" label="Hello" />
-        </StyledTreeItem>
-        <StyledTreeItem nodeId="4" label="World" />
-        <StyledTreeItem nodeId="5" label="Something something" />
-      </StyledTreeItem> */}
     </TreeView>
   );
 }

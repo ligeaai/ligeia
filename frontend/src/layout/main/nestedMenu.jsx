@@ -20,10 +20,17 @@ import { ItemSperatorLine, Items } from "../../components";
 
 const NestedMenu = (props) => {
   const dispatch = useDispatch();
-  const { menuItems, isSubmenuOpen, themeMode } = props;
+  const { menuItems, isSubmenuOpen, themeMode, setSettingsMenuFunc } = props;
   const [menu, setMenu] = React.useState(menuItems.map(() => false));
   var menuValidator = menuItems.map(() => false);
   const [mainMenu, setMainMenu] = React.useState(true);
+  const handleUserClick = (e) => {
+    console.log("sads");
+    if (!e.target.closest(".settingsMenu")) {
+      setSettingsMenuFunc();
+    }
+  };
+
   useEffect(() => {
     if (isSubmenuOpen) {
       setMenu(menuItems.map(() => false));
@@ -31,6 +38,12 @@ const NestedMenu = (props) => {
     }
   }, [isSubmenuOpen]);
 
+  useEffect(() => {
+    window.addEventListener("click", handleUserClick);
+    return () => {
+      window.removeEventListener("click", handleUserClick);
+    };
+  }, []);
   const myLogout = () => {
     dispatch(logout());
     dispatch(setLoaderTrue());

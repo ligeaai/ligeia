@@ -18,6 +18,7 @@ import overviewDialog from "./overview/overviewDialog";
 import registerFormReducer from './registerFormReducer';
 import searchBarReducer from './searchBarReducer';
 import tags from "./tags/tags"
+import tapsOverview from "./overview/taps"
 import themeReducer from './themeReducer';
 import treeview from './treeview/treeview';
 
@@ -25,5 +26,5 @@ import treeview from './treeview/treeview';
 
 export {
     authReducer, confirmation, checkedList, collapseMenu, historyConfirmation, cssUserSelect, dataGridCodeList, dataGridType, drawerMenu, errorReducer, project, fullScreenReducer,
-    itemDataGrid, itemLinkEditor, langReducer, loaderReducer, overviewDialog, registerFormReducer, searchBarReducer, tags, themeReducer, treeview
+    itemDataGrid, itemLinkEditor, langReducer, loaderReducer, overviewDialog, registerFormReducer, searchBarReducer, tags, tapsOverview, themeReducer, treeview
 }

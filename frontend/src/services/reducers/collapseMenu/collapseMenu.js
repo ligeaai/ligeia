@@ -1,11 +1,13 @@
 import {
-    LOAD_COLLAPSABLE_MENU_ITEMS
+    LOAD_COLLAPSABLE_MENU_ITEMS,
+    SET_SELECTED_COLLAPSE_MENU_ITEM
 } from "../../actions/types"
 
 
 
 const initialState = {
-    menuItems: []
+    menuItems: [],
+    selectedItem: null
 };
 
 export default function (state = initialState, action) {
@@ -17,6 +19,11 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 menuItems: payload
+            }
+        case SET_SELECTED_COLLAPSE_MENU_ITEM:
+            return {
+                ...state,
+                selectedItem: payload
             }
         default:
             return {

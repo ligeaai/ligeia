@@ -9,8 +9,9 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 
-import Highchart from "../../pages/main/overview/highchart";
-
+import { useDispatch, useSelector } from "react-redux";
+import TabItems from "../../layout/main/overview/tabItems";
+import { selectTab, addNewTabItem } from "../../services/actions/overview/taps";
 const TabPanel = (props) => {
   const { children, value, index, ...other } = props;
 
@@ -41,12 +42,14 @@ function a11yProps(index) {
   };
 }
 function MyTabs() {
-  const [value, setValue] = React.useState(0);
-  const [itemCount, setItemCount] = React.useState(0);
+  const dispatch = useDispatch();
+  const [value, setValue] = React.useState(null);
+  const titles = useSelector((state) => state.tapsOverview.titles);
+  const widgets = useSelector((state) => state.tapsOverview.widgets);
+  const isFullScreen = useSelector((state) => state.fullScreen.isFullScreen);
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-
   const handleChangeIndex = (index) => {
     setValue(index);
   };
@@ -55,9 +58,8 @@ function MyTabs() {
     <Box
       sx={{
         bgcolor: "background.paper",
-        height: "100%",
         position: "relative",
-        width: "100%",
+        height: "100%",
       }}
     >
       <AppBar position="static" color="default">
@@ -66,19 +68,20 @@ function MyTabs() {
           onChange={handleChange}
           aria-label="action tabs example"
         >
-          {[...Array(itemCount)].map((x, i) => (
+          {titles.map((x, i) => (
             <Tab
-              key={`Dashboard ${i}`}
-              label={`Dashboard ${i + 1}`}
+              key={`${x}`}
+              label={`${x}`}
               {...a11yProps(i)}
               sx={{ maxWidth: "150px", textTransform: "capitalize" }}
+              onClick={() => {
+                dispatch(selectTab(x));
+              }}
             />
           ))}
           <Grid
+            key={`a`}
             container
-            onClick={() => {
-              setItemCount((prev) => prev + 1);
-            }}
             sx={{
               height: "48px",
               width: "50px",
@@ -86,20 +89,46 @@ function MyTabs() {
               alignItems: "center",
             }}
           >
-            <Grid item>+</Grid>
+            <Grid
+              item
+              onClick={() => {
+                dispatch(addNewTabItem());
+              }}
+            >
+              +
+            </Grid>
           </Grid>
         </Tabs>
       </AppBar>
-      <SwipeableViews index={value} onChangeIndex={handleChangeIndex}>
-        <TabPanel value={value} index={0}>
-          <Highchart />
-        </TabPanel>
-        <TabPanel value={value} index={1}>
-          Item Two
-        </TabPanel>
-        <TabPanel value={value} index={2}>
-          Item Three
-        </TabPanel>
+
+      <SwipeableViews
+        index={value}
+        onChangeIndex={handleChangeIndex}
+        style={{
+          minHeight: isFullScreen
+            ? "calc(500px - 56px - 48px  )"
+            : "calc(500px - 50px - 16px  - 48px )",
+          height: isFullScreen
+            ? "calc(100vh - 56px - 48px )"
+            : "calc(100vh - 60px - 50px - 16px - 48px )",
+          "& .react-swipeable-view-container": {
+            height: "100%",
+          },
+        }}
+      >
+        {Object.keys(widgets).map((widgetProps, i) => {
+          return (
+            <TabPanel
+              value={value}
+              index={i}
+              key={i}
+              className={"sakdşlksladklş"}
+              sx={{ height: "100%" }}
+            >
+              <TabItems widgetProps={widgets[widgetProps]}></TabItems>
+            </TabPanel>
+          );
+        })}
       </SwipeableViews>
     </Box>
   );
