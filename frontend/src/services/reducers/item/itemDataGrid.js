@@ -15,7 +15,6 @@ const columns = {
         field: "PROPERTY_NAME",
         headerName: "Property",
         minWidth: 200,
-        flex: 1,
         renderCell: (params) => {
             return params.row.SHORT_LABEL;
         },
@@ -25,14 +24,12 @@ const columns = {
         field: "PROP_GRP",
         headerName: "Category",
         minWidth: 100,
-        flex: 1,
         cellClassName: "super-app-theme--cell",
     },
     "SORT_ORDER": {
         field: "SORT_ORDER",
         headerName: "Order",
         minWidth: 100,
-        flex: 1,
         cellClassName: "super-app-theme--cell",
     },
     "MANDATORY": {
@@ -49,7 +46,6 @@ const columns = {
             return <Checkbox disabled checked={params.row.MANDATORY === "True"} />;
         },
         minWidth: 100,
-        flex: 1,
         cellClassName: "super-app-theme--cell",
     }
 }
