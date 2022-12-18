@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 
-import { Box, Grid, Divider } from "@mui/material";
+import { Box, Grid } from "@mui/material";
 
 import {
   Breadcrumb,
@@ -10,6 +10,7 @@ import {
   PropLinkTabs,
   Select,
   TreeMenuItems,
+  MyDivider,
 } from "../../../../components";
 import DrawerMenu from "../../../../layout/main/asset/treeViewMenu";
 
@@ -99,17 +100,7 @@ const CodeList = () => {
             <Grid item>
               <MyActionMenu />
             </Grid>
-            <Divider
-              orientation="vertical"
-              variant="middle"
-              flexItem
-              sx={{
-                marginX: "2px",
-                borderWidth: "0.2px",
-                borderColor: "#4B4B4B",
-                backgroundColor: "#4B4B4B",
-              }}
-            />
+            <MyDivider />
             <Grid item sx={{ mx: 1 }}>
               <Select
                 values={layerValues}
@@ -117,17 +108,7 @@ const CodeList = () => {
                 handleChangeFunc={selectHandleChangeFunc}
               />
             </Grid>
-            <Divider
-              orientation="vertical"
-              variant="middle"
-              flexItem
-              sx={{
-                marginX: "2px",
-                borderWidth: "0.2px",
-                borderColor: "#4B4B4B",
-                backgroundColor: "#4B4B4B",
-              }}
-            />
+            <MyDivider />
           </Grid>
 
           <ItemSperatorLineXL />

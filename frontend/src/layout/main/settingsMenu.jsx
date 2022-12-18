@@ -21,6 +21,11 @@ const SettingsMenu = () => {
   const [settingsMenu, setSettingsMenu] = React.useState(false);
   const [languages, setLanguages] = React.useState(false);
   const [langItems, setLangItems] = React.useState([]);
+
+  const setSettingsMenuFunc = () => {
+    setSettingsMenu(false);
+  };
+
   React.useEffect(() => {
     const myFunc = async () => {
       try {
@@ -34,12 +39,8 @@ const SettingsMenu = () => {
       } catch {}
     };
     myFunc();
+    return;
   }, []);
-  window.addEventListener("click", function (e) {
-    if (!e.target.closest(".settingsMenu")) {
-      setSettingsMenu(false);
-    }
-  });
 
   const themeSelect = (theme) => {
     dispatch(changeTheme(theme));
@@ -112,44 +113,47 @@ const SettingsMenu = () => {
           />
         </Grid>
       </Grid>
-      <Box
-        sx={{
-          display: settingsMenu ? "flex" : "none",
-          position: "absolute",
-          right: { xs: "0" },
-          top: "62px",
-          boxShadow: "0px 1px 5px rgba(0, 0, 0, 0.1)",
-          zIndex: 3,
-        }}
-      >
-        <NestedMenu
-          menuItems={[
-            {
-              icon: <Brightness2OutlinedIcon />,
-              fixedText: "Appearance",
-              text: theme,
-              subtable: ["dark", "light"],
-              functions: themeSelect,
-            },
-            {
-              icon: <TranslateIcon />,
-              fixedText: "Language",
-              text: lang,
-              subtable: langItems,
-              functions: langSelect,
-            },
-            {
-              icon: <LanguageIcon />,
-              fixedText: "Location",
-              text: "Canada",
-              subtable: ["Canada", "Kazakistan", "Türkiye"],
-              functions: locationSelect,
-            },
-          ]}
-          isSubmenuOpen={settingsMenu}
-          themeMode={theme}
-        />
-      </Box>
+      {settingsMenu ? (
+        <Box
+          sx={{
+            display: "flex",
+            position: "absolute",
+            right: { xs: "0" },
+            top: "62px",
+            boxShadow: "0px 1px 5px rgba(0, 0, 0, 0.1)",
+            zIndex: 3,
+          }}
+        >
+          <NestedMenu
+            menuItems={[
+              {
+                icon: <Brightness2OutlinedIcon />,
+                fixedText: "Appearance",
+                text: theme,
+                subtable: ["dark", "light"],
+                functions: themeSelect,
+              },
+              {
+                icon: <TranslateIcon />,
+                fixedText: "Language",
+                text: lang,
+                subtable: langItems,
+                functions: langSelect,
+              },
+              {
+                icon: <LanguageIcon />,
+                fixedText: "Location",
+                text: "Canada",
+                subtable: ["Canada", "Kazakistan", "Türkiye"],
+                functions: locationSelect,
+              },
+            ]}
+            isSubmenuOpen={settingsMenu}
+            setSettingsMenuFunc={setSettingsMenuFunc}
+            themeMode={theme}
+          />
+        </Box>
+      ) : null}
     </Grid>
   );
 };

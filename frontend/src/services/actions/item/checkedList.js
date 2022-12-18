@@ -6,7 +6,7 @@ import {
 import axios from "axios";
 
 import { instance, config } from '../../baseApi';
-import { loadLinkEditor } from "./linkEditor";
+import { loadLinks } from "./itemLinkEditor";
 
 import { dateFormatter } from "../../utils/dateFormatter"
 
@@ -20,7 +20,7 @@ export const loadCheckedList = (type, inOut) => async (dispatch, getState) => {
     try {
         res = await instance.get(`/item/details/${inOut === "data" ? type.FROM_TYPE : type.TO_TYPE}`,
             { ...config(), cancelToken: cancelToken.token });
-        const selectedItemId = getState().item.selectedItem.ITEM_ID;
+        const selectedItemId = getState().treeview.selectedItem.ITEM_ID;
         console.log(res);
         try {
             let itemLinkRes = await instance.post(
@@ -91,10 +91,10 @@ function _uuidv4() {
 }
 
 export const cardinalityCheck = (selectItems, selectedItemFromType) => async (dispatch, getState) => {
-    const selectedItem = getState().item.selectedItem
-    const links = getState().linkEditor.links
-    const checkedItemLength = getState().companyCheckedList.checkedItems.length
-    const checkedItem = getState().companyCheckedList.checkedItems
+    const selectedItem = getState().treeview.selectedItem
+    const links = getState().itemLinkEditor.links
+    const checkedItemLength = getState().checkedList.checkedItems.length
+    const checkedItem = getState().checkedList.checkedItems
     var isOut = false
     if (selectItems[0].TO_TYPE === selectedItem.ITEM_TYPE) {
         isOut = true
@@ -305,8 +305,8 @@ export const cardinalityCheck = (selectItems, selectedItemFromType) => async (di
 }
 
 export const saveLinks = (date, linkType, isOutCheck) => async (dispatch, getState) => {
-    const checkedItems = getState().companyCheckedList.checkedItems
-    const selectedItem = getState().item.selectedItem
+    const checkedItems = getState().checkedList.checkedItems
+    const selectedItem = getState().treeview.selectedItem
 
     const saveFunc = async () => {
         checkedItems.map(async (e) => {
@@ -334,7 +334,7 @@ export const saveLinks = (date, linkType, isOutCheck) => async (dispatch, getSta
                     body,
                     config()
                 );
-                dispatch(loadLinkEditor());
+                dispatch(loadLinks());
             } catch (err) { }
         });
         dispatch(cleanCompanyCheckedList());

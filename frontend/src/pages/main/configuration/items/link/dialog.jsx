@@ -6,7 +6,7 @@ import Paper from "@mui/material/Paper";
 import Draggable from "react-draggable";
 import CheckList from "./checkList";
 import { useDispatch } from "react-redux";
-import { cleanCompanyCheckedList } from "../../../../../services/actions/company/checkedList";
+import { cleanCompanyCheckedList } from "../../../../../services/actions/item/checkedList";
 
 function PaperComponent(props) {
   const nodeRef = React.useRef(null);
@@ -54,6 +54,7 @@ SimpleDialog.propTypes = {
 };
 
 export default function SimpleDialogDemo(props) {
+  const dispatch = useDispatch();
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -62,6 +63,7 @@ export default function SimpleDialogDemo(props) {
 
   const handleClose = (value) => {
     setOpen(false);
+    dispatch(cleanCompanyCheckedList());
   };
 
   return (

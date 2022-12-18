@@ -8,37 +8,26 @@ const cards = [
     cardTitle: "Asset",
     cardBody: "Asset overview",
     cardURL: "/overview",
-    isActiveDrawer: 1,
-  },
-  {
-    cardTitle: "Asset Status",
-    cardBody: "Assets dashboards",
-    cardURL: "/#",
-    isActiveDrawer: 2,
   },
   {
     cardTitle: "Analytics",
     cardBody: "Assets analytics",
     cardURL: "/analytics",
-    isActiveDrawer: 2,
   },
   {
     cardTitle: "Reporting",
     cardBody: "Assets reporting",
     cardURL: "/reporting",
-    isActiveDrawer: 3,
-  },
-  {
-    cardTitle: "Configuration",
-    cardBody: "Configuration of the platform",
-    cardURL: "/#",
-    isActiveDrawer: 4,
   },
   {
     cardTitle: "Adminstration",
     cardBody: "Administration of the platform",
     cardURL: "/administration",
-    isActiveDrawer: 5,
+  },
+  {
+    cardTitle: "Configuration",
+    cardBody: "Configuration of the platform",
+    cardURL: "/configuration",
   },
 ];
 

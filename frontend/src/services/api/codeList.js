@@ -11,6 +11,7 @@ const getCodelistDetail = (body) => {
         cancelToken.cancel()
     }
     cancelToken = axios.CancelToken.source();
+    console.log(body);
     return instance.post("/code-list/deep-details/", body, { ...config(), cancelToken: cancelToken.token });
 };
 
@@ -22,13 +23,25 @@ const remove = (body) => {
     return instance.post("/code-list/delete/", body, config());
 };
 
+const details = (body) => {
+    return instance.post("/code-list/details/", body, config());
+};
+
+const getItemPropCode = (body) => {
+    return instance.post("code-list/property-code/", body, config());
+};
+
+
 
 const CodelistService = {
     getAllTreeitem,
     getCodelistDetail,
     createUpdate,
     remove,
+    details,
+    getItemPropCode
 };
 
 
 export default CodelistService;
+

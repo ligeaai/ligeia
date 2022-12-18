@@ -41,6 +41,7 @@ export const loadTreeviewItem = (path, sortPath) => async (dispatch, getState) =
         cancelToken = axios.CancelToken.source();
         let res = await path(body, cancelToken);
         var sortedResponse;
+        console.log(res);
         if (sortPath === "TYPE") {//todo need to change api end point 
             sortedResponse = res.data.Message.sort((a, b) =>
                 a[sortPath] > b[sortPath] ? 1 : -1
@@ -64,8 +65,8 @@ export const loadTreeviewItem = (path, sortPath) => async (dispatch, getState) =
 }
 
 
-
 export const selectTreeViewItem = (index, breadcrumbPath) => async (dispatch, getState) => {
+    const filteredMenuLength = getState().treeview.filteredMenuItem.length
     const goFunction = () => {
         if (index === -2) {
             dispatch({
@@ -76,15 +77,14 @@ export const selectTreeViewItem = (index, breadcrumbPath) => async (dispatch, ge
             myHistoryPush(3, "new")
         } else {
             if (index < 0) {
-                index = getState().treeview.filteredMenuItem.length - 1
+                index = filteredMenuLength - 1
             }
-            if (index >= getState().treeview.filteredMenuItem.length) {
+            if (index >= filteredMenuLength) {
                 index = 0
             }
             var payload = getState().treeview.filteredMenuItem[parseInt(index)]
 
             payload = { ...payload, selectedIndex: index }
-            console.log(payload);
             dispatch({
                 type: SELECT_TREEVIEW_ITEM,
                 payload: payload
@@ -93,7 +93,6 @@ export const selectTreeViewItem = (index, breadcrumbPath) => async (dispatch, ge
                 type: CLEAN_AFTER_SAVE,
             })
             myHistoryPush(3, payload[breadcrumbPath].toLowerCase())
-
         }
     }
     dispatch(setGoFunctionConfirmation(goFunction))

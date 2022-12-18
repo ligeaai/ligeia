@@ -81,6 +81,9 @@ class ItemLinkUpdateView(generics.UpdateAPIView):
 
 class ItemLinkHierarchyView(generics.ListAPIView):
     permission_classes = [permissions.AllowAny]
+    def get_queryset(self):
+        pass
+
     def get(self, request, *args, **kwargs):
         quaryset  = item_link.objects.filter(TO_ITEM_TYPE = "COMPANY")
         validate_find(quaryset,request)
@@ -95,8 +98,10 @@ class ItemLinkHierarchyView(generics.ListAPIView):
             quaryset_to = item_property.objects.filter(ITEM_ID = data[index].get('TO_ITEM_ID'),PROPERTY_TYPE = 'NAME').order_by('START_DATETIME')
             serializer_from = ItemPropertyNameSerializer(quaryset_from,many = True)
             serializer_to = ItemPropertyNameSerializer(quaryset_to,many = True)
-            data[index]['FROM_ITEM_NAME'] = serializer_from.data[0].get("PROPERTY_STRING")
-            data[index]['TO_ITEM_NAME'] = serializer_to.data[0].get("PROPERTY_STRING")
+            if quaryset_from:
+                data[index]['FROM_ITEM_NAME'] = serializer_from.data[0].get("PROPERTY_STRING")
+            if quaryset_to:
+                data[index]['TO_ITEM_NAME'] = serializer_to.data[0].get("PROPERTY_STRING")
             quaryset  = item_link.objects.filter(TO_ITEM_TYPE = data[index].get('FROM_ITEM_TYPE'))
             if quaryset:
                 serializer = ItemLinkDetailsSerializer(quaryset,many = True)

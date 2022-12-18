@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Button, Grid } from "@mui/material";
+import { Button, Grid, Typography } from "@mui/material";
 
 import { Select, InputGenerator } from "../../../components";
 import {
@@ -8,32 +8,32 @@ import {
   changeValeus,
 } from "../../../services/actions/overview/overviewDialog";
 import { loadSelectItems } from "../../../services/actions/overview/overviewDialog";
-import { saveChart } from "../../../services/actions/overview/overviewDialog";
-const DialogContent = () => {
+import { updateChart } from "../../../services/actions/overview/taps";
+const DialogContent = ({ highchartProps, chartId }) => {
   const dispatch = useDispatch();
   const selectedItem = useSelector(
     (state) => state.overviewDialog.selectedItem
   );
   const properties = useSelector((state) => state.overviewDialog.values);
-  const values = useSelector((state) => state.overviewDialog.selectItems);
-  const handleChangeFunc = async (props) => {
-    dispatch(await changeSelectValue(props));
-  };
+  const defaultProps = useSelector(
+    (state) => state.overviewDialog.highchartProps
+  );
+
   React.useEffect(() => {
     async function myFunc() {
       dispatch(await loadSelectItems());
+      await dispatch(await changeSelectValue(highchartProps.Type));
+      Object.keys(highchartProps).map((e) => {
+        dispatch(changeValeus(e, highchartProps[e]));
+      });
     }
     myFunc();
   }, []);
   return (
     <Grid container sx={{ p: 1, width: "100%" }}>
-      <Grid item sx={{ pb: 2 }}>
-        <Select
-          values={values}
-          handleChangeFunc={handleChangeFunc}
-          defaultValue={selectedItem}
-        />
-      </Grid>
+      <Typography sx={{ fontWeight: "bold", mb: 1, fontSize: "14px" }}>
+        {highchartProps.Type}
+      </Typography>
       {properties.map((e, i) => {
         return (
           <Grid container key={i}>
@@ -41,11 +41,15 @@ const DialogContent = () => {
               return (
                 <Grid item xs={6} sm={4} md={3} sx={{ pr: 1, pb: 1 }}>
                   <Grid container>
-                    <Grid item xs={12}>
+                    <Grid item xs={12} sx={{ fontSize: "14px" }}>
                       {a.title}
                     </Grid>
                     <Grid item sx={{ width: "100%" }}>
-                      <InputGenerator {...a} changeFunction={changeValeus} />
+                      <InputGenerator
+                        {...a}
+                        defaultValue={defaultProps[a.title]}
+                        changeFunction={changeValeus}
+                      />
                     </Grid>
                   </Grid>
                 </Grid>
@@ -57,7 +61,7 @@ const DialogContent = () => {
       <Grid>
         <Button
           onClick={() => {
-            dispatch(saveChart());
+            dispatch(updateChart(chartId));
           }}
         >
           Save

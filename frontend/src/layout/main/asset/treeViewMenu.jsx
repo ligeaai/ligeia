@@ -28,6 +28,7 @@ const DrawerMenu = (props) => {
     }
     function onMouseUp() {
       document.body.removeEventListener("mousemove", onMouseMove);
+      document.body.removeEventListener("mouseup", onMouseUp);
       dispatch(setCssUserSelect(false));
     }
 
@@ -83,11 +84,11 @@ const DrawerMenu = (props) => {
           item
           xs={12}
           sx={{
-            // overflowY: "scroll",
+            overflowY: "hidden",
             overflowX: "hidden",
             height: isFullScreen
-              ? "calc(100vh - 85px )"
-              : "calc(100vh - 85px - 60px - 4px)",
+              ? "calc(100vh - 84px )"
+              : "calc(100vh - 85px - 60px - 4px  )",
             minHeight: "416px",
             // minHeight: "min-content",
             //height: "calc(100% - 75px)",
@@ -124,4 +125,4 @@ const DrawerMenu = (props) => {
   );
 };
 
-export default DrawerMenu;
+export default React.memo(DrawerMenu);

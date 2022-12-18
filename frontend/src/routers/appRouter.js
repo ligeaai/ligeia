@@ -27,7 +27,7 @@ const ForgotPassword = Loadable(React.lazy(() => import("../pages/authorization/
 const ForgotPasswordConfirm = Loadable(React.lazy(() => import("../pages/authorization/forgotPassword/forgotPasswordConfirm")));
 const Login = Loadable(React.lazy(() => import("../pages/authorization/login/login")));
 const NotFoundPage = Loadable(React.lazy(() => import("../pages/error/notFound")));
-const OrganizationAndItems = Loadable(React.lazy(() => import("../pages/main/configuration/organization/organizationAndItems")));
+const Items = Loadable(React.lazy(() => import("../pages/main/configuration/items/item")));
 const Overview = Loadable(React.lazy(() => import("../pages/main/overview/overview")));
 const Project = Loadable(React.lazy(() => import("../pages/main/configuration/project/project")));
 const Register = Loadable(React.lazy(() => import("../pages/authorization/register/register")));
@@ -58,8 +58,8 @@ const AppRouter1 = () => {
             <Route exact path="/configuration/tools/project" element={<Project isHome={true} />} />
             <Route exact path="/configuration/tools/code_list" element={<CodeList isHome={true} />} />
             <Route exact path="/configuration/tools/code_list/:codelist" element={<CodeList isHome={false} />} />
-            <Route exact path="/configuration/:myKey/:type/:item" element={<OrganizationAndItems isHome={false} />} />
-            <Route path="/configuration/:myKey/:type" element={<OrganizationAndItems isHome={true} />} />
+            <Route exact path="/configuration/:myKey/:type/:item" element={<Items isHome={false} />} />
+            <Route path="/configuration/:myKey/:type" element={<Items isHome={true} />} />
           </Route>
           <Route exact path="/" element={<PublicRoute />}>
             <Route exact path="/home" element={<Start />} />

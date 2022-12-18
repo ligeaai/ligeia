@@ -1,57 +1,64 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import {
-  Box,
-  Grid,
-  Typography,
-  Divider,
-  IconButton,
-  TextField,
-} from "@mui/material";
-
-import { addItemType } from "../../../../../services/actions/company/datagrid";
-import { TimeRangePicker } from "../../../../../components";
-import { selectItem } from "../../../../../services/actions/company/item";
-import Dialog from "./dialog";
+import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
+import Divider from "@mui/material/Divider";
+import IconButton from "@mui/material/IconButton";
 
 import DeleteIcon from "@mui/icons-material/Delete";
-import SaveIcon from "@mui/icons-material/Save";
 
-import { loadLinkEditor } from "../../../../../services/actions/company/linkEditor";
-import { instance, config } from "../../../../../services/baseApi";
+import { useIsMount } from "../../../../../hooks/useIsMount";
+import { setIsActiveLink } from "../../../../../services/actions/item/itemLinkEditor";
+
 import {
-  deleteLinkItem,
+  setBodyConfirmation,
+  setSaveFunctonConfirmation,
+  setTitleConfirmation,
+} from "../../../../../services/actions/confirmation/historyConfirmation";
+
+import {
+  loadLinks,
   updateItemLink,
-  saveLinkItem,
-} from "../../../../../services/actions/company/linkEditor";
+  deleteItemLink,
+  saveItemLink,
+} from "../../../../../services/actions/item/itemLinkEditor";
 import DatePicker from "../../../../../components/datePicker/datePicker";
-
-const LinkEditor = ({ type }) => {
+import Dialog from "./dialog";
+const LinkEditor = () => {
+  const isMount = useIsMount();
   const dispatch = useDispatch();
-  const res = useSelector((state) => state.linkEditor.linkEditorSchema);
-  const resFromType = useSelector(
-    (state) => state.linkEditor.linkEditorSchemaFromType
+  const selectedIndex = useSelector(
+    (state) => state.treeview.selectedItem.selectedIndex
   );
-  const links = useSelector((state) => state.linkEditor.links);
-  const changedLinks = useSelector((state) => state.linkEditor.changedLinks);
-  const isFullScreen = useSelector((state) => state.fullScreen.isFullScreen);
-  const selectedItem = useSelector((state) => state.item.selectedItem);
-  console.log(res);
-  console.log(links);
-  React.useEffect(() => {
-    if (type === selectedItem.ITEM_TYPE) {
-      dispatch(selectItem(selectedItem.selectedIndex));
-    } else {
-      dispatch({
-        type: "SET_SELECTED_ITEM",
-        payload: -3,
-      });
-    }
-    dispatch(addItemType(type));
-    dispatch(loadLinkEditor());
-  }, [window.location.pathname]);
 
+  const res = useSelector((state) => state.itemLinkEditor.linkEditorSchema);
+  const resFromType = useSelector(
+    (state) => state.itemLinkEditor.linkEditorSchemaFromType
+  );
+  const links = useSelector((state) => state.itemLinkEditor.links);
+  const changedLinks = useSelector(
+    (state) => state.itemLinkEditor.changedLinks
+  );
+  const isFullScreen = useSelector((state) => state.fullScreen.isFullScreen);
+  const selectedItem = useSelector((state) => state.treeview.selectedItem);
+
+  React.useEffect(() => {
+    dispatch(setIsActiveLink(true));
+    return () => {
+      dispatch(setIsActiveLink(false));
+    };
+  }, []);
+  React.useEffect(() => {
+    if (isMount) {
+      dispatch(setSaveFunctonConfirmation(saveItemLink));
+      dispatch(setTitleConfirmation("Are you sure you want to save this ? "));
+      dispatch(setBodyConfirmation("asd"));
+    }
+    if (selectedIndex !== -2 && selectedIndex !== -3) {
+      dispatch(loadLinks());
+    }
+  }, [selectedIndex]);
   if (res && selectedItem.NAME && links) {
     return (
       <Grid container>
@@ -111,7 +118,7 @@ const LinkEditor = ({ type }) => {
                               <IconButton
                                 onClick={async () => {
                                   const deleteFunc = async () => {
-                                    dispatch(deleteLinkItem(links[a].LINK_ID));
+                                    dispatch(deleteItemLink(links[a].LINK_ID));
                                   };
                                   dispatch({
                                     type: "confirmation/setConfirmation",
@@ -258,7 +265,7 @@ const LinkEditor = ({ type }) => {
                               <IconButton
                                 onClick={async () => {
                                   const deleteFunc = async () => {
-                                    dispatch(deleteLinkItem(links[a].LINK_ID));
+                                    dispatch(deleteItemLink(links[a].LINK_ID));
                                   };
                                   dispatch({
                                     type: "confirmation/setConfirmation",
@@ -331,6 +338,7 @@ const LinkEditor = ({ type }) => {
       </Grid>
     );
   }
+  return <></>;
 };
 
 export default LinkEditor;

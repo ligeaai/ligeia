@@ -17,7 +17,6 @@ export default function MySelect(props) {
     },
     disabled = false,
   } = props;
-  console.log(props);
   const [selectedItem, setSelectedItem] = React.useState(defaultValue);
   const handleChange = (event) => {
     setSelectedItem(event.target.value);

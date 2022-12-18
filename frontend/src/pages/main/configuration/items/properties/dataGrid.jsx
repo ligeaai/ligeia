@@ -3,19 +3,32 @@ import { useSelector, useDispatch } from "react-redux";
 
 import { DataGridPro } from "@mui/x-data-grid-pro";
 
+import { useIsMount } from "../../../../../hooks/useIsMount";
+
+import { CustomToolbar, CustomNoRowsOverlay } from "../../../../../components";
 import CustomColumnMenu from "./customColumnMenu";
-import CustomToolbar from "./customToolbar";
-import { editRow } from "../../../../../services/actions/company/datagrid";
-import { selectItem } from "../../../../../services/actions/company/item";
-import { addItemType } from "../../../../../services/actions/company/datagrid";
-import { CustomNoRowsOverlay } from "../../../../../components";
+import {
+  loadItemRowsDataGrid,
+  editDataGridCell,
+  saveItem,
+  cleanDataGrid,
+} from "../../../../../services/actions/item/itemDataGrid";
+
+import {
+  setBodyConfirmation,
+  setSaveFunctonConfirmation,
+  setTitleConfirmation,
+} from "../../../../../services/actions/confirmation/historyConfirmation";
 
 const MyDataGrid = ({ type, isLinksActive }) => {
+  const isMount = useIsMount();
   const dispatch = useDispatch();
-  const columns = useSelector((state) => state.companyDataGrid.columns);
-  const rows = useSelector((state) => state.companyDataGrid.rows);
-  const loading = useSelector((state) => state.companyDataGrid.loading);
-  const selectedItem = useSelector((state) => state.item.selectedItem);
+  const columns = useSelector((state) => state.itemDataGrid.columns);
+  const rows = useSelector((state) => state.itemDataGrid.rows);
+  const selectedIndex = useSelector(
+    (state) => state.treeview.selectedItem.selectedIndex
+  );
+  const itemId = useSelector((state) => state.treeview.selectedItem.ITEM_ID);
   const [sortModel, setSortModel] = React.useState([
     {
       field: "SORT_ORDER",
@@ -26,24 +39,17 @@ const MyDataGrid = ({ type, isLinksActive }) => {
     top: [rows.HISTORY],
     bottom: [],
   };
-
   React.useEffect(() => {
-    if (!isLinksActive) {
-      if (type === selectedItem.ITEM_TYPE) {
-        dispatch(selectItem(selectedItem.selectedIndex));
-      } else {
-        dispatch({
-          type: "SET_SELECTED_ITEM",
-          payload: -3,
-        });
-      }
-      dispatch(addItemType(type));
-      dispatch({
-        type: "CLEAN_ROWS",
-      });
+    if (isMount) {
+      dispatch(setSaveFunctonConfirmation(saveItem));
+      dispatch(setTitleConfirmation("Are you sure you want to save this ? "));
+      dispatch(setBodyConfirmation("asd"));
     }
-  }, [type]);
-
+    if (selectedIndex !== -2 && selectedIndex !== -3) {
+      dispatch({ type: "CLEAR_COLUMN_ITEM" });
+      dispatch(loadItemRowsDataGrid());
+    }
+  }, [itemId]);
   const onCellEditCommit = (cellData) => {
     const { id, field, value } = cellData;
     let myId = id;
@@ -51,11 +57,16 @@ const MyDataGrid = ({ type, isLinksActive }) => {
       //todo find better way
       myId = "HISTORY";
     }
-    dispatch(editRow(myId, field, value));
+    dispatch(editDataGridCell(myId, field, value));
   };
   if (Object.keys(rows).length !== 0) {
     return (
       <DataGridPro
+        sx={{
+          ".MuiDataGrid-pinnedRows": {
+            zIndex: 2,
+          },
+        }}
         componentsProps={{
           basePopper: {
             sx: {
@@ -73,7 +84,7 @@ const MyDataGrid = ({ type, isLinksActive }) => {
         hideFooter={true}
         sortModel={sortModel}
         onSortModelChange={(model) => setSortModel(model)}
-        loading={loading}
+        // loading={loading}
         components={{
           Toolbar: CustomToolbar,
           ColumnMenu: CustomColumnMenu,

@@ -8,7 +8,6 @@ const MyTextfield = (props) => {
       return false;
     },
   } = props;
-  console.log(defaultValue);
   const [value, setValue] = React.useState(defaultValue);
   const handleChange = (e) => {
     setValue(e.target.value);
