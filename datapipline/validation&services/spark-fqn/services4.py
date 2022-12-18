@@ -1,5 +1,7 @@
 from services3 import *
 
+df19.printSchema()
+
 query = (
     dffqn.writeStream.format("json")
     .option("path", "app/fqn")
@@ -7,19 +9,18 @@ query = (
     .option("maxRecordsPerFile", 1)
     .start()
 )
-df19.printSchema()
+
 query2 = (
     df19.selectExpr("CAST(id AS STRING) AS key", "to_json(struct(*)) AS value")
     .writeStream.format("kafka")
     .option("kafka.bootstrap.servers", "broker:29092")
-    .option("topic", "frozendata")
+    .option("topic", "backorlive")
     .option(
         "checkpointLocation",
         "app/check2",
     )
     .start()
 )
-
 query.awaitTermination()
 
 # query9 = df7.selectExpr("CAST(id AS STRING) AS key", "to_json(struct(*)) AS value") \

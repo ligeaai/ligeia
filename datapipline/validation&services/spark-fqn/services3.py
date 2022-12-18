@@ -10,6 +10,7 @@ df3 = df2.select(
         "name",
         "time",
         "quality",
+        "step-status",
         "temperature",
         "pressure",
         "vibration_x",
@@ -19,6 +20,7 @@ df3 = df2.select(
         "version",
         "company",
         "insert",
+        "TAG_NAME",
     ),
     "topic",
     "timestamp",
@@ -28,6 +30,7 @@ df3 = df2.select(
     "name",
     "time",
     "quality",
+    "step-status",
     "temperature",
     "pressure",
     "vibration_x",
@@ -37,6 +40,7 @@ df3 = df2.select(
     "version",
     "company",
     "insert",
+    "TAG_NAME",
     "topic",
     "timestamp",
 )
@@ -46,53 +50,22 @@ df4 = (
     .withColumn("vibration_x", df3["vibration_x"].cast(FloatType()))
     .withColumn("vibration_y", df3["vibration_y"].cast(FloatType()))
     .withColumn("vibration_motor", df3["vibration_motor"].cast(FloatType()))
+    .withColumn("TAG_NAME", df3["TAG_NAME"].cast(StringType()))
     .withColumn("time", to_timestamp("time", "dd/MM/yyyy HH:mm:ss"))
-    .withColumn("quality", lit(196))
+    .withColumn("quality", lit(192))
+    .withColumn("step-status", lit("formatting"))
 )
-df5 = (
-    df4.withColumn(
-        "value",
-        when(col("temperature") > 0, "temperature").otherwise(
-            when(col("pressure") > 0, "pressure").otherwise(
-                when(col("vibration_x") > 0, "vibration_x").otherwise(
-                    when(col("vibration_y") > 0, "vibration_y")
-                    .when(col("vibration_motor") > 0, "vibration_motor")
-                    .otherwise(None)
-                )
+df5 = df4.withColumn(
+    "value",
+    when(col("temperature") > 0, "temperature").otherwise(
+        when(col("pressure") > 0, "pressure").otherwise(
+            when(col("vibration_x") > 0, "vibration_x").otherwise(
+                when(col("vibration_y") > 0, "vibration_y")
+                .when(col("vibration_motor") > 0, "vibration_motor")
+                .otherwise(None)
             )
-        ),
-    )
-    .withColumn(
-        "quality",
-        when(
-            (col("temperature") < 15) | (col("temperature") > 70), col("quality") - 50
-        ).otherwise(col("quality")),
-    )
-    .withColumn(
-        "quality",
-        when(
-            (col("pressure") < 15) | (col("pressure") > 70), col("quality") - 50
-        ).otherwise(col("quality")),
-    )
-    .withColumn(
-        "quality",
-        when(
-            (col("vibration_x") < 15) | (col("vibration_x") > 70), col("quality") - 50
-        ).otherwise(col("quality")),
-    )
-    .withColumn(
-        "quality",
-        when(
-            (col("vibration_y") < 15) | (col("vibration_y") > 70), col("quality") - 50
-        ).otherwise(col("quality")),
-    )
-    .withColumn(
-        "quality",
-        when(
-            (col("vibration_motor") < 15) | (col("vibration_motor") > 70),
-            col("quality") - 50,
-        ).otherwise(col("quality")),
-    )
+        )
+    ),
 )
 df6 = df5.withColumn("org_unit4", split(col("name"), ",").getItem(0)).withColumn(
     "asset", split(col("name"), ",").getItem(1)
@@ -133,9 +106,11 @@ df16 = (
         "created_by",
         "version",
         "quality",
+        "step-status",
         "date",
         "time1",
         "DiffInHours",
+        "TAG_NAME",
     )
     .select(
         concat_ws(" ", df7.message_Type1).alias("message_type"),
@@ -154,9 +129,11 @@ df16 = (
         "created_by",
         "version",
         "quality",
+        "step-status",
         "date",
         "time1",
         "DiffInHours",
+        "TAG_NAME",
     )
     .select(
         concat_ws(" ", df6.timestamp).alias("createdtime"),
@@ -175,9 +152,11 @@ df16 = (
         "timestamp",
         "version",
         "quality",
+        "step-status",
         "date",
         "time1",
         "DiffInHours",
+        "TAG_NAME",
     )
     .select(
         concat_ws(
@@ -204,9 +183,11 @@ df16 = (
         "created_by",
         "version",
         "quality",
+        "step-status",
         "date",
         "time1",
         "DiffInHours",
+        "TAG_NAME",
     )
     .select(
         concat_ws(" ", df15.date, df15.time1).alias("t"),
@@ -227,9 +208,11 @@ df16 = (
         "created_by",
         "version",
         "quality",
+        "step-status",
         "date",
         "time1",
         "DiffInHours",
+        "TAG_NAME",
     )
     .withColumnRenamed("quality", "q")
 )
@@ -257,6 +240,8 @@ df17 = (
         "vibration_y",
         "vibration_motor",
         "DiffInHours",
+        "step-status",
+        "TAG_NAME",
     )
 )
 
@@ -269,6 +254,8 @@ df18 = df17.select(
     "vibration_y",
     "vibration_motor",
     "DiffInHours",
+    "step-status",
+    "TAG_NAME",
     df17.payload.insert.vqts.id,
     df17.header.version,
     df17.header.created_by,
@@ -299,6 +286,7 @@ df19 = (
         "fqn",
         "timestamp",
         "quality",
+        "step-status",
         "value",
         "temperature",
         "pressure",
@@ -306,5 +294,9 @@ df19 = (
         "vibration_y",
         "vibration_motor",
         "DiffInHours",
+        "TAG_NAME",
     )
 )
+df19.printSchema()
+
+df20 = df19

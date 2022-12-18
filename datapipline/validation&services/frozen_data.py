@@ -8,7 +8,7 @@ from ast import literal_eval
 import json
 
 host = "localhost:9092"
-topic = "frozendata"
+topic = "frozen_data"
 consumer = KafkaConsumer(
     group_id=topic,
     bootstrap_servers=host,
@@ -17,7 +17,7 @@ consumer = KafkaConsumer(
 )
 
 producer = KafkaProducer(
-    bootstrap_servers="localhost:9092",
+    bootstrap_servers=host,
     value_serializer=lambda v: json.dumps(v).encode("ascii"),
 )
 
@@ -74,7 +74,7 @@ def frozen_data_check(data_check):
             print(
                 "----------------------------THE DATA IS COMING SAME PLEASE CHECK----------------------------"
             )
-            data["quality"] = data["quality"] - 50
+            data["quality"] = data["quality"] - 125
     else:
         data_dict.get(data_check).clear()
     return valueType
@@ -87,12 +87,16 @@ for message in consumer:
     data = literal_eval(df.decode("utf8"))
     df2 = dict(data)
     data_check = get_value_type(df2)
+    print(data_check)
     print(len(data_dict.get(data_check)))
     if len(data_dict.get(data_check)) > 3:
         frozen_data_check(data_check)
     try:
-        del data[data_check]
-        producer.send("backorlive", value=data)
+        print("-----------------")
+        data["step-status"] = "frozen-data"
+        producer.send("scaling_data", value=data)
+        producer.flush()
+        producer.send(data["message_type"], value=data)
         producer.flush()
     except:
         pass
