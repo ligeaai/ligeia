@@ -17,7 +17,8 @@ import { Confirmation, MyNavigator, Loadable, HistoryConfirmation } from "../com
 import ErrorMessage from "../components/errorMessage/errorMessage";
 
 import { setLoaderTrue } from "../services/actions/loader";
-
+import "react-grid-layout/css/styles.css";
+import "react-resizable/css/styles.css";
 
 const Administration = Loadable(React.lazy(() => import("../pages/main/administration/main")));
 const Analytics = Loadable(React.lazy(() => import("../pages/main/asset/analytics")));

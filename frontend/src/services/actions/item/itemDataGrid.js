@@ -90,7 +90,7 @@ export const loadTypeRowsDataGrid = () => async (dispatch, getState) => {
             LABEL_ID: "HISTORY",
             PROP_GRP: "",
             PROPERTY_TYPE: "HISTORY",
-            SORT_ORDER: "",
+            SORT_ORDER: "1",
             "RESOURCE-LIST": [
                 {
                     SHORT_LABEL: "",
@@ -102,6 +102,7 @@ export const loadTypeRowsDataGrid = () => async (dispatch, getState) => {
                 response[a.PROPERTY_NAME] = a
             })
         })
+        console.log(response);
         dispatch({
             type: LOAD_TYPE_ROWS_ITEM,
             payload: response

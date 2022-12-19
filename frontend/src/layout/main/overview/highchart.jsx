@@ -5,8 +5,9 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { angular, lineChart } from "./highchartOptions";
 addHighchartsMore(Highcharts);
-const OverviewEditor = ({ highchartProps }) => {
-  console.log(highchartProps);
+const OverviewEditor = ({ highchartProps, width, height }) => {
+  console.log(width);
+  console.log(height);
   const chartType = {
     "Gauge(Angular)[Highchart]": angular,
     LineCharts: lineChart,
@@ -17,8 +18,14 @@ const OverviewEditor = ({ highchartProps }) => {
     return (
       <HighchartsReact
         highcharts={Highcharts}
-        options={options}
-        containerProps={{ style: { height: "100%", width: "100%" } }}
+        options={{
+          ...options,
+          chart: {
+            ...options.chart,
+            width: width,
+            height: height,
+          },
+        }}
       />
     );
   }

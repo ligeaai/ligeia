@@ -1,5 +1,6 @@
 import React from "react";
 import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
 import { IconButton } from "@mui/material";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import SettingsIcon from "@mui/icons-material/Settings";
@@ -9,21 +10,11 @@ import { deleteChart } from "../../../services/actions/overview/taps";
 import { useDispatch, useSelector } from "react-redux";
 import { LoadingComponent, MyDialog } from "../../../components";
 import UpdatePopUp from "./updatePopup";
-import { Rnd } from "react-rnd";
-import { Resizable } from "re-resizable";
-import Draggable from "react-draggable";
-import Highcharts from "highcharts";
-
-const style = {
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-};
-
-const Widgets = ({ widget, key }) => {
+import "../../../assets/css/dashboard.css";
+const Widgets = React.forwardRef((props, ref) => {
+  const { widget, style, className, children, ...rest } = props;
   const dispatch = useDispatch();
   const [highchartProps, setHighChartProps] = React.useState(null);
-  const [dragEnable, setDragEnable] = React.useState(false);
   const refresh = useSelector((state) => state.tapsOverview.refresh);
   React.useEffect(() => {
     async function myFunc() {
@@ -34,89 +25,70 @@ const Widgets = ({ widget, key }) => {
     }
     myFunc();
   }, [refresh]);
-  function reflowChart() {
-    for (var i = 0; i < Highcharts.charts.length; i++) {
-      if (Highcharts.charts[i] !== undefined) {
-        Highcharts.charts[i].reflow();
-      }
-    }
-  }
-  reflowChart();
-  if (highchartProps)
+  const width = parseInt(style.width, 10);
+  const height = parseInt(style.height, 10) - 50;
+  if (highchartProps) {
     return (
-      // <Rnd
-      //   style={style}
-      //   default={{
-      //     x: 0,
-      //     y: 0,
-      //     width: 320,
-      //     height: 200,
-      //   }}
-      // >
-      //<Draggable>
-      <Draggable disabled={dragEnable}>
-        <Resizable
-          defaultSize={{
-            width: "30%",
-            height: 300,
-            backgroundColor: "red",
-          }}
-          lockAspectRatio={true}
-          onResizeStart={(e) => {
-            e.stopPropagation();
-            setDragEnable(true);
-          }}
-          onResizeStop={() => {
-            reflowChart();
-            setDragEnable(false);
+      <div
+        ref={ref}
+        className={`grid-item ${className}`}
+        style={style}
+        {...rest}
+      >
+        <Box
+          className="grid-item__title"
+          sx={{
+            fontSize: "14px",
+            backgroundColor: "#7E99AA",
+            "&:hover": {
+              background: "#7E99AADD",
+              cursor: "move",
+            },
           }}
         >
-          <Grid item sx={{ boxShadow: 3, m: 1, height: "100%" }}>
-            <Grid container sx={{ width: "100%", height: "100%" }}>
-              <Grid item xs={12}>
-                <Grid container sx={{ justifyContent: "space-between" }}>
-                  <Grid item>
-                    <IconButton
-                      onClick={() => {
-                        dispatch(deleteChart(widget, highchartProps._rev));
-                      }}
-                    >
-                      <DeleteForeverIcon />
-                    </IconButton>
-                  </Grid>
-                  <Grid item>
-                    <MyDialog
-                      Button={
-                        <IconButton>
-                          <SettingsIcon />
-                        </IconButton>
-                      }
-                      DialogBody={
-                        <UpdatePopUp
-                          highchartProps={highchartProps}
-                          chartId={widget}
-                        />
-                      }
-                    />
-                  </Grid>
-                </Grid>
-              </Grid>
-
-              <Grid item xs={12} height={200}>
-                <MyHighcharts highchartProps={highchartProps}></MyHighcharts>
-              </Grid>
+          <Grid container sx={{ justifyContent: "space-between" }}>
+            <Grid item>
+              <IconButton
+                onClick={() => {
+                  dispatch(deleteChart(widget, highchartProps._rev));
+                }}
+              >
+                <DeleteForeverIcon />
+              </IconButton>
+            </Grid>
+            <Grid item>
+              <MyDialog
+                Button={
+                  <IconButton>
+                    <SettingsIcon />
+                  </IconButton>
+                }
+                DialogBody={
+                  <UpdatePopUp
+                    highchartProps={highchartProps}
+                    chartId={widget}
+                  />
+                }
+              />
             </Grid>
           </Grid>
-        </Resizable>
-      </Draggable>
-      //</Draggable>
-      // </Rnd>
+        </Box>
+        <Box className="grid-item__graph">
+          <MyHighcharts
+            highchartProps={highchartProps}
+            width={width}
+            height={height}
+          ></MyHighcharts>
+        </Box>
+        {children}
+      </div>
     );
+  }
   return (
     <Grid xs={3} height={300} sx={{ boxShadow: 3, m: 1 }}>
       <LoadingComponent />
     </Grid>
   );
-};
+});
 
-export default Widgets;
+export default React.memo(Widgets);

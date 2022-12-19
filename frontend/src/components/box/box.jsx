@@ -28,7 +28,7 @@ const Properties = ({ Element }) => {
         border: "0.5px solid",
         borderColor: grey[200],
         borderRadius: "5px",
-        overflowY: "scroll",
+        overflowY: "auto",
       }}
     >
       <ComponentError

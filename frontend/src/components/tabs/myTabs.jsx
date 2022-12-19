@@ -8,7 +8,8 @@ import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
-
+import "../../assets/css/react-grid-layout.css";
+import "../../assets/css/react-resizable.css";
 import { useDispatch, useSelector } from "react-redux";
 import TabItems from "../../layout/main/overview/tabItems";
 import { selectTab, addNewTabItem } from "../../services/actions/overview/taps";
@@ -41,6 +42,26 @@ function a11yProps(index) {
     "aria-controls": `action-tabpanel-${index}`,
   };
 }
+const MyTap = (x, i) => {
+  // const [changeText, setChangeText] = React.useState(false);
+  const dispatch = useDispatch();
+  // if (!changeText)
+  return (
+    <Tab
+      key={`${x}`}
+      label={`${x}`}
+      {...a11yProps(i)}
+      sx={{ maxWidth: "150px", textTransform: "capitalize" }}
+      onClick={() => {
+        dispatch(selectTab(x));
+      }}
+      // onDoubleClick={() => {
+      //   setChangeText(true);
+      // }}
+    />
+  );
+  return <>asdsd</>;
+};
 function MyTabs() {
   const dispatch = useDispatch();
   const [value, setValue] = React.useState(null);
@@ -60,6 +81,9 @@ function MyTabs() {
         bgcolor: "background.paper",
         position: "relative",
         height: "100%",
+        ".react-swipeable-view-container": {
+          height: "100%",
+        },
       }}
     >
       <AppBar position="static" color="default">
@@ -68,17 +92,7 @@ function MyTabs() {
           onChange={handleChange}
           aria-label="action tabs example"
         >
-          {titles.map((x, i) => (
-            <Tab
-              key={`${x}`}
-              label={`${x}`}
-              {...a11yProps(i)}
-              sx={{ maxWidth: "150px", textTransform: "capitalize" }}
-              onClick={() => {
-                dispatch(selectTab(x));
-              }}
-            />
-          ))}
+          {titles.map((x, i) => MyTap(x, i))}
           <Grid
             key={`a`}
             container
@@ -111,9 +125,6 @@ function MyTabs() {
           height: isFullScreen
             ? "calc(100vh - 56px - 48px )"
             : "calc(100vh - 60px - 50px - 16px - 48px )",
-          "& .react-swipeable-view-container": {
-            height: "100%",
-          },
         }}
       >
         {Object.keys(widgets).map((widgetProps, i) => {
@@ -122,8 +133,9 @@ function MyTabs() {
               value={value}
               index={i}
               key={i}
-              className={"sakdşlksladklş"}
-              sx={{ height: "100%" }}
+              sx={{
+                height: "100%",
+              }}
             >
               <TabItems widgetProps={widgets[widgetProps]}></TabItems>
             </TabPanel>
