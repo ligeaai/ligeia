@@ -63,9 +63,13 @@ const SingleSelectCell = (params) => {
         a.CODE_TEXT > b.CODE_TEXT ? 1 : -1
       );
       sortedResponse.map((e) => {
-        data.push(e);
+        if (e.CODE_TEXT) {
+          data.push(e);
+        }
       });
       setValues(data);
+      console.log(values);
+
       return Promise.resolve(res.data);
     } catch (err) {
       return Promise.reject(err);
