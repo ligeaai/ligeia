@@ -7,6 +7,7 @@ const MyTextfield = (props) => {
     errFunc = () => {
       return false;
     },
+    ...rest
   } = props;
   const [value, setValue] = React.useState(defaultValue);
   const handleChange = (e) => {
@@ -18,6 +19,7 @@ const MyTextfield = (props) => {
   }, [defaultValue]);
   return (
     <TextField
+      {...rest}
       error={errFunc()}
       variant="outlined"
       value={value}

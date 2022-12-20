@@ -110,6 +110,69 @@ export const addNewTabItem = () => async (dispatch, getState) => {
     catch (err) { console.log(err); }
 }
 
+const _checkHeader = (oldHeader, newHeader, keys) => {
+    if (oldHeader === newHeader) {
+        return false
+    }
+    if (keys.some(e => e === newHeader)) {
+        return false
+    }
+    return true
+}
+
+export const updateTabHeader = (oldHeader, newHeader) => async (dispatch, getState) => {
+    const selectedLink = getState().collapseMenu.selectedItem.LINK_ID
+    const resData = getState().tapsOverview.data
+
+    if (_checkHeader(oldHeader, newHeader, Object.keys(resData.data))) {
+        resData.data[newHeader] = resData.data[oldHeader]
+        delete resData.data[oldHeader]
+
+        const tablinkBody = {
+            ...resData, data: {
+                ...resData.data
+            }
+        }
+        try {
+            await instance
+                .put(
+                    `/taplinks/${selectedLink}`,
+                    tablinkBody,
+                    config
+                )
+            dispatch(loadTapsOverview())
+
+        }
+        catch (err) { console.log(err); }
+    }
+
+}
+
+export const deleteTapHeader = (header) => async (dispatch, getState) => {
+    const selectedLink = getState().collapseMenu.selectedItem.LINK_ID
+    const resData = getState().tapsOverview.data
+    delete resData.data[header]
+
+    const tablinkBody = {
+        ...resData, data: {
+            ...resData.data
+        }
+    }
+
+
+    try {
+        await instance
+            .put(
+                `/taplinks/${selectedLink}`,
+                tablinkBody,
+                config
+            )
+        dispatch(loadTapsOverview())
+
+    }
+    catch (err) { console.log(err); }
+}
+
 export const updateChart = () => async (dispatch, getState) => {
     const chartProps = getState().overviewDialog.highchartProps
     const body = JSON.stringify({ ...chartProps })

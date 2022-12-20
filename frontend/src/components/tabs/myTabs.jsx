@@ -1,6 +1,7 @@
 import * as React from "react";
 import PropTypes from "prop-types";
 import SwipeableViews from "react-swipeable-views";
+import DeleteIcon from "@mui/icons-material/Delete";
 import { useTheme } from "@mui/material/styles";
 import AppBar from "@mui/material/AppBar";
 import Tabs from "@mui/material/Tabs";
@@ -12,7 +13,13 @@ import "../../assets/css/react-grid-layout.css";
 import "../../assets/css/react-resizable.css";
 import { useDispatch, useSelector } from "react-redux";
 import TabItems from "../../layout/main/overview/tabItems";
-import { selectTab, addNewTabItem } from "../../services/actions/overview/taps";
+import {
+  selectTab,
+  addNewTabItem,
+  updateTabHeader,
+  deleteTapHeader,
+} from "../../services/actions/overview/taps";
+import { MyTextField } from "..";
 const TabPanel = (props) => {
   const { children, value, index, ...other } = props;
 
@@ -42,27 +49,83 @@ function a11yProps(index) {
     "aria-controls": `action-tabpanel-${index}`,
   };
 }
-const MyTap = (x, i) => {
-  // const [changeText, setChangeText] = React.useState(false);
+let value = "";
+
+const MyTap = React.forwardRef(({ x, i, ...rest }, ref) => {
+  const [changeText, setChangeText] = React.useState(false);
+  const [iconIsActive, setIconIsActive] = React.useState(false);
   const dispatch = useDispatch();
-  // if (!changeText)
+  const onChange = (e) => {
+    value = e;
+  };
+  const handleUserClick = () => {
+    setChangeText(false);
+    dispatch(updateTabHeader(x, value));
+  };
+  React.useEffect(() => {
+    if (changeText) {
+      value = x;
+      window.addEventListener("click", handleUserClick);
+    }
+    return () => {
+      window.removeEventListener("click", handleUserClick);
+    };
+  }, [changeText]);
+  if (!changeText)
+    return (
+      <Box
+        sx={{
+          height: "48px",
+          display: "flex",
+          alignItems: "center",
+          position: "relative",
+        }}
+        onMouseEnter={() => setIconIsActive(true)}
+        onMouseLeave={() => setIconIsActive(false)}
+      >
+        <Tab
+          ref={ref}
+          label={`${x}`}
+          {...a11yProps(i)}
+          {...rest}
+          sx={{
+            maxWidth: "150px",
+            textTransform: "capitalize",
+          }}
+          onClick={() => {
+            dispatch(selectTab(x));
+          }}
+          onDoubleClick={() => {
+            setChangeText(true);
+          }}
+        />
+        <DeleteIcon
+          fontSize="small"
+          sx={{
+            cursor: "pointer",
+            display: iconIsActive ? "flex" : "none",
+            position: "absolute",
+            right: 0,
+          }}
+          onClick={() => {
+            dispatch(deleteTapHeader(x));
+          }}
+        ></DeleteIcon>
+      </Box>
+    );
   return (
-    <Tab
-      key={`${x}`}
-      label={`${x}`}
-      {...a11yProps(i)}
-      sx={{ maxWidth: "150px", textTransform: "capitalize" }}
-      onClick={() => {
-        dispatch(selectTab(x));
-      }}
-      // onDoubleClick={() => {
-      //   setChangeText(true);
-      // }}
-    />
+    <Box sx={{ display: "flex", alignItems: "center", maxWidth: "150px" }}>
+      <MyTextField
+        defaultValue={x}
+        handleChangeFunc={onChange}
+        autoFocus
+        {...rest}
+      />
+    </Box>
   );
-  return <>asdsd</>;
-};
+});
 function MyTabs() {
+  const ref = React.createRef();
   const dispatch = useDispatch();
   const [value, setValue] = React.useState(null);
   const titles = useSelector((state) => state.tapsOverview.titles);
@@ -91,8 +154,11 @@ function MyTabs() {
           value={value}
           onChange={handleChange}
           aria-label="action tabs example"
+          sx={{ height: "48px" }}
         >
-          {titles.map((x, i) => MyTap(x, i))}
+          {titles.map((x, i) => (
+            <MyTap ref={ref} key={`${x}`} x={x} i={i}></MyTap>
+          ))}
           <Grid
             key={`a`}
             container
