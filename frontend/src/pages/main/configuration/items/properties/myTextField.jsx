@@ -45,8 +45,6 @@ const SingleSelectCell = (params) => {
   }, []);
 
   const handleClick = async () => {
-    console.log(params);
-
     const body = JSON.stringify({ CULTURE, CODE_LIST: params.row.CODE_LIST });
 
     try {
@@ -75,7 +73,16 @@ const SingleSelectCell = (params) => {
   };
 
   return (
-    <Box onMouseUp={handleClick} {...params}>
+    <Box
+      onMouseUp={handleClick}
+      {...params}
+      sx={{
+        width: "100%",
+        "& .MuiOutlinedInput-notchedOutline": {
+          border: "none",
+        },
+      }}
+    >
       <Select
         values={values}
         valuesPath={"ROW_ID"}
