@@ -123,7 +123,7 @@ const UnitOne = ({ isHome }) => {
               {isLinksActive ? <LinkActionMenu /> : <MyActionMenu />}
             </Grid>
             <MyDivider />
-            <Grid item>
+            <Grid item sx={{ mr: 1 }}>
               {isLinksActive ? <DateBreak props={true} /> : <DateBreak />}
             </Grid>
             <MyDivider />

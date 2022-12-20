@@ -102,7 +102,6 @@ const CodeList = ({ isHome }) => {
             </Box>
           </Grid>
           <ItemSperatorLineXL />
-
           <Grid container sx={{ alignItems: "center", pl: 2 }}>
             <Grid item>
               <MyActionMenu />
@@ -117,7 +116,6 @@ const CodeList = ({ isHome }) => {
             </Grid>
             <MyDivider />
           </Grid>
-
           <ItemSperatorLineXL />
           <Grid item xs={12} sx={{ mt: 1 }}>
             <ComponentError errMsg="Error">
