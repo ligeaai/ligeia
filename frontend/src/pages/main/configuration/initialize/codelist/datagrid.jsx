@@ -119,9 +119,18 @@ export default function TreeDataWithGap() {
               basePopper: {
                 sx: {
                   ".MuiDataGrid-columnsPanel": {
+                    span: {
+                      fontSize: "14px",
+                    },
                     "&>*:nth-of-type(2)": {
                       display: "none",
                     },
+                  },
+                  "& .MuiInputBase-input": {
+                    fontSize: "14px",
+                  },
+                  "& .MuiButtonBase-root": {
+                    fontSize: "14px",
                   },
                 },
               },

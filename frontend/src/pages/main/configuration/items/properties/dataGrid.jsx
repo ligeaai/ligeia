@@ -71,9 +71,18 @@ const MyDataGrid = ({ type, isLinksActive }) => {
           basePopper: {
             sx: {
               ".MuiDataGrid-columnsPanel": {
+                span: {
+                  fontSize: "14px",
+                },
                 "&>*:nth-of-type(n+5)": {
                   display: "none",
                 },
+              },
+              "& .MuiInputBase-input": {
+                fontSize: "14px",
+              },
+              "& .MuiButtonBase-root": {
+                fontSize: "14px",
               },
             },
           },

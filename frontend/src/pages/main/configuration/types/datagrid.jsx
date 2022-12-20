@@ -88,23 +88,6 @@ function TreeDataWithGap() {
           }}
         >
           <DataGridPro
-            componentsProps={{
-              basePopper: {
-                sx: {
-                  ".MuiDataGrid-columnsPanel": {
-                    "&>*:nth-of-type(2)": {
-                      display: "none",
-                    },
-                  },
-                },
-              },
-            }}
-            localeText={{
-              toolbarColumns: "",
-              toolbarFilters: "",
-              toolbarDensity: "",
-              toolbarExport: "",
-            }}
             density="compact"
             defaultGroupingExpansionDepth={1}
             hideFooter={true}
