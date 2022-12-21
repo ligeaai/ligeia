@@ -20,6 +20,7 @@ const Properties = () => {
         "& .super-app-theme--cell": {
           backgroundColor: grey[200],
         },
+        m: 0.5,
         button: { color: "#4B4B4B" },
       }}
       Element={<DataGrid />}
