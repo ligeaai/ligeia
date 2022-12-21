@@ -18,7 +18,9 @@ producer = KafkaProducer(
     bootstrap_servers=host,
     value_serializer=lambda v: json.dumps(v).encode("ascii"),
 )
-r = requests.get("http://34.125.220.112:8000/api/v1/tags/details/")
+r = requests.get(
+    "http://34.125.220.112:8000/api/v1/tags/details/"
+)  # I will fix it soon
 
 incoming_tag_name = r.json()
 
@@ -57,7 +59,7 @@ def get_value_type(df2):
             data_dict.get(data).append(incomingData)
             return data
         except:
-            pass
+            print("No defined data is coming")
 
 
 def tag_name_check(data_tag_name, incoming_tag_name):
@@ -72,38 +74,19 @@ def tag_name_check(data_tag_name, incoming_tag_name):
         pass
 
 
-def data_range_check(data_check, data, min_max_values):
+def data_range_check(data, min_max_values):
     quality = data["quality"]
     data_value = float(data["value"])
     min_values = float(min_max_values[0])
     max_values = float(min_max_values[1])
-
+    print(max_values)
+    print(min_values)
     try:
-        if data_check == "temperature":
-            if data_value < min_values:
-                quality = quality - 127
-            elif data_value > max_values:
-                quality = quality - 126
-        elif data_check == "pressure":
-            if data_value < min_values:
-                quality = quality - 127
-            elif data_value > max_values:
-                quality = quality - 126
-        elif data_check == "vibration_x":
-            if data_value < min_values:
-                quality = quality - 127
-            elif data_value > max_values:
-                quality = quality - 126
-        elif data_check == "vibration_y":
-            if data_value < min_values:
-                quality = quality - 127
-            elif data_value > max_values:
-                quality = quality - 126
-        elif data_check == "vibration_motor":
-            if data_value < min_values:
-                quality = quality - 127
-            elif data_value > max_values:
-                quality = quality - 126
+        if data_value < min_values:
+            quality = quality - 127
+        elif data_value > max_values:
+            quality = quality - 126
+        data["quality"] = quality
     except:
         data["TAG_NAME"] == "no such tag value found"
     return data
@@ -119,15 +102,14 @@ for message in consumer:
     if data["quality"] == 192:
         del data["step-status"]
         data_check = get_value_type(df2)
-        data_range_check(
-            data_check, data, tag_name_check(data["TAG_NAME"], incoming_tag_name)
-        )
-        print(data)
-        print(data_check)
+        data_range_check(data, tag_name_check(data["TAG_NAME"], incoming_tag_name))
+        # print(data)
+        # print(data_check)
         del data["TAG_NAME"]
         del data[data_check]
-        print(data)
-        producer.send(data["message_type"], value=data)
+        # print(data)
+        key = data["id"].encode("utf-8")
+        producer.send(data["message_type"], value=data, key=key)
         producer.flush()
     else:
         pass
