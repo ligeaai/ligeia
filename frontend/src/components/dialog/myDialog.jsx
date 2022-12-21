@@ -18,7 +18,7 @@ export default function AlertDialog({ Button, DialogBody }) {
     <Box>
       <Box onClick={handleClickOpen}>{Button}</Box>
       <Dialog open={open} onClose={handleClose} maxWidth="lg">
-        {DialogBody}
+        <DialogBody handleClose={handleClose} />
       </Dialog>
     </Box>
   );

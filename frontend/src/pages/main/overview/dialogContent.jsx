@@ -9,7 +9,7 @@ import {
 } from "../../../services/actions/overview/overviewDialog";
 import { loadSelectItems } from "../../../services/actions/overview/overviewDialog";
 import { saveChart } from "../../../services/actions/overview/overviewDialog";
-const DialogContent = () => {
+const DialogContent = ({ handleClose }) => {
   const dispatch = useDispatch();
   const selectedItem = useSelector(
     (state) => state.overviewDialog.selectedItem
@@ -54,14 +54,22 @@ const DialogContent = () => {
           </Grid>
         );
       })}
-      <Grid>
-        <Button
-          onClick={() => {
-            dispatch(saveChart());
-          }}
-        >
-          Save
-        </Button>
+      <Grid item xs={12}>
+        <Grid container sx={{ flexDirection: "row-reverse" }}>
+          <Grid item>
+            <Button onClick={handleClose} color="error">
+              Cancel
+            </Button>
+            <Button
+              onClick={() => {
+                dispatch(saveChart());
+                handleClose();
+              }}
+            >
+              Save
+            </Button>
+          </Grid>
+        </Grid>
       </Grid>
     </Grid>
   );

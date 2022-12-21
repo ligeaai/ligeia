@@ -45,7 +45,7 @@ const Tabs = () => {
       }}
     >
       <MyTabs />
-      <MyDialog Button={<MyFab />} DialogBody={<DialogContent />} />
+      <MyDialog Button={<MyFab />} DialogBody={DialogContent} />
     </Box>
   );
 };
