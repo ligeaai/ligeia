@@ -29,10 +29,10 @@ const Widgets = React.forwardRef((props, ref) => {
   const height = parseInt(style.height, 10) - 50;
   if (highchartProps) {
     return (
-      <div
+      <Box
         ref={ref}
         className={`grid-item ${className}`}
-        style={style}
+        sx={{ ...style, boxShadow: 4 }}
         {...rest}
       >
         <Box
@@ -63,12 +63,9 @@ const Widgets = React.forwardRef((props, ref) => {
                     <SettingsIcon />
                   </IconButton>
                 }
-                DialogBody={
-                  <UpdatePopUp
-                    highchartProps={highchartProps}
-                    chartId={widget}
-                  />
-                }
+                DialogBody={UpdatePopUp}
+                highchartProps={highchartProps}
+                chartId={widget}
               />
             </Grid>
           </Grid>
@@ -81,7 +78,7 @@ const Widgets = React.forwardRef((props, ref) => {
           ></MyHighcharts>
         </Box>
         {children}
-      </div>
+      </Box>
     );
   }
   return (

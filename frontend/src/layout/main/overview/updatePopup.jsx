@@ -9,7 +9,9 @@ import {
 } from "../../../services/actions/overview/overviewDialog";
 import { loadSelectItems } from "../../../services/actions/overview/overviewDialog";
 import { updateChart } from "../../../services/actions/overview/taps";
-const DialogContent = ({ highchartProps, chartId }) => {
+const DialogContent = ({ highchartProps, chartId, ...rest }) => {
+  console.log("sadsad");
+  console.log(rest);
   const dispatch = useDispatch();
   const selectedItem = useSelector(
     (state) => state.overviewDialog.selectedItem
@@ -58,14 +60,27 @@ const DialogContent = ({ highchartProps, chartId }) => {
           </Grid>
         );
       })}
-      <Grid>
-        <Button
-          onClick={() => {
-            dispatch(updateChart(chartId));
-          }}
-        >
-          Save
-        </Button>
+      <Grid item xs={12}>
+        <Grid container sx={{ flexDirection: "row-reverse" }}>
+          <Grid item>
+            <Button
+              color="error"
+              onClick={() => {
+                rest.handleClose();
+              }}
+            >
+              Cancel
+            </Button>
+            <Button
+              onClick={() => {
+                dispatch(updateChart(chartId));
+                rest.handleClose();
+              }}
+            >
+              Save
+            </Button>
+          </Grid>
+        </Grid>
       </Grid>
     </Grid>
   );
