@@ -31,6 +31,7 @@ ALLOWED_HOSTS = env("ALLOWED_HOSTS").split(" ")
 CORS_ALLOW_ALL_ORIGINS = True
 
 DJANGO_APPS = [
+    "daphne",
     "django.contrib.contenttypes",
     "django.contrib.admin",
     "django.contrib.auth",
@@ -41,6 +42,7 @@ DJANGO_APPS = [
 ]
 
 THIRD_PARTY_APPS = [
+    
     "raven.contrib.django.raven_compat",
     "rest_framework",
     "rest_framework.authtoken",
@@ -72,6 +74,7 @@ ELASTICSEARCH_DSL = {
         'hosts': env('Elastic_Search_Host')
     },
 }
+SECURE_CROSS_ORIGIN_OPENER_POLICY = None
 LOCAL_APPS = [
     # "apps.base",
     # "apps.citylight",
