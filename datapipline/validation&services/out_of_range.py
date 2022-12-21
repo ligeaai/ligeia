@@ -104,9 +104,9 @@ def data_range_check(data_check, data, min_max_values):
                 quality = quality - 127
             elif data_value > max_values:
                 quality = quality - 126
-        return data
     except:
-        print("Böyle bir şey yokk")
+        data["TAG_NAME"] == "no such tag value found"
+    return data
 
 
 for message in consumer:
