@@ -15,7 +15,7 @@ const TabItems = (props) => {
     lg: [
       {
         w: 6,
-        i: "125d53bf-7753-4d47-a7c6-a86e184989b6",
+        i: "86d3962a-6439-4d25-b05f-c4a07ae3e04b",
         h: 6,
         x: 0,
         y: 0,
@@ -31,7 +31,7 @@ const TabItems = (props) => {
     md: [
       {
         w: 6,
-        i: "125d53bf-7753-4d47-a7c6-a86e184989b6",
+        i: "86d3962a-6439-4d25-b05f-c4a07ae3e04b",
         h: 6,
         x: 0,
         y: 0,
@@ -47,7 +47,7 @@ const TabItems = (props) => {
     sm: [
       {
         w: 6,
-        i: "125d53bf-7753-4d47-a7c6-a86e184989b6",
+        i: "86d3962a-6439-4d25-b05f-c4a07ae3e04b",
         h: 6,
         x: 0,
         y: 0,
@@ -63,7 +63,7 @@ const TabItems = (props) => {
     xs: [
       {
         w: 6,
-        i: "125d53bf-7753-4d47-a7c6-a86e184989b6",
+        i: "86d3962a-6439-4d25-b05f-c4a07ae3e04b",
         h: 6,
         x: 0,
         y: 0,
@@ -79,7 +79,7 @@ const TabItems = (props) => {
     xxs: [
       {
         w: 4,
-        i: "125d53bf-7753-4d47-a7c6-a86e184989b6",
+        i: "86d3962a-6439-4d25-b05f-c4a07ae3e04b",
         h: 4,
         x: 0,
         y: 0,

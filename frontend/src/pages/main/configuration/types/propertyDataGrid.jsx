@@ -35,6 +35,23 @@ const DetailPanelContent = () => {
       <Paper sx={{ flex: 1, width: "100%", p: 1 }}>
         <Stack direction="column" spacing={1} sx={{ height: 1 }}>
           <DataGridPro
+            componentsProps={{
+              basePopper: {
+                sx: {
+                  ".MuiDataGrid-columnsPanel": {
+                    span: {
+                      fontSize: "14px",
+                    },
+                  },
+                  "& .MuiInputBase-input": {
+                    fontSize: "14px",
+                  },
+                  "& .MuiButtonBase-root": {
+                    fontSize: "14px",
+                  },
+                },
+              },
+            }}
             localeText={{
               toolbarColumns: "",
               toolbarFilters: "",

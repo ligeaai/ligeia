@@ -45,8 +45,6 @@ const SingleSelectCell = (params) => {
   }, []);
 
   const handleClick = async () => {
-    console.log(params);
-
     const body = JSON.stringify({ CULTURE, CODE_LIST: params.row.CODE_LIST });
 
     try {
@@ -65,9 +63,13 @@ const SingleSelectCell = (params) => {
         a.CODE_TEXT > b.CODE_TEXT ? 1 : -1
       );
       sortedResponse.map((e) => {
-        data.push(e);
+        if (e.CODE_TEXT) {
+          data.push(e);
+        }
       });
       setValues(data);
+      console.log(values);
+
       return Promise.resolve(res.data);
     } catch (err) {
       return Promise.reject(err);
@@ -75,7 +77,16 @@ const SingleSelectCell = (params) => {
   };
 
   return (
-    <Box onMouseUp={handleClick} {...params}>
+    <Box
+      onMouseUp={handleClick}
+      {...params}
+      sx={{
+        width: "100%",
+        "& .MuiOutlinedInput-notchedOutline": {
+          border: "none",
+        },
+      }}
+    >
       <Select
         values={values}
         valuesPath={"ROW_ID"}

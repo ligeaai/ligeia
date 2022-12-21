@@ -22,17 +22,25 @@ export const loadItemLinkSchema = () => async (dispatch, getState) => {
     const body = JSON.stringify({ TYPE, CULTURE });
     try {
         let res = await ItemLinkService.getLinkSchema(body, cancelToken);
+        let sortedRes = {}
+
+        sortedRes["FROM_TYPE"] = res.data.FROM_TYPE.sort((a, b) =>
+            a["TYPE_LABEL"] > b["TYPE_LABEL"] ? 1 : -1
+        )
+        sortedRes["TO_TYPE"] = res.data.TO_TYPE.sort((a, b) =>
+            a["TYPE_LABEL"] > b["TYPE_LABEL"] ? 1 : -1
+        )
         var temp = []
         var tempFromType = []
-        Object.keys(res.data.TO_TYPE).map(e => {
-            temp[res.data.TO_TYPE[e].TYPE] = res.data.TO_TYPE[e]
+        Object.keys(sortedRes.TO_TYPE).map(e => {
+            temp[sortedRes.TO_TYPE[e].TYPE] = sortedRes.TO_TYPE[e]
         })
-        Object.keys(res.data.FROM_TYPE).map(e => {
-            tempFromType[res.data.FROM_TYPE[e].TYPE] = res.data.FROM_TYPE[e]
+        Object.keys(sortedRes.FROM_TYPE).map(e => {
+            tempFromType[sortedRes.FROM_TYPE[e].TYPE] = sortedRes.FROM_TYPE[e]
         })
         dispatch({
             type: LOAD_LINK_EDITOR,
-            payload: res.data
+            payload: sortedRes
         })
         dispatch({
             type: LOAD_LINK_EDITOR_SCHEMA_FROM_TYPE_ITEM,

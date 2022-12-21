@@ -81,7 +81,7 @@ export const loadTypeRowsDataGrid = () => async (dispatch, getState) => {
         }
         cancelToken = axios.CancelToken.source();
         let res = await ItemService.getTypeProperty(body, cancelToken)
-
+        console.log(res);
         var response = {}
         response["HISTORY"] = {
             PROPERTY_NAME: "",

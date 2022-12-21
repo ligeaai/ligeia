@@ -4,6 +4,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { DataGridPro } from "@mui/x-data-grid-pro";
 
 import { useIsMount } from "../../../../../hooks/useIsMount";
+import Box from "@mui/material/Box";
+import { grey } from "@mui/material/colors";
 
 import { CustomToolbar, CustomNoRowsOverlay } from "../../../../../components";
 import CustomColumnMenu from "./customColumnMenu";
@@ -59,10 +61,14 @@ const MyDataGrid = ({ type, isLinksActive }) => {
     }
     dispatch(editDataGridCell(myId, field, value));
   };
+  console.log(columns);
   if (Object.keys(rows).length !== 0) {
     return (
       <DataGridPro
         sx={{
+          boxSizing: "border-box",
+          maxWidth: "100%",
+          width: `calc(521px + ${150 * (Object.keys(columns).length - 4)}px)`,
           ".MuiDataGrid-pinnedRows": {
             zIndex: 2,
           },
@@ -71,9 +77,18 @@ const MyDataGrid = ({ type, isLinksActive }) => {
           basePopper: {
             sx: {
               ".MuiDataGrid-columnsPanel": {
+                span: {
+                  fontSize: "14px",
+                },
                 "&>*:nth-of-type(n+5)": {
                   display: "none",
                 },
+              },
+              "& .MuiInputBase-input": {
+                fontSize: "14px",
+              },
+              "& .MuiButtonBase-root": {
+                fontSize: "14px",
               },
             },
           },
@@ -99,7 +114,16 @@ const MyDataGrid = ({ type, isLinksActive }) => {
       />
     );
   } else {
-    return <CustomNoRowsOverlay text="No Rows and Columns" />;
+    return (
+      <Box
+        sx={{
+          width: "100%",
+          height: "100%",
+        }}
+      >
+        <CustomNoRowsOverlay text="No Rows and Columns" />
+      </Box>
+    );
   }
 };
 
