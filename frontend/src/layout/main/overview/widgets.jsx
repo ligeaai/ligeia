@@ -39,9 +39,7 @@ const Widgets = React.forwardRef((props, ref) => {
           className="grid-item__title"
           sx={{
             fontSize: "14px",
-            backgroundColor: "#7E99AA",
             "&:hover": {
-              background: "#7E99AADD",
               cursor: "move",
             },
           }}
