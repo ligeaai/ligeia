@@ -8,7 +8,7 @@ import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
 
 import { ComponentError, ComponentErrorBody } from "../index";
 
-const Properties = ({ Element }) => {
+const MyBox = ({ Element, ...rest }) => {
   const isFullScreen = useSelector((state) => state.fullScreen.isFullScreen);
   return (
     <Box
@@ -30,6 +30,7 @@ const Properties = ({ Element }) => {
         borderRadius: "5px",
         overflowY: "auto",
       }}
+      {...rest}
     >
       <ComponentError
         errMsg={
@@ -45,4 +46,4 @@ const Properties = ({ Element }) => {
   );
 };
 
-export default Properties;
+export default MyBox;
