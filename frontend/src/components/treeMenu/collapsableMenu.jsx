@@ -12,6 +12,7 @@ import { setSelectedCollapseMenu } from "../../services/actions/collapseMenu/col
 import {
   loadTapsOverview,
   cleanTabs,
+  updateCouchDb,
 } from "../../services/actions/overview/taps";
 // web.cjs is required for IE11 support
 //import { useSpring, animated } from 'react-spring/web.cjs';
@@ -78,8 +79,12 @@ const StyledTreeItem = styled((props) => (
 function CustomizedTreeView() {
   const dispatch = useDispatch();
   const items = useSelector((state) => state.collapseMenu.menuItems);
+  const selectedItem = useSelector((state) => state.collapseMenu.selectedItem);
   React.useEffect(() => {
     return () => {
+      if (selectedItem) {
+        dispatch(updateCouchDb());
+      }
       dispatch(cleanTabs());
     };
   }, []);

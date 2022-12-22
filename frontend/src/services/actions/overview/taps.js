@@ -3,10 +3,13 @@ import {
     SET_SELECT_TAB_ITEM,
     CLEAN_TABS_OVERVIEW,
     SET_WIDGETS_OVERVIEW,
-    REFRESH_WIDGETS_OVERVIEW
+    REFRESH_WIDGETS_OVERVIEW,
+    SET_REV,
+    UPDATE_LAYOUT
 } from "../types";
-
+import axios from "axios";
 import { instance, config } from "../../couchApi";
+import { uuidv4 } from "../../utils/uuidGenerator";
 
 export const loadTapsOverview = () => async (dispatch, getState) => {
     const linkId = getState().collapseMenu.selectedItem.LINK_ID
@@ -48,7 +51,7 @@ export const cleanTabs = () => dispatch => {
 export const deleteChart = (id, revId) => async (dispatch, getState) => {
     const selected = getState().tapsOverview.selected
     const resData = getState().tapsOverview.data
-    resData.data[selected].find((e, i) => e === id ? resData.data[selected].splice(i, 1) : null)
+    resData.data[selected].widgets.find((e, i) => e === id ? resData.data[selected].widgets.splice(i, 1) : null)
     const selectedLink = getState().collapseMenu.selectedItem.LINK_ID
     // const tablinkBody = {
     //     ...resData, data: {
@@ -93,7 +96,16 @@ export const addNewTabItem = () => async (dispatch, getState) => {
     const newTabName = _newTapNameChoser(Object.keys(resData.data))
     const tablinkBody = {
         ...resData, data: {
-            ...resData.data, [newTabName]: []
+            ...resData.data, [newTabName]: {
+                widgets: [],
+                layouts: {
+                    lg: [],
+                    md: [],
+                    sm: [],
+                    xs: [],
+                    xxs: [],
+                }
+            }
         }
     }
     console.log(tablinkBody);
@@ -141,6 +153,10 @@ export const updateTabHeader = (oldHeader, newHeader) => async (dispatch, getSta
                     config
                 )
             dispatch(loadTapsOverview())
+            dispatch({
+                type: SET_SELECT_TAB_ITEM,
+                payload: newHeader
+            })
 
         }
         catch (err) { console.log(err); }
@@ -188,4 +204,45 @@ export const updateChart = () => async (dispatch, getState) => {
 
     }
 
+}
+export const updateChartLayout = (layout) => async (dispatch, getState) => {
+    const selectedTab = getState().tapsOverview.selected
+    const resData = getState().tapsOverview.data
+    console.log(selectedTab);
+    console.log(resData.data[selectedTab]);
+    const tablinkBody = {
+        ...resData, data: {
+            ...resData.data, [selectedTab]: {
+                ...resData.data[selectedTab], "layouts": layout
+            }
+        },
+    }
+    console.log(tablinkBody);
+    dispatch({
+        type: UPDATE_LAYOUT,
+        payload: tablinkBody
+    })
+}
+
+
+export const updateCouchDb = () => async (dispatch, getState) => {
+    const selectedLink = getState().collapseMenu.selectedItem.LINK_ID
+    const resData = getState().tapsOverview.data
+    const tablinkBody = {
+        ...resData
+    }
+
+    try {
+
+        let res = await instance
+            .put(
+                `/taplinks/${selectedLink}`,
+                tablinkBody,
+                { ...config }
+            )
+        console.log(res);
+
+
+    }
+    catch (err) { console.log(err); }
 }

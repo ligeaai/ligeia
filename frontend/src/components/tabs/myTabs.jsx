@@ -192,6 +192,7 @@ function MyTabs() {
             ? "calc(100vh - 56px - 48px )"
             : "calc(100vh - 60px - 50px - 16px - 48px )",
         }}
+        id="myResponsiveGridLayout"
       >
         {Object.keys(widgets).map((widgetProps, i) => {
           return (
@@ -203,7 +204,7 @@ function MyTabs() {
                 height: "100%",
               }}
             >
-              <TabItems widgetProps={widgets[widgetProps]}></TabItems>
+              <TabItems widgetname={widgetProps}></TabItems>
             </TabPanel>
           );
         })}
@@ -212,4 +213,4 @@ function MyTabs() {
   );
 }
 
-export default MyTabs;
+export default React.memo(MyTabs);

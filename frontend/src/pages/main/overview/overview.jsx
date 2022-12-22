@@ -18,7 +18,7 @@ import ItemLinkService from "../../../services/api/itemLink";
 
 const Overview = () => {
   const dispatch = useDispatch();
-
+  const isActiveTabs = useSelector((state) => state.tapsOverview.isActive);
   const isFullScreen = useSelector((state) => state.fullScreen.isFullScreen);
   React.useEffect(() => {
     dispatch(loadCollapseMenu(ItemLinkService.hierarchy));
@@ -64,7 +64,7 @@ const Overview = () => {
             </Box>
           </Grid>
           <ItemSperatorLineXL />
-          <Tabs />
+          {isActiveTabs ? <Tabs /> : <></>}
           {/*<Grid item xs={12} sx={{ mt: 1, mr: 1 }}>
             <OverviewEditor />
           </Grid> */}

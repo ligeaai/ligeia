@@ -4,7 +4,9 @@ import {
     SET_SELECT_TAB_ITEM,
     CLEAN_TABS_OVERVIEW,
     SET_WIDGETS_OVERVIEW,
-    REFRESH_WIDGETS_OVERVIEW
+    REFRESH_WIDGETS_OVERVIEW,
+    SET_REV,
+    UPDATE_LAYOUT
 } from "../../actions/types"
 
 
@@ -14,7 +16,8 @@ const initialState = {
     widgets: [],
     data: [],
     selected: null,
-    refresh: false
+    refresh: false,
+    isActive: false
 };
 
 export default function (state = initialState, action) {
@@ -22,6 +25,16 @@ export default function (state = initialState, action) {
     const { type, payload } = action;
 
     switch (type) {
+        case UPDATE_LAYOUT:
+            return {
+                ...state,
+                data: payload
+            }
+        case SET_REV:
+            return {
+                ...state,
+                data: { ...state.data, _rev: payload }
+            }
         case REFRESH_WIDGETS_OVERVIEW:
             return {
                 ...state,
@@ -37,7 +50,9 @@ export default function (state = initialState, action) {
                 titles: [],
                 widgets: [],
                 data: [],
-                selected: null
+                selected: null,
+                refresh: false,
+                isActive: false
             }
         case SET_SELECT_TAB_ITEM:
             return {
@@ -49,7 +64,8 @@ export default function (state = initialState, action) {
                 ...state,
                 titles: payload.titles,
                 widgets: payload.widgets,
-                data: payload.data
+                data: payload.data,
+                isActive: true
             }
         default:
             return {

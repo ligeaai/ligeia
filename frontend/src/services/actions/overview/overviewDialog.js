@@ -86,6 +86,7 @@ export const saveChart = () => async (dispatch, getState) => {
     const selectedChartType = getState().overviewDialog.selectedItem
     const resData = getState().tapsOverview.data
     const uuid = uuidv4()
+    console.log(uuid);
     const body = JSON.stringify({ ...chartProps, _id: uuid, Type: selectedChartType })
     await instance
         .post(
@@ -96,7 +97,52 @@ export const saveChart = () => async (dispatch, getState) => {
 
     const tablinkBody = {
         ...resData, data: {
-            ...resData.data, [selected]: [...resData.data[selected], uuid]
+            ...resData.data, [selected]: {
+                widgets: [...resData.data[selected].widgets, uuid],
+                layouts: {
+                    ...resData.data[selected].layouts,
+                    lg: [...resData.data[selected].layouts.lg, {
+                        "w": 6,
+                        "i": uuid,
+                        "h": 6,
+                        "x": 0,
+                        "y": 0
+                    },
+                    ],
+                    md: [...resData.data[selected].layouts.md, {
+                        "w": 6,
+                        "i": uuid,
+                        "h": 6,
+                        "x": 0,
+                        "y": 0
+                    },
+                    ],
+                    sm: [...resData.data[selected].layouts.sm, {
+                        "w": 6,
+                        "i": uuid,
+                        "h": 6,
+                        "x": 0,
+                        "y": 0
+                    },
+                    ],
+                    xs: [...resData.data[selected].layouts.xs, {
+                        "w": 6,
+                        "i": uuid,
+                        "h": 6,
+                        "x": 0,
+                        "y": 0
+                    },
+                    ],
+                    xxs: [...resData.data[selected].layouts.xxs, {
+                        "w": 4,
+                        "i": uuid,
+                        "h": 4,
+                        "x": 0,
+                        "y": 0
+                    },
+                    ]
+                }
+            }
         }
     }
     console.log(tablinkBody);
