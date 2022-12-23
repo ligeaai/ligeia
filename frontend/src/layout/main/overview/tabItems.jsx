@@ -6,34 +6,26 @@ import "../../../assets/css/dashboard.css";
 import GridItem from "./gridItem";
 
 import { updateChartLayout } from "../../../services/actions/overview/taps";
-let i = 1;
 const ResponsiveGridLayout = WidthProvider(Responsive);
 const TabItems = (props) => {
-  i++;
   const dispatch = useDispatch();
   const [breakpoint, setBreakpoint] = React.useState("lg");
   const { widgetname } = props;
-  console.log(widgetname);
   const widgets = useSelector(
     (state) => state.tapsOverview.widgets[widgetname].widgets
   );
   const layouts = useSelector(
     (state) => state.tapsOverview.widgets[widgetname].layouts
   );
-  console.log(layouts);
   const ref = React.createRef();
   const handleBreakPointChange = (breakpoint) => {
-    console.log(breakpoint);
     setBreakpoint(breakpoint);
   };
   const handleLayoutChange = (newLayout) => {
-    console.log(breakpoint);
-    console.log(newLayout);
     layouts[breakpoint] = newLayout;
     dispatch(updateChartLayout(layouts));
   };
 
-  console.log(i);
   return (
     <ResponsiveGridLayout
       className="layout"

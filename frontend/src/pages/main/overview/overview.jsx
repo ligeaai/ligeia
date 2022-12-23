@@ -32,7 +32,7 @@ const Overview = () => {
         flexWrap: "nowrap",
       }}
     >
-      <Grid item sx={{ minHeight: "500px", boxShadow: 3, mr: 0.5 }}>
+      <Grid item>
         <DrawerMenu Element={<CollapsableMenu />} />
       </Grid>
 

@@ -33,7 +33,12 @@ export const loadItemLinkSchema = () => async (dispatch, getState) => {
         var temp = []
         var tempFromType = []
         Object.keys(sortedRes.TO_TYPE).map(e => {
-            temp[sortedRes.TO_TYPE[e].TYPE] = sortedRes.TO_TYPE[e]
+            if (sortedRes.TO_TYPE[e].TYPE === "TAGS") {
+                temp["TAG_ITEM"] = { ...sortedRes.TO_TYPE[e], TYPE: "TAG_ITEM" }
+            } else {
+                temp[sortedRes.TO_TYPE[e].TYPE] = sortedRes.TO_TYPE[e]
+
+            }
         })
         Object.keys(sortedRes.FROM_TYPE).map(e => {
             tempFromType[sortedRes.FROM_TYPE[e].TYPE] = sortedRes.FROM_TYPE[e]
@@ -84,6 +89,7 @@ export const loadLinks = () => async (dispatch, getState) => {
     try {
         const body = JSON.stringify({ ID: selectedItem })
         let itemLinkRes = await ItemLinkService.getItemLink(body, cancelTokenLinks)
+        console.log(itemLinkRes);
         itemLinkRes.data.TO_ITEM_ID.map(e => {
             e.END_DATETIME = new Date(e.END_DATETIME)
             e.START_DATETIME = new Date(e.START_DATETIME)
