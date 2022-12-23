@@ -27,7 +27,6 @@ const Highchart = ({ highchartProps, width, height }) => {
       }}
     />
   );
-  return <></>;
 };
 
 export default Highchart;
