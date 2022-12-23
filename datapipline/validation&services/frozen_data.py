@@ -91,12 +91,6 @@ for message in consumer:
     print(len(data_dict.get(data_check)))
     if len(data_dict.get(data_check)) > 3:
         frozen_data_check(data_check)
-    try:
-        print("-----------------")
-        data["step-status"] = "frozen-data"
-        producer.send("scaling_data", value=data)
-        producer.flush()
-        producer.send(data["message_type"], value=data)
-        producer.flush()
-    except:
-        pass
+    data["step-status"] = "frozen-data"
+    producer.send("scaling_data", value=data)
+    producer.flush()
