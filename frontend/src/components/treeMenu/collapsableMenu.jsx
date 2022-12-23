@@ -75,7 +75,33 @@ const StyledTreeItem = styled((props) => (
     borderLeft: `1px dashed ${alpha(theme.palette.text.primary, 0.4)}`,
   },
 }));
-
+const MyStyledTreeItem = React.memo(({ myItems }) => {
+  const dispatch = useDispatch();
+  console.log(myItems);
+  return myItems.map((e, i) => {
+    if (e.CHILD)
+      return (
+        <StyledTreeItem key={i} nodeId={`${uuidv4()}`} label={e.TO_ITEM_NAME}>
+          <MyStyledTreeItem myItems={e.CHILD}></MyStyledTreeItem>
+          {/* <StyledTreeItem
+            nodeId={`${uuidv4()}`}
+            label={e.TO_ITEM_NAME}
+          ></StyledTreeItem> */}
+        </StyledTreeItem>
+      );
+    return (
+      <StyledTreeItem
+        key={i}
+        nodeId={`${uuidv4()}`}
+        label={e.TO_ITEM_NAME}
+        onClick={async () => {
+          dispatch(await setSelectedCollapseMenu(e));
+          dispatch(loadTapsOverview());
+        }}
+      ></StyledTreeItem>
+    );
+  });
+});
 function CustomizedTreeView() {
   const dispatch = useDispatch();
   const items = useSelector((state) => state.collapseMenu.menuItems);
@@ -89,33 +115,6 @@ function CustomizedTreeView() {
     };
   }, []);
 
-  function myStyledTreeItem(myItems) {
-    return myItems.map((e, i) => {
-      try {
-        return (
-          <StyledTreeItem key={i} nodeId={`${uuidv4()}`} label={e.TO_ITEM_NAME}>
-            {myStyledTreeItem(e.CHILD)}
-            {/* <StyledTreeItem
-              nodeId={`${uuidv4()}`}
-              label={e.TO_ITEM_NAME}
-            ></StyledTreeItem> */}
-          </StyledTreeItem>
-        );
-      } catch {
-        return (
-          <StyledTreeItem
-            key={i}
-            nodeId={`${uuidv4()}`}
-            label={e.TO_ITEM_NAME}
-            onClick={async () => {
-              dispatch(await setSelectedCollapseMenu(e));
-              dispatch(loadTapsOverview());
-            }}
-          ></StyledTreeItem>
-        );
-      }
-    });
-  }
   return (
     <TreeView
       aria-label="customized"
@@ -124,7 +123,7 @@ function CustomizedTreeView() {
       defaultExpandIcon={<PlusSquare />}
       defaultEndIcon={<CloseSquare />}
     >
-      {myStyledTreeItem(items)}
+      <MyStyledTreeItem myItems={items}></MyStyledTreeItem>
     </TreeView>
   );
 }
