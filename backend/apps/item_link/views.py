@@ -89,6 +89,7 @@ class ItemLinkHierarchyView(generics.ListAPIView):
         quaryset  = item_link.objects.filter(Q(TO_ITEM_TYPE = "COMPANY"),~Q(LINK_TYPE='TAG_ITEM'))
         validate_find(quaryset,request)
         tempt ={}
+        serializer = ItemLinkDetailsSerializer(quaryset,many = True)
         self._getChild(serializer.data,tempt)
         return Response(serializer.data)
     
