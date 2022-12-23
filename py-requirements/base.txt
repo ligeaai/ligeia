@@ -21,6 +21,7 @@ django-cities-light
 django-smart-selects
 django-mptt
 channels
+daphne
 
 # Kafka-Python
 kafka-python
