@@ -87,6 +87,7 @@ def data_range_check(data, min_max_values):
         elif data_value > max_values:
             quality = quality - 126
         data["quality"] = quality
+        # print(data["quality"])
     except:
         data["TAG_NAME"] == "no such tag value found"
     return data
@@ -109,7 +110,10 @@ for message in consumer:
         del data[data_check]
         # print(data)
         key = data["id"].encode("utf-8")
-        producer.send(data["message_type"], value=data, key=key)
-        producer.flush()
-    else:
-        pass
+        # print("------")
+        # print(data["quality"])
+        # print(data["message_type"])
+    producer.send(data["message_type"], value=data, key=key)
+    producer.flush()
+
+

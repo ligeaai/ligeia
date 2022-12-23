@@ -15,10 +15,7 @@ class WSConsumer(WebsocketConsumer):
 			data = rds.get(i)
 			data = data.decode('utf-8')
 			data = json.loads(data)
-			count += 1
-			print(count)
-
-		self.send(json.dumps({'message':"deneme"}))
+			self.send(json.dumps({'message':data}))
 		# count = 0
 		# for i in range(1000):
 		# 	if count < 10:

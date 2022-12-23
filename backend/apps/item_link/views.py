@@ -7,6 +7,7 @@ from utils.models_utils import validate_find
 from apps.item_property.models import item_property 
 from utils.models_utils import validate_model_not_null
 from apps.item_property.serializers import ItemPropertyNameSerializer
+from django.db.models import Q
 # Create your views here.
 
 
@@ -85,10 +86,10 @@ class ItemLinkHierarchyView(generics.ListAPIView):
         pass
 
     def get(self, request, *args, **kwargs):
-        quaryset  = item_link.objects.filter(TO_ITEM_TYPE = "COMPANY")
+        quaryset  = item_link.objects.filter(Q(TO_ITEM_TYPE = "COMPANY"),~Q(LINK_TYPE='TAG_ITEM'))
         validate_find(quaryset,request)
-        serializer = ItemLinkDetailsSerializer(quaryset,many = True)
         tempt ={}
+        serializer = ItemLinkDetailsSerializer(quaryset,many = True)
         self._getChild(serializer.data,tempt)
         return Response(serializer.data)
     

@@ -154,11 +154,11 @@ class TypeDetailNewView(generics.CreateAPIView):
     ]
     def post(self, request):
         cache_key = str(request.user) + str(request.data.get('CULTURE'))+str(request.data.get('TYPE'))
-        cache_data = Red.get(cache_key)
-        if cache_data:
-            logger.info(request=request, message="Type details")
-            print('CACHE')
-            return Response(cache_data, status=status.HTTP_200_OK) 
+        # cache_data = Red.get(cache_key)
+        # if cache_data:
+        #     logger.info(request=request, message="Type details")
+        #     print('CACHE')
+        #     return Response(cache_data, status=status.HTTP_200_OK) 
         
         TypePropertys = self._baseModels(request)
         Red.set(cache_key,TypePropertys)
