@@ -46,7 +46,7 @@ const AppRouter1 = () => {
         <Routes>
           <Route exact path="/" element={<PrivateRoute />}>
             <Route exact path="/" element={<Main />} />
-            <Route path="/overview" element={<Overview />} />
+            <Route exact path="/overview/*" element={<Overview />} />
             <Route path="/analytics" element={<Analytics />} />
             <Route path="/reporting" element={<Reporting />} />
             <Route path="/administration" element={<Administration />} />

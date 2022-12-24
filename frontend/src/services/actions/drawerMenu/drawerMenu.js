@@ -4,7 +4,6 @@ import {
     LOAD_DRAWER_MENU
 } from "../types"
 
-import axios from "axios";
 import { instance, config } from '../../couchApi';
 
 export const loadDrawerMenu = () => async (dispatch, getState) => {
@@ -23,7 +22,6 @@ export const loadDrawerMenu = () => async (dispatch, getState) => {
 
     } catch (err) {
         console.log(err);
-
     }
 }
 

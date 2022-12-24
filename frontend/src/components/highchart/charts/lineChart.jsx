@@ -30,12 +30,17 @@ export const LineChart = (highchartProps) => {
               setData((prev) => [...prev, data.message.value]);
             }
 
-            setTimeout(sendNumber, 5000);
+            setTimeout(sendNumber, 10000);
             return data;
           }
         }
       }
       sendNumber();
+    };
+    return () => {
+      client.onclose = function () {
+        console.log("WebSocket Client Closed");
+      };
     };
   }, []);
   return {

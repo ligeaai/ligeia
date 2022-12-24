@@ -14,6 +14,7 @@ import {
   cleanTabs,
   updateCouchDb,
 } from "../../services/actions/overview/taps";
+import history from "../../routers/history";
 // web.cjs is required for IE11 support
 //import { useSpring, animated } from 'react-spring/web.cjs';
 
@@ -78,14 +79,24 @@ const StyledTreeItem = styled((props) => (
     borderLeft: `1px dashed ${alpha(theme.palette.text.primary, 0.4)}`,
   },
 }));
-const MyStyledTreeItem = React.memo(({ myItems }) => {
+const MyStyledTreeItem = React.memo(({ myItems, path }) => {
   const dispatch = useDispatch();
   console.log(myItems);
   return myItems.map((e, i) => {
     if (e.CHILD)
       return (
-        <StyledTreeItem key={i} nodeId={`${uuidv4()}`} label={e.TO_ITEM_NAME}>
-          <MyStyledTreeItem myItems={e.CHILD}></MyStyledTreeItem>
+        <StyledTreeItem
+          key={i}
+          nodeId={`${uuidv4()}`}
+          label={e.TO_ITEM_NAME}
+          onClick={() => {
+            history.push(`/${path}/${e.TO_ITEM_NAME}`);
+          }}
+        >
+          <MyStyledTreeItem
+            myItems={e.CHILD}
+            path={`${path}/${e.TO_ITEM_NAME}`}
+          ></MyStyledTreeItem>
           {/* <StyledTreeItem
             nodeId={`${uuidv4()}`}
             label={e.TO_ITEM_NAME}
@@ -100,6 +111,7 @@ const MyStyledTreeItem = React.memo(({ myItems }) => {
         onClick={async () => {
           dispatch(await setSelectedCollapseMenu(e));
           dispatch(loadTapsOverview());
+          history.push(`/${path}/${e.TO_ITEM_NAME}`);
         }}
       ></StyledTreeItem>
     );
@@ -108,12 +120,8 @@ const MyStyledTreeItem = React.memo(({ myItems }) => {
 function CustomizedTreeView() {
   const dispatch = useDispatch();
   const items = useSelector((state) => state.collapseMenu.menuItems);
-  const selectedItem = useSelector((state) => state.collapseMenu.selectedItem);
   React.useEffect(() => {
     return () => {
-      if (selectedItem) {
-        dispatch(updateCouchDb());
-      }
       dispatch(cleanTabs());
     };
   }, []);
@@ -126,7 +134,7 @@ function CustomizedTreeView() {
       defaultExpandIcon={<PlusSquare />}
       defaultEndIcon={<CloseSquare />}
     >
-      <MyStyledTreeItem myItems={items}></MyStyledTreeItem>
+      <MyStyledTreeItem myItems={items} path={"overview"}></MyStyledTreeItem>
     </TreeView>
   );
 }

@@ -5,7 +5,10 @@ import { Responsive, WidthProvider } from "react-grid-layout";
 import "../../../assets/css/dashboard.css";
 import GridItem from "./gridItem";
 
-import { updateChartLayout } from "../../../services/actions/overview/taps";
+import {
+  updateChartLayout,
+  updateCouchDb,
+} from "../../../services/actions/overview/taps";
 const ResponsiveGridLayout = WidthProvider(Responsive);
 const TabItems = (props) => {
   const dispatch = useDispatch();
@@ -25,7 +28,11 @@ const TabItems = (props) => {
     layouts[breakpoint] = newLayout;
     dispatch(updateChartLayout(layouts));
   };
-
+  React.useEffect(() => {
+    return () => {
+      dispatch(updateCouchDb());
+    };
+  }, []);
   return (
     <ResponsiveGridLayout
       className="layout"
