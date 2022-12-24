@@ -11,7 +11,7 @@ export const LineChart = (highchartProps) => {
   React.useEffect(() => {
     var W3CWebSocket = require("websocket").w3cwebsocket;
 
-    var client = new W3CWebSocket("ws://34.125.220.112:8001/ws/tags/");
+    var client = new W3CWebSocket("ws://34.125.220.112:8000/ws/tags/");
     client.onerror = function () {
       console.log("Connection Error");
     };

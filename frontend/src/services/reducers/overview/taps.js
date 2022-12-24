@@ -6,7 +6,8 @@ import {
     SET_WIDGETS_OVERVIEW,
     REFRESH_WIDGETS_OVERVIEW,
     SET_REV,
-    UPDATE_LAYOUT
+    UPDATE_LAYOUT,
+    DELETE_WIDGET_LAYOUT
 } from "../../actions/types"
 
 
@@ -20,11 +21,39 @@ const initialState = {
     isActive: false
 };
 
+
 export default function (state = initialState, action) {
 
     const { type, payload } = action;
 
     switch (type) {
+        case DELETE_WIDGET_LAYOUT:
+            // return {
+            //     ...state,
+            //     data: {
+            //         ...state.data, data: {
+            //             ...state.data.data, [state.selected]: {
+            //                 ...[state.data.data[state.selected]], widgets:
+            //                     state.data.data[state.selected].widgets.filter((e, i) => e === payload)
+
+            //                 , layouts: {
+            //                     ...[state.data.data[state.selected].layouts], lg: state.data.data[state.selected].layouts.lg.filter((e, i) => e.id !== payload),
+            //                     md: state.data.data[state.selected].layouts.md.filter((e, i) => e.id !== payload),
+            //                     sm: state.data.data[state.selected].layouts.sm.filter((e, i) => e.id !== payload),
+            //                     xs: state.data.data[state.selected].layouts.xs.filter((e, i) => e.id !== payload),
+            //                     xxs: state.data.data[state.selected].layouts.xxs.filter((e, i) => e.id !== payload)
+            //                 }
+            //             }
+            //         }
+            //     }
+            // }
+            return {
+                ...state,
+                data: {
+                    ...state.data,
+                    _rev: payload
+                }
+            }
         case UPDATE_LAYOUT:
             return {
                 ...state,

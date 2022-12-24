@@ -122,6 +122,7 @@ function CustomizedTreeView() {
   const items = useSelector((state) => state.collapseMenu.menuItems);
   React.useEffect(() => {
     return () => {
+      dispatch(updateCouchDb());
       dispatch(cleanTabs());
     };
   }, []);

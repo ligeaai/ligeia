@@ -8,12 +8,39 @@ import GridItem from "./gridItem";
 import {
   updateChartLayout,
   updateCouchDb,
+  loadTapsOverview,
 } from "../../../services/actions/overview/taps";
 const ResponsiveGridLayout = WidthProvider(Responsive);
+
+function setBreakPoint() {
+  const width = document.getElementById("myResponsiveGridLayout").offsetWidth;
+  if (width >= 1280) {
+    return "lg";
+  } else if (width >= 992) {
+    return "md";
+  } else if (width >= 767) {
+    return "sm";
+  } else if (width >= 480) {
+    return "xs";
+  } else if (width >= 0) {
+    return "xxs";
+  }
+}
+
 const TabItems = (props) => {
+  const refLayout = React.useRef(null);
+  const [width, setWidth] = React.useState(
+    document.getElementById("myResponsiveGridLayout").offsetWidth
+  );
   const dispatch = useDispatch();
-  const [breakpoint, setBreakpoint] = React.useState("lg");
+  const [breakpoint, setBreakpoint] = React.useState(setBreakPoint());
   const { widgetname } = props;
+  const onResize = React.useCallback(() => {
+    if (refLayout.current) {
+      setWidth(document.getElementById("myResponsiveGridLayout").offsetWidth);
+      setBreakpoint(setBreakPoint());
+    }
+  }, []);
   const widgets = useSelector(
     (state) => state.tapsOverview.widgets[widgetname].widgets
   );
@@ -25,16 +52,21 @@ const TabItems = (props) => {
     setBreakpoint(breakpoint);
   };
   const handleLayoutChange = (newLayout) => {
+    console.log(newLayout);
+    console.log(breakpoint);
     layouts[breakpoint] = newLayout;
     dispatch(updateChartLayout(layouts));
   };
   React.useEffect(() => {
+    window.addEventListener("resize", onResize);
+    onResize();
     return () => {
-      dispatch(updateCouchDb());
+      window.removeEventListener("resize", onResize);
     };
   }, []);
   return (
     <ResponsiveGridLayout
+      ref={refLayout}
       className="layout"
       layouts={layouts}
       rowHeight={30}
@@ -45,8 +77,9 @@ const TabItems = (props) => {
       isResizable
       draggableHandle=".grid-item__title"
       breakpoints={{ lg: 1280, md: 992, sm: 767, xs: 480, xxs: 0 }}
-      cols={{ lg: 24, md: 20, sm: 12, xs: 8, xxs: 4 }}
-      width={document.getElementById("myResponsiveGridLayout").offsetWidth}
+      cols={{ lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }}
+      breakpoint={breakpoint}
+      width={width}
     >
       {widgets.map((widget) => {
         return (
