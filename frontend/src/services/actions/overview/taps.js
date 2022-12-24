@@ -6,11 +6,8 @@ import {
     REFRESH_WIDGETS_OVERVIEW,
     SET_REV,
     UPDATE_LAYOUT,
-    DELETE_WIDGET_LAYOUT
 } from "../types";
-import axios from "axios";
 import { instance, config } from "../../couchApi";
-import { uuidv4 } from "../../utils/uuidGenerator";
 
 export const loadTapsOverview = () => async (dispatch, getState) => {
     const linkId = getState().collapseMenu.selectedItem.LINK_ID
@@ -168,24 +165,39 @@ export const updateTabHeader = (oldHeader, newHeader) => async (dispatch, getSta
                 payload: newHeader
             })
 
+
         }
         catch (err) { console.log(err); }
     }
 
 }
 
+function _deleteAllCharts(charts) {
+    charts.map(async e => {
+        try {
+            let res = await instance.get(`/widgets/${e}`, config);
+            console.log(res);
+            await instance
+                .delete(
+                    `/widgets/${e}?rev=${res.data._rev}`,
+                    config
+                )
+        } catch { }
+
+    })
+}
+
 export const deleteTapHeader = (header) => async (dispatch, getState) => {
     const selectedLink = getState().collapseMenu.selectedItem.LINK_ID
     const resData = getState().tapsOverview.data
+    const selected = getState().tapsOverview.selected
+    const charts = resData.data[selected].widgets
     delete resData.data[header]
-
     const tablinkBody = {
         ...resData, data: {
             ...resData.data
         }
     }
-
-
     try {
         await instance
             .put(
@@ -193,7 +205,9 @@ export const deleteTapHeader = (header) => async (dispatch, getState) => {
                 tablinkBody,
                 config
             )
+
         dispatch(loadTapsOverview())
+        _deleteAllCharts(charts)
 
     }
     catch (err) { console.log(err); }
