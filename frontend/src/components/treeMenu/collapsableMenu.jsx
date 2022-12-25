@@ -76,7 +76,6 @@ const StyledTreeItem = styled((props) => (
   [`& .${treeItemClasses.group}`]: {
     marginLeft: 15,
     paddingLeft: 18,
-    borderLeft: `1px dashed ${alpha(theme.palette.text.primary, 0.4)}`,
   },
 }));
 const MyStyledTreeItem = React.memo(({ myItems, path }) => {

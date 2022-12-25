@@ -7,8 +7,41 @@ import {
   changeSelectValue,
   changeValeus,
 } from "../../../services/actions/overview/overviewDialog";
-import { loadSelectItems } from "../../../services/actions/overview/overviewDialog";
+import {
+  loadSelectItems,
+  fillProperties,
+} from "../../../services/actions/overview/overviewDialog";
 import { saveChart } from "../../../services/actions/overview/overviewDialog";
+import TagService from "../../../services/api/tags";
+const MesurementInputGenerator = (props) => {
+  const dispatch = useDispatch();
+  const values = useSelector((state) => state.overviewDialog.measuremenetData);
+  console.log(values);
+  const handleChangeFunc = async (value) => {
+    console.log(value);
+    dispatch(changeValeus("Mesurement", value));
+    try {
+      const body = JSON.stringify({ TAG_ID: value });
+      let res = await TagService.getTagItem(body);
+      console.log(res);
+      dispatch(changeValeus("Minimum", res.data[0].NORMAL_MINIMUM));
+      dispatch(changeValeus("Maximum", res.data[0].NORMAL_MAXIMUM));
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  return (
+    <Select
+      {...props}
+      values={values}
+      valuesPath="FROM_ITEM_ID"
+      dataTextPath="FROM_ITEM_ID"
+      handleChangeFunc={handleChangeFunc}
+    />
+  );
+};
+
 const DialogContent = ({ handleClose }) => {
   const dispatch = useDispatch();
   const selectedItem = useSelector(
@@ -22,6 +55,7 @@ const DialogContent = ({ handleClose }) => {
   React.useEffect(() => {
     async function myFunc() {
       dispatch(await loadSelectItems());
+      dispatch(await fillProperties());
     }
     myFunc();
   }, []);
@@ -45,7 +79,14 @@ const DialogContent = ({ handleClose }) => {
                       {a.title}
                     </Grid>
                     <Grid item sx={{ width: "100%" }}>
-                      <InputGenerator {...a} changeFunction={changeValeus} />
+                      {a.title === "Mesurement" ? (
+                        <MesurementInputGenerator
+                          {...a}
+                          changeFunction={changeValeus}
+                        />
+                      ) : (
+                        <InputGenerator {...a} changeFunction={changeValeus} />
+                      )}
                     </Grid>
                   </Grid>
                 </Grid>

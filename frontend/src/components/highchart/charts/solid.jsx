@@ -49,7 +49,7 @@ export const solid = (highchartProps) => {
     // the value axis
     yAxis: {
       min: parseInt(highchartProps.Minimum),
-      max: parseInt(highchartProps.Maxsimum),
+      max: parseInt(highchartProps.Maximum),
       stops: [
         [highchartProps["[0] Stops"], highchartProps["[0] Color"]],
         [highchartProps["[1] Stops"], highchartProps["[1] Color"]],

@@ -33,7 +33,7 @@ export const angular = (highchartProps) => {
 
     // the value axis
     yAxis: {
-      min: parseInt(highchartProps.Minumum),
+      min: parseInt(highchartProps.Minimum),
       max: parseInt(highchartProps.Maximum),
       tickPixelInterval: 72,
       tickPosition: "inside",
