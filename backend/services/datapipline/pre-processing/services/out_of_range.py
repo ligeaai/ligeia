@@ -4,7 +4,10 @@ from kafka import KafkaConsumer, TopicPartition
 from ast import literal_eval
 import json
 import pip._vendor.requests as requests
+import os
+from request import req
 
+requ = os.environ.get("TAG_NAME_ENDPOINT")
 host = "localhost:9092"
 topic = "out_of_range"
 consumer = KafkaConsumer(
@@ -18,9 +21,7 @@ producer = KafkaProducer(
     bootstrap_servers=host,
     value_serializer=lambda v: json.dumps(v).encode("ascii"),
 )
-r = requests.get(
-    "http://34.125.220.112:8000/api/v1/tags/details/"
-)  # I will fix it soon
+r = requests.get(req)  # I will fix it soon
 
 incoming_tag_name = r.json()
 
@@ -115,5 +116,3 @@ for message in consumer:
         # print(data["message_type"])
     producer.send(data["message_type"], value=data, key=key)
     producer.flush()
-
-
