@@ -11,7 +11,7 @@ export const Items = (props) => {
       sx={{
         padding: "5px",
         "&:hover": {
-          backgroundColor: "#bdbdbd33",
+          backgroundColor: "hover.primary",
         },
       }}
     >

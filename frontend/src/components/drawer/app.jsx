@@ -55,12 +55,12 @@ const SingleLevel = ({ item, url }) => {
         "&:hover": {
           backgroundColor:
             item.SHORT_LABEL === selectedItem
-              ? "action.active"
+              ? "hover.primary"
               : "action.hover",
           opacity: "action.hoverOpacity",
         },
         backgroundColor:
-          item.SHORT_LABEL === selectedItem ? "action.active" : "inherit",
+          item.SHORT_LABEL === selectedItem ? "background.primary" : "inherit",
       }}
       onClick={handleClick}
     >
@@ -69,8 +69,8 @@ const SingleLevel = ({ item, url }) => {
           sx={{
             color:
               item.SHORT_LABEL === selectedItem
-                ? "myReverseText"
-                : "myBoldText",
+                ? "text.main"  //iconun seçili hali
+                : "text.primary",  // iconun rengi
           }}
         />
       ) : (
@@ -83,7 +83,7 @@ const SingleLevel = ({ item, url }) => {
           pl: 0.5,
           display: isOpen ? "inline-block" : "none",
           color:
-            item.SHORT_LABEL === selectedItem ? "myReverseText" : "myBoldText",
+            item.SHORT_LABEL === selectedItem ? "text.main" : "text.primary", //textin rengi 
           overflow: "hidden",
           whiteSpace: "nowrap",
           textOverflow: "ellipsis",
@@ -129,7 +129,7 @@ const MultiLevel = ({ item, url }) => {
           "&:hover": {
             backgroundColor:
               url.slice(0, -1) === window.location.pathname
-                ? "action.active"
+                ? "hover.primary"
                 : "action.hover",
             opacity: "action.hoverOpacity",
           },
@@ -144,8 +144,8 @@ const MultiLevel = ({ item, url }) => {
             sx={{
               color:
                 url.slice(0, -1) === window.location.pathname
-                  ? "myReverseText"
-                  : "myBoldText",
+                  ? "text.main"
+                  : "text.primary",
             }}
           />
         ) : (
@@ -161,7 +161,7 @@ const MultiLevel = ({ item, url }) => {
             color:
               url.slice(0, -1) === window.location.pathname
                 ? "myReverseText"
-                : "myBoldText",
+                : "text.primary",
             overflow: "hidden",
             whiteSpace: "nowrap",
             textOverflow: "ellipsis",
@@ -178,8 +178,8 @@ const MultiLevel = ({ item, url }) => {
               mr: 1,
               color:
                 url.slice(0, -1) === window.location.pathname
-                  ? "myReverseText"
-                  : "myBoldText",
+                  ? "text.main"
+                  : "text.primary",
               typography: "body1",
               display: isOpen ? "inline-block" : "none",
             }}
@@ -192,8 +192,8 @@ const MultiLevel = ({ item, url }) => {
               mr: 1,
               color:
                 url.slice(0, -1) === window.location.pathname
-                  ? "myReverseText"
-                  : "myBoldText",
+                  ? "text.main"
+                  : "text.primary",
               typography: "body1",
               display: isOpen ? "inline-block" : "none",
             }}
@@ -204,7 +204,7 @@ const MultiLevel = ({ item, url }) => {
         in={open}
         timeout="auto"
         unmountOnExit
-        // style={{ marginLeft: "10px" }}
+      // style={{ marginLeft: "10px" }}
       >
         <List component="div" disablePadding>
           {Object.keys(children).map((child, key) => (

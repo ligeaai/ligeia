@@ -72,8 +72,7 @@ const NestedMenu = (props) => {
                     padding: "5px",
                     py: 1,
                     "&:hover": {
-                      backgroundColor:
-                        themeMode === "dark" ? "#ffffff22" : "#00000022",
+                      backgroundColor: "hover.primary";
                     },
                   }}
                 >

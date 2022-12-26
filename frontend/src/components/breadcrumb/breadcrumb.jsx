@@ -57,7 +57,7 @@ const Breadcrumbs = () => {
             }}
             sx={{
               fontSize: "14px",
-              color: "myBoldText",
+              color: "text.primary",
               cursor: "pointer",
               textTransform: "capitalize",
             }}

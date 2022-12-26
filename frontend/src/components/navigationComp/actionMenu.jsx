@@ -12,7 +12,7 @@ import ArrowCircleRightOutlinedIcon from "@mui/icons-material/ArrowCircleRightOu
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 
 const actionIcon = (props) => {
-  const defaultFunction = () => {};
+  const defaultFunction = () => { };
   const {
     btnNew = defaultFunction,
     btnNewIsActive = true,

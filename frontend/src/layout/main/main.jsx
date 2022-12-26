@@ -40,7 +40,7 @@ const Main = (props) => {
           <Grid
             item
             sx={{
-              backgroundColor: "myBackgroundColor",
+              backgroundColor: "success.secondary",
               zIndex: 2,
               typography: {
                 xs: {

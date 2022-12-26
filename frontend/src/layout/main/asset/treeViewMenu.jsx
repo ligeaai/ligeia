@@ -51,7 +51,7 @@ const DrawerMenu = (props) => {
       <Grid
         container
         sx={{
-          backgroundColor: "myTreeViewBg",
+          backgroundColor: "status.main",
           borderRadius: "5px",
         }}
       >
@@ -69,7 +69,7 @@ const DrawerMenu = (props) => {
             height: "25px",
             position: "absolute",
             boxShadow: 2,
-            backgroundColor: "myReverseText",
+            backgroundColor: "status.primary",
             top: "25px",
             right: "-12px",
             zIndex: { xs: 0, sm: 3 },
