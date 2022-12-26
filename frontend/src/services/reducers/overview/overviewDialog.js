@@ -3,7 +3,8 @@ import {
     FILL_VALUES_OVERVIEW_DIALOG,
     CHANGE_VALUE_OVERVIEW_DIALOG,
     SET_SELECT_ITEM_OVERVIEW_DIALOG,
-    SET_HIGHCHART_PROPERTY_OVERVIEW_DIALOG
+    SET_HIGHCHART_PROPERTY_OVERVIEW_DIALOG,
+    SET_MEASUREMENT_DATA
 } from "../../actions/types"
 
 
@@ -181,7 +182,8 @@ const initialState = {
         "[4] Low": "",
         "[4] High": "",
         "[4] Color": ""
-    }
+    },
+    measuremenetData: []
 
 };
 
@@ -191,6 +193,11 @@ export default function (state = initialState, action) {
     const { type, payload } = action;
 
     switch (type) {
+        case SET_MEASUREMENT_DATA:
+            return {
+                ...state,
+                measuremenetData: payload
+            }
         case SET_HIGHCHART_PROPERTY_OVERVIEW_DIALOG:
             return {
                 ...state,

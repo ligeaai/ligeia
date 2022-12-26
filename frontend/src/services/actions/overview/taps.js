@@ -5,11 +5,9 @@ import {
     SET_WIDGETS_OVERVIEW,
     REFRESH_WIDGETS_OVERVIEW,
     SET_REV,
-    UPDATE_LAYOUT
+    UPDATE_LAYOUT,
 } from "../types";
-import axios from "axios";
 import { instance, config } from "../../couchApi";
-import { uuidv4 } from "../../utils/uuidGenerator";
 
 export const loadTapsOverview = () => async (dispatch, getState) => {
     const linkId = getState().collapseMenu.selectedItem.LINK_ID
@@ -50,28 +48,37 @@ export const cleanTabs = () => dispatch => {
 
 export const deleteChart = (id, revId) => async (dispatch, getState) => {
     const selected = getState().tapsOverview.selected
-    const resData = getState().tapsOverview.data
-    resData.data[selected].widgets.find((e, i) => e === id ? resData.data[selected].widgets.splice(i, 1) : null)
+    const resData = getState().tapsOverview
+    let myData = resData.data
+    myData.data[selected].widgets.find((e, i) => e === id ? myData.data[selected].widgets.splice(i, 1) : null)
+    myData.data[selected].layouts.lg.find((e, i) => e.i === id ? myData.data[selected].layouts.lg.splice(i, 1) : null)
+    myData.data[selected].layouts.md.find((e, i) => e.i === id ? myData.data[selected].layouts.md.splice(i, 1) : null)
+    myData.data[selected].layouts.sm.find((e, i) => e.i === id ? myData.data[selected].layouts.sm.splice(i, 1) : null)
+    myData.data[selected].layouts.xs.find((e, i) => e.i === id ? myData.data[selected].layouts.xs.splice(i, 1) : null)
+    myData.data[selected].layouts.xxs.find((e, i) => e.i === id ? myData.data[selected].layouts.xxs.splice(i, 1) : null)
+
+
     const selectedLink = getState().collapseMenu.selectedItem.LINK_ID
     // const tablinkBody = {
-    //     ...resData, data: {
-    //         ...resData.data, [selected]: [...resData.data[selected]]
+    //     ...myData, data: {
+    //         ...myData.data, [selected]: [...myData.data[selected]]
     //     }
     // }
-    const body = JSON.stringify({ ...resData })
+    const body = JSON.stringify({ ...myData })
     console.log(body);
     try {
-        let res = await instance
+        await instance
             .delete(
                 `/widgets/${id}?rev=${revId}`,
                 config
             )
-        await instance
+        let res = await instance
             .put(
                 `/taplinks/${selectedLink}`,
                 body,
                 config
             )
+
         dispatch(loadTapsOverview())
     } catch (err) {
         console.log(err);
@@ -158,24 +165,39 @@ export const updateTabHeader = (oldHeader, newHeader) => async (dispatch, getSta
                 payload: newHeader
             })
 
+
         }
         catch (err) { console.log(err); }
     }
 
 }
 
+function _deleteAllCharts(charts) {
+    charts.map(async e => {
+        try {
+            let res = await instance.get(`/widgets/${e}`, config);
+            console.log(res);
+            await instance
+                .delete(
+                    `/widgets/${e}?rev=${res.data._rev}`,
+                    config
+                )
+        } catch { }
+
+    })
+}
+
 export const deleteTapHeader = (header) => async (dispatch, getState) => {
     const selectedLink = getState().collapseMenu.selectedItem.LINK_ID
     const resData = getState().tapsOverview.data
+    const selected = getState().tapsOverview.selected
+    const charts = resData.data[selected].widgets
     delete resData.data[header]
-
     const tablinkBody = {
         ...resData, data: {
             ...resData.data
         }
     }
-
-
     try {
         await instance
             .put(
@@ -183,7 +205,9 @@ export const deleteTapHeader = (header) => async (dispatch, getState) => {
                 tablinkBody,
                 config
             )
+
         dispatch(loadTapsOverview())
+        _deleteAllCharts(charts)
 
     }
     catch (err) { console.log(err); }
@@ -199,6 +223,8 @@ export const updateChart = () => async (dispatch, getState) => {
                 body,
                 config
             )
+        dispatch(updateCouchDb())
+
         dispatch(loadTapsOverview())
     } catch {
 
@@ -231,7 +257,7 @@ export const updateCouchDb = () => async (dispatch, getState) => {
     const tablinkBody = {
         ...resData
     }
-
+    console.log(resData);
     try {
 
         let res = await instance

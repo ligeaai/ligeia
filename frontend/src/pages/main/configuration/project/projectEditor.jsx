@@ -58,14 +58,14 @@ const Layers = (props) => {
         var myRes = [""];
         stateWay === "LAYERS"
           ? res.data.map((e) => {
-              myRes.push(e.LAYER_NAME);
-            })
+            myRes.push(e.LAYER_NAME);
+          })
           : console.log(res);
         res.data.Message.map((e) => {
           myRes.push(e.CULTURE);
         });
         setLayerValues([...myRes]);
-      } catch {}
+      } catch { }
     };
     myFunc();
   }, []);

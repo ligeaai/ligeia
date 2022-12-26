@@ -14,6 +14,7 @@ import {
   cleanTabs,
   updateCouchDb,
 } from "../../services/actions/overview/taps";
+import history from "../../routers/history";
 // web.cjs is required for IE11 support
 //import { useSpring, animated } from 'react-spring/web.cjs';
 
@@ -64,6 +65,9 @@ TransitionComponent.propTypes = {
 const StyledTreeItem = styled((props) => (
   <TreeItem {...props} TransitionComponent={TransitionComponent} />
 ))(({ theme }) => ({
+  whiteSpace: "nowrap",
+  overflow: "hidden",
+  textOverflow: "ellipsis",
   [`& .${treeItemClasses.iconContainer}`]: {
     "& .close": {
       opacity: 0.3,
@@ -72,50 +76,56 @@ const StyledTreeItem = styled((props) => (
   [`& .${treeItemClasses.group}`]: {
     marginLeft: 15,
     paddingLeft: 18,
-    borderLeft: `1px dashed ${alpha(theme.palette.text.primary, 0.4)}`,
   },
 }));
-
+const MyStyledTreeItem = React.memo(({ myItems, path }) => {
+  const dispatch = useDispatch();
+  console.log(myItems);
+  return myItems.map((e, i) => {
+    if (e.CHILD)
+      return (
+        <StyledTreeItem
+          key={i}
+          nodeId={`${uuidv4()}`}
+          label={e.TO_ITEM_NAME}
+          onClick={() => {
+            history.push(`/${path}/${e.TO_ITEM_NAME}`);
+          }}
+        >
+          <MyStyledTreeItem
+            myItems={e.CHILD}
+            path={`${path}/${e.TO_ITEM_NAME}`}
+          ></MyStyledTreeItem>
+          {/* <StyledTreeItem
+            nodeId={`${uuidv4()}`}
+            label={e.TO_ITEM_NAME}
+          ></StyledTreeItem> */}
+        </StyledTreeItem>
+      );
+    return (
+      <StyledTreeItem
+        key={i}
+        nodeId={`${uuidv4()}`}
+        label={e.TO_ITEM_NAME}
+        onClick={async () => {
+          dispatch(await setSelectedCollapseMenu(e));
+          dispatch(loadTapsOverview());
+          history.push(`/${path}/${e.TO_ITEM_NAME}`);
+        }}
+      ></StyledTreeItem>
+    );
+  });
+});
 function CustomizedTreeView() {
   const dispatch = useDispatch();
   const items = useSelector((state) => state.collapseMenu.menuItems);
-  const selectedItem = useSelector((state) => state.collapseMenu.selectedItem);
   React.useEffect(() => {
     return () => {
-      if (selectedItem) {
-        dispatch(updateCouchDb());
-      }
+      dispatch(updateCouchDb());
       dispatch(cleanTabs());
     };
   }, []);
 
-  function myStyledTreeItem(myItems) {
-    return myItems.map((e, i) => {
-      try {
-        return (
-          <StyledTreeItem key={i} nodeId={`${uuidv4()}`} label={e.TO_ITEM_NAME}>
-            {myStyledTreeItem(e.CHILD)}
-            {/* <StyledTreeItem
-              nodeId={`${uuidv4()}`}
-              label={e.TO_ITEM_NAME}
-            ></StyledTreeItem> */}
-          </StyledTreeItem>
-        );
-      } catch {
-        return (
-          <StyledTreeItem
-            key={i}
-            nodeId={`${uuidv4()}`}
-            label={e.TO_ITEM_NAME}
-            onClick={async () => {
-              dispatch(await setSelectedCollapseMenu(e));
-              dispatch(loadTapsOverview());
-            }}
-          ></StyledTreeItem>
-        );
-      }
-    });
-  }
   return (
     <TreeView
       aria-label="customized"
@@ -124,7 +134,7 @@ function CustomizedTreeView() {
       defaultExpandIcon={<PlusSquare />}
       defaultEndIcon={<CloseSquare />}
     >
-      {myStyledTreeItem(items)}
+      <MyStyledTreeItem myItems={items} path={"overview"}></MyStyledTreeItem>
     </TreeView>
   );
 }

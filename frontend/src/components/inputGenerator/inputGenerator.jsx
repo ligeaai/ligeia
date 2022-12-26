@@ -1,5 +1,5 @@
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   MyCheckBox,
   MyTextField,
@@ -10,18 +10,49 @@ import {
 
 const InputGenerator = (props) => {
   const { type, changeFunction } = props;
+  const defaultValue = useSelector(
+    (state) => state.overviewDialog.highchartProps[props.title]
+  );
   const dispatch = useDispatch();
   const handleChangeFunc = (val) => {
     dispatch(changeFunction(props.title, val));
   };
   const typeToInput = {
-    text: <MyTextField {...props} handleChangeFunc={handleChangeFunc} />,
-    checkbox: <MyCheckBox {...props} handleChangeFunc={handleChangeFunc} />,
-    number: (
-      <MyNumberTextField {...props} handleChangeFunc={handleChangeFunc} />
+    text: (
+      <MyTextField
+        {...props}
+        defaultValue={defaultValue}
+        handleChangeFunc={handleChangeFunc}
+      />
     ),
-    select: <Select {...props} handleChangeFunc={handleChangeFunc} />,
-    color: <ColorTextfield {...props} handleChangeFunc={handleChangeFunc} />,
+    checkbox: (
+      <MyCheckBox
+        {...props}
+        defaultValue={defaultValue}
+        handleChangeFunc={handleChangeFunc}
+      />
+    ),
+    number: (
+      <MyNumberTextField
+        {...props}
+        defaultValue={defaultValue}
+        handleChangeFunc={handleChangeFunc}
+      />
+    ),
+    select: (
+      <Select
+        {...props}
+        defaultValue={defaultValue}
+        handleChangeFunc={handleChangeFunc}
+      />
+    ),
+    color: (
+      <ColorTextfield
+        {...props}
+        defaultValue={defaultValue}
+        handleChangeFunc={handleChangeFunc}
+      />
+    ),
   };
   const Element = typeToInput[type];
 

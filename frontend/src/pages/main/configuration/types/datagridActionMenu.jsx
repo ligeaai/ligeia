@@ -45,6 +45,7 @@ export const CustomToolbar = () => {
 
           <Tooltip
             title={"Delete Child"}
+
             componentsProps={{
               tooltip: { sx: { backgroundColor: "primary.dark" } },
             }}

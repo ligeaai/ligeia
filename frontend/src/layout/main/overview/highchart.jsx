@@ -1,29 +1,23 @@
-import Highcharts from "highcharts";
-import HighchartsReact from "highcharts-react-official";
-import addHighchartsMore from "highcharts/highcharts-more";
 import React from "react";
-import { useSelector } from "react-redux";
-import { angular, lineChart } from "./highchartOptions";
-addHighchartsMore(Highcharts);
-const OverviewEditor = ({ highchartProps, width, height }) => {
-  const chartType = {
-    "Gauge(Angular)[Highchart]": angular,
-    LineCharts: lineChart,
-  };
-  const options = chartType[highchartProps.Type](highchartProps);
+import { Measurement } from "../../../components/highchart/charts";
+import { Highchart } from "../../../components";
 
+const OverviewEditor = ({ highchartProps, width, height }) => {
+  if (highchartProps.Type === "Measurement") {
+    return (
+      <Measurement
+        highchartProps={highchartProps}
+        width={width}
+        height={height}
+      />
+    );
+  }
   if (highchartProps.Name !== "") {
     return (
-      <HighchartsReact
-        highcharts={Highcharts}
-        options={{
-          ...options,
-          chart: {
-            ...options.chart,
-            width: width,
-            height: height,
-          },
-        }}
+      <Highchart
+        highchartProps={highchartProps}
+        width={width}
+        height={height}
       />
     );
   }

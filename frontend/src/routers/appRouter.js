@@ -46,7 +46,7 @@ const AppRouter1 = () => {
         <Routes>
           <Route exact path="/" element={<PrivateRoute />}>
             <Route exact path="/" element={<Main />} />
-            <Route path="/overview" element={<Overview />} />
+            <Route exact path="/overview/*" element={<Overview />} />
             <Route path="/analytics" element={<Analytics />} />
             <Route path="/reporting" element={<Reporting />} />
             <Route path="/administration" element={<Administration />} />
@@ -85,7 +85,7 @@ const AppRouter = () => {
   const cssUserSelect = useSelector((state) => state.cssUserSelect.userSelect);
   return (
     <HistoryRouter history={history}>
-      <Box sx={{ userSelect: cssUserSelect ? "none" : "text" }}>
+      <Box sx={{ userSelect: cssUserSelect ? "none" : "text", backgroundColor: "background.main" }}>
         <ErrorMessage Element={AppRouter1} />
         <Confirmation />
         <HistoryConfirmation />

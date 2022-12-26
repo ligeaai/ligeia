@@ -4,35 +4,24 @@ import {
     LOAD_DRAWER_MENU
 } from "../types"
 
-import axios from "axios";
-import { instance, config } from '../../baseApi';
+import { instance, config } from '../../couchApi';
 
-let cancelToken;
 export const loadDrawerMenu = () => async (dispatch, getState) => {
-    const CULTURE = getState().lang.cultur
-    const body = JSON.stringify({ CULTURE })
-    if (cancelToken) {
-        cancelToken.cancel()
-    }
-    cancelToken = axios.CancelToken.source();
-    let res;
+
     try {
         let res = await instance
-            .post(
-                "/resource-list/menu/",
-                body,
-                config()
+            .get(
+                "/drawermenu/d770fc23c7a9bba2a6e3c15a5f02c8b8/",
+                config
             )
-        res.data.Configuration.Items.Items.URL = "/configuration/items"
-        res.data.Configuration.Items.Tools.URL = "/configuration/initialize"
+
         dispatch({
             type: LOAD_DRAWER_MENU,
-            payload: res.data
+            payload: res.data.CONTENTS
         })
 
     } catch (err) {
         console.log(err);
-
     }
 }
 

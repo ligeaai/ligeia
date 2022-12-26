@@ -76,7 +76,7 @@ const UnitOne = ({ isHome }) => {
         flexWrap: "nowrap",
       }}
     >
-      <Grid item sx={{ minHeight: "500px", boxShadow: 3, mr: 0.5 }}>
+      <Grid item>
         <DrawerMenu Element={<Menu />} />
       </Grid>
 
@@ -98,7 +98,7 @@ const UnitOne = ({ isHome }) => {
               height: "42px",
               display: "flex",
               alignItems: "center",
-              backgroundColor: "myTreeViewBg",
+              backgroundColor: "status.main",
               color: "text.primary",
               borderTopLeftRadius: "3px",
               borderTopRightRadius: "3px",

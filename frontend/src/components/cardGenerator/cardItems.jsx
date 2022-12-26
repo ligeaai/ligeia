@@ -9,7 +9,7 @@ const CardItems = (props) => {
   const dispatch = useDispatch();
   const { card } = props;
   const [isClick, setIsClick] = useState(false);
-  const [cardFancyTheme, setCardFancyTheme] = useState("myCardFancyColor");
+  const [cardFancyTheme, setCardFancyTheme] = useState("success.primary");
   return (
     <Grid
       item
@@ -21,6 +21,7 @@ const CardItems = (props) => {
         cursor: "pointer",
         borderTopRightRadius: "12px",
         borderBottomRightRadius: "12px",
+        backgroundColor: "background.success",
         position: "relative",
         "&:hover": {
           boxShadow: "4px 4px 8px rgba(0, 0, 0, 0.6)",
@@ -33,9 +34,9 @@ const CardItems = (props) => {
           ? "2px 2px 6px rgba(0, 0, 0, 0.2) !important"
           : "3px 3px 8px rgba(0, 0, 0, 0.3)",
       }}
-      onMouseOver={() => setCardFancyTheme("myCardFancyColorHover")}
+      onMouseOver={() => setCardFancyTheme("hover.secondary")}
       onMouseLeave={() => {
-        setCardFancyTheme("myCardFancyColor");
+        setCardFancyTheme("success.primary");
         setIsClick(false);
       }}
       onClick={() => {
@@ -69,7 +70,7 @@ const CardItems = (props) => {
                 variant="h6"
                 sx={{
                   fontWeight: "700",
-                  color: "myTextColor",
+                  color: "text.secondary",
                 }}
               >
                 {card.cardTitle}
@@ -80,7 +81,7 @@ const CardItems = (props) => {
               xs={12}
               sx={{ fontSize: "18px", color: "text.secondary" }}
             >
-              <Typography variant="subtitle2" sx={{ color: "text.secondary" }}>
+              <Typography variant="subtitle2" sx={{ color: "text.success" }}>
                 {card.cardBody}
               </Typography>
             </Grid>
@@ -95,7 +96,7 @@ const CardItems = (props) => {
                 marginBottom: "20px",
               }}
             >
-              <Typography variant="body2" color="myTextColor">
+              <Typography variant="body2" color="text.success">
                 Next
               </Typography>
             </Grid>

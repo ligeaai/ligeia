@@ -49,7 +49,7 @@ const MyDataGrid = () => {
           minHeight: "400px",
           height: "400px",
 
-          button: { color: "#4B4B4B" },
+          button: { color: "text.primary" },
 
           border: "0.5px solid",
 

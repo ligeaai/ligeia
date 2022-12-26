@@ -83,11 +83,11 @@ const MyCheckList = (props) => {
                           svg: {
                             fontSize: "medium",
                           },
-                          color: "#4B4B4B",
+                          color: "text.primary",
                         },
                       },
                       Input: {
-                        color: "#4B4B4B",
+                        color: "text.primary",
                         fontSize: "12px",
                         paddingY: "6px",
                       },

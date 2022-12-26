@@ -4,24 +4,44 @@ import {
     CHANGE_VALUE_OVERVIEW_DIALOG,
     SET_SELECT_ITEM_OVERVIEW_DIALOG,
     SET_HIGHCHART_PROPERTY_OVERVIEW_DIALOG,
-    SET_WIDGETS_OVERVIEW
+    SET_WIDGETS_OVERVIEW,
+    SET_MEASUREMENT_DATA
 } from "../types"
+import axios from "axios"
 
 import { instance, config } from "../../couchApi"
 import { uuidv4 } from "../../utils/uuidGenerator"
 import { loadTapsOverview } from "./taps"
+import ItemLinkService from "../../api/itemLink"
 
 
-const fillProperties = async () => async (dispatch, getState) => {
+
+let cancelTokenLinks;
+export const fillProperties = async () => async (dispatch, getState) => {
     //api call and fill the properties
     const selectedValue = getState().overviewDialog.selectedItem
+    const selectedItem = getState().collapseMenu.selectedItem.TO_ITEM_ID
+    if (cancelTokenLinks) {
+        cancelTokenLinks.cancel()
+    }
+    cancelTokenLinks = axios.CancelToken.source();
     try {
         let res = await instance
             .get(
                 `/highchartproperties/${selectedValue}`,
                 config
             )
+        console.log(res);
+        const body = JSON.stringify({ ID: selectedItem })
 
+        let itemLinkRes = await ItemLinkService.getItemLink(body, cancelTokenLinks)
+        console.log(itemLinkRes.data);
+        let tags = itemLinkRes.data.TO_ITEM_ID.filter(e => e.FROM_ITEM_TYPE === "TAG_CACHE")
+        console.log(tags);
+        dispatch({
+            type: SET_MEASUREMENT_DATA,
+            payload: tags
+        })
         dispatch({
             type: FILL_VALUES_OVERVIEW_DIALOG,
             payload: res.data.properties
@@ -57,6 +77,7 @@ export const loadSelectItems = async () => async dispatch => {
             type: SET_SELECT_ITEM_OVERVIEW_DIALOG,
             payload: res.data.type
         })
+
 
     } catch (err) {
         return err

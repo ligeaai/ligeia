@@ -10,7 +10,7 @@ import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 
 const MaterialUIPickers = ({
   time = "9000-10-10",
-  onChangeFunc = () => {},
+  onChangeFunc = () => { },
   errFunc = () => false,
 }) => {
   const [date, setDate] = React.useState(time);
@@ -26,7 +26,7 @@ const MaterialUIPickers = ({
           try {
             setDate(newValue.$d);
             onChangeFunc(newValue.$d);
-          } catch {}
+          } catch { }
         }}
         components={{
           OpenPickerIcon: CalendarTodayIcon,

@@ -62,7 +62,7 @@ const CodeList = ({ isHome }) => {
         flexWrap: "nowrap",
       }}
     >
-      <Grid item sx={{ minHeight: "500px", boxShadow: 3, mr: 0.5 }}>
+      <Grid item>
         <DrawerMenu
           Element={
             <TreeMenuItems

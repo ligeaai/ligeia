@@ -42,16 +42,24 @@ const DrawerMenu = (props) => {
         position: "relative",
         width: `${leftMenuWidth}px`,
         height: "100%",
+        borderRadius: "5px",
+        minHeight: "500px",
+        boxShadow: 3,
+        mr: 0.5,
       }}
     >
       <Grid
         container
         sx={{
-          backgroundColor: "myTreeViewBg",
-          borderRadius: "3px",
+          backgroundColor: "status.main",
+          borderRadius: "5px",
         }}
       >
-        <Grid item xs={12} sx={{ padding: 2, pb: 0, position: "relative" }}>
+        <Grid
+          item
+          xs={12}
+          sx={{ padding: 2, pb: 0, position: "relative", borderRadius: "5px" }}
+        >
           <SearchBarMobile theme={"light"} />
         </Grid>
         <Box
@@ -61,7 +69,7 @@ const DrawerMenu = (props) => {
             height: "25px",
             position: "absolute",
             boxShadow: 2,
-            backgroundColor: "myReverseText",
+            backgroundColor: "status.primary",
             top: "25px",
             right: "-12px",
             zIndex: { xs: 0, sm: 3 },

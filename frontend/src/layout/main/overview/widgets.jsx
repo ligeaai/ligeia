@@ -5,10 +5,10 @@ import { IconButton } from "@mui/material";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import SettingsIcon from "@mui/icons-material/Settings";
 import { instance, config } from "../../../services/couchApi";
-import MyHighcharts from "./highchart";
 import { deleteChart } from "../../../services/actions/overview/taps";
 import { useDispatch, useSelector } from "react-redux";
 import { LoadingComponent, MyDialog } from "../../../components";
+import MyHighchart from "./highchart";
 import UpdatePopUp from "./updatePopup";
 import "../../../assets/css/dashboard.css";
 const Widgets = React.forwardRef((props, ref) => {
@@ -69,11 +69,11 @@ const Widgets = React.forwardRef((props, ref) => {
           </Grid>
         </Box>
         <Box className="grid-item__graph">
-          <MyHighcharts
+          <MyHighchart
             highchartProps={highchartProps}
             width={width}
             height={height}
-          ></MyHighcharts>
+          ></MyHighchart>
         </Box>
         {children}
       </Box>

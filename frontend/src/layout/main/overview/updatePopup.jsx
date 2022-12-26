@@ -9,17 +9,41 @@ import {
 } from "../../../services/actions/overview/overviewDialog";
 import { loadSelectItems } from "../../../services/actions/overview/overviewDialog";
 import { updateChart } from "../../../services/actions/overview/taps";
-const DialogContent = ({ highchartProps, chartId, ...rest }) => {
-  console.log("sadsad");
-  console.log(rest);
+import TagService from "../../../services/api/tags";
+const MesurementInputGenerator = (props) => {
   const dispatch = useDispatch();
-  const selectedItem = useSelector(
-    (state) => state.overviewDialog.selectedItem
+  console.log(props);
+  const values = useSelector((state) => state.overviewDialog.measuremenetData);
+  console.log(values);
+  const handleChangeFunc = async (value) => {
+    console.log(value);
+    dispatch(changeValeus("Mesurement", value));
+    try {
+      const body = JSON.stringify({ TAG_ID: value });
+      let res = await TagService.getTagItem(body);
+      console.log(res);
+      dispatch(changeValeus("Minimum", res.data[0].NORMAL_MINIMUM));
+      dispatch(changeValeus("Maximum", res.data[0].NORMAL_MAXIMUM));
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  return (
+    <Select
+      {...props}
+      values={values}
+      //defaultValue={defaultValue}
+      valuesPath="FROM_ITEM_ID"
+      dataTextPath="FROM_ITEM_ID"
+      handleChangeFunc={handleChangeFunc}
+    />
   );
+};
+
+const DialogContent = ({ highchartProps, chartId, ...rest }) => {
+  const dispatch = useDispatch();
   const properties = useSelector((state) => state.overviewDialog.values);
-  const defaultProps = useSelector(
-    (state) => state.overviewDialog.highchartProps
-  );
 
   React.useEffect(() => {
     async function myFunc() {
@@ -47,11 +71,15 @@ const DialogContent = ({ highchartProps, chartId, ...rest }) => {
                       {a.title}
                     </Grid>
                     <Grid item sx={{ width: "100%" }}>
-                      <InputGenerator
-                        {...a}
-                        defaultValue={defaultProps[a.title]}
-                        changeFunction={changeValeus}
-                      />
+                      {a.title === "Mesurement" ? (
+                        <MesurementInputGenerator
+                          {...a}
+                          defaultValue={highchartProps.Mesurement}
+                          changeFunction={changeValeus}
+                        />
+                      ) : (
+                        <InputGenerator {...a} changeFunction={changeValeus} />
+                      )}
                     </Grid>
                   </Grid>
                 </Grid>

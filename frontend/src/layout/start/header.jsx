@@ -55,7 +55,7 @@ const Header = () => {
   const langSelect = (val) => {
     dispatch(changeLanguage(val));
   };
-  const locationSelect = (val) => {};
+  const locationSelect = (val) => { };
   const handleClick = (key) => {
     openValid[key] = true;
     setOpenNavbar(openValid);
