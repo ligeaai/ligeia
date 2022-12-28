@@ -68,7 +68,7 @@ export function CustomNoRowsOverlay({ text = "No Rows" }) {
           </g>
         </g>
       </svg>
-      <Box sx={{ mt: 1 }}>{text}</Box>
+      <Box sx={{ mt: 1, color: "text.primary" }}>{text}</Box>
     </StyledGridOverlay >
   );
 }

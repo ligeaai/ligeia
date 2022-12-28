@@ -14,9 +14,9 @@ const SearchBarMobile = (props) => {
   const Search = styled("div")(({ theme }) => ({
     position: "relative",
     borderRadius: theme.shape.borderRadius,
-    backgroundColor: theme === "dark" ? "#ffffff33" : "#00000033",
+    backgroundColor: theme.palette.status.success,
     "&:hover": {
-      backgroundColor: theme === "dark" ? "#ffffff22" : "#00000022",
+      backgroundColor: theme.palette.status.info,
     },
     marginLeft: 0,
     width: "100%",
@@ -32,7 +32,7 @@ const SearchBarMobile = (props) => {
     justifyContent: "center",
   }));
   const StyledInputBase = styled(InputBase)(({ theme }) => ({
-    color: "#ffffff",
+    color: theme.palette.text.secondary,
     "& .MuiInputBase-input": {
       padding: theme.spacing(1, 1, 1, 0),
       // vertical padding + font size from searchIcon
@@ -43,7 +43,7 @@ const SearchBarMobile = (props) => {
   return (
     <Search>
       <SearchIconWrapper>
-        <SearchIcon sx={{ color: theme === "light" ? "#000000" : "#ffffff" }} />
+        <SearchIcon sx={{ color: "icon.main" }} />
       </SearchIconWrapper>
       <StyledInputBase
         key="search"

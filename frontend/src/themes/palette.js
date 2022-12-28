@@ -33,6 +33,9 @@ const Palette = () => {
                 main: "#546e7a", // select item for drawer text
                 secondary: "#616161", // card header text
                 success: "#9e9e9e", //card info text
+                info: "#37474f",
+
+
             },
 
 
@@ -41,6 +44,7 @@ const Palette = () => {
                 main: "#eeeeee", // paper background
                 secondary: "#e0e0e0", // nested menu background
                 success: "#e0e0e0", // card Background
+                info: "#eceff1", //properties bg
             },
 
 
@@ -50,11 +54,24 @@ const Palette = () => {
                 secondary: "#00897b", // card fancy hover
             },
 
+            icon: {
+                primary: "#819ca9", //items icon
+                secondary: "#263238", // items under icon
+                main: "#819ca9", //seachbar icon
+                success: "#9fa8da", // icon hover text 
+            },
+
 
             status: {
-                main: "#616161", //items 
-                primary: "#e0e0e0" // items text
+                main: "#efebe9", //items bg
+                primary: "#424242", // items text
+                secondary: "#37474f", // item text lvl2
+                success: "#e0e0e0", // search bar
+                info: "#cfd8dc", //search bar hover
+            },
 
+            deneme: {
+                main: "#ff3d00",
             },
 
 
@@ -74,7 +91,7 @@ const Palette = () => {
             primary: {
                 light: "#9E9E9E",
                 main: "#424242",
-                dark: "#455a64", // DarkHeader
+                dark: "#212121", // DarkHeader
             },
 
             success: {
@@ -88,6 +105,7 @@ const Palette = () => {
                 main: "#eceff1", // select item for drawer text for dark
                 secondary: "#eeeeee", // card header text for dark
                 success: "#e0e0e0", //card info text for dark
+                info: "#424242",
             },
 
             background: {
@@ -95,11 +113,24 @@ const Palette = () => {
                 main: "#757575", //  paper background for dark
                 secondary: "#616161", //nested menu dark background
                 success: "#9e9e9e", // card bg dark
+                info: "#616161", //properties bg
             },
+
+            icon: {
+                primary: "#cfd8dc", //items icon
+                main: "#37474f", //searchbar icon
+                secondary: "#e0e0e0", // items under icon
+                success: "#5c6bc0", // icon hover text 
+            },
+
+
 
             status: {
                 main: "#616161", //items 
-                primary: "#e0e0e0" // items text
+                primary: "#e0e0e0", // items text
+                secondary: "#e0e0e0", //item text lvl2
+                success: "#9e9e9e", // search bar
+                info: "#bdbdbd", //search bar hover
 
             },
 
@@ -108,6 +139,10 @@ const Palette = () => {
                 primary: "#757575", // nested menu hover for dark
                 main: "#f44336",
                 secondary: "#607d8b", // card hover for dark
+            },
+
+            deneme: {
+                main: "#ff3d00",
             },
 
 

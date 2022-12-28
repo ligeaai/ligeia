@@ -9,8 +9,8 @@ const divider = () => {
       sx={{
         marginX: "2px",
         borderWidth: "0.2px",
-        borderColor: "#4B4B4B",
-        backgroundColor: "#4B4B4B",
+        borderColor: "text.main",
+        backgroundColor: "text.main",
       }}
     />
   );

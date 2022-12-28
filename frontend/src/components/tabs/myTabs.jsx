@@ -154,7 +154,7 @@ function MyTabs() {
           value={value}
           onChange={handleChange}
           aria-label="action tabs example"
-          sx={{ height: "48px" }}
+          sx={{ height: "48px", backgroundColor: "background.info" }}
         >
           {titles.map((x, i) => (
             <MyTap ref={ref} key={`${x}`} x={x} i={i}></MyTap>
@@ -201,6 +201,7 @@ function MyTabs() {
               index={i}
               key={i}
               sx={{
+                backgroundColor: "background.main",
                 height: "100%",
               }}
             >

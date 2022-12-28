@@ -96,7 +96,7 @@ const actionIcon = (props) => {
               key={key}
               title={Element.tooltip}
               componentsProps={{
-                tooltip: { sx: { backgroundColor: "primary.dark" } },
+                tooltip: { sx: { backgroundColor: "icon.success" } },
               }}
               sx={{ display: Element.isActive ? "flex" : "none" }}
             >
@@ -105,7 +105,7 @@ const actionIcon = (props) => {
                   Element.function();
                 }}
               >
-                <Element.Icon fontSize="small" sx={{ color: "#4B4B4B" }} />
+                <Element.Icon fontSize="small" sx={{ color: "icon.secondary" }} />
               </IconButton>
             </Tooltip>
           );

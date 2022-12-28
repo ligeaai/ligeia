@@ -53,7 +53,7 @@ const Overview = () => {
               height: "42px",
               display: "flex",
               alignItems: "center",
-              backgroundColor: "myTreeViewBg",
+              backgroundColor: "status.main",
               color: "text.primary",
               borderTopLeftRadius: "3px",
               borderTopRightRadius: "3px",

@@ -25,7 +25,7 @@ const SearchBar = (props) => {
     return {
       position: "relative",
       borderRadius: theme.shape.borderRadius,
-      backgroundColor: searchBarTheme === "dark" ? "#ffffff33" : "#00000033",
+      backgroundColor: "icon.main",
       "&:hover": {
         backgroundColor: searchBarTheme === "dark" ? "#ffffff22" : "#00000022",
       },
