@@ -1,7 +1,7 @@
 import * as React from "react";
 import PropTypes from "prop-types";
 import SwipeableViews from "react-swipeable-views";
-import DeleteIcon from "@mui/icons-material/Delete";
+import ClearIcon from "@mui/icons-material/Clear";
 import { useTheme } from "@mui/material/styles";
 import AppBar from "@mui/material/AppBar";
 import Tabs from "@mui/material/Tabs";
@@ -21,6 +21,8 @@ import {
 } from "../../services/actions/overview/taps";
 import palette from "../../themes/palette";
 import { MyTextField } from "..";
+import { setConfirmation } from "../../services/reducers/confirmation";
+
 const TabPanel = (props) => {
   const { children, value, index, ...other } = props;
 
@@ -100,18 +102,26 @@ const MyTap = React.forwardRef(({ x, i, ...rest }, ref) => {
             setChangeText(true);
           }}
         />
-        <DeleteIcon
+        <ClearIcon
           fontSize="small"
           sx={{
             cursor: "pointer",
             display: iconIsActive ? "flex" : "none",
-            position: "absolute",
-            right: 0,
+
+            fill: "red",
           }}
           onClick={() => {
-            dispatch(deleteTapHeader(x));
+            dispatch(
+              setConfirmation({
+                title: "Are you sure you want to delete the dashboard?",
+                body: <>{x} will be deleted and will not come back</>,
+                agreefunction: () => {
+                  dispatch(deleteTapHeader(x));
+                },
+              })
+            );
           }}
-        ></DeleteIcon>
+        ></ClearIcon>
       </Box>
     );
   return (
@@ -150,8 +160,8 @@ function MyTabs() {
           height: "100%",
         },
         "#myResponsiveGridLayout": {
-          backgroundColor: "background.main"
-        }
+          backgroundColor: "background.main",
+        },
       }}
     >
       <AppBar position="static" color="default">
