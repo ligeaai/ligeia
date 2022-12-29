@@ -8,7 +8,7 @@ import {
     UPDATE_LAYOUT,
 } from "../types";
 import { instance, config } from "../../couchApi";
-
+import { uuidv4 } from "../../utils/uuidGenerator";
 export const loadTapsOverview = () => async (dispatch, getState) => {
     const linkId = getState().collapseMenu.selectedItem.LINK_ID
     try {
@@ -29,7 +29,17 @@ export const loadTapsOverview = () => async (dispatch, getState) => {
 
         })
     } catch (err) {
-        console.log(err);
+        if (err.response.status === 404) {
+            const body = JSON.stringify({ _id: linkId, data: {} })
+            await instance
+                .post(
+                    "/taplinks/",
+                    body,
+                    config
+                )
+        }
+        dispatch(loadTapsOverview())
+        console.log(err.response.status);
     }
 }
 
