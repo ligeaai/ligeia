@@ -5,7 +5,7 @@ from venv import create
 from kafka import KafkaProducer
 import json
 from datetime import datetime
-
+import uuid
 
 class KafkaLogger():
     def __init__(self):
@@ -17,6 +17,8 @@ class KafkaLogger():
             "Level":"No Level",
             "User":"None",
         }
+        key = uuid.uuid4().hex
+        key = key.encode('utf-8')
        
 
     def _update_json(self,message=None,request=None,level=None):
@@ -51,7 +53,7 @@ class KafkaLogger():
         except Exception as e: 
             self.json_message['ERROR'] = e
         
-        self.producer.send(os.environ.get('Kafka_Topic'), self.loggingTemplates)
+        self.producer.send(os.environ.get('Kafka_Topic'), value = self.loggingTemplates,key =self.key )
             
 
     def warning(self,message=None,request = None, warning = None,logType = "logging"):
@@ -61,7 +63,7 @@ class KafkaLogger():
         except Exception as e:
             self.json_message['ERROR'] = e
         
-        self.producer.send(os.environ.get('Kafka_Topic'), self.loggingTemplates)
+        self.producer.send(os.environ.get('Kafka_Topic'), value = self.loggingTemplates,key =self.key )
     
     def debug(self,message=None,request = None, debug = None,logType = "FAULTS"):
         try:
@@ -69,7 +71,7 @@ class KafkaLogger():
             self._logging_template(message=message,request = request,level="DEBUG",logType = logType)
         except Exception as e:
             self.json_message['ERROR'] = e
-        self.producer.send(os.environ.get('Kafka_Topic'), self.loggingTemplates)
+        self.producer.send(os.environ.get('Kafka_Topic'), value = self.loggingTemplates,key =self.key )
 
     def error(self,message=None,request = None, error = None,logType = "FAULTS"):
         try:
@@ -77,6 +79,6 @@ class KafkaLogger():
             self._logging_template(message=message,request = request,level="ERROR",logType = logType)
         except Exception as e:
             self.json_message['ERROR'] = e
-        self.producer.send(os.environ.get('Kafka_Topic'), self.loggingTemplates)
+        self.producer.send(os.environ.get('Kafka_Topic'), value = self.loggingTemplates,key =self.key)
 
 

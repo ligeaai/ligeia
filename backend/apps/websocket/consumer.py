@@ -16,13 +16,3 @@ class WSConsumer(WebsocketConsumer):
 			data = data.decode('utf-8')
 			data = json.loads(data)
 			self.send(json.dumps({'message':data}))
-		# count = 0
-		# for i in range(1000):
-		# 	if count < 10:
-		# 		count += 1
-		# 		self.send(json.dumps({'message': count}))
-		# 		sleep(1)
-		# 	else:
-		# 		count = 1
-		# 		self.send(json.dumps({'message': count}))
-		# 		sleep(1)
