@@ -3,12 +3,14 @@ import highchartsMore from "highcharts/highcharts-more.js";
 import solidGauge from "highcharts/modules/solid-gauge.js";
 import HighchartsReact from "highcharts-react-official";
 import React from "react";
+import exporting from "highcharts/modules/exporting";
 
+exporting(Highcharts);
 highchartsMore(Highcharts);
 solidGauge(Highcharts);
 
-export const solid = (highchartProps) => {
-  return {
+export const solid = (highchartProps, width, height) => {
+  const options = {
     chart: {
       type: "solidgauge",
       height: "80%",
@@ -38,9 +40,6 @@ export const solid = (highchartProps) => {
         outerRadius: "100%",
         shape: "arc",
       },
-    },
-    exporting: {
-      enabled: false,
     },
 
     tooltip: {
@@ -94,4 +93,17 @@ export const solid = (highchartProps) => {
       },
     ],
   };
+  return (
+    <HighchartsReact
+      highcharts={Highcharts}
+      options={{
+        ...options,
+        chart: {
+          ...options.chart,
+          width: width,
+          height: height,
+        },
+      }}
+    />
+  );
 };

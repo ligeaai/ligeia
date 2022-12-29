@@ -1,12 +1,11 @@
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
-import addHighchartsMore from "highcharts/highcharts-more";
+
 import React from "react";
 import { useSelector } from "react-redux";
 import Box from "@mui/material/Box";
 import { styled } from "@mui/material/styles";
 import { angular, LineChart, solid } from "./charts";
-addHighchartsMore(Highcharts);
 
 const MyBox = styled(Box)(({ theme }) => {
   return {
@@ -29,20 +28,9 @@ const Highchart = ({ highchartProps, width, height }) => {
     "Gauge(Solid)[Highchart]": solid,
   };
 
-  const options = chartType[highchartProps.Type](highchartProps);
   return (
     <MyBox>
-      <HighchartsReact
-        highcharts={Highcharts}
-        options={{
-          ...options,
-          chart: {
-            ...options.chart,
-            width: width,
-            height: height,
-          },
-        }}
-      />
+      {chartType[highchartProps.Type](highchartProps, width, height)}
     </MyBox>
   );
 };
