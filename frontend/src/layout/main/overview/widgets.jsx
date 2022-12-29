@@ -32,7 +32,7 @@ const Widgets = React.forwardRef((props, ref) => {
       <Box
         ref={ref}
         className={`grid-item ${className}`}
-        sx={{ ...style, boxShadow: 4 }}
+        sx={{ ...style, boxShadow: 4, borderRadius: "5px" }}
         {...rest}
       >
         <Box
