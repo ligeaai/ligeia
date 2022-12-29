@@ -46,6 +46,7 @@ export class column {
         this.editable = true;
         this.renderCell = myMemoFunction;
         this.renderEditCell = myMemoFunction;
+        this.cellClassName = "myRenderCell"
     }
 }
 

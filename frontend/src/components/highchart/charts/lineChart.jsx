@@ -49,6 +49,8 @@ export const LineChart = (highchartProps) => {
       zoomType: "x",
       type: "spline",
       reflow: true,
+      backgroundColor: "backcground.main"
+
     },
     credits: {
       enabled: false,
@@ -60,7 +62,10 @@ export const LineChart = (highchartProps) => {
           highchartProps["Name Font Size(em)"] !== ""
             ? `${highchartProps["Name Font Size(em)"]}px`
             : "14px",
+
       },
+
+
     },
     xAxis: {
       categories: categories,

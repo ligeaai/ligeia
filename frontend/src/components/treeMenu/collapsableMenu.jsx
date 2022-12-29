@@ -85,6 +85,7 @@ const MyStyledTreeItem = React.memo(({ myItems, path }) => {
     if (e.CHILD)
       return (
         <StyledTreeItem
+          sx={{ color: "status.primary" }}
           key={i}
           nodeId={`${uuidv4()}`}
           label={e.TO_ITEM_NAME}
@@ -104,6 +105,7 @@ const MyStyledTreeItem = React.memo(({ myItems, path }) => {
       );
     return (
       <StyledTreeItem
+        sx={{ color: "status.primary" }}
         key={i}
         nodeId={`${uuidv4()}`}
         label={e.TO_ITEM_NAME}

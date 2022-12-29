@@ -72,6 +72,9 @@ const MyDataGrid = ({ type, isLinksActive }) => {
           ".MuiDataGrid-pinnedRows": {
             zIndex: 2,
           },
+          ".myRenderCell": {
+            backgroundColor: "background.main"
+          }
         }}
         componentsProps={{
           basePopper: {

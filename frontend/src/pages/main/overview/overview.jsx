@@ -64,7 +64,7 @@ const Overview = () => {
             </Box>
           </Grid>
           <ItemSperatorLineXL />
-          {isActiveTabs ? <Tabs /> : <></>}
+          {isActiveTabs ? <Tabs /> : <Box sx={{ backgroundColor: "red" }} />}
           {/*<Grid item xs={12} sx={{ mt: 1, mr: 1 }}>
             <OverviewEditor />
           </Grid> */}

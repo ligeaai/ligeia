@@ -19,6 +19,7 @@ import {
   updateTabHeader,
   deleteTapHeader,
 } from "../../services/actions/overview/taps";
+import palette from "../../themes/palette";
 import { MyTextField } from "..";
 const TabPanel = (props) => {
   const { children, value, index, ...other } = props;
@@ -125,6 +126,7 @@ const MyTap = React.forwardRef(({ x, i, ...rest }, ref) => {
   );
 });
 function MyTabs() {
+  console.log(palette());
   const ref = React.createRef();
   const dispatch = useDispatch();
   const [value, setValue] = React.useState(null);
@@ -147,6 +149,9 @@ function MyTabs() {
         ".react-swipeable-view-container": {
           height: "100%",
         },
+        "#myResponsiveGridLayout": {
+          backgroundColor: "background.main"
+        }
       }}
     >
       <AppBar position="static" color="default">
