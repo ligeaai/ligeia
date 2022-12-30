@@ -56,7 +56,7 @@ def get_value_type(df2):
             data_dict.get(data).append(incomingData)
             return data
         except:
-            pass
+            print("No defined data is coming")
 
 
 def frozen_data_check(data_check):
@@ -91,6 +91,8 @@ for message in consumer:
     print(len(data_dict.get(data_check)))
     if len(data_dict.get(data_check)) > 3:
         frozen_data_check(data_check)
+
+    del data[data_check]
     data["step-status"] = "frozen-data"
     producer.send("scaling_data", value=data)
     producer.flush()
