@@ -2,7 +2,7 @@ import axios from "axios";
 import { instance, config } from "../baseApi"
 
 const getAllTreeitem = (body, cancelToken) => {
-    return instance.post("/code-list/details/parent", body, { ...config(), cancelToken: cancelToken.token });
+    return instance.post("/code-list/details/parent/", body, { ...config(), cancelToken: cancelToken.token });
 };
 
 let cancelToken;
