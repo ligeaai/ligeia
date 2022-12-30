@@ -17,8 +17,8 @@ class KafkaLogger():
             "Level":"No Level",
             "User":"None",
         }
-        key = uuid.uuid4().hex
-        key = key.encode('utf-8')
+        self.key = uuid.uuid4().hex
+        self.key = self.key.encode('utf-8')
        
 
     def _update_json(self,message=None,request=None,level=None):
