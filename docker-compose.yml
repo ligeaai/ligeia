@@ -29,9 +29,13 @@ services:
       - .:/django
       # - static_volume:/django/staticfiles
       # - media_volume:/django/mediafiles
+    environment:
+      - CELERY_BROKER=redis://redis:6379/1
+      - CELERY_BACKEND=redis://redis:6379/1
     depends_on:
       - redis
       - postgres
+      - apache-kafka-broker1
       - es
     ports:
       - "8000:8000"
@@ -222,6 +226,40 @@ services:
       CLASSPATH: /usr/share/java/monitoring-interceptors/monitoring-interceptors-5.1.1.jar
       CONNECT_PRODUCER_INTERCEPTOR_CLASSES: "io.confluent.monitoring.clients.interceptor.MonitoringProducerInterceptor"
       CONNECT_CONSUMER_INTERCEPTOR_CLASSES: "io.confluent.monitoring.clients.interceptor.MonitoringConsumerInterceptor"
+    networks:
+      - net
+  celery_worker:
+    restart: on-failure
+    build:
+      context: .
+      dockerfile: ./dockerfile/local/django/Dockerfile
+    command: /start-celeryworker
+    image: doccano_backend:prod
+    volumes:
+      - .:/django
+    env_file:
+      - .env
+    depends_on:
+      - redis
+      - postgres
+      - django
+    networks:
+      - net
+  flower:
+    build:
+      context: .
+      dockerfile: ./dockerfile/local/django/Dockerfile
+    command: /start-flower
+    volumes:
+      - .:/django
+    env_file:
+      - .env
+    ports:
+      - "5557:5555"
+    depends_on:
+      - redis
+      - postgres
+      - celery_worker
     networks:
       - net
 networks:
