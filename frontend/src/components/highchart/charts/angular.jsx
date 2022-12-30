@@ -1,7 +1,11 @@
 import Highcharts from "highcharts";
+import HighchartsReact from "highcharts-react-official";
 import React from "react";
-export const angular = (highchartProps) => {
-  return {
+import exporting from "highcharts/modules/exporting";
+
+exporting(Highcharts);
+export const angular = (highchartProps, width, height) => {
+  const options = {
     chart: {
       type: "gauge",
       plotBackgroundColor: null,
@@ -114,4 +118,17 @@ export const angular = (highchartProps) => {
       },
     ],
   };
+  return (
+    <HighchartsReact
+      highcharts={Highcharts}
+      options={{
+        ...options,
+        chart: {
+          ...options.chart,
+          width: width,
+          height: height,
+        },
+      }}
+    />
+  );
 };

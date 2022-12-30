@@ -69,7 +69,7 @@ const DrawerMenu = (props) => {
             height: "25px",
             position: "absolute",
             boxShadow: 2,
-            backgroundColor: "status.primary",
+            backgroundColor: "icon.primary",
             top: "25px",
             right: "-12px",
             zIndex: { xs: 0, sm: 3 },
@@ -122,7 +122,7 @@ const DrawerMenu = (props) => {
             width: "5px",
             right: 0,
             "&:hover": {
-              backgroundColor: "rgba(0,0,0,0.5)",
+              backgroundColor: "text.main",
               cursor: "w-resize",
             },
           }}

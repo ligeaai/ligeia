@@ -6,6 +6,7 @@ import os
 import pandas as pd
 from ast import literal_eval
 import json
+import uuid
 
 
 host = os.environ.get('Kafka_Host')
@@ -23,12 +24,14 @@ producer = KafkaProducer(bootstrap_servers=os.environ.get('Kafka_Host'),
 consumer.poll()
 def checkEvent(message):
     data = json.loads(message.value.decode('utf-8'))
+    key = uuid.uuid4().hex
+    key = key.encode('utf-8')
     if data.get('quality') > 66 or data.get('quality') < 65:
         alarms = {
             "LOG_TYPE":"ALARMS",
             "CONTENTS":data
         }
-        producer.send(os.environ.get('Kafka_Topic'),alarms)
+        producer.send(os.environ.get('Kafka_Topic'),value = alarms,key=key)
 for message in consumer:
     checkEvent(message)
 

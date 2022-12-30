@@ -1,7 +1,7 @@
 import * as React from "react";
 import PropTypes from "prop-types";
 import SwipeableViews from "react-swipeable-views";
-import DeleteIcon from "@mui/icons-material/Delete";
+import ClearIcon from "@mui/icons-material/Clear";
 import { useTheme } from "@mui/material/styles";
 import AppBar from "@mui/material/AppBar";
 import Tabs from "@mui/material/Tabs";
@@ -19,7 +19,10 @@ import {
   updateTabHeader,
   deleteTapHeader,
 } from "../../services/actions/overview/taps";
+import palette from "../../themes/palette";
 import { MyTextField } from "..";
+import { setConfirmation } from "../../services/reducers/confirmation";
+
 const TabPanel = (props) => {
   const { children, value, index, ...other } = props;
 
@@ -99,18 +102,26 @@ const MyTap = React.forwardRef(({ x, i, ...rest }, ref) => {
             setChangeText(true);
           }}
         />
-        <DeleteIcon
+        <ClearIcon
           fontSize="small"
           sx={{
             cursor: "pointer",
             display: iconIsActive ? "flex" : "none",
-            position: "absolute",
-            right: 0,
+
+            fill: "red",
           }}
           onClick={() => {
-            dispatch(deleteTapHeader(x));
+            dispatch(
+              setConfirmation({
+                title: "Are you sure you want to delete the dashboard?",
+                body: <>{x} will be deleted and will not come back</>,
+                agreefunction: () => {
+                  dispatch(deleteTapHeader(x));
+                },
+              })
+            );
           }}
-        ></DeleteIcon>
+        ></ClearIcon>
       </Box>
     );
   return (
@@ -125,6 +136,7 @@ const MyTap = React.forwardRef(({ x, i, ...rest }, ref) => {
   );
 });
 function MyTabs() {
+  console.log(palette());
   const ref = React.createRef();
   const dispatch = useDispatch();
   const [value, setValue] = React.useState(null);
@@ -147,6 +159,9 @@ function MyTabs() {
         ".react-swipeable-view-container": {
           height: "100%",
         },
+        "#myResponsiveGridLayout": {
+          backgroundColor: "background.main",
+        },
       }}
     >
       <AppBar position="static" color="default">
@@ -154,7 +169,7 @@ function MyTabs() {
           value={value}
           onChange={handleChange}
           aria-label="action tabs example"
-          sx={{ height: "48px" }}
+          sx={{ height: "48px", backgroundColor: "background.info" }}
         >
           {titles.map((x, i) => (
             <MyTap ref={ref} key={`${x}`} x={x} i={i}></MyTap>
@@ -201,6 +216,7 @@ function MyTabs() {
               index={i}
               key={i}
               sx={{
+                backgroundColor: "background.main",
                 height: "100%",
               }}
             >

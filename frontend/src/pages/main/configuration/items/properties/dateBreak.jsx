@@ -36,7 +36,7 @@ const DateBreak = ({ props }) => {
             sx={{
               textTransform: "capitalize",
               fontSize: "12px",
-              color: "text.primary",
+              color: "status.primary",
               pr: 1,
             }}
             disabled={props}
@@ -73,7 +73,7 @@ const DateBreak = ({ props }) => {
                           svg: {
                             fontSize: "medium",
                           },
-                          color: "text.primary",
+                          color: "icon.secondary",
                         },
                       },
                       Input: {

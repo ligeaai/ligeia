@@ -23,7 +23,7 @@ const Breadcrumbs = () => {
     >
       <HomeIcon
         fontSize="small"
-        sx={{ position: "relative", top: "3px", cursor: "pointer" }}
+        sx={{ position: "relative", top: "3px", cursor: "pointer", color: "icon.primary" }}
         onClick={() => {
           dispatch(setGoFunctionConfirmation(() => history.push("home")));
           dispatch(confirmationPushHistory());
@@ -40,7 +40,7 @@ const Breadcrumbs = () => {
             key={name}
             sx={{
               fontSize: "14px",
-              color: "#4B4B4B",
+              color: "status.secondary",
               cursor: "pointer",
               textTransform: "capitalize",
               fontWeight: "bold",
@@ -57,7 +57,7 @@ const Breadcrumbs = () => {
             }}
             sx={{
               fontSize: "14px",
-              color: "text.primary",
+              color: "status.primary",
               cursor: "pointer",
               textTransform: "capitalize",
             }}

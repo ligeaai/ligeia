@@ -12,4 +12,7 @@ modelApp = [
     "apps.layer",
     "apps.tags",
     "apps.notifications",
+    "apps.uom",
+    "apps.websocket",
+    "apps.uom_base_unit",
     ]

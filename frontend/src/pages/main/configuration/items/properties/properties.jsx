@@ -18,10 +18,10 @@ const Properties = () => {
           ? "calc(100vh - 60px - 40px )"
           : "calc(100vh - 60px - 50px - 36px - 26px )",
         "& .super-app-theme--cell": {
-          backgroundColor: grey[200],
+          backgroundColor: "background.info",
         },
         m: 0.5,
-        button: { color: "#4B4B4B" },
+        button: { color: "status.secondary" },
       }}
       Element={<DataGrid />}
     ></MyBox>

@@ -15,7 +15,7 @@ const RenderRow = (props) => {
     data,
     index,
     style,
-    selectFunc = () => {},
+    selectFunc = () => { },
     selectedIndex = -999,
     primaryText = "", //Specifies the path to reach the text in data
   } = props;
@@ -42,6 +42,7 @@ const RenderRow = (props) => {
           primary={`${data[index][primaryText]}`}
           sx={{
             span: {
+              color: "status.primary",
               fontSize: "14px",
               overflow: "hidden",
               whiteSpace: "nowrap",

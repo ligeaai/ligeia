@@ -13,6 +13,7 @@ const fabStyle = {
   position: "absolute",
   bottom: 16,
   left: 16,
+  backgroundColor: "icon.primary",
 };
 const MyFab = () => {
   return (

@@ -1,10 +1,10 @@
-import Highcharts from "highcharts";
+import Highcharts from "highcharts/highstock";
 import React from "react";
 import HighchartsReact from "highcharts-react-official";
+import exporting from "highcharts/modules/exporting";
 
-require("highcharts/modules/accessibility")(Highcharts);
-
-export const LineChart = (highchartProps) => {
+exporting(Highcharts);
+export const LineChart = (highchartProps, width, height) => {
   const [categories, setCategories] = React.useState([]);
   const [quality, setQuality] = React.useState([]);
   const [data, setData] = React.useState([]);
@@ -43,7 +43,7 @@ export const LineChart = (highchartProps) => {
       };
     };
   }, []);
-  return {
+  const options = {
     chart: {
       zoomBySingleTouch: true,
       zoomType: "x",
@@ -80,5 +80,26 @@ export const LineChart = (highchartProps) => {
         data: data,
       },
     ],
+    exporting: {
+      buttons: {
+        contextButton: {
+          enabled: true,
+        },
+      },
+    },
   };
+  return (
+    <HighchartsReact
+      highcharts={Highcharts}
+      options={{
+        ...options,
+        chart: {
+          ...options.chart,
+          width: width,
+          height: height,
+        },
+      }}
+      constructorType={"stockChart"}
+    />
+  );
 };

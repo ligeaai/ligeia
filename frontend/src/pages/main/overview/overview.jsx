@@ -53,7 +53,7 @@ const Overview = () => {
               height: "42px",
               display: "flex",
               alignItems: "center",
-              backgroundColor: "myTreeViewBg",
+              backgroundColor: "status.main",
               color: "text.primary",
               borderTopLeftRadius: "3px",
               borderTopRightRadius: "3px",
@@ -64,7 +64,7 @@ const Overview = () => {
             </Box>
           </Grid>
           <ItemSperatorLineXL />
-          {isActiveTabs ? <Tabs /> : <></>}
+          {isActiveTabs ? <Tabs /> : <Box sx={{ backgroundColor: "red" }} />}
           {/*<Grid item xs={12} sx={{ mt: 1, mr: 1 }}>
             <OverviewEditor />
           </Grid> */}

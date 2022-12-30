@@ -52,7 +52,7 @@ const Properties = ({ MyProperties, isLinkOpen = true, MyLinks }) => {
           paddingRight: "6px",
           my: 0.5,
           borderRight: "1.2px solid",
-          borderColor: "text.disabled",
+          borderColor: "text.primary",
           height: "100%",
         }}
       >
@@ -74,7 +74,7 @@ const Properties = ({ MyProperties, isLinkOpen = true, MyLinks }) => {
             <Typography
               variant="body2"
               sx={{
-                color: "#4B4B4B",
+                color: "text.primary",
                 writingMode: "vertical-rl",
                 WebkitTransform: "rotate(180deg)",
                 MozTransform: "rotate(180deg)",
@@ -105,7 +105,7 @@ const Properties = ({ MyProperties, isLinkOpen = true, MyLinks }) => {
             <Typography
               variant="body2"
               sx={{
-                color: "#4B4B4B",
+                color: "text.primary",
                 writingMode: "vertical-rl",
                 WebkitTransform: "rotate(180deg)",
                 MozTransform: "rotate(180deg)",
