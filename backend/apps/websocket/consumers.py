@@ -38,7 +38,7 @@ class WSConsumerBackfill(WebsocketConsumer):
 		env = environ.Env(DEBUG=(bool, False))
 		cassandra_host = "34.70.46.54"
 		cassandra_port = 9092
-
+		print('GİRDİ')
 		counter = prom.Counter('python_my_counter', 'This is my counter')
 		gauge = prom.Gauge('python_my_gauge', 'This is my gauge')
 		histogram = prom.Histogram('python_my_histogram', 'This is my histogram')
@@ -51,5 +51,4 @@ class WSConsumerBackfill(WebsocketConsumer):
 		session.row_factory = ordered_dict_factory
 		rows = session.execute('SELECT * FROM backfilldata')
 		for row in rows:
-			data = json.dumps(row)
-			self.send(json.dumps({'message':data}))
+			self.send(json.dumps({'message':row}))
