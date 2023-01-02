@@ -3,6 +3,8 @@ from time import sleep
 from channels.generic.websocket import WebsocketConsumer
 import redis
 import environ
+from channels.exceptions import StopConsumer
+
 env = environ.Env(DEBUG=(bool, False))
 
 
@@ -16,6 +18,9 @@ class WSConsumer(WebsocketConsumer):
 			data = data.decode('utf-8')
 			data = json.loads(data)
 			self.send(json.dumps({'message':data}))
+	
+	def disconnect():
+           raise StopConsumer
 
 
 
@@ -25,8 +30,6 @@ class WSConsumer(WebsocketConsumer):
 class WSConsumerBackfill(WebsocketConsumer):
 	def connect(self):
 		self.accept()
-
-
 		from cassandra.cluster import Cluster	
 		from cassandra.auth import PlainTextAuthProvider
 		from cassandra.query import ordered_dict_factory
@@ -40,3 +43,6 @@ class WSConsumerBackfill(WebsocketConsumer):
 		rows = session.execute('SELECT * FROM backfilldata')
 		for row in rows:
 			self.send(json.dumps({'message':row}))
+
+	def disconnect():
+           raise StopConsumer
