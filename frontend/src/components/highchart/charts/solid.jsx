@@ -9,7 +9,13 @@ exporting(Highcharts);
 highchartsMore(Highcharts);
 solidGauge(Highcharts);
 
-export const solid = (highchartProps, width, height) => {
+export const Solid = ({
+  highchartProps,
+  width,
+  height,
+  liveData,
+  backfillData,
+}) => {
   const options = {
     chart: {
       type: "solidgauge",
@@ -60,7 +66,7 @@ export const solid = (highchartProps, width, height) => {
       minorTickInterval: null,
       tickAmount: 2,
       title: {
-        y: -70,
+        y: 70,
       },
       labels: {
         y: 16,

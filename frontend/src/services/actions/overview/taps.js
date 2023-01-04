@@ -10,7 +10,7 @@ import {
 import { instance, config } from "../../couchApi";
 import { uuidv4 } from "../../utils/uuidGenerator";
 export const loadTapsOverview = () => async (dispatch, getState) => {
-    const linkId = getState().collapseMenu.selectedItem.LINK_ID
+    const linkId = getState().collapseMenu.selectedItem.TO_ITEM_ID
     try {
         let res = await instance
             .get(
@@ -68,7 +68,7 @@ export const deleteChart = (id, revId) => async (dispatch, getState) => {
     myData.data[selected].layouts.xxs.find((e, i) => e.i === id ? myData.data[selected].layouts.xxs.splice(i, 1) : null)
 
 
-    const selectedLink = getState().collapseMenu.selectedItem.LINK_ID
+    const selectedLink = getState().collapseMenu.selectedItem.TO_ITEM_ID
     // const tablinkBody = {
     //     ...myData, data: {
     //         ...myData.data, [selected]: [...myData.data[selected]]
@@ -107,7 +107,7 @@ function _newTapNameChoser(keys) {
 
 
 export const addNewTabItem = () => async (dispatch, getState) => {
-    const selectedLink = getState().collapseMenu.selectedItem.LINK_ID
+    const selectedLink = getState().collapseMenu.selectedItem.TO_ITEM_ID
 
     const resData = getState().tapsOverview.data
     const newTabName = _newTapNameChoser(Object.keys(resData.data))
@@ -150,7 +150,7 @@ const _checkHeader = (oldHeader, newHeader, keys) => {
 }
 
 export const updateTabHeader = (oldHeader, newHeader) => async (dispatch, getState) => {
-    const selectedLink = getState().collapseMenu.selectedItem.LINK_ID
+    const selectedLink = getState().collapseMenu.selectedItem.TO_ITEM_ID
     const resData = getState().tapsOverview.data
 
     if (_checkHeader(oldHeader, newHeader, Object.keys(resData.data))) {
@@ -198,7 +198,7 @@ function _deleteAllCharts(charts) {
 }
 
 export const deleteTapHeader = (header) => async (dispatch, getState) => {
-    const selectedLink = getState().collapseMenu.selectedItem.LINK_ID
+    const selectedLink = getState().collapseMenu.selectedItem.TO_ITEM_ID
     const resData = getState().tapsOverview.data
     const selected = getState().tapsOverview.selected
     const charts = resData.data[selected].widgets
@@ -262,7 +262,8 @@ export const updateChartLayout = (layout) => async (dispatch, getState) => {
 
 
 export const updateCouchDb = () => async (dispatch, getState) => {
-    const selectedLink = getState().collapseMenu.selectedItem.LINK_ID
+    console.log("lsaşkdlaskdlşaksldklşskşd");
+    const selectedLink = getState().collapseMenu.selectedItem.TO_ITEM_ID
     const resData = getState().tapsOverview.data
     const tablinkBody = {
         ...resData

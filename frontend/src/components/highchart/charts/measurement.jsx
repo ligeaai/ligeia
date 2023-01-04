@@ -2,15 +2,31 @@ import Highcharts from "highcharts";
 import React from "react";
 
 import Grid from "@mui/material/Grid";
+var client;
+var W3CWebSocket = require("websocket").w3cwebsocket;
 
-export const Measurement = ({ highchartProps, width, height }) => {
+export const Measurement = ({
+  highchartProps,
+  width,
+  height,
+  liveData,
+  backfillData,
+}) => {
   const [categories, setCategories] = React.useState("");
 
   const [data, setData] = React.useState("");
   React.useEffect(() => {
-    var W3CWebSocket = require("websocket").w3cwebsocket;
-
-    var client = new W3CWebSocket("ws://34.125.220.112:8000/ws/tags/");
+    if (client) {
+      console.log("kaslşdklşs");
+      setData([]);
+      setCategories([]);
+      client.onclose = function () {
+        console.log("WebSocket Client Closed");
+      };
+    }
+    if (backfillData) {
+      client = new W3CWebSocket("ws://34.125.220.112:8000/ws/tags/backfill/");
+    } else client = new W3CWebSocket("ws://34.125.220.112:8000/ws/tags/");
     client.onerror = function () {
       console.log("Connection Error");
     };
@@ -48,14 +64,14 @@ export const Measurement = ({ highchartProps, width, height }) => {
               setData((prev) => data.message.value);
             }
 
-            setTimeout(sendNumber, 5000);
+            //setTimeout(sendNumber, 5000);
             return data;
           }
         }
       }
       sendNumber();
     };
-  }, []);
+  }, [liveData, backfillData]);
   return (
     <Grid
       container

@@ -22,6 +22,7 @@ export const loadItemLinkSchema = () => async (dispatch, getState) => {
     const body = JSON.stringify({ TYPE, CULTURE });
     try {
         let res = await ItemLinkService.getLinkSchema(body, cancelToken);
+        console.log(res);
         let sortedRes = {}
 
         sortedRes["FROM_TYPE"] = res.data.FROM_TYPE.sort((a, b) =>

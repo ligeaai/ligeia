@@ -1,6 +1,7 @@
 import React from "react";
 import { TextField } from "@mui/material";
 const MyTextfield = (props) => {
+  console.log(props);
   const {
     handleChangeFunc = () => {},
     defaultValue = "",
@@ -14,6 +15,7 @@ const MyTextfield = (props) => {
     setValue(e.target.value);
     handleChangeFunc(e.target.value);
   };
+  console.log(defaultValue);
   React.useEffect(() => {
     setValue(defaultValue);
   }, [defaultValue]);

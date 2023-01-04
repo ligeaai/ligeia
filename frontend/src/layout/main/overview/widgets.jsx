@@ -1,6 +1,9 @@
 import React from "react";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
+import FormGroup from "@mui/material/FormGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Switch from "@mui/material/Switch";
 import { IconButton } from "@mui/material";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import SettingsIcon from "@mui/icons-material/Settings";
@@ -13,6 +16,8 @@ import UpdatePopUp from "./updatePopup";
 import "../../../assets/css/dashboard.css";
 const Widgets = React.forwardRef((props, ref) => {
   const { widget, style, className, children, ...rest } = props;
+  const [liveData, setLiveData] = React.useState(false);
+  const [backfill, setbackfill] = React.useState(true);
   const dispatch = useDispatch();
   const [highchartProps, setHighChartProps] = React.useState(null);
   const refresh = useSelector((state) => state.tapsOverview.refresh);
@@ -55,6 +60,36 @@ const Widgets = React.forwardRef((props, ref) => {
               </IconButton>
             </Grid>
             <Grid item>
+              <FormControlLabel
+                control={
+                  <Switch
+                    checked={liveData}
+                    onChange={() => {
+                      setLiveData((prev) => {
+                        setbackfill(prev);
+                        return !prev;
+                      });
+                    }}
+                  />
+                }
+                label="Live Data"
+              />
+              <FormControlLabel
+                control={
+                  <Switch
+                    checked={backfill}
+                    onChange={() => {
+                      setbackfill((prev) => {
+                        setLiveData(prev);
+                        return !prev;
+                      });
+                    }}
+                  />
+                }
+                label="Backfill Data"
+              />
+            </Grid>
+            <Grid item>
               <MyDialog
                 Button={
                   <IconButton>
@@ -73,6 +108,8 @@ const Widgets = React.forwardRef((props, ref) => {
             highchartProps={highchartProps}
             width={width}
             height={height}
+            liveData={liveData}
+            backfillData={backfill}
           ></MyHighchart>
         </Box>
         {children}

@@ -89,21 +89,23 @@ const MyStyledTreeItem = React.memo(({ myItems, path }) => {
           key={i}
           nodeId={`${uuidv4()}`}
           label={e.TO_ITEM_NAME}
-          onClick={() => {
+          onClick={async () => {
+            dispatch(updateCouchDb());
+            dispatch(await setSelectedCollapseMenu(e));
+            dispatch(loadTapsOverview());
             history.push(`/${path}/${e.TO_ITEM_NAME}`);
           }}
         >
-          <StyledTreeItem
+          {/* <StyledTreeItem
             sx={{ color: "status.primary" }}
             key={i}
             nodeId={`${uuidv4()}+1`}
             label={e.TO_ITEM_NAME}
             onClick={async () => {
-              dispatch(await setSelectedCollapseMenu(e));
-              dispatch(loadTapsOverview());
+             
               history.push(`/${path}/${e.TO_ITEM_NAME}`);
             }}
-          ></StyledTreeItem>
+          ></StyledTreeItem> */}
           <MyStyledTreeItem
             myItems={e.CHILD}
             path={`${path}/${e.TO_ITEM_NAME}`}
@@ -122,6 +124,7 @@ const MyStyledTreeItem = React.memo(({ myItems, path }) => {
         nodeId={`${uuidv4()}`}
         label={e.TO_ITEM_NAME}
         onClick={async () => {
+          dispatch(updateCouchDb());
           dispatch(await setSelectedCollapseMenu(e));
           dispatch(loadTapsOverview());
           history.push(`/${path}/${e.TO_ITEM_NAME}`);

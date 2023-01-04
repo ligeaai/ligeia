@@ -5,7 +5,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import Box from "@mui/material/Box";
 import { styled } from "@mui/material/styles";
-import { angular, LineChart, solid } from "./charts";
+import { Angular, LineChart, Solid } from "./charts";
 
 const MyBox = styled(Box)(({ theme }) => {
   return {
@@ -21,18 +21,44 @@ const MyBox = styled(Box)(({ theme }) => {
   };
 });
 
-const Highchart = ({ highchartProps, width, height }) => {
+const Highchart = ({
+  highchartProps,
+  width,
+  height,
+  liveData,
+  backfillData,
+}) => {
   const chartType = {
-    "Gauge(Angular)[Highchart]": angular,
-    Linechart: LineChart,
-    "Gauge(Solid)[Highchart]": solid,
+    "Gauge(Angular)[Highchart]": (
+      <Angular
+        highchartProps={highchartProps}
+        width={width}
+        height={height}
+        liveData={liveData}
+        backfillData={backfillData}
+      />
+    ),
+    Linechart: (
+      <LineChart
+        highchartProps={highchartProps}
+        width={width}
+        height={height}
+        liveData={liveData}
+        backfillData={backfillData}
+      />
+    ),
+    "Gauge(Solid)[Highchart]": (
+      <Solid
+        highchartProps={highchartProps}
+        width={width}
+        height={height}
+        liveData={liveData}
+        backfillData={backfillData}
+      />
+    ),
   };
 
-  return (
-    <MyBox>
-      {chartType[highchartProps.Type](highchartProps, width, height)}
-    </MyBox>
-  );
+  return <MyBox>{chartType[highchartProps.Type]}</MyBox>;
 };
 
 export default Highchart;

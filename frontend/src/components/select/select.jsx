@@ -25,6 +25,7 @@ export default function MySelect(props) {
   React.useEffect(() => {
     setSelectedItem(defaultValue);
   }, [defaultValue]);
+  console.log(values);
   return (
     <Box sx={{ minWidth: 125, width: "100%", display: "inline-block" }}>
       <FormControl fullWidth>

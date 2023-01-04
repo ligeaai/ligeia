@@ -17,7 +17,7 @@ import ItemLinkService from "../../api/itemLink"
 
 
 let cancelTokenLinks;
-export const fillProperties = async () => async (dispatch, getState) => {
+export const fillProperties = async (props) => async (dispatch, getState) => {
     //api call and fill the properties
     const selectedValue = getState().overviewDialog.selectedItem
     const selectedItem = getState().collapseMenu.selectedItem.TO_ITEM_ID
@@ -28,7 +28,7 @@ export const fillProperties = async () => async (dispatch, getState) => {
     try {
         let res = await instance
             .get(
-                `/highchartproperties/${selectedValue}`,
+                `/highchartproperties/${props}`,
                 config
             )
         console.log(res);
@@ -38,6 +38,7 @@ export const fillProperties = async () => async (dispatch, getState) => {
         console.log(itemLinkRes.data);
         let tags = itemLinkRes.data.TO_ITEM_ID.filter(e => e.FROM_ITEM_TYPE === "TAG_CACHE")
         console.log(tags);
+
         dispatch({
             type: SET_MEASUREMENT_DATA,
             payload: tags
@@ -46,22 +47,17 @@ export const fillProperties = async () => async (dispatch, getState) => {
             type: FILL_VALUES_OVERVIEW_DIALOG,
             payload: res.data.properties
         })
-        let highchartProp = []
-        res.data.properties.map(e => {
-            highchartProp.push(...e)
-        })
-
-        let highchartPropVal = {}
-        highchartProp.map(e => {
-            highchartPropVal[e.title] = ""
-        })
         dispatch({
             type: SET_HIGHCHART_PROPERTY_OVERVIEW_DIALOG,
-            payload: highchartPropVal
+            payload: res.data.properties
+        })
+        dispatch({
+            type: SET_SELECTED_ITEM_OVERVIEW_DIALOG,
+            payload: props
         })
         return Promise.resolve(res.data)
     } catch {
-
+        console.log("asdasd");
     }
 }
 
@@ -85,11 +81,7 @@ export const loadSelectItems = async () => async dispatch => {
 }
 
 export const changeSelectValue = async (payload) => async (dispatch) => {
-    dispatch({
-        type: SET_SELECTED_ITEM_OVERVIEW_DIALOG,
-        payload: payload
-    })
-    return Promise.resolve(dispatch(await fillProperties()))
+    return Promise.resolve(dispatch(await fillProperties(payload)))
 
 }
 
@@ -102,7 +94,7 @@ export const changeValeus = (key, value) => dispatch => {
 
 export const saveChart = () => async (dispatch, getState) => {
     const chartProps = getState().overviewDialog.highchartProps
-    const selectedLink = getState().collapseMenu.selectedItem.LINK_ID
+    const selectedLink = getState().collapseMenu.selectedItem.TO_ITEM_ID
     const selected = getState().tapsOverview.selected
     const selectedChartType = getState().overviewDialog.selectedItem
     const resData = getState().tapsOverview.data
@@ -180,4 +172,14 @@ export const saveChart = () => async (dispatch, getState) => {
     catch (err) { console.log(err); }
 }
 
-
+export const cleanStops = (key, value, titles) => (dispatch, getState) => {
+    const highchartProps = getState().overviewDialog.highchartProps
+    const stopsVal = getState().overviewDialog.highchartProps.Stops
+    for (let i = parseInt(stopsVal); i >= parseInt(value); i--) {
+        titles.map(e => {
+            console.log(highchartProps[`[${i}] ${e}`]);
+            delete highchartProps[`[${i}] ${e}`]
+        })
+    }
+    dispatch(changeValeus(key, value))
+}
