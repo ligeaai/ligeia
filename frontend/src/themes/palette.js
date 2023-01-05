@@ -25,6 +25,7 @@ const Palette = () => {
                 primary: "#607d8b", // card fancy color
                 main: "#676767", // selected item for light
                 secondary: "#e0e0e0", // drawer menu bacground
+                info: "#eeeeee",
 
             },
 
@@ -98,6 +99,7 @@ const Palette = () => {
                 primary: "#424242", // card fancy dark color
                 main: "#ffffff", //selected item for dark
                 secondary: "#424242", // drawer bg for dark
+                info: "#616161"
             },
 
             text: {

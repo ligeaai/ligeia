@@ -81,7 +81,7 @@ export default function TreeDataWithGap() {
         sx={{
           m: 0.5,
           "& .super-app-theme--cell": {
-            backgroundColor: grey[200],
+            backgroundColor: "success.info",
           },
 
           button: {
@@ -100,7 +100,7 @@ export default function TreeDataWithGap() {
               padding: "0px important",
             },
             "& .super-app-theme--cell": {
-              backgroundColor: grey[200],
+              backgroundColor: "success.info",
             },
             "& .MuiDataGrid-cellContent": { fontSize: "12px" },
             "& .MuiDataGrid-virtualScrollerRenderZone": {

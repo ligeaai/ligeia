@@ -42,7 +42,7 @@ const CodeList = ({ isHome }) => {
           myRes.push(e.LAYER_NAME);
         });
         setLayerValues(["NONE", ...myRes]);
-      } catch {}
+      } catch { }
     };
     myFunc();
   }, []);
@@ -91,7 +91,7 @@ const CodeList = ({ isHome }) => {
               height: "42px",
               display: "flex",
               alignItems: "center",
-              backgroundColor: "myTreeViewBg",
+              backgroundColor: "status.main",
               color: "text.primary",
               borderTopLeftRadius: "3px",
               borderTopRightRadius: "3px",

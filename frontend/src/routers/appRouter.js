@@ -23,6 +23,7 @@ import "react-resizable/css/styles.css";
 const Administration = Loadable(React.lazy(() => import("../pages/main/administration/main")));
 const Analytics = Loadable(React.lazy(() => import("../pages/main/asset/analytics")));
 const CodeList = Loadable(React.lazy(() => import("../pages/main/configuration/initialize/codelist/codelist")))
+const ResourceList = Loadable(React.lazy(() => import("../pages/main/configuration/initialize/resource/resourceList")))
 const Configuration = Loadable(React.lazy(() => import("../pages/main/configuration/main")))
 const ForgotPassword = Loadable(React.lazy(() => import("../pages/authorization/forgotPassword/forgotPassword")));
 const ForgotPasswordConfirm = Loadable(React.lazy(() => import("../pages/authorization/forgotPassword/forgotPasswordConfirm")));
@@ -59,6 +60,8 @@ const AppRouter1 = () => {
             <Route exact path="/configuration/tools/project" element={<Project isHome={true} />} />
             <Route exact path="/configuration/tools/code_list" element={<CodeList isHome={true} />} />
             <Route exact path="/configuration/tools/code_list/:codelist" element={<CodeList isHome={false} />} />
+            <Route exact path="/configuration/tools/resources" element={<ResourceList isHome={true} />} />
+            <Route exact path="/configuration/tools/resources/:resourceList" element={<ResourceList isHome={false} />} />
             <Route exact path="/configuration/:myKey/:type/:item" element={<Items isHome={false} />} />
             <Route path="/configuration/:myKey/:type" element={<Items isHome={true} />} />
           </Route>

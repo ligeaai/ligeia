@@ -21,10 +21,11 @@ import tags from "./tags/tags"
 import tapsOverview from "./overview/taps"
 import themeReducer from './themeReducer';
 import treeview from './treeview/treeview';
+import dataGridResourceList from './resource/resource';
 
 
 
 export {
     authReducer, confirmation, checkedList, collapseMenu, historyConfirmation, cssUserSelect, dataGridCodeList, dataGridType, drawerMenu, errorReducer, project, fullScreenReducer,
-    itemDataGrid, itemLinkEditor, langReducer, loaderReducer, overviewDialog, registerFormReducer, searchBarReducer, tags, tapsOverview, themeReducer, treeview
+    itemDataGrid, itemLinkEditor, langReducer, loaderReducer, overviewDialog, registerFormReducer, searchBarReducer, tags, tapsOverview, themeReducer, treeview, dataGridResourceList
 }
