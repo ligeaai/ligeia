@@ -8,21 +8,73 @@ var client;
 var W3CWebSocket = require("websocket").w3cwebsocket;
 exporting(Highcharts);
 exportdata(Highcharts);
+
 export const LineChart = ({
   highchartProps,
   width,
   height,
   liveData,
   backfillData,
+  tabular,
 }) => {
+  Highcharts.addEvent(Highcharts.Chart, "render", function () {
+    var table = this.dataTableDiv;
+    if (table) {
+      // Apply styles inline because stylesheets are not passed to the exported SVG
+      Highcharts.css(table.querySelector("table"), {
+        "border-collapse": "collapse",
+        "border-spacing": 0,
+        background: "white",
+        "min-width": "100%",
+        "font-family": "sans-serif",
+        "font-size": "14px",
+        overflow: "scrol",
+      });
+
+      [].forEach.call(
+        table.querySelectorAll("td, th, caption"),
+        function (elem) {
+          Highcharts.css(elem, {
+            border: "1px solid silver",
+            padding: "0.5em",
+          });
+        }
+      );
+
+      Highcharts.css(table.querySelector("caption"), {
+        "border-bottom": "none",
+        "font-size": "1.1em",
+        "font-weight": "bold",
+      });
+
+      [].forEach.call(
+        table.querySelectorAll("caption, tr"),
+        function (elem, i) {
+          if (i % 2) {
+            Highcharts.css(elem, {
+              background: "#f8f8f8",
+            });
+          }
+        }
+      );
+
+      // Add the table as the subtitle to make it part of the export
+      this.setTitle(null, {
+        text: table.innerHTML,
+        useHTML: true,
+      });
+      if (table.parentNode) {
+        table.parentNode.removeChild(table);
+      }
+      delete this.dataTableDiv;
+    }
+  });
   console.log(liveData);
   console.log(backfillData);
   const [categories, setCategories] = React.useState([]);
-  const [quality, setQuality] = React.useState([]);
   const [data, setData] = React.useState([]);
   React.useEffect(() => {
     if (client) {
-      setQuality([]);
       setData([]);
       client.onclose = function () {
         console.log("WebSocket Client Closed");
@@ -39,6 +91,7 @@ export const LineChart = ({
     };
 
     client.onmessage = function (e) {
+      console.log(e);
       function sendNumber() {
         if (client.readyState === client.OPEN) {
           if (typeof e.data === "string") {
@@ -46,10 +99,7 @@ export const LineChart = ({
             console.log(jsonData);
             if (Object.keys(jsonData.message).length > 5) {
               setCategories((prev) => [...prev, jsonData.message.createdtime]);
-              setQuality((prev) => [
-                ...prev,
-                parseInt(jsonData.message.quality),
-              ]);
+
               setData((prev) => [...prev, parseInt(jsonData.message.value)]);
             }
 
@@ -127,45 +177,43 @@ export const LineChart = ({
     },
     series: [
       {
-        name: "Quality",
-        data: quality,
-      },
-      {
         name: "Value",
         data: data,
       },
     ],
     exporting: {
-      menuItemDefinitions: {
-        // Custom definition
-        toggleTable: {
-          onclick: function () {
-            if (
-              this.dataTableDiv &&
-              this.dataTableDiv.style.display !== "none"
-            ) {
-              this.dataTableDiv.style.display = "none";
-            } else {
-              this.viewData();
-              this.dataTableDiv.style.display = "";
-            }
-          },
-          text: "Toggle Table",
-        },
-      },
+      showTable: true,
+      allowHTML: true,
     },
   };
   return (
     <Box
       sx={{
-        zIndex: 99999,
-        Table: {
-          backgroundColor: "#ffffff",
-          zIndex: 99999,
-          overflow: "hidden",
-          position: "relative",
-          bottom: height,
-          maxHeight: `${height}px`,
+        ".highcharts-subtitle": {
+          height: tabular ? `calc(${height}px - 25px)` : "0px",
+          overflow: "scroll",
+        },
+        table: {
+          display: tabular ? "block" : "none",
+          // backgroundColor: "#ffffff",
+          // overflow: "scroll",
+          // height: `${height}px`,
+
+          // position: "sticky",
+          // marginTop: "40px",
+          // bottom: height,
+          // width: `${width}px`,
+          // table: {
+          //   width: `calc(${width}px - 20px)`,
+          //   ".highcharts-table-caption": {
+          //     display: "none",
+
+          //     backgroundColor: "#ffffff",
+          //   },
+          // },
+        },
+        svg: {
+          display: tabular ? "none" : "block",
         },
       }}
     >

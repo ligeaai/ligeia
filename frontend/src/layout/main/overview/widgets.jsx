@@ -17,6 +17,7 @@ import "../../../assets/css/dashboard.css";
 const Widgets = React.forwardRef((props, ref) => {
   const { widget, style, className, children, ...rest } = props;
   const [liveData, setLiveData] = React.useState(false);
+  const [tabular, setTabular] = React.useState(false);
   const [backfill, setbackfill] = React.useState(true);
   const dispatch = useDispatch();
   const [highchartProps, setHighChartProps] = React.useState(null);
@@ -59,7 +60,27 @@ const Widgets = React.forwardRef((props, ref) => {
                 <DeleteForeverIcon />
               </IconButton>
             </Grid>
-            <Grid item>
+
+            <Grid
+              item
+              sx={{
+                display: highchartProps.Type === "Linechart" ? "flex" : "none",
+              }}
+            >
+              <FormControlLabel
+                control={
+                  <Switch
+                    checked={tabular}
+                    onChange={() => {
+                      setTabular((prev) => {
+                        setTabular(prev);
+                        return !prev;
+                      });
+                    }}
+                  />
+                }
+                label="Tabular View"
+              />
               <FormControlLabel
                 control={
                   <Switch
@@ -72,7 +93,7 @@ const Widgets = React.forwardRef((props, ref) => {
                     }}
                   />
                 }
-                label="Live Data"
+                label="Live"
               />
               <FormControlLabel
                 control={
@@ -86,7 +107,7 @@ const Widgets = React.forwardRef((props, ref) => {
                     }}
                   />
                 }
-                label="Backfill Data"
+                label="Backfill"
               />
             </Grid>
             <Grid item>
@@ -110,6 +131,7 @@ const Widgets = React.forwardRef((props, ref) => {
             height={height}
             liveData={liveData}
             backfillData={backfill}
+            tabular={tabular}
           ></MyHighchart>
         </Box>
         {children}

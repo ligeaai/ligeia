@@ -8,6 +8,7 @@ const OverviewEditor = ({
   height,
   liveData,
   backfillData,
+  tabular,
 }) => {
   if (highchartProps.Type === "Measurement") {
     return (
@@ -28,6 +29,7 @@ const OverviewEditor = ({
         height={height}
         liveData={liveData}
         backfillData={backfillData}
+        tabular={tabular}
       />
     );
   }

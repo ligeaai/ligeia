@@ -9,13 +9,7 @@ exporting(Highcharts);
 highchartsMore(Highcharts);
 solidGauge(Highcharts);
 
-export const Solid = ({
-  highchartProps,
-  width,
-  height,
-  liveData,
-  backfillData,
-}) => {
+export const Solid = ({ highchartProps, width, height }) => {
   const options = {
     chart: {
       type: "solidgauge",

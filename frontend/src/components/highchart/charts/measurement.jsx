@@ -5,28 +5,12 @@ import Grid from "@mui/material/Grid";
 var client;
 var W3CWebSocket = require("websocket").w3cwebsocket;
 
-export const Measurement = ({
-  highchartProps,
-  width,
-  height,
-  liveData,
-  backfillData,
-}) => {
+export const Measurement = ({ highchartProps, width, height }) => {
   const [categories, setCategories] = React.useState("");
 
   const [data, setData] = React.useState("");
   React.useEffect(() => {
-    if (client) {
-      console.log("kaslşdklşs");
-      setData([]);
-      setCategories([]);
-      client.onclose = function () {
-        console.log("WebSocket Client Closed");
-      };
-    }
-    if (backfillData) {
-      client = new W3CWebSocket("ws://34.125.220.112:8000/ws/tags/backfill/");
-    } else client = new W3CWebSocket("ws://34.125.220.112:8000/ws/tags/");
+    client = new W3CWebSocket("ws://34.125.220.112:8000/ws/tags/");
     client.onerror = function () {
       console.log("Connection Error");
     };
@@ -71,7 +55,7 @@ export const Measurement = ({
       }
       sendNumber();
     };
-  }, [liveData, backfillData]);
+  }, []);
   return (
     <Grid
       container

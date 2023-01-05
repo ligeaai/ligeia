@@ -4,13 +4,7 @@ import React from "react";
 import exporting from "highcharts/modules/exporting";
 
 exporting(Highcharts);
-export const Angular = ({
-  highchartProps,
-  width,
-  height,
-  liveData,
-  backfillData,
-}) => {
+export const Angular = ({ highchartProps, width, height }) => {
   const options = {
     chart: {
       type: "gauge",

@@ -27,16 +27,11 @@ const Highchart = ({
   height,
   liveData,
   backfillData,
+  tabular,
 }) => {
   const chartType = {
     "Gauge(Angular)[Highchart]": (
-      <Angular
-        highchartProps={highchartProps}
-        width={width}
-        height={height}
-        liveData={liveData}
-        backfillData={backfillData}
-      />
+      <Angular highchartProps={highchartProps} width={width} height={height} />
     ),
     Linechart: (
       <LineChart
@@ -45,16 +40,11 @@ const Highchart = ({
         height={height}
         liveData={liveData}
         backfillData={backfillData}
+        tabular={tabular}
       />
     ),
     "Gauge(Solid)[Highchart]": (
-      <Solid
-        highchartProps={highchartProps}
-        width={width}
-        height={height}
-        liveData={liveData}
-        backfillData={backfillData}
-      />
+      <Solid highchartProps={highchartProps} width={width} height={height} />
     ),
   };
 
