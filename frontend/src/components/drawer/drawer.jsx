@@ -2,10 +2,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { Box } from "@mui/material";
-// import {
-//   mouseEnterDrawer,
-//   mouseLeaveDrawer,
-// } from "../../services/actions/drawerMenu/drawerMenu";
+
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
 import App from "./app";
 import { ComponentError, ComponentErrorBody } from "../index";
@@ -21,24 +18,12 @@ const Drawer = () => {
   }, [isAuth]);
   return (
     <Box
-      // onMouseEnter={() => dispatch(mouseEnterDrawer())}
-      // onMouseLeave={() => dispatch(mouseLeaveDrawer())}
       sx={{
         minWidth: isOpen ? "248px" : "68px",
         minHeight: "calc(100vh - 60px - 8px)",
         height: "500px",
-        overflowY: "auto",
-        "&::-webkit-scrollbar": {
-          width: "0.2em",
-        },
-        "&::-webkit-scrollbar-track": {
-          boxShadow: "inset 0 0 6px rgba(0,0,0,0.00)",
-          webkitBoxShadow: "inset 0 0 6px rgba(0,0,0,0.00)",
-        },
-        "&::-webkit-scrollbar-thumb": {
-          backgroundColor: "rgba(0,0,0,.1)",
-          outline: "1px solid rgba(0,0,0,.3)",
-        },
+        overflow: "hidden",
+
         width: "min-content",
         typography: {
           xs: {
@@ -46,9 +31,6 @@ const Drawer = () => {
           },
           sm: { display: "inline-block" },
         },
-        paddingTop: "8px",
-        paddingBottom: "8px",
-        paddingX: "6px",
         mt: 0.5,
         ml: 0.5,
         boxShadow: 3,
@@ -56,20 +38,41 @@ const Drawer = () => {
         backgroundColor: "success.secondary",
       }}
     >
-      <ComponentError
-        errMsg={
-          <ComponentErrorBody
-            text="Something went wrong"
-            icon={<ErrorOutlineIcon />}
-          />
-        }
+      <Box
+        sx={{
+          width: "100%",
+          height: "100%",
+          overflow: "auto",
+          "&::-webkit-scrollbar": {
+            width: "0.25em",
+          },
+          "&::-webkit-scrollbar-track": {
+            boxShadow: "inset 0 0 6px rgba(0,0,0,0.00)",
+            webkitBoxShadow: "inset 0 0 6px rgba(0,0,0,0.00)",
+          },
+          "&::-webkit-scrollbar-thumb": {
+            backgroundColor: "rgba(0,0,0,.2)",
+          },
+          paddingTop: "8px",
+          paddingBottom: "8px",
+          paddingX: "6px",
+        }}
       >
-        {navItems ? (
-          <App menu={navItems} />
-        ) : (
-          <LoadingComponent></LoadingComponent>
-        )}
-      </ComponentError>
+        <ComponentError
+          errMsg={
+            <ComponentErrorBody
+              text="Something went wrong"
+              icon={<ErrorOutlineIcon />}
+            />
+          }
+        >
+          {navItems ? (
+            <App menu={navItems} />
+          ) : (
+            <LoadingComponent></LoadingComponent>
+          )}
+        </ComponentError>
+      </Box>
     </Box>
   );
 };
