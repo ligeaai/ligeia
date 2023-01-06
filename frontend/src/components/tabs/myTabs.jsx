@@ -55,7 +55,7 @@ function a11yProps(index) {
 }
 let value = "";
 
-const MyTap = React.forwardRef(({ x, i, ...rest }, ref) => {
+const MyTap = React.forwardRef(({ x, i, handleChange, ...rest }, ref) => {
   const [changeText, setChangeText] = React.useState(false);
   const dispatch = useDispatch();
   const onChange = (e) => {
@@ -110,6 +110,7 @@ const MyTap = React.forwardRef(({ x, i, ...rest }, ref) => {
                 body: <>{x} will be deleted and will not come back</>,
                 agreefunction: () => {
                   dispatch(deleteTapHeader(x));
+                  handleChange(0);
                 },
               })
             );
@@ -138,14 +139,12 @@ function MyTabs() {
   const isFullScreen = useSelector((state) => state.fullScreen.isFullScreen);
   const handleChange = (event, newValue) => {
     setValue(newValue);
+    dispatch(selectTab(Object.keys(widgets)[newValue]));
   };
   const handleChangeIndex = (index) => {
     setValue(index);
   };
-  React.useEffect(() => {
-    console.log(widgets[Object.keys(widgets)[value]]);
-    dispatch(selectTab(Object.keys(widgets)[value]));
-  }, [value]);
+
   return (
     <Box
       sx={{
@@ -168,7 +167,13 @@ function MyTabs() {
           sx={{ height: "48px", backgroundColor: "background.info" }}
         >
           {titles.map((x, i) => (
-            <MyTap ref={ref} key={`${x}`} x={x} i={i}></MyTap>
+            <MyTap
+              ref={ref}
+              key={`${x}`}
+              x={x}
+              i={i}
+              handleChange={handleChange}
+            ></MyTap>
           ))}
           <Grid
             key={`a`}

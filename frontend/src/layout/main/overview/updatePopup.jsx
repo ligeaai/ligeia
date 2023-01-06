@@ -20,10 +20,10 @@ const DialogContent = ({ highchartProps, chartId, ...rest }) => {
 
   const body = {
     Linechart: <LinechartPopUp highchartProps={highchartProps} {...rest} />,
-    "Gauge(Angular)[Highchart]": (
+    "Gauge(Angular) [Highchart]": (
       <AngularPopUp highchartProps={highchartProps} {...rest} />
     ),
-    "Gauge(Solid)[Highchart]": (
+    "Gauge(Solid) [Highchart]": (
       <SolidPopUp highchartProps={highchartProps} {...rest} />
     ),
     Measurement: <MeasurementPopUp highchartProps={highchartProps} {...rest} />,

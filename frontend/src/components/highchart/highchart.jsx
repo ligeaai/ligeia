@@ -30,7 +30,7 @@ const Highchart = ({
   tabular,
 }) => {
   const chartType = {
-    "Gauge(Angular)[Highchart]": (
+    "Gauge(Angular) [Highchart]": (
       <Angular highchartProps={highchartProps} width={width} height={height} />
     ),
     Linechart: (
@@ -43,7 +43,7 @@ const Highchart = ({
         tabular={tabular}
       />
     ),
-    "Gauge(Solid)[Highchart]": (
+    "Gauge(Solid) [Highchart]": (
       <Solid highchartProps={highchartProps} width={width} height={height} />
     ),
   };

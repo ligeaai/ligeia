@@ -32,11 +32,11 @@ const DialogContent = ({ handleClose }) => {
     Linechart: (
       <LinechartPopUp highchartProps={properties} handleClose={handleClose} />
     ),
-    "Gauge(Angular)[Highchart]": (
+    "Gauge(Angular) [Highchart]": (
       <AngularPopUp highchartProps={properties} handleClose={handleClose} />
     ),
 
-    "Gauge(Solid)[Highchart]": (
+    "Gauge(Solid) [Highchart]": (
       <SolidPopUp highchartProps={properties} handleClose={handleClose} />
     ),
     Measurement: (
@@ -46,7 +46,7 @@ const DialogContent = ({ handleClose }) => {
   React.useEffect(() => {
     async function myFunc() {
       await dispatch(await loadSelectItems());
-      dispatch(await fillProperties("Gauge(Angular)[Highchart]"));
+      dispatch(await fillProperties("Gauge(Angular) [Highchart]"));
     }
     myFunc();
   }, []);

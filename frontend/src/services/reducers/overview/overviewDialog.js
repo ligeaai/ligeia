@@ -10,8 +10,8 @@ import {
 
 
 const initialState = {
-    selectItems: ["Gauge(Angular)[Highchart]"],
-    selectedItem: "Gauge(Angular)[Highchart]",
+    selectItems: ["Gauge(Angular) [Highchart]"],
+    selectedItem: "Gauge(Angular) [Highchart]",
     values: {
         "Name": "",
         "Name Font Size(em)": "",
@@ -20,7 +20,7 @@ const initialState = {
         "Widget Refresh (seconds)": "",
         "Decimal Places": "",
         "Stops": "",
-        "Type": "Gauge(Angular)[Highchart]"
+        "Type": "Gauge(Angular) [Highchart]"
     },
 
     highchartProps: {
@@ -31,7 +31,7 @@ const initialState = {
         "Widget Refresh (seconds)": "",
         "Decimal Places": "",
         "Stops": "",
-        "Type": "Gauge(Angular)[Highchart]"
+        "Type": "Gauge(Angular) [Highchart]"
     },
     measuremenetData: []
 
