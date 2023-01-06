@@ -93,7 +93,7 @@ export const selectTreeViewItem = (index, breadcrumbPath) => async (dispatch, ge
                 payload: { selectedIndex: -2 }
             });
             dispatch(setGoFunctionConfirmation(() => { }));
-            myHistoryPush(3, "new")
+            myHistoryPush(2, "new")
         } else {
             if (index < 0) {
                 index = filteredMenuLength - 1
@@ -111,7 +111,7 @@ export const selectTreeViewItem = (index, breadcrumbPath) => async (dispatch, ge
             dispatch({
                 type: CLEAN_AFTER_SAVE,
             })
-            myHistoryPush(3, payload[breadcrumbPath].toLowerCase())
+            myHistoryPush(2, payload[breadcrumbPath].toLowerCase())
         }
     }
     dispatch(setGoFunctionConfirmation(goFunction))

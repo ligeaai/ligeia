@@ -69,8 +69,8 @@ const SingleLevel = ({ item, url }) => {
           sx={{
             color:
               item.SHORT_LABEL === selectedItem
-                ? "text.main"  //iconun seçili hali
-                : "text.primary",  // iconun rengi
+                ? "text.main" //iconun seçili hali
+                : "text.primary", // iconun rengi
           }}
         />
       ) : (
@@ -83,7 +83,7 @@ const SingleLevel = ({ item, url }) => {
           pl: 0.5,
           display: isOpen ? "inline-block" : "none",
           color:
-            item.SHORT_LABEL === selectedItem ? "text.main" : "text.primary", //textin rengi 
+            item.SHORT_LABEL === selectedItem ? "text.main" : "text.primary", //textin rengi
           overflow: "hidden",
           whiteSpace: "nowrap",
           textOverflow: "ellipsis",
@@ -117,7 +117,7 @@ const MultiLevel = ({ item, url }) => {
     //dispatch(setSelectedDrawerItem(item.SHORT_LABEL));
     //   history.push(`${item.URL}`);
   };
-
+  console.log(Icon);
   return (
     <React.Fragment>
       <ListItem
@@ -204,7 +204,7 @@ const MultiLevel = ({ item, url }) => {
         in={open}
         timeout="auto"
         unmountOnExit
-      // style={{ marginLeft: "10px" }}
+        // style={{ marginLeft: "10px" }}
       >
         <List component="div" disablePadding>
           {Object.keys(children).map((child, key) => (
