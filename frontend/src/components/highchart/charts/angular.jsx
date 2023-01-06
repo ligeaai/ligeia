@@ -4,7 +4,38 @@ import React from "react";
 import exporting from "highcharts/modules/exporting";
 
 exporting(Highcharts);
+var client;
+var W3CWebSocket = require("websocket").w3cwebsocket;
+
 export const Angular = ({ highchartProps, width, height }) => {
+  const [categories, setCategories] = React.useState("");
+  const [value, setValue] = React.useState("");
+  React.useEffect(() => {
+    client = new W3CWebSocket("ws://34.125.220.112:8000/ws/tags/");
+    client.onerror = function () {
+      console.log("Connection Error");
+    };
+    client.onopen = function () {
+      console.log("WebSocket Client Connected");
+    };
+
+    client.onmessage = function (e) {
+      function sendNumber() {
+        if (client.readyState === client.OPEN) {
+          if (typeof e.data === "string") {
+            let data = JSON.parse(e.data);
+            if (data.message.value) {
+              setCategories((prev) => data.message.createdtime);
+              setValue((prev) => data.message.value);
+            }
+            //setTimeout(sendNumber, 5000);
+            return data;
+          }
+        }
+      }
+      sendNumber();
+    };
+  }, []);
   const options = {
     chart: {
       type: "gauge",
@@ -87,8 +118,16 @@ export const Angular = ({ highchartProps, width, height }) => {
 
     series: [
       {
-        name: "Speed",
-        data: [80],
+        name: "Value",
+        data: [
+          parseFloat(
+            parseFloat(value).toFixed(
+              highchartProps["Decimal Places"] === ""
+                ? 3
+                : highchartProps["Decimal Places"]
+            )
+          ),
+        ],
         tooltip: {
           valueSuffix: " km/h",
         },

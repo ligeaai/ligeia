@@ -21,6 +21,77 @@ import {
 } from "../..";
 import { changeValeus } from "../../../services/actions/overview/overviewDialog";
 
+import TagService from "../../../services/api/tags";
+const MinMaxSelection = (props) => {
+  const { highchartProps, name } = props;
+
+  const dispatch = useDispatch();
+  const minimum = useSelector(
+    (state) => state.overviewDialog.highchartProps[`${name} Y-Axis Minimum`]
+  );
+  const maximum = useSelector(
+    (state) => state.overviewDialog.highchartProps[`${name} Y-Axis Maximum`]
+  );
+  const handleChangeFunc = (key, val) => {
+    dispatch(changeValeus(key, val));
+  };
+  return (
+    <Grid item xs={12}>
+      <Grid container>
+        <Grid itme xs={12} sm={6} md={3}>
+          <Grid container>
+            <Grid item xs={12}>
+              Y-Axis Minimum
+            </Grid>
+            <Grid item xs={12}>
+              <MyNumberTextField
+                defaultValue={minimum}
+                handleChangeFunc={(value) => {
+                  handleChangeFunc(`${name} Y-Axis Minimum`, value);
+                }}
+              />
+            </Grid>
+          </Grid>
+        </Grid>
+        <Grid itme xs={12} sm={6} md={3}>
+          <Grid container>
+            <Grid item xs={12}>
+              Y-Axis Maximum
+            </Grid>
+            <Grid item xs={12}>
+              <MyNumberTextField
+                defaultValue={maximum}
+                handleChangeFunc={(value) => {
+                  handleChangeFunc(`${name} Y-Axis Maximum`, value);
+                }}
+              />
+            </Grid>
+          </Grid>
+        </Grid>
+      </Grid>
+    </Grid>
+  );
+};
+
+const YAxis = (props) => {
+  const Inputs = useSelector(
+    (state) => state.overviewDialog.highchartProps.Inputs
+  );
+  return Inputs.map((e, i) => {
+    return (
+      <React.Fragment key={i}>
+        <Grid item xs={12}>
+          {e.FROM_ITEM_ID}
+        </Grid>
+        <MinMaxSelection
+          highchartProps={props.highchartProps}
+          name={e.FROM_ITEM_ID}
+        />
+      </React.Fragment>
+    );
+  });
+};
+
 const ColorPicker = () => {
   const dispatch = useDispatch();
   const Inputs = useSelector(
@@ -33,7 +104,7 @@ const ColorPicker = () => {
     dispatch(changeValeus(key, val));
   };
   return Inputs.map((e, i) => (
-    <Grid container>
+    <Grid container key={i}>
       <Grid item xs={12}>
         Input,{e.FROM_ITEM_ID}
       </Grid>
@@ -46,9 +117,9 @@ const ColorPicker = () => {
               </Grid>
               <Grid item xs={12}>
                 <ColorTextfield
-                  defaultValue={highchartProps[`[${e}] Color`]}
+                  defaultValue={highchartProps[`[${e.FROM_ITEM_ID}] Color`]}
                   handleChangeFunc={(value) => {
-                    handleChangeFunc(`[${e}] Color`, value);
+                    handleChangeFunc(`[${e.FROM_ITEM_ID}] Color`, value);
                   }}
                 />
               </Grid>
@@ -61,9 +132,14 @@ const ColorPicker = () => {
               </Grid>
               <Grid item xs={12}>
                 <MyCheckBox
-                  defaultValue={highchartProps[`[${e}] Disable Data Grouping`]}
+                  defaultValue={
+                    highchartProps[`[${e.FROM_ITEM_ID}] Disable Data Grouping`]
+                  }
                   handleChangeFunc={(value) => {
-                    handleChangeFunc(`[${e}] Disable Data Grouping`, value);
+                    handleChangeFunc(
+                      `[${e.FROM_ITEM_ID}] Disable Data Grouping`,
+                      value
+                    );
                   }}
                 />
               </Grid>
@@ -84,8 +160,8 @@ function intersection(a, b) {
 }
 
 const Inputs = (props) => {
+  const dispatch = useDispatch();
   const { handleChangeFunc } = props;
-  console.log(props);
   const tags = useSelector((state) => state.overviewDialog.measuremenetData);
   const [checked, setChecked] = React.useState([]);
   const [left, setLeft] = React.useState(
@@ -98,7 +174,6 @@ const Inputs = (props) => {
       props.defaultValue.some((a) => a.FROM_ITEM_ID === e.FROM_ITEM_ID)
     )
   );
-
   const leftChecked = intersection(checked, left);
   const rightChecked = intersection(checked, right);
 
@@ -115,6 +190,26 @@ const Inputs = (props) => {
   };
 
   const handleAllRight = () => {
+    left.map(async (e) => {
+      try {
+        console.log(e);
+        const body = JSON.stringify({ TAG_ID: e.FROM_ITEM_ID });
+        let res = await TagService.getTagItemS(body);
+        console.log(res);
+        dispatch(
+          changeValeus(
+            `${e.FROM_ITEM_ID} Y-Axis Minimum`,
+            res.data[0].NORMAL_MINIMUM
+          )
+        );
+        dispatch(
+          changeValeus(
+            `${e.FROM_ITEM_ID} Y-Axis Maximum`,
+            res.data[0].NORMAL_MAXIMUM
+          )
+        );
+      } catch {}
+    });
     setRight(right.concat(left));
     setLeft([]);
     handleChangeFunc(right.concat(left));
@@ -578,178 +673,7 @@ const Linechart = (props) => {
       </Grid>
       <Grid item xs={12}>
         <Grid container>
-          <Grid item xs={12}>
-            CPU Load (Proc.)
-          </Grid>
-          <Grid item xs={12}>
-            <Grid container>
-              <Grid itme xs={12} sm={6} md={3}>
-                <Grid container>
-                  <Grid item xs={12}>
-                    Y-Axis Minimum
-                  </Grid>
-                  <Grid item xs={12}>
-                    <MyNumberTextField
-                      defaultValue={
-                        highchartProps["CPU Load (Proc.) Y-Axis Minimum"]
-                      }
-                      handleChangeFunc={(value) => {
-                        handleChangeFunc(
-                          "CPU Load (Proc.) Y-Axis Minimum",
-                          value
-                        );
-                      }}
-                    />
-                  </Grid>
-                </Grid>
-              </Grid>
-              <Grid itme xs={12} sm={6} md={3}>
-                <Grid container>
-                  <Grid item xs={12}>
-                    Y-Axis Maximum
-                  </Grid>
-                  <Grid item xs={12}>
-                    <MyNumberTextField
-                      defaultValue={
-                        highchartProps["CPU Load (Proc.) Y-Axis Maximum"]
-                      }
-                      handleChangeFunc={(value) => {
-                        handleChangeFunc(
-                          "CPU Load (Proc.) Y-Axis Maximum",
-                          value
-                        );
-                      }}
-                    />
-                  </Grid>
-                </Grid>
-              </Grid>
-            </Grid>
-          </Grid>
-
-          <Grid item xs={12}>
-            Megabyte (MB)
-          </Grid>
-          <Grid item xs={12}>
-            <Grid container>
-              <Grid itme xs={12} sm={6} md={3}>
-                <Grid container>
-                  <Grid item xs={12}>
-                    Y-Axis Minimum
-                  </Grid>
-                  <Grid item xs={12}>
-                    <MyNumberTextField
-                      defaultValue={
-                        highchartProps["Megabyte (MB) Y-Axis Minimum"]
-                      }
-                      handleChangeFunc={(value) => {
-                        handleChangeFunc(
-                          "Megabyte (MB)) Y-Axis Minimum",
-                          value
-                        );
-                      }}
-                    />
-                  </Grid>
-                </Grid>
-              </Grid>
-              <Grid itme xs={12} sm={6} md={3}>
-                <Grid container>
-                  <Grid item xs={12}>
-                    Y-Axis Maximum
-                  </Grid>
-                  <Grid item xs={12}>
-                    <MyNumberTextField
-                      defaultValue={
-                        highchartProps["Megabyte (MB) Y-Axis Maximum"]
-                      }
-                      handleChangeFunc={(value) => {
-                        handleChangeFunc("Megabyte (MB) Y-Axis Maximum", value);
-                      }}
-                    />
-                  </Grid>
-                </Grid>
-              </Grid>
-            </Grid>
-          </Grid>
-
-          <Grid item xs={12}>
-            Unitless
-          </Grid>
-          <Grid item xs={12}>
-            <Grid container>
-              <Grid itme xs={12} sm={6} md={3}>
-                <Grid container>
-                  <Grid item xs={12}>
-                    Y-Axis Minimum
-                  </Grid>
-                  <Grid item xs={12}>
-                    <MyNumberTextField
-                      defaultValue={highchartProps["Unitless Y-Axis Minimum"]}
-                      handleChangeFunc={(value) => {
-                        handleChangeFunc("Unitless Y-Axis Minimum", value);
-                      }}
-                    />
-                  </Grid>
-                </Grid>
-              </Grid>
-              <Grid itme xs={12} sm={6} md={3}>
-                <Grid container>
-                  <Grid item xs={12}>
-                    Y-Axis Maximum
-                  </Grid>
-                  <Grid item xs={12}>
-                    <MyNumberTextField
-                      defaultValue={highchartProps["Unitless Y-Axis Maximum"]}
-                      handleChangeFunc={(value) => {
-                        handleChangeFunc("Unitless Y-Axis Maximum", value);
-                      }}
-                    />
-                  </Grid>
-                </Grid>
-              </Grid>
-            </Grid>
-          </Grid>
-
-          <Grid item xs={12}>
-            Celcius (C)
-          </Grid>
-          <Grid item xs={12}>
-            <Grid container>
-              <Grid itme xs={12} sm={6} md={3}>
-                <Grid container>
-                  <Grid item xs={12}>
-                    Y-Axis Minimum
-                  </Grid>
-                  <Grid item xs={12}>
-                    <MyNumberTextField
-                      defaultValue={
-                        highchartProps["Celcius (C) Y-Axis Minimum"]
-                      }
-                      handleChangeFunc={(value) => {
-                        handleChangeFunc("Celcius (C) Y-Axis Minimum", value);
-                      }}
-                    />
-                  </Grid>
-                </Grid>
-              </Grid>
-              <Grid itme xs={12} sm={6} md={3}>
-                <Grid container>
-                  <Grid item xs={12}>
-                    Y-Axis Maximum
-                  </Grid>
-                  <Grid item xs={12}>
-                    <MyNumberTextField
-                      defaultValue={
-                        highchartProps["Celcius (C) Y-Axis Maximum"]
-                      }
-                      handleChangeFunc={(value) => {
-                        handleChangeFunc("Celcius (C) Y-Axis Maximum", value);
-                      }}
-                    />
-                  </Grid>
-                </Grid>
-              </Grid>
-            </Grid>
-          </Grid>
+          <YAxis highchartProps={highchartProps} />
         </Grid>
       </Grid>
     </Grid>

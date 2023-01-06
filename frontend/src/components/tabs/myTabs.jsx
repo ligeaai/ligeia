@@ -22,6 +22,7 @@ import {
 import palette from "../../themes/palette";
 import { MyTextField } from "..";
 import { setConfirmation } from "../../services/reducers/confirmation";
+import { Button } from "@mui/material";
 
 const TabPanel = (props) => {
   const { children, value, index, ...other } = props;
@@ -56,7 +57,6 @@ let value = "";
 
 const MyTap = React.forwardRef(({ x, i, ...rest }, ref) => {
   const [changeText, setChangeText] = React.useState(false);
-  const [iconIsActive, setIconIsActive] = React.useState(false);
   const dispatch = useDispatch();
   const onChange = (e) => {
     value = e;
@@ -83,8 +83,6 @@ const MyTap = React.forwardRef(({ x, i, ...rest }, ref) => {
           alignItems: "center",
           position: "relative",
         }}
-        onMouseEnter={() => setIconIsActive(true)}
-        onMouseLeave={() => setIconIsActive(false)}
       >
         <Tab
           ref={ref}
@@ -95,9 +93,6 @@ const MyTap = React.forwardRef(({ x, i, ...rest }, ref) => {
             maxWidth: "150px",
             textTransform: "capitalize",
           }}
-          onClick={() => {
-            dispatch(selectTab(x));
-          }}
           onDoubleClick={() => {
             setChangeText(true);
           }}
@@ -106,8 +101,6 @@ const MyTap = React.forwardRef(({ x, i, ...rest }, ref) => {
           fontSize="small"
           sx={{
             cursor: "pointer",
-            display: iconIsActive ? "flex" : "none",
-
             fill: "red",
           }}
           onClick={() => {
@@ -149,7 +142,10 @@ function MyTabs() {
   const handleChangeIndex = (index) => {
     setValue(index);
   };
-
+  React.useEffect(() => {
+    console.log(widgets[Object.keys(widgets)[value]]);
+    dispatch(selectTab(Object.keys(widgets)[value]));
+  }, [value]);
   return (
     <Box
       sx={{

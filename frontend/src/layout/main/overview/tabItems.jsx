@@ -35,18 +35,28 @@ const TabItems = (props) => {
   const dispatch = useDispatch();
   const [breakpoint, setBreakpoint] = React.useState(setBreakPoint());
   const { widgetname } = props;
+  console.log(widgetname);
   const onResize = React.useCallback(() => {
     if (refLayout.current) {
       setWidth(document.getElementById("myResponsiveGridLayout").offsetWidth);
       setBreakpoint(setBreakPoint());
     }
   }, []);
-  const widgets = useSelector(
-    (state) => state.tapsOverview.widgets[widgetname].widgets
-  );
-  const layouts = useSelector(
-    (state) => state.tapsOverview.widgets[widgetname].layouts
-  );
+  const widgets = useSelector((state) => {
+    try {
+      return state.tapsOverview.widgets[widgetname].widgets;
+    } catch {
+      console.log("sadad");
+      return [];
+    }
+  });
+  const layouts = useSelector((state) => {
+    try {
+      return state.tapsOverview.widgets[widgetname].layouts;
+    } catch {
+      return [];
+    }
+  });
   const ref = React.createRef();
   const handleBreakPointChange = (breakpoint) => {
     setBreakpoint(breakpoint);

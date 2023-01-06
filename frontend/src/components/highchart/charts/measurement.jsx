@@ -17,37 +17,17 @@ export const Measurement = ({ highchartProps, width, height }) => {
     client.onopen = function () {
       console.log("WebSocket Client Connected");
     };
-    let list = [
-      "24",
-      "9",
-      "1",
-      "4",
-      "5",
-      "12",
-      "10",
-      "11",
-      "14",
-      "8",
-      "3",
-      "12",
-      "54",
-      "7",
-    ];
 
     client.onmessage = function (e) {
       function sendNumber() {
         if (client.readyState === client.OPEN) {
           if (typeof e.data === "string") {
             let data = JSON.parse(e.data);
-            if (
-              Object.keys(data.message).length > 5 &&
-              list[Math.floor(Math.random() * list.length)] === data.message.id
-            ) {
+            if (data.message.value) {
               setCategories((prev) => data.message.createdtime);
 
               setData((prev) => data.message.value);
             }
-
             //setTimeout(sendNumber, 5000);
             return data;
           }
@@ -81,7 +61,13 @@ export const Measurement = ({ highchartProps, width, height }) => {
       </Grid>
 
       <Grid item xs={12} sx={{ textAlign: "center" }}>
-        {data}
+        {parseFloat(
+          parseFloat(data).toFixed(
+            highchartProps["Decimal Places"] === ""
+              ? 3
+              : highchartProps["Decimal Places"]
+          )
+        )}
       </Grid>
       <Grid
         xs={12}

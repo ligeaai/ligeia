@@ -195,22 +195,6 @@ export const LineChart = ({
         },
         table: {
           display: tabular ? "block" : "none",
-          // backgroundColor: "#ffffff",
-          // overflow: "scroll",
-          // height: `${height}px`,
-
-          // position: "sticky",
-          // marginTop: "40px",
-          // bottom: height,
-          // width: `${width}px`,
-          // table: {
-          //   width: `calc(${width}px - 20px)`,
-          //   ".highcharts-table-caption": {
-          //     display: "none",
-
-          //     backgroundColor: "#ffffff",
-          //   },
-          // },
         },
         svg: {
           display: tabular ? "none" : "block",

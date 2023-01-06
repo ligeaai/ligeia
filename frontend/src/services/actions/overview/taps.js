@@ -200,14 +200,14 @@ function _deleteAllCharts(charts) {
 export const deleteTapHeader = (header) => async (dispatch, getState) => {
     const selectedLink = getState().collapseMenu.selectedItem.TO_ITEM_ID
     const resData = getState().tapsOverview.data
-    const selected = getState().tapsOverview.selected
-    const charts = resData.data[selected].widgets
+    const charts = resData.data[header].widgets
     delete resData.data[header]
     const tablinkBody = {
         ...resData, data: {
             ...resData.data
         }
     }
+    console.log("lşkaslşdklşaskdlşaskdşlaksdlşkasşldklaşsdklşaskdlş");
     try {
         await instance
             .put(
