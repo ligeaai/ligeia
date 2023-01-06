@@ -58,6 +58,7 @@ const DrawerMenu = (props) => {
   return (
     <Box
       sx={{
+        backgroundColor: "status.main",
         position: "relative",
         width: `${leftMenuWidth}px`,
         height: "100%",
@@ -70,7 +71,6 @@ const DrawerMenu = (props) => {
       <Grid
         container
         sx={{
-          backgroundColor: "status.main",
           borderRadius: "5px",
         }}
       >
