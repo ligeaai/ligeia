@@ -53,6 +53,7 @@ const Drawer = () => {
         ml: 0.5,
         boxShadow: 3,
         borderRadius: "3px",
+        backgroundColor: "success.secondary",
       }}
     >
       <ComponentError

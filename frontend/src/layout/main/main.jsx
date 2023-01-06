@@ -34,13 +34,12 @@ const Main = (props) => {
     </React.Fragment>
   ) : (
     <React.Fragment>
-      <Box>
+      <Box sx={{ backgroundColor: "background.main" }}>
         <Header delSearchBar={delSearchBar} />
         <Grid container sx={{ flexWrap: "nowrap" }}>
           <Grid
             item
             sx={{
-              backgroundColor: "success.secondary",
               zIndex: 2,
               typography: {
                 xs: {

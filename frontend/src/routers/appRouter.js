@@ -88,7 +88,7 @@ const AppRouter = () => {
   const cssUserSelect = useSelector((state) => state.cssUserSelect.userSelect);
   return (
     <HistoryRouter history={history}>
-      <Box sx={{ userSelect: cssUserSelect ? "none" : "text", backgroundColor: "background.main" }}>
+      <Box sx={{ userSelect: cssUserSelect ? "none" : "text" }}>
         <ErrorMessage Element={AppRouter1} />
         <Confirmation />
         <HistoryConfirmation />
