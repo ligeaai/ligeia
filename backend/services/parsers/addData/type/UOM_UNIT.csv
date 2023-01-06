@@ -1,0 +1,1130 @@
+A,B,C,D,UOM_NAME,ROW_ID,RESULT
+0,0.000006283185307,1,0,microhertz,,
+0,1,86400,0,per day
+0,1,1,0,per degree Celsius
+0,9,5,0,per degree Fahrenheit
+0,9,5,0,per degree Rankine
+0,1,0.3048,0,per foot
+0,1,0.09290304,0,per square foot
+0,1,0.02831685,0,per cubic foot
+0,1000,1,0,per gram
+0,1,0.00456092,0,per UK gallon
+0,1,0.003785412,0,per US gallon
+0,1,3600,0,per hour
+0,1,0.0254,0,per inch
+0,1,1000000,0,per square kilometre
+0,0.001,1,0,per kilopascal
+0,1000,1,0,per litre
+0,1,4.448.222,0,per pound force
+0,1,0.4535924,0,per pound
+0,1,1.609.344,0,per mile
+0,1,2589988.11,0,per square mile
+0,1,60,0,per minute
+0,1000,1,0,per millimetre
+0,1000000000,1,0,per nanometre
+0,1E+12,1,0,per pico pascal
+0,1,6.894.757,0,per pounds/square inch
+0,1,0.006894757,0,per micro pounds per square inch
+0,1000000,1,0,per microvolt
+0,1,604800,0,per week
+0,1,0.9144,0,per yard
+0,28.316.846.592,1,0,thousand cubic feet
+0,28.316.846.592,0.1589873,0,thousand cubic feet per barrel
+0,2.831.685,86400,0,thousand cubic feet per day
+0,9.290.304,86400,0,thousand cubic feet per day per foot
+0,2.831.685,595707004.8,0,thousand cubic feet per day per psi
+0,1000,86400,0,thousand cubic metres per day
+0,1000,86400,0,thousand cubic meter per day per meter
+0,1000,3600,0,thousand cubic metres per hour
+0,1000,3600,0,thousand cubic meters per hour per meter
+0,1000,86400,0,thousand (cubic meter per day)-meter
+0,3,15582E+12,1,0,100000 years
+0,10000,1,0,ten thousand kilograms per cubic metre
+0,31558150,1,0,annum
+0,3600,1,0,Ampere hour
+0,10000,1,0,ampere per square centimeter
+0,1,0.09290304,0,ampere per square foot
+0,1000,1,0,Ampere/millimetre
+0,1000000,1,0,Ampere/square millimetre
+0,4.046.873,1,0,acre
+0,1.233.489,1,0,acre foot
+0,1.233.489,158987.3,0,acre feet/million stbs, 60 deg F
+0,1,00E-21,1,0,attogram
+0,1,00E-18,1,0,attojoule
+0,0.0000000001,1,0,Angstrom
+0,98066.5,1,0,Technical atmosphere
+0,101325,1,0,Atmosphere
+0,101325,0.3048,0,Atmospheres per ft
+0,101325,3600,0,atmosphere per hour
+0,101325,100,0,Atmospheres per hundred metre
+0,101325,1,0,Atmospheres/metre
+0,1,00E+28,1,0,barn
+0,1,00E+34,1,0,barns/cubic centimetre
+0,0.00006023,1,0,barns/electron
+0,100000,1,0,bar
+0,100000,3600,0,bar per hour
+0,100,1,0,bar per kilometer
+0,100000,1,0,bar per meter
+0,10000000000,1,0,bar squared
+0,1.E+13,1,0,bar squared per centipoise
+0,0.1589873,1,0,barrel
+0,0.01,1,0,barrel per hundred barrel
+0,0.1589873,4.046.879,0,barrels/acre
+0,0.1589873,1.233.489,0,barrel/acre foot
+0,1,1,0,barrel/barrel
+0,0.1589873,595707,0,barrels/centiPoise day psi
+0,0.1589873,86400,0,barrel/day
+0,0.1589873,106573450,0,barrels/day acre foot
+0,0.1589873,26334.72,0,barrels/day foot
+0,0.000000000266888418,0.3048,0,barrels/day foot pounds/sq in
+0,0.000000000266888418,1,0,barrel/day pounds/square inch
+0,0.0000000000212978,1,0,barrels/day per day
+0,0.1589873,0.3048,0,barrel/foot
+0,0.1589873,0.02831685,0,barrel per cubic foot
+0,0.1589873,3600,0,barrel/hour
+0,0.1589873,12960000,0,barrels/hour/hour
+0,0.1589873,0.0254,0,barrel/inch
+0,0.1589873,2.831.685,0,barrel per thousand cubic feet
+0,0.1589873,86400000,0,barrel per day per kilopascal
+0,0.1589873,28316.85,0,barrel per million cubic feet
+0,0.1589873,1.609.344,0,barrel/mile
+0,0.1589873,60,0,barrel per minute
+0,0.1589873,28.262.357,0,barrels/million std cubic feet, 60 degF
+0,0.1589873,595707004.8,0,barrel per day per psi
+0,1,1,0,barrels/stock tank barrel, 60 deg F
+0,1.564.763,1,0,barrel per U.K. ton
+0,1.752.535,1,0,barrel per U.S. ton
+0,28316850,1,0,billion cubic feet
+0,1,8,0,bit
+0,1.055.056,1,0,British thermal unit
+0,0.1442279,1,0,Btus/hour foot squared deg F per inch
+0,293071.1,1,0,million Btus/hour
+0,1.055.056,0.1589873,0,British thermal units/barrel
+0,0.0003930148,1,0,Btus/brake-horsepower hour
+0,37258.95,1,0,British thermal units/cubic foot
+0,232080,1,0,British thermal units/U.K. gallon
+0,278716.3,1,0,British thermal units/U.S. gallon
+0,0.2930711,1,0,British thermal unit/hour
+0,1.730.735,1,0,British thermal units/hour foot deg F
+0,3.154.591,1,0,Btus/hour per square foot
+0,5.678.263,1,0,Btus/hour foot squared deg F
+0,5.678.263,1,0,Btus/hour foot squared deg R
+0,1.034.971,1,0,British thermal units/hour cubic foot
+0,1.862.947,1,0,Btus/hour foot cubed deg F
+0,0.2930711,1,0,Btus/hour metre squared deg C
+0,2326,1,0,British thermal units/pound mass
+0,4186.8,1,0,British thermal units/pound mass deg F
+0,4186.8,1,0,British thermal units/pound mass deg R
+0,1.758.427,1,0,British thermal units/minute
+0,2.326,1,0,British thermal units/pound mass mol
+0,2326,1,0,British thermal units/pound mass mol
+0,41.868,1,0,Btus/pound mass mol deg F
+0,4186.8,1,0,Btus/pound mass mol deg F
+0,1.055.056,1,0,British thermal units/second
+0,11356.53,1,0,British thermal units/second square foot
+0,20441.75,1,0,Btus/second per square foot deg F
+0,37258.95,1,0,Btus/second per cubic foot
+0,67066.11,1,0,Btus/second per cubic foot deg F
+0,6.283.185.307,1,0,cycle
+0,1,0.0001,0,Coulombs/square centimetre
+0,1,0.000001,0,Coulombs/cubic centimeter
+0,1000,1,0,coulomb per gram
+0,1,0.000001,0,Coulombs/square millimetre
+0,1,0.000000001,0,Coulombs/cubic millimetre
+0,6.283.185.307,1,0,cycles/second
+0,4.184,1,0,calorie
+0,4.184,0.000001,0,calories/cubic centimetre
+0,4184,1,0,calories/gram
+0,4184,1,0,calories/gram degree Kelvin
+0,0.1162222,1,0,calories/hour centimetre degree Celsius
+0,1.162.222,1,0,calories/hour centimetre squared
+0,1.162.222,1,0,calories/hour square centimetre deg C
+0,1.162.222,1,0,calories/hour cubic centimetre
+0,4.184,1,0,calories/kilogram
+0,9.224.141,1,0,calories/pound mass
+0,4184000,1,0,calories/milliliter
+0,4.184,0.000000001,0,calories/cubic millimetre
+0,4.184,1,0,calories/gram mol degree celsius
+0,4184,1,0,calories/gram mol degree celsius
+0,418.4,1,0,calories/second centimetre deg C
+0,41840,1,0,calories/second square centimetre deg C
+0,4184000,1,0,calories/second cubic centimetre
+0,31.415.926.535.898,2000000,0,centesimal second
+0,0.01,1,0,centiEuclid
+0,31.415.926.535.898,20000,0,centesimal minute
+0,735.499,1,0,ch
+0,2647796,1,0,ch hours
+0,201.167.824,1,0,Benoit chain (1895 A)
+0,792,39.370.113,0,Benoit chain (1895 B)
+0,2.011.661.949,1,0,Clarke chain
+0,792,39.370.147,0,Sears chain
+0,1.899.101,1,0,chus
+0,792,39.37,0,US Survey chain
+0,37000000000,1,0,curie
+0,0.01,1,0,centimetre
+0,0.01,31558150,0,centimeter per year
+0,0.01,1,0,centimetre/second
+0,0.01,1,0,centimetre/second squared
+0,0.0001,1,0,square centimetre
+0,0.1,1,0,centimetres squared/gram
+0,0.0001,1,0,centimetres squared/second
+0,0.000001,1,0,cubic centimetre
+0,0.000001,1800,0,cubic centimeter per thirty minutes
+0,1,1,0,cubic centimeters/ cubic centimetres
+0,0.001,1,0,cubic centimetres/gram
+0,0.000001,3600,0,cubic centimeter per hour
+0,0.000001,1,0,cubic centimetre/cubic metre
+0,0.000001,60,0,cubic centimeter per minute
+0,0.000001,1,0,cubic centimeter per second
+0,0.00000001,1,0,centimetres fourth
+0,980.638,1,0,cm of water at 4 degC.
+0,0.001,1,0,centipoise
+0,0.01,1,0,ten milli second
+0,0.000001,1,0,centiStoke
+0,0.0002,1,0,carat
+0,0.1,1,0,capture unit
+0,0.02831685,1,0,cubic feet
+0,0.00001638706,1,0,cubic inch
+0,0.7645549,1,0,cubic yard
+0,4168182000,1,0,cubic mile
+0,37000000000,1,0,curie
+0,735.499,1,0,cheval vapeur
+0,2647796,1,0,CV hours
+0,5.080.235,1,0,UK hundredweight
+0,4.535.924,1,0,US hundredweight
+0,0.000000000000986923,1,0,darcy
+0,86400,1,0,day
+0,0.0000000000003008141,1,0,darcy foot
+0,0.000000000000986923,1,0,darcy metre
+0,86400,0.1589873,0,day per barrel
+0,86400,0.028316846592,0,days/cubic foot
+0,86400,28.316.846.592,0,day per thousand cubic feet
+0,86400,1,0,days/cubic metre
+0,10,1,0,decanewtons
+0,10,1,0,decanewton metres
+141500,0,131.5,1,API gravity
+0,0.1,1,0,decibel
+0,0.1,0.3048,0,decibels/foot
+0,0.1,1,0,decibels/metre
+0,0.0001,1,0,decibels/kilometre
+0,0.1,1,0,decibels/octave
+0,1,1,0,change in degrees Celsius
+0,5,9,0,change in degrees Fahrenheit
+0,1,1,0,change in degrees Kelvin
+0,5,9,0,change in degrees Rankine
+0,0.01745329,1,0,degree of an angle
+0,0.01745329,30.48,0,degrees of an angle/100 feet
+0,0.01745329,9.144,0,degrees of an angle per thirty feet
+0,0.01745329,30,0,degrees of an angle/30 metres
+0,0.01745329,0.3048,0,degrees of an angle/foot
+0,0.01745329,30.48,0,degrees of an angle/100 feet
+0,0.01745329,3600,0,degrees of an angle per hour
+0,0.01745329,1,0,degrees of an angle/metre
+0,0.01745329,30,0,degrees of an angle/30 metres
+0,0.01745329,60,0,degrees of an angle/minute
+0,0.01745329,1,0,degrees of an angle per second
+273.15,1,1,0,degrees Celsius
+0,0.8604208,1,0,degrees C square metres hours/kilocal
+0,0.01,1,0,degrees Celsius per hundred metre
+0,1,0.3048,0,degrees Celsius per foot
+0,1,3600,0,degrees Celsius per hour
+0,0.001,1,0,degrees Celsius/kilometre
+0,1,1,0,degrees Celsius/metre
+0,1,60,0,degrees Celsius per minute
+0,1,1,0,degrees Celsius per second
+2298.35,5,9,0,degree Fahrenheit
+0,0.1761102,1,0,degrees F square feet hours/Btu
+0,0.01822689,1,0,degrees Fahrenheit/100 feet.
+0,1.822.689,1,0,degrees Fahrenheit/foot
+0,0.01822689,1,0,degrees Fahrenheit/100 feet.
+0,5,32400,0,degrees Fahrenheit per hour
+0,5,9,0,degrees Fahrenheit per meter
+0,5,540,0,degrees Fahrenheit per minute
+0,5,9,0,degrees Fahrenheit per second
+0,5,9,0,degrees Rankine
+0,0.1,1,0,decimetre
+0,0.1,1,0,decimeter per second
+0,0.001,1,0,cubic decimetre
+0,0.00000001,1,0,cubic decimetres/100 kilometres
+0,0.001,1,0,cubic decimetres/kilogram
+0,0.00000001,1,0,cubic decimetres/100 kilometres
+0,0.0000000002777778,1,0,cubic decimetres/kilowatt hour
+0,0.001,1,0,cubic decimetres/metre
+0,0.001,1,0,cubic decimetres/cubic metre
+0,0.000000001,1,0,cubic decimetres/megajoule
+0,0.000001,1,0,cubic decimetres/kilogram mole
+0,0.001,1,0,cubic decimetres/kilogram mole
+0,0.001,1,0,cubic decimetres/second
+0,0.001,1,0,cubic decimetres/second/second
+0,0.000001,1,0,cubic decimetres/ton
+0,0.1,1,0,decinewton metres
+0,0.00001,1,0,dynes
+0,0.000000001,1,0,dyne centimetre squared
+0,0.1,1,0,dyne seconds/square centimetre
+0,0.001,1,0,dynes/centimetre
+0,0.1,1,0,dynes/square centimetre
+0,0.001,1,0,dynes/centimetre fourth/gram cm cubed
+0,1,1,0,newton/metre fourth/kilogram metre cubed
+0,746,1,0,electric horsepower
+0,1,00E+18,1,0,exajoule
+0,31687540000,1,0,exajoules/year
+0,1000,1,0,equivalents/ Liter
+0,0.0000001,1,0,ergs
+0,0.0000001,31558150,0,ergs/year
+0,0.001,1,0,ergs/square centimetre
+0,0.1,1,0,ergs/cubic centimetre
+0,0.0001,1,0,ergs/gram
+0,0.0000001,1,0,ergs/kilogram
+0,0.0000001,1,0,ergs/cubic metre
+0,1,60E-13,1,0,electron volts
+0,18.288,1,0,fathoms
+0,1,00E-15,1,0,femtocoulomb
+0,0.00002841308,1,0,UK fluid ounce
+0,0.00002957353,1,0,US fluid ounces
+0,1,1,0,flops
+0,0.00002841308,1,0,UK fluid ounce
+0,0.00002957353,1,0,US fluid ounces
+0,1,00E-15,1,0,femtometer
+0,1.076.391,1,0,footcandles
+0,1.076.391,1,0,footcandle seconds
+0,0.3048,1,0,foot
+0,1.355.818,1,0,foot pounds force
+0,1.355.818,0.1589873,0,foot pounds force/barrel
+0,3.581.692,1,0,foot pounds force/US gallon
+0,1.355.818,0.4535924,0,foot pounds force/pound mass
+0,0.02259697,1,0,foot pounds force/minute
+0,1.355.818,1,0,foot pounds force/second
+0,0.1382549,1,0,foot-pound mass
+0,0.01,1,0,feet per 100 feet
+0,1.917.134,1,0,feet/barrel
+0,0.3048,86400,0,feet/day
+0,0.54864,1,0,feet/degree Fahrenheit
+0,1,1,0,feet per feet
+0,1.076.391,1,0,feet/cubic foot
+0,8.051.964,1,0,feet/US gallon
+0,0.3048,3600,0,feet/hour
+0,12,1,0,feet/inch
+0,0.3048,1,0,feet/metre
+0,1,5280,0,feet/mile
+0,0.3048,60,0,feet/minute
+0,304.8,1,0,foot per millisecond
+0,0.3048,1,0,feet/second
+0,0.3048,1,0,feet/second squared
+0,304800,1,0,foot per microsecond
+0,0.09290304,1,0,square foot
+0,0.09290304,3600,0,square feet/hour
+0,5.669.291,1,0,square feet/cubic inch
+0,0.09290304,1,0,square feet/second
+0,0.02831685,1,0,cubic feet
+0,0.0011953,1,0,cubic feet at standard conditions
+0,0.02831685,0.1589873,0,cubic feet/barrel
+0,0.02831685,86400,0,cubic feet/day
+0,0.09290304,5957067005,0,cubic feet/day foot psi
+0,0.02831685,7464960000,0,cubic feet/day/day
+0,0.09290304,1,0,cubic feet/foot
+0,1,1,0,cubic feet/cubic foot
+0,0.02831685,3600,0,cubic feet/hour
+0,0.02831685,12960000,0,cubic feet/hour/hour
+0,0.02831685,1,0,cubic feet per kilogram
+0,0.06242796,1,0,cubic feet/pound mass
+0,0.02831685,60,0,cubic feet/minute
+0,0.3048,60,0,cubic feet/min square foot
+0,0.02831685,3600,0,cubic feet/minute/minute
+0,0.00006242796,1,0,cubic feet/mole (pound mass)
+0,0.06242796,1,0,cubic feet/mole (pound mass)
+0,0.02831685,1,0,cubic feet/second
+0,0.3048,1,0,cubic feet/second square foot
+0,0.02831685,1,0,cubic feet/second/second
+0,0.02831685,4.263.769,0,cubic feet per 94 pound sack
+0,1,1,0,cubic feet/std cubic foot, 60 deg F
+0,0.9143992,3,0,British Foot (Benoit 1895 A)
+0,12,39.370.113,0,British Foot (Benoit 1895 B)
+0,0.9144025,3,0,British Foot 1865
+0,0.304797265,1,0,Imperial Foot
+0,6378300,20926201,0,Gold Coast Foot
+0,12,39.370.142,0,Indian Foot
+0,0.30479841,1,0,Indian Foot, 1937
+0,0.3047996,1,0,Indian Foot, 1962
+0,0.3047995,1,0,Indian Foot, 1975
+0,0.304812253,1,0,Modified American Foot
+0,12,39.370.147,0,Sears Foot
+0,12,39.37,0,US Survey Foot
+0,0.001,1,0,gram
+0,0.0003048,0.000001,0,gram feet/cubic centimetre second
+0,1000,1,0,grams/cubic centimetre
+0,100000,1,0,grams/centimetre fourth
+0,1,1,0,grams/cubic decimetre
+0,0.2199692,1,0,grams/UK gallon
+0,0.264172,1,0,grams/US gallon
+0,0.001,1,0,grams/kilogram
+0,1,1,0,grams/litre
+0,0.001,1,0,grams/cubic metre
+0,0.001,1,0,grams/second
+0,3,16E+22,1,0,gigayears
+0,0.01,1,0,galileo
+0,0.003785412,4.263.769,0,US gallons/94 lb sack
+0,0.004546092,1,0,UK gallon
+0,0.004549092,86400,0,UK gallons per day
+0,0.1605437,1,0,UK gallons/cubic foot
+0,0.004549092,3600,0,UK gallons/hour
+0,0.000004143055,1,0,UK gallons/hour foot
+0,0.0000135927,1,0,UK gallons/hour square foot
+0,0.00004971667,1,0,UK gallons/hour inch
+0,0.001957349,1,0,UK gallons/hour square inch
+0,0.004546092,12960000,0,UK gallons/hour/hour
+0,0.001,1,0,UK gallons per thousand UK gallons
+0,0.01002242,1,0,UK gallons/pound mass
+0,0.00002859406,1,0,UK gallons/1000 barrels
+0,0.004546092,1.609.344,0,UK gallons/mile
+0,0.004549092,60,0,UK gallons/minute
+0,0.0002485333,1,0,UK gallons/minute foot
+0,0.0008155621,1,0,UK gallons/minute square foot
+0,0.004546092,3600,0,UK gallons/minute/minute
+0,0.003785412,1,0,US gallons
+0,0.002380952381,1,0,US gallons per ten barrels
+0,0.02380952381,1,0,US gallons/barrels
+0,0.003785412,86400,0,US gallons per day
+0,0.003785412,0.3048,0,US gallons/foot
+0,0.1336806,1,0,US gallons/cubic foot
+0,0.003785412,3600,0,US gallons/hour
+0,0.000003449814,1,0,US gallons/foot hour
+0,0.00001131829,1,0,US gallons/hour square foot
+0,0.00004139776,1,0,US gallons/hour inch
+0,0.001629833,1,0,US gallons/hour square inch
+0,0.003785412,12960000,0,US gallons/hour/hour
+0,0.001,1,0,US gallons per thousand US gallons
+0,0.008345404,1,0,US gallons/pound mass
+0,0.00002380952,1,0,US gallons/1000 barrels
+0,0.003785412,1.609.344,0,US gallons/mile
+0,0.003785412,60,0,US gallons/minute
+0,0.0002069888,1,0,US gallons/minute foot
+0,0.0006790972,1,0,US gallons/minute square foot
+0,0.003785412,3600,0,US gallons/minute/minute
+0,0.003785412,28.262.357,0,US gals/1000 std cubic feet, 60 deg F
+0,0.003785412,4.263.769,0,US gallons/94 lb sack
+0,0.000003725627,1,0,US gallons/UK ton
+0,0.000004172702,1,0,US gallons/US ton
+0,0.0007957747,1,0,gamma
+0,0.0001,1,0,gauss
+0,1000000000,1,0,gigabecquerel
+0,0.000000000160219,1,0,billions of electron volts
+0,0.00980665,1,0,gram force
+0,6283185307,1,0,gigahertz
+0,1000000000,1,0,gigajoule
+0,980.665,1,0,gravity
+0,1000000000,1,0,gigaohm
+0,0.015707963268,1,0,gons
+0,1000000000,1,0,gigapascal
+0,1E+11,1,0,gigapascal per centimeter
+0,1,00E+18,1,0,gigapascal squared
+0,0.015707963268,1,0,grad
+0,1000000000,1,0,gigaradian
+0,0.00006479891,1,0,grain
+0,0.00002288352,1,0,grains/100 cubic feet
+0,0.002288352,1,0,grains/cubic foot
+0,0.00002288352,1,0,grains/100 cubic feet
+0,0.01711806,1,0,grains/US gallon
+0,1000000000,1,0,gigasiemens
+0,1000000000,1,0,giga standard cubic metres 15C
+0,1000000000,1,0,gigawatt
+0,3,6E+12,1,0,gigawatt hour
+0,3600,1,0,hour
+0,3600,0.028316846592,0,hours/cubic foot
+0,3600,304.8,0,hour per thousand foot
+0,3.Haz,1,0,hour per kilometer
+0,3600,1,0,hour per cubic meter
+0,10000,1,0,hectare
+0,10000,1,0,hectare metres
+0,10000000,1,0,hectobar
+0,746.043,1,0,hydraulic horsepower
+0,746.043,0.00064516,0,(hydraulic) horsepower per square inch
+0,0.1,1,0,hectoliter
+0,7.456.999,1,0,horsepower
+0,2684520,1,0,horsepower hour
+0,2684520,0.1589873,0,horsepower hours/barrel
+0,2684520,0.4535924,0,horsepower hours/pound mass
+0,26334.14,1,0,horsepower/cubic foot
+0,7.456.999,0.00064516,0,horsepower per square inch
+0,100,1,0,hundred seconds
+0,0.0254,1,0,inch
+0,0.00254,1,0,tenth of an inch
+0,0.0015875,1,0,16th of an inch
+0,0.00079375,1,0,32nd of an inch
+0,0.000396875,1,0,64th of an inch
+0,0.0254,31558150,0,inches/year
+0,1.Ağu,1,0,inches/inch degree Fahrenheit
+0,0.0254,60,0,inches/minute
+0,0.0254,1,0,inches/second
+0,0.00064516,1,0,square inches
+0,1,144,0,square inches/square foot
+0,1,1,0,square inches/square inch
+0,0.00064516,1,0,square inches/second
+0,0.00001638706,1,0,cubic inches
+0,0.000016387064,0.3048,0,cubic inches/foot
+0,0.0000004162314,1,0,inches to the fourth
+0,249.082,1,0,inches of water at 39.2 deg F
+0,248.84,1,0,inches of water at 60 deg F
+0,3386.38,1,0,inches of mercury at 32 deg F
+0,3376.85,1,0,inches of mercury at 60 deg F
+0,1,39.37,0,US Survey inch
+0,10000,1,0,joules/square centimetre
+0,1000,1,0,joules/cubic decimetre
+0,1000,1,0,joules/gram
+0,1000,1,0,joules/gram degree Kelvin
+0,1,1,0,joules/metre
+0,1,1,0,joules/square metre
+0,1,1,0,joules/second square metre deg C
+0,0.001,1,0,degrees Kelvin square metres/kilowatt
+0,1000,1,0,kiloampere
+0,1.589.873,86400,0,thousand barrels per day
+0,1024,1,0,kilobyte
+0,1000,1,0,kilocoulombs
+0,4184,1,0,kilocalories
+0,4184,0.0001,0,kilocalorie metres/square centimetre
+0,4184,0.000001,0,kilocalories/cubic centimetre
+0,4184,0.001,0,kilocalories/gram
+0,1.162.222,1,0,kilocalories/hour
+0,1.162.222,1,0,kilocalories/hour metre degree Celsius
+0,1.162.222,1,0,kilocalorie/hour square metre deg C
+0,4184,1,0,kilocalories/kilogram
+0,4184,1,0,kilocalories/kilogram degree Celsius
+0,4184,1,0,kilocalroies/cubic metre
+0,4184,1,0,kilocalories/mole (gram)
+0,4184000,1,0,kilocalories/mole (gram)
+0,1000,1,0,kilocandela
+0,0.01,1,0,kilkodynes
+0,1000,1,0,thousand per second
+0,1,60E-08,1,0,kiloelectron volts
+0,1355818,1,0,thousand foot pounds force
+0,304.8,3600,0,thousand feet per hour
+0,304.8,1,0,thousand feet per second
+0,10000,1,0,kilogram metres/square centimetre
+0,1,86400,0,kilogram per day
+0,1000,1,0,kilograms/cubic decimetre
+0,10000,1,0,kilograms/decimetre fourth
+0,1,3600,0,kilograms/hour
+0,1,1,0,kilograms/kilogram
+0,1,3600000,0,kilograms/kilowatt hour
+0,1000,1,0,kilogram per litre
+0,1,1,0,kilograms/metre second
+0,1,60,0,kilogram per min
+0,0.000001,1,0,kilograms/megajoule
+0,1,4.263.769,0,kilogram per 94 pound sack
+0,980.665,1,0,kilogram force
+0,980.665,1,0,kilogram force metres
+0,98066.5,1,0,kilogram force metres/square centimetre
+0,980.665,1,0,kilograms force metres/metre
+0,980.665,1,0,kilogram force metres squared
+0,980.665,1,0,kilograms force seconds/square metre
+0,980.665,0.01,0,kilograms force/centimetre
+0,980.665,0.0001,0,kilogram per square centimeter
+0,1,1,0,kilogram force per kilogram force
+0,980.665,0.000001,0,kilogram force/square millimetre
+0,6.283.185.307,1,0,kilohertz
+0,1000,1,0,kilojoules
+0,1,3.Haz,0,kilojoule metres/hour sq metre deg K
+0,1000000,1,0,kilojoules/cubic decimetre
+0,1000,3600,0,kilojoules/hour square metre deg K
+0,1000,1,0,kilojoule/kilogram
+0,1000,1,0,kilojoules/kilogram degree Kelvin
+0,1000,1,0,kilojoule/cubic metre
+0,1.0,1,0,kilojoule/mole (kilogram)
+0,1000,1,0,kilojoule/mole (kilogram)
+0,1.0,1,0,kilojoules/mole (kilogram) deg K
+0,1000,1,0,kilojoules/mole (kilogram) deg K
+0,4.448.222,1,0,thousand pounds force
+0,4.535.924,1,0,thousand pounds mass
+0,4.535.924,0.0254,0,thousand pounds mass per inch
+0,1000,1,0,kilolux
+0,1000,1,0,kilometre
+0,100000,1,0,kilometre/ centimetre
+0,1000000,1,0,kilometres/cubic decimetre
+0,1,3.Haz,0,kilometres/hour
+0,1000000,1,0,kilometres/litre
+0,1000,1,0,kilometer per second
+0,1000000,1,0,square kilometres
+0,1000000000,1,0,cubic kilometres
+0,1000,1,0,kilomole
+0,1000,1,0,kilonewtons
+0,1000,1,0,kilonewton metres
+0,1000,1,0,kilonewton metres squared
+0,1000,1,0,kilonewtons/metre
+0,1000,1,0,kilonewtons/square metre
+0,1852,3600,0,knots
+0,1000,1,0,kilohm
+0,1000,1,0,kilo ohm metre
+0,1000,1,0,kilopascals
+0,1000,1,0,kilopascal seconds/metre
+0,10,1,0,kilopascal per hundred meter
+0,1000,3600,0,kilopascal per hour
+0,1000,1,0,kilopascals/metre
+0,1000,60,0,kilopascal per min
+0,1000000,1,0,kilopascal squared
+0,1000000000,1,0,kilopascal squared per centipoise
+0,1000000,1,0,kilopascal squared per thousand centipoise
+0,6894757,1,0,thousand pounds per square inch
+0,4,75377E+13,1,0,thousand pound per square inch, squared
+0,1000,1,0,kiloradian
+0,1000,1,0,kilosiemens
+0,1000,1,0,kilo standard cubic metres 15C
+0,1000,86400,0,thousand std cubic metres/ day
+0,1000,1,0,1000 std cubic metres/ std cubic metre
+0,1000,1,0,kilovolt
+0,1000,1,0,kilowatts
+0,3600000,1,0,kilowatt hours
+0,3600000,0.001,0,kilowatt hours/decimetre
+0,3600000,1,0,kilowatt hours/kilogram
+0,3600000,1,0,kilowatt hours/kilogram degree C
+0,3600000,1,0,kilowatt hours/cubic metres
+0,10000000,1,0,kilowatts/square centimetre
+0,1000,1,0,kilowatts/square metre
+0,1000,1,0,kilowatts/square metre degree Kelvin
+0,1000,1,0,kilowatts/cubic metre
+0,1000,1,0,killowatts/cubic metre degree Kelvin
+0,0.001,1,0,litre
+0,0.00001,1,0,liter per hundred kilogram
+0,0.000000001,1,0,litres/100 kilometres
+0,0.001,1.589.873,0,liter per ten barrel
+0,0.001,6000000,0,litres per minute per bar
+0,0.001,3600,0,liter per hour
+0,0.001,1,0,liter per kilogram
+0,0.000000001,1,0,litres/100 kilometres
+0,0.001,1,0,litres/metre
+0,0.001,1,0,litres/cubic metre
+0,0.001,60,0,liter per minute
+0,.001,1,0,litres/mole (gram)
+0,1,1,0,litres/mole (gram)
+0,0.000001,1,0,litres/mole (kilogram)
+0,0.001,1,0,litres/mole (kilogram)
+0,0.001,1,0,litres/second
+0,0.001,1,0,litres/second/second
+0,0.000001,1,0,litres/tonne
+0,0.001,1.016.047,0,liter per UK ton
+0,4.448.222,1,0,pounds force
+0,1.355.818,1,0,foot pounds force
+0,1.355.818,0.1589873,0,foot pounds force/barrel
+0,1.355.818,0.0254,0,pounds force feet/inch
+0,2.101.522,1,0,foot pounds force/square inch
+0,1.355.818,0.4535924,0,foot pounds force/pound mass
+0,0.1129848,1,0,inch pounds force
+0,4.448.222,1,0,pounds force inches/inch
+0,0.002869815,1,0,pounds force inches squared
+0,4.788.026,1,0,pounds force seconds/square foot
+0,6.894.757,1,0,pounds force seconds/square inch
+0,4.448.222,30.48,0,pounds force per hundred foot
+0,0.4788026,1,0,pounds force/100 square foot
+0,4.448.222,30,0,pounds force per thirty meters
+0,4.448.222,0.3048,0,pounds force per foot
+0,4.788.026,1,0,pounds force/square foot
+0,0.4788026,1,0,pounds force/100 square foot
+0,4.448.222,0.02831685,0,pounds force/cubic foot
+0,4.448.222,0.003785412,0,pounds force/US gallon
+0,4.448.222,0.0254,0,pounds force/inch
+0,6.894.757,1,0,pounds force/square inch
+0,1,1,0,pound force per pound force
+0,0.4535924,1,0,pounds mass
+0,0.138255,1,0,foot pounds mass/second
+0,0.04214011,1,0,pounds mass square feet
+0,0.04214011,1,0,pounds mass square feet/second squared
+0,453592.4,31558150,0,million pounds mass/year
+0,9.977.633,1000,0,pounds mass/1000 UK gallons
+0,1.198.264,1000,0,pounds mass/1000 US gallons
+0,4.882.428,100,0,pounds mass per hundred square foot
+0,0.4535924,1.589.873,0,pounds mass per 10 barrel
+0,0.4535924,0.1589873,0,pounds mass/barrel
+0,0.4535924,86400,0,pound mass per day
+0,0.4535924,0.3048,0,pounds mass/foot
+0,0.0004133789,1,0,pounds mass/foot hour
+0,1.488.164,1,0,pounds mass/foot second
+0,4.882.428,1,0,pounds mass/square foot
+0,1.601.846,1,0,pounds mass/cubic foot
+0,1.601.846,0.3048,0,pounds mass/foot fourth
+0,9.977.633,1,0,pounds mass/UK gallon
+0,9.977.633,0.3048,0,pounds mass/UK gallon foot
+0,9.977.633,1000,0,pounds mass/1000 UK gallons
+0,1.198.264,1,0,pounds mass/US gallon
+0,1.198.264,0.3048,0,pounds mass/US gallon foot
+0,1.198.264,1000,0,pounds mass/1000 US gallons
+0,0.4535924,3600,0,pounds mass/hour
+0,0.0004133789,1,0,pounds mass/hour foot
+0,0.00135623,1,0,pounds mass/hour square foot
+0,0.0000001689659,1,0,pounds mass/horsepower hour
+0,0.4535924,0.000016387064,0,pounds mass/cubic inch
+0,0.00285301,1,0,pounds mass/1000 barrels
+0,0.4535924,60,0,pounds mass/minute
+0,0.4535924,1,0,pounds mass/second
+0,1.488.164,1,0,pounds mass/second foot
+0,4.882.428,1,0,pounds mass/second square foot
+0,0.201167824,1,0,British link 1895 A
+0,Tem.92,39.370.113,0,British link 1895 B
+0,Tem.92,39.370.432,0,Clarke link
+0,Tem.92,39.370.147,0,Sears link
+0,Tem.92,39.37,0,US Survey link
+0,1,1,0,lumens/square metre
+0,28.316.846.592,1,0,million cubic feet
+0,1000000,43560,0,million cubic feet per acre-foot
+0,28316.85,86400,0,million cubic feet per day
+0,0.000000001,1,0,million cubic meters
+0,1000000,86400,0,million cubic metres per day
+0,1,30,0,metres per thirty metres
+0,100,1,0,metres/ centimetre
+0,1,86400,0,metres/day
+0,1,3600,0,metres/hour
+0,0.001,1,0,metres/kilometre
+0,1,1,0,metres/metre
+0,1,1,0,metres/metre Kelvin
+0,1,1,0,metres/cubic metre
+0,1,60,0,meter per minute
+0,1000,1,0,metres/millisecond
+0,1000000,1,0,square metres/cubic centimetre
+0,1,86400000,0,square metres/day kiloPascal
+0,1000,1,0,square metres/gram
+0,1,3600,0,square metres/hour
+0,1,1,0,square metres/cubic metre
+0,0.0446158,1,0,cubic metres at std condition (0 deg C)
+0,0.0422932,1,0,cubic metres at std condition (15 deg C)
+0,1.,8640000000,0,cubic meter per day per bar
+0,1,360000000,0,cubic meter per hour per bar
+0,1,6000000,0,cubic meter per minute per bar
+0,1,86400,0,cubic metres/centiPoise day kiloPascal
+0,1000,1,0,cubic metres/centiPoise Pascal second
+0,1,86400,0,cubic metres/day
+0,1,86400000,0,cubic metres/day kilopascal
+0,1,86400,0,cubic meter per day per meter
+0,1,7464960000,0,cubic metres/day/day
+0,1000,1,0,cubic metres/gram
+0,1,3600,0,cubic metres/hour
+0,1,3600,0,cubic meter per hour per meter
+0,0.0001,1,0,cubic metres/hectare metre
+0,0.001,1,0,cubic metres/kilometre
+0,1,86400000,0,cubic meter per day per kilopascal
+0,1,3600000,0,(cubic metres per hour) per kilopascal
+0,1,3600000,0,cubic metres/kilowatt hour
+0,1,1,0,cubic metres/metre
+0,1,1,0,cubic meter per square meter
+0,1,1,0,cubic metres/cubic metre
+0,1,60,0,cubic meter per minute
+0,.001,1,0,cubic metres/mole (kilogram)
+0,1,1,0,cubic metres/mole (kilogram)
+0,1,595707004.8,0,cubic meter per day per (pound per square inch)
+0,1,0.3048,0,cubic meter per second per foot
+0,1,1,0,cubic metres/second metre
+0,1,1,0,cubic metres/second square metre
+0,0.001,1,0,cubic metres/tonne
+0,1,1.016.047,0,cubic meters per UK ton
+0,1,9.071.847,0,cubic meters per US ton
+0,0.001,1,0,milliamp
+0,3,15582E+13,1,0,megayears
+0,1000000,1,0,megaampere
+0,10,1,0,milliampere per square centimeter
+0,0.001,0.09290304,0,milliampere per square foot
+0,100,1,0,millibar
+0,1.589.873,1,0,thousand barrels
+0,4.845.933,86400,0,thousand barrel feet/day
+0,1.589.873,86400,0,thousand barrels/day
+0,1000000,1,0,megabecquerel
+0,293071.1,1,0,million Btus/hour
+0,1048576,1,0,megabyte
+0,0.001,1,0,millicoulomb
+0,0.001,1,0,millicoulombs/square metre
+0,28.316.846.592,1,0,thousand cubic feet
+0,37000,1,0,millicurie
+0,9,87E-11,1,0,millidarcy
+0,3,01E-10,1,0,millidarcy foot
+0,9,87E-11,4.788.026,0,millidarcy sq feet/pound force second
+0,9,87E-11,6.894.757,0,millidarcy sq inches/pound force second
+0,9,87E-11,1,0,millidarcy metres
+0,9,87E-11,0.001,0,millidarcies/centipoise
+0,9,87E-11,1,0,millidarcies/Pascal second
+0,0.001,1,0,milliequivalent
+0,100,1,0,milliequivalents/ hectogram
+0,1000,1,0,milliequivalents/ cubic centimeter
+0,1,1,0,milliequivalents/ gram
+0,0.001,1,0,milliEuclid
+0,0.000000000000160219,1,0,millions of electron volts
+0,1000000,1,0,megaflops
+0,1000,1,0,megagram
+0,0.000001,1,0,milligram
+0,1000,31558150,0,megagrams/year
+0,1000,86400,0,megagrams/day
+0,0.001,1,0,milligrams/cubic decimetre
+0,0.000264172,1,0,milligrams/US gallon
+0,1,3.Haz,0,megagrams/hour
+0,1000,0.0254,0,thousand kilograms per inch
+0,0.000001,1,0,milligrams/joule
+0,0.000001,1,0,milligrams/kilogram
+0,0.001,1,0,milligram per litre
+0,1000,1,0,megagrams/square metre
+0,0.000001,1,0,milligrams/cubic metre
+0,1000000,1,0,thousand kilograms per cubic metre
+0,0.00001,1,0,milligalileo
+0,0.0000001,1,0,milligauss
+0,1.000.014,1,0,German legal metre
+0,4448222,1,0,thousand kilograms force
+0,0.00980665,1,0,milligravity
+0,0.001,1,0,milligray
+0,0.001,1,0,millihenries
+0,1,1,0,mhos
+0,1,1,0,mhos/metre
+0,6.283.185.307,1,0,megahertz
+0,0.006283185307,1,0,millihertz
+0,1.609.344,1,0,mile
+0,1.609.344,0.004546092,0,miles/UK gallon
+0,1.609.344,0.003785412,0,miles/US gallon
+0,1.609.344,3600,0,miles/hour
+0,63360,1,0,miles/inch
+0,2589988,1,0,square miles
+0,4168182000,1,0,cubic mile
+0,0.0000254,1,0,mil, a thousandth of an inch
+0,0.0000254,31558150,0,mils/year
+0,31.415.926.535.898,3200,0,mil_6400
+0,60,1,0,minutes
+0,60,0.3048,0,minute per foot
+0,60,1,0,minute per meter
+0,0.00029088821,1,0,minutes angular
+0,1.609.347,1,0,U.S. Survey mile
+0,2589998,1,0,U.S. Survey square mile
+0,1000000,1,0,megajoules
+0,0.001,1,0,millijoules
+0,1000000,31558150,0,megajoules/year
+0,10,1,0,millijoules/square centimetre
+0,1000000,1,0,megajoules/kilogram
+0,1000000,1,0,megajoules/metre
+0,0.001,1,0,millijoules/square metre
+0,1000000,1,0,megajoules/cubic metre
+0,1000,1,0,megajoules/mole (kilogram)
+0,1000000,1,0,megajoules/mole (kilogram)
+0,0.001,1,0,millidegrees Kelvin/metre
+0,0.000001,1,0,millilitre
+0,0.0002199692,1,0,millilitres/UK gallon
+0,0.000264172,1,0,millilitres/US gallon
+0,1,1,0,milliliter per milliliter
+0,453592.4,31558150,0,million pounds mass/year
+0,0.001,1,0,millimetres
+0,0.001,1,0,megameter
+0,0.001,31558150,0,millimetres/year
+0,1,1,0,millimetres/millimetre degree Kelvin
+0,0.001,1,0,millimetres/second
+0,0.000001,1,0,square millimetres
+0,1,1,0,square millimetres/square millimetre
+0,0.000001,1,0,square millimetres/second
+0,0.000000001,1,0,cubic millimetres
+0,0.000000001,1,0,cubic millimetres/joule
+0,158987.3,1,0,million barrels
+0,158987.3,1.233.489,0,million barrels/acre foot
+0,28316.85,1,0,million cubic feet
+0,1.333.224,1,0,millimetres of Mercury at 0 deg C
+0,0.001,1,0,millimhos/metre
+0,0.001,1,0,millimole
+0,28.262.357,1,0,million standard cubic feet at 60 deg F
+0,28.262.357,86400,0,million standard cubic feet/day
+0,28.262.357,0.1589873,0,million std cu ft/ stock tank barrel
+0,1000000,1,0,million standard cubic metres 15C
+0,1000000,86400,0,million std cubic metres, 15 degC/day
+0,158987.3,1,0,million stock tank barrels 60 deg F
+0,158987.3,86400,0,million stock tank barrels, 60 deg F/day
+0,158987.3,4.046.873,0,million stock tank barrels 60 deg F/acre
+0,158987.3,1.233.489,0,million stbs, 60 deg F/acre foot
+0,1000000,1,0,meganewtons
+0,0.001,1,0,millinewtons
+0,0.001,1,0,millinewton metres squared
+0,0.000001,1,0,millinewtons/kilometre
+0,0.001,1,0,millinewtons/metre
+0,1000000,1,0,megaohm
+0,0.001,1,0,milliohm
+0,0.001,1,0,mole (gram)
+0,1,1,0,mole (kilogram)
+0,1000,3600,0,moles (kilogram)/hour
+0,1,3600,0,moles (kilogram)/hour
+0,1000,1,0,moles (kilogram)/cubic metre
+0,1,1,0,moles (kilogram)/cubic metre
+0,1000,1,0,moles (kilogram)/second
+0,1,1,0,moles (kilogram)/second
+0,4.535.924,1,0,moles (pounds mass)
+0,0.4535924,1,0,moles (pounds mass)
+0,16018.46,1,0,moles (pounds mass)/cubic foot
+0,1.601.846,1,0,moles (pounds mass)/cubic foot
+0,9.977.633.537,1,0,moles (pounds mass)/UK gallon
+0,9.977.633,1,0,moles (pounds mass)/UK gallon
+0,119826.4,1,0,moles (pounds mass)/US gallon
+0,1.198.264,1,0,moles (pounds mass)/US gallon
+0,4.535.924,3600,0,moles (pounds mass)/hour
+0,0.4535924,3600,0,moles (pounds mass)/hour
+0,0.4535924,334.450.944,0,moles (pounds mass)/hour square foot
+0,4.535.924,334.450.944,0,moles (pounds mass)/hour square foot
+0,4.535.924,1,0,moles (pounds mass)/second
+0,0.4535924,1,0,moles (pounds mass)/second
+0,4.535.924,0.09290304,0,moles (pounds mass)/second square foot
+0,0.4535924,0.09290304,0,moles (pounds mass)/second square foot
+0,0.001,1,0,millipascal
+0,1000000,1,0,megapascals
+0,0.001,1,0,millipascal seconds
+0,1000000,1,0,megapascal seconds/metre (megarayl)
+0,1000000,3600,0,megapascal per hour
+0,1000000,1,0,megapascal per meter
+0,6894757000,1,0,mega pounds per square inch
+0,0.001,1,0,milliradian
+0,1000000,1,0,megaradian
+0,0.00001,1,0,milli-rem
+0,0.00001,3600,0,milli-rems per hour
+0,0.001,1,0,millisiemen
+0,0.001,1,0,milliseconds
+0,0.0005,1,0,half a millisecond
+0,0.1,1,0,milliseconds/centimetre
+0,0.001,0.3048,0,millisecond per foot
+0,0.001,0.0254,0,milliseconds/inch
+0,0.001,1,0,millisiemens/metre
+0,0.001,1,0,millisecond per meter
+0,0.001,1,0,milliseconds/second
+0,28.262.357,1,0,thousand cubic feet at 60 deg F
+0,28.262.357,86400,0,thousand standard cubic feet/day
+0,28.262.357,0.1589873,0,thousand std cu ft/ stock tank barrel
+0,1000,86400,0,thousand std cubic metres, 15 degC/day
+0,0.00000000484814,1,0,milliseconds angular
+0,1000000,1,0,mega standard cubic metres 15C
+0,1.589.873,1,0,thousand stock tank barrels 60 F
+0,1.589.873,86400,0,thousand stock tank barrels,60 deg F/day
+0,0.001,1,0,millisievert
+0,0.001,3600,0,millisieverts per hour
+0,0.001,1,0,milliteslas
+0,1000000,1,0,megavolt
+0,0.001,1,0,millivolts
+0,0.001,0.3048,0,millivolt per foot
+0,0.001,1,0,millivolt per meter
+0,1000000,1,0,megawatts
+0,0.001,1,0,milliwatt
+0,3600000000,1,0,megawatt hours
+0,3600000000,1,0,megawatt hours/kilogram
+0,3600000000,1,0,megawatt hours/cubic metre
+0,0.001,1,0,milliwatts/square metres
+0,0.001,1,0,milliwebers
+0,3,15582E+13,1,0,megayears
+0,1,1,0,newton metre
+0,1,1,0,newton metres/metre
+0,1,1,0,newton seconds/metre squared
+0,1,30,0,newton per thirty meters
+0,1,1,0,newtons/square metre
+0,1000000,1,0,newtons/square millimetre
+0,0.000000001,1,0,nanoampere
+0,1852,1,0,nautical mile
+0,0.000000001,1,0,nanocoulomb
+0,37,1,0,nanocurie
+0,0.000000001,1,0,nanoeuclid
+0,0.000000001,1,0,nanohenry
+0,0.000000001,1,0,nanojoules
+0,0.000000001,1,0,nanometres
+0,0.000000001,1,0,nanometer per second
+0,0.000000001,1,0,nanohm
+0,0.000000001,1,0,nanoseconds
+0,0.000000001,0.3048,0,nanoseconds/foot
+0,0.000000001,1,0,nanoseconds/metre
+0,0.000000001,1,0,nanoteslas
+0,0.000000001,1,0,nanowatts
+0,7.957.747,1,0,oersted
+0,0.01,1,0,ohm centimetres
+0,0.02834952,1,0,avoirdupois ounces
+0,0.03110348,1,0,troy ounces
+0,4.448.222,16,0,ounce force
+0,0.4535924,16.,0,ounce mass
+0,0.1,1,0,poise
+0,0.000000000001,1,0,picoampere
+0,1,1,0,pascal seconds squared/ cubic metre
+101325,1,1,0,pascal gauge
+0,1,3600,0,pascal per hour
+0,0.000000000001,1,0,picocoulomb
+0,37,1,0,picocurie per gram
+0,0.037,1,0,picocurie
+0,0.138255,1,0,poundals
+0,0.0000138255,1,0,poundal centimetre squared
+0,0.04214012,1,0,foot poundal
+0,0.138255,0.01,0,poundals/centimetre
+0,0.001,1,0,per mille
+0,0.000000000001,1,0,picrofarads
+0,0.000000000001,1,0,picometer
+0,0.000000000001,1,0,picopascal
+0,0.0001,1,0,parts per ten thousand
+0,0.001,1,0,parts per thousand
+0,0.000001,1,0,parts per million
+0,0.000001,1,0,part per million per degree Celsius
+0,0.0000018,1,0,part per million per degree Fahrenheit
+0,0.000000000001,1,0,picosecond
+0,0.000000001,1,0,picosiemens
+0,4.788.026,1,0,pounds/square foot
+0,6.894.757,1,0,pounds/square inch
+0,1,2.305.916,0,pounds per square inch days/barrel
+0,6.894.757,1,0,pound per square inch second
+0,6.894.757,30.48,0,pounds/square inch per 100 feet
+0,6.894.757,0.3048,0,pounds/square inch per foot
+0,6.894.757,30.48,0,pounds/square inch per 100 feet
+0,6.894.757,3600,0,pound per square inch per hour
+0,6.894.757,304.8,0,pounds/square inch per thousand feet
+0,6.894.757,1,0,pound per square inch per meter
+0,6.894.757,60,0,pound per square inch per minute
+0,47537674,1,0,pound per square inch squared
+0,4,10726E+12,0.000028316847,0,psi squared days/ centipoise cubic foot
+0,4,10726E+12,0.000028316847,0,psi squared days/ centipoise cubic foot
+0,3,55E+27,0.0000008018438,0,(psi days/cubic foot)squared/centipoise
+0,3,55E+27,0.0000008018438,0,(psi days/cubic foot)squared/centipoise
+0,4753764090,1,0,pounds/square inch squared/ centipoise
+0,6.894.757,1,0,pounds/square inch absolute
+101325,6.894.757,1,0,pounds/square inch gauge
+0,0.0005682615,1,0,UK pint
+0,0.0000000002116809,1,0,UK pints/horsepower hour
+0,0.0005682615,1.589.873,0,UK pints/1000 barrels
+0,0.0004731765,1,0,US pints
+0,0.4731765,0.01589873,0,US pint per ten barrel
+0,0.001136523,1,0,UK quarts
+0,0.0009463529,1,0,US quarts
+0,1,06E+24,1,0,quads
+0,1,06E+24,31558150,0,quads/year
+0,1,0.3048,0,radians per foot
+0,1,0.028316846592,0,radians per cubic foot
+0,0.01,1,0,rad
+0,0.01,1,0,rem
+0,0.01,3600,0,rems per hour
+0,6.283.185.307,60,0,revolutions/minute
+0,6.283.185.307,1,0,revolutions/second
+0,6.283.185.307,60,0,revolutions/minute
+0,6.283.185.307,60,0,revolutions/minute per second
+0,100,1,0,seconds/centimetre
+0,1,0.3048,0,seconds/foot
+0,1,0.028316846592,0,second per cubic foot
+0,1,0.0254,0,seconds/inch
+0,1,0.001,0,second per litre
+0,1,0.001136523,0,second per UK quart
+0,1,0.0009463529,0,second per US quart
+0,4.263.769,1,0,sacks
+0,0.028262357,1,0,std cubic feet at 60 deg F
+0,0.028262357,0.1589873,0,std cubic feet at 60 deg F/barrel
+0,0.028262357,86400,0,standard cubic feet/day
+0,0.028262357,0.09290304,0,std cubic feet at 60 deg F/square foot
+0,0.9980757,1,0,std cubic feet at 60 deg Ft/cubic foot
+0,1,86400,0,std cubic metres at 15 deg C/day
+0,1,0.1589873,0,std cubic metres / stock tank barrel
+0,0.00000484814,1,0,seconds angular
+0,0.1,1,0,capture unit
+0,1,1000,0,std cubic metres/ 1000 std cubic metre
+0,1,1,0,std cubic metres/ std cubic metres
+0,0.09290304,1,0,square feet
+0,0.00064516,1,0,square inches
+0,2589988,1,0,square miles
+0,0.8361274,1,0,square yards
+0,0.1589873,1,0,stock tank barrel at 60 deg F
+0,0.1589873,4.046.873,0,stock tank barrels, 60 deg F/acre
+0,1,1,0,stock tank barrels, 60 deg F/barrel
+0,0.1589873,86400,0,stock tank barrels, 60 deg F/day
+0,0.1589873,28.262.357,0,stock tank barrels/ million std cu ft
+0,0.1589873,1000000,0,stock tank barrels/ million std cu mts
+0,0.1589873,28.262.357,0,stock tank barrels/ 1000 std cu ft
+0,0.1589873,1000,0,stock tank barrels/ 1000 std cu metres
+0,0.1589873,1,0,stock tank barrels/ std cu metres
+0,1,3600,0,sieverts per hour
+0,1000,1,0,tonne
+0,1000,31558150,0,tonnes/year
+0,1000,86400,0,tonnes/day
+0,1000,3600,0,tonnes/hour
+0,1000,60,0,tonnes per minute
+0,1,1,0,talbot
+0,1.0E12,1,0,terabecquerel
+0,28316850000,1,0,trillion cubic feet
+0,0.0000001602177,1,0,tera electron volts
+0,105505600,1,0,therms
+0,105505600,0.02831685,0,therms/cubic foot
+0,23208000000,1,0,therms/UK gallon
+0,105505600,0.4535924,0,therms/pound mass
+0,1E+12,1,0,terajoules
+0,1E+12,31558150,0,terajoules/year
+0,1E+12,1,0,teraohm
+0,3.516.853,1,0,tons of refrigeration
+0,9.964.016,1,0,UK tons force
+0,9.256.874,1,0,UK ton feet squared
+0,9.964.016,0.3048,0,UK tons force/foot
+0,9.964.016,0.09290304,0,UK tons force/square foot
+0,8.896.443,1,0,US tons force
+0,2.711.636,1,0,US tons force feet
+0,8.265.067,1,0,US tons force feet squared
+0,14317440,1,0,US tons force miles
+0,14317440,0.1589873,0,US ton force miles/barrel
+0,14317440,0.3048,0,US tons force miles/foot
+0,8.896.443,0.3048,0,US tons force/foot
+0,95760.52,1,0,US tons force/square foot
+0,13789510,1,0,US tons force/square inch
+0,1.016.047,1,0,UK tons
+0,1.016.047,31558150,0,UK tons/year
+0,1.016.047,86400,0,UK tons/day
+0,1.016.047,3600,0,UK tons/hour
+0,1.016.047,60,0,UK tons/minute
+0,9.071.847,1,0,US tons
+0,9.071.847,31558150,0,US tons/year
+0,9.071.847,86400,0,US tons/day
+0,9.764.855,1,0,US tons/square foot
+0,9.071.847,3600,0,US tons/hour
+0,9.071.847,60,0,US tons/minute
+0,1.333.224,1,0,torr
+0,1E+12,1,0,terawatts
+0,3.6E+015,1,0,terrawatt hours
+0,0.000001,1,0,microampere
+0,0.01,1,0,microampere per square centimeter
+0,0.000001,0.00064516,0,microampere per square inch
+0,0.1,1,0,microbars
+0,0.000001,1,0,microcoulomb
+0,0.04184,1,0,microcalories/second square centimetre
+0,37000,1,0,microcurie
+0,0.000001,1,0,microEuclids
+0,0.000001,1,0,microfarads
+0,0.000001,1,0,microfarads/metre
+0,0.000000001,1,0,micrograms
+0,0.001,1,0,micrograms/cubic centimetre
+0,0.000001,1,0,microhenry
+0,0.000001,1,0,microhenries/metre
+0,0.000006283185307,1,0,microhertz
+0,0.000001,1,0,microjoules
+0,0.000001,1,0,microns
+0,0.000001,1,0,micrometer per second
+0,0.000000000001,1,0,square microns
+0,0.000000000001,1,0,square micron metres
+0,0.1333224,1,0,microns of Mercury at 0 deg C
+0,0.000001,1,0,micromole
+0,0.000001,1,0,micronewtons
+0,1,1,0,unitless
+0,0.000001,1,0,microohm
+0,0.000001,0.3048,0,microhm per foot
+0,0.000001,1,0,microhm per meter
+0,0.000001,1,0,micropascal
+0,0.006894757,1,0,micropounds/square inch
+0,0.000001,1,0,microradian
+0,0.000001,1,0,microsiemens
+0,0.000001,1,0,microsecond
+0,0.000001,0.3048,0,microseconds/foot
+0,0.000001,1,0,microseconds/metre
+0,0.000001,1,0,microteslas
+0,0.000001,1,0,microvolts
+0,0.000001,0.3048,0,microvolt per foot
+0,0.000001,1,0,microvolt per meter
+0,0.000001,1,0,microwatts
+0,0.000001,1,0,microwatts/cubic metre
+0,0.000001,1,0,microwebers
+0,10,1,0,volts/decibel
+0,0.01,1,0,volume percent
+0,0.000001,1,0,volume parts per million
+0,10000,1,0,watts/square centimetre
+0,0.001,1,0,watts/kilowatt
+0,1000000,1,0,watts per square millimeter
+0,1,1,0,watts/watt
+0,1000,1,0,webers/millimetre
+0,604800,1,0,weeks
+0,0.01,1,0,weight percent
+0,0.000001,1,0,weight parts per million
+0,0.9144,1,0,yards
+0,0.83612736,1,0,square yards
+0,0.7645549,1,0,cubic yard
+0,0.9143992,1,0,Benoits yard (1895 A)
+0,36,39.370.113,0,Benoits yard (1895 B)
+0,0.914391795,1,0,Clarkes yard
+0,0.914391795,1,0,imperial yard
+0,36,39.370.142,0,Indian yard
+0,0.91439523,1,0,Indian yard (1937)
+0,0.9143988,1,0,Indian yard (1962)
+0,0.9143985,1,0,Indian yard (1975)
+0,36,39.370.147,0,Sears yard
+0,3,15582E+12,1,0,100000 years
