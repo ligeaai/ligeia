@@ -43,7 +43,7 @@ const CodeList = () => {
           myRes.push(e.LAYER_NAME);
         });
         setLayerValues(["NONE", ...myRes]);
-      } catch { }
+      } catch {}
     };
     myFunc();
     return () => {
@@ -63,6 +63,7 @@ const CodeList = () => {
       <Grid item>
         <DrawerMenu
           Element={<TreeMenuItems path={TypeService.getAll} textPath="TYPE" />}
+          path="types"
         />
       </Grid>
 

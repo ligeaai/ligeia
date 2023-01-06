@@ -9,32 +9,51 @@ import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { SearchBarMobile } from "../../../components";
 
 import { setCssUserSelect } from "../../../services/reducers/cssUserSelect";
+import {
+  loadTreeViewWidth,
+  updateTreeViewCouch,
+} from "../../../services/actions/treeview/treeview";
+import { PatternSharp } from "@mui/icons-material";
 
 const DrawerMenu = (props) => {
   const dispatch = useDispatch();
-  const [leftMenuWidth, setLeftMenuWidth] = React.useState(250);
+  const { Element, path } = props;
+
+  const [leftMenuWidth, setLeftMenuWidth] = React.useState(0);
+
   const isFullScreen = useSelector((state) => state.fullScreen.isFullScreen);
-  const { Element } = props;
   const handler = (mouseDownEvent) => {
     const startSize = leftMenuWidth;
     const startPosition = mouseDownEvent.pageX;
+    var sonuc = 0;
     dispatch(setCssUserSelect(true));
     function onMouseMove(mouseMoveEvent) {
       if (startSize - startPosition + mouseMoveEvent.pageX < 10) {
         setLeftMenuWidth(0);
       } else {
-        setLeftMenuWidth(startSize - startPosition + mouseMoveEvent.pageX);
+        setLeftMenuWidth(
+          (prev) => startSize - startPosition + mouseMoveEvent.pageX
+        );
+        sonuc = startSize - startPosition + mouseMoveEvent.pageX;
       }
     }
     function onMouseUp() {
+      dispatch(setCssUserSelect(false));
+      dispatch(updateTreeViewCouch(path, sonuc));
       document.body.removeEventListener("mousemove", onMouseMove);
       document.body.removeEventListener("mouseup", onMouseUp);
-      dispatch(setCssUserSelect(false));
     }
 
     document.body.addEventListener("mousemove", onMouseMove);
     document.body.addEventListener("mouseup", onMouseUp);
   };
+  React.useEffect(() => {
+    const myFunc = async () => {
+      var res = await dispatch(await loadTreeViewWidth(path));
+      setLeftMenuWidth(res[path]);
+    };
+    myFunc();
+  }, []);
 
   return (
     <Box
@@ -76,6 +95,7 @@ const DrawerMenu = (props) => {
           }}
           onClick={() => {
             setLeftMenuWidth(() => (leftMenuWidth > 0 ? 0 : 250));
+            dispatch(updateTreeViewCouch(path, leftMenuWidth > 0 ? 0 : 250));
           }}
         >
           {leftMenuWidth > 0 ? <ChevronLeftIcon /> : <ChevronRightIcon />}

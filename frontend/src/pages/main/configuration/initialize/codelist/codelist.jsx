@@ -42,7 +42,7 @@ const CodeList = ({ isHome }) => {
           myRes.push(e.LAYER_NAME);
         });
         setLayerValues(["NONE", ...myRes]);
-      } catch { }
+      } catch {}
     };
     myFunc();
   }, []);
@@ -70,6 +70,7 @@ const CodeList = ({ isHome }) => {
               textPath="CODE_TEXT"
             />
           }
+          path="codelist"
         />
       </Grid>
 

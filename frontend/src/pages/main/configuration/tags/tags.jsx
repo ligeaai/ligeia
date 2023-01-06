@@ -48,6 +48,7 @@ const Tags = ({ isHome }) => {
       <Grid item>
         <DrawerMenu
           Element={<TreeMenuItems path={TagService.getAll} textPath="NAME" />}
+          path="tags"
         />
       </Grid>
 

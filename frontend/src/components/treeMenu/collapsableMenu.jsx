@@ -8,7 +8,10 @@ import TreeView from "@mui/lab/TreeView";
 import TreeItem, { treeItemClasses } from "@mui/lab/TreeItem";
 import Collapse from "@mui/material/Collapse";
 import { uuidv4 } from "../../services/utils/uuidGenerator";
-import { setSelectedCollapseMenu } from "../../services/actions/collapseMenu/collapseMenu";
+import {
+  setSelectedCollapseMenu,
+  updateCollapseMenuCouch,
+} from "../../services/actions/collapseMenu/collapseMenu";
 import {
   loadTapsOverview,
   cleanTabs,
@@ -87,7 +90,7 @@ const MyStyledTreeItem = React.memo(({ myItems, path }) => {
         <StyledTreeItem
           sx={{ color: "status.primary" }}
           key={i}
-          nodeId={`${uuidv4()}`}
+          nodeId={e.TO_ITEM_ID}
           label={e.TO_ITEM_NAME}
           onClick={async () => {
             dispatch(updateCouchDb());
@@ -121,7 +124,7 @@ const MyStyledTreeItem = React.memo(({ myItems, path }) => {
       <StyledTreeItem
         sx={{ color: "status.primary" }}
         key={i}
-        nodeId={`${uuidv4()}`}
+        nodeId={e.TO_ITEM_ID}
         label={e.TO_ITEM_NAME}
         onClick={async () => {
           dispatch(updateCouchDb());
@@ -136,20 +139,35 @@ const MyStyledTreeItem = React.memo(({ myItems, path }) => {
 function CustomizedTreeView() {
   const dispatch = useDispatch();
   const items = useSelector((state) => state.collapseMenu.menuItems);
+  const expandedItems = useSelector(
+    (state) => state.treeview.width.values.overviewHierarchy
+  );
+  const [expanded, setExpanded] = React.useState(expandedItems);
+
   React.useEffect(() => {
     return () => {
       dispatch(updateCouchDb());
       dispatch(cleanTabs());
     };
   }, []);
-
   return (
     <TreeView
       aria-label="customized"
-      defaultExpanded={["1"]}
+      expanded={expanded}
       defaultCollapseIcon={<MinusSquare />}
       defaultExpandIcon={<PlusSquare />}
       defaultEndIcon={<CloseSquare />}
+      onNodeSelect={(event, nodeId) => {
+        const index = expanded.indexOf(nodeId);
+        const copyExpanded = [...expanded];
+        if (index === -1) {
+          copyExpanded.push(nodeId);
+        } else {
+          copyExpanded.splice(index, 1);
+        }
+        setExpanded(copyExpanded);
+        dispatch(updateCollapseMenuCouch(copyExpanded));
+      }}
     >
       <MyStyledTreeItem myItems={items} path={"overview"}></MyStyledTreeItem>
     </TreeView>

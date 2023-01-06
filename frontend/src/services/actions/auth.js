@@ -30,7 +30,7 @@ import {
 } from './types';
 
 import { instance } from '../baseApi';
-
+import { createTreeViewCouch } from './treeview/treeview';
 export const loadUser = () => async dispatch => {
     if (localStorage.getItem('token')) {
         const config = {
@@ -140,14 +140,14 @@ export const signup = (email, first_name, last_name, password) => async dispatch
 
     try {
         const res = await instance.post(`/auth/register/`, body, config);
-
         dispatch({
             type: SIGNUP_SUCCESS,
             payload: res.data.token
         });
-        dispatch(loadUser());
+        await dispatch(loadUser());
         dispatch(setLoaderFalse());
         dispatch(cleanState())
+        dispatch(createTreeViewCouch())
     } catch (err) {
         dispatch({
             type: SIGNUP_FAIL

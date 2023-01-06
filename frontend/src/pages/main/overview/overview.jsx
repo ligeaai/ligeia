@@ -33,7 +33,7 @@ const Overview = () => {
       }}
     >
       <Grid item>
-        <DrawerMenu Element={<CollapsableMenu />} />
+        <DrawerMenu Element={<CollapsableMenu />} path="overview" />
       </Grid>
 
       <Grid
