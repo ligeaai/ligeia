@@ -16,16 +16,22 @@ import { setGoFunctionConfirmation } from "../confirmation/historyConfirmation"
 import { config, instance } from "../../couchApi"
 export const loadTreeViewWidth = async (path) => async (dispatch, getState) => {
     const userId = getState().auth.user.id
-    let res = await instance
-        .get(
-            `/treeviewstate/${userId}`,
-            config
-        )
-    dispatch({
-        type: LOAD_TREE_VIEW_WIDTH,
-        payload: res.data
-    })
-    return Promise.resolve(res.data.values)
+    try {
+        let res = await instance
+            .get(
+                `/treeviewstate/${userId}`,
+                config
+            )
+        dispatch({
+            type: LOAD_TREE_VIEW_WIDTH,
+            payload: res.data
+        })
+        return Promise.resolve(res.data.values)
+    } catch (err) {
+        if (err.response.status === 404) {
+            dispatch(createTreeViewCouch())
+        }
+    }
 }
 
 export const loadFilteredTreeviewItem = () => async (dispatch, getState) => {
