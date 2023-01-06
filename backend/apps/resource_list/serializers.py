@@ -43,6 +43,11 @@ class ResourceListDetailsSerializer(serializers.ModelSerializer):
         model = resource_list
         fields = "__all__"
 
+class ResourceListParentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = resource_list
+        fields = ['PARENT']
+
 
 class ResourceListSerializer(serializers.ModelSerializer):
     class Meta:

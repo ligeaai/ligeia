@@ -1,5 +1,5 @@
 from django.urls import include, path, re_path
-from .views import ResourceListSaveView, ResourceListView, ResourceListDetailView,ResourceListDrawerMenutView
+from .views import ResourceListSaveView, ResourceListView, ResourceListDetailView,ResourceListDrawerMenutView,ResourceListEditorTreeMenuView,ResourceListEditorHierarchyView
 from django.urls.resolvers import URLPattern
 
 urlpatterns = [
@@ -7,4 +7,7 @@ urlpatterns = [
     path("scripts/", ResourceListView.as_view(), name="code-list"),
     path("details/", ResourceListDetailView.as_view(), name="clDetails"),
     path("menu/", ResourceListDrawerMenutView.as_view(), name="clDetails"),
+    path("parent/", ResourceListEditorTreeMenuView.as_view(), name="test"),
+    path("hierarchy/", ResourceListEditorHierarchyView.as_view(), name="test"),
 ]
+    
