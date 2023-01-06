@@ -5,7 +5,8 @@ import {
     LOAD_FILTERED_TREEVIEW_ITEM,
     SET_FILTERED_LAYER_NAME,
     CLEAN_TREEVIEW,
-    LOAD_TREE_VIEW_WIDTH
+    LOAD_TREE_VIEW_WIDTH,
+    UPDATE_TREE_VIEW_WIDTH_HIERARCHY
 } from "../../actions/types"
 const initialState = {
     treeMenuItem: [],
@@ -13,12 +14,15 @@ const initialState = {
     filteredLayerName: "NONE",
     selectedItem: { selectedIndex: -3 },
     width: {
-        "overview": 250,
-        "codelist": 250,
-        "item": 250,
-        "resources": 250,
-        "types": 250,
-        "tags": 250
+        values: {
+            "overview": 250,
+            "codelist": 250,
+            "item": 250,
+            "resources": 250,
+            "types": 250,
+            "tags": 250,
+            "overviewHierarchy": ["1"]
+        }
     }
 };
 
@@ -27,6 +31,14 @@ export default function (state = initialState, action) {
     const { type, payload } = action;
 
     switch (type) {
+        case UPDATE_TREE_VIEW_WIDTH_HIERARCHY:
+            return {
+                ...state,
+                width: {
+                    ...state.width,
+                    values: { ...state.width.values, overviewHierarchy: payload }
+                }
+            }
         case LOAD_TREE_VIEW_WIDTH:
             return {
                 ...state,

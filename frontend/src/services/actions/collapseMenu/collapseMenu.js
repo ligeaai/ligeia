@@ -1,4 +1,4 @@
-import { LOAD_COLLAPSABLE_MENU_ITEMS, SET_SELECTED_COLLAPSE_MENU_ITEM, LOAD_TREE_VIEW_WIDTH } from "../types"
+import { LOAD_COLLAPSABLE_MENU_ITEMS, SET_SELECTED_COLLAPSE_MENU_ITEM, LOAD_TREE_VIEW_WIDTH, UPDATE_TREE_VIEW_WIDTH_HIERARCHY } from "../types"
 
 import { config, instance } from "../../couchApi"
 export const loadCollapseMenu = (path) => async dispatch => {
@@ -25,8 +25,11 @@ export const setSelectedCollapseMenu = async (value) => dispatch => {
 
 export const updateCollapseMenuCouch = (value) => async (dispatch, getState) => {
     const userId = getState().auth.user.id
+    dispatch({
+        type: UPDATE_TREE_VIEW_WIDTH_HIERARCHY,
+        payload: value
+    })
     const treeViewWidth = getState().treeview.width
-    treeViewWidth.values.overviewHierarchy = value
     const body = JSON.stringify({ ...treeViewWidth })
     try {
         let res = await instance
@@ -40,6 +43,7 @@ export const updateCollapseMenuCouch = (value) => async (dispatch, getState) => 
             type: LOAD_TREE_VIEW_WIDTH,
             payload: treeViewWidth
         })
+
         console.log(res);
     } catch (err) {
         console.log(err);
