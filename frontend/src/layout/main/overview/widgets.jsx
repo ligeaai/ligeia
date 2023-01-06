@@ -50,7 +50,7 @@ const Widgets = React.forwardRef((props, ref) => {
             },
           }}
         >
-          <Grid container sx={{ justifyContent: "space-between" }}>
+          <Grid container sx={{ justifyContent: "space-between", p: 0.5 }}>
             <Grid item>
               <IconButton
                 onClick={() => {
