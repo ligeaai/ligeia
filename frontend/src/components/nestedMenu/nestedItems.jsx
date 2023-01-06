@@ -61,7 +61,7 @@ export const ItemSperatorLineXL = () => {
         border: "0.2px solid",
         backgroundColor: "status.secondary",
         borderColor: "status.secondary",
-        width: "98%",
+        width: "100%",
         margin: "auto",
       }}
     />

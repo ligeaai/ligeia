@@ -7,7 +7,6 @@ const divider = () => {
       variant="middle"
       flexItem
       sx={{
-        marginX: "2px",
         borderWidth: "0.2px",
         borderColor: "text.main",
         backgroundColor: "text.main",
