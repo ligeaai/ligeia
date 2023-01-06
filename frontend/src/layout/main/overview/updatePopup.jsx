@@ -2,49 +2,17 @@ import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Button, Grid, Typography } from "@mui/material";
 
-import { Select, InputGenerator, LoadingComponent } from "../../../components";
+import { LoadingComponent } from "../../../components";
 import {
   changeSelectValue,
   changeValeus,
 } from "../../../services/actions/overview/overviewDialog";
 import { loadSelectItems } from "../../../services/actions/overview/overviewDialog";
 import { updateChart } from "../../../services/actions/overview/taps";
-import TagService from "../../../services/api/tags";
 import LinechartPopUp from "../../../components/highchart/popup/lineChartPopUp";
 import AngularPopUp from "../../../components/highchart/popup/angularPopUp";
 import SolidPopUp from "../../../components/highchart/popup/solidPopUp";
 import MeasurementPopUp from "../../../components/highchart/popup/measurementPopUp";
-const MesurementInputGenerator = (props) => {
-  const dispatch = useDispatch();
-  console.log(props);
-  const values = useSelector((state) => state.overviewDialog.measuremenetData);
-  console.log(values);
-
-  const handleChangeFunc = async (value) => {
-    console.log(value);
-    dispatch(changeValeus("Mesurement", value));
-    try {
-      const body = JSON.stringify({ TAG_ID: value });
-      let res = await TagService.getTagItem(body);
-      console.log(res);
-      dispatch(changeValeus("Minimum", res.data[0].NORMAL_MINIMUM));
-      dispatch(changeValeus("Maximum", res.data[0].NORMAL_MAXIMUM));
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  return (
-    <Select
-      {...props}
-      values={values}
-      //defaultValue={defaultValue}
-      valuesPath="FROM_ITEM_ID"
-      dataTextPath="FROM_ITEM_ID"
-      handleChangeFunc={handleChangeFunc}
-    />
-  );
-};
 
 const DialogContent = ({ highchartProps, chartId, ...rest }) => {
   const dispatch = useDispatch();
@@ -72,7 +40,16 @@ const DialogContent = ({ highchartProps, chartId, ...rest }) => {
   }, []);
   return (
     <Grid container sx={{ p: 1, width: "100%" }}>
-      <Typography sx={{ fontWeight: "bold", mb: 1, fontSize: "14px" }}>
+      <Typography
+        id="draggable-dialog-title"
+        sx={{
+          fontWeight: "bold",
+          mb: 1,
+          fontSize: "14px",
+          width: "100%",
+          cursor: "all-scroll",
+        }}
+      >
         {highchartProps.Type}
       </Typography>
       {type === highchartProps.Type ? (

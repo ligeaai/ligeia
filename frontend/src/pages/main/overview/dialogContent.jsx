@@ -50,10 +50,14 @@ const DialogContent = ({ handleClose }) => {
     }
     myFunc();
   }, []);
-
   return (
-    <Grid container sx={{ p: 1, width: "100%" }}>
-      <Grid item sx={{ pb: 2 }}>
+    <Grid container id="draggable-dialog-title" sx={{ p: 1, width: "100%" }}>
+      <Grid
+        item
+        sx={{
+          mb: 1,
+        }}
+      >
         <Select
           values={values}
           handleChangeFunc={handleChangeFunc}
