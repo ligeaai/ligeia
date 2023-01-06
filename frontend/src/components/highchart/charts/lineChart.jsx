@@ -4,6 +4,7 @@ import Box from "@mui/material/Box";
 import HighchartsReact from "highcharts-react-official";
 import exporting from "highcharts/modules/exporting";
 import exportdata from "highcharts/modules/export-data";
+import { wsBaseUrl } from "../../../services/baseApi";
 var client;
 var W3CWebSocket = require("websocket").w3cwebsocket;
 exporting(Highcharts);
@@ -81,8 +82,8 @@ export const LineChart = ({
       };
     }
     if (backfillData) {
-      client = new W3CWebSocket("ws://34.125.220.112:8000/ws/tags/backfill/");
-    } else client = new W3CWebSocket("ws://34.125.220.112:8000/ws/tags/");
+      client = new W3CWebSocket(`${wsBaseUrl}/ws/tags/backfill/`);
+    } else client = new W3CWebSocket(`${wsBaseUrl}/ws/tags/`);
     client.onerror = function () {
       console.log("Connection Error");
     };

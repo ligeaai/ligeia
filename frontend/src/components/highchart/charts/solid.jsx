@@ -4,7 +4,7 @@ import solidGauge from "highcharts/modules/solid-gauge.js";
 import HighchartsReact from "highcharts-react-official";
 import React from "react";
 import exporting from "highcharts/modules/exporting";
-
+import { wsBaseUrl } from "../../../services/baseApi";
 exporting(Highcharts);
 highchartsMore(Highcharts);
 solidGauge(Highcharts);
@@ -14,7 +14,7 @@ export const Solid = ({ highchartProps, width, height }) => {
   const [categories, setCategories] = React.useState("");
   const [value, setValue] = React.useState("");
   React.useEffect(() => {
-    client = new W3CWebSocket("ws://34.125.220.112:8000/ws/tags/");
+    client = new W3CWebSocket(`${wsBaseUrl}/ws/tags/`);
     client.onerror = function () {
       console.log("Connection Error");
     };

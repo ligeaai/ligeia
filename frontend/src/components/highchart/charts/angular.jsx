@@ -2,7 +2,7 @@ import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import React from "react";
 import exporting from "highcharts/modules/exporting";
-
+import { wsBaseUrl } from "../../../services/baseApi";
 exporting(Highcharts);
 var client;
 var W3CWebSocket = require("websocket").w3cwebsocket;
@@ -11,7 +11,7 @@ export const Angular = ({ highchartProps, width, height }) => {
   const [categories, setCategories] = React.useState("");
   const [value, setValue] = React.useState("");
   React.useEffect(() => {
-    client = new W3CWebSocket("ws://34.125.220.112:8000/ws/tags/");
+    client = new W3CWebSocket(`${wsBaseUrl}/ws/tags/`);
     client.onerror = function () {
       console.log("Connection Error");
     };
