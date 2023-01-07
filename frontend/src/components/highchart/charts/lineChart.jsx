@@ -50,7 +50,7 @@ export const LineChart = ({
             let jsonData = JSON.parse(e.data);
             console.log(jsonData);
             if (Object.keys(jsonData.message).length > 5) {
-              setCategories((prev) => [...prev, jsonData.message.createdtime]);
+              setCategories((prev) => [...prev, jsonData.message.timestamp]);
               setAllData((prev) => [...prev, jsonData.message]);
               setData((prev) => [...prev, parseInt(jsonData.message.value)]);
             }

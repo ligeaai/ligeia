@@ -55,80 +55,86 @@ function a11yProps(index) {
 }
 let value = "";
 
-const MyTap = React.forwardRef(({ x, i, handleChange, ...rest }, ref) => {
-  const [changeText, setChangeText] = React.useState(false);
-  const dispatch = useDispatch();
-  const onChange = (e) => {
-    value = e;
-  };
-  const handleUserClick = () => {
-    setChangeText(false);
-    dispatch(updateTabHeader(x, value));
-  };
-  React.useEffect(() => {
-    if (changeText) {
-      value = x;
-      window.addEventListener("click", handleUserClick);
-    }
-    return () => {
-      window.removeEventListener("click", handleUserClick);
+const MyTap = React.forwardRef(
+  ({ x, i, handleChange, active, ...rest }, ref) => {
+    const [changeText, setChangeText] = React.useState(false);
+    const dispatch = useDispatch();
+    const onChange = (e) => {
+      value = e;
     };
-  }, [changeText]);
-  if (!changeText)
+    const handleUserClick = () => {
+      setChangeText(false);
+      dispatch(updateTabHeader(x, value));
+    };
+    React.useEffect(() => {
+      if (changeText) {
+        value = x;
+        window.addEventListener("click", handleUserClick);
+      }
+      return () => {
+        window.removeEventListener("click", handleUserClick);
+      };
+    }, [changeText]);
+    if (!changeText)
+      return (
+        <Box
+          sx={{
+            borderTopLeftRadius: "15px",
+            borderTopRightRadius: "15px",
+            height: active === i ? "48px" : "40px",
+            mt: active === i ? 0 : 1,
+            display: "flex",
+            alignItems: "center",
+            position: "relative",
+          }}
+        >
+          <Tab
+            ref={ref}
+            label={`${x}`}
+            {...a11yProps(i)}
+            {...rest}
+            sx={{
+              maxWidth: active === i ? "160px" : "150px",
+              textTransform: "capitalize",
+              fontSize: active === i ? "14px" : "12px",
+            }}
+            onDoubleClick={() => {
+              setChangeText(true);
+            }}
+          />
+          <ClearIcon
+            fontSize="small"
+            sx={{
+              cursor: "pointer",
+              fill: "red",
+            }}
+            onClick={() => {
+              dispatch(
+                setConfirmation({
+                  title: "Are you sure you want to delete the dashboard?",
+                  body: <>{x} will be deleted and will not come back</>,
+                  agreefunction: () => {
+                    dispatch(deleteTapHeader(x));
+                    handleChange(0);
+                  },
+                })
+              );
+            }}
+          ></ClearIcon>
+        </Box>
+      );
     return (
-      <Box
-        sx={{
-          height: "48px",
-          display: "flex",
-          alignItems: "center",
-          position: "relative",
-        }}
-      >
-        <Tab
-          ref={ref}
-          label={`${x}`}
-          {...a11yProps(i)}
+      <Box sx={{ display: "flex", alignItems: "center", maxWidth: "150px" }}>
+        <MyTextField
+          defaultValue={x}
+          handleChangeFunc={onChange}
+          autoFocus
           {...rest}
-          sx={{
-            maxWidth: "150px",
-            textTransform: "capitalize",
-          }}
-          onDoubleClick={() => {
-            setChangeText(true);
-          }}
         />
-        <ClearIcon
-          fontSize="small"
-          sx={{
-            cursor: "pointer",
-            fill: "red",
-          }}
-          onClick={() => {
-            dispatch(
-              setConfirmation({
-                title: "Are you sure you want to delete the dashboard?",
-                body: <>{x} will be deleted and will not come back</>,
-                agreefunction: () => {
-                  dispatch(deleteTapHeader(x));
-                  handleChange(0);
-                },
-              })
-            );
-          }}
-        ></ClearIcon>
       </Box>
     );
-  return (
-    <Box sx={{ display: "flex", alignItems: "center", maxWidth: "150px" }}>
-      <MyTextField
-        defaultValue={x}
-        handleChangeFunc={onChange}
-        autoFocus
-        {...rest}
-      />
-    </Box>
-  );
-});
+  }
+);
 function MyTabs() {
   console.log(palette());
   const ref = React.createRef();
@@ -164,6 +170,7 @@ function MyTabs() {
           value={value}
           onChange={handleChange}
           aria-label="action tabs example"
+          scrollButtons="auto"
           sx={{ height: "48px", backgroundColor: "background.info" }}
         >
           {titles.map((x, i) => (
@@ -172,6 +179,7 @@ function MyTabs() {
               key={`${x}`}
               x={x}
               i={i}
+              active={value}
               handleChange={handleChange}
             ></MyTap>
           ))}
@@ -179,7 +187,8 @@ function MyTabs() {
             key={`a`}
             container
             sx={{
-              height: "48px",
+              height: "40px",
+              mt: 1,
               width: "50px",
               justifyContent: "center",
               alignItems: "center",

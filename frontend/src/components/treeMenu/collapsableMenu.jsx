@@ -71,6 +71,7 @@ const StyledTreeItem = styled((props) => (
   whiteSpace: "nowrap",
   overflow: "hidden",
   textOverflow: "ellipsis",
+  color: theme.palette.status.primary,
   [`& .${treeItemClasses.iconContainer}`]: {
     "& .close": {
       opacity: 0.3,
@@ -80,6 +81,12 @@ const StyledTreeItem = styled((props) => (
     marginLeft: 15,
     paddingLeft: 18,
   },
+  ".MuiTreeItem-label": {
+    variant: "subtitle2",
+    overflow: "hidden",
+    whiteSpace: "nowrap",
+    textOverflow: "ellipsis",
+  },
 }));
 const MyStyledTreeItem = React.memo(({ myItems, path }) => {
   const dispatch = useDispatch();
@@ -88,7 +95,6 @@ const MyStyledTreeItem = React.memo(({ myItems, path }) => {
     if (e.CHILD)
       return (
         <StyledTreeItem
-          sx={{ color: "status.primary" }}
           key={i}
           nodeId={e.TO_ITEM_ID}
           label={e.TO_ITEM_NAME}
@@ -122,7 +128,6 @@ const MyStyledTreeItem = React.memo(({ myItems, path }) => {
       );
     return (
       <StyledTreeItem
-        sx={{ color: "status.primary" }}
         key={i}
         nodeId={e.TO_ITEM_ID}
         label={e.TO_ITEM_NAME}
