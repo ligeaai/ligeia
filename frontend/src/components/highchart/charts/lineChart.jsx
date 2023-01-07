@@ -1,14 +1,16 @@
 import Highcharts from "highcharts/highstock";
 import React from "react";
+
 import Box from "@mui/material/Box";
+
 import HighchartsReact from "highcharts-react-official";
 import exporting from "highcharts/modules/exporting";
-import exportdata from "highcharts/modules/export-data";
 import { wsBaseUrl } from "../../../services/baseApi";
+
+import { DataGrid } from "../../index";
 var client;
 var W3CWebSocket = require("websocket").w3cwebsocket;
 exporting(Highcharts);
-exportdata(Highcharts);
 
 export const LineChart = ({
   highchartProps,
@@ -18,64 +20,14 @@ export const LineChart = ({
   backfillData,
   tabular,
 }) => {
-  Highcharts.addEvent(Highcharts.Chart, "render", function () {
-    var table = this.dataTableDiv;
-    if (table) {
-      // Apply styles inline because stylesheets are not passed to the exported SVG
-      Highcharts.css(table.querySelector("table"), {
-        "border-collapse": "collapse",
-        "border-spacing": 0,
-        background: "white",
-        "min-width": "100%",
-        "font-family": "sans-serif",
-        "font-size": "14px",
-        overflow: "scrol",
-      });
-
-      [].forEach.call(
-        table.querySelectorAll("td, th, caption"),
-        function (elem) {
-          Highcharts.css(elem, {
-            border: "1px solid silver",
-            padding: "0.5em",
-          });
-        }
-      );
-
-      Highcharts.css(table.querySelector("caption"), {
-        "border-bottom": "none",
-        "font-size": "1.1em",
-        "font-weight": "bold",
-      });
-
-      [].forEach.call(
-        table.querySelectorAll("caption, tr"),
-        function (elem, i) {
-          if (i % 2) {
-            Highcharts.css(elem, {
-              background: "#f8f8f8",
-            });
-          }
-        }
-      );
-
-      // Add the table as the subtitle to make it part of the export
-      this.setTitle(null, {
-        text: table.innerHTML,
-        useHTML: true,
-      });
-      if (table.parentNode) {
-        table.parentNode.removeChild(table);
-      }
-      delete this.dataTableDiv;
-    }
-  });
   console.log(liveData);
   console.log(backfillData);
   const [categories, setCategories] = React.useState([]);
   const [data, setData] = React.useState([]);
+  const [allData, setAllData] = React.useState([]);
   React.useEffect(() => {
     if (client) {
+      setAllData([]);
       setData([]);
       client.onclose = function () {
         console.log("WebSocket Client Closed");
@@ -92,7 +44,6 @@ export const LineChart = ({
     };
 
     client.onmessage = function (e) {
-      console.log(e);
       function sendNumber() {
         if (client.readyState === client.OPEN) {
           if (typeof e.data === "string") {
@@ -100,7 +51,7 @@ export const LineChart = ({
             console.log(jsonData);
             if (Object.keys(jsonData.message).length > 5) {
               setCategories((prev) => [...prev, jsonData.message.createdtime]);
-
+              setAllData((prev) => [...prev, jsonData.message]);
               setData((prev) => [...prev, parseInt(jsonData.message.value)]);
             }
 
@@ -182,26 +133,9 @@ export const LineChart = ({
         data: data,
       },
     ],
-    exporting: {
-      showTable: true,
-      allowHTML: true,
-    },
   };
-  return (
-    <Box
-      sx={{
-        ".highcharts-subtitle": {
-          height: tabular ? `calc(${height}px - 25px)` : "0px",
-          overflow: "scroll",
-        },
-        table: {
-          display: tabular ? "block" : "none",
-        },
-        svg: {
-          display: tabular ? "none" : "block",
-        },
-      }}
-    >
+  if (!tabular) {
+    return (
       <HighchartsReact
         highcharts={Highcharts}
         options={{
@@ -213,6 +147,20 @@ export const LineChart = ({
           },
         }}
         constructorType={"stockChart"}
+      />
+    );
+  }
+  return (
+    <Box sx={{ width: width, height: height }}>
+      <DataGrid
+        columns={[
+          { field: "created_by", headerName: "Created By" },
+          { field: "createdtime", headerName: "Created Time" },
+          { field: "message_type", headerName: "Message Type" },
+          { field: "timestamp", headerName: "Time Stamp" },
+          { field: "value", headerName: "Value" },
+        ]}
+        rows={allData}
       />
     </Box>
   );
