@@ -1,14 +1,14 @@
 import {
-    LOAD_DATAGRID_ROW_CODELIST,
-    ON_CHANGE_CODELIST_CELL,
+    LOAD_DATAGRID_ROW_RESOURCELIST,
+    ON_CHANGE_RESOURCELIST_CELL,
     ADD_ERROR_SUCCESS,
-    CLEAN_AFTER_SAVE,
-    SET_SELECTED_ROWS,
-    CLEAN_SELECTED_ROWS,
+    CLEAN_AFTER_SAVE_RESOURCELIST,
+    SET_SELECTED_ROWS_RESOURCELIST,
+    CLEAN_SELECTED_ROWS_RESOURCELIST,
     SELECT_TREEVIEW_ITEM,
-    REFRESH_DELETECHILD_CODELIST,
-    ADD_NEW_CHILD_CODELIST,
-    CLEAN_ALL_DATAGRID_CODELIST,
+    REFRESH_DELETECHILD_RESOURCELIST,
+    ADD_NEW_CHILD_RESOURCELIST,
+    CLEAN_ALL_DATAGRID_RESOURCELIST,
     SET_IS_ACTIVE_CONFIRMATION
 } from "../types"
 
@@ -56,7 +56,7 @@ export const addNewResourceListItemSchema = () => async (dispatch, getState) => 
         payload: { ...payload[0], selectedIndex: -2 }
     });
     dispatch({
-        type: LOAD_DATAGRID_ROW_CODELIST,
+        type: LOAD_DATAGRID_ROW_RESOURCELIST,
         payload: payload
     })
     var pathnames = window.location.pathname.split("/").filter((x) => x);
@@ -80,7 +80,7 @@ export const refreshDataGridResourcelist = () => async (dispatch, getState) => {
         let res = await ResourcelistService.getResourcelistDetail(body);
         console.log(res);
         dispatch({
-            type: LOAD_DATAGRID_ROW_CODELIST,
+            type: LOAD_DATAGRID_ROW_RESOURCELIST,
             payload: res.data
         })
         return Promise.resolve(res.data);
@@ -100,7 +100,7 @@ export const onChangeCell = (id, field, value) => async (dispatch, getState) => 
     rows[id][field] = value
     changedRows.push(id)
     dispatch({
-        type: ON_CHANGE_CODELIST_CELL,
+        type: ON_CHANGE_RESOURCELIST_CELL,
         payload: { rows: rows, changedRows: changedRows.filter(onlyUnique) }
     })
     dispatch({
@@ -178,7 +178,7 @@ export const saveResourceList = () => async (dispatch, getState) => {
                 }
             }))
         dispatch({
-            type: CLEAN_AFTER_SAVE,
+            type: CLEAN_AFTER_SAVE_RESOURCELIST,
         })
         dispatch(loadTreeviewItem(ResourcelistService.getAllTreeitem, "SHORT_LABEL"))
         return true
@@ -255,25 +255,25 @@ export const addChildResourceList = () => async (dispatch, getState) => {
     })
     payload.push(newChild)
     dispatch({
-        type: LOAD_DATAGRID_ROW_CODELIST,
+        type: LOAD_DATAGRID_ROW_RESOURCELIST,
         payload: payload
     })
     dispatch({
-        type: ADD_NEW_CHILD_CODELIST,
+        type: ADD_NEW_CHILD_RESOURCELIST,
         payload: newChild.ROW_ID
     })
 }
 
 export const setSelectedRows = (payload) => (dispatch) => {
     dispatch({
-        type: SET_SELECTED_ROWS,
+        type: SET_SELECTED_ROWS_RESOURCELIST,
         payload: payload
     })
 }
 
 export const cleanSelectedRows = () => (dispatch) => {
     dispatch({
-        type: CLEAN_SELECTED_ROWS
+        type: CLEAN_SELECTED_ROWS_RESOURCELIST
     })
 }
 
@@ -321,14 +321,14 @@ export const deleteChild = () => (dispatch, getState) => {
         }
     })
     dispatch({
-        type: REFRESH_DELETECHILD_CODELIST,
+        type: REFRESH_DELETECHILD_RESOURCELIST,
         payload: { tempRows, deletedRows, changedNew }
     })
 }
 
 export const cleanAllDataGrid = () => dispatch => {
     dispatch({
-        type: CLEAN_ALL_DATAGRID_CODELIST,
+        type: CLEAN_ALL_DATAGRID_RESOURCELIST,
 
     })
 }

@@ -35,12 +35,14 @@ const Tabs = () => {
           ? "calc(100vh - 56px)"
           : "calc(100vh - 60px - 50px - 16px )",
         "& .super-app-theme--cell": {
-          backgroundColor: grey[200],
+          backgroundColor: "deneme.main",
         },
-        button: { color: "#4B4B4B" },
+        button: {
+          color: "text.primary"
+        },
         m: 0.5,
         border: "0.5px solid",
-        borderColor: grey[200],
+        borderColor: "background.main",
         borderRadius: "5px",
         position: "relative",
       }}

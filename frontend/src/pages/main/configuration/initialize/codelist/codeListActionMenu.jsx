@@ -42,7 +42,7 @@ export const CustomToolbar = () => {
                 dispatch(addChildCodeList());
               }}
             >
-              <AddBoxIcon fontSize="small" sx={{ color: "#4B4B4B" }} />
+              <AddBoxIcon fontSize="small" sx={{ color: "icon.secondary" }} />
             </IconButton>
           </Tooltip>
 
@@ -58,7 +58,7 @@ export const CustomToolbar = () => {
                 dispatch(deleteChild());
               }}
             >
-              <DeleteIcon fontSize="small" sx={{ color: "#4B4B4B" }} />
+              <DeleteIcon fontSize="small" sx={{ color: "icon.secondary" }} />
             </IconButton>
           </Tooltip>
           <Tooltip
@@ -69,7 +69,7 @@ export const CustomToolbar = () => {
           >
             <GridToolbarFilterButton
               sx={{
-                color: "#4B4B4B",
+                color: "icon.secondary",
                 span: {
                   m: 0,
                 },
@@ -84,7 +84,7 @@ export const CustomToolbar = () => {
           >
             <GridToolbarColumnsButton
               sx={{
-                color: "#4B4B4B",
+                color: "icon.secondary",
                 span: {
                   m: 0,
                 },
@@ -99,7 +99,7 @@ export const CustomToolbar = () => {
           >
             <GridToolbarDensitySelector
               sx={{
-                color: "#4B4B4B",
+                color: "icon.secondary",
                 span: {
                   m: 0,
                 },
@@ -114,7 +114,7 @@ export const CustomToolbar = () => {
           >
             <GridToolbarExport
               sx={{
-                color: "#4B4B4B",
+                color: "icon.secondary",
                 span: {
                   m: 0,
                 },

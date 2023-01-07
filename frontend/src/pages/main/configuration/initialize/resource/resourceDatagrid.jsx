@@ -54,7 +54,7 @@ export default function TreeDataWithGap() {
         if (isMount) {
             dispatch(setSaveFunctonConfirmation(saveResourceList));
             dispatch(
-                setTitleConfirmation("Are you sure you want to save this code list ? ")
+                setTitleConfirmation("Are you sure you want to save this resource list ? ")
             );
             dispatch(setBodyConfirmation(<ConfirmResourceDataGrid />));
         } else if (selectedIndex !== -2) {

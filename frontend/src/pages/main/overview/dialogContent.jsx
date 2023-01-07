@@ -79,6 +79,7 @@ const DialogContent = ({ handleClose }) => {
                 dispatch(saveChart());
                 handleClose();
               }}
+              color="success"
             >
               Save
             </Button>

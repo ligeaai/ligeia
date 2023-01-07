@@ -43,7 +43,7 @@ const SearchBarMobile = (props) => {
   return (
     <Search>
       <SearchIconWrapper>
-        <SearchIcon sx={{ color: "icon.main" }} />
+        <SearchIcon sx={{ color: "icon.secondary" }} />
       </SearchIconWrapper>
       <StyledInputBase
         key="search"

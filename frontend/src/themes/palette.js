@@ -16,8 +16,8 @@ const Palette = () => {
         ...(theme === "light" ? {
 
             primary: {
-                light: "#ffffff",
-                main: "#42526E",
+                light: "#cfd8dc",
+                main: "#212121", // typography
                 dark: "#819ca9", //header
             },
 
@@ -71,6 +71,10 @@ const Palette = () => {
                 info: "#cfd8dc", //search bar hover
             },
 
+            chart: {
+                main: "#cfd8dc"
+            },
+
             deneme: {
                 main: "#ff3d00",
             },
@@ -90,8 +94,8 @@ const Palette = () => {
         } : {
 
             primary: {
-                light: "#9E9E9E",
-                main: "#424242",
+                light: "#ffffff",
+                main: "#ffffff",
                 dark: "#212121", // DarkHeader
             },
 
@@ -103,7 +107,7 @@ const Palette = () => {
             },
 
             text: {
-                primary: "#cfd8dc", // drawer menu text for dark
+                primary: "#ffffff", // drawer menu text for dark
                 main: "#eceff1", // select item for drawer text for dark
                 secondary: "#eeeeee", // card header text for dark
                 success: "#e0e0e0", //card info text for dark
@@ -141,6 +145,10 @@ const Palette = () => {
                 primary: "#757575", // nested menu hover for dark
                 main: "#f44336",
                 secondary: "#607d8b", // card hover for dark
+            },
+
+            chart: {
+                main: "#ffffff"
             },
 
             deneme: {
