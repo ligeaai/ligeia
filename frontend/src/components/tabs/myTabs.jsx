@@ -165,11 +165,12 @@ function MyTabs() {
         },
       }}
     >
-      <AppBar position="static" color="default">
+      <AppBar position="static" sx={{ width: "100%", boxShadow: "none" }}>
         <Tabs
           value={value}
           onChange={handleChange}
           aria-label="action tabs example"
+          variant="scrollable"
           scrollButtons="auto"
           sx={{ height: "48px", backgroundColor: "background.info" }}
         >

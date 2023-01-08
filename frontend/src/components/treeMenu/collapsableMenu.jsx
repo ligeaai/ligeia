@@ -82,7 +82,7 @@ const StyledTreeItem = styled((props) => (
     paddingLeft: 18,
   },
   ".MuiTreeItem-label": {
-    variant: "subtitle2",
+    ...theme.typography.subtitle2,
     overflow: "hidden",
     whiteSpace: "nowrap",
     textOverflow: "ellipsis",
