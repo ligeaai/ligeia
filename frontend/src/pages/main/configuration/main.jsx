@@ -6,18 +6,18 @@ import Cards from "../../../components/cardGenerator/cards";
 import { LoadingComponent } from "../../../components";
 import { setSelectedDrawerItem } from "../../../services/actions/drawerMenu/drawerMenu";
 
-const Main = () => {
+const Main = ({ way }) => {
   const dispatch = useDispatch();
   const isFullScreen = useSelector((state) => state.fullScreen.isFullScreen);
   const drawerData = useSelector((state) => state.drawerMenu.data);
   React.useEffect(() => {
     if (drawerData) {
-      const drawerDataConfiguration = drawerData["Configuration"];
+      const drawerDataConfiguration = drawerData[way];
       dispatch(setSelectedDrawerItem(drawerDataConfiguration));
     }
   }, [drawerData]);
   if (drawerData) {
-    const drawerDataConfiguration = drawerData["Configuration"];
+    const drawerDataConfiguration = drawerData[way];
     var cards = [];
     Object.keys(drawerDataConfiguration.Items).map((e) => {
       var url = drawerDataConfiguration.Items[e].SHORT_LABEL.toLowerCase();
@@ -25,7 +25,7 @@ const Main = () => {
       cards.push({
         cardTitle: drawerDataConfiguration.Items[e].SHORT_LABEL,
         //cardBody: "Administration of the platform",
-        cardURL: `/configuration/${url}`,
+        cardURL: `/${way.toLowerCase()}/${url}`,
         // selectedDrawerItem:
         //   drawerDataConfiguration.Items[e].Items[
         //     Object.keys(drawerDataConfiguration.Items[e].Items)[0]

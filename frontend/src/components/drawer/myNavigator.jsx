@@ -4,14 +4,14 @@ import { Navigate, useParams } from "react-router-dom";
 
 import { setSelectedDrawerItem } from "../../services/actions/drawerMenu/drawerMenu";
 import history from "../../routers/history";
-const MyNavigator = () => {
+const MyNavigator = ({ way }) => {
   const dispatch = useDispatch();
   const { myKey } = useParams();
   const drawerMenu = useSelector((state) => state.drawerMenu.data);
   var url = "/";
 
   if (drawerMenu) {
-    const configurationItems = drawerMenu.Configuration.Items;
+    const configurationItems = drawerMenu[way].Items;
     Object.keys(configurationItems).map((e) => {
       var myKeyValidator = configurationItems[e].SHORT_LABEL.toLowerCase();
       myKeyValidator = myKeyValidator.replace(/ /g, "_");
