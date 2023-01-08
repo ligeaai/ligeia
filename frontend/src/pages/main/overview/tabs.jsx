@@ -38,10 +38,9 @@ const Tabs = () => {
           backgroundColor: "deneme.main",
         },
         button: {
-          color: "text.primary"
+          color: "text.primary",
         },
-        m: 0.5,
-        border: "0.5px solid",
+
         borderColor: "background.main",
         borderRadius: "5px",
         position: "relative",
