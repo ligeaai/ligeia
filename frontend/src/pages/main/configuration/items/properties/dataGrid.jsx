@@ -72,9 +72,15 @@ const MyDataGrid = ({ type, isLinksActive }) => {
           ".MuiDataGrid-pinnedRows": {
             zIndex: 2,
           },
-          ".myRenderCell": {
-            backgroundColor: "background.main"
-          }
+          ".MuiDataGrid-cell": {
+            backgroundColor: "background.main",
+          },
+          ".super-app-theme--cell": {
+            backgroundColor: "background.secondary",
+          },
+          ".css-1w5m2wr-MuiDataGrid-virtualScroller": {
+            overflowY: "scroll",
+          },
         }}
         componentsProps={{
           basePopper: {
@@ -113,7 +119,7 @@ const MyDataGrid = ({ type, isLinksActive }) => {
         experimentalFeatures={{ rowPinning: true }}
         onCellEditCommit={onCellEditCommit}
         disableSelectionOnClick={true}
-      //disableVirtualization={true}
+        //disableVirtualization={true}
       />
     );
   } else {
