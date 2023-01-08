@@ -25,6 +25,8 @@ import {
 } from "../../../../../services/actions/item/itemLinkEditor";
 import DatePicker from "../../../../../components/datePicker/datePicker";
 import Dialog from "./dialog";
+import { TextField } from "@mui/material";
+
 const LinkEditor = () => {
   const isMount = useIsMount();
   const dispatch = useDispatch();
@@ -130,7 +132,7 @@ const LinkEditor = () => {
                                   });
                                 }}
                               >
-                                <DeleteIcon fontSize="small" />
+                                <DeleteIcon sx={{ color: "text.main" }} fontSize="small" />
                               </IconButton>
                             </Grid>
                             <Grid
@@ -148,7 +150,7 @@ const LinkEditor = () => {
                               </Grid>
                             </Grid>
                             <Grid item xs={6} sx={{ p: 1 }}>
-                              <Grid container sx={{ fontSize: "12px" }}>
+                              <Grid container sx={{ fontSize: "12px", color: "text.main" }}>
                                 <Grid item xs={12}>
                                   Start:
                                   <DatePicker
@@ -172,6 +174,7 @@ const LinkEditor = () => {
                                 >
                                   End:
                                   <DatePicker
+
                                     time={new Date(links[a].END_DATETIME)}
                                     onChangeFunc={onChangeEndDateTime}
                                   />
@@ -277,7 +280,7 @@ const LinkEditor = () => {
                                   });
                                 }}
                               >
-                                <DeleteIcon fontSize="small" />
+                                <DeleteIcon sx={{ color: "text.main" }} fontSize="small" />
                               </IconButton>
                             </Grid>
                             <Grid

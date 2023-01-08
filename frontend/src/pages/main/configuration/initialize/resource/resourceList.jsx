@@ -42,7 +42,7 @@ const ResourceList = ({ isHome }) => {
           myRes.push(e.LAYER_NAME);
         });
         setLayerValues(["NONE", ...myRes]);
-      } catch {}
+      } catch { }
     };
     myFunc();
   }, []);
@@ -102,7 +102,7 @@ const ResourceList = ({ isHome }) => {
             </Box>
           </Grid>
           <ItemSperatorLineXL />
-          <Grid container sx={{ alignItems: "center", pl: 2 }}>
+          <Grid container sx={{ alignItems: "center", pl: 2, marginY: "2px" }}>
             <Grid item>
               <MyActionMenu />
             </Grid>

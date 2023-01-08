@@ -34,7 +34,7 @@ export const CustomToolbar = () => {
                     <Tooltip
                         title={"Add Child"}
                         componentsProps={{
-                            tooltip: { sx: { backgroundColor: "primary.dark" } },
+                            tooltip: { sx: { backgroundColor: "icon.success" } },
                         }}
                     >
                         <IconButton
@@ -50,7 +50,7 @@ export const CustomToolbar = () => {
                     <Tooltip
                         title={"Delete Child"}
                         componentsProps={{
-                            tooltip: { sx: { backgroundColor: "primary.dark" } },
+                            tooltip: { sx: { backgroundColor: "icon.success" } },
                         }}
                     >
                         <IconButton
@@ -65,7 +65,7 @@ export const CustomToolbar = () => {
                     <Tooltip
                         title={"Show Filters"}
                         componentsProps={{
-                            tooltip: { sx: { backgroundColor: "primary.dark" } },
+                            tooltip: { sx: { backgroundColor: "icon.success" } },
                         }}
                     >
                         <GridToolbarFilterButton
@@ -80,7 +80,7 @@ export const CustomToolbar = () => {
                     <Tooltip
                         title={"Find Column"}
                         componentsProps={{
-                            tooltip: { sx: { backgroundColor: "primary.dark" } },
+                            tooltip: { sx: { backgroundColor: "icon.success" } },
                         }}
                     >
                         <GridToolbarColumnsButton
@@ -95,7 +95,7 @@ export const CustomToolbar = () => {
                     <Tooltip
                         title={"Show Density"}
                         componentsProps={{
-                            tooltip: { sx: { backgroundColor: "primary.dark" } },
+                            tooltip: { sx: { backgroundColor: "icon.success" } },
                         }}
                     >
                         <GridToolbarDensitySelector
@@ -110,7 +110,7 @@ export const CustomToolbar = () => {
                     <Tooltip
                         title={"Show Export"}
                         componentsProps={{
-                            tooltip: { sx: { backgroundColor: "primary.dark" } },
+                            tooltip: { sx: { backgroundColor: "icon.success" } },
                         }}
                     >
                         <GridToolbarExport

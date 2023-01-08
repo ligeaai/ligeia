@@ -53,6 +53,7 @@ const Palette = () => {
                 primary: "#cfd8dc", // nested menu hover
                 main: "#f44336",
                 secondary: "#00897b", // card fancy hover
+                success: "#e0e0e0",// button hover
             },
 
             icon: {
@@ -125,7 +126,7 @@ const Palette = () => {
             icon: {
                 primary: "#cfd8dc", //items icon
                 main: "#37474f", //searchbar icon
-                secondary: "#e0e0e0", // items under icon
+                secondary: "#ffffff", // items under icon
                 success: "#5c6bc0", // icon hover text 
             },
 
@@ -145,6 +146,7 @@ const Palette = () => {
                 primary: "#757575", // nested menu hover for dark
                 main: "#f44336",
                 secondary: "#607d8b", // card hover for dark
+                success: "#bdbdbd",//button hover
             },
 
             chart: {

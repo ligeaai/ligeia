@@ -46,11 +46,11 @@ const MaterialUIPickers = ({
                   svg: {
                     fontSize: "medium",
                   },
-                  color: "#4B4B4B",
+                  color: "primary.main",
                 },
               },
               Input: {
-                color: "#4B4B4B",
+                color: "primary.main",
                 fontSize: "12px",
                 paddingY: "6px",
               },

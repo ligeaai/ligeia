@@ -87,6 +87,7 @@ const UnitOne = ({ isHome }) => {
           boxShadow: 3,
           borderRadius: "3px",
           width: "100px",
+          color: "text.main"
         }}
       >
         <Grid container>
@@ -118,7 +119,7 @@ const UnitOne = ({ isHome }) => {
           </Grid>
           <ItemSperatorLineXL />
 
-          <Grid container sx={{ alignItems: "center", pl: 2 }}>
+          <Grid container sx={{ alignItems: "center", pl: 2, marginY: "2px" }}>
             <Grid item>
               {isLinksActive ? <LinkActionMenu /> : <MyActionMenu />}
             </Grid>

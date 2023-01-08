@@ -84,9 +84,9 @@ const Tags = ({ isHome }) => {
             item
             sx={{
               ml: 1.5,
-              backgroundColor: "myBackgroundColor",
               display: "flex",
               alignItems: "center",
+              marginY: "2px"
             }}
           >
             <TagsActionMenu />
