@@ -86,6 +86,11 @@ const MyTap = React.forwardRef(
             display: "flex",
             alignItems: "center",
             position: "relative",
+            ":hover": {
+              height: "48px",
+              mt: 0,
+              backgroundColor: "hover.primary",
+            },
           }}
         >
           <Tab
@@ -94,9 +99,13 @@ const MyTap = React.forwardRef(
             {...a11yProps(i)}
             {...rest}
             sx={{
+              width: "max-content",
               maxWidth: active === i ? "160px" : "150px",
               textTransform: "capitalize",
               fontSize: active === i ? "14px" : "12px",
+              ":hover": {
+                textShadow: "0.5px 0.5px 0.5px black",
+              },
             }}
             onDoubleClick={() => {
               setChangeText(true);
