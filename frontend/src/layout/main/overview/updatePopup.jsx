@@ -19,14 +19,18 @@ const DialogContent = ({ highchartProps, chartId, ...rest }) => {
   const type = useSelector((state) => state.overviewDialog.values.Type);
 
   const body = {
-    Linechart: <LinechartPopUp highchartProps={highchartProps} {...rest} />,
+    "Linechart [Highchart]": (
+      <LinechartPopUp highchartProps={highchartProps} {...rest} />
+    ),
     "Gauge(Angular) [Highchart]": (
       <AngularPopUp highchartProps={highchartProps} {...rest} />
     ),
     "Gauge(Solid) [Highchart]": (
       <SolidPopUp highchartProps={highchartProps} {...rest} />
     ),
-    Measurement: <MeasurementPopUp highchartProps={highchartProps} {...rest} />,
+    "Measurement [Custom]": (
+      <MeasurementPopUp highchartProps={highchartProps} {...rest} />
+    ),
   };
   React.useEffect(() => {
     async function myFunc() {

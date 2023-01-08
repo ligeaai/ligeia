@@ -16,9 +16,9 @@ import UpdatePopUp from "./updatePopup";
 import "../../../assets/css/dashboard.css";
 const Widgets = React.forwardRef((props, ref) => {
   const { widget, style, className, children, ...rest } = props;
-  const [liveData, setLiveData] = React.useState(false);
+  const [liveData, setLiveData] = React.useState(true);
   const [tabular, setTabular] = React.useState(false);
-  const [backfill, setbackfill] = React.useState(true);
+  const [backfill, setbackfill] = React.useState(false);
   const dispatch = useDispatch();
   const [highchartProps, setHighChartProps] = React.useState(null);
   const refresh = useSelector((state) => state.tapsOverview.refresh);
@@ -38,7 +38,12 @@ const Widgets = React.forwardRef((props, ref) => {
       <Box
         ref={ref}
         className={`grid-item ${className}`}
-        sx={{ ...style, boxShadow: 4, borderRadius: "5px", color: "status.primary" }}
+        sx={{
+          ...style,
+          boxShadow: 4,
+          borderRadius: "5px",
+          color: "status.primary",
+        }}
         {...rest}
       >
         <Box
@@ -64,7 +69,10 @@ const Widgets = React.forwardRef((props, ref) => {
             <Grid
               item
               sx={{
-                display: highchartProps.Type === "Linechart" ? "flex" : "none",
+                display:
+                  highchartProps.Type === "Linechart [Highchart]"
+                    ? "flex"
+                    : "none",
               }}
             >
               <FormControlLabel

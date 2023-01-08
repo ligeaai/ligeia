@@ -5,7 +5,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import Box from "@mui/material/Box";
 import { styled } from "@mui/material/styles";
-import { Angular, LineChart, Solid } from "./charts";
+import { Angular, LineChart, Solid, Measurement } from "./charts";
 
 const MyBox = styled(Box)(({ theme }) => {
   return {
@@ -23,8 +23,7 @@ const MyBox = styled(Box)(({ theme }) => {
       text: {
         color: `${theme.palette.text.main} !important`,
         fill: `${theme.palette.text.main} !important`,
-
-      }
+      },
     },
 
     ".highcharts-range-selector-buttons": {
@@ -40,15 +39,12 @@ const MyBox = styled(Box)(({ theme }) => {
     ".highcharts-exporting-group": {
       rect: {
         fill: `${theme.palette.background.main} !important`,
-
       },
 
       path: {
         fill: `${theme.palette.text.main} !important`,
         stroke: `${theme.palette.text.main} !important`,
-
       },
-
     },
 
     ".highcharts-menu": {
@@ -71,7 +67,6 @@ const MyBox = styled(Box)(({ theme }) => {
         fill: `${theme.palette.success.primary} !important`,
       },
     },
-
   };
 });
 
@@ -85,24 +80,27 @@ const Highchart = ({
 }) => {
   const chartType = {
     "Gauge(Angular) [Highchart]": (
-      <MyBox>
-        <Angular highchartProps={highchartProps} width={width} height={height} />
-      </MyBox>
+      <Angular highchartProps={highchartProps} width={width} height={height} />
     ),
-    Linechart: (
-      <MyBox>
-        <LineChart
-          highchartProps={highchartProps}
-          width={width}
-          height={height}
-          liveData={liveData}
-          backfillData={backfillData}
-          tabular={tabular}
-        />
-      </MyBox>
+    "Linechart [Highchart]": (
+      <LineChart
+        highchartProps={highchartProps}
+        width={width}
+        height={height}
+        liveData={liveData}
+        backfillData={backfillData}
+        tabular={tabular}
+      />
     ),
     "Gauge(Solid) [Highchart]": (
       <Solid highchartProps={highchartProps} width={width} height={height} />
+    ),
+    "Measurement [Custom]": (
+      <Measurement
+        highchartProps={highchartProps}
+        width={width}
+        height={height}
+      />
     ),
   };
 

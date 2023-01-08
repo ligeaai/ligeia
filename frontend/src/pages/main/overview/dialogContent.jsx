@@ -29,7 +29,7 @@ const DialogContent = ({ handleClose }) => {
     dispatch(await changeSelectValue(props));
   };
   const body = {
-    Linechart: (
+    "Linechart [Highchart]": (
       <LinechartPopUp highchartProps={properties} handleClose={handleClose} />
     ),
     "Gauge(Angular) [Highchart]": (
@@ -39,7 +39,7 @@ const DialogContent = ({ handleClose }) => {
     "Gauge(Solid) [Highchart]": (
       <SolidPopUp highchartProps={properties} handleClose={handleClose} />
     ),
-    Measurement: (
+    "Measurement [Custom]": (
       <MeasurementPopUp highchartProps={properties} handleClose={handleClose} />
     ),
   };

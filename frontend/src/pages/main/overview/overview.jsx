@@ -10,7 +10,6 @@ import {
 } from "../../../components";
 
 import DrawerMenu from "../../../layout/main/asset/treeViewMenu";
-import TreeView from "./treeview";
 
 import Tabs from "./tabs";
 import { loadCollapseMenu } from "../../../services/actions/collapseMenu/collapseMenu";
