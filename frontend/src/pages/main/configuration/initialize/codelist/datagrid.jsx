@@ -95,6 +95,9 @@ export default function TreeDataWithGap() {
             "& .MuiInputBase-input": {
               padding: "0px important",
             },
+            "& .MuiDataGrid-cell--editing": {
+              backgroundColor: "background.secondary",
+            },
             "& .super-app-theme--cell": {
               backgroundColor: "background.secondary",
             },

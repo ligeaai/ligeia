@@ -81,6 +81,9 @@ const MyDataGrid = ({ type, isLinksActive }) => {
           ".css-1w5m2wr-MuiDataGrid-virtualScroller": {
             overflowY: "scroll",
           },
+          "& .MuiDataGrid-cell--editing": {
+            backgroundColor: "background.secondary",
+          },
         }}
         componentsProps={{
           basePopper: {
@@ -119,7 +122,7 @@ const MyDataGrid = ({ type, isLinksActive }) => {
         experimentalFeatures={{ rowPinning: true }}
         onCellEditCommit={onCellEditCommit}
         disableSelectionOnClick={true}
-      //disableVirtualization={true}
+        //disableVirtualization={true}
       />
     );
   } else {

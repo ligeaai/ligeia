@@ -22,6 +22,7 @@ import history from "../../routers/history";
 //import { useSpring, animated } from 'react-spring/web.cjs';
 
 function MinusSquare(props) {
+  console.log(props);
   return (
     <SvgIcon fontSize="inherit" style={{ width: 14, height: 14 }} {...props}>
       {/* tslint:disable-next-line: max-line-length */}
@@ -90,7 +91,6 @@ const StyledTreeItem = styled((props) => (
 }));
 const MyStyledTreeItem = React.memo(({ myItems, path }) => {
   const dispatch = useDispatch();
-  console.log(myItems);
   return myItems.map((e, i) => {
     if (e.CHILD)
       return (
@@ -142,13 +142,26 @@ const MyStyledTreeItem = React.memo(({ myItems, path }) => {
   });
 });
 function CustomizedTreeView() {
+  const ref = React.createRef();
   const dispatch = useDispatch();
   const items = useSelector((state) => state.collapseMenu.menuItems);
   const expandedItems = useSelector(
     (state) => state.treeview.width.values.overviewHierarchy
   );
   const [expanded, setExpanded] = React.useState(expandedItems);
-
+  const onNodeSelect = (event, nodeId) => {
+    if (event.target.tagName === "svg" || event.target.tagName === "path") {
+      const index = expanded.indexOf(nodeId);
+      const copyExpanded = [...expanded];
+      if (index === -1) {
+        copyExpanded.push(nodeId);
+      } else {
+        copyExpanded.splice(index, 1);
+      }
+      setExpanded(copyExpanded);
+      dispatch(updateCollapseMenuCouch(copyExpanded));
+    }
+  };
   React.useEffect(() => {
     return () => {
       dispatch(updateCouchDb());
@@ -159,22 +172,17 @@ function CustomizedTreeView() {
     <TreeView
       aria-label="customized"
       expanded={expanded}
-      defaultCollapseIcon={<MinusSquare />}
-      defaultExpandIcon={<PlusSquare />}
+      defaultCollapseIcon={<MinusSquare className="MyIcon" />}
+      defaultExpandIcon={<PlusSquare className="MyIcon" />}
       defaultEndIcon={<CloseSquare />}
-      onNodeSelect={(event, nodeId) => {
-        const index = expanded.indexOf(nodeId);
-        const copyExpanded = [...expanded];
-        if (index === -1) {
-          copyExpanded.push(nodeId);
-        } else {
-          copyExpanded.splice(index, 1);
-        }
-        setExpanded(copyExpanded);
-        dispatch(updateCollapseMenuCouch(copyExpanded));
-      }}
+      onNodeSelect={onNodeSelect}
+      ref={ref}
     >
-      <MyStyledTreeItem myItems={items} path={"overview"}></MyStyledTreeItem>
+      <MyStyledTreeItem
+        myItems={items}
+        path={"overview"}
+        onNodeSelect={onNodeSelect}
+      ></MyStyledTreeItem>
     </TreeView>
   );
 }

@@ -80,6 +80,7 @@ export const refreshDataGridCodelist = () => async (dispatch, getState) => {
             type: LOAD_DATAGRID_ROW_CODELIST,
             payload: res.data
         })
+        console.log(res);
         return Promise.resolve(res.data);
     } catch (err) {
         return Promise.reject(err)

@@ -85,6 +85,9 @@ function TreeDataWithGap() {
             "& .super-app-theme--cell": {
               backgroundColor: grey[200],
             },
+            "& .MuiDataGrid-cell--editing": {
+              backgroundColor: "background.secondary",
+            },
           }}
         >
           <DataGridPro
