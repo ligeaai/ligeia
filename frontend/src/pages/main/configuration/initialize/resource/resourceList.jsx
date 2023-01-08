@@ -42,7 +42,7 @@ const ResourceList = ({ isHome }) => {
           myRes.push(e.LAYER_NAME);
         });
         setLayerValues(["NONE", ...myRes]);
-      } catch { }
+      } catch {}
     };
     myFunc();
   }, []);
@@ -68,6 +68,7 @@ const ResourceList = ({ isHome }) => {
             <TreeMenuItems
               path={ResourcelistService.getAllTreeitem}
               textPath="PARENT"
+              historyPathLevel={2}
             />
           }
           path="resources"

@@ -42,7 +42,7 @@ const CodeList = ({ isHome }) => {
           myRes.push(e.LAYER_NAME);
         });
         setLayerValues(["NONE", ...myRes]);
-      } catch { }
+      } catch {}
     };
     myFunc();
   }, []);
@@ -68,6 +68,7 @@ const CodeList = ({ isHome }) => {
             <TreeMenuItems
               path={CodelistService.getAllTreeitem}
               textPath="CODE_TEXT"
+              historyPathLevel={2}
             />
           }
           path="codelist"

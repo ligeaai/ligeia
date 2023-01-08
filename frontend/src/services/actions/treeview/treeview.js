@@ -84,7 +84,7 @@ export const loadTreeviewItem = (path, sortPath) => async (dispatch, getState) =
     }
 }
 
-export const selectTreeViewItem = (index, breadcrumbPath) => async (dispatch, getState) => {
+export const selectTreeViewItem = (index, breadcrumbPath, historyPathLevel) => async (dispatch, getState) => {
     const filteredMenuLength = getState().treeview.filteredMenuItem.length
     const goFunction = () => {
         if (index === -2) {
@@ -93,7 +93,8 @@ export const selectTreeViewItem = (index, breadcrumbPath) => async (dispatch, ge
                 payload: { selectedIndex: -2 }
             });
             dispatch(setGoFunctionConfirmation(() => { }));
-            myHistoryPush(2, "new")
+
+            myHistoryPush(historyPathLevel, "new")
         } else {
             if (index < 0) {
                 index = filteredMenuLength - 1
@@ -111,7 +112,7 @@ export const selectTreeViewItem = (index, breadcrumbPath) => async (dispatch, ge
             dispatch({
                 type: CLEAN_AFTER_SAVE,
             })
-            myHistoryPush(2, payload[breadcrumbPath].toLowerCase())
+            myHistoryPush(historyPathLevel, payload[breadcrumbPath].toLowerCase())
         }
     }
     dispatch(setGoFunctionConfirmation(goFunction))

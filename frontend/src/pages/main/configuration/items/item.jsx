@@ -52,7 +52,9 @@ const Menu = () => {
     return await ItemService.getAll(body, cancelToken, type);
   };
 
-  return <TreeMenuItems path={pathFunction} textPath="NAME" />;
+  return (
+    <TreeMenuItems path={pathFunction} textPath="NAME" historyPathLevel={3} />
+  );
 };
 
 const UnitOne = ({ isHome }) => {
@@ -87,7 +89,7 @@ const UnitOne = ({ isHome }) => {
           boxShadow: 3,
           borderRadius: "3px",
           width: "100px",
-          color: "text.main"
+          color: "text.main",
         }}
       >
         <Grid container>

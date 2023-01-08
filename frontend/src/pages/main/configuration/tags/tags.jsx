@@ -47,7 +47,13 @@ const Tags = ({ isHome }) => {
     >
       <Grid item>
         <DrawerMenu
-          Element={<TreeMenuItems path={TagService.getAll} textPath="NAME" />}
+          Element={
+            <TreeMenuItems
+              path={TagService.getAll}
+              textPath="NAME"
+              historyPathLevel={3}
+            />
+          }
           path="tags"
         />
       </Grid>
@@ -86,7 +92,7 @@ const Tags = ({ isHome }) => {
               ml: 1.5,
               display: "flex",
               alignItems: "center",
-              marginY: "2px"
+              marginY: "2px",
             }}
           >
             <TagsActionMenu />
