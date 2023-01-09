@@ -122,7 +122,7 @@ const UnitOne = ({ isHome }) => {
           <ItemSperatorLineXL />
 
           <Grid container sx={{ alignItems: "center", pl: 2, marginY: "2px" }}>
-            <Grid item>
+            <Grid item sx={{ mr: "2px" }}>
               {isLinksActive ? <LinkActionMenu /> : <MyActionMenu />}
             </Grid>
             <MyDivider />

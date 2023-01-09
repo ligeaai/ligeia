@@ -104,7 +104,7 @@ const ResourceList = ({ isHome }) => {
           </Grid>
           <ItemSperatorLineXL />
           <Grid container sx={{ alignItems: "center", pl: 2, marginY: "2px" }}>
-            <Grid item>
+            <Grid item sx={{ mr: "2px" }}>
               <MyActionMenu />
             </Grid>
             <MyDivider />
