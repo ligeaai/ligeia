@@ -150,17 +150,15 @@ function CustomizedTreeView() {
   const expandedItems = useSelector(
     (state) => state.treeview.width.values.overviewHierarchy
   );
-  const [expanded, setExpanded] = React.useState(expandedItems);
   const onNodeSelect = (event, nodeId) => {
     if (event.target.tagName === "svg" || event.target.tagName === "path") {
-      const index = expanded.indexOf(nodeId);
-      const copyExpanded = [...expanded];
+      const index = expandedItems.indexOf(nodeId);
+      const copyExpanded = [...expandedItems];
       if (index === -1) {
         copyExpanded.push(nodeId);
       } else {
         copyExpanded.splice(index, 1);
       }
-      setExpanded(copyExpanded);
       dispatch(updateCollapseMenuCouch(copyExpanded));
     }
   };
@@ -173,7 +171,7 @@ function CustomizedTreeView() {
   return (
     <TreeView
       aria-label="customized"
-      expanded={expanded}
+      expanded={expandedItems}
       defaultCollapseIcon={<MinusSquare className="MyIcon" />}
       defaultExpandIcon={<PlusSquare className="MyIcon" />}
       defaultEndIcon={<CloseSquare />}
