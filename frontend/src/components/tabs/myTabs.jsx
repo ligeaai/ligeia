@@ -81,13 +81,14 @@ const MyTap = React.forwardRef(
           sx={{
             borderTopLeftRadius: "15px",
             borderTopRightRadius: "15px",
-            height: active === i ? "48px" : "40px",
+            height: active === i ? "40px" : "30px",
+            paddingBottom: "4px",
             mt: active === i ? 0 : 1,
             display: "flex",
             alignItems: "center",
             position: "relative",
             ":hover": {
-              height: "48px",
+              height: "40px",
               mt: 0,
               backgroundColor: "hover.primary",
             },
@@ -164,7 +165,10 @@ function MyTabs() {
       sx={{
         bgcolor: "background.paper",
         position: "relative",
-        height: "100%",
+        height: "40px",
+        header: {
+          height: "40px",
+        },
         ".react-swipeable-view-container": {
           height: "100%",
         },
@@ -180,7 +184,11 @@ function MyTabs() {
           aria-label="action tabs example"
           variant="scrollable"
           scrollButtons="auto"
-          sx={{ height: "48px", backgroundColor: "background.info", pt: "2px" }}
+          sx={{
+            minHeight: "40px",
+            backgroundColor: "background.info",
+            pt: "2px",
+          }}
         >
           {titles.map((x, i) => (
             <MyTap
@@ -196,7 +204,9 @@ function MyTabs() {
             key={`a`}
             container
             sx={{
-              height: "40px",
+              height: "30px",
+              paddingBottom: "4px",
+              cursor: "pointer",
               mt: 1,
               width: "50px",
               justifyContent: "center",
@@ -207,6 +217,12 @@ function MyTabs() {
               item
               onClick={() => {
                 dispatch(addNewTabItem());
+              }}
+              sx={{
+                ":hover": {
+                  fontSize: "16px",
+                  textShadow: "0.5px 0.5px 0.5px black",
+                },
               }}
             >
               +
