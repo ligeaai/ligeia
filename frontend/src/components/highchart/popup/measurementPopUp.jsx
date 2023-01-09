@@ -27,11 +27,11 @@ const AngularPopUp = (props) => {
     dispatch(changeValeus(key, val));
   };
   return (
-    <Grid container>
+    <Grid container rowGap={0.5}>
       <Grid item xs={12}>
-        <Grid container>
+        <Grid container rowGap={0.5}>
           <Grid item xs={12} sm={6} md={3}>
-            <Grid container>
+            <Grid container rowGap={0.5}>
               <Grid item xs={12}>
                 Name
               </Grid>
@@ -46,7 +46,7 @@ const AngularPopUp = (props) => {
             </Grid>
           </Grid>
           <Grid item xs={12} sm={6} md={3}>
-            <Grid container>
+            <Grid container rowGap={0.5}>
               <Grid item xs={12}>
                 Name Font Size(em)
               </Grid>
@@ -63,9 +63,9 @@ const AngularPopUp = (props) => {
         </Grid>
       </Grid>
       <Grid item xs={12}>
-        <Grid container>
+        <Grid container rowGap={0.5}>
           <Grid item xs={12} sm={6} md={3}>
-            <Grid container>
+            <Grid container rowGap={0.5}>
               <Grid item xs={12}>
                 Measurement
               </Grid>
@@ -97,7 +97,7 @@ const AngularPopUp = (props) => {
             </Grid>
           </Grid>
           <Grid item xs={12} sm={6} md={3}>
-            <Grid container>
+            <Grid container rowGap={0.5}>
               <Grid item xs={12}>
                 Mesurement Max Age
               </Grid>
@@ -112,7 +112,7 @@ const AngularPopUp = (props) => {
             </Grid>
           </Grid>
           <Grid item xs={12} sm={6} md={3}>
-            <Grid container>
+            <Grid container rowGap={0.5}>
               <Grid item xs={12}>
                 Widget Refresh (seconds)
               </Grid>
@@ -129,9 +129,9 @@ const AngularPopUp = (props) => {
         </Grid>
       </Grid>
       <Grid item xs={12}>
-        <Grid container>
+        <Grid container rowGap={0.5}>
           <Grid item xs={12} sm={6} md={3}>
-            <Grid container>
+            <Grid container rowGap={0.5}>
               <Grid item xs={12}>
                 Value Font Size
               </Grid>
@@ -146,7 +146,7 @@ const AngularPopUp = (props) => {
             </Grid>
           </Grid>
           <Grid item xs={12} sm={6} md={3}>
-            <Grid container>
+            <Grid container rowGap={0.5}>
               <Grid item xs={12}>
                 Unit Font Size
               </Grid>
@@ -161,7 +161,7 @@ const AngularPopUp = (props) => {
             </Grid>
           </Grid>
           <Grid item xs={12} sm={6} md={3}>
-            <Grid container>
+            <Grid container rowGap={0.5}>
               <Grid item xs={12}>
                 Time Stamp Font Size
               </Grid>
@@ -176,7 +176,7 @@ const AngularPopUp = (props) => {
             </Grid>
           </Grid>
           <Grid item xs={12} sm={6} md={3}>
-            <Grid container>
+            <Grid container rowGap={0.5}>
               <Grid item xs={12}>
                 Decimal Places
               </Grid>
@@ -192,7 +192,7 @@ const AngularPopUp = (props) => {
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
-            <Grid container>
+            <Grid container rowGap={0.5}>
               <Grid item xs={12}>
                 Show Unit
               </Grid>
@@ -207,7 +207,7 @@ const AngularPopUp = (props) => {
             </Grid>
           </Grid>
           <Grid item xs={12} sm={6} md={3}>
-            <Grid container>
+            <Grid container rowGap={0.5}>
               <Grid item xs={12}>
                 Show Name
               </Grid>
@@ -222,7 +222,7 @@ const AngularPopUp = (props) => {
             </Grid>
           </Grid>
           <Grid item xs={12} sm={6} md={3}>
-            <Grid container>
+            <Grid container rowGap={0.5}>
               <Grid item xs={12}>
                 Show Chanel
               </Grid>
@@ -237,7 +237,7 @@ const AngularPopUp = (props) => {
             </Grid>
           </Grid>
           <Grid item xs={12} sm={6} md={3}>
-            <Grid container>
+            <Grid container rowGap={0.5}>
               <Grid item xs={12}>
                 Show Measurement
               </Grid>
@@ -252,7 +252,7 @@ const AngularPopUp = (props) => {
             </Grid>
           </Grid>
           <Grid item xs={12} sm={6} md={3}>
-            <Grid container>
+            <Grid container rowGap={0.5}>
               <Grid item xs={12}>
                 Show Timestamp
               </Grid>

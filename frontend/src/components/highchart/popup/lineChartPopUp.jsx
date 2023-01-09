@@ -37,9 +37,9 @@ const MinMaxSelection = (props) => {
   };
   return (
     <Grid item xs={12}>
-      <Grid container>
+      <Grid container rowGap={0.5}>
         <Grid itme xs={12} sm={6} md={3}>
-          <Grid container>
+          <Grid container rowGap={0.5}>
             <Grid item xs={12}>
               Y-Axis Minimum
             </Grid>
@@ -54,7 +54,7 @@ const MinMaxSelection = (props) => {
           </Grid>
         </Grid>
         <Grid itme xs={12} sm={6} md={3}>
-          <Grid container>
+          <Grid container rowGap={0.5}>
             <Grid item xs={12}>
               Y-Axis Maximum
             </Grid>
@@ -109,9 +109,9 @@ const ColorPicker = () => {
         Input,{e.FROM_ITEM_ID}
       </Grid>
       <Grid item xs={12}>
-        <Grid container>
+        <Grid container rowGap={0.5}>
           <Grid item>
-            <Grid container>
+            <Grid container rowGap={0.5}>
               <Grid item xs={12}>
                 Color
               </Grid>
@@ -126,7 +126,7 @@ const ColorPicker = () => {
             </Grid>
           </Grid>
           <Grid item>
-            <Grid container>
+            <Grid container rowGap={0.5}>
               <Grid item xs={12}>
                 Disable Data Grouping
               </Grid>
@@ -339,7 +339,7 @@ const Linechart = (props) => {
       <Grid item xs={12}>
         <Grid container columnSpacing={2}>
           <Grid item xs={12} sm={6} md={3}>
-            <Grid container>
+            <Grid container rowGap={0.5}>
               <Grid item xs={12}>
                 Name
               </Grid>
@@ -354,7 +354,7 @@ const Linechart = (props) => {
             </Grid>
           </Grid>
           <Grid item xs={12} sm={6} md={3}>
-            <Grid container>
+            <Grid container rowGap={0.5}>
               <Grid item xs={12}>
                 Name Font Size(em)
               </Grid>
@@ -373,7 +373,7 @@ const Linechart = (props) => {
       <Grid item xs={12}>
         <Grid container columnSpacing={2}>
           <Grid item xs={12} sm={6} md={3}>
-            <Grid container>
+            <Grid container rowGap={0.5}>
               <Grid item xs={12}>
                 Refresh (Seconds)
               </Grid>
@@ -388,7 +388,7 @@ const Linechart = (props) => {
             </Grid>
           </Grid>
           <Grid item xs={12} sm={6} md={3}>
-            <Grid container>
+            <Grid container rowGap={0.5}>
               <Grid item xs={12}>
                 X-Axis Duration (minutes)
               </Grid>
@@ -405,9 +405,9 @@ const Linechart = (props) => {
         </Grid>
       </Grid>
       <Grid item xs={12}>
-        <Grid container>
+        <Grid container rowGap={0.5}>
           <Grid item xs={12} sm={6} md={3}>
-            <Grid container>
+            <Grid container rowGap={0.5}>
               <Grid item xs={12}>
                 Enable X-Axis Reset
               </Grid>
@@ -422,7 +422,7 @@ const Linechart = (props) => {
             </Grid>
           </Grid>
           <Grid item xs={12} sm={6} md={3}>
-            <Grid container>
+            <Grid container rowGap={0.5}>
               <Grid item xs={12}>
                 Enable Header Buttons
               </Grid>
@@ -437,7 +437,7 @@ const Linechart = (props) => {
             </Grid>
           </Grid>
           <Grid item xs={12} sm={6} md={3}>
-            <Grid container>
+            <Grid container rowGap={0.5}>
               <Grid item xs={12}>
                 Enable Title
               </Grid>
@@ -452,7 +452,7 @@ const Linechart = (props) => {
             </Grid>
           </Grid>
           <Grid item xs={12} sm={6} md={3}>
-            <Grid container>
+            <Grid container rowGap={0.5}>
               <Grid item xs={12}>
                 Enable Navbar
               </Grid>
@@ -467,7 +467,7 @@ const Linechart = (props) => {
             </Grid>
           </Grid>
           <Grid item xs={12} sm={6} md={3}>
-            <Grid container>
+            <Grid container rowGap={0.5}>
               <Grid item xs={12}>
                 Enable Export
               </Grid>
@@ -482,7 +482,7 @@ const Linechart = (props) => {
             </Grid>
           </Grid>
           <Grid item xs={12} sm={6} md={3}>
-            <Grid container>
+            <Grid container rowGap={0.5}>
               <Grid item xs={12}>
                 Enable Range Selector
               </Grid>
@@ -497,7 +497,7 @@ const Linechart = (props) => {
             </Grid>
           </Grid>
           <Grid item xs={12} sm={6} md={3}>
-            <Grid container>
+            <Grid container rowGap={0.5}>
               <Grid item xs={12}>
                 Enable Graph Legend
               </Grid>
@@ -516,7 +516,7 @@ const Linechart = (props) => {
       <Grid item xs={12}>
         <Grid container columnSpacing={2}>
           <Grid item xs={12} sm={6} md={3}>
-            <Grid container>
+            <Grid container rowGap={0.5}>
               <Grid item xs={12}>
                 Graph Axis Value Font Size (em)
               </Grid>
@@ -533,7 +533,7 @@ const Linechart = (props) => {
             </Grid>
           </Grid>
           <Grid item xs={12} sm={6} md={3}>
-            <Grid container>
+            <Grid container rowGap={0.5}>
               <Grid item xs={12}>
                 Graph Axis Title Font Size (em)
               </Grid>
@@ -550,7 +550,7 @@ const Linechart = (props) => {
             </Grid>
           </Grid>
           <Grid item xs={12} sm={6} md={3}>
-            <Grid container>
+            <Grid container rowGap={0.5}>
               <Grid item xs={12}>
                 Graph Legend Font Size (em)
               </Grid>
@@ -565,7 +565,7 @@ const Linechart = (props) => {
             </Grid>
           </Grid>
           <Grid item xs={12} sm={6} md={3}>
-            <Grid container>
+            <Grid container rowGap={0.5}>
               <Grid item xs={12}>
                 Graph Title Font Size (em)
               </Grid>
@@ -582,7 +582,7 @@ const Linechart = (props) => {
         </Grid>
       </Grid>
       <Grid item xs={12}>
-        <Grid container>
+        <Grid container rowGap={0.5}>
           <Grid item xs={12}>
             Inputs
           </Grid>
@@ -598,7 +598,7 @@ const Linechart = (props) => {
         </Grid>
       </Grid>
       <Grid item xs={12}>
-        <Grid container>
+        <Grid container rowGap={0.5}>
           <Grid item xs={12}>
             Enable Custom Colors
           </Grid>
@@ -616,7 +616,7 @@ const Linechart = (props) => {
         </Grid>
       </Grid>
       <Grid item xs={12}>
-        <Grid container>
+        <Grid container rowGap={0.5}>
           <Grid item xs={12} sm={6}>
             <Grid item xs={12}>
               Enable Manuel Y-Axis Min/Max
@@ -672,7 +672,7 @@ const Linechart = (props) => {
         </Grid>
       </Grid>
       <Grid item xs={12}>
-        <Grid container>
+        <Grid container rowGap={0.5}>
           <YAxis highchartProps={highchartProps} />
         </Grid>
       </Grid>

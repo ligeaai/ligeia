@@ -34,9 +34,9 @@ const Stops = () => {
       {loop.map((e, i) => {
         return (
           <Grid item xs={12} key={i}>
-            <Grid container>
+            <Grid container rowGap={0.5}>
               <Grid item xs={12} sm={6} md={3}>
-                <Grid container>
+                <Grid container rowGap={0.5}>
                   <Grid item xs={12}>
                     {`[${e}] Low`}
                   </Grid>
@@ -51,7 +51,7 @@ const Stops = () => {
                 </Grid>
               </Grid>
               <Grid item xs={12} sm={6} md={3}>
-                <Grid container>
+                <Grid container rowGap={0.5}>
                   <Grid item xs={12}>
                     {`[${e}] High`}
                   </Grid>
@@ -66,7 +66,7 @@ const Stops = () => {
                 </Grid>
               </Grid>
               <Grid item xs={12} sm={6} md={3}>
-                <Grid container>
+                <Grid container rowGap={0.5}>
                   <Grid item xs={12}>
                     {`[${e}] Color`}
                   </Grid>
@@ -102,7 +102,7 @@ const Measurement = () => {
   return (
     <React.Fragment>
       <Grid item xs={12} sm={6} md={3}>
-        <Grid container>
+        <Grid container rowGap={0.5}>
           <Grid item xs={12}>
             Minimum
           </Grid>
@@ -117,7 +117,7 @@ const Measurement = () => {
         </Grid>
       </Grid>
       <Grid item xs={12} sm={6} md={3}>
-        <Grid container>
+        <Grid container rowGap={0.5}>
           <Grid item xs={12}>
             Maximum
           </Grid>
@@ -144,11 +144,11 @@ const AngularPopUp = (props) => {
     dispatch(changeValeus(key, val));
   };
   return (
-    <Grid container>
+    <Grid container rowGap={0.5}>
       <Grid item xs={12}>
-        <Grid container>
+        <Grid container rowGap={0.5}>
           <Grid item xs={12} sm={6} md={3}>
-            <Grid container>
+            <Grid container rowGap={0.5}>
               <Grid item xs={12}>
                 Name
               </Grid>
@@ -163,7 +163,7 @@ const AngularPopUp = (props) => {
             </Grid>
           </Grid>
           <Grid item xs={12} sm={6} md={3}>
-            <Grid container>
+            <Grid container rowGap={0.5}>
               <Grid item xs={12}>
                 Name Font Size(em)
               </Grid>
@@ -180,9 +180,9 @@ const AngularPopUp = (props) => {
         </Grid>
       </Grid>
       <Grid item xs={12}>
-        <Grid container>
+        <Grid container rowGap={0.5}>
           <Grid item xs={12} sm={6} md={3}>
-            <Grid container>
+            <Grid container rowGap={0.5}>
               <Grid item xs={12}>
                 Measurement
               </Grid>
@@ -214,7 +214,7 @@ const AngularPopUp = (props) => {
             </Grid>
           </Grid>
           <Grid item xs={12} sm={6} md={3}>
-            <Grid container>
+            <Grid container rowGap={0.5}>
               <Grid item xs={12}>
                 Mesurement Max Age
               </Grid>
@@ -229,7 +229,7 @@ const AngularPopUp = (props) => {
             </Grid>
           </Grid>
           <Grid item xs={12} sm={6} md={3}>
-            <Grid container>
+            <Grid container rowGap={0.5}>
               <Grid item xs={12}>
                 Widget Refresh (seconds)
               </Grid>
@@ -244,7 +244,7 @@ const AngularPopUp = (props) => {
             </Grid>
           </Grid>
           <Grid item xs={12} sm={6} md={3}>
-            <Grid container>
+            <Grid container rowGap={0.5}>
               <Grid item xs={12}>
                 Decimal Places
               </Grid>
@@ -260,7 +260,7 @@ const AngularPopUp = (props) => {
           </Grid>
           <Measurement />
           <Grid item xs={12} sm={6} md={3}>
-            <Grid container>
+            <Grid container rowGap={0.5}>
               <Grid item xs={12}>
                 Stops
               </Grid>
