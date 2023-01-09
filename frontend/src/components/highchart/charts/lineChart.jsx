@@ -8,6 +8,7 @@ import exporting from "highcharts/modules/exporting";
 import { wsBaseUrl } from "../../../services/baseApi";
 
 import { DataGrid } from "../../index";
+import { dateFormatDDMMYYHHMM } from "../../../services/utils/dateFormatter";
 var client;
 var W3CWebSocket = require("websocket").w3cwebsocket;
 exporting(Highcharts);
@@ -47,7 +48,9 @@ export const LineChart = ({
           if (typeof e.data === "string") {
             let jsonData = JSON.parse(e.data);
             if (Object.keys(jsonData.message).length > 5) {
-              setCategories((prev) => [...prev, jsonData.message.timestamp]);
+              let timestamp = new Date(jsonData.message.timestamp);
+              const time = dateFormatDDMMYYHHMM(timestamp);
+              setCategories((prev) => [...prev, time]);
               setAllData((prev) => [...prev, jsonData.message]);
               setData((prev) => [...prev, parseInt(jsonData.message.value)]);
             }
