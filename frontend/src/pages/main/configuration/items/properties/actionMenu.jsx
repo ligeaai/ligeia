@@ -19,13 +19,16 @@ const PropertiesActionMenu = () => {
   const selectedIndex = useSelector(
     (state) => state.treeview.selectedItem.selectedIndex
   );
+  const name = useSelector((state) => state.treeview.selectedItem.NAME);
   const dispatch = useDispatch();
   const btnNew = () => {
     if (isChanged) {
       dispatch(
         setConfirmation({
           title: "Are you sure you want to save this ?",
-          body: "bodyasd",
+          body: `Are you sure you want to save an item ${
+            name ? "named " + name : "new"
+          }?`,
           agreefunction: async () => {
             dispatch(saveItem());
             dispatch(newItem());
@@ -51,7 +54,9 @@ const PropertiesActionMenu = () => {
       dispatch(
         setConfirmation({
           title: "Are you sure you want to save this ?",
-          body: "bodyasd",
+          body: `Are you sure you want to save an item ${
+            name ? "named " + name : "new"
+          }?`,
           agreefunction: async () => {
             dispatch(saveItem());
             dispatch(setIsActiveConfirmation(false));
@@ -65,7 +70,9 @@ const PropertiesActionMenu = () => {
     dispatch(
       setConfirmation({
         title: "Are you sure you want to delete this ?",
-        body: "bodyasd",
+        body: `Are you sure you want to delete an item ${
+          name ? "named " + name : "new"
+        }?`,
         agreefunction: () => {
           dispatch(deleteItem());
           dispatch(setIsActiveConfirmation(false));

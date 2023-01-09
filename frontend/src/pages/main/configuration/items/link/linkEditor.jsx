@@ -44,7 +44,7 @@ const LinkEditor = () => {
   );
   const isFullScreen = useSelector((state) => state.fullScreen.isFullScreen);
   const selectedItem = useSelector((state) => state.treeview.selectedItem);
-
+  const name = useSelector((state) => state.treeview.selectedItem.NAME);
   React.useEffect(() => {
     dispatch(setIsActiveLink(true));
     return () => {
@@ -55,7 +55,13 @@ const LinkEditor = () => {
     if (isMount) {
       dispatch(setSaveFunctonConfirmation(saveItemLink));
       dispatch(setTitleConfirmation("Are you sure you want to save this ? "));
-      dispatch(setBodyConfirmation("asd"));
+      dispatch(
+        setBodyConfirmation(
+          `Are you sure you want to save an item ${
+            name ? "named " + name : "new"
+          }?`
+        )
+      );
     }
     if (selectedIndex !== -2 && selectedIndex !== -3) {
       dispatch(loadLinks());
@@ -132,7 +138,10 @@ const LinkEditor = () => {
                                   });
                                 }}
                               >
-                                <DeleteIcon sx={{ color: "text.main" }} fontSize="small" />
+                                <DeleteIcon
+                                  sx={{ color: "text.main" }}
+                                  fontSize="small"
+                                />
                               </IconButton>
                             </Grid>
                             <Grid
@@ -150,7 +159,10 @@ const LinkEditor = () => {
                               </Grid>
                             </Grid>
                             <Grid item xs={6} sx={{ p: 1 }}>
-                              <Grid container sx={{ fontSize: "12px", color: "text.main" }}>
+                              <Grid
+                                container
+                                sx={{ fontSize: "12px", color: "text.main" }}
+                              >
                                 <Grid item xs={12}>
                                   Start:
                                   <DatePicker
@@ -174,7 +186,6 @@ const LinkEditor = () => {
                                 >
                                   End:
                                   <DatePicker
-
                                     time={new Date(links[a].END_DATETIME)}
                                     onChangeFunc={onChangeEndDateTime}
                                   />
@@ -280,7 +291,10 @@ const LinkEditor = () => {
                                   });
                                 }}
                               >
-                                <DeleteIcon sx={{ color: "text.main" }} fontSize="small" />
+                                <DeleteIcon
+                                  sx={{ color: "text.main" }}
+                                  fontSize="small"
+                                />
                               </IconButton>
                             </Grid>
                             <Grid

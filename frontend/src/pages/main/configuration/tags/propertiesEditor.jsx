@@ -43,7 +43,6 @@ const useStyles = makeStyles((theme) => {
 });
 
 const PropertiesEditor = () => {
-  const isMount = useIsMount();
   const dispatch = useDispatch();
   const classes = useStyles();
   const tagValues = useSelector((state) => state.tags.tagValues);
@@ -51,18 +50,23 @@ const PropertiesEditor = () => {
   const selectedIndex = useSelector(
     (state) => state.treeview.selectedItem.selectedIndex
   );
-
+  const name = useSelector((state) => state.treeview.selectedItem.NAME);
   React.useEffect(() => {
     if (selectedIndex === -2) {
       dispatch(addNewTag());
     }
   }, [selectedIndex]);
   React.useEffect(() => {
-    if (isMount) {
-      dispatch(setSaveFunctonConfirmation(saveTag));
-      dispatch(setTitleConfirmation("Are you sure you want to save this ? "));
-      dispatch(setBodyConfirmation("body"));
-    } else if (selectedIndex !== -2) {
+    dispatch(setSaveFunctonConfirmation(saveTag));
+    dispatch(setTitleConfirmation("Are you sure you want to save this ? "));
+    dispatch(
+      setBodyConfirmation(
+        `Are you sure you want to save an tag ${
+          name ? "named " + name : "new"
+        }?`
+      )
+    );
+    if (selectedIndex !== -2) {
       dispatch(_fillTagData(tagId));
     }
   }, [tagId]);

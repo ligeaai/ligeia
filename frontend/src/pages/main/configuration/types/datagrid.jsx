@@ -45,11 +45,16 @@ function TreeDataWithGap() {
   );
 
   React.useEffect(() => {
-    if (isMount) {
-      dispatch(setSaveFunctonConfirmation(saveTypeFunc));
-      dispatch(setTitleConfirmation("Are you sure you want to save ? "));
-      dispatch(setBodyConfirmation("body"));
-    } else if (selectedIndex === -2) {
+    dispatch(setSaveFunctonConfirmation(saveTypeFunc));
+    dispatch(setTitleConfirmation("Are you sure you want to save ? "));
+    dispatch(
+      setBodyConfirmation(
+        `Are you sure you want to save an types ${
+          type ? "type " + type : "new"
+        }?`
+      )
+    );
+    if (selectedIndex === -2) {
       dispatch(addNewType());
     } else if (selectedIndex >= 0) {
       dispatch(refreshDataGridType());

@@ -22,8 +22,7 @@ import {
   setTitleConfirmation,
 } from "../../../../../services/actions/confirmation/historyConfirmation";
 
-const MyDataGrid = ({ type, isLinksActive }) => {
-  const isMount = useIsMount();
+const MyDataGrid = () => {
   const dispatch = useDispatch();
   const columns = useSelector((state) => state.itemDataGrid.columns);
   const rows = useSelector((state) => state.itemDataGrid.rows);
@@ -31,6 +30,7 @@ const MyDataGrid = ({ type, isLinksActive }) => {
     (state) => state.treeview.selectedItem.selectedIndex
   );
   const itemId = useSelector((state) => state.treeview.selectedItem.ITEM_ID);
+  const name = useSelector((state) => state.treeview.selectedItem.NAME);
   const [sortModel, setSortModel] = React.useState([
     {
       field: "SORT_ORDER",
@@ -42,16 +42,21 @@ const MyDataGrid = ({ type, isLinksActive }) => {
     bottom: [],
   };
   React.useEffect(() => {
-    if (isMount) {
-      dispatch(setSaveFunctonConfirmation(saveItem));
-      dispatch(setTitleConfirmation("Are you sure you want to save this ? "));
-      dispatch(setBodyConfirmation("asd"));
-    }
+    dispatch(setSaveFunctonConfirmation(saveItem));
+    dispatch(setTitleConfirmation("Are you sure you want to save this ? "));
+    dispatch(
+      setBodyConfirmation(
+        `Are you sure you want to save an item ${
+          name ? "named " + name : "new"
+        }?`
+      )
+    );
+
     if (selectedIndex !== -2 && selectedIndex !== -3) {
       dispatch({ type: "CLEAR_COLUMN_ITEM" });
       dispatch(loadItemRowsDataGrid());
     }
-  }, [itemId]);
+  }, [itemId, name]);
   const onCellEditCommit = (cellData) => {
     const { id, field, value } = cellData;
     let myId = id;
