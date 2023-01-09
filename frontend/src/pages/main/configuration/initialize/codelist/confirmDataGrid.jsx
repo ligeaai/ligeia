@@ -28,7 +28,6 @@ export default function TreeDataWithGap() {
       myColumns[e].editable = false;
       delete myColumns[e].renderCell;
     });
-    console.log(myColumns);
   }, []);
   const [sortModel, setSortModel] = React.useState([
     {

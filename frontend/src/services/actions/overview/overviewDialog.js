@@ -31,13 +31,10 @@ export const fillProperties = async (props) => async (dispatch, getState) => {
                 `/highchartproperties/${props}`,
                 config
             )
-        console.log(res);
         const body = JSON.stringify({ ID: selectedItem })
 
         let itemLinkRes = await ItemLinkService.getItemLink(body, cancelTokenLinks)
-        console.log(itemLinkRes.data);
         let tags = itemLinkRes.data.TO_ITEM_ID.filter(e => e.FROM_ITEM_TYPE === "TAG_CACHE")
-        console.log(tags);
 
         dispatch({
             type: SET_MEASUREMENT_DATA,
@@ -68,7 +65,6 @@ export const loadSelectItems = async () => async dispatch => {
                 "/highcharttype/57b054aedfcb4984da539444110006b6",
                 config
             )
-        console.log(res);
         dispatch({
             type: SET_SELECT_ITEM_OVERVIEW_DIALOG,
             payload: res.data.type
@@ -99,7 +95,6 @@ export const saveChart = () => async (dispatch, getState) => {
     const selectedChartType = getState().overviewDialog.selectedItem
     const resData = getState().tapsOverview.data
     const uuid = uuidv4()
-    console.log(uuid);
     const body = JSON.stringify({ ...chartProps, _id: uuid, Type: selectedChartType })
     await instance
         .post(
@@ -158,7 +153,6 @@ export const saveChart = () => async (dispatch, getState) => {
             }
         }
     }
-    console.log(tablinkBody);
     try {
         await instance
             .put(
@@ -177,7 +171,6 @@ export const cleanStops = (key, value, titles) => (dispatch, getState) => {
     const stopsVal = getState().overviewDialog.highchartProps.Stops
     for (let i = parseInt(stopsVal); i >= parseInt(value); i--) {
         titles.map(e => {
-            console.log(highchartProps[`[${i}] ${e}`]);
             delete highchartProps[`[${i}] ${e}`]
         })
     }

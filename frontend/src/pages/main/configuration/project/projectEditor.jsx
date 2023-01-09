@@ -59,14 +59,14 @@ const Layers = (props) => {
         var myRes = [""];
         stateWay === "LAYERS"
           ? res.data.map((e) => {
-            myRes.push(e.LAYER_NAME);
-          })
+              myRes.push(e.LAYER_NAME);
+            })
           : console.log(res);
         res.data.Message.map((e) => {
           myRes.push(e.CULTURE);
         });
         setLayerValues([...myRes]);
-      } catch { }
+      } catch {}
     };
     myFunc();
   }, []);
@@ -134,7 +134,11 @@ const ConnectionString = () => {
   };
   return (
     <Grid item xs={12} className={classes.row}>
-      <Grid container className={classes.selectBox} sx={{ width: "100%", color: "text.main" }}>
+      <Grid
+        container
+        className={classes.selectBox}
+        sx={{ width: "100%", color: "text.main" }}
+      >
         <Grid item className={classes.label}>
           Connection String
         </Grid>
@@ -167,7 +171,6 @@ const DatabaseCreationFile = () => {
   const value = useSelector((state) => state.project.DATABASE_CREATE_FILE);
   const handleChange = (e) => {
     dispatch(changeProjectValue("DATABASE_CREATE_FILE", e.target.value));
-    console.log(e.target.result);
   };
   return (
     <Grid item xs={12} className={classes.row}>
@@ -267,7 +270,11 @@ const ProjectEditor = () => {
     >
       <Grid container sx={{ p: 1.5 }}>
         <Grid item xs={12} className={classes.row}>
-          <Grid container className={classes.selectBox} sx={{ color: "text.main" }}>
+          <Grid
+            container
+            className={classes.selectBox}
+            sx={{ color: "text.main" }}
+          >
             <Grid item className={classes.label}>
               Data source:
             </Grid>
@@ -295,15 +302,17 @@ const ProjectEditor = () => {
         </Typography>
         <UnitSystem />
         <Grid item>
-          <Button variant="contained"
+          <Button
+            variant="contained"
             sx={{
               color: "text.main",
               backgroundColor: "background.success",
-              '&:hover': {
-                backgroundColor: 'hover.success',
-                color: 'primary.dark',
+              "&:hover": {
+                backgroundColor: "hover.success",
+                color: "primary.dark",
               },
-            }}>
+            }}
+          >
             Save
           </Button>
         </Grid>

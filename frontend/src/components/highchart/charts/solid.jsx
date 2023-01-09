@@ -30,7 +30,6 @@ export const Solid = ({ highchartProps, width, height }) => {
             if (data.message.value) {
               setCategories((prev) => data.message.createdtime);
               setValue((prev) => data.message.value);
-              console.log(typeof value);
             }
             //setTimeout(sendNumber, 5000);
             return data;

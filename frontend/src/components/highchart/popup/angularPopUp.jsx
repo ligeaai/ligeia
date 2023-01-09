@@ -187,7 +187,6 @@ const AngularPopUp = (props) => {
                 Measurement
               </Grid>
               <Grid item xs={12}>
-                {console.log("sadasdasd")}
                 <Select
                   values={tags}
                   valuesPath="FROM_ITEM_ID"
@@ -198,16 +197,13 @@ const AngularPopUp = (props) => {
                     try {
                       const body = JSON.stringify({ TAG_ID: value });
                       let res = await TagService.getTagItem(body);
-                      console.log(res);
                       dispatch(
                         changeValeus("Minimum", res.data[0].NORMAL_MINIMUM)
                       );
                       dispatch(
                         changeValeus("Maximum", res.data[0].NORMAL_MAXIMUM)
                       );
-                    } catch (err) {
-                      console.log(err);
-                    }
+                    } catch (err) {}
                   }}
                 />
               </Grid>

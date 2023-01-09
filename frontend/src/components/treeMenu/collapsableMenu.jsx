@@ -22,7 +22,6 @@ import history from "../../routers/history";
 //import { useSpring, animated } from 'react-spring/web.cjs';
 
 function MinusSquare(props) {
-  console.log(props);
   return (
     <SvgIcon fontSize="inherit" style={{ width: 14, height: 14 }} {...props}>
       {/* tslint:disable-next-line: max-line-length */}

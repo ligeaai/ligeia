@@ -68,7 +68,6 @@ const SingleSelectCell = (params) => {
         }
       });
       setValues(data);
-      console.log(values);
 
       return Promise.resolve(res.data);
     } catch (err) {

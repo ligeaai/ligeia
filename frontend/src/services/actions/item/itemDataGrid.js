@@ -82,7 +82,6 @@ export const loadTypeRowsDataGrid = () => async (dispatch, getState) => {
         }
         cancelToken = axios.CancelToken.source();
         let res = await ItemService.getTypeProperty(body, cancelToken)
-        console.log(res);
         var response = {}
         response["HISTORY"] = {
             PROPERTY_NAME: "",
@@ -103,7 +102,6 @@ export const loadTypeRowsDataGrid = () => async (dispatch, getState) => {
                 response[a.PROPERTY_NAME] = a
             })
         })
-        console.log(response);
         dispatch({
             type: LOAD_TYPE_ROWS_ITEM,
             payload: response
@@ -126,7 +124,6 @@ export const loadItemRowsDataGrid = () => async (dispatch, getState) => {
         }
         itemCancelToken = axios.CancelToken.source();
         let res = await ItemService.getItemValues(body, itemCancelToken)
-        console.log(res);
         let itemRows = {}
         let columnsId = []
         Promise.all(
@@ -172,7 +169,6 @@ export const cleanDataGrid = () => dispatch => {
 }
 
 export const editDataGridCell = (id, field, value) => dispatch => {
-    console.log(id, field, value);
     dispatch({
         type: EDIT_DATAGRID_CELL_ITEM,
         payload: { id, field, value }

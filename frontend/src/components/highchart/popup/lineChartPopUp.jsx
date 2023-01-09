@@ -192,10 +192,8 @@ const Inputs = (props) => {
   const handleAllRight = () => {
     left.map(async (e) => {
       try {
-        console.log(e);
         const body = JSON.stringify({ TAG_ID: e.FROM_ITEM_ID });
         let res = await TagService.getTagItemS(body);
-        console.log(res);
         dispatch(
           changeValeus(
             `${e.FROM_ITEM_ID} Y-Axis Minimum`,

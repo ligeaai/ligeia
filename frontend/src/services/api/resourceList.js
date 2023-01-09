@@ -11,7 +11,6 @@ const getResourcelistDetail = (body) => {
         cancelToken.cancel()
     }
     cancelToken = axios.CancelToken.source();
-    console.log(body);
     return instance.post("/resource-list/hierarchy/", body, { ...config(), cancelToken: cancelToken.token });
 };
 

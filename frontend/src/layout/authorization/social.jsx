@@ -11,7 +11,6 @@ import GoogleSocialAuth from "./googleSocialAuth";
 import GitHubSocialAuth from "./githubSocialAuth";
 
 const social = ({ isSignInPanel }) => {
-  console.log(isSignInPanel);
   return (
     <Grid container spacing={1} sx={{ justifyContent: "center" }}>
       <Grid item>

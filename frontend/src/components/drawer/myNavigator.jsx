@@ -21,9 +21,7 @@ const MyNavigator = ({ way }) => {
             Object.keys(configurationItems[e].Items)[0]
           ].SHORT_LABEL.toLowerCase();
         tempUrl = tempUrl.replace(/ /g, "_");
-        console.log(tempUrl);
         url = `${window.location.pathname}/${tempUrl}`;
-        console.log(url);
         dispatch(
           setSelectedDrawerItem(
             configurationItems[e].Items[
@@ -36,7 +34,6 @@ const MyNavigator = ({ way }) => {
   } else {
     history.push(`/`);
   }
-  console.log(url);
   return <Navigate to={`${url}`}></Navigate>;
 };
 

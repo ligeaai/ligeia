@@ -20,8 +20,6 @@ export const LineChart = ({
   backfillData,
   tabular,
 }) => {
-  console.log(liveData);
-  console.log(backfillData);
   const [categories, setCategories] = React.useState([]);
   const [data, setData] = React.useState([]);
   const [allData, setAllData] = React.useState([]);
@@ -48,7 +46,6 @@ export const LineChart = ({
         if (client.readyState === client.OPEN) {
           if (typeof e.data === "string") {
             let jsonData = JSON.parse(e.data);
-            console.log(jsonData);
             if (Object.keys(jsonData.message).length > 5) {
               setCategories((prev) => [...prev, jsonData.message.timestamp]);
               setAllData((prev) => [...prev, jsonData.message]);

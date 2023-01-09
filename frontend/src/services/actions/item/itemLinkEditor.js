@@ -22,7 +22,6 @@ export const loadItemLinkSchema = () => async (dispatch, getState) => {
     const body = JSON.stringify({ TYPE, CULTURE });
     try {
         let res = await ItemLinkService.getLinkSchema(body, cancelToken);
-        console.log(res);
         let sortedRes = {}
 
         sortedRes["FROM_TYPE"] = res.data.FROM_TYPE.sort((a, b) =>
@@ -90,7 +89,6 @@ export const loadLinks = () => async (dispatch, getState) => {
     try {
         const body = JSON.stringify({ ID: selectedItem })
         let itemLinkRes = await ItemLinkService.getItemLink(body, cancelTokenLinks)
-        console.log(itemLinkRes);
         itemLinkRes.data.TO_ITEM_ID.map(e => {
             e.END_DATETIME = new Date(e.END_DATETIME)
             e.START_DATETIME = new Date(e.START_DATETIME)

@@ -145,7 +145,6 @@ const MyTap = React.forwardRef(
   }
 );
 function MyTabs() {
-  console.log(palette());
   const ref = React.createRef();
   const dispatch = useDispatch();
   const [value, setValue] = React.useState(null);

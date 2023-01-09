@@ -35,7 +35,6 @@ const SingleLevel = ({ item, url }) => {
   if (url === "/home") {
     url = "/";
   }
-  console.log(item);
   const dispatch = useDispatch();
   const isOpen = useSelector((state) => state.drawerMenu.isOpen);
   const { [item.ICON]: Icon } = Icons;
@@ -116,7 +115,6 @@ const MultiLevel = ({ item, url }) => {
     //dispatch(setSelectedDrawerItem(item.SHORT_LABEL));
     //   history.push(`${item.URL}`);
   };
-  console.log(Icon);
   return (
     <React.Fragment>
       <ListItem

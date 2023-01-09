@@ -33,7 +33,6 @@ const TransactionPropertySelect = ({ defaultValue }) => {
   };
   React.useEffect(() => {
     if (!isMount && selectedValue !== -3) {
-      console.log(selectedValue);
       dispatch({
         type: "SET_TAG_SAVE_VALUES",
         payload: { key: "TO_ITEM_ID", value: defaultValue },
@@ -54,7 +53,6 @@ const TransactionPropertySelect = ({ defaultValue }) => {
 };
 
 const TransactionTypeSelect = ({ row, defaultValue }) => {
-  console.log("renddered  ");
   const selectedIndex = useSelector(
     (state) => state.treeview.selectedItem.selectedIndex
   );
@@ -123,7 +121,6 @@ const TransactionTypeSelect = ({ row, defaultValue }) => {
       }
     };
     if (selectedIndex !== -3) {
-      console.log(selectedIndex);
       myFunc();
     }
 
@@ -188,7 +185,6 @@ const TextFields = (props) => {
         />
       );
     } else {
-      //console.log(row);
       return <>CODE NULL</>;
     }
   }
@@ -238,7 +234,6 @@ const TextFields = (props) => {
       return <TransactionPropertySelect defaultValue={myDefaultValue} />;
     }
   }
-  console.log(row.PROPERTY_TYPE);
   return <>{row.PROPERTY_TYPE}</>;
 };
 

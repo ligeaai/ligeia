@@ -149,7 +149,6 @@ const MyCheckList = (props) => {
             <Grid item>
               <Button
                 onClick={() => {
-                  console.log(props);
                   props.onClose();
                 }}
               >

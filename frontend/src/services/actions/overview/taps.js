@@ -17,7 +17,6 @@ export const loadTapsOverview = () => async (dispatch, getState) => {
                 `/taplinks/${linkId}`,
                 config
             )
-        console.log(res);
         var titles = Object.keys(res.data.data)
 
         dispatch({
@@ -39,7 +38,6 @@ export const loadTapsOverview = () => async (dispatch, getState) => {
                 )
         }
         dispatch(loadTapsOverview())
-        console.log(err.response.status);
     }
 }
 
@@ -75,7 +73,6 @@ export const deleteChart = (id, revId) => async (dispatch, getState) => {
     //     }
     // }
     const body = JSON.stringify({ ...myData })
-    console.log(body);
     try {
         await instance
             .delete(
@@ -125,7 +122,6 @@ export const addNewTabItem = () => async (dispatch, getState) => {
             }
         }
     }
-    console.log(tablinkBody);
     try {
         await instance
             .put(
@@ -186,7 +182,6 @@ function _deleteAllCharts(charts) {
     charts.map(async e => {
         try {
             let res = await instance.get(`/widgets/${e}`, config);
-            console.log(res);
             await instance
                 .delete(
                     `/widgets/${e}?rev=${res.data._rev}`,
@@ -207,7 +202,6 @@ export const deleteTapHeader = (header) => async (dispatch, getState) => {
             ...resData.data
         }
     }
-    console.log("lşkaslşdklşaskdlşaskdşlaksdlşkasşldklaşsdklşaskdlş");
     try {
         await instance
             .put(
@@ -244,8 +238,6 @@ export const updateChart = () => async (dispatch, getState) => {
 export const updateChartLayout = (layout) => async (dispatch, getState) => {
     const selectedTab = getState().tapsOverview.selected
     const resData = getState().tapsOverview.data
-    console.log(selectedTab);
-    console.log(resData.data[selectedTab]);
     const tablinkBody = {
         ...resData, data: {
             ...resData.data, [selectedTab]: {
@@ -262,13 +254,11 @@ export const updateChartLayout = (layout) => async (dispatch, getState) => {
 
 
 export const updateCouchDb = () => async (dispatch, getState) => {
-    console.log("lsaşkdlaskdlşaksldklşskşd");
     const selectedLink = getState().collapseMenu.selectedItem.TO_ITEM_ID
     const resData = getState().tapsOverview.data
     const tablinkBody = {
         ...resData
     }
-    console.log(resData);
     try {
 
         let res = await instance

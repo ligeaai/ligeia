@@ -205,7 +205,6 @@ export const deleteTag = () => async (dispatch, getState) => {
             title: "Are you sure you want to delete this?",
             body: <></>,
             agreefunction: async () => {
-                console.log(tagId);
                 dispatch({
                     type: TOGGLE_CHANGES_TAGS,
                     payload: false
@@ -225,20 +224,17 @@ const mandatoryFields = (properties) => {
 }
 
 const _checkmandatoryFields = (values, properties) => {
-    console.log(properties);
     var myPropInformation = mandatoryFields(properties.TAG_INFORMATIONS);
     var myPropLink = mandatoryFields(properties.TAG_LINK);
     var returnval = true
 
     myPropInformation.map(e => {
         if (!values[e.PROPERTY_NAME] && e.PROPERTY_NAME !== "ITEM_ID") {
-            console.log(e);
             returnval = false
         }
     })
     myPropLink.map(e => {
         if (!values[e.PROPERTY_NAME] && e.PROPERTY_NAME !== "ITEM_ID") {
-            console.log(e);
             returnval = false
         }
     })

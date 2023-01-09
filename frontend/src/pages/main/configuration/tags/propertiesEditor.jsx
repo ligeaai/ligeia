@@ -15,7 +15,6 @@ import {
 } from "../../../../services/actions/confirmation/historyConfirmation";
 import { saveTag, addNewTag } from "../../../../services/actions/tags/tags";
 const useStyles = makeStyles((theme) => {
-  console.log(theme);
   return {
     box: {
       boxShadow: theme.shadows[1],

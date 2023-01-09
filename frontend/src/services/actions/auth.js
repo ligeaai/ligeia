@@ -59,41 +59,6 @@ export const loadUser = () => async dispatch => {
     }
 };
 
-// export const checkAuthenticated = () => async dispatch => {
-//     if (localStorage.getItem('access')) {
-//         const config = {
-//             headers: {
-//                 'Content-Type': 'application/json',
-//                 'Accept': 'application/json'
-//             }
-//         };
-
-//         const body = JSON.stringify({ token: localStorage.getItem('access') });
-
-//         try {
-//             const res = await axios.post(`http://localhost:8000/en/api/v1/...`, body, config)
-
-//             if (res.data.code !== 'token_not_valid') {
-//                 dispatch({
-//                     type: AUTHENTICATED_SUCCESS
-//                 });
-//             } else {
-//                 dispatch({
-//                     type: AUTHENTICATED_FAIL
-//                 });
-//             }
-//         } catch (err) {
-//             dispatch({
-//                 type: AUTHENTICATED_FAIL
-//             });
-//         }
-
-//     } else {
-//         dispatch({
-//             type: AUTHENTICATED_FAIL
-//         });
-//     }
-// };
 
 export const login = (email, password) => async dispatch => {
     const config = {
@@ -135,7 +100,6 @@ export const signup = (email, first_name, last_name, password) => async dispatch
             'Content-Type': 'application/json'
         }
     };
-    console.log(email, first_name, last_name, password);
     const body = JSON.stringify({ email, first_name, last_name, password });
 
     try {
@@ -166,62 +130,6 @@ export const signup = (email, first_name, last_name, password) => async dispatch
     }
 };
 
-// export const verify = (uid, token) => async dispatch => {
-//     const config = {
-//         headers: {
-//             'Content-Type': 'application/json'
-//         }
-//     };
-
-//     const body = JSON.stringify({ uid, token });
-
-//     try {
-//         await axios.post(`http://localhost:8000/en/api/v1/...`, body, config);
-
-//         dispatch({
-//             type: ACTIVATION_SUCCESS,
-//         });
-//     } catch (err) {
-//         dispatch({
-//             type: ACTIVATION_FAIL
-//         })
-//     }
-// };
-
-// export const change_password = (new_password1, new_password2, old_password) => async dispatch => {
-//     let token = localStorage.getItem('token');
-//     const config = {
-//         headers: {
-//             'Content-Type': 'application/json',
-//             "Authorization": `token ${token}`,
-//         }
-//     };
-//     const body = JSON.stringify({
-//         new_password1,
-//         new_password2,
-//         old_password
-//     });
-//     try {
-//         await axios.patch(`http://localhost:8000/api/v1/auth/change-password/`, body, config);
-//         await axios.post(`http://localhost:8000/api/v1/auth/logout/`, body, config);
-//         dispatch({
-//             type: CHANGE_PASSWORD_SUCCESS
-//         });
-//     } catch (err) {
-//         dispatch({
-//             type: CHANGE_PASSWORD_FAIL
-//         });
-//         dispatch({
-//             type: ADD_ERROR_SUCCESS,
-//             payload: err.message
-//         })
-//         setTimeout(() => {
-//             dispatch({
-//                 type: CLEAN_ERROR_SUCCESS,
-//             })
-//         }, 3000)
-//     }
-// };
 
 export const forget_password = (email) => async dispatch => {
     const config = {
@@ -263,8 +171,6 @@ export const forgot_password_confirm = (token, password) => async dispatch => {
     };
 
     const body = JSON.stringify({ password });
-    console.log(token);
-    console.log(body);
     try {
         await instance.post(`/auth/reset-new-password/${token}/`, body, config);
 
@@ -334,7 +240,6 @@ export const myFacebookLogin = (accesstoken, path) => async (dispatch) => {
 };
 
 export const myGoogleLogin = (response, path) => async (dispatch) => {
-    console.log(path);
     try {
         let res = await instance.post(
             `/auth/google/${path}`,
@@ -364,7 +269,6 @@ export const myGoogleLogin = (response, path) => async (dispatch) => {
 };
 
 export const myGithubLogin = (access_token, path) => async (dispatch) => {
-    console.log(access_token);
     try {
         let res = await instance.post(
             `/auth/github/${path}`,
@@ -372,7 +276,6 @@ export const myGithubLogin = (access_token, path) => async (dispatch) => {
                 access_token: access_token,
             }
         );
-        console.log(res);
         await dispatch({ type: GITHUB_AUTH_SUCCESS, payload: res.data.key })
         await dispatch(loadUser())
         await dispatch(setLoaderFalse())

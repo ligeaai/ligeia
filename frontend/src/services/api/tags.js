@@ -10,7 +10,6 @@ const getTagItem = (body) => {
         cancelToken.cancel()
     }
     cancelToken = axios.CancelToken.source();
-    console.log(body);
     return instance.post("/tags/item/", body, { ...config(), cancelToken: cancelToken.token });
 };
 

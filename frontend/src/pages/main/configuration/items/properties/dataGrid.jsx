@@ -61,7 +61,6 @@ const MyDataGrid = ({ type, isLinksActive }) => {
     }
     dispatch(editDataGridCell(myId, field, value));
   };
-  console.log(columns);
   if (Object.keys(rows).length !== 0) {
     return (
       <DataGridPro

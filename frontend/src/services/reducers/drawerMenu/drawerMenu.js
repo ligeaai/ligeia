@@ -43,7 +43,6 @@ export default function (state = initialState, action) {
                     openTabs: payload.drawerMenu.openTabs
                 }
             } catch {
-                console.log("catch");
                 return {
                     ...state,
                     selectedItem: { SHORT_LABEL: "Home" },

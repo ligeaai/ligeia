@@ -78,7 +78,6 @@ export const refreshDataGridResourcelist = () => async (dispatch, getState) => {
 
     try {
         let res = await ResourcelistService.getResourcelistDetail(body);
-        console.log(res);
         dispatch({
             type: LOAD_DATAGRID_ROW_RESOURCELIST,
             payload: res.data

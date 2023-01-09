@@ -9,7 +9,6 @@ export const loadCollapseMenu = (path) => async dispatch => {
             type: LOAD_COLLAPSABLE_MENU_ITEMS,
             payload: res.data
         });
-        console.log(res.data);
         return Promise.resolve(res.data)
     } catch (err) {
         return Promise.reject(err)
@@ -44,7 +43,6 @@ export const updateCollapseMenuCouch = (value) => async (dispatch, getState) => 
             payload: treeViewWidth
         })
 
-        console.log(res);
     } catch (err) {
         console.log(err);
     }

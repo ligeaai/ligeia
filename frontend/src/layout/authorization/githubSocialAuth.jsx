@@ -14,7 +14,6 @@ function GithubSocialAuth(props) {
     <GitHubLogin
       clientId="18aca4fc69e6c0c27eae"
       onSuccess={(response) => {
-        console.log(response);
         dispatch(setLoaderTrue());
         dispatch(
           myGithubLogin(response.code, isSignInPanel ? "login" : "register")
@@ -22,9 +21,7 @@ function GithubSocialAuth(props) {
           history.push("/");
         });
       }}
-      onFailure={(response) => {
-        console.log(response);
-      }}
+      onFailure={(response) => {}}
     >
       {Element}
     </GitHubLogin>

@@ -61,7 +61,6 @@ export const loadTreeviewItem = (path, sortPath) => async (dispatch, getState) =
         cancelToken = axios.CancelToken.source();
         let res = await path(body, cancelToken);
         var sortedResponse;
-        console.log(res);
         if (sortPath === "TYPE") {//todo need to change api end point 
             sortedResponse = res.data.Message.sort((a, b) =>
                 a[sortPath] > b[sortPath] ? 1 : -1
@@ -147,7 +146,6 @@ export const updateTreeViewCouch = (path, value) => async (dispatch, getState) =
     const width = getState().treeview.width
     width.values[path] = value
     const body = JSON.stringify({ ...width })
-    console.log(body);
     try {
         let res = await instance
             .put(
@@ -160,7 +158,6 @@ export const updateTreeViewCouch = (path, value) => async (dispatch, getState) =
             type: LOAD_TREE_VIEW_WIDTH,
             payload: width
         })
-        console.log(res);
     } catch (err) {
         console.log(err);
     }
@@ -179,7 +176,6 @@ export const createTreeViewCouch = () => async (dispatch, getState) => {
             overviewHierarchy: ["1"]
         }
     })
-    console.log(body);
     try {
         await instance
             .post(

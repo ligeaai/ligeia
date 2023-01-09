@@ -64,8 +64,6 @@ const DialogContent = ({ handleClose }) => {
           defaultValue={selectedItem}
         />
       </Grid>
-      {console.log(properties)}
-      {console.log(body[properties.Type])}
       {body[properties.Type]}
 
       <Grid item xs={12}>
