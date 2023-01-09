@@ -56,12 +56,23 @@ export const Measurement = ({ highchartProps, width, height }) => {
             highchartProps["Name Font Size(em)"] !== ""
               ? `${highchartProps["Name Font Size(em)"]}px`
               : "14px",
+          display: highchartProps["Show Name"] ? "inline-block" : "none",
         }}
       >
         {highchartProps.Name}
       </Grid>
 
-      <Grid item xs={12} sx={{ textAlign: "center" }}>
+      <Grid
+        item
+        xs={12}
+        sx={{
+          textAlign: "center",
+          fontSize:
+            highchartProps["Value Font Size"] !== ""
+              ? `${highchartProps["Value Font Size"]}px`
+              : "14px",
+        }}
+      >
         {parseFloat(
           parseFloat(data).toFixed(
             highchartProps["Decimal Places"] === ""
@@ -75,6 +86,11 @@ export const Measurement = ({ highchartProps, width, height }) => {
         item
         sx={{
           textAlign: "center",
+          fontSize:
+            highchartProps["Time Stamp Font Size"] !== ""
+              ? `${highchartProps["Time Stamp Font Size"]}px`
+              : "14px",
+          display: highchartProps["Show Timestamp"] ? "inline-block" : "none",
         }}
       >
         {categories}
