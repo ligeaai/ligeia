@@ -55,13 +55,7 @@ const LinkEditor = () => {
     if (isMount) {
       dispatch(setSaveFunctonConfirmation(saveItemLink));
       dispatch(setTitleConfirmation("Are you sure you want to save this ? "));
-      dispatch(
-        setBodyConfirmation(
-          `Are you sure you want to save an item ${
-            name ? "named " + name : "new"
-          }?`
-        )
-      );
+      dispatch(setBodyConfirmation(`${name ? name : "new"}`));
     }
     if (selectedIndex !== -2 && selectedIndex !== -3) {
       dispatch(loadLinks());

@@ -47,13 +47,7 @@ function TreeDataWithGap() {
   React.useEffect(() => {
     dispatch(setSaveFunctonConfirmation(saveTypeFunc));
     dispatch(setTitleConfirmation("Are you sure you want to save ? "));
-    dispatch(
-      setBodyConfirmation(
-        `Are you sure you want to save an types ${
-          type ? "type " + type : "new"
-        }?`
-      )
-    );
+    dispatch(setBodyConfirmation(`${type ? type : "new"}`));
     if (selectedIndex === -2) {
       dispatch(addNewType());
     } else if (selectedIndex >= 0) {

@@ -26,9 +26,7 @@ const PropertiesActionMenu = () => {
       dispatch(
         setConfirmation({
           title: "Are you sure you want to save this ?",
-          body: `Are you sure you want to save an item ${
-            name ? "named " + name : "new"
-          }?`,
+          body: `${name ? name : "new"}`,
           agreefunction: async () => {
             dispatch(saveItem());
             dispatch(newItem());
@@ -54,9 +52,7 @@ const PropertiesActionMenu = () => {
       dispatch(
         setConfirmation({
           title: "Are you sure you want to save this ?",
-          body: `Are you sure you want to save an item ${
-            name ? "named " + name : "new"
-          }?`,
+          body: `${name ? name : "new"}`,
           agreefunction: async () => {
             dispatch(saveItem());
             dispatch(setIsActiveConfirmation(false));
@@ -70,9 +66,7 @@ const PropertiesActionMenu = () => {
     dispatch(
       setConfirmation({
         title: "Are you sure you want to delete this ?",
-        body: `Are you sure you want to delete an item ${
-          name ? "named " + name : "new"
-        }?`,
+        body: `${name ? name : "new"}`,
         agreefunction: () => {
           dispatch(deleteItem());
           dispatch(setIsActiveConfirmation(false));
