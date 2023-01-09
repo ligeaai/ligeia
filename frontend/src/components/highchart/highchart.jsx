@@ -12,7 +12,9 @@ const MyBox = styled(Box)(({ theme }) => {
     ".highcharts-background": {
       fill: theme.palette.background.success,
     },
-
+    ".highcharts-label-box": {
+      fill: theme.palette.background.main,
+    },
     ".highcharts-axis-labels": {
       text: {
         color: `${theme.palette.text.main} !important`,
