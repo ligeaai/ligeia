@@ -180,7 +180,7 @@ function MyTabs() {
           aria-label="action tabs example"
           variant="scrollable"
           scrollButtons="auto"
-          sx={{ height: "48px", backgroundColor: "background.info" }}
+          sx={{ height: "48px", backgroundColor: "background.info", pt: "2px" }}
         >
           {titles.map((x, i) => (
             <MyTap
