@@ -89,7 +89,7 @@ const UnitOne = ({ isHome }) => {
           boxShadow: 3,
           borderRadius: "3px",
           width: "100px",
-          color: "text.main",
+          color: "text.primary",
         }}
       >
         <Grid container>

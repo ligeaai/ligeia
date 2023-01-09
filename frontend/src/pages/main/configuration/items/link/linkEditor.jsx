@@ -70,7 +70,7 @@ const LinkEditor = () => {
           </Box>
           {Object.keys(res).map((e, i) => (
             <Box key={i}>
-              <Divider />
+              <Divider sx={{ backgroundColor: "primary.main" }} />
               <Box sx={{ p: 1 }}>
                 <Box sx={{ mb: 1, fontSize: "14px" }}>{res[e].TYPE_LABEL}</Box>
                 <Box>
@@ -114,7 +114,7 @@ const LinkEditor = () => {
                               xs={12}
                               sx={{
                                 width: "278px",
-                                borderBottom: "1px solid black",
+                                borderBottom: "1px solid white",
                               }}
                             >
                               <IconButton
@@ -133,7 +133,7 @@ const LinkEditor = () => {
                                 }}
                               >
                                 <DeleteIcon
-                                  sx={{ color: "text.main" }}
+                                  sx={{ color: "text.primary" }}
                                   fontSize="small"
                                 />
                               </IconButton>
@@ -141,7 +141,7 @@ const LinkEditor = () => {
                             <Grid
                               item
                               xs={6}
-                              sx={{ borderRight: "1px solid black", p: 1 }}
+                              sx={{ borderRight: "1px solid white", p: 1 }}
                             >
                               <Grid container sx={{ fontSize: "14px" }}>
                                 <Grid item xs={12}>
@@ -155,7 +155,7 @@ const LinkEditor = () => {
                             <Grid item xs={6} sx={{ p: 1 }}>
                               <Grid
                                 container
-                                sx={{ fontSize: "12px", color: "text.main" }}
+                                sx={{ fontSize: "12px", color: "text.primary" }}
                               >
                                 <Grid item xs={12}>
                                   Start:
@@ -208,7 +208,7 @@ const LinkEditor = () => {
               height: isFullScreen
                 ? "calc(100vh - 60px - 51px )"
                 : "calc(100vh - 60px - 50px - 36px - 33px)",
-              backgroundColor: "secondary",
+              backgroundColor: "text.primary",
             }}
           />
         </Grid>
@@ -218,7 +218,7 @@ const LinkEditor = () => {
           </Box>
           {Object.keys(resFromType).map((e, i) => (
             <Box key={i}>
-              <Divider />
+              <Divider sx={{ backgroundColor: "primary.main" }} />
               <Box sx={{ p: 1 }}>
                 <Box sx={{ mb: 1, fontSize: "14px" }}>
                   {resFromType[e].TYPE_LABEL}
@@ -267,7 +267,7 @@ const LinkEditor = () => {
                               xs={12}
                               sx={{
                                 width: "278px",
-                                borderBottom: "1px solid black",
+                                borderBottom: "1px solid white",
                               }}
                             >
                               <IconButton
@@ -286,7 +286,7 @@ const LinkEditor = () => {
                                 }}
                               >
                                 <DeleteIcon
-                                  sx={{ color: "text.main" }}
+                                  sx={{ color: "text.primary" }}
                                   fontSize="small"
                                 />
                               </IconButton>
@@ -294,10 +294,10 @@ const LinkEditor = () => {
                             <Grid
                               item
                               xs={6}
-                              sx={{ borderRight: "1px solid black", p: 1 }}
+                              sx={{ borderRight: "1px solid white", p: 1 }}
                             >
                               <Grid container sx={{ fontSize: "14px" }}>
-                                <Grid item xs={12}>
+                                <Grid item xs={12} >
                                   {links[a].TO_ITEM_TYPE}
                                 </Grid>
                                 <Grid item xs={12} sx={{ fontSize: "12px" }}>
