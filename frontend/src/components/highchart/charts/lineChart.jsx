@@ -75,6 +75,69 @@ export const LineChart = ({
       type: "spline",
       reflow: true,
     },
+    rangeSelector: {
+      buttons: [
+        {
+          type: "minutes",
+          count: 1,
+          text: "1m",
+        },
+        {
+          type: "minutes",
+          count: 5,
+          text: "5m",
+        },
+        {
+          type: "minutes",
+          count: 15,
+          text: "15m",
+        },
+        {
+          type: "minutes",
+          count: 30,
+          text: "30m",
+        },
+        {
+          type: "hours",
+          count: 1,
+          text: "1h",
+        },
+        {
+          type: "hours",
+          count: 6,
+          text: "6h",
+        },
+        {
+          type: "days",
+          count: 1,
+          text: "1d",
+        },
+        {
+          type: "weeks",
+          count: 1,
+          text: "1w",
+        },
+        {
+          type: "months",
+          count: 1,
+          text: "1m",
+        },
+        {
+          type: "months",
+          count: 3,
+          text: "3m",
+        },
+        {
+          type: "months",
+          count: 6,
+          text: "6m",
+        },
+        {
+          type: "all",
+          text: "Full",
+        },
+      ],
+    },
     credits: {
       enabled: false,
     },
