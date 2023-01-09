@@ -9,7 +9,10 @@ import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import { hasChildren } from "./utils";
 import history from "../../routers/history";
 
-import { setSelectedDrawerItem } from "../../services/actions/drawerMenu/drawerMenu";
+import {
+  setSelectedDrawerItem,
+  setOpenTab,
+} from "../../services/actions/drawerMenu/drawerMenu";
 import { useParams } from "react-router-dom";
 
 import { confirmationPushHistory } from "../../services/utils/historyPush";
@@ -32,6 +35,7 @@ const SingleLevel = ({ item, url }) => {
   if (url === "/home") {
     url = "/";
   }
+  console.log(item);
   const dispatch = useDispatch();
   const isOpen = useSelector((state) => state.drawerMenu.isOpen);
   const { [item.ICON]: Icon } = Icons;
@@ -96,23 +100,18 @@ const SingleLevel = ({ item, url }) => {
 };
 
 const MultiLevel = ({ item, url }) => {
+  const dispatch = useDispatch();
   url = url + item.SHORT_LABEL.toLowerCase() + "/";
   const { params } = useParams();
   const isOpen = useSelector((state) => state.drawerMenu.isOpen);
+  const isOpenTab = useSelector((state) => state.drawerMenu.openTabs[item.id]);
   const { Items: children } = item;
   const { [item.ICON]: Icon } = Icons;
-  const [open, setOpen] = useState(false);
-  useEffect(() => {
-    if (isOpen) {
-      setOpen(true);
-    } else {
-      setOpen(false);
-    }
-  }, [isOpen]);
 
   const handleClick = () => {
     if (isOpen) {
-      setOpen((prev) => !prev);
+      //setOpen((prev) => !prev);
+      dispatch(setOpenTab(item.id));
     }
     //dispatch(setSelectedDrawerItem(item.SHORT_LABEL));
     //   history.push(`${item.URL}`);
@@ -170,7 +169,7 @@ const MultiLevel = ({ item, url }) => {
           {item.SHORT_LABEL}
         </Typography>
 
-        {open ? (
+        {isOpenTab && isOpen ? (
           <ArrowDropUpIcon
             sx={{
               position: "absolute",
@@ -201,7 +200,7 @@ const MultiLevel = ({ item, url }) => {
         )}
       </ListItem>
       <Collapse
-        in={open}
+        in={isOpenTab && isOpen}
         timeout="auto"
         unmountOnExit
         // style={{ marginLeft: "10px" }}
@@ -216,4 +215,4 @@ const MultiLevel = ({ item, url }) => {
   );
 };
 
-export default React.memo(App);
+export default App;
