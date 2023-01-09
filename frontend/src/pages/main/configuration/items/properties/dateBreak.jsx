@@ -37,7 +37,7 @@ const DateBreak = ({ props }) => {
               textTransform: "capitalize",
               fontSize: "12px",
               color: "status.primary",
-              pr: 1,
+              mx: "2px",
             }}
             disabled={props}
             onClick={() => {
