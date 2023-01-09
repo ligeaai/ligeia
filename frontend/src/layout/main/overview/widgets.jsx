@@ -42,7 +42,7 @@ const Widgets = React.forwardRef((props, ref) => {
           ...style,
           boxShadow: 4,
           borderRadius: "5px",
-          color: "status.primary",
+          color: "text.primary",
         }}
         {...rest}
       >

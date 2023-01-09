@@ -71,7 +71,7 @@ const StyledTreeItem = styled((props) => (
   whiteSpace: "nowrap",
   overflow: "hidden",
   textOverflow: "ellipsis",
-  color: theme.palette.status.primary,
+  color: theme.palette.primary.main,
   [`& .${treeItemClasses.iconContainer}`]: {
     "& .close": {
       opacity: 0.3,
