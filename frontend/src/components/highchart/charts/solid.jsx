@@ -3,6 +3,7 @@ import highchartsMore from "highcharts/highcharts-more.js";
 import solidGauge from "highcharts/modules/solid-gauge.js";
 import HighchartsReact from "highcharts-react-official";
 import React from "react";
+import { useSelector } from "react-redux";
 import exporting from "highcharts/modules/exporting";
 import { wsBaseUrl } from "../../../services/baseApi";
 exporting(Highcharts);
@@ -12,6 +13,7 @@ var client;
 var W3CWebSocket = require("websocket").w3cwebsocket;
 export const Solid = ({ highchartProps, width, height }) => {
   const [categories, setCategories] = React.useState("");
+  const uom = useSelector((state) => state.tapsOverview.UOMList);
   const [value, setValue] = React.useState("");
   React.useEffect(() => {
     client = new W3CWebSocket(`${wsBaseUrl}/ws/tags/`);
@@ -125,6 +127,19 @@ export const Solid = ({ highchartProps, width, height }) => {
             ),
           },
         ],
+        tooltip: {
+          valueSuffix: ` ${
+            highchartProps.UOM ? uom[highchartProps.UOM].CODE_TEXT : ""
+          }`,
+        },
+        dataLabels: {
+          format:
+            '<div style="text-align:center">' +
+            `<span style="font-size:14px">{y} ${
+              highchartProps.UOM ? uom[highchartProps.UOM].CODE_TEXT : ""
+            }</span><br/> ` +
+            "</div>",
+        },
       },
     ],
   };

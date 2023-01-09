@@ -80,12 +80,14 @@ const AngularPopUp = (props) => {
                     try {
                       const body = JSON.stringify({ TAG_ID: value });
                       let res = await TagService.getTagItem(body);
+                      console.log(res);
                       dispatch(
                         changeValeus("Minimum", res.data[0].NORMAL_MINIMUM)
                       );
                       dispatch(
                         changeValeus("Maximum", res.data[0].NORMAL_MAXIMUM)
                       );
+                      dispatch(changeValeus("UOM", res.data[0].UOM));
                     } catch (err) {}
                   }}
                 />

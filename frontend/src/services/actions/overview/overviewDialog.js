@@ -5,7 +5,7 @@ import {
     SET_SELECT_ITEM_OVERVIEW_DIALOG,
     SET_HIGHCHART_PROPERTY_OVERVIEW_DIALOG,
     SET_WIDGETS_OVERVIEW,
-    SET_MEASUREMENT_DATA
+    SET_MEASUREMENT_DATA,
 } from "../types"
 import axios from "axios"
 
@@ -15,11 +15,9 @@ import { loadTapsOverview } from "./taps"
 import ItemLinkService from "../../api/itemLink"
 
 
-
 let cancelTokenLinks;
 export const fillProperties = async (props) => async (dispatch, getState) => {
     //api call and fill the properties
-    const selectedValue = getState().overviewDialog.selectedItem
     const selectedItem = getState().collapseMenu.selectedItem.TO_ITEM_ID
     if (cancelTokenLinks) {
         cancelTokenLinks.cancel()

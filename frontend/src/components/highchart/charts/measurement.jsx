@@ -1,12 +1,14 @@
 import Highcharts from "highcharts";
 import React from "react";
-
+import { useSelector } from "react-redux";
 import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
 import { wsBaseUrl } from "../../../services/baseApi";
 var client;
 var W3CWebSocket = require("websocket").w3cwebsocket;
 
 export const Measurement = ({ highchartProps, width, height }) => {
+  const uom = useSelector((state) => state.tapsOverview.UOMList);
   const [categories, setCategories] = React.useState("");
 
   const [data, setData] = React.useState("");
@@ -25,6 +27,7 @@ export const Measurement = ({ highchartProps, width, height }) => {
           if (typeof e.data === "string") {
             let data = JSON.parse(e.data);
             if (data.message.value) {
+              console.log(data);
               setCategories((prev) => data.message.createdtime);
 
               setData((prev) => data.message.value);
@@ -67,19 +70,36 @@ export const Measurement = ({ highchartProps, width, height }) => {
         xs={12}
         sx={{
           textAlign: "center",
-          fontSize:
-            highchartProps["Value Font Size"] !== ""
-              ? `${highchartProps["Value Font Size"]}px`
-              : "14px",
         }}
       >
-        {parseFloat(
-          parseFloat(data).toFixed(
-            highchartProps["Decimal Places"] === ""
-              ? 3
-              : highchartProps["Decimal Places"]
-          )
-        )}
+        <Box
+          sx={{
+            display: "inline-block",
+            fontSize:
+              highchartProps["Value Font Size"] !== ""
+                ? `${highchartProps["Value Font Size"]}px`
+                : "14px",
+          }}
+        >
+          {parseFloat(
+            parseFloat(data).toFixed(
+              highchartProps["Decimal Places"] === ""
+                ? 3
+                : highchartProps["Decimal Places"]
+            )
+          )}
+        </Box>
+        <Box
+          sx={{
+            display: "inline-block",
+            fontSize:
+              highchartProps["Unit Font Size"] !== ""
+                ? `${highchartProps["Unit Font Size"]}px`
+                : "14px",
+          }}
+        >
+          {highchartProps.UOM ? uom[highchartProps.UOM].CODE_TEXT : ""}
+        </Box>
       </Grid>
       <Grid
         xs={12}

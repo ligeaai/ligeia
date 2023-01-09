@@ -1,6 +1,7 @@
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import React from "react";
+import { useSelector } from "react-redux";
 import exporting from "highcharts/modules/exporting";
 import { wsBaseUrl } from "../../../services/baseApi";
 exporting(Highcharts);
@@ -9,6 +10,7 @@ var W3CWebSocket = require("websocket").w3cwebsocket;
 
 export const Angular = ({ highchartProps, width, height }) => {
   const [categories, setCategories] = React.useState("");
+  const uom = useSelector((state) => state.tapsOverview.UOMList);
   const [value, setValue] = React.useState("");
   React.useEffect(() => {
     client = new W3CWebSocket(`${wsBaseUrl}/ws/tags/`);
@@ -129,10 +131,14 @@ export const Angular = ({ highchartProps, width, height }) => {
           ),
         ],
         tooltip: {
-          valueSuffix: " km/h",
+          valueSuffix: ` ${
+            highchartProps.UOM ? uom[highchartProps.UOM].CODE_TEXT : ""
+          }`,
         },
         dataLabels: {
-          format: "{y} km/h",
+          format: `{y}  ${
+            highchartProps.UOM ? uom[highchartProps.UOM].CODE_TEXT : ""
+          }`,
           borderWidth: 0,
           color:
             (Highcharts.defaultOptions.title &&

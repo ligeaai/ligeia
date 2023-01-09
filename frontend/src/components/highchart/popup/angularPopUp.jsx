@@ -203,6 +203,7 @@ const AngularPopUp = (props) => {
                       dispatch(
                         changeValeus("Maximum", res.data[0].NORMAL_MAXIMUM)
                       );
+                      dispatch(changeValeus("UOM", res.data[0].UOM));
                     } catch (err) {}
                   }}
                 />

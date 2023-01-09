@@ -24,6 +24,7 @@ const getTagsProperty = (body) => {
 };
 
 const createAndUpdate = (body) => {
+    console.log(body);
     return instance.post("/tags/save/", body, config());
 };
 

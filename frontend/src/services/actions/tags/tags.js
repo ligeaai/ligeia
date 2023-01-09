@@ -40,7 +40,7 @@ export const _fillTagData = (tagId) => async (dispatch, getState) => {
         const body = JSON.stringify({ TAG_ID: tagId })
 
         let res = await TagService.getTagItem(body)
-
+        console.log(res);
         dispatch({
             type: FILL_SAVE_VALUES_TAGS,
             payload: res.data[0]
@@ -112,6 +112,7 @@ const _newTagSave = async (saveValues, user) => {
         ...saveValues,
         // "LAST_UPDT_USER": user,
         // "LAST_UPDT_DATE": new Date(),
+        "TO_ITEM_ID": saveValues.TRANSACTION_PROPERTY,
         "TO_ITEM_TYPE": saveValues.TRANSACTION_TYPE,
         "END_DATETIME": "9000-01-01",
         "LINK_ID": saveValues.LINK_ID ? saveValues.LINK_ID : newUuid.replace(/-/g, ""),
@@ -121,7 +122,7 @@ const _newTagSave = async (saveValues, user) => {
     })
     try {
         let res = await TagService.createAndUpdate(body)
-        return Promise.resolve(res.data)
+        console.log(res);
     } catch (err) {
         return Promise.reject(err)
     }
@@ -166,6 +167,7 @@ export const saveTag = () => async (dispatch, getState) => {
     const values = getState().tags.saveValues
     const properties = getState().tags.tagValues
     if (_checkmandatoryFields(values, properties)) {
+        console.log("asdsa");
         var user = getState().auth.user.email
         const saveValues = getState().tags.saveValues
         dispatch({
@@ -173,8 +175,10 @@ export const saveTag = () => async (dispatch, getState) => {
             payload: false
         })
         await _newTagSave(saveValues, user)
+        console.log("---------");
         dispatch(loadTreeviewItem(TagService.getAll, "NAME"))
         dispatch(setIsActiveConfirmation(false))
+        console.log(true);
         return true
     }
     else {

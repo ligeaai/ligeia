@@ -25,7 +25,6 @@ import {
 } from "../../../../services/actions/confirmation/historyConfirmation";
 import { useIsMount } from "../../../../hooks/useIsMount";
 function TreeDataWithGap() {
-  const isMount = useIsMount();
   const dispatch = useDispatch();
   const rows = useSelector((state) => state.dataGridType.rows);
   const selectedIndex = useSelector(

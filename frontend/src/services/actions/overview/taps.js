@@ -6,9 +6,13 @@ import {
     REFRESH_WIDGETS_OVERVIEW,
     SET_REV,
     UPDATE_LAYOUT,
+    LOAD_UOMLIST
 } from "../types";
 import { instance, config } from "../../couchApi";
 import { uuidv4 } from "../../utils/uuidGenerator";
+import CodeListService from "../../api/codeList"
+import axios from "axios";
+let cancelTokenLinks;
 export const loadTapsOverview = () => async (dispatch, getState) => {
     const linkId = getState().collapseMenu.selectedItem.TO_ITEM_ID
     try {
@@ -18,7 +22,23 @@ export const loadTapsOverview = () => async (dispatch, getState) => {
                 config
             )
         var titles = Object.keys(res.data.data)
+        const uomBody = JSON.stringify({ ROW_ID: "235b78d901c2458786099e5fd9ae1efe" })
+        if (cancelTokenLinks) {
+            cancelTokenLinks.cancel()
+        }
+        cancelTokenLinks = axios.CancelToken.source();
+        try {
+            let uomList = await CodeListService.getCodelistDetail(uomBody, cancelTokenLinks)
+            let uomValues = {}
+            uomList.data.map(e => {
+                uomValues[e.ROW_ID] = e
+            })
 
+            dispatch({
+                type: LOAD_UOMLIST,
+                payload: uomValues
+            })
+        } catch { }
         dispatch({
             type: FILL_TAPS_OVERVIEW,
             payload: { titles, widgets: res.data.data, data: res.data }
