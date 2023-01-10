@@ -44,7 +44,7 @@ export const ItemSperatorLine = () => {
   return (
     <Box
       sx={{
-        border: "0.1px solid",
+        border: "1px solid",
         backgroundColor: "status.secondary",
         borderColor: "status.secondary",
         width: "100%",
@@ -58,7 +58,7 @@ export const ItemSperatorLineXL = () => {
   return (
     <Box
       sx={{
-        border: "0.2px solid",
+        border: "0.05rem solid",
         backgroundColor: "status.secondary",
         borderColor: "status.secondary",
         width: "100%",
