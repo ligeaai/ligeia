@@ -121,8 +121,8 @@ const MyTap = React.forwardRef(
             onClick={() => {
               dispatch(
                 setConfirmation({
-                  title: "Are you sure you want to delete the dashboard?",
-                  body: <>{x} will be deleted and will not come back</>,
+                  title: "Are you sure you want to delete ?",
+                  body: <>{x} </>,
                   agreefunction: () => {
                     dispatch(deleteTapHeader(x));
                     handleChange(0);
