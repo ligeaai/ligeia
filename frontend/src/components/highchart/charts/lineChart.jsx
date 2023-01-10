@@ -174,13 +174,7 @@ export const LineChart = ({
       },
     },
     title: {
-      text: highchartProps.Name,
-      style: {
-        fontSize:
-          highchartProps["Name Font Size(em)"] !== ""
-            ? `${highchartProps["Name Font Size(em)"]}px`
-            : "14px",
-      },
+      text: "",
     },
     xAxis: {
       categories: categories,

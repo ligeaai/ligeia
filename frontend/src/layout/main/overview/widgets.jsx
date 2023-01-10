@@ -65,13 +65,33 @@ const Widgets = React.forwardRef((props, ref) => {
             }}
           >
             <Grid item>
-              <IconButton
-                onClick={() => {
-                  dispatch(deleteChart(widget, highchartProps._rev));
-                }}
-              >
-                <DeleteForeverIcon />
-              </IconButton>
+              <Grid container sx={{ alignItems: "center" }}>
+                <Grid item>
+                  <IconButton
+                    onClick={() => {
+                      dispatch(deleteChart(widget, highchartProps._rev));
+                    }}
+                  >
+                    <DeleteForeverIcon />
+                  </IconButton>
+                </Grid>
+                <Grid
+                  item
+                  sx={{
+                    ml: 0.5,
+                    display:
+                      highchartProps.Type === "Linechart [Highchart]"
+                        ? "inline-block"
+                        : "none",
+                    fontSize:
+                      highchartProps["Name Font Size(em)"] !== ""
+                        ? `${highchartProps["Name Font Size(em)"]}px`
+                        : "14px",
+                  }}
+                >
+                  {highchartProps.Name}
+                </Grid>
+              </Grid>
             </Grid>
             <Grid
               item
