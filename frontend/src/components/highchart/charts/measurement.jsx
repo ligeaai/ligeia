@@ -79,7 +79,6 @@ export const Measurement = ({ highchartProps, width, height }) => {
             textAlign: "center",
             position: "relative",
             top: "-24px",
-            color: colorPicker(parseInt(data)),
           }}
         >
           <Box
@@ -92,6 +91,7 @@ export const Measurement = ({ highchartProps, width, height }) => {
                   ? `${highchartProps["Value Font Size"]}px`
                   : "14px",
               marginRight: "6px",
+              color: colorPicker(parseInt(data)),
             }}
           >
             {parseFloat(
