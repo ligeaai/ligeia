@@ -15,14 +15,10 @@ import { loadTapsOverview } from "./taps"
 import ItemLinkService from "../../api/itemLink"
 
 
-let cancelTokenLinks;
 export const fillProperties = async (props) => async (dispatch, getState) => {
     //api call and fill the properties
     const selectedItem = getState().collapseMenu.selectedItem.TO_ITEM_ID
-    if (cancelTokenLinks) {
-        cancelTokenLinks.cancel()
-    }
-    cancelTokenLinks = axios.CancelToken.source();
+
     try {
         let res = await instance
             .get(
@@ -30,13 +26,11 @@ export const fillProperties = async (props) => async (dispatch, getState) => {
                 config
             )
         const body = JSON.stringify({ ID: selectedItem })
-
-        let itemLinkRes = await ItemLinkService.getItemLink(body, cancelTokenLinks)
-        let tags = itemLinkRes.data.TO_ITEM_ID.filter(e => e.FROM_ITEM_TYPE === "TAG_CACHE")
+        let itemLinkRes = await ItemLinkService.getTags(body)
 
         dispatch({
             type: SET_MEASUREMENT_DATA,
-            payload: tags
+            payload: itemLinkRes.data
         })
         dispatch({
             type: FILL_VALUES_OVERVIEW_DIALOG,

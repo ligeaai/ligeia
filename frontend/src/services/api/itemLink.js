@@ -12,6 +12,9 @@ const getItemLink = (body, cancelToken) => {
     return instance.post("/item-link/details/", body, { ...config(), cancelToken: cancelToken.token });
 };
 
+const getTags = (body) => {
+    return instance.post("/item-link/tags/", body, config())
+}
 const remove = (body) => {
     return instance.post("/item-link/delete/", body, config());
 };
@@ -25,6 +28,7 @@ const ItemLinkService = {
     hierarchy,
     getLinkSchema,
     getItemLink,
+    getTags,
     remove,
     update
 };

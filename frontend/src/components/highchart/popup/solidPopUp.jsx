@@ -175,22 +175,23 @@ const SolidPopUp = (props) => {
               <Grid item xs={12}>
                 <Select
                   values={tags}
-                  valuesPath="FROM_ITEM_ID"
-                  dataTextPath="FROM_ITEM_ID"
+                  valuesPath="TAG_ID"
+                  dataTextPath="NAME"
                   defaultValue={highchartProps["Measurement"]}
                   handleChangeFunc={async (value) => {
                     handleChangeFunc("Measurement", value);
-                    try {
-                      const body = JSON.stringify({ TAG_ID: value });
-                      let res = await TagService.getTagItem(body);
-                      dispatch(
-                        changeValeus("Minimum", res.data[0].NORMAL_MINIMUM)
-                      );
-                      dispatch(
-                        changeValeus("Maximum", res.data[0].NORMAL_MAXIMUM)
-                      );
-                      dispatch(changeValeus("UOM", res.data[0].UOM));
-                    } catch (err) {}
+                    handleChangeFunc(
+                      "Minimum",
+                      tags.filter((e) => e.TAG_ID === value)[0].NORMAL_MINIMUM
+                    );
+                    handleChangeFunc(
+                      "Maximum",
+                      tags.filter((e) => e.TAG_ID === value)[0].NORMAL_MAXIMUM
+                    );
+                    handleChangeFunc(
+                      "UOM",
+                      tags.filter((e) => e.TAG_ID === value)[0].UOM
+                    );
                   }}
                 />
               </Grid>

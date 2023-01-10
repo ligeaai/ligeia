@@ -19,7 +19,7 @@ export const loadTapsOverview = () => async (dispatch, getState) => {
     let res = await instance.get(`/taplinks/${linkId}`, config);
     var titles = Object.keys(res.data.data);
     const uomBody = JSON.stringify({
-      ROW_ID: "e6cfdd3246e241649b9c2dbb0a47de81",
+      ROW_ID: "24257d53b23d4c269e4905e042fddaf7",
     });
     // TODO don't use patches, tends to leak code
 
@@ -41,7 +41,7 @@ export const loadTapsOverview = () => async (dispatch, getState) => {
         type: LOAD_UOMLIST,
         payload: uomValues,
       });
-    } catch {}
+    } catch { }
     dispatch({
       type: FILL_TAPS_OVERVIEW,
       payload: { titles, widgets: res.data.data, data: res.data },
@@ -193,7 +193,7 @@ function _deleteAllCharts(charts) {
     try {
       let res = await instance.get(`/widgets/${e}`, config);
       await instance.delete(`/widgets/${e}?rev=${res.data._rev}`, config);
-    } catch {}
+    } catch { }
   });
 }
 
@@ -226,7 +226,7 @@ export const updateChart = () => async (dispatch, getState) => {
     dispatch(updateCouchDb());
 
     dispatch(loadTapsOverview());
-  } catch {}
+  } catch { }
 };
 export const updateChartLayout = (layout) => async (dispatch, getState) => {
   const selectedTab = getState().tapsOverview.selected;
