@@ -11,8 +11,27 @@ var W3CWebSocket = require("websocket").w3cwebsocket;
 export const Measurement = ({ highchartProps, width, height }) => {
   const uom = useSelector((state) => state.tapsOverview.UOMList);
   const [categories, setCategories] = React.useState("");
-
   const [data, setData] = React.useState("");
+  function colorPicker(val) {
+    let color = "inherit";
+    let i = 0;
+    console.log(typeof parseInt(highchartProps[`[${i}] Low`]));
+    while (i < parseInt(highchartProps.Stops)) {
+      console.log(i);
+      console.log(highchartProps.Stops);
+      if (
+        parseInt(highchartProps[`[${i}] Low`]) < val &&
+        parseInt(highchartProps[`[${i}] High`]) > val
+      ) {
+        color = highchartProps[`[${i}] Color`];
+      }
+      i++;
+    }
+
+    console.log(color);
+    return color;
+  }
+
   React.useEffect(() => {
     client = new W3CWebSocket(`${wsBaseUrl}/ws/tags/`);
     client.onerror = function () {
@@ -60,6 +79,7 @@ export const Measurement = ({ highchartProps, width, height }) => {
             textAlign: "center",
             position: "relative",
             top: "-24px",
+            color: colorPicker(parseInt(data)),
           }}
         >
           <Box

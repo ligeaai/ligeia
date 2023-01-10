@@ -17,7 +17,122 @@ import {
 
 import TagService from "../../../services/api/tags";
 import MyCheckbox from "../../checkbox/checkbox";
-
+const Stops = () => {
+  const dispatch = useDispatch();
+  const highchartProps = useSelector(
+    (state) => state.overviewDialog.highchartProps
+  );
+  var loop = [];
+  for (let i = 0; i < highchartProps.Stops; i++) {
+    loop.push(i);
+  }
+  const handleChangeFunc = (key, val) => {
+    dispatch(changeValeus(key, val));
+  };
+  return (
+    <React.Fragment>
+      {loop.map((e, i) => {
+        return (
+          <Grid item xs={12} key={i}>
+            <Grid container columnSpacing={2}>
+              <Grid item xs={12} sm={6} md={3}>
+                <Grid container rowGap={0.5}>
+                  <Grid item xs={12}>
+                    {`[${e}] Low`}
+                  </Grid>
+                  <Grid item xs={12}>
+                    <MyNumberTextField
+                      defaultValue={highchartProps[`[${e}] Low`]}
+                      handleChangeFunc={(value) => {
+                        handleChangeFunc(`[${e}] Low`, value);
+                      }}
+                    />
+                  </Grid>
+                </Grid>
+              </Grid>
+              <Grid item xs={12} sm={6} md={3}>
+                <Grid container rowGap={0.5}>
+                  <Grid item xs={12}>
+                    {`[${e}] High`}
+                  </Grid>
+                  <Grid item xs={12}>
+                    <MyNumberTextField
+                      defaultValue={highchartProps[`[${e}] High`]}
+                      handleChangeFunc={(value) => {
+                        handleChangeFunc(`[${e}] High`, value);
+                      }}
+                    />
+                  </Grid>
+                </Grid>
+              </Grid>
+              <Grid item xs={12} sm={6} md={3}>
+                <Grid container rowGap={0.5}>
+                  <Grid item xs={12}>
+                    {`[${e}] Color`}
+                  </Grid>
+                  <Grid item xs={12}>
+                    <ColorTextfield
+                      defaultValue={highchartProps[`[${e}] Color`]}
+                      handleChangeFunc={(value) => {
+                        handleChangeFunc(`[${e}] Color`, value);
+                      }}
+                    />
+                  </Grid>
+                </Grid>
+              </Grid>
+            </Grid>
+          </Grid>
+        );
+      })}
+    </React.Fragment>
+  );
+};
+const Measurement = () => {
+  const dispatch = useDispatch();
+  const minimum = useSelector(
+    (state) => state.overviewDialog.highchartProps.Minimum
+  );
+  const maximum = useSelector(
+    (state) => state.overviewDialog.highchartProps.Maximum
+  );
+  const handleChangeFunc = (key, val) => {
+    dispatch(changeValeus(key, val));
+  };
+  return (
+    <React.Fragment>
+      <Grid item xs={12} sm={6} md={3}>
+        <Grid container rowGap={0.5}>
+          <Grid item xs={12}>
+            Minimum
+          </Grid>
+          <Grid item xs={12}>
+            <MyNumberTextField
+              defaultValue={minimum}
+              handleChangeFunc={(value) => {
+                handleChangeFunc("Minimum", value);
+              }}
+            />
+          </Grid>
+        </Grid>
+      </Grid>
+      <Grid item xs={12} sm={6} md={3}>
+        <Grid container rowGap={0.5}>
+          <Grid item xs={12}>
+            Maximum
+          </Grid>
+          <Grid item xs={12}>
+            <MyNumberTextField
+              defaultValue={maximum}
+              handleChangeFunc={(value) => {
+                handleChangeFunc("Maximum", value);
+              }}
+            />
+          </Grid>
+        </Grid>
+      </Grid>
+    </React.Fragment>
+  );
+};
 const AngularPopUp = (props) => {
   const dispatch = useDispatch();
   const { highchartProps, handleClose } = props;
@@ -111,6 +226,29 @@ const AngularPopUp = (props) => {
           </Grid>
         </Grid>
       </Grid>
+      <Grid item xs={12}>
+        <Grid container columnSpacing={2}>
+          <Measurement />
+          <Grid item xs={12} sm={6} md={3}>
+            <Grid container rowGap={0.5}>
+              <Grid item xs={12}>
+                Stops
+              </Grid>
+              <Grid item xs={12}>
+                <MyNumberTextField
+                  defaultValue={highchartProps["Stops"]}
+                  handleChangeFunc={(value) => {
+                    dispatch(
+                      cleanStops("Stops", value, ["Low", "High", "Color"])
+                    );
+                  }}
+                />
+              </Grid>
+            </Grid>
+          </Grid>
+        </Grid>
+      </Grid>
+
       <Grid item xs={12}>
         <Grid container columnSpacing={2} rowGap={2}>
           <Grid item xs={12} sm={6} md={3}>
@@ -235,6 +373,7 @@ const AngularPopUp = (props) => {
           </Grid>
         </Grid>
       </Grid>
+      <Stops />
     </Grid>
   );
 };
