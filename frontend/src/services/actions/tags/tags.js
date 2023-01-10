@@ -203,11 +203,11 @@ async function _deleteTag(TAG_ID) {
 export const deleteTag = () => async (dispatch, getState) => {
     const tagId = getState().treeview.selectedItem.TAG_ID
     const selectedIndex = getState().treeview.selectedItem.selectedIndex
-
+    const name = getState().treeview.selectedItem.NAME
     dispatch(
         setConfirmation({
             title: "Are you sure you want to delete this?",
-            body: <></>,
+            body: <>{name}</>,
             agreefunction: async () => {
                 dispatch({
                     type: TOGGLE_CHANGES_TAGS,

@@ -63,14 +63,18 @@ const PropertiesEditor = () => {
     if (selectedIndex !== -2) {
       dispatch(_fillTagData(tagId));
     }
-  }, [tagId]);
+  }, [tagId, name]);
 
   if (Object.keys(tagValues).length > 0) {
     return (
       <Grid container>
         <Grid item xs={12} className={classes.box}>
           <Grid container>
-            <Grid item xs={12} sx={{ fontWeight: "bold", mb: 0.5, color: "text.primary" }}>
+            <Grid
+              item
+              xs={12}
+              sx={{ fontWeight: "bold", mb: 0.5, color: "text.primary" }}
+            >
               Tag Link
             </Grid>
             <Grid item xs={12} md={6} sx={{ color: "primary.main" }}>
@@ -93,10 +97,19 @@ const PropertiesEditor = () => {
         </Grid>
         <Grid item xs={12} className={classes.box}>
           <Grid container>
-            <Grid item xs={12} sx={{ fontWeight: "bold", mb: 0.5, color: "text.primary" }}>
+            <Grid
+              item
+              xs={12}
+              sx={{ fontWeight: "bold", mb: 0.5, color: "text.primary" }}
+            >
               Tag Information
             </Grid>
-            <Grid item xs={12} key={"startdatetime"} sx={{ color: "primary.main" }}>
+            <Grid
+              item
+              xs={12}
+              key={"startdatetime"}
+              sx={{ color: "primary.main" }}
+            >
               <Grid container>
                 <Grid item xs={6}>
                   <Grid container className={classes.selectBox}>
@@ -114,16 +127,16 @@ const PropertiesEditor = () => {
               if (
                 tagValues.TAG_INFORMATIONS[e].PROPERTY_TYPE !== "GUID" &&
                 tagValues.TAG_INFORMATIONS[e].PROPERTY_NAME !==
-                "END_DATETIME" &&
+                  "END_DATETIME" &&
                 tagValues.TAG_INFORMATIONS[e].PROPERTY_NAME !==
-                "LAST_UPDT_USER" &&
+                  "LAST_UPDT_USER" &&
                 tagValues.TAG_INFORMATIONS[e].PROPERTY_NAME !==
-                "LAST_UPDT_DATE" &&
+                  "LAST_UPDT_DATE" &&
                 tagValues.TAG_INFORMATIONS[e].PROPERTY_NAME !== "LOAD" &&
                 tagValues.TAG_INFORMATIONS[e].PROPERTY_NAME !== "ITEM_ID" &&
                 tagValues.TAG_INFORMATIONS[e].PROPERTY_NAME !== "TARGET_ID" &&
                 tagValues.TAG_INFORMATIONS[e].PROPERTY_NAME !==
-                "FULL_INTERVAL" &&
+                  "FULL_INTERVAL" &&
                 tagValues.TAG_INFORMATIONS[e].PROPERTY_NAME !== "ACCESS" &&
                 tagValues.TAG_INFORMATIONS[e].PROPERTY_NAME !== "DESCRIPTION" &&
                 tagValues.TAG_INFORMATIONS[e].PROPERTY_NAME !== "START_DATETIME"
@@ -131,7 +144,11 @@ const PropertiesEditor = () => {
                 return (
                   <Grid item xs={12} md={6} key={key}>
                     <Grid container className={classes.selectBox}>
-                      <Grid item className={classes.label} sx={{ color: "primary.main" }}>
+                      <Grid
+                        item
+                        className={classes.label}
+                        sx={{ color: "primary.main" }}
+                      >
                         {tagValues.TAG_INFORMATIONS[e].SHORT_LABEL}
                       </Grid>
                       <Grid item className={classes.labelFields}>
@@ -142,7 +159,12 @@ const PropertiesEditor = () => {
                 );
               }
             })}
-            <Grid item xs={12} key={"description"} sx={{ color: "primary.main" }}>
+            <Grid
+              item
+              xs={12}
+              key={"description"}
+              sx={{ color: "primary.main" }}
+            >
               <Grid container className={classes.selectBox}>
                 <Grid item className={classes.label}>
                   {tagValues.TAG_INFORMATIONS[6].SHORT_LABEL}
