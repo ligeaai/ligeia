@@ -14,6 +14,7 @@ class item_link(models.Model):
 	COLL_ITEM_TYPE=models.CharField(max_length=14,null=True,db_index=True,)
 	LAST_UPDT_USER=models.CharField(max_length=100,null=True,)
 	LAST_UPDT_DATE=models.DateField(default=timezone.now,null=True,)
+	LAYER_NAME=models.CharField(max_length=50,null=False,)
 	VERSION=models.CharField(max_length=32,default=uuid.uuid4,null=False,)
 	DB_ID=models.CharField(max_length=32,null=True,)
 	ROW_ID=models.CharField(max_length=32,default=uuid.uuid4,null=False,db_index=True,)

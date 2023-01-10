@@ -17,4 +17,5 @@ class uom(models.Model):
 	DB_ID=models.CharField(max_length=32,null=True,)
 	ROW_ID=models.CharField(max_length=32,default=uuid.uuid4().hex,null=False,db_index=True,)
 	STATUS=models.CharField(max_length=10,null=True,)
+	LAYER_NAME=models.CharField(max_length=50,null=False,)
 	REV_GRP_ID=models.CharField(max_length=32,null=True,)
