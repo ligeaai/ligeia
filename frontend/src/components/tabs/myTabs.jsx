@@ -79,17 +79,17 @@ const MyTap = React.forwardRef(
       return (
         <Box
           sx={{
-            borderTopLeftRadius: "15px",
-            borderTopRightRadius: "15px",
-            height: active === i ? "40px" : "30px",
-            paddingBottom: "4px",
-            mt: active === i ? 0 : 1,
+            borderRadius: "10px",
+            height: "30px",
+            backgroundColor: "inherit",
+            padding: "4px",
+            fontSize: active === i ? "14px" : "12px",
             display: "flex",
+            marginY: "2px",
+            marginRight: "2px",
             alignItems: "center",
             position: "relative",
             ":hover": {
-              height: "40px",
-              mt: 0,
               backgroundColor: "hover.primary",
             },
           }}
@@ -101,9 +101,9 @@ const MyTap = React.forwardRef(
             {...rest}
             sx={{
               width: "max-content",
-              maxWidth: active === i ? "160px" : "150px",
+              maxWidth: "150px",
               textTransform: "capitalize",
-              fontSize: active === i ? "14px" : "12px",
+              fontSize: "12px",
               ":hover": {
                 textShadow: "0.5px 0.5px 0.5px black",
               },
@@ -204,8 +204,8 @@ function MyTabs() {
             key={`a`}
             container
             sx={{
-              height: "30px",
-              paddingBottom: "4px",
+              height: "20px",
+              marginY: "2px",
               cursor: "pointer",
               mt: 1,
               width: "50px",
@@ -217,12 +217,6 @@ function MyTabs() {
               item
               onClick={() => {
                 dispatch(addNewTabItem());
-              }}
-              sx={{
-                ":hover": {
-                  fontSize: "16px",
-                  textShadow: "0.5px 0.5px 0.5px black",
-                },
               }}
             >
               +
