@@ -10,8 +10,11 @@ var W3CWebSocket = require("websocket").w3cwebsocket;
 
 export const Measurement = ({ highchartProps, width, height }) => {
   const uom = useSelector((state) => state.tapsOverview.UOMList);
+  const measuremenetData = useSelector(
+    (state) => state.overviewDialog.measuremenetData
+  );
   const [categories, setCategories] = React.useState("");
-  const [data, setData] = React.useState("");
+  const [data, setData] = React.useState("0");
   function colorPicker(val) {
     let color = "inherit";
     let i = 0;
@@ -62,7 +65,26 @@ export const Measurement = ({ highchartProps, width, height }) => {
     };
   }, []);
   return (
-    <React.Fragment>
+    <Box
+      sx={{
+        position: "relative",
+      }}
+    >
+      <Box
+        sx={{
+          position: "absolute",
+          top: "0px",
+          width: "100%",
+          textAlign: "center",
+          display: highchartProps["Tag Name"] ? "inline-block" : "none",
+        }}
+      >
+        {
+          measuremenetData.filter(
+            (e) => e.TAG_ID === highchartProps.Measurement
+          )[0].NAME
+        }
+      </Box>
       <Grid
         container
         sx={{
@@ -76,43 +98,47 @@ export const Measurement = ({ highchartProps, width, height }) => {
         <Grid
           item
           sx={{
-            textAlign: "center",
             position: "relative",
             top: "-24px",
           }}
         >
-          <Box
-            sx={{
-              display: highchartProps["Show Measurement"]
-                ? "inline-block"
-                : "none",
-              fontSize:
-                highchartProps["Value Font Size"] !== ""
-                  ? `${highchartProps["Value Font Size"]}px`
-                  : "14px",
-              marginRight: "6px",
-              color: colorPicker(parseInt(data)),
-            }}
+          <Grid
+            container
+            sx={{ justifyContent: "center", alignItems: "center" }}
           >
-            {parseFloat(
-              parseFloat(data).toFixed(
+            <Grid
+              item
+              sx={{
+                display: highchartProps["Measurement"]
+                  ? "inline-block"
+                  : "none",
+                fontSize:
+                  highchartProps["Value Font Size"] !== ""
+                    ? `${highchartProps["Value Font Size"]}px`
+                    : "14px",
+                marginRight: "6px",
+                color: colorPicker(parseInt(data)),
+              }}
+            >
+              {parseFloat(data).toFixed(
                 highchartProps["Decimal Places"] === ""
-                  ? 3
+                  ? 0
                   : highchartProps["Decimal Places"]
-              )
-            )}
-          </Box>
-          <Box
-            sx={{
-              display: highchartProps["Show Unit"] ? "inline-block" : "none",
-              fontSize:
-                highchartProps["Unit Font Size"] !== ""
-                  ? `${highchartProps["Unit Font Size"]}px`
-                  : "14px",
-            }}
-          >
-            ( {highchartProps.UOM ? uom[highchartProps.UOM].CODE_TEXT : ""} )
-          </Box>
+              )}
+            </Grid>
+            <Grid
+              item
+              sx={{
+                display: highchartProps["Unit"] ? "inline-block" : "none",
+                fontSize:
+                  highchartProps["Unit Font Size"] !== ""
+                    ? `${highchartProps["Unit Font Size"]}px`
+                    : "14px",
+              }}
+            >
+              ( {highchartProps.UOM ? uom[highchartProps.UOM].CODE_TEXT : ""} )
+            </Grid>
+          </Grid>
         </Grid>
       </Grid>
       <Box
@@ -126,11 +152,11 @@ export const Measurement = ({ highchartProps, width, height }) => {
             highchartProps["Time Stamp Font Size"] !== ""
               ? `${highchartProps["Time Stamp Font Size"]}px`
               : "14px",
-          display: highchartProps["Show Timestamp"] ? "inline-block" : "none",
+          display: highchartProps["Timestamp"] ? "inline-block" : "none",
         }}
       >
         {categories}
       </Box>
-    </React.Fragment>
+    </Box>
   );
 };

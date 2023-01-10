@@ -306,13 +306,13 @@ const MeasurementPopUp = (props) => {
           <Grid item xs={12} sm={6} md={3}>
             <Grid container rowGap={0.5}>
               <Grid item xs={12}>
-                Show Name
+                Name
               </Grid>
               <Grid item xs={12}>
                 <MyCheckbox
-                  defaultValue={!highchartProps["Show Name"]}
+                  defaultValue={!highchartProps["Name"]}
                   handleChangeFunc={(value) => {
-                    handleChangeFunc("Show Name", !value);
+                    handleChangeFunc("Name", !value);
                   }}
                 />
               </Grid>
@@ -321,13 +321,13 @@ const MeasurementPopUp = (props) => {
           <Grid item xs={12} sm={6} md={3}>
             <Grid container rowGap={0.5}>
               <Grid item xs={12}>
-                Show Measurement
+                Measurement
               </Grid>
               <Grid item xs={12}>
                 <MyCheckbox
-                  defaultValue={highchartProps["Show Measurement"]}
+                  defaultValue={highchartProps["Measurement"]}
                   handleChangeFunc={(value) => {
-                    handleChangeFunc("Show Measurement", value);
+                    handleChangeFunc("Measurement", value);
                   }}
                 />
               </Grid>
@@ -336,13 +336,13 @@ const MeasurementPopUp = (props) => {
           <Grid item xs={12} sm={6} md={3}>
             <Grid container rowGap={0.5}>
               <Grid item xs={12}>
-                Show Unit
+                Unit
               </Grid>
               <Grid item xs={12}>
                 <MyCheckbox
-                  defaultValue={highchartProps["Show Unit"]}
+                  defaultValue={highchartProps["Unit"]}
                   handleChangeFunc={(value) => {
-                    handleChangeFunc("Show Unit", value);
+                    handleChangeFunc("Unit", value);
                   }}
                 />
               </Grid>
@@ -351,13 +351,43 @@ const MeasurementPopUp = (props) => {
           <Grid item xs={12} sm={6} md={3}>
             <Grid container rowGap={0.5}>
               <Grid item xs={12}>
-                Show Timestamp
+                Timestamp
               </Grid>
               <Grid item xs={12}>
                 <MyCheckbox
-                  defaultValue={highchartProps["Show Timestamp"]}
+                  defaultValue={highchartProps["Timestamp"]}
                   handleChangeFunc={(value) => {
-                    handleChangeFunc("Show Timestamp", value);
+                    handleChangeFunc("Timestamp", value);
+                  }}
+                />
+              </Grid>
+            </Grid>
+          </Grid>
+          <Grid item xs={12} sm={6} md={3}>
+            <Grid container rowGap={0.5}>
+              <Grid item xs={12}>
+                Tag Name
+              </Grid>
+              <Grid item xs={12}>
+                <MyCheckbox
+                  defaultValue={highchartProps["Tag Name"]}
+                  handleChangeFunc={(value) => {
+                    handleChangeFunc("Tag Name", value);
+                  }}
+                />
+              </Grid>
+            </Grid>
+          </Grid>
+          <Grid item xs={12} sm={6} md={3}>
+            <Grid container rowGap={0.5}>
+              <Grid item xs={12}>
+                Enable Export
+              </Grid>
+              <Grid item xs={12}>
+                <MyCheckbox
+                  defaultValue={highchartProps["Enable Export"]}
+                  handleChangeFunc={(value) => {
+                    handleChangeFunc("Enable Export", value);
                   }}
                 />
               </Grid>

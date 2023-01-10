@@ -7,10 +7,13 @@ import {
   SET_REV,
   UPDATE_LAYOUT,
   LOAD_UOMLIST,
+  SET_MEASUREMENT_DATA
 } from "../types";
 import { instance, config } from "../../couchApi";
 import { uuidv4 } from "../../utils/uuidGenerator";
 import CodeListService from "../../api/codeList";
+import ItemLinkService from "../../api/itemLink"
+
 import axios from "axios";
 let cancelTokenLinks;
 export const loadTapsOverview = () => async (dispatch, getState) => {
@@ -22,7 +25,13 @@ export const loadTapsOverview = () => async (dispatch, getState) => {
       ROW_ID: "24257d53b23d4c269e4905e042fddaf7",
     });
     // TODO don't use patches, tends to leak code
+    const body = JSON.stringify({ ID: linkId })
+    let itemLinkRes = await ItemLinkService.getTags(body)
 
+    dispatch({
+      type: SET_MEASUREMENT_DATA,
+      payload: itemLinkRes.data
+    })
     if (cancelTokenLinks) {
       cancelTokenLinks.cancel();
     }

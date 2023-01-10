@@ -12,7 +12,6 @@ import axios from "axios"
 import { instance, config } from "../../couchApi"
 import { uuidv4 } from "../../utils/uuidGenerator"
 import { loadTapsOverview } from "./taps"
-import ItemLinkService from "../../api/itemLink"
 
 
 export const fillProperties = async (props) => async (dispatch, getState) => {
@@ -25,13 +24,7 @@ export const fillProperties = async (props) => async (dispatch, getState) => {
                 `/highchartproperties/${props}`,
                 config
             )
-        const body = JSON.stringify({ ID: selectedItem })
-        let itemLinkRes = await ItemLinkService.getTags(body)
 
-        dispatch({
-            type: SET_MEASUREMENT_DATA,
-            payload: itemLinkRes.data
-        })
         dispatch({
             type: FILL_VALUES_OVERVIEW_DIALOG,
             payload: res.data.properties
