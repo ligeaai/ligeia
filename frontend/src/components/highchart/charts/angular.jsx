@@ -54,11 +54,11 @@ export const Angular = ({ highchartProps, width, height }) => {
       text: "",
     },
     pane: {
-      startAngle: -90,
-      endAngle: 89.9,
+      startAngle: -150,
+      endAngle: 150,
       background: null,
-      center: ["50%", "75%"],
-      size: "110%",
+      center: ["50%", "50%"],
+      size: "80%",
     },
 
     // the value axis
@@ -70,9 +70,10 @@ export const Angular = ({ highchartProps, width, height }) => {
       tickColor: Highcharts.defaultOptions.chart.backgroundColor || "#FFFFFF",
       tickLength: 20,
       tickWidth: 2,
-      minorTickInterval: null,
+      minorTickPosition: "inside",
       labels: {
-        distance: 20,
+        distance: -40,
+        rotation: "auto",
         style: {
           fontSize: "14px",
         },
@@ -129,7 +130,7 @@ export const Angular = ({ highchartProps, width, height }) => {
           }`,
         },
         dataLabels: {
-          format: `{y}  ${
+          format: ` ${
             highchartProps.UOM ? uom[highchartProps.UOM].CODE_TEXT : ""
           }`,
           borderWidth: 0,
@@ -139,7 +140,8 @@ export const Angular = ({ highchartProps, width, height }) => {
               Highcharts.defaultOptions.title.style.color) ||
             "#333333",
           style: {
-            fontSize: "10px",
+            fontSize: "12px",
+            zIndex: 67,
           },
         },
         dial: {
@@ -151,7 +153,7 @@ export const Angular = ({ highchartProps, width, height }) => {
         },
         pivot: {
           backgroundColor: "gray",
-          radius: 6,
+          radius: 8,
         },
       },
     ],
