@@ -5,14 +5,17 @@ import Box from "@mui/material/Box";
 
 import HighchartsReact from "highcharts-react-official";
 import exporting from "highcharts/modules/exporting";
+import accessibility from "highcharts/modules/accessibility";
 import { wsBaseUrl } from "../../../services/baseApi";
 
 import { DataGrid } from "../../index";
 import { dateFormatDDMMYYHHMM } from "../../../services/utils/dateFormatter";
+import { useSelector } from "react-redux";
+
 var client;
 var W3CWebSocket = require("websocket").w3cwebsocket;
 exporting(Highcharts);
-
+accessibility(Highcharts);
 export const LineChart = ({
   highchartProps,
   width,
@@ -21,9 +24,30 @@ export const LineChart = ({
   backfillData,
   tabular,
 }) => {
+  console.log(highchartProps.Inputs);
+  const UOMList = useSelector((state) => state.tapsOverview.UOMList);
+  const yAxisTitles = [];
+  const series = [];
   const [categories, setCategories] = React.useState([]);
   const [data, setData] = React.useState([]);
   const [allData, setAllData] = React.useState([]);
+  highchartProps.Inputs.map((e) => {
+    yAxisTitles.push({
+      title: {
+        text: UOMList[e.UOM].CODE_TEXT,
+      },
+      max: parseInt(e.NORMAL_MAXIMUM),
+      min: parseInt(e.NORMAL_MINIMUM),
+    });
+    series.push({
+      name: e.NAME,
+      data: data,
+      color: !highchartProps["Enable Custom Colors"]
+        ? ""
+        : highchartProps[`[${e.NAME}] Color`],
+    });
+  });
+
   React.useEffect(() => {
     if (client) {
       setAllData([]);
@@ -144,23 +168,23 @@ export const LineChart = ({
     tooltip: {
       borderWidth: 0,
     },
+    legend: {
+      enabled: highchartProps["Enable Graph Legend"],
+      layout: "vertical",
+      itemStyle: {
+        fontSize: highchartProps["Graph Legend Font Size (em)"]
+          ? `${highchartProps["Graph Legend Font Size (em)"]}px`
+          : "12px",
+      },
+    },
     title: {
       text: "",
     },
     xAxis: {
       categories: categories,
     },
-    yAxis: {
-      title: {
-        text: "Amount",
-      },
-    },
-    series: [
-      {
-        name: "Value",
-        data: data,
-      },
-    ],
+    yAxis: [...yAxisTitles],
+    series: [...series],
   };
   if (!tabular) {
     return (

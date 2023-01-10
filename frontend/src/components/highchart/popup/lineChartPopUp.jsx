@@ -184,6 +184,10 @@ const Inputs = (props) => {
 
   const handleAllRight = () => {
     setRight(right.concat(left));
+    left.map(async (e) => {
+      dispatch(changeValeus(`${e.NAME} Y-Axis Minimum`, e.NORMAL_MINIMUM));
+      dispatch(changeValeus(`${e.NAME} Y-Axis Maximum`, e.NORMAL_MAXIMUM));
+    });
     setLeft([]);
     handleChangeFunc(right.concat(left));
   };
@@ -191,6 +195,10 @@ const Inputs = (props) => {
   const handleCheckedRight = () => {
     setRight(right.concat(leftChecked));
     handleChangeFunc(right.concat(leftChecked));
+    leftChecked.map(async (e) => {
+      dispatch(changeValeus(`${e.NAME} Y-Axis Minimum`, e.NORMAL_MINIMUM));
+      dispatch(changeValeus(`${e.NAME} Y-Axis Maximum`, e.NORMAL_MAXIMUM));
+    });
     setLeft(not(left, leftChecked));
     setChecked(not(checked, leftChecked));
   };
