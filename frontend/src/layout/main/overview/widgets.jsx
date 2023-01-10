@@ -56,7 +56,14 @@ const Widgets = React.forwardRef((props, ref) => {
             },
           }}
         >
-          <Grid container sx={{ justifyContent: "space-between", p: 0.5 }}>
+          <Grid
+            container
+            sx={{
+              justifyContent: "space-between",
+              p: 0.5,
+              alignItems: "center",
+            }}
+          >
             <Grid item>
               <IconButton
                 onClick={() => {
@@ -66,7 +73,22 @@ const Widgets = React.forwardRef((props, ref) => {
                 <DeleteForeverIcon />
               </IconButton>
             </Grid>
-
+            <Grid
+              item
+              sx={{
+                display:
+                  highchartProps.Type === "Linechart [Highchart]" ||
+                  highchartProps["Show Name"]
+                    ? "none"
+                    : "flex",
+                fontSize:
+                  highchartProps["Name Font Size(em)"] !== ""
+                    ? `${highchartProps["Name Font Size(em)"]}px`
+                    : "14px",
+              }}
+            >
+              {highchartProps.Name}
+            </Grid>
             <Grid
               item
               sx={{

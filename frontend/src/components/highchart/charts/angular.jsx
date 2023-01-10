@@ -51,15 +51,8 @@ export const Angular = ({ highchartProps, width, height }) => {
       enabled: false,
     },
     title: {
-      text: highchartProps.Name,
-      style: {
-        fontSize:
-          highchartProps["Name Font Size(em)"] !== ""
-            ? `${highchartProps["Name Font Size(em)"]}px`
-            : "14px",
-      },
+      text: "",
     },
-
     pane: {
       startAngle: -90,
       endAngle: 89.9,

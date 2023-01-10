@@ -50,15 +50,8 @@ export const Solid = ({ highchartProps, width, height }) => {
       enabled: false,
     },
     title: {
-      text: highchartProps.Name,
-      style: {
-        fontSize:
-          highchartProps["Name Font Size(em)"] !== ""
-            ? `${highchartProps["Name Font Size(em)"]}px`
-            : "14px",
-      },
+      text: "",
     },
-
     pane: {
       center: ["50%", "85%"],
       size: "140%",

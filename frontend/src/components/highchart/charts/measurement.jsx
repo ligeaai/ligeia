@@ -57,21 +57,6 @@ export const Measurement = ({ highchartProps, width, height }) => {
         xs={12}
         sx={{
           textAlign: "center",
-          fontSize:
-            highchartProps["Name Font Size(em)"] !== ""
-              ? `${highchartProps["Name Font Size(em)"]}px`
-              : "14px",
-          display: highchartProps["Show Name"] ? "inline-block" : "none",
-        }}
-      >
-        {highchartProps.Name}
-      </Grid>
-
-      <Grid
-        item
-        xs={12}
-        sx={{
-          textAlign: "center",
         }}
       >
         <Box

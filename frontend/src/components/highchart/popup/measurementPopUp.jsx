@@ -211,9 +211,9 @@ const AngularPopUp = (props) => {
               </Grid>
               <Grid item xs={12}>
                 <MyCheckbox
-                  defaultValue={highchartProps["Show Name"]}
+                  defaultValue={!highchartProps["Show Name"]}
                   handleChangeFunc={(value) => {
-                    handleChangeFunc("Show Name", value);
+                    handleChangeFunc("Show Name", !value);
                   }}
                 />
               </Grid>
