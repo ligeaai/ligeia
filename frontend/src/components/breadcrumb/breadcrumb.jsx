@@ -40,7 +40,7 @@ const Breadcrumbs = () => {
             key={name}
             sx={{
               fontSize: "14px",
-              color: "status.secondary",
+              color: "primary.main",
               cursor: "pointer",
               textTransform: "capitalize",
               fontWeight: "bold",

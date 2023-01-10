@@ -157,7 +157,18 @@ const LinkEditor = () => {
                                 container
                                 sx={{ fontSize: "12px", color: "text.primary" }}
                               >
-                                <Grid item xs={12}>
+                                <Grid item xs={12}
+                                  sx={{
+                                    "& div": {
+                                      "& div": {
+                                        fieldset: {
+                                          borderColor:
+                                            "white",
+                                        },
+                                      },
+                                    },
+                                  }}
+                                >
                                   Start:
                                   <DatePicker
                                     time={new Date(links[a].START_DATETIME)}
@@ -172,7 +183,7 @@ const LinkEditor = () => {
                                       "& div": {
                                         fieldset: {
                                           borderColor:
-                                            "rgba(0, 0, 0, 0.23) !important",
+                                            "white !important",
                                         },
                                       },
                                     },
@@ -307,7 +318,18 @@ const LinkEditor = () => {
                             </Grid>
                             <Grid item xs={6} sx={{ p: 1 }}>
                               <Grid container sx={{ fontSize: "12px" }}>
-                                <Grid item xs={12}>
+                                <Grid item xs={12}
+                                  sx={{
+                                    "& div": {
+                                      "& div": {
+                                        fieldset: {
+                                          borderColor:
+                                            "white",
+                                        },
+                                      },
+                                    },
+                                  }}
+                                >
                                   Start:
                                   <DatePicker
                                     time={new Date(links[a].START_DATETIME)}
@@ -322,7 +344,7 @@ const LinkEditor = () => {
                                       "& div": {
                                         fieldset: {
                                           borderColor:
-                                            "rgba(0, 0, 0, 0.23) !important",
+                                            "white !important",
                                         },
                                       },
                                     },

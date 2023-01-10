@@ -124,7 +124,7 @@ const Palette = () => {
             },
 
             icon: {
-                primary: "#cfd8dc", //items icon
+                primary: "#ffffff", //items icon
                 main: "#37474f", //searchbar icon
                 secondary: "#ffffff", // items under icon
                 success: "#5c6bc0", // icon hover text 
