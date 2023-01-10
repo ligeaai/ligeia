@@ -26,7 +26,6 @@ import {
     FACEBOOK_AUTH_FAIL,
     LOGOUT,
     ADD_ERROR_SUCCESS,
-    CLEAN_ERROR_SUCCESS
 } from './types';
 
 import { instance } from '../baseApi';
@@ -86,11 +85,7 @@ export const login = (email, password) => async dispatch => {
             payload: "Username or password is incorrect"
         })
         dispatch(setLoaderFalse());
-        setTimeout(() => {
-            dispatch({
-                type: CLEAN_ERROR_SUCCESS,
-            })
-        }, 3000)
+
     }
 };
 
@@ -122,11 +117,7 @@ export const signup = (email, first_name, last_name, password) => async dispatch
         })
         dispatch(setLoaderFalse());
         dispatch(cleanState())
-        setTimeout(() => {
-            dispatch({
-                type: CLEAN_ERROR_SUCCESS,
-            })
-        }, 3000)
+
     }
 };
 
@@ -154,11 +145,7 @@ export const forget_password = (email) => async dispatch => {
             type: ADD_ERROR_SUCCESS,
             payload: err.message
         })
-        setTimeout(() => {
-            dispatch({
-                type: CLEAN_ERROR_SUCCESS,
-            })
-        }, 3000)
+
     }
 };
 
@@ -208,11 +195,7 @@ export const logout = () => async dispatch => {
             payload: err.message
         })
         dispatch(setLoaderFalse())
-        setTimeout(() => {
-            dispatch({
-                type: CLEAN_ERROR_SUCCESS,
-            })
-        }, 3000)
+
     }
 };
 
