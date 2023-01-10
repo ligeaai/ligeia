@@ -27,9 +27,9 @@ const AngularPopUp = (props) => {
     dispatch(changeValeus(key, val));
   };
   return (
-    <Grid container rowGap={0.5}>
+    <Grid container rowGap={2}>
       <Grid item xs={12}>
-        <Grid container rowGap={0.5}>
+        <Grid container columnSpacing={2}>
           <Grid item xs={12} sm={6} md={3}>
             <Grid container rowGap={0.5}>
               <Grid item xs={12}>
@@ -63,7 +63,7 @@ const AngularPopUp = (props) => {
         </Grid>
       </Grid>
       <Grid item xs={12}>
-        <Grid container rowGap={0.5}>
+        <Grid container columnSpacing={2}>
           <Grid item xs={12} sm={6} md={3}>
             <Grid container rowGap={0.5}>
               <Grid item xs={12}>
@@ -112,7 +112,7 @@ const AngularPopUp = (props) => {
         </Grid>
       </Grid>
       <Grid item xs={12}>
-        <Grid container rowGap={0.5}>
+        <Grid container columnSpacing={2} rowGap={2}>
           <Grid item xs={12} sm={6} md={3}>
             <Grid container rowGap={0.5}>
               <Grid item xs={12}>
