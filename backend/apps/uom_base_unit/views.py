@@ -38,3 +38,11 @@ class UomUnitDetialsView(generics.CreateAPIView):
       
         serializer = UomUnitDetailsSerializer(queryset,many = True)
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+class UomUnitsDetailView(generics.ListAPIView):
+    serializer_class = UomUnitDetailsSerializer
+    permission_classes = [permissions.AllowAny]
+    def get(self, request, *args, **kwargs):
+        queryset = uom_base_unit.objects.all()
+        serializer = UomUnitDetailsSerializer(queryset,many = True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
