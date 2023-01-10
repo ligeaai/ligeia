@@ -43,56 +43,63 @@ export const Measurement = ({ highchartProps, width, height }) => {
     };
   }, []);
   return (
-    <Grid
-      container
-      sx={{
-        height: height,
-        flexDirection: "column",
-        width: width,
-        flexWrap: "nowrap",
-      }}
-    >
+    <React.Fragment>
       <Grid
-        item
-        xs={12}
+        container
         sx={{
-          textAlign: "center",
+          height: height,
+          flexDirection: "column",
+          width: width,
+          flexWrap: "nowrap",
+          justifyContent: "space-evenly",
         }}
       >
-        <Box
+        <Grid
+          item
           sx={{
-            display: "inline-block",
-            fontSize:
-              highchartProps["Value Font Size"] !== ""
-                ? `${highchartProps["Value Font Size"]}px`
-                : "14px",
+            textAlign: "center",
+            position: "relative",
+            top: "-24px",
           }}
         >
-          {parseFloat(
-            parseFloat(data).toFixed(
-              highchartProps["Decimal Places"] === ""
-                ? 3
-                : highchartProps["Decimal Places"]
-            )
-          )}
-        </Box>
-        <Box
-          sx={{
-            display: "inline-block",
-            fontSize:
-              highchartProps["Unit Font Size"] !== ""
-                ? `${highchartProps["Unit Font Size"]}px`
-                : "14px",
-          }}
-        >
-          {highchartProps.UOM ? uom[highchartProps.UOM].CODE_TEXT : ""}
-        </Box>
+          <Box
+            sx={{
+              display: "inline-block",
+              fontSize:
+                highchartProps["Value Font Size"] !== ""
+                  ? `${highchartProps["Value Font Size"]}px`
+                  : "14px",
+              marginRight: "6px",
+            }}
+          >
+            {parseFloat(
+              parseFloat(data).toFixed(
+                highchartProps["Decimal Places"] === ""
+                  ? 3
+                  : highchartProps["Decimal Places"]
+              )
+            )}
+          </Box>
+          <Box
+            sx={{
+              display: "inline-block",
+              fontSize:
+                highchartProps["Unit Font Size"] !== ""
+                  ? `${highchartProps["Unit Font Size"]}px`
+                  : "14px",
+            }}
+          >
+            {highchartProps.UOM ? uom[highchartProps.UOM].CODE_TEXT : ""}
+          </Box>
+        </Grid>
       </Grid>
-      <Grid
-        xs={12}
-        item
+      <Box
         sx={{
+          position: "absolute",
+          bottom: "0px",
+          width: "100%",
           textAlign: "center",
+          paddingBottom: "12px",
           fontSize:
             highchartProps["Time Stamp Font Size"] !== ""
               ? `${highchartProps["Time Stamp Font Size"]}px`
@@ -101,7 +108,7 @@ export const Measurement = ({ highchartProps, width, height }) => {
         }}
       >
         {categories}
-      </Grid>
-    </Grid>
+      </Box>
+    </React.Fragment>
   );
 };
