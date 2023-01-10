@@ -166,29 +166,32 @@ class TagsLinksView(generics.CreateAPIView):
             quaryset  = item_link.objects.filter(Q(FROM_ITEM_ID= request.data.get('ID')),~Q(LINK_TYPE='TAG_ITEM'))
             
         tempt ={}
-        tags = []
+        tagsList = []
         serializer = ItemLinkDetailsSerializer(quaryset,many = True)
-        self._getChild(serializer.data,tempt,tags)
-        return Response(tags)
+        self._getChild(serializer.data,tempt,tagsList)
+        return Response(tagsList)
     
     
-    def _getChild(self,data,tempt,tags):
+    def _getChild(self,data,tempt,tagsList):
         for index in range(len(data)):
+            print('girdi')
             quaryset  = item_link.objects.filter(Q(TO_ITEM_ID = data[index].get('FROM_ITEM_ID')),~Q(LINK_TYPE='TAG_ITEM'))
             if quaryset:
                 serializer = ItemLinkDetailsSerializer(quaryset,many = True)
                 data[index]['CHILD'] = serializer.data
-                self._getChild(serializer.data,tempt,tags)
+                self._getChild(serializer.data,tempt,tagsList)
                 find_tags = tags.objects.filter(ITEM_ID = data[index].get('TO_ITEM_ID'))
                 if find_tags:
                     for item in TagsDetiailsSerializer(find_tags,many=True).data:
-                        tags.append(item)
+                        tagsList.append(item)
+                        
                 
             else:
                 find_tags = tags.objects.filter(ITEM_ID = data[index].get('FROM_ITEM_ID'))
                 if find_tags:
                     for item in TagsDetiailsSerializer(find_tags,many=True).data:
-                        tags.append(item)
+                        tagsList.append(item)
+                        
                 
             #    new_dict = {
             #     'TO_ITEM_NAME':data[index].get('FROM_ITEM_NAME'),
