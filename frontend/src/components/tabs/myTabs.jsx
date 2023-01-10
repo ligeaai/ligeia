@@ -244,9 +244,13 @@ function MyTabs() {
               value={value}
               index={i}
               key={i}
+              id="asdasdasdadsa"
               sx={{
                 backgroundColor: "background.main",
                 height: "100%",
+                "& > .MuiBox-root:nth-of-type(1)": {
+                  padding: "0px",
+                },
               }}
             >
               <TabItems widgetname={widgetProps}></TabItems>
