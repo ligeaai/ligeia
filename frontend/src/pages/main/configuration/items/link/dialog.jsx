@@ -7,6 +7,7 @@ import Draggable from "react-draggable";
 import CheckList from "./checkList";
 import { useDispatch } from "react-redux";
 import { cleanCompanyCheckedList } from "../../../../../services/actions/item/checkedList";
+import { Typography } from "@mui/material";
 
 function PaperComponent(props) {
   const nodeRef = React.useRef(null);
@@ -68,9 +69,13 @@ export default function SimpleDialogDemo(props) {
 
   return (
     <div>
+
       <Button variant="outlined" onClick={handleClickOpen}>
-        New
+        <Typography sx={{ color: "primary.main" }}>
+          New
+        </Typography>
       </Button>
+
       <SimpleDialog
         open={open}
         onClose={handleClose}

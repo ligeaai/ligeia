@@ -42,7 +42,7 @@ const RenderRow = (props) => {
           primary={`${data[index][primaryText]}`}
           sx={{
             span: {
-              color: "status.primary",
+              color: "primary.main",
               fontSize: "14px",
               overflow: "hidden",
               whiteSpace: "nowrap",

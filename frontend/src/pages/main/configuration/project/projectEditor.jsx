@@ -15,6 +15,7 @@ import {
   changeProjectValue,
   cleanProjectReducer,
 } from "../../../../services/actions/project/project";
+import { Typography } from "@mui/material";
 
 const useStyles = makeStyles((theme) => ({
   selectBox: {
@@ -58,14 +59,14 @@ const Layers = (props) => {
         var myRes = [""];
         stateWay === "LAYERS"
           ? res.data.map((e) => {
-            myRes.push(e.LAYER_NAME);
-          })
+              myRes.push(e.LAYER_NAME);
+            })
           : console.log(res);
         res.data.Message.map((e) => {
           myRes.push(e.CULTURE);
         });
         setLayerValues([...myRes]);
-      } catch { }
+      } catch {}
     };
     myFunc();
   }, []);
@@ -133,7 +134,11 @@ const ConnectionString = () => {
   };
   return (
     <Grid item xs={12} className={classes.row}>
-      <Grid container className={classes.selectBox} sx={{ width: "100%" }}>
+      <Grid
+        container
+        className={classes.selectBox}
+        sx={{ width: "100%", color: "text.main" }}
+      >
         <Grid item className={classes.label}>
           Connection String
         </Grid>
@@ -166,11 +171,10 @@ const DatabaseCreationFile = () => {
   const value = useSelector((state) => state.project.DATABASE_CREATE_FILE);
   const handleChange = (e) => {
     dispatch(changeProjectValue("DATABASE_CREATE_FILE", e.target.value));
-    console.log(e.target.result);
   };
   return (
     <Grid item xs={12} className={classes.row}>
-      <Grid container className={classes.selectBox}>
+      <Grid container className={classes.selectBox} sx={{ color: "text.main" }}>
         <Grid item className={classes.label}>
           Database creation File
         </Grid>
@@ -200,7 +204,7 @@ const ImplementationName = () => {
   };
   return (
     <Grid item xs={12} className={classes.row}>
-      <Grid container className={classes.selectBox}>
+      <Grid container className={classes.selectBox} sx={{ color: "text.main" }}>
         <Grid item className={classes.label}>
           Implementation Name:
         </Grid>
@@ -221,7 +225,7 @@ const UnitSystem = () => {
   };
   return (
     <Grid item xs={12} className={classes.row}>
-      <Grid container className={classes.selectBox}>
+      <Grid container className={classes.selectBox} sx={{ color: "text.main" }}>
         <Grid item className={classes.label}>
           Unit System:
         </Grid>
@@ -255,21 +259,22 @@ const ProjectEditor = () => {
         height: isFullScreen
           ? "calc(100vh - 60px )"
           : "calc(100vh - 60px - 74px )",
-        "& .super-app-theme--cell": {
-          backgroundColor: grey[200],
-        },
-        button: { color: "#4B4B4B" },
+        button: { color: "text.secondary" },
         m: 0.5,
 
         border: "0.5px solid",
-        borderColor: grey[200],
+        borderColor: "background.main",
         borderRadius: "5px",
         overflowY: "scroll",
       }}
     >
       <Grid container sx={{ p: 1.5 }}>
         <Grid item xs={12} className={classes.row}>
-          <Grid container className={classes.selectBox}>
+          <Grid
+            container
+            className={classes.selectBox}
+            sx={{ color: "text.main" }}
+          >
             <Grid item className={classes.label}>
               Data source:
             </Grid>
@@ -281,22 +286,33 @@ const ProjectEditor = () => {
         <ConnectionString />
         <DatabaseCreationFile />
         <ImplementationName />
-
-        <Layers
-          key={"Cultures"}
-          path="/code-list/culture/"
-          stateWay="CULTURES"
-          text="Cultures"
-        />
-        <Layers
-          key={"Layers"}
-          path="/layer/layer-dropdown/"
-          stateWay="LAYERS"
-          text="Layers"
-        />
+        <Typography sx={{ color: "text.main" }}>
+          <Layers
+            key={"Cultures"}
+            path="/code-list/culture/"
+            stateWay="CULTURES"
+            text="Cultures"
+          />
+          <Layers
+            key={"Layers"}
+            path="/layer/layer-dropdown/"
+            stateWay="LAYERS"
+            text="Layers"
+          />
+        </Typography>
         <UnitSystem />
         <Grid item>
-          <Button variant="contained" sx={{ color: "#fff !important" }}>
+          <Button
+            variant="contained"
+            sx={{
+              color: "text.main",
+              backgroundColor: "background.success",
+              "&:hover": {
+                backgroundColor: "hover.success",
+                color: "primary.dark",
+              },
+            }}
+          >
             Save
           </Button>
         </Grid>

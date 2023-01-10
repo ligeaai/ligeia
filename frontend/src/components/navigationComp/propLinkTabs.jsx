@@ -51,8 +51,8 @@ const Properties = ({ MyProperties, isLinkOpen = true, MyLinks }) => {
           pl: 0.5,
           paddingRight: "6px",
           my: 0.5,
-          borderRight: "1.2px solid",
-          borderColor: "text.primary",
+          borderRight: "2px solid",
+          borderColor: "status.secondary",
           height: "100%",
         }}
       >

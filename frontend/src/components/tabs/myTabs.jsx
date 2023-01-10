@@ -22,6 +22,7 @@ import {
 import palette from "../../themes/palette";
 import { MyTextField } from "..";
 import { setConfirmation } from "../../services/reducers/confirmation";
+import { Button } from "@mui/material";
 
 const TabPanel = (props) => {
   const { children, value, index, ...other } = props;
@@ -54,89 +55,97 @@ function a11yProps(index) {
 }
 let value = "";
 
-const MyTap = React.forwardRef(({ x, i, ...rest }, ref) => {
-  const [changeText, setChangeText] = React.useState(false);
-  const [iconIsActive, setIconIsActive] = React.useState(false);
-  const dispatch = useDispatch();
-  const onChange = (e) => {
-    value = e;
-  };
-  const handleUserClick = () => {
-    setChangeText(false);
-    dispatch(updateTabHeader(x, value));
-  };
-  React.useEffect(() => {
-    if (changeText) {
-      value = x;
-      window.addEventListener("click", handleUserClick);
-    }
-    return () => {
-      window.removeEventListener("click", handleUserClick);
+const MyTap = React.forwardRef(
+  ({ x, i, handleChange, active, ...rest }, ref) => {
+    const [changeText, setChangeText] = React.useState(false);
+    const dispatch = useDispatch();
+    const onChange = (e) => {
+      value = e;
     };
-  }, [changeText]);
-  if (!changeText)
+    const handleUserClick = () => {
+      setChangeText(false);
+      dispatch(updateTabHeader(x, value));
+    };
+    React.useEffect(() => {
+      if (changeText) {
+        value = x;
+        window.addEventListener("click", handleUserClick);
+      }
+      return () => {
+        window.removeEventListener("click", handleUserClick);
+      };
+    }, [changeText]);
+    if (!changeText)
+      return (
+        <Box
+          sx={{
+            borderRadius: "10px",
+            height: "30px",
+            backgroundColor: "inherit",
+            padding: "4px",
+            fontSize: active === i ? "14px" : "12px",
+            display: "flex",
+            marginY: "2px",
+            marginRight: "2px",
+            alignItems: "center",
+            position: "relative",
+            ":hover": {
+              backgroundColor: "hover.primary",
+            },
+          }}
+        >
+          <Tab
+            ref={ref}
+            label={`${x}`}
+            {...a11yProps(i)}
+            {...rest}
+            sx={{
+              width: "max-content",
+              maxWidth: "150px",
+              textTransform: "capitalize",
+              fontSize: "12px",
+              ":hover": {
+                textShadow: "0.5px 0.5px 0.5px black",
+              },
+            }}
+            onDoubleClick={() => {
+              setChangeText(true);
+            }}
+          />
+          <ClearIcon
+            fontSize="small"
+            sx={{
+              cursor: "pointer",
+              fill: "red",
+            }}
+            onClick={() => {
+              dispatch(
+                setConfirmation({
+                  title: "Are you sure you want to delete ?",
+                  body: <>{x} </>,
+                  agreefunction: () => {
+                    dispatch(deleteTapHeader(x));
+                    handleChange(0);
+                  },
+                })
+              );
+            }}
+          ></ClearIcon>
+        </Box>
+      );
     return (
-      <Box
-        sx={{
-          height: "48px",
-          display: "flex",
-          alignItems: "center",
-          position: "relative",
-        }}
-        onMouseEnter={() => setIconIsActive(true)}
-        onMouseLeave={() => setIconIsActive(false)}
-      >
-        <Tab
-          ref={ref}
-          label={`${x}`}
-          {...a11yProps(i)}
+      <Box sx={{ display: "flex", alignItems: "center", maxWidth: "150px" }}>
+        <MyTextField
+          defaultValue={x}
+          handleChangeFunc={onChange}
+          autoFocus
           {...rest}
-          sx={{
-            maxWidth: "150px",
-            textTransform: "capitalize",
-          }}
-          onClick={() => {
-            dispatch(selectTab(x));
-          }}
-          onDoubleClick={() => {
-            setChangeText(true);
-          }}
         />
-        <ClearIcon
-          fontSize="small"
-          sx={{
-            cursor: "pointer",
-            display: iconIsActive ? "flex" : "none",
-
-            fill: "red",
-          }}
-          onClick={() => {
-            dispatch(
-              setConfirmation({
-                title: "Are you sure you want to delete the dashboard?",
-                body: <>{x} will be deleted and will not come back</>,
-                agreefunction: () => {
-                  dispatch(deleteTapHeader(x));
-                },
-              })
-            );
-          }}
-        ></ClearIcon>
       </Box>
     );
-  return (
-    <Box sx={{ display: "flex", alignItems: "center", maxWidth: "150px" }}>
-      <MyTextField
-        defaultValue={x}
-        handleChangeFunc={onChange}
-        autoFocus
-        {...rest}
-      />
-    </Box>
-  );
-});
+  }
+);
 function MyTabs() {
-  console.log(palette());
   const ref = React.createRef();
   const dispatch = useDispatch();
   const [value, setValue] = React.useState(null);
@@ -145,6 +154,7 @@ function MyTabs() {
   const isFullScreen = useSelector((state) => state.fullScreen.isFullScreen);
   const handleChange = (event, newValue) => {
     setValue(newValue);
+    dispatch(selectTab(Object.keys(widgets)[newValue]));
   };
   const handleChangeIndex = (index) => {
     setValue(index);
@@ -155,7 +165,10 @@ function MyTabs() {
       sx={{
         bgcolor: "background.paper",
         position: "relative",
-        height: "100%",
+        height: "40px",
+        header: {
+          height: "40px",
+        },
         ".react-swipeable-view-container": {
           height: "100%",
         },
@@ -164,21 +177,37 @@ function MyTabs() {
         },
       }}
     >
-      <AppBar position="static" color="default">
+      <AppBar position="static" sx={{ width: "100%", boxShadow: "none" }}>
         <Tabs
           value={value}
           onChange={handleChange}
           aria-label="action tabs example"
-          sx={{ height: "48px", backgroundColor: "background.info" }}
+          variant="scrollable"
+          scrollButtons="auto"
+          sx={{
+            minHeight: "40px",
+            backgroundColor: "background.info",
+            pt: "2px",
+          }}
         >
           {titles.map((x, i) => (
-            <MyTap ref={ref} key={`${x}`} x={x} i={i}></MyTap>
+            <MyTap
+              ref={ref}
+              key={`${x}`}
+              x={x}
+              i={i}
+              active={value}
+              handleChange={handleChange}
+            ></MyTap>
           ))}
           <Grid
             key={`a`}
             container
             sx={{
-              height: "48px",
+              height: "20px",
+              marginY: "2px",
+              cursor: "pointer",
+              mt: 1,
               width: "50px",
               justifyContent: "center",
               alignItems: "center",

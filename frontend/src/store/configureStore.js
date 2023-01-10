@@ -25,6 +25,7 @@ import {
     historyConfirmation,
     cssUserSelect,
     dataGridCodeList,
+    dataGridResourceList,
     dataGridType,
     drawerMenu,
     errorReducer,
@@ -47,7 +48,7 @@ import {
 const persistConfig = {
     key: 'root',
     storage,
-    whitelist: ['drawerMenu', "lang"]
+    whitelist: ['drawerMenu', "lang", "theme"]
 }
 
 const rootReducer = combineReducers({
@@ -58,6 +59,7 @@ const rootReducer = combineReducers({
     historyConfirmation: historyConfirmation,
     cssUserSelect: cssUserSelect,
     dataGridCodeList: dataGridCodeList,
+    dataGridResourceList: dataGridResourceList,
     dataGridType: dataGridType,
     drawerMenu: drawerMenu,
     error: errorReducer,

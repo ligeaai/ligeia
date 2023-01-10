@@ -1,7 +1,9 @@
 from django.urls import path
-from .consumers import WSConsumer,WSConsumerBackfill
+from .consumers import WSLiveConsumer,WSConsumerBackfill,AlarmsConsumer
+#DataConsumer
 
 websocket_urlpatterns = [
-	path('ws/tags/', WSConsumer.as_asgi()),
+	path('ws/tags/', WSLiveConsumer.as_asgi()),
+	path('ws/alarms/', AlarmsConsumer.as_asgi()),
 	path('ws/tags/backfill/', WSConsumerBackfill.as_asgi()),
 ]

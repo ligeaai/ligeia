@@ -8,7 +8,10 @@ import TreeView from "@mui/lab/TreeView";
 import TreeItem, { treeItemClasses } from "@mui/lab/TreeItem";
 import Collapse from "@mui/material/Collapse";
 import { uuidv4 } from "../../services/utils/uuidGenerator";
-import { setSelectedCollapseMenu } from "../../services/actions/collapseMenu/collapseMenu";
+import {
+  setSelectedCollapseMenu,
+  updateCollapseMenuCouch,
+} from "../../services/actions/collapseMenu/collapseMenu";
 import {
   loadTapsOverview,
   cleanTabs,
@@ -68,6 +71,7 @@ const StyledTreeItem = styled((props) => (
   whiteSpace: "nowrap",
   overflow: "hidden",
   textOverflow: "ellipsis",
+  color: theme.palette.primary.main,
   [`& .${treeItemClasses.iconContainer}`]: {
     "& .close": {
       opacity: 0.3,
@@ -77,33 +81,42 @@ const StyledTreeItem = styled((props) => (
     marginLeft: 15,
     paddingLeft: 18,
   },
+  ".MuiTreeItem-label": {
+    fontSize: "14px !important",
+    lineHeight: "1.57 !important",
+    letterSpacing: "0.00714em !important",
+    fontWeight: "500 !important",
+    overflow: "hidden",
+    whiteSpace: "nowrap",
+    textOverflow: "ellipsis",
+  },
 }));
 const MyStyledTreeItem = React.memo(({ myItems, path }) => {
   const dispatch = useDispatch();
-  console.log(myItems);
   return myItems.map((e, i) => {
     if (e.CHILD)
       return (
         <StyledTreeItem
-          sx={{ color: "status.primary" }}
           key={i}
-          nodeId={`${uuidv4()}`}
+          nodeId={e.TO_ITEM_ID}
           label={e.TO_ITEM_NAME}
-          onClick={() => {
+          onClick={async () => {
+            dispatch(updateCouchDb());
+            dispatch(await setSelectedCollapseMenu(e));
+            dispatch(loadTapsOverview());
             history.push(`/${path}/${e.TO_ITEM_NAME}`);
           }}
         >
-          <StyledTreeItem
+          {/* <StyledTreeItem
             sx={{ color: "status.primary" }}
             key={i}
             nodeId={`${uuidv4()}+1`}
             label={e.TO_ITEM_NAME}
             onClick={async () => {
-              dispatch(await setSelectedCollapseMenu(e));
-              dispatch(loadTapsOverview());
+             
               history.push(`/${path}/${e.TO_ITEM_NAME}`);
             }}
-          ></StyledTreeItem>
+          ></StyledTreeItem> */}
           <MyStyledTreeItem
             myItems={e.CHILD}
             path={`${path}/${e.TO_ITEM_NAME}`}
@@ -117,11 +130,11 @@ const MyStyledTreeItem = React.memo(({ myItems, path }) => {
       );
     return (
       <StyledTreeItem
-        sx={{ color: "status.primary" }}
         key={i}
-        nodeId={`${uuidv4()}`}
+        nodeId={e.TO_ITEM_ID}
         label={e.TO_ITEM_NAME}
         onClick={async () => {
+          dispatch(updateCouchDb());
           dispatch(await setSelectedCollapseMenu(e));
           dispatch(loadTapsOverview());
           history.push(`/${path}/${e.TO_ITEM_NAME}`);
@@ -131,24 +144,45 @@ const MyStyledTreeItem = React.memo(({ myItems, path }) => {
   });
 });
 function CustomizedTreeView() {
+  const ref = React.createRef();
   const dispatch = useDispatch();
   const items = useSelector((state) => state.collapseMenu.menuItems);
+  const expandedItems = useSelector(
+    (state) => state.treeview.width.values.overviewHierarchy
+  );
+  const onNodeSelect = (event, nodeId) => {
+    if (event.target.tagName === "svg" || event.target.tagName === "path") {
+      const index = expandedItems.indexOf(nodeId);
+      const copyExpanded = [...expandedItems];
+      if (index === -1) {
+        copyExpanded.push(nodeId);
+      } else {
+        copyExpanded.splice(index, 1);
+      }
+      dispatch(updateCollapseMenuCouch(copyExpanded));
+    }
+  };
   React.useEffect(() => {
     return () => {
       dispatch(updateCouchDb());
       dispatch(cleanTabs());
     };
   }, []);
-
   return (
     <TreeView
       aria-label="customized"
-      defaultExpanded={["1"]}
-      defaultCollapseIcon={<MinusSquare />}
-      defaultExpandIcon={<PlusSquare />}
+      expanded={expandedItems}
+      defaultCollapseIcon={<MinusSquare className="MyIcon" />}
+      defaultExpandIcon={<PlusSquare className="MyIcon" />}
       defaultEndIcon={<CloseSquare />}
+      onNodeSelect={onNodeSelect}
+      ref={ref}
     >
-      <MyStyledTreeItem myItems={items} path={"overview"}></MyStyledTreeItem>
+      <MyStyledTreeItem
+        myItems={items}
+        path={"overview"}
+        onNodeSelect={onNodeSelect}
+      ></MyStyledTreeItem>
     </TreeView>
   );
 }

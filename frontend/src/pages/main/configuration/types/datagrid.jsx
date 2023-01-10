@@ -25,7 +25,6 @@ import {
 } from "../../../../services/actions/confirmation/historyConfirmation";
 import { useIsMount } from "../../../../hooks/useIsMount";
 function TreeDataWithGap() {
-  const isMount = useIsMount();
   const dispatch = useDispatch();
   const rows = useSelector((state) => state.dataGridType.rows);
   const selectedIndex = useSelector(
@@ -45,11 +44,10 @@ function TreeDataWithGap() {
   );
 
   React.useEffect(() => {
-    if (isMount) {
-      dispatch(setSaveFunctonConfirmation(saveTypeFunc));
-      dispatch(setTitleConfirmation("Are you sure you want to save ? "));
-      dispatch(setBodyConfirmation("body"));
-    } else if (selectedIndex === -2) {
+    dispatch(setSaveFunctonConfirmation(saveTypeFunc));
+    dispatch(setTitleConfirmation("Are you sure you want to save ? "));
+    dispatch(setBodyConfirmation(`${type ? type : "new"}`));
+    if (selectedIndex === -2) {
       dispatch(addNewType());
     } else if (selectedIndex >= 0) {
       dispatch(refreshDataGridType());
@@ -84,6 +82,9 @@ function TreeDataWithGap() {
             },
             "& .super-app-theme--cell": {
               backgroundColor: grey[200],
+            },
+            "& .MuiDataGrid-cell--editing": {
+              backgroundColor: "background.secondary",
             },
           }}
         >

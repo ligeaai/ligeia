@@ -47,7 +47,14 @@ const Tags = ({ isHome }) => {
     >
       <Grid item>
         <DrawerMenu
-          Element={<TreeMenuItems path={TagService.getAll} textPath="NAME" />}
+          Element={
+            <TreeMenuItems
+              path={TagService.getAll}
+              textPath="NAME"
+              historyPathLevel={3}
+            />
+          }
+          path="tags"
         />
       </Grid>
 
@@ -68,7 +75,7 @@ const Tags = ({ isHome }) => {
               height: "42px",
               display: "flex",
               alignItems: "center",
-              backgroundColor: "myTreeViewBg",
+              backgroundColor: "status.main",
               color: "text.primary",
               borderTopLeftRadius: "3px",
               borderTopRightRadius: "3px",
@@ -83,9 +90,9 @@ const Tags = ({ isHome }) => {
             item
             sx={{
               ml: 1.5,
-              backgroundColor: "myBackgroundColor",
               display: "flex",
               alignItems: "center",
+              marginY: "2px",
             }}
           >
             <TagsActionMenu />

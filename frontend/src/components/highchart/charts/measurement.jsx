@@ -1,54 +1,40 @@
 import Highcharts from "highcharts";
 import React from "react";
-
+import { useSelector } from "react-redux";
 import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
+import { wsBaseUrl } from "../../../services/baseApi";
+import { dateFormatDDMMYYHHMM } from "../../../services/utils/dateFormatter";
+var client;
+var W3CWebSocket = require("websocket").w3cwebsocket;
 
 export const Measurement = ({ highchartProps, width, height }) => {
+  const uom = useSelector((state) => state.tapsOverview.UOMList);
   const [categories, setCategories] = React.useState("");
 
   const [data, setData] = React.useState("");
   React.useEffect(() => {
-    var W3CWebSocket = require("websocket").w3cwebsocket;
-
-    var client = new W3CWebSocket("ws://34.125.220.112:8000/ws/tags/");
+    client = new W3CWebSocket(`${wsBaseUrl}/ws/tags/`);
     client.onerror = function () {
       console.log("Connection Error");
     };
     client.onopen = function () {
       console.log("WebSocket Client Connected");
     };
-    let list = [
-      "24",
-      "9",
-      "1",
-      "4",
-      "5",
-      "12",
-      "10",
-      "11",
-      "14",
-      "8",
-      "3",
-      "12",
-      "54",
-      "7",
-    ];
 
     client.onmessage = function (e) {
       function sendNumber() {
         if (client.readyState === client.OPEN) {
           if (typeof e.data === "string") {
             let data = JSON.parse(e.data);
-            if (
-              Object.keys(data.message).length > 5 &&
-              list[Math.floor(Math.random() * list.length)] === data.message.id
-            ) {
-              setCategories((prev) => data.message.createdtime);
+            if (data.message.value) {
+              let timestamp = new Date(data.message.timestamp);
+              const time = dateFormatDDMMYYHHMM(timestamp);
+              setCategories((prev) => time);
 
               setData((prev) => data.message.value);
             }
-
-            setTimeout(sendNumber, 5000);
+            //setTimeout(sendNumber, 5000);
             return data;
           }
         }
@@ -57,41 +43,73 @@ export const Measurement = ({ highchartProps, width, height }) => {
     };
   }, []);
   return (
-    <Grid
-      container
-      sx={{
-        height: height,
-        flexDirection: "column",
-        width: width,
-        flexWrap: "nowrap",
-      }}
-    >
+    <React.Fragment>
       <Grid
-        item
-        xs={12}
+        container
         sx={{
-          textAlign: "center",
-          fontSize:
-            highchartProps["Name Font Size(em)"] !== ""
-              ? `${highchartProps["Name Font Size(em)"]}px`
-              : "14px",
+          height: height,
+          flexDirection: "column",
+          width: width,
+          flexWrap: "nowrap",
+          justifyContent: "space-evenly",
         }}
       >
-        {highchartProps.Name}
+        <Grid
+          item
+          sx={{
+            textAlign: "center",
+            position: "relative",
+            top: "-24px",
+          }}
+        >
+          <Box
+            sx={{
+              display: "inline-block",
+              fontSize:
+                highchartProps["Value Font Size"] !== ""
+                  ? `${highchartProps["Value Font Size"]}px`
+                  : "14px",
+              marginRight: "6px",
+            }}
+          >
+            {parseFloat(
+              parseFloat(data).toFixed(
+                highchartProps["Decimal Places"] === ""
+                  ? 3
+                  : highchartProps["Decimal Places"]
+              )
+            )}
+          </Box>
+          <Box
+            sx={{
+              // display: highchartProps["Show Unit"] ? "inline-block" : "none",
+              display: "inline-block",
+              fontSize:
+                highchartProps["Unit Font Size"] !== ""
+                  ? `${highchartProps["Unit Font Size"]}px`
+                  : "14px",
+            }}
+          >
+            {highchartProps.UOM ? uom[highchartProps.UOM].CODE_TEXT : ""}
+          </Box>
+        </Grid>
       </Grid>
-
-      <Grid item xs={12} sx={{ textAlign: "center" }}>
-        {data}
-      </Grid>
-      <Grid
-        xs={12}
-        item
+      <Box
         sx={{
+          position: "absolute",
+          bottom: "0px",
+          width: "100%",
           textAlign: "center",
+          paddingBottom: "12px",
+          fontSize:
+            highchartProps["Time Stamp Font Size"] !== ""
+              ? `${highchartProps["Time Stamp Font Size"]}px`
+              : "14px",
+          display: highchartProps["Show Timestamp"] ? "inline-block" : "none",
         }}
       >
         {categories}
-      </Grid>
-    </Grid>
+      </Box>
+    </React.Fragment>
   );
 };

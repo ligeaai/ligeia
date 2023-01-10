@@ -32,7 +32,7 @@ export default function CheckboxList(props) {
         minWidth: 360,
 
         height: "500px",
-        bgcolor: "background.paper",
+        bgcolor: "background.main",
       }}
     >
       {data.length === 0 ? (

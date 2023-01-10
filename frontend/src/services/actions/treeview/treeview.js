@@ -5,14 +5,34 @@ import {
     LOAD_FILTERED_TREEVIEW_ITEM,
     SET_FILTERED_LAYER_NAME,
     CLEAN_AFTER_SAVE,
-    CLEAN_TREEVIEW
+    CLEAN_TREEVIEW,
+    LOAD_TREE_VIEW_WIDTH
 } from "../types"
 
 import axios from "axios"
 
 import { confirmationPushHistory, myHistoryPush } from "../../utils/historyPush"
 import { setGoFunctionConfirmation } from "../confirmation/historyConfirmation"
-
+import { config, instance } from "../../couchApi"
+export const loadTreeViewWidth = async (path) => async (dispatch, getState) => {
+    const userId = getState().auth.user.id
+    try {
+        let res = await instance
+            .get(
+                `/treeviewstate/${userId}`,
+                config
+            )
+        dispatch({
+            type: LOAD_TREE_VIEW_WIDTH,
+            payload: res.data
+        })
+        return Promise.resolve(res.data.values)
+    } catch (err) {
+        if (err.response.status === 404) {
+            dispatch(createTreeViewCouch())
+        }
+    }
+}
 
 export const loadFilteredTreeviewItem = () => async (dispatch, getState) => {
     const treeMenuItem = getState().treeview.treeMenuItem
@@ -41,7 +61,6 @@ export const loadTreeviewItem = (path, sortPath) => async (dispatch, getState) =
         cancelToken = axios.CancelToken.source();
         let res = await path(body, cancelToken);
         var sortedResponse;
-        console.log(res);
         if (sortPath === "TYPE") {//todo need to change api end point 
             sortedResponse = res.data.Message.sort((a, b) =>
                 a[sortPath] > b[sortPath] ? 1 : -1
@@ -64,8 +83,7 @@ export const loadTreeviewItem = (path, sortPath) => async (dispatch, getState) =
     }
 }
 
-
-export const selectTreeViewItem = (index, breadcrumbPath) => async (dispatch, getState) => {
+export const selectTreeViewItem = (index, breadcrumbPath, historyPathLevel) => async (dispatch, getState) => {
     const filteredMenuLength = getState().treeview.filteredMenuItem.length
     const goFunction = () => {
         if (index === -2) {
@@ -74,7 +92,8 @@ export const selectTreeViewItem = (index, breadcrumbPath) => async (dispatch, ge
                 payload: { selectedIndex: -2 }
             });
             dispatch(setGoFunctionConfirmation(() => { }));
-            myHistoryPush(3, "new")
+
+            myHistoryPush(historyPathLevel, "new")
         } else {
             if (index < 0) {
                 index = filteredMenuLength - 1
@@ -92,7 +111,7 @@ export const selectTreeViewItem = (index, breadcrumbPath) => async (dispatch, ge
             dispatch({
                 type: CLEAN_AFTER_SAVE,
             })
-            myHistoryPush(3, payload[breadcrumbPath].toLowerCase())
+            myHistoryPush(historyPathLevel, payload[breadcrumbPath].toLowerCase())
         }
     }
     dispatch(setGoFunctionConfirmation(goFunction))
@@ -120,4 +139,52 @@ export const cleanTreeview = async () => async dispatch => {
         type: CLEAN_TREEVIEW,
     })
 
+}
+
+export const updateTreeViewCouch = (path, value) => async (dispatch, getState) => {
+    const userId = getState().auth.user.id
+    const width = getState().treeview.width
+    width.values[path] = value
+    const body = JSON.stringify({ ...width })
+    try {
+        let res = await instance
+            .put(
+                `/treeviewstate/${userId}`,
+                body,
+                config
+            )
+        width._rev = res.data.rev
+        dispatch({
+            type: LOAD_TREE_VIEW_WIDTH,
+            payload: width
+        })
+    } catch (err) {
+        console.log(err);
+    }
+}
+export const createTreeViewCouch = () => async (dispatch, getState) => {
+    const userId = getState().auth.user.id
+    const body = JSON.stringify({
+        _id: userId.toString(),
+        values: {
+            overview: 250,
+            codelist: 250,
+            item: 250,
+            resources: 250,
+            types: 250,
+            tags: 250,
+            overviewHierarchy: ["1"]
+        }
+    })
+    try {
+        await instance
+            .post(
+                "/treeviewstate/",
+                body,
+                config
+            )
+
+    } catch (err) {
+        console.log(err);
+    }
 }

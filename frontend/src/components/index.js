@@ -18,6 +18,7 @@ import { CustomNoRowsOverlay } from "./datagrid/customNoRowOwerlay";
 import CustomToolbar from "./datagrid/customToolbar"
 import DatePicker from "./datePicker/datePicker";
 import Drawer from "./drawer/drawer";
+import DataGrid from "./datagrid/dataGrid"
 import { ErrorBoundary } from "./errorMessage/errorBoundary"
 import ErrorMessage from "./errorMessage/errorMessage"
 import InputGenerator from "./inputGenerator/inputGenerator"
@@ -44,7 +45,7 @@ import TreeMenuItems from "./treeMenu/treeMenuGenerator"
 
 
 export {
-    ActionMenu, Breadcrumb, Cards, CheckboxList, ColorTextfield, CollapsableMenu, Confirmation, ComponentError, ComponentErrorBody, CustomNoRowsOverlay, CustomToolbar, MyDivider, DatePicker, Drawer, ErrorBoundary,
+    ActionMenu, Breadcrumb, Cards, CheckboxList, ColorTextfield, CollapsableMenu, Confirmation, ComponentError, ComponentErrorBody, CustomNoRowsOverlay, CustomToolbar, MyDivider, DatePicker, DataGrid, Drawer, ErrorBoundary,
     ErrorMessage, Highchart, InputGenerator, Loadable, Loading, LoadingComponent, MyBox, MyCheckBox, MyNavigator, MyNumberTextField, MyTextField, MyMultilineTextField, PropLinkTabs, SocialButton, TimeRangePicker, TreeView,
     ItemSperatorLine, ItemSperatorLineXL, Items, SearchBar, SearchBarMobile, Select, TreeMenu, MyDialog, MyTabs, TreeMenuItems, HistoryConfirmation
 }

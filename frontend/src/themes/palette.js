@@ -16,8 +16,8 @@ const Palette = () => {
         ...(theme === "light" ? {
 
             primary: {
-                light: "#ffffff",
-                main: "#42526E",
+                light: "#cfd8dc",
+                main: "#212121", // typography
                 dark: "#819ca9", //header
             },
 
@@ -25,6 +25,7 @@ const Palette = () => {
                 primary: "#607d8b", // card fancy color
                 main: "#676767", // selected item for light
                 secondary: "#e0e0e0", // drawer menu bacground
+                info: "#eeeeee",
 
             },
 
@@ -52,6 +53,7 @@ const Palette = () => {
                 primary: "#cfd8dc", // nested menu hover
                 main: "#f44336",
                 secondary: "#00897b", // card fancy hover
+                success: "#e0e0e0",// button hover
             },
 
             icon: {
@@ -68,6 +70,10 @@ const Palette = () => {
                 secondary: "#37474f", // item text lvl2
                 success: "#e0e0e0", // search bar
                 info: "#cfd8dc", //search bar hover
+            },
+
+            chart: {
+                main: "#cfd8dc"
             },
 
             deneme: {
@@ -89,8 +95,8 @@ const Palette = () => {
         } : {
 
             primary: {
-                light: "#9E9E9E",
-                main: "#424242",
+                light: "#ffffff",
+                main: "#ffffff",
                 dark: "#212121", // DarkHeader
             },
 
@@ -98,10 +104,11 @@ const Palette = () => {
                 primary: "#424242", // card fancy dark color
                 main: "#ffffff", //selected item for dark
                 secondary: "#424242", // drawer bg for dark
+                info: "#616161"
             },
 
             text: {
-                primary: "#cfd8dc", // drawer menu text for dark
+                primary: "#ffffff", // drawer menu text for dark
                 main: "#eceff1", // select item for drawer text for dark
                 secondary: "#eeeeee", // card header text for dark
                 success: "#e0e0e0", //card info text for dark
@@ -119,7 +126,7 @@ const Palette = () => {
             icon: {
                 primary: "#cfd8dc", //items icon
                 main: "#37474f", //searchbar icon
-                secondary: "#e0e0e0", // items under icon
+                secondary: "#ffffff", // items under icon
                 success: "#5c6bc0", // icon hover text 
             },
 
@@ -139,6 +146,11 @@ const Palette = () => {
                 primary: "#757575", // nested menu hover for dark
                 main: "#f44336",
                 secondary: "#607d8b", // card hover for dark
+                success: "#bdbdbd",//button hover
+            },
+
+            chart: {
+                main: "#ffffff"
             },
 
             deneme: {

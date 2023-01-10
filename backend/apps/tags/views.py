@@ -17,8 +17,7 @@ from apps.type_link.serializers import TypeLinkDetailsSerializer
 from utils.models_utils import validate_model_not_null
 import datetime
 # Create your views here.
-from utils.coucdb_utils import couchdbUtils
-couchdb = couchdbUtils()
+
 
 class TagsSaveView(generics.CreateAPIView):
 
@@ -44,22 +43,9 @@ class TagsSaveView(generics.CreateAPIView):
         link_serializer = ItemLinkSaveSerializer(data = request.data.get('LINK'))
         link_serializer.is_valid()
         message = link_serializer.save(link_dict)
-        
-        couchdb_tags  = {
-            "HEADERS":{
-                "_id":tags_dict.get('NAME'),
-                "CREATED_TIME":datetime.datetime.now(),
-                "CREATED_BY":str(request.user),
-
-            },
-            "PAYLOAD":{
-            "TAGS_LINK":link_dict,
-            "TAGS_INFO":tags_dict
-            }
-        }
-        couchdb.createDoc(model='tags',doc = couchdb_tags)
         return Response(message,status=status.HTTP_200_OK)
-    
+
+
 
 class TagsDetailsView(generics.ListAPIView):
 
@@ -136,4 +122,15 @@ class TagsTypeLinkView(generics.ListAPIView):
     def get(self, request, *args, **kwargs):
         queryset = type_link.objects.filter(TYPE = 'TAGS')
         serializer = TypeLinkDetailsSerializer(queryset,many = True)
+        return Response(serializer.data,status=status.HTTP_200_OK)
+
+
+
+class TagsNameViews(generics.CreateAPIView):
+
+    serializer_class = TagsDetiailsSerializer
+    permission_classes = [permissions.AllowAny]
+    def post(self, request, *args, **kwargs):
+        queryset = tags.objects.filter(NAME = request.data.get('TAG_NAME'))
+        serializer = TagsDetiailsSerializer(queryset,many = True)
         return Response(serializer.data,status=status.HTTP_200_OK)

@@ -10,7 +10,6 @@ import {
 } from "../../../components";
 
 import DrawerMenu from "../../../layout/main/asset/treeViewMenu";
-import TreeView from "./treeview";
 
 import Tabs from "./tabs";
 import { loadCollapseMenu } from "../../../services/actions/collapseMenu/collapseMenu";
@@ -33,7 +32,7 @@ const Overview = () => {
       }}
     >
       <Grid item>
-        <DrawerMenu Element={<CollapsableMenu />} />
+        <DrawerMenu Element={<CollapsableMenu />} path="overview" />
       </Grid>
 
       <Grid

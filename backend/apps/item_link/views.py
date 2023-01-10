@@ -8,6 +8,8 @@ from apps.item_property.models import item_property
 from utils.models_utils import validate_model_not_null
 from apps.item_property.serializers import ItemPropertyNameSerializer
 from django.db.models import Q
+from apps.tags.models import tags
+from apps.tags.serializers import TagsDetiailsSerializer
 # Create your views here.
 
 
@@ -61,6 +63,7 @@ class ItemLinkDetailsView(generics.CreateAPIView):
                 item = data[index]
                 propertys = item_property.objects.filter(ITEM_ID = item.get('FROM_ITEM_ID'),PROPERTY_TYPE = 'NAME').order_by('START_DATETIME')
                 property2 = item_property.objects.filter(ITEM_ID = item.get('TO_ITEM_ID'),PROPERTY_TYPE = 'NAME').order_by('START_DATETIME')
+                tag_name = tags.objects.filter(TAG_ID = item.get('FROM_ITEM_ID'))
                 # validate_find(property,request)
                 serializer = ItemPropertyNameSerializer(propertys,many = True)
                 serializer2 = ItemPropertyNameSerializer(property2,many = True)
@@ -68,6 +71,9 @@ class ItemLinkDetailsView(generics.CreateAPIView):
                     data[index]['FROM_ITEM_NAME'] = serializer.data[0].get('PROPERTY_STRING')
                 if property2:
                     data[index]['TO_ITEM_NAME'] = serializer2.data[0].get('PROPERTY_STRING')
+                if tag_name: #SEE TAG NAME IF ITEM IS NOT IN PROPERTY
+                    data[index]['FROM_ITEM_NAME'] = TagsDetiailsSerializer(tag_name,many = True).data[0].get('NAME')
+
             return data
         except Exception as e:
             raise e
@@ -101,6 +107,7 @@ class ItemLinkHierarchyView(generics.ListAPIView):
                 serializer = ItemLinkDetailsSerializer(quaryset,many = True)
                 data[index]['CHILD'] = serializer.data
                 self._getChild(serializer.data,tempt)
+                
             else:
                new_dict = {
                 'TO_ITEM_NAME':data[index].get('FROM_ITEM_NAME'),
@@ -108,6 +115,7 @@ class ItemLinkHierarchyView(generics.ListAPIView):
                 "TO_ITEM_TYPE": data[index].get('FROM_ITEM_TYPE'),
                }
                data[index]['CHILD'] = [new_dict]
+               
                 
 
     def _getName(self,data):
@@ -148,3 +156,46 @@ class ItemLinkDeleteView(generics.CreateAPIView):
         quaryset.delete()
         return Response("Deleted SUCCSESFUL",status=status.HTTP_200_OK)
 
+
+class TagsLinksView(generics.CreateAPIView):
+    permission_classes = [permissions.AllowAny]
+
+    def post(self, request, *args, **kwargs):
+        quaryset  = item_link.objects.filter(Q(TO_ITEM_ID = request.data.get('ID')),~Q(LINK_TYPE='TAG_ITEM'))
+        if not quaryset:
+            quaryset  = item_link.objects.filter(Q(FROM_ITEM_ID= request.data.get('ID')),~Q(LINK_TYPE='TAG_ITEM'))
+            
+        tempt ={}
+        tagsList = []
+        serializer = ItemLinkDetailsSerializer(quaryset,many = True)
+        self._getChild(serializer.data,tempt,tagsList)
+        return Response(tagsList)
+    
+    
+    def _getChild(self,data,tempt,tagsList):
+        for index in range(len(data)):
+            print('girdi')
+            quaryset  = item_link.objects.filter(Q(TO_ITEM_ID = data[index].get('FROM_ITEM_ID')),~Q(LINK_TYPE='TAG_ITEM'))
+            if quaryset:
+                serializer = ItemLinkDetailsSerializer(quaryset,many = True)
+                data[index]['CHILD'] = serializer.data
+                self._getChild(serializer.data,tempt,tagsList)
+                find_tags = tags.objects.filter(ITEM_ID = data[index].get('TO_ITEM_ID'))
+                if find_tags:
+                    for item in TagsDetiailsSerializer(find_tags,many=True).data:
+                        tagsList.append(item)
+                        
+                
+            else:
+                find_tags = tags.objects.filter(ITEM_ID = data[index].get('FROM_ITEM_ID'))
+                if find_tags:
+                    for item in TagsDetiailsSerializer(find_tags,many=True).data:
+                        tagsList.append(item)
+                        
+                
+            #    new_dict = {
+            #     'TO_ITEM_NAME':data[index].get('FROM_ITEM_NAME'),
+            #     "TO_ITEM_ID": data[index].get('FROM_ITEM_ID'),
+            #     "TO_ITEM_TYPE": data[index].get('FROM_ITEM_TYPE'),
+            #    }
+            #    data[index]['CHILD'] = [new_dict]

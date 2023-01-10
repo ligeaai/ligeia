@@ -2,49 +2,36 @@ import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Button, Grid, Typography } from "@mui/material";
 
-import { Select, InputGenerator } from "../../../components";
+import { LoadingComponent } from "../../../components";
 import {
   changeSelectValue,
   changeValeus,
 } from "../../../services/actions/overview/overviewDialog";
 import { loadSelectItems } from "../../../services/actions/overview/overviewDialog";
 import { updateChart } from "../../../services/actions/overview/taps";
-import TagService from "../../../services/api/tags";
-const MesurementInputGenerator = (props) => {
-  const dispatch = useDispatch();
-  console.log(props);
-  const values = useSelector((state) => state.overviewDialog.measuremenetData);
-  console.log(values);
-  const handleChangeFunc = async (value) => {
-    console.log(value);
-    dispatch(changeValeus("Mesurement", value));
-    try {
-      const body = JSON.stringify({ TAG_ID: value });
-      let res = await TagService.getTagItem(body);
-      console.log(res);
-      dispatch(changeValeus("Minimum", res.data[0].NORMAL_MINIMUM));
-      dispatch(changeValeus("Maximum", res.data[0].NORMAL_MAXIMUM));
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  return (
-    <Select
-      {...props}
-      values={values}
-      //defaultValue={defaultValue}
-      valuesPath="FROM_ITEM_ID"
-      dataTextPath="FROM_ITEM_ID"
-      handleChangeFunc={handleChangeFunc}
-    />
-  );
-};
+import LinechartPopUp from "../../../components/highchart/popup/lineChartPopUp";
+import AngularPopUp from "../../../components/highchart/popup/angularPopUp";
+import SolidPopUp from "../../../components/highchart/popup/solidPopUp";
+import MeasurementPopUp from "../../../components/highchart/popup/measurementPopUp";
 
 const DialogContent = ({ highchartProps, chartId, ...rest }) => {
   const dispatch = useDispatch();
-  const properties = useSelector((state) => state.overviewDialog.values);
+  const type = useSelector((state) => state.overviewDialog.values.Type);
 
+  const body = {
+    "Linechart [Highchart]": (
+      <LinechartPopUp highchartProps={highchartProps} {...rest} />
+    ),
+    "Gauge(Angular) [Highchart]": (
+      <AngularPopUp highchartProps={highchartProps} {...rest} />
+    ),
+    "Gauge(Solid) [Highchart]": (
+      <SolidPopUp highchartProps={highchartProps} {...rest} />
+    ),
+    "Measurement [Custom]": (
+      <MeasurementPopUp highchartProps={highchartProps} {...rest} />
+    ),
+  };
   React.useEffect(() => {
     async function myFunc() {
       dispatch(await loadSelectItems());
@@ -57,37 +44,23 @@ const DialogContent = ({ highchartProps, chartId, ...rest }) => {
   }, []);
   return (
     <Grid container sx={{ p: 1, width: "100%" }}>
-      <Typography sx={{ fontWeight: "bold", mb: 1, fontSize: "14px" }}>
+      <Typography
+        id="draggable-dialog-title"
+        sx={{
+          fontWeight: "bold",
+          mb: 1,
+          fontSize: "14px",
+          width: "100%",
+          cursor: "all-scroll",
+        }}
+      >
         {highchartProps.Type}
       </Typography>
-      {properties.map((e, i) => {
-        return (
-          <Grid container key={i}>
-            {e.map((a, key) => {
-              return (
-                <Grid item xs={6} sm={4} md={3} sx={{ pr: 1, pb: 1 }}>
-                  <Grid container>
-                    <Grid item xs={12} sx={{ fontSize: "14px" }}>
-                      {a.title}
-                    </Grid>
-                    <Grid item sx={{ width: "100%" }}>
-                      {a.title === "Mesurement" ? (
-                        <MesurementInputGenerator
-                          {...a}
-                          defaultValue={highchartProps.Mesurement}
-                          changeFunction={changeValeus}
-                        />
-                      ) : (
-                        <InputGenerator {...a} changeFunction={changeValeus} />
-                      )}
-                    </Grid>
-                  </Grid>
-                </Grid>
-              );
-            })}
-          </Grid>
-        );
-      })}
+      {type === highchartProps.Type ? (
+        body[highchartProps.Type]
+      ) : (
+        <LoadingComponent />
+      )}
       <Grid item xs={12}>
         <Grid container sx={{ flexDirection: "row-reverse" }}>
           <Grid item>

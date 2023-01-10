@@ -1,7 +1,8 @@
 import {
     SET_SELECTED_DRAWER_ITEM,
     TOGGLE_DRAWER_MENU,
-    LOAD_DRAWER_MENU
+    LOAD_DRAWER_MENU,
+    DRAWER_MENU_SET_OPEN
 } from "../types"
 
 import { instance, config } from '../../couchApi';
@@ -35,5 +36,12 @@ export const setSelectedDrawerItem = (payload) => async (dispatch) => {
 export const toggleDrawerMenu = () => async (dispatch) => {
     dispatch({
         type: TOGGLE_DRAWER_MENU
+    })
+}
+
+export const setOpenTab = (itemId) => dispatch => {
+    dispatch({
+        type: DRAWER_MENU_SET_OPEN,
+        payload: itemId
     })
 }

@@ -12,6 +12,8 @@ urlpatterns = [
     path("resource-list/", include("apps.resource_list.urls")),
     path("item-link/", include("apps.item_link.urls")),
     path("tags/", include("apps.tags.urls")),
+    path("uoms/", include("apps.uoms.urls")),
+    path("uom_unit/", include("apps.uom_base_unit.urls")),
     path("notifications/", include("apps.notifications.urls")),
     # path("menu/", include("apps.page_resource_list.urls")),
 ]

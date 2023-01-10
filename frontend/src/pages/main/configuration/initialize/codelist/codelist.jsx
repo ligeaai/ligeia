@@ -68,8 +68,10 @@ const CodeList = ({ isHome }) => {
             <TreeMenuItems
               path={CodelistService.getAllTreeitem}
               textPath="CODE_TEXT"
+              historyPathLevel={2}
             />
           }
+          path="codelist"
         />
       </Grid>
 
@@ -91,7 +93,7 @@ const CodeList = ({ isHome }) => {
               height: "42px",
               display: "flex",
               alignItems: "center",
-              backgroundColor: "myTreeViewBg",
+              backgroundColor: "status.main",
               color: "text.primary",
               borderTopLeftRadius: "3px",
               borderTopRightRadius: "3px",
@@ -102,8 +104,8 @@ const CodeList = ({ isHome }) => {
             </Box>
           </Grid>
           <ItemSperatorLineXL />
-          <Grid container sx={{ alignItems: "center", pl: 2 }}>
-            <Grid item>
+          <Grid container sx={{ alignItems: "center", pl: 2, marginY: "2px" }}>
+            <Grid item sx={{ mr: "2px" }}>
               <MyActionMenu />
             </Grid>
             <MyDivider />

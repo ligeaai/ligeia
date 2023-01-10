@@ -21,7 +21,6 @@ export const loadCheckedList = (type, inOut) => async (dispatch, getState) => {
         res = await instance.get(`/item/details/${inOut === "data" ? type.FROM_TYPE : type.TO_TYPE}`,
             { ...config(), cancelToken: cancelToken.token });
         const selectedItemId = getState().treeview.selectedItem.ITEM_ID;
-        console.log(res);
         try {
             let itemLinkRes = await instance.post(
                 `/item-link/details/`,
@@ -30,7 +29,6 @@ export const loadCheckedList = (type, inOut) => async (dispatch, getState) => {
                 },
                 config()
             );
-            console.log(itemLinkRes);
             var data = [];
             res.data.map((e) => {
                 var temp = true;
@@ -124,7 +122,6 @@ export const cardinalityCheck = (selectItems, selectedItemFromType) => async (di
             return false
         }
         Object.keys(links).map(e => {
-            console.log(links);
             if (links[e].FROM_ITEM_TYPE === mySelectItem.FROM_TYPE) {
                 if (links[e].LINK_TYPE === mySelectItem.TYPE) {
                     returnVal = false
@@ -181,7 +178,6 @@ export const cardinalityCheck = (selectItems, selectedItemFromType) => async (di
         const TO_ITEM_TYPE = mySelectItem.FROM_TYPE
         var FROM_ITEM_ID = selectedItem.ITEM_ID
         const body = JSON.stringify({ TO_ITEM_TYPE, FROM_ITEM_ID, LINK_TYPE })
-        console.log(body);
         try {
             let res = await instance.post(
                 `/item-link/cardinalty/`,
@@ -197,7 +193,6 @@ export const cardinalityCheck = (selectItems, selectedItemFromType) => async (di
                 const TO_ITEM_TYPE = mySelectItem.TO_TYPE
                 var FROM_ITEM_ID = checkedItem[e].ITEM_ID
                 const body = JSON.stringify({ TO_ITEM_TYPE, FROM_ITEM_ID, LINK_TYPE })
-                console.log(body);
                 try {
                     let res = await instance.post(
                         `/item-link/cardinalty/`,
@@ -220,14 +215,12 @@ export const cardinalityCheck = (selectItems, selectedItemFromType) => async (di
                 const FROM_ITEM_TYPE = mySelectItem.FROM_TYPE
                 var TO_ITEM_ID = checkedItem[e].ITEM_ID
                 const body = JSON.stringify({ FROM_ITEM_TYPE, TO_ITEM_ID, LINK_TYPE })
-                console.log(body);
                 try {
                     let res = await instance.post(
                         `/item-link/cardinalty/`,
                         body,
                         config()
                     );
-                    console.log(res);
                     if (res.data) {
                         returnVal = false
                     }
@@ -270,7 +263,6 @@ export const cardinalityCheck = (selectItems, selectedItemFromType) => async (di
         const FROM_ITEM_TYPE = mySelectItem.FROM_TYPE
         var TO_ITEM_ID = checkedItem[0].ITEM_ID
         var body = JSON.stringify({ FROM_ITEM_TYPE, TO_ITEM_ID, LINK_TYPE })
-        console.log(body);
         try {
             let res = await instance.post(
                 `/item-link/cardinalty/`,
@@ -283,11 +275,9 @@ export const cardinalityCheck = (selectItems, selectedItemFromType) => async (di
         } catch (err) {
             console.log(err);
         }
-        console.log(mySelectItem);
         var TO_ITEM_TYPE = selectedItemFromType
         var FROM_ITEM_ID = selectedItem.ITEM_ID
         var body = JSON.stringify({ TO_ITEM_TYPE, FROM_ITEM_ID, LINK_TYPE })
-        console.log(body);
         try {
             let res = await instance.post(
                 `/item-link/cardinalty/`,
@@ -327,7 +317,6 @@ export const saveLinks = (date, linkType, isOutCheck) => async (dispatch, getSta
                 TO_ITEM_TYPE: isOut ? selectedItem.ITEM_TYPE : e.ITEM_TYPE,
                 ROW_ID: rowUuid.replace(/-/g, ""),
             });
-            console.log(body);
             try {
                 let res = await instance.post(
                     `/item-link/save/`,

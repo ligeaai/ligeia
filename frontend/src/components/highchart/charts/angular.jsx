@@ -1,10 +1,43 @@
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import React from "react";
+import { useSelector } from "react-redux";
 import exporting from "highcharts/modules/exporting";
-
+import { wsBaseUrl } from "../../../services/baseApi";
 exporting(Highcharts);
-export const angular = (highchartProps, width, height) => {
+var client;
+var W3CWebSocket = require("websocket").w3cwebsocket;
+
+export const Angular = ({ highchartProps, width, height }) => {
+  const [categories, setCategories] = React.useState("");
+  const uom = useSelector((state) => state.tapsOverview.UOMList);
+  const [value, setValue] = React.useState("");
+  React.useEffect(() => {
+    client = new W3CWebSocket(`${wsBaseUrl}/ws/tags/`);
+    client.onerror = function () {
+      console.log("Connection Error");
+    };
+    client.onopen = function () {
+      console.log("WebSocket Client Connected");
+    };
+
+    client.onmessage = function (e) {
+      function sendNumber() {
+        if (client.readyState === client.OPEN) {
+          if (typeof e.data === "string") {
+            let data = JSON.parse(e.data);
+            if (data.message.value) {
+              setCategories((prev) => data.message.createdtime);
+              setValue((prev) => data.message.value);
+            }
+            //setTimeout(sendNumber, 5000);
+            return data;
+          }
+        }
+      }
+      sendNumber();
+    };
+  }, []);
   const options = {
     chart: {
       type: "gauge",
@@ -18,21 +51,14 @@ export const angular = (highchartProps, width, height) => {
       enabled: false,
     },
     title: {
-      text: highchartProps.Name,
-      style: {
-        fontSize:
-          highchartProps["Name Font Size(em)"] !== ""
-            ? `${highchartProps["Name Font Size(em)"]}px`
-            : "14px",
-      },
+      text: "",
     },
-
     pane: {
-      startAngle: -90,
-      endAngle: 89.9,
+      startAngle: -150,
+      endAngle: 150,
       background: null,
-      center: ["50%", "75%"],
-      size: "110%",
+      center: ["50%", "50%"],
+      size: "80%",
     },
 
     // the value axis
@@ -44,9 +70,10 @@ export const angular = (highchartProps, width, height) => {
       tickColor: Highcharts.defaultOptions.chart.backgroundColor || "#FFFFFF",
       tickLength: 20,
       tickWidth: 2,
-      minorTickInterval: null,
+      minorTickPosition: "inside",
       labels: {
-        distance: 20,
+        distance: -40,
+        rotation: "auto",
         style: {
           fontSize: "14px",
         },
@@ -87,13 +114,25 @@ export const angular = (highchartProps, width, height) => {
 
     series: [
       {
-        name: "Speed",
-        data: [80],
+        name: "Value",
+        data: [
+          parseFloat(
+            parseFloat(value).toFixed(
+              highchartProps["Decimal Places"] === ""
+                ? 3
+                : highchartProps["Decimal Places"]
+            )
+          ),
+        ],
         tooltip: {
-          valueSuffix: " km/h",
+          valueSuffix: ` ${
+            highchartProps.UOM ? uom[highchartProps.UOM].CODE_TEXT : ""
+          }`,
         },
         dataLabels: {
-          format: "{y} km/h",
+          format: ` ${
+            highchartProps.UOM ? uom[highchartProps.UOM].CODE_TEXT : ""
+          }`,
           borderWidth: 0,
           color:
             (Highcharts.defaultOptions.title &&
@@ -101,7 +140,8 @@ export const angular = (highchartProps, width, height) => {
               Highcharts.defaultOptions.title.style.color) ||
             "#333333",
           style: {
-            fontSize: "10px",
+            fontSize: "12px",
+            zIndex: 67,
           },
         },
         dial: {
@@ -113,7 +153,7 @@ export const angular = (highchartProps, width, height) => {
         },
         pivot: {
           backgroundColor: "gray",
-          radius: 6,
+          radius: 8,
         },
       },
     ],

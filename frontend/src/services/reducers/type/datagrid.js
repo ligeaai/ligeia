@@ -41,7 +41,6 @@ export default function (state = initialState, action) {
             }
         }
         case ADD_NEW_PROPERTY:
-            console.log(payload);
             return {
                 ...state,
                 propertyRows: { ...state.propertyRows, ...payload },

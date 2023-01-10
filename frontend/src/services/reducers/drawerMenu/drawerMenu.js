@@ -3,7 +3,8 @@ import {
     TOGGLE_DRAWER_MENU,
     MOUSE_ENTER_DRAWER,
     MOUSE_LEAVE_DRAWER,
-    LOAD_DRAWER_MENU
+    LOAD_DRAWER_MENU,
+    DRAWER_MENU_SET_OPEN
 } from "../../actions/types"
 
 
@@ -13,7 +14,16 @@ const initialState = {
     // temp: 0,//temporary value determines the drawer stat before the drawer hover
     width: "68px",
     selectedItem: { SHORT_LABEL: "Home" },
-    data: null
+    data: null,
+    openTabs: {
+        52729: true,
+        52734: true,
+        52728: true,
+        52754: true,
+        52738: true,
+        52744: true,
+        52748: true
+    }
 };
 
 
@@ -29,10 +39,10 @@ export default function (state = initialState, action) {
                     ...state,
                     selectedItem: payload.drawerMenu.selectedItem,
                     width: payload.drawerMenu.width,
-                    isOpen: payload.drawerMenu.isOpen
+                    isOpen: payload.drawerMenu.isOpen,
+                    openTabs: payload.drawerMenu.openTabs
                 }
             } catch {
-                console.log("catch");
                 return {
                     ...state,
                     selectedItem: { SHORT_LABEL: "Home" },
@@ -40,7 +50,14 @@ export default function (state = initialState, action) {
                     isOpen: false,
                 }
             }
-
+        case DRAWER_MENU_SET_OPEN:
+            return {
+                ...state,
+                openTabs: {
+                    ...state.openTabs,
+                    [payload]: !state.openTabs[payload]
+                }
+            }
         case LOAD_DRAWER_MENU:
             return {
                 ...state,

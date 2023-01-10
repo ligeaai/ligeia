@@ -12,7 +12,7 @@ const notFound = () => {
         height: "100vh",
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: grey[200],
+        backgroundColor: "background.main",
       }}
     >
       <Grid
@@ -20,7 +20,8 @@ const notFound = () => {
         xs={4}
         sx={{
           boxShadow: 3,
-          backgroundColor: "#ffffff",
+          color: "text.primary",
+          backgroundColor: "background.success",
           borderRadius: "3px",
           py: 1,
           pt: 0,
@@ -44,7 +45,7 @@ const notFound = () => {
                 onClick={() => {
                   history.push("/home");
                 }}
-                sx={{ cursor: "pointer" }}
+                sx={{ cursor: "pointer", color: "icon.success" }}
               >
                 home
               </Link>

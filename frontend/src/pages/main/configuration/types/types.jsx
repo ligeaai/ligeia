@@ -62,7 +62,14 @@ const CodeList = () => {
     >
       <Grid item>
         <DrawerMenu
-          Element={<TreeMenuItems path={TypeService.getAll} textPath="TYPE" />}
+          Element={
+            <TreeMenuItems
+              path={TypeService.getAll}
+              textPath="TYPE"
+              historyPathLevel={2}
+            />
+          }
+          path="types"
         />
       </Grid>
 
@@ -84,7 +91,7 @@ const CodeList = () => {
               height: "42px",
               display: "flex",
               alignItems: "center",
-              backgroundColor: "myTreeViewBg",
+              backgroundColor: "status.main",
               color: "text.primary",
               borderTopLeftRadius: "3px",
               borderTopRightRadius: "3px",
@@ -96,8 +103,8 @@ const CodeList = () => {
           </Grid>
           <ItemSperatorLineXL />
 
-          <Grid container sx={{ alignItems: "center", pl: 2 }}>
-            <Grid item>
+          <Grid container sx={{ alignItems: "center", pl: 2, marginY: "2px" }}>
+            <Grid item sx={{ mr: "2px" }}>
               <MyActionMenu />
             </Grid>
             <MyDivider />

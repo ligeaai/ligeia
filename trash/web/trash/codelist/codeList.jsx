@@ -192,7 +192,7 @@ function RenderRow(props) {
                   key: childCodeList.changedItems[a],
                   value: {
                     ...childCodeList.dataGridItems[
-                      childCodeList.changedItems[a]
+                    childCodeList.changedItems[a]
                     ],
                     requestMethod: "change",
                   },
@@ -387,7 +387,7 @@ const CodeList = () => {
               height: "42px",
               display: "flex",
               alignItems: "center",
-              backgroundColor: "myTreeViewBg",
+              backgroundColor: "status.main",
               color: "text.primary",
               borderTopLeftRadius: "3px",
               borderTopRightRadius: "3px",

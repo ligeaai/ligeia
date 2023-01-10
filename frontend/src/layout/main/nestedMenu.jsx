@@ -25,7 +25,6 @@ const NestedMenu = (props) => {
   var menuValidator = menuItems.map(() => false);
   const [mainMenu, setMainMenu] = React.useState(true);
   const handleUserClick = (e) => {
-    console.log("sads");
     if (!e.target.closest(".settingsMenu")) {
       setSettingsMenuFunc();
     }
@@ -195,7 +194,6 @@ const NestedMenu = (props) => {
               <ItemSperatorLine />
               {menuItems[i].subtable.length > 0 ? (
                 menuItems[i].subtable.map((subValue, subKey) => {
-                  console.log(subValue);
                   return (
                     <Grid
                       item

@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class UomConfig(AppConfig):
+class UomsConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'apps.uom'
+    name = 'apps.uoms'

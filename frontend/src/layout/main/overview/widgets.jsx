@@ -1,6 +1,9 @@
 import React from "react";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
+import FormGroup from "@mui/material/FormGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Switch from "@mui/material/Switch";
 import { IconButton } from "@mui/material";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import SettingsIcon from "@mui/icons-material/Settings";
@@ -13,6 +16,9 @@ import UpdatePopUp from "./updatePopup";
 import "../../../assets/css/dashboard.css";
 const Widgets = React.forwardRef((props, ref) => {
   const { widget, style, className, children, ...rest } = props;
+  const [liveData, setLiveData] = React.useState(true);
+  const [tabular, setTabular] = React.useState(false);
+  const [backfill, setbackfill] = React.useState(false);
   const dispatch = useDispatch();
   const [highchartProps, setHighChartProps] = React.useState(null);
   const refresh = useSelector((state) => state.tapsOverview.refresh);
@@ -32,7 +38,13 @@ const Widgets = React.forwardRef((props, ref) => {
       <Box
         ref={ref}
         className={`grid-item ${className}`}
-        sx={{ ...style, boxShadow: 4, borderRadius: "5px" }}
+        sx={{
+          ...style,
+          boxShadow: 4,
+          borderRadius: "5px",
+          color: "text.primary",
+          backgroundColor: "background.success",
+        }}
         {...rest}
       >
         <Box
@@ -44,15 +56,110 @@ const Widgets = React.forwardRef((props, ref) => {
             },
           }}
         >
-          <Grid container sx={{ justifyContent: "space-between" }}>
+          <Grid
+            container
+            sx={{
+              justifyContent: "space-between",
+              p: 0.5,
+              alignItems: "center",
+            }}
+          >
             <Grid item>
-              <IconButton
-                onClick={() => {
-                  dispatch(deleteChart(widget, highchartProps._rev));
-                }}
-              >
-                <DeleteForeverIcon />
-              </IconButton>
+              <Grid container sx={{ alignItems: "center" }}>
+                <Grid item>
+                  <IconButton
+                    onClick={() => {
+                      dispatch(deleteChart(widget, highchartProps._rev));
+                    }}
+                  >
+                    <DeleteForeverIcon />
+                  </IconButton>
+                </Grid>
+                <Grid
+                  item
+                  sx={{
+                    ml: 0.5,
+                    display:
+                      highchartProps.Type === "Linechart [Highchart]"
+                        ? "inline-block"
+                        : "none",
+                    fontSize:
+                      highchartProps["Name Font Size(em)"] !== ""
+                        ? `${highchartProps["Name Font Size(em)"]}px`
+                        : "14px",
+                  }}
+                >
+                  {highchartProps.Name}
+                </Grid>
+              </Grid>
+            </Grid>
+            <Grid
+              item
+              sx={{
+                display:
+                  highchartProps.Type === "Linechart [Highchart]" ||
+                  highchartProps["Show Name"]
+                    ? "none"
+                    : "flex",
+                fontSize:
+                  highchartProps["Name Font Size(em)"] !== ""
+                    ? `${highchartProps["Name Font Size(em)"]}px`
+                    : "14px",
+              }}
+            >
+              {highchartProps.Name}
+            </Grid>
+            <Grid
+              item
+              sx={{
+                display:
+                  highchartProps.Type === "Linechart [Highchart]"
+                    ? "flex"
+                    : "none",
+              }}
+            >
+              <FormControlLabel
+                control={
+                  <Switch
+                    checked={tabular}
+                    onChange={() => {
+                      setTabular((prev) => {
+                        setTabular(prev);
+                        return !prev;
+                      });
+                    }}
+                  />
+                }
+                label="Tabular View"
+              />
+              <FormControlLabel
+                control={
+                  <Switch
+                    checked={liveData}
+                    onChange={() => {
+                      setLiveData((prev) => {
+                        setbackfill(prev);
+                        return !prev;
+                      });
+                    }}
+                  />
+                }
+                label="Live"
+              />
+              <FormControlLabel
+                control={
+                  <Switch
+                    checked={backfill}
+                    onChange={() => {
+                      setbackfill((prev) => {
+                        setLiveData(prev);
+                        return !prev;
+                      });
+                    }}
+                  />
+                }
+                label="Backfill"
+              />
             </Grid>
             <Grid item>
               <MyDialog
@@ -73,6 +180,9 @@ const Widgets = React.forwardRef((props, ref) => {
             highchartProps={highchartProps}
             width={width}
             height={height}
+            liveData={liveData}
+            backfillData={backfill}
+            tabular={tabular}
           ></MyHighchart>
         </Box>
         {children}

@@ -41,19 +41,25 @@ const TabItems = (props) => {
       setBreakpoint(setBreakPoint());
     }
   }, []);
-  const widgets = useSelector(
-    (state) => state.tapsOverview.widgets[widgetname].widgets
-  );
-  const layouts = useSelector(
-    (state) => state.tapsOverview.widgets[widgetname].layouts
-  );
+  const widgets = useSelector((state) => {
+    try {
+      return state.tapsOverview.widgets[widgetname].widgets;
+    } catch {
+      return [];
+    }
+  });
+  const layouts = useSelector((state) => {
+    try {
+      return state.tapsOverview.widgets[widgetname].layouts;
+    } catch {
+      return [];
+    }
+  });
   const ref = React.createRef();
   const handleBreakPointChange = (breakpoint) => {
     setBreakpoint(breakpoint);
   };
   const handleLayoutChange = (newLayout) => {
-    console.log(newLayout);
-    console.log(breakpoint);
     layouts[breakpoint] = newLayout;
     dispatch(updateChartLayout(layouts));
   };

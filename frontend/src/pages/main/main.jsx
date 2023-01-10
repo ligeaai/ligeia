@@ -25,6 +25,11 @@ const cards = [
     cardURL: "/administration",
   },
   {
+    cardTitle: "Tools",
+    cardBody: "Tools",
+    cardURL: "/tools",
+  },
+  {
     cardTitle: "Configuration",
     cardBody: "Configuration of the platform",
     cardURL: "/configuration",

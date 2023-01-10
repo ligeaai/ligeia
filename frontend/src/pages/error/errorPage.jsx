@@ -11,7 +11,7 @@ const errorPage = () => {
         height: "100vh",
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: grey[200],
+        backgroundColor: "background.success",
       }}
     >
       <Grid
@@ -19,7 +19,7 @@ const errorPage = () => {
         xs={4}
         sx={{
           boxShadow: 3,
-          backgroundColor: "#ffffff",
+          backgroundColor: "icon.main",
           borderRadius: "3px",
           py: 1,
           pt: 0,

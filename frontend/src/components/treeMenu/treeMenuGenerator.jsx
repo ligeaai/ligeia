@@ -9,7 +9,7 @@ import {
   cleanTreeview,
 } from "../../services/actions/treeview/treeview";
 
-const TreeMenuItems = ({ path, textPath }) => {
+const TreeMenuItems = ({ path, textPath, historyPathLevel }) => {
   const dispatch = useDispatch();
   const filteredTreeItems = useSelector(
     (state) => state.treeview.filteredMenuItem
@@ -18,7 +18,7 @@ const TreeMenuItems = ({ path, textPath }) => {
     (state) => state.treeview.selectedItem.selectedIndex
   );
   const selectFunc = (index) => {
-    dispatch(selectTreeViewItem(index, textPath));
+    dispatch(selectTreeViewItem(index, textPath, historyPathLevel));
   };
   React.useEffect(() => {
     dispatch(loadTreeviewItem(path, textPath));

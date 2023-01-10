@@ -13,11 +13,18 @@ const getTagItem = (body) => {
     return instance.post("/tags/item/", body, { ...config(), cancelToken: cancelToken.token });
 };
 
+const getTagItemS = (body) => {
+
+    return instance.post("/tags/item/", body, { ...config() });
+};
+
+
 const getTagsProperty = (body) => {
     return instance.post("/tags/tags-property/", body, config());
 };
 
 const createAndUpdate = (body) => {
+    console.log(body);
     return instance.post("/tags/save/", body, config());
 };
 
@@ -27,6 +34,7 @@ const remove = (body) => {
 
 const TagService = {
     getAll,
+    getTagItemS,
     getTagItem,
     getTagsProperty,
     createAndUpdate,

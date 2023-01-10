@@ -48,7 +48,6 @@ const SettingsMenu = () => {
   const langSelect = (language) => {
     languages.map((e) => {
       if (e.CODE_TEXT === language) {
-        console.log(e);
         dispatch(changeLanguage(e.CULTURE));
         dispatch(changeLangs(e.CODE_TEXT));
       }

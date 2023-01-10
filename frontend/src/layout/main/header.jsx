@@ -66,15 +66,14 @@ const Header = (props) => {
   const theme = useSelector((state) => state.theme.theme);
 
   const MyBox = styled(Grid)(({ theme }) => {
-    console.log(theme);
     return {
-      backgroundColor: theme.palette.primary.dark,  // this
+      backgroundColor: theme.palette.primary.dark, // this
       alignItems: "center",
       justifyContent: "space-between",
       padding: "13px 21px",
       height: "59px",
       borderBottom: "1px solid rgba(0,0,0,0.3)",
-    }
+    };
   });
 
   const StyledBadge = styled(BadgeUnstyled)(
@@ -156,7 +155,7 @@ const Header = (props) => {
                 <StyledBadge badgeContent={8} max={99}>
                   <NotificationsNoneIcon
                     sx={{
-                      color: "primary.light",  // this
+                      color: "primary.light", // this
                     }}
                   />
                 </StyledBadge>

@@ -17,7 +17,7 @@ const ErrorMessage = (props) => {
       dispatch({
         type: "CLEAN_ERROR_SUCCESS",
       });
-    }, 1500);
+    }, 25000);
 
     return () => {
       clearTimeout(timer);

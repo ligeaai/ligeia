@@ -6,6 +6,7 @@ import {
     REFRESH_WIDGETS_OVERVIEW,
     SET_REV,
     UPDATE_LAYOUT,
+    LOAD_UOMLIST
 } from "../../actions/types"
 
 
@@ -16,7 +17,8 @@ const initialState = {
     data: [],
     selected: null,
     refresh: false,
-    isActive: false
+    isActive: false,
+    UOMList: []
 };
 
 
@@ -52,6 +54,11 @@ export default function (state = initialState, action) {
         //         _rev: payload
         //     }
         // }
+        case LOAD_UOMLIST:
+            return {
+                ...state,
+                UOMList: payload
+            }
         case UPDATE_LAYOUT:
             return {
                 ...state,

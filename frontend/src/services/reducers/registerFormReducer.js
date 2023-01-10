@@ -11,7 +11,6 @@ export const registerFormReducer = createSlice({
     },
     reducers: {
         setEmailPass: (state, payload) => {
-            console.log(payload);
             return {
                 ...state,
                 email: payload.payload.email,
