@@ -244,7 +244,6 @@ function MyTabs() {
               value={value}
               index={i}
               key={i}
-              id="asdasdasdadsa"
               sx={{
                 backgroundColor: "background.main",
                 height: "100%",
