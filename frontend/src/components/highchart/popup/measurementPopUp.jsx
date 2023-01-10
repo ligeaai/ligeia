@@ -133,11 +133,12 @@ const Measurement = () => {
     </React.Fragment>
   );
 };
-const AngularPopUp = (props) => {
+const MeasurementPopUp = (props) => {
   const dispatch = useDispatch();
   const { highchartProps, handleClose } = props;
   const tags = useSelector((state) => state.overviewDialog.measuremenetData);
-
+  const UOMList = useSelector((state) => state.tapsOverview.UOMList);
+  const uom = useSelector((state) => state.overviewDialog.highchartProps.UOM);
   const handleChangeFunc = (key, val) => {
     dispatch(changeValeus(key, val));
   };
@@ -170,6 +171,21 @@ const AngularPopUp = (props) => {
                   defaultValue={highchartProps["Name Font Size(em)"]}
                   handleChangeFunc={(value) => {
                     handleChangeFunc("Name Font Size(em)", value);
+                  }}
+                />
+              </Grid>
+            </Grid>
+          </Grid>
+          <Grid item xs={12} sm={6} md={3}>
+            <Grid container rowGap={0.5}>
+              <Grid item xs={12}>
+                Widget Refresh (seconds)
+              </Grid>
+              <Grid item xs={12}>
+                <MyNumberTextField
+                  defaultValue={highchartProps["Widget Refresh (seconds)"]}
+                  handleChangeFunc={(value) => {
+                    handleChangeFunc("Widget Refresh (seconds)", value);
                   }}
                 />
               </Grid>
@@ -212,43 +228,19 @@ const AngularPopUp = (props) => {
           <Grid item xs={12} sm={6} md={3}>
             <Grid container rowGap={0.5}>
               <Grid item xs={12}>
-                Widget Refresh (seconds)
+                Unit of Measurement
               </Grid>
               <Grid item xs={12}>
-                <MyNumberTextField
-                  defaultValue={highchartProps["Widget Refresh (seconds)"]}
-                  handleChangeFunc={(value) => {
-                    handleChangeFunc("Widget Refresh (seconds)", value);
-                  }}
+                <Select
+                  values={uom ? [UOMList[uom].CODE_TEXT] : []}
+                  defaultValue={uom ? UOMList[uom].CODE_TEXT : ""}
+                  disabled={true}
                 />
               </Grid>
             </Grid>
           </Grid>
         </Grid>
       </Grid>
-      <Grid item xs={12}>
-        <Grid container columnSpacing={2}>
-          <Measurement />
-          <Grid item xs={12} sm={6} md={3}>
-            <Grid container rowGap={0.5}>
-              <Grid item xs={12}>
-                Stops
-              </Grid>
-              <Grid item xs={12}>
-                <MyNumberTextField
-                  defaultValue={highchartProps["Stops"]}
-                  handleChangeFunc={(value) => {
-                    dispatch(
-                      cleanStops("Stops", value, ["Low", "High", "Color"])
-                    );
-                  }}
-                />
-              </Grid>
-            </Grid>
-          </Grid>
-        </Grid>
-      </Grid>
-
       <Grid item xs={12}>
         <Grid container columnSpacing={2} rowGap={2}>
           <Grid item xs={12} sm={6} md={3}>
@@ -373,9 +365,31 @@ const AngularPopUp = (props) => {
           </Grid>
         </Grid>
       </Grid>
+      <Grid item xs={12}>
+        <Grid container columnSpacing={2}>
+          <Measurement />
+          <Grid item xs={12} sm={6} md={3}>
+            <Grid container rowGap={0.5}>
+              <Grid item xs={12}>
+                Stops
+              </Grid>
+              <Grid item xs={12}>
+                <MyNumberTextField
+                  defaultValue={highchartProps["Stops"]}
+                  handleChangeFunc={(value) => {
+                    dispatch(
+                      cleanStops("Stops", value, ["Low", "High", "Color"])
+                    );
+                  }}
+                />
+              </Grid>
+            </Grid>
+          </Grid>
+        </Grid>
+      </Grid>
       <Stops />
     </Grid>
   );
 };
 
-export default AngularPopUp;
+export default MeasurementPopUp;
