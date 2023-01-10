@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Grid, Typography } from "@mui/material";
+import { Grid, Divider, Typography } from "@mui/material";
 
 import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
@@ -49,10 +49,8 @@ const Properties = ({ MyProperties, isLinkOpen = true, MyLinks }) => {
         item
         sx={{
           pl: 0.5,
-          paddingRight: "6px",
+          paddingRight: "4px",
           my: 0.5,
-          borderRight: "2px solid",
-          borderColor: "status.secondary",
           height: "100%",
         }}
       >
@@ -126,6 +124,16 @@ const Properties = ({ MyProperties, isLinkOpen = true, MyLinks }) => {
           </ToggleButton>
         </ToggleButtonGroup>
       </Grid>
+      <Divider
+        orientation="vertical"
+        flexItem
+        sx={{
+          mt: 0.5,
+          borderWidth: "0.2px",
+          borderColor: "status.secondary",
+          backgroundColor: "status.secondary",
+        }}
+      />
       <Grid
         item
         xs={12}

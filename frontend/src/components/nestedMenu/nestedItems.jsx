@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Box, Grid, Typography } from "@mui/material";
+import { Box, Grid, Divider, Typography } from "@mui/material";
 
 export const Items = (props) => {
   const { Icon, text, myFunction } = props;
@@ -42,9 +42,10 @@ export const Items = (props) => {
 
 export const ItemSperatorLine = () => {
   return (
-    <Box
+    <Divider
+      flexItem
       sx={{
-        border: "1px solid",
+        borderWidth: "0.2px",
         backgroundColor: "status.secondary",
         borderColor: "status.secondary",
         width: "100%",
@@ -56,9 +57,10 @@ export const ItemSperatorLine = () => {
 
 export const ItemSperatorLineXL = () => {
   return (
-    <Box
+    <Divider
+      flexItem
       sx={{
-        border: "0.05rem solid",
+        borderWidth: "0.2px",
         backgroundColor: "status.secondary",
         borderColor: "status.secondary",
         width: "100%",
