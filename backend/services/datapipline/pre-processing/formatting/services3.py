@@ -67,6 +67,7 @@ df5 = df4.withColumn(
         )
     ),
 )
+
 df6 = df5.withColumn("org_unit4", split(col("name"), ",").getItem(0)).withColumn(
     "asset", split(col("name"), ",").getItem(1)
 )
@@ -111,6 +112,7 @@ df16 = (
         "time1",
         "DiffInHours",
         "TAG_NAME",
+        "value",
     )
     .select(
         concat_ws(" ", df7.message_Type1).alias("message_type"),
@@ -134,6 +136,7 @@ df16 = (
         "time1",
         "DiffInHours",
         "TAG_NAME",
+        "value",
     )
     .select(
         concat_ws(" ", df6.timestamp).alias("createdtime"),
@@ -157,6 +160,7 @@ df16 = (
         "time1",
         "DiffInHours",
         "TAG_NAME",
+        "value",
     )
     .select(
         concat_ws(
@@ -188,6 +192,7 @@ df16 = (
         "time1",
         "DiffInHours",
         "TAG_NAME",
+        "value",
     )
     .select(
         concat_ws(" ", df15.date, df15.time1).alias("t"),
@@ -213,6 +218,7 @@ df16 = (
         "time1",
         "DiffInHours",
         "TAG_NAME",
+        "value",
     )
     .withColumnRenamed("quality", "q")
 )
@@ -242,6 +248,7 @@ df17 = (
         "DiffInHours",
         "step-status",
         "TAG_NAME",
+        "value",
     )
 )
 
@@ -256,6 +263,7 @@ df18 = df17.select(
     "DiffInHours",
     "step-status",
     "TAG_NAME",
+    "value",
     df17.payload.insert.vqts.id,
     df17.header.version,
     df17.header.created_by,
@@ -276,7 +284,7 @@ df19 = (
     .withColumnRenamed("payload.insert.fqn", "fqn")
     .withColumnRenamed("payload.insert.vqts.t", "timestamp")
     .withColumnRenamed("payload.insert.vqts.q", "quality")
-    .withColumnRenamed("payload.insert.vqts.v", "value")
+    .withColumnRenamed("payload.insert.vqts.v", "type_value")
     .select(
         "id",
         "version",
@@ -288,6 +296,7 @@ df19 = (
         "quality",
         "step-status",
         "value",
+        "type_value",
         "temperature",
         "pressure",
         "vibration_x",

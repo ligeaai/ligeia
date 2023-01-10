@@ -41,22 +41,15 @@ data_dict = {
 }
 
 
-def get_value_type(df2):
-    type_of_value = [
-        "temperature",
-        "pressure",
-        "vibration_x",
-        "vibration_y",
-        "vibration_motor",
-    ]
-    for data in type_of_value:
-        try:
-            list(df2.keys()).index(data)
-            incomingData = str(df2.get(data)) + " " + str(data)
-            data_dict.get(data).append(incomingData)
-            return data
-        except:
-            print("No defined data is coming")
+def get_value_type(df2, get_value):
+    data = get_value
+    try:
+        list(df2.keys()).index(data)
+        incomingData = str(df2.get(data)) + " " + str(data)
+        data_dict.get(data).append(incomingData)
+        return data
+    except:
+        print("No defined data is coming")
 
 
 def frozen_data_check(data_check):
@@ -86,12 +79,10 @@ for message in consumer:
     df = message.value
     data = literal_eval(df.decode("utf8"))
     df2 = dict(data)
-    data_check = get_value_type(df2)
-    print(data_check)
+    data_check = get_value_type(df2, data["value"])
     print(len(data_dict.get(data_check)))
     if len(data_dict.get(data_check)) > 3:
         frozen_data_check(data_check)
-
     del data[data_check]
     data["step-status"] = "frozen-data"
     producer.send("scaling_data", value=data)
