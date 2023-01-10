@@ -82,6 +82,7 @@ export const Measurement = ({ highchartProps, width, height }) => {
           </Box>
           <Box
             sx={{
+              // display: highchartProps["Show Unit"] ? "inline-block" : "none",
               display: "inline-block",
               fontSize:
                 highchartProps["Unit Font Size"] !== ""

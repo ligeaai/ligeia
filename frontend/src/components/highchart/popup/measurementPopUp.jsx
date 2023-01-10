@@ -97,21 +97,6 @@ const AngularPopUp = (props) => {
           <Grid item xs={12} sm={6} md={3}>
             <Grid container rowGap={0.5}>
               <Grid item xs={12}>
-                Mesurement Max Age
-              </Grid>
-              <Grid item xs={12}>
-                <MyNumberTextField
-                  defaultValue={highchartProps["Mesurement Max Age"]}
-                  handleChangeFunc={(value) => {
-                    handleChangeFunc("Mesurement Max Age", value);
-                  }}
-                />
-              </Grid>
-            </Grid>
-          </Grid>
-          <Grid item xs={12} sm={6} md={3}>
-            <Grid container rowGap={0.5}>
-              <Grid item xs={12}>
                 Widget Refresh (seconds)
               </Grid>
               <Grid item xs={12}>
@@ -188,22 +173,6 @@ const AngularPopUp = (props) => {
               </Grid>
             </Grid>
           </Grid>
-
-          <Grid item xs={12} sm={6} md={3}>
-            <Grid container rowGap={0.5}>
-              <Grid item xs={12}>
-                Show Unit
-              </Grid>
-              <Grid item xs={12}>
-                <MyCheckbox
-                  defaultValue={highchartProps["Show Unit"]}
-                  handleChangeFunc={(value) => {
-                    handleChangeFunc("Show Unit", value);
-                  }}
-                />
-              </Grid>
-            </Grid>
-          </Grid>
           <Grid item xs={12} sm={6} md={3}>
             <Grid container rowGap={0.5}>
               <Grid item xs={12}>
@@ -222,13 +191,13 @@ const AngularPopUp = (props) => {
           <Grid item xs={12} sm={6} md={3}>
             <Grid container rowGap={0.5}>
               <Grid item xs={12}>
-                Show Chanel
+                Show Measurement
               </Grid>
               <Grid item xs={12}>
                 <MyCheckbox
-                  defaultValue={highchartProps["Show Chanel"]}
+                  defaultValue={highchartProps["Show Measurement"]}
                   handleChangeFunc={(value) => {
-                    handleChangeFunc("Show Chanel", value);
+                    handleChangeFunc("Show Measurement", value);
                   }}
                 />
               </Grid>
@@ -237,13 +206,13 @@ const AngularPopUp = (props) => {
           <Grid item xs={12} sm={6} md={3}>
             <Grid container rowGap={0.5}>
               <Grid item xs={12}>
-                Show Measurement
+                Show Unit
               </Grid>
               <Grid item xs={12}>
                 <MyCheckbox
-                  defaultValue={highchartProps["Show Measurement"]}
+                  defaultValue={highchartProps["Show Unit"]}
                   handleChangeFunc={(value) => {
-                    handleChangeFunc("Show Measurement", value);
+                    handleChangeFunc("Show Unit", value);
                   }}
                 />
               </Grid>
