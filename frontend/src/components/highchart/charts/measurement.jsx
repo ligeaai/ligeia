@@ -64,7 +64,9 @@ export const Measurement = ({ highchartProps, width, height }) => {
         >
           <Box
             sx={{
-              display: "inline-block",
+              display: highchartProps["Show Measurement"]
+                ? "inline-block"
+                : "none",
               fontSize:
                 highchartProps["Value Font Size"] !== ""
                   ? `${highchartProps["Value Font Size"]}px`
@@ -82,8 +84,7 @@ export const Measurement = ({ highchartProps, width, height }) => {
           </Box>
           <Box
             sx={{
-              // display: highchartProps["Show Unit"] ? "inline-block" : "none",
-              display: "inline-block",
+              display: highchartProps["Show Unit"] ? "inline-block" : "none",
               fontSize:
                 highchartProps["Unit Font Size"] !== ""
                   ? `${highchartProps["Unit Font Size"]}px`
