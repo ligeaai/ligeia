@@ -64,7 +64,7 @@ const DialogContent = ({ highchartProps, chartId, ...rest }) => {
       )}
 
       <Grid item xs={12}>
-        <Grid container sx={{ flexDirection: "row-reverse" }}>
+        <Grid container sx={{ flexDirection: "row-reverse", pb: 1, pr: 1 }}>
           <Grid item>
             <Button
               color="error"
