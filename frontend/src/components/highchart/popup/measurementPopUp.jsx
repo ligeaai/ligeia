@@ -43,7 +43,7 @@ const Stops = () => {
         return (
           <Grid item xs={12} key={i}>
             <Grid container columnSpacing={2}>
-              <Grid item xs={12} sm={6} md={4}>
+              <Grid item xs={12} sm={6} md={4.5}>
                 <Grid container rowGap={0.5}>
                   <Grid item xs={12}>
                     {`[${e}] Low`}
@@ -58,7 +58,7 @@ const Stops = () => {
                   </Grid>
                 </Grid>
               </Grid>
-              <Grid item xs={12} sm={6} md={4}>
+              <Grid item xs={12} sm={6} md={4.5}>
                 <Grid container rowGap={0.5}>
                   <Grid item xs={12}>
                     {`[${e}] High`}
@@ -73,7 +73,7 @@ const Stops = () => {
                   </Grid>
                 </Grid>
               </Grid>
-              <Grid item xs={12} sm={6} md={4}>
+              <Grid item xs={12} sm={6} md={3}>
                 <Grid container rowGap={0.5}>
                   <Grid item xs={12}>
                     {`[${e}] Color`}
@@ -108,7 +108,7 @@ const Measurement = () => {
   };
   return (
     <React.Fragment>
-      <Grid item xs={12} sm={6} md={4}>
+      <Grid item xs={12} sm={6} md={4.5}>
         <Grid container rowGap={0.5}>
           <Grid item xs={12}>
             Minimum
@@ -123,7 +123,7 @@ const Measurement = () => {
           </Grid>
         </Grid>
       </Grid>
-      <Grid item xs={12} sm={6} md={4}>
+      <Grid item xs={12} sm={6} md={4.5}>
         <Grid container rowGap={0.5}>
           <Grid item xs={12}>
             Maximum
@@ -175,7 +175,7 @@ const MeasurementPopUp = (props) => {
   };
   return (
     <Grid container rowGap={2} columnSpacing={2}>
-      <Grid item xs={8}>
+      <Grid item xs={9}>
         <Grid container rowGap={2}>
           <Grid item xs={12}>
             <Grid container columnSpacing={2} rowGap={2}>
@@ -343,7 +343,7 @@ const MeasurementPopUp = (props) => {
         </Grid>
       </Grid>
 
-      <Grid item xs={4}>
+      <Grid item xs={3}>
         <Grid item xs={12}>
           <List sx={{ width: "100%", bgcolor: "inherit" }}>
             {["Name", "Measurement", "Unit", "Timestamp", "Tag Name"].map(
@@ -382,7 +382,7 @@ const MeasurementPopUp = (props) => {
       <Grid item xs={12}>
         <Grid container columnSpacing={2} rowGap={2}>
           <Measurement />
-          <Grid item xs={12} sm={6} md={4}>
+          <Grid item xs={12} sm={6} md={3}>
             <Grid container rowGap={0.5}>
               <Grid item xs={12}>
                 Stops

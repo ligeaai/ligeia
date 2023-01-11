@@ -58,7 +58,7 @@ const DialogContent = ({ highchartProps, chartId, ...rest }) => {
         {highchartProps.Type}
       </Typography>
       {type === highchartProps.Type ? (
-        <Box sx={{ p: 1 }}>{body[highchartProps.Type]}</Box>
+        <Box sx={{ py: 1, px: 2 }}>{body[highchartProps.Type]}</Box>
       ) : (
         <LoadingComponent />
       )}
