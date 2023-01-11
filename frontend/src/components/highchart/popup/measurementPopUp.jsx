@@ -395,6 +395,17 @@ const MeasurementPopUp = (props) => {
                       cleanStops("Stops", value, ["Low", "High", "Color"])
                     );
                   }}
+                  sx={{
+                    fontSize: "14px",
+                    "& .MuiOutlinedInput-input": {
+                      fontSize: "14px",
+                      paddingTop: "4px",
+                      paddingBottom: "4px",
+                      paddingRight: "2px",
+                    },
+                    width: 75,
+                    minWidth: 75,
+                  }}
                 />
               </Grid>
             </Grid>
