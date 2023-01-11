@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Button, Grid } from "@mui/material";
+import { Button, Grid, Box } from "@mui/material";
 
 import { Select, InputGenerator } from "../../../components";
 import {
@@ -51,7 +51,20 @@ const DialogContent = ({ handleClose }) => {
     myFunc();
   }, []);
   return (
-    <Grid container id="draggable-dialog-title" sx={{ p: 1, width: "100%" }}>
+    <Grid container sx={{ p: 1, width: "100%" }}>
+      <Box
+        id="draggable-dialog-title"
+        sx={{
+          cursor: "all-scroll",
+          backgroundColor: "background.main",
+          width: "100%",
+          position: "absolute",
+          height: "44px",
+          top: 0,
+          left: 0,
+        }}
+      ></Box>
+
       <Grid
         item
         sx={{
@@ -64,6 +77,7 @@ const DialogContent = ({ handleClose }) => {
           defaultValue={selectedItem}
         />
       </Grid>
+
       {body[properties.Type]}
 
       <Grid item xs={12}>

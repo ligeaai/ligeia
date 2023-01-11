@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Button, Grid, Typography } from "@mui/material";
+import { Button, Grid, Box, Typography } from "@mui/material";
 
 import { LoadingComponent } from "../../../components";
 import {
@@ -43,24 +43,26 @@ const DialogContent = ({ highchartProps, chartId, ...rest }) => {
     myFunc();
   }, []);
   return (
-    <Grid container sx={{ p: 1, width: "100%" }}>
+    <Grid container sx={{ width: "100%" }}>
       <Typography
         id="draggable-dialog-title"
         sx={{
           fontWeight: "bold",
-          mb: 1,
           fontSize: "14px",
           width: "100%",
           cursor: "all-scroll",
+          backgroundColor: "background.main",
+          p: 1,
         }}
       >
         {highchartProps.Type}
       </Typography>
       {type === highchartProps.Type ? (
-        body[highchartProps.Type]
+        <Box sx={{ p: 1 }}>{body[highchartProps.Type]}</Box>
       ) : (
         <LoadingComponent />
       )}
+
       <Grid item xs={12}>
         <Grid container sx={{ flexDirection: "row-reverse" }}>
           <Grid item>
