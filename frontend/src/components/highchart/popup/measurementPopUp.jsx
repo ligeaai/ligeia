@@ -162,22 +162,19 @@ const MeasurementPopUp = (props) => {
   const TagName = useSelector(
     (state) => state.overviewDialog.highchartProps["Show Tag Name"]
   );
-  const EnableExport = useSelector(
-    (state) => state.overviewDialog.highchartProps["Show Enable Export"]
-  );
+
   const values = {
     Name: Name,
     Measurement: Measurements,
     Unit: Unit,
     Timestamp: Timestamp,
     "Tag Name": TagName,
-    "Enable Export": EnableExport,
   };
   const handleChangeFunc = (key, val) => {
     dispatch(changeValeus(key, val));
   };
   return (
-    <Grid container rowGap={2}>
+    <Grid container rowGap={2} columnSpacing={2}>
       <Grid item xs={6}>
         <Grid container rowGap={2}>
           <Grid item xs={12}>
@@ -348,42 +345,37 @@ const MeasurementPopUp = (props) => {
 
       <Grid item xs={6}>
         <Grid item xs={12}>
-          <List sx={{ width: "100%", maxWidth: 360, bgcolor: "inherit" }}>
-            {[
-              "Name",
-              "Measurement",
-              "Unit",
-              "Timestamp",
-              "Tag Name",
-              "Enable Export",
-            ].map((value) => {
-              const labelId = `checkbox-list-label-${value}`;
+          <List sx={{ width: "100%", bgcolor: "inherit" }}>
+            {["Name", "Measurement", "Unit", "Timestamp", "Tag Name"].map(
+              (value) => {
+                const labelId = `checkbox-list-label-${value}`;
 
-              return (
-                <ListItem key={value} disablePadding>
-                  <ListItemButton
-                    role={undefined}
-                    onClick={() => {
-                      handleChangeFunc(`Show ${value}`, !values[value]);
-                    }}
-                    dense
-                  >
-                    <ListItemIcon>
-                      <Checkbox
-                        edge="start"
-                        checked={
-                          value === "Name" ? !values[value] : values[value]
-                        }
-                        tabIndex={-1}
-                        disableRipple
-                        inputProps={{ "aria-labelledby": labelId }}
-                      />
-                    </ListItemIcon>
-                    <ListItemText id={labelId} primary={`${value}`} />
-                  </ListItemButton>
-                </ListItem>
-              );
-            })}
+                return (
+                  <ListItem key={value} disablePadding>
+                    <ListItemButton
+                      role={undefined}
+                      onClick={() => {
+                        handleChangeFunc(`Show ${value}`, !values[value]);
+                      }}
+                      dense
+                    >
+                      <ListItemIcon>
+                        <Checkbox
+                          edge="start"
+                          checked={
+                            value === "Name" ? !values[value] : values[value]
+                          }
+                          tabIndex={-1}
+                          disableRipple
+                          inputProps={{ "aria-labelledby": labelId }}
+                        />
+                      </ListItemIcon>
+                      <ListItemText id={labelId} primary={`${value}`} />
+                    </ListItemButton>
+                  </ListItem>
+                );
+              }
+            )}
           </List>
         </Grid>
       </Grid>
