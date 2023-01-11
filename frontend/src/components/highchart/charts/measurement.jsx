@@ -76,14 +76,14 @@ export const Measurement = ({ highchartProps, width, height }) => {
           top: "0px",
           width: "100%",
           textAlign: "center",
-          display: highchartProps["Tag Name"] ? "inline-block" : "none",
+          display: highchartProps["Show Tag Name"] ? "inline-block" : "none",
         }}
       >
-        {
-          measuremenetData.filter(
-            (e) => e.TAG_ID === highchartProps.Measurement
-          )[0].NAME
-        }
+        {measuremenetData
+          ? measuremenetData.filter(
+              (e) => e.TAG_ID === highchartProps.Measurement
+            )[0].NAME
+          : ""}
       </Box>
       <Grid
         container
@@ -109,7 +109,7 @@ export const Measurement = ({ highchartProps, width, height }) => {
             <Grid
               item
               sx={{
-                display: highchartProps["Measurement"]
+                display: highchartProps["Show Measurement"]
                   ? "inline-block"
                   : "none",
                 fontSize:
@@ -118,6 +118,7 @@ export const Measurement = ({ highchartProps, width, height }) => {
                     : "14px",
                 marginRight: "6px",
                 color: colorPicker(parseInt(data)),
+                fontWeight: "bold",
               }}
             >
               {parseFloat(data).toFixed(
@@ -129,7 +130,7 @@ export const Measurement = ({ highchartProps, width, height }) => {
             <Grid
               item
               sx={{
-                display: highchartProps["Unit"] ? "inline-block" : "none",
+                display: highchartProps["Show Unit"] ? "inline-block" : "none",
                 fontSize:
                   highchartProps["Unit Font Size"] !== ""
                     ? `${highchartProps["Unit Font Size"]}px`
@@ -152,7 +153,7 @@ export const Measurement = ({ highchartProps, width, height }) => {
             highchartProps["Time Stamp Font Size"] !== ""
               ? `${highchartProps["Time Stamp Font Size"]}px`
               : "14px",
-          display: highchartProps["Timestamp"] ? "inline-block" : "none",
+          display: highchartProps["Show Timestamp"] ? "inline-block" : "none",
         }}
       >
         {categories}

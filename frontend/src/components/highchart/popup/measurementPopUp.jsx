@@ -1,7 +1,15 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { Grid } from "@mui/material";
+import {
+  Grid,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemIcon,
+  Checkbox,
+  ListItemText,
+} from "@mui/material";
 
 import {
   MyTextField,
@@ -139,6 +147,32 @@ const MeasurementPopUp = (props) => {
   const tags = useSelector((state) => state.overviewDialog.measuremenetData);
   const UOMList = useSelector((state) => state.tapsOverview.UOMList);
   const uom = useSelector((state) => state.overviewDialog.highchartProps.UOM);
+  const Name = useSelector(
+    (state) => state.overviewDialog.highchartProps["Show Name"]
+  );
+  const Measurements = useSelector(
+    (state) => state.overviewDialog.highchartProps["Show Measurement"]
+  );
+  const Unit = useSelector(
+    (state) => state.overviewDialog.highchartProps["Show Unit"]
+  );
+  const Timestamp = useSelector(
+    (state) => state.overviewDialog.highchartProps["Show Timestamp"]
+  );
+  const TagName = useSelector(
+    (state) => state.overviewDialog.highchartProps["Show Tag Name"]
+  );
+  const EnableExport = useSelector(
+    (state) => state.overviewDialog.highchartProps["Show Enable Export"]
+  );
+  const values = {
+    Name: Name,
+    Measurement: Measurements,
+    Unit: Unit,
+    Timestamp: Timestamp,
+    "Tag Name": TagName,
+    "Enable Export": EnableExport,
+  };
   const handleChangeFunc = (key, val) => {
     dispatch(changeValeus(key, val));
   };
@@ -303,7 +337,46 @@ const MeasurementPopUp = (props) => {
               </Grid>
             </Grid>
           </Grid>
-          <Grid item xs={12} sm={6} md={3}>
+          <Grid item xs={12}>
+            <List sx={{ width: "100%", maxWidth: 360, bgcolor: "inherit" }}>
+              {[
+                "Name",
+                "Measurement",
+                "Unit",
+                "Timestamp",
+                "Tag Name",
+                "Enable Export",
+              ].map((value) => {
+                const labelId = `checkbox-list-label-${value}`;
+
+                return (
+                  <ListItem key={value} disablePadding>
+                    <ListItemButton
+                      role={undefined}
+                      onClick={() => {
+                        handleChangeFunc(`Show ${value}`, !values[value]);
+                      }}
+                      dense
+                    >
+                      <ListItemIcon>
+                        <Checkbox
+                          edge="start"
+                          checked={
+                            value === "Name" ? !values[value] : values[value]
+                          }
+                          tabIndex={-1}
+                          disableRipple
+                          inputProps={{ "aria-labelledby": labelId }}
+                        />
+                      </ListItemIcon>
+                      <ListItemText id={labelId} primary={`${value}`} />
+                    </ListItemButton>
+                  </ListItem>
+                );
+              })}
+            </List>
+          </Grid>
+          {/* <Grid item xs={12} sm={6} md={3}>
             <Grid container rowGap={0.5}>
               <Grid item xs={12}>
                 Name
@@ -317,82 +390,7 @@ const MeasurementPopUp = (props) => {
                 />
               </Grid>
             </Grid>
-          </Grid>
-          <Grid item xs={12} sm={6} md={3}>
-            <Grid container rowGap={0.5}>
-              <Grid item xs={12}>
-                Measurement
-              </Grid>
-              <Grid item xs={12}>
-                <MyCheckbox
-                  defaultValue={highchartProps["Measurement"]}
-                  handleChangeFunc={(value) => {
-                    handleChangeFunc("Measurement", value);
-                  }}
-                />
-              </Grid>
-            </Grid>
-          </Grid>
-          <Grid item xs={12} sm={6} md={3}>
-            <Grid container rowGap={0.5}>
-              <Grid item xs={12}>
-                Unit
-              </Grid>
-              <Grid item xs={12}>
-                <MyCheckbox
-                  defaultValue={highchartProps["Unit"]}
-                  handleChangeFunc={(value) => {
-                    handleChangeFunc("Unit", value);
-                  }}
-                />
-              </Grid>
-            </Grid>
-          </Grid>
-          <Grid item xs={12} sm={6} md={3}>
-            <Grid container rowGap={0.5}>
-              <Grid item xs={12}>
-                Timestamp
-              </Grid>
-              <Grid item xs={12}>
-                <MyCheckbox
-                  defaultValue={highchartProps["Timestamp"]}
-                  handleChangeFunc={(value) => {
-                    handleChangeFunc("Timestamp", value);
-                  }}
-                />
-              </Grid>
-            </Grid>
-          </Grid>
-          <Grid item xs={12} sm={6} md={3}>
-            <Grid container rowGap={0.5}>
-              <Grid item xs={12}>
-                Tag Name
-              </Grid>
-              <Grid item xs={12}>
-                <MyCheckbox
-                  defaultValue={highchartProps["Tag Name"]}
-                  handleChangeFunc={(value) => {
-                    handleChangeFunc("Tag Name", value);
-                  }}
-                />
-              </Grid>
-            </Grid>
-          </Grid>
-          <Grid item xs={12} sm={6} md={3}>
-            <Grid container rowGap={0.5}>
-              <Grid item xs={12}>
-                Enable Export
-              </Grid>
-              <Grid item xs={12}>
-                <MyCheckbox
-                  defaultValue={highchartProps["Enable Export"]}
-                  handleChangeFunc={(value) => {
-                    handleChangeFunc("Enable Export", value);
-                  }}
-                />
-              </Grid>
-            </Grid>
-          </Grid>
+          </Grid> */}
         </Grid>
       </Grid>
       <Grid item xs={12}>
