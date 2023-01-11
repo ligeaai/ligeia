@@ -221,8 +221,7 @@ const Inputs = (props) => {
       sx={{
         width: {
           xs: 150,
-          sm: 200,
-          md: 500,
+          md: 375,
         },
         height: 230,
         overflow: "auto",
@@ -316,7 +315,7 @@ const Linechart = (props) => {
     dispatch(changeValeus(key, val));
   };
   return (
-    <Grid container rowGap={2}>
+    <Grid container rowGap={2} sx={{ div: { fontSize: "14px" } }}>
       <Grid item xs={12}>
         <Grid container columnSpacing={2}>
           <Grid item xs={12} sm={6} md={3}>

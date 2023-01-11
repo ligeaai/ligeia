@@ -174,8 +174,13 @@ const MeasurementPopUp = (props) => {
     dispatch(changeValeus(key, val));
   };
   return (
-    <Grid container rowGap={2} columnSpacing={2}>
-      <Grid item xs={9}>
+    <Grid
+      container
+      rowGap={2}
+      columnSpacing={2}
+      sx={{ div: { fontSize: "14px" } }}
+    >
+      <Grid item xs={12} sm={9}>
         <Grid container rowGap={2}>
           <Grid item xs={12}>
             <Grid container columnSpacing={2} rowGap={2}>
@@ -343,7 +348,7 @@ const MeasurementPopUp = (props) => {
         </Grid>
       </Grid>
 
-      <Grid item xs={3}>
+      <Grid item xs={12} sm={3}>
         <Grid item xs={12}>
           <List sx={{ width: "100%", bgcolor: "inherit" }}>
             {["Name", "Measurement", "Unit", "Timestamp", "Tag Name"].map(

@@ -11,7 +11,21 @@ var W3CWebSocket = require("websocket").w3cwebsocket;
 export const Angular = ({ highchartProps, width, height }) => {
   const [categories, setCategories] = React.useState("");
   const uom = useSelector((state) => state.tapsOverview.UOMList);
+  const measuremenetData = useSelector(
+    (state) => state.overviewDialog.measuremenetData
+  );
   const [value, setValue] = React.useState("");
+  let i = 0;
+  let plotBands = [];
+  while (i < parseInt(highchartProps.Stops)) {
+    plotBands.push({
+      from: parseInt(highchartProps[`[${i}] Low`]),
+      to: parseInt(highchartProps[`[${i}] High`]),
+      color: highchartProps[`[${i}] Color`],
+      thickness: 20,
+    });
+    i++;
+  }
   React.useEffect(() => {
     client = new W3CWebSocket(`${wsBaseUrl}/ws/tags/`);
     client.onerror = function () {
@@ -51,7 +65,12 @@ export const Angular = ({ highchartProps, width, height }) => {
       enabled: false,
     },
     title: {
-      text: "",
+      text:
+        measuremenetData && highchartProps["Show Tag Name"]
+          ? measuremenetData.filter(
+              (e) => e.TAG_ID === highchartProps.Measurement
+            )[0].NAME
+          : "",
     },
     pane: {
       startAngle: -150,
@@ -60,7 +79,9 @@ export const Angular = ({ highchartProps, width, height }) => {
       center: ["50%", "50%"],
       size: "80%",
     },
-
+    exporting: {
+      enabled: highchartProps["Show Enable Export"],
+    },
     // the value axis
     yAxis: {
       min: parseInt(highchartProps.Minimum),
@@ -78,38 +99,7 @@ export const Angular = ({ highchartProps, width, height }) => {
           fontSize: "14px",
         },
       },
-      plotBands: [
-        {
-          from: parseInt(highchartProps["[0] Low"]),
-          to: parseInt(highchartProps["[0] High"]),
-          color: highchartProps["[0] Color"], // green
-          thickness: 20,
-        },
-        {
-          from: parseInt(highchartProps["[1] Low"]),
-          to: parseInt(highchartProps["[1] High"]),
-          color: highchartProps["[1] Color"], // yellow
-          thickness: 20,
-        },
-        {
-          from: highchartProps["[2] Low"],
-          to: highchartProps["[2] High"],
-          color: highchartProps["[2] Color"], // red
-          thickness: 20,
-        },
-        {
-          from: highchartProps["[3] Low"],
-          to: highchartProps["[3] High"],
-          color: highchartProps["[3] Color"], // red
-          thickness: 20,
-        },
-        {
-          from: highchartProps["[4] Low"],
-          to: highchartProps["[4] High"],
-          color: highchartProps["[4] Color"], // red
-          thickness: 20,
-        },
-      ],
+      plotBands: [...plotBands],
     },
 
     series: [
@@ -130,10 +120,13 @@ export const Angular = ({ highchartProps, width, height }) => {
           }`,
         },
         dataLabels: {
-          format: ` ${
-            highchartProps.UOM ? uom[highchartProps.UOM].CODE_TEXT : ""
+          format: `${highchartProps["Show Measurement"] ? "{y}" : ""} ${
+            highchartProps.UOM && highchartProps["Show Unit"]
+              ? uom[highchartProps.UOM].CODE_TEXT
+              : ""
           }`,
           borderWidth: 0,
+          distance: -50,
           color:
             (Highcharts.defaultOptions.title &&
               Highcharts.defaultOptions.title.style &&

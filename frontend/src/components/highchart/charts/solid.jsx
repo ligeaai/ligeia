@@ -15,6 +15,18 @@ export const Solid = ({ highchartProps, width, height }) => {
   const [categories, setCategories] = React.useState("");
   const uom = useSelector((state) => state.tapsOverview.UOMList);
   const [value, setValue] = React.useState("");
+  const measuremenetData = useSelector(
+    (state) => state.overviewDialog.measuremenetData
+  );
+  let i = 0;
+  let stops = [];
+  while (i < parseInt(highchartProps.Stops)) {
+    stops.push([
+      highchartProps[`[${i}] Stops`],
+      highchartProps[`[${i}] Color`],
+    ]);
+    i++;
+  }
   React.useEffect(() => {
     client = new W3CWebSocket(`${wsBaseUrl}/ws/tags/`);
     client.onerror = function () {
@@ -50,7 +62,15 @@ export const Solid = ({ highchartProps, width, height }) => {
       enabled: false,
     },
     title: {
-      text: "",
+      text:
+        measuremenetData && highchartProps["Show Tag Name"]
+          ? measuremenetData.filter(
+              (e) => e.TAG_ID === highchartProps.Measurement
+            )[0].NAME
+          : "",
+    },
+    exporting: {
+      enabled: highchartProps["Show Enable Export"],
     },
     pane: {
       center: ["50%", "85%"],
@@ -73,12 +93,7 @@ export const Solid = ({ highchartProps, width, height }) => {
     yAxis: {
       min: parseInt(highchartProps.Minimum),
       max: parseInt(highchartProps.Maximum),
-      stops: [
-        [highchartProps["[0] Stops"], highchartProps["[0] Color"]],
-        [highchartProps["[1] Stops"], highchartProps["[1] Color"]],
-        [highchartProps["[2] Stops"], highchartProps["[2] Color"]],
-        [highchartProps["[3] Stops"], highchartProps["[3] Color"]],
-      ],
+      stops: [...stops],
       lineWidth: 0,
       tickWidth: 0,
       minorTickInterval: null,
@@ -126,12 +141,11 @@ export const Solid = ({ highchartProps, width, height }) => {
           }`,
         },
         dataLabels: {
-          format:
-            '<div style="text-align:center">' +
-            `<span style="font-size:14px">{y} ${
-              highchartProps.UOM ? uom[highchartProps.UOM].CODE_TEXT : ""
-            }</span><br/> ` +
-            "</div>",
+          format: `${highchartProps["Show Measurement"] ? "{y}" : ""} ${
+            highchartProps.UOM && highchartProps["Show Unit"]
+              ? uom[highchartProps.UOM].CODE_TEXT
+              : ""
+          }`,
         },
       },
     ],
