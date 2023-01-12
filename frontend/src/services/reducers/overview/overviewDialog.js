@@ -20,7 +20,12 @@ const initialState = {
         "Widget Refresh (seconds)": "",
         "Decimal Places": "",
         "Stops": "",
-        "Type": "Gauge(Angular) [Highchart]"
+        "Type": "Gauge(Angular) [Highchart]",
+        "Show Unit": false,
+        "Show Name": true,
+        "Show Measurement": false,
+        "Show Enable Export": false,
+        "Show Tag Name": false
     },
 
     highchartProps: {
@@ -31,7 +36,12 @@ const initialState = {
         "Widget Refresh (seconds)": "",
         "Decimal Places": "",
         "Stops": "",
-        "Type": "Gauge(Angular) [Highchart]"
+        "Type": "Gauge(Angular) [Highchart]",
+        "Show Unit": false,
+        "Show Name": true,
+        "Show Measurement": false,
+        "Show Enable Export": false,
+        "Show Tag Name": false
     },
     measuremenetData: []
 
