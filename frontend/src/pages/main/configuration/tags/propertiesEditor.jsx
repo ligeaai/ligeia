@@ -58,7 +58,7 @@ const PropertiesEditor = () => {
   }, [selectedIndex]);
   React.useEffect(() => {
     dispatch(setSaveFunctonConfirmation(saveTag));
-    dispatch(setTitleConfirmation("Are you sure you want to save this ? "));
+    dispatch(setTitleConfirmation("You want to save this ? "));
     dispatch(setBodyConfirmation(`${name ? name : "new"}`));
     if (selectedIndex !== -2) {
       dispatch(_fillTagData(tagId));
