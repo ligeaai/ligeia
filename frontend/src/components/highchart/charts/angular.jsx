@@ -82,6 +82,13 @@ export const Angular = ({ highchartProps, width, height }) => {
     exporting: {
       enabled: highchartProps["Show Enable Export"],
     },
+    navigation: {
+      buttonOptions: {
+        verticalAlign: "top",
+        y: -10,
+        x: -1,
+      },
+    },
     // the value axis
     yAxis: {
       min: parseInt(highchartProps.Minimum),

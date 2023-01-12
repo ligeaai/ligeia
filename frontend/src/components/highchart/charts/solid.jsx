@@ -72,6 +72,13 @@ export const Solid = ({ highchartProps, width, height }) => {
     exporting: {
       enabled: highchartProps["Show Enable Export"],
     },
+    navigation: {
+      buttonOptions: {
+        verticalAlign: "top",
+        y: -10,
+        x: -1,
+      },
+    },
     pane: {
       center: ["50%", "85%"],
       size: "140%",

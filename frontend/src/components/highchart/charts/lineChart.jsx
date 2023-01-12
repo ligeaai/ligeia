@@ -168,6 +168,13 @@ export const LineChart = ({
     tooltip: {
       borderWidth: 0,
     },
+    navigation: {
+      buttonOptions: {
+        verticalAlign: "top",
+        y: -10,
+        x: -1,
+      },
+    },
     legend: {
       enabled: highchartProps["Enable Graph Legend"],
       layout: "vertical",
