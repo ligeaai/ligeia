@@ -65,13 +65,9 @@ export const Angular = ({ highchartProps, width, height }) => {
       enabled: false,
     },
     title: {
-      text:
-        measuremenetData && highchartProps["Show Tag Name"]
-          ? measuremenetData.filter(
-              (e) => e.TAG_ID === highchartProps.Measurement
-            )[0].NAME
-          : "",
+      text: "",
     },
+
     pane: {
       startAngle: -150,
       endAngle: 150,
@@ -106,6 +102,15 @@ export const Angular = ({ highchartProps, width, height }) => {
           fontSize: "14px",
         },
       },
+      title: {
+        text:
+          measuremenetData && highchartProps["Show Tag Name"]
+            ? measuremenetData.filter(
+                (e) => e.TAG_ID === highchartProps.Measurement
+              )[0].NAME
+            : "",
+        y: 10,
+      },
       plotBands: [...plotBands],
     },
 
@@ -133,7 +138,7 @@ export const Angular = ({ highchartProps, width, height }) => {
               : ""
           }`,
           borderWidth: 0,
-          distance: -50,
+          y: (height / 100) * 15,
           color:
             (Highcharts.defaultOptions.title &&
               Highcharts.defaultOptions.title.style &&
