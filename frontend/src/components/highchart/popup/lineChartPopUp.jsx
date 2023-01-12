@@ -453,9 +453,9 @@ const Linechart = (props) => {
               </Grid>
               <Grid item xs={12}>
                 <MyCheckBox
-                  defaultValue={highchartProps["Enable Export"]}
+                  defaultValue={highchartProps["Show Enable Export"]}
                   handleChangeFunc={(value) => {
-                    handleChangeFunc("Enable Export", value);
+                    handleChangeFunc("Show Enable Export", value);
                   }}
                 />
               </Grid>

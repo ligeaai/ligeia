@@ -42,7 +42,7 @@ export const LineChart = ({
     series.push({
       name: e.NAME,
       data: data,
-      color: !highchartProps["Enable Custom Colors"]
+      color: highchartProps["Enable Custom Colors"]
         ? ""
         : highchartProps[`[${e.NAME}] Color`],
     });
@@ -167,6 +167,9 @@ export const LineChart = ({
     },
     tooltip: {
       borderWidth: 0,
+    },
+    exporting: {
+      enabled: highchartProps["Show Enable Export"],
     },
     navigation: {
       buttonOptions: {
