@@ -1,5 +1,5 @@
 import React from "react";
-import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
 
 import { makeStyles } from "@mui/styles";
 
@@ -10,6 +10,7 @@ import {
   MyCheckBox,
   MyNumberTextField,
   MyMultilineTextField,
+  LoadingComponent,
 } from "../../../../components";
 import { useDispatch, useSelector } from "react-redux";
 import { instance, config } from "../../../../services/baseApi";
@@ -157,8 +158,8 @@ const TextFields = (props) => {
     dispatch(addSaveTagValue(row.PROPERTY_NAME, newdate));
   };
 
-  const defaultValue = useSelector(
-    (state) => state.tags.saveValues[row.PROPERTY_NAME]
+  const defaultValue = useSelector((state) =>
+    state.tags.saveValues ? state.tags.saveValues[row.PROPERTY_NAME] : "loading"
   );
   var myDefaultValue = defaultValue ? defaultValue : undefined;
   const errFunc = () => {
@@ -167,6 +168,13 @@ const TextFields = (props) => {
       (row.MANDATORY === "False" ? false : true)
     );
   };
+  if (myDefaultValue === "loading") {
+    return (
+      <Box sx={{ width: "50px", height: "20px" }}>
+        <LoadingComponent></LoadingComponent>
+      </Box>
+    );
+  }
   if (row.PROPERTY_TYPE === "CODE") {
     if (row.CODE) {
       var values = [{ ROW_ID: "", CODE_TEXT: "" }];
