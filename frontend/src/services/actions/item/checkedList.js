@@ -116,7 +116,7 @@ export const cardinalityCheck = (selectItems, selectedItemFromType) => async (di
         return true
 
     //------ in
-    if (isOut && mySelectItem.TO_CARDINALITY === "1" && mySelectItem.FROM_CARDINALITY === "*") {
+    if (isOut && mySelectItem.TO_CARDINALITY === "*" && mySelectItem.FROM_CARDINALITY === "1") {
         let returnVal = true
         if (parseInt(checkedItemLength) > 1) {
             return false
@@ -131,7 +131,7 @@ export const cardinalityCheck = (selectItems, selectedItemFromType) => async (di
         })
         return returnVal
     }
-    if (isOut && mySelectItem.TO_CARDINALITY === "*" && mySelectItem.FROM_CARDINALITY === "1") {
+    if (isOut && mySelectItem.TO_CARDINALITY === "1" && mySelectItem.FROM_CARDINALITY === "*") {
         try {
             if (parseInt(checkedItemLength) > 1) {
                 return false

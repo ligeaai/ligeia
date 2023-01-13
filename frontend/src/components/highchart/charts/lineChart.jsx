@@ -32,20 +32,23 @@ export const LineChart = ({
   const [data, setData] = React.useState([]);
   const [allData, setAllData] = React.useState([]);
   highchartProps.Inputs.map((e) => {
-    yAxisTitles.push({
-      title: {
-        text: UOMList[e.UOM].CODE_TEXT,
-      },
-      max: parseInt(e.NORMAL_MAXIMUM),
-      min: parseInt(e.NORMAL_MINIMUM),
-    });
-    series.push({
-      name: e.NAME,
-      data: data,
-      color: highchartProps["Enable Custom Colors"]
-        ? ""
-        : highchartProps[`[${e.NAME}] Color`],
-    });
+    if (!highchartProps[`[${e.NAME}] Disable Data Grouping`]) {
+      yAxisTitles.push({
+        title: {
+          text: UOMList[e.UOM].CODE_TEXT,
+        },
+        max: parseInt(e.NORMAL_MAXIMUM),
+        min: parseInt(e.NORMAL_MINIMUM),
+        opposite: false,
+      });
+      series.push({
+        name: e.NAME,
+        data: data,
+        color: highchartProps["Enable Custom Colors"]
+          ? highchartProps[`[${e.NAME}] Color`]
+          : "",
+      });
+    }
   });
 
   React.useEffect(() => {
