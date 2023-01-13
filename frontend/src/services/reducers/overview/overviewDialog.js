@@ -25,7 +25,11 @@ const initialState = {
         "Show Name": true,
         "Show Measurement": false,
         "Show Enable Export": false,
-        "Show Tag Name": false
+        "Show Tag Name": false,
+        "Show Timestamp": false,
+        "Value Font Size": "",
+        "Unit Font Size": "",
+        "Time Stamp Font Size": "",
     },
 
     highchartProps: {
@@ -41,7 +45,11 @@ const initialState = {
         "Show Name": true,
         "Show Measurement": false,
         "Show Enable Export": false,
-        "Show Tag Name": false
+        "Show Tag Name": false,
+        "Show Timestamp": false,
+        "Value Font Size": "",
+        "Unit Font Size": "",
+        "Time Stamp Font Size": "",
     },
     measuremenetData: []
 

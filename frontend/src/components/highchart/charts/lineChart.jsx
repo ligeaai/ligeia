@@ -70,6 +70,7 @@ export const LineChart = ({
     };
 
     client.onmessage = function (e) {
+      console.log(e);
       function sendNumber() {
         if (client.readyState === client.OPEN) {
           if (typeof e.data === "string") {

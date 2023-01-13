@@ -41,7 +41,7 @@ export const Angular = ({ highchartProps, width, height }) => {
           if (typeof e.data === "string") {
             let data = JSON.parse(e.data);
             if (data.message.value) {
-              setCategories((prev) => data.message.createdtime);
+              setCategories((prev) => data.message.timestamp);
               setValue((prev) => data.message.value);
             }
             //setTimeout(sendNumber, 5000);
@@ -62,7 +62,17 @@ export const Angular = ({ highchartProps, width, height }) => {
       height: "80%",
     },
     credits: {
-      enabled: false,
+      enabled: highchartProps["Show Timestamp"],
+      position: {
+        align: "center",
+      },
+      style: {
+        fontSize: highchartProps["Time Stamp Font Size"]
+          ? highchartProps["Time Stamp Font Size"]
+          : 12,
+      },
+      text: categories,
+      href: null,
     },
     title: {
       text: "",
@@ -132,11 +142,21 @@ export const Angular = ({ highchartProps, width, height }) => {
           }`,
         },
         dataLabels: {
-          format: `${highchartProps["Show Measurement"] ? "{y}" : ""} ${
+          format: `<div style="font-size: ${
+            highchartProps["Value Font Size"]
+              ? highchartProps["Value Font Size"]
+              : "9"
+          }px">${
+            highchartProps["Show Measurement"] ? "{y}" : ""
+          }</div> <div style="font-size: ${
+            highchartProps["Unit Font Size"]
+              ? highchartProps["Unit Font Size"]
+              : "9"
+          }px">${
             highchartProps.UOM && highchartProps["Show Unit"]
               ? uom[highchartProps.UOM].CODE_TEXT
               : ""
-          }`,
+          } </div>`,
           borderWidth: 0,
           y: (height / 100) * 15,
           color:
@@ -145,7 +165,6 @@ export const Angular = ({ highchartProps, width, height }) => {
               Highcharts.defaultOptions.title.style.color) ||
             "#333333",
           style: {
-            fontSize: "12px",
             zIndex: 67,
           },
         },

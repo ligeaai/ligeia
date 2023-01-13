@@ -133,6 +133,8 @@ const SolidPopUp = (props) => {
   const dispatch = useDispatch();
   const { highchartProps, handleClose } = props;
   const tags = useSelector((state) => state.overviewDialog.measuremenetData);
+  const UOMList = useSelector((state) => state.tapsOverview.UOMList);
+  const uom = useSelector((state) => state.overviewDialog.highchartProps.UOM);
   const Name = useSelector(
     (state) => state.overviewDialog.highchartProps["Show Name"]
   );
@@ -146,6 +148,9 @@ const SolidPopUp = (props) => {
   const TagName = useSelector(
     (state) => state.overviewDialog.highchartProps["Show Tag Name"]
   );
+  const TimeStamp = useSelector(
+    (state) => state.overviewDialog.highchartProps["Show Timestamp"]
+  );
   const EnableExport = useSelector(
     (state) => state.overviewDialog.highchartProps["Show Enable Export"]
   );
@@ -155,13 +160,19 @@ const SolidPopUp = (props) => {
     Measurement: Measurements,
     Unit: Unit,
     "Tag Name": TagName,
+    Timestamp: TimeStamp,
     "Enable Export": EnableExport,
   };
   const handleChangeFunc = (key, val) => {
     dispatch(changeValeus(key, val));
   };
   return (
-    <Grid container columnSpacing={2} sx={{ div: { fontSize: "14px" } }}>
+    <Grid
+      container
+      columnSpacing={2}
+      rowGap={2}
+      sx={{ div: { fontSize: "14px" } }}
+    >
       <Grid item xs={12} sm={9}>
         <Grid container rowGap={2}>
           <Grid item xs={12}>
@@ -250,19 +261,62 @@ const SolidPopUp = (props) => {
               <Grid item xs={12} sm={6}>
                 <Grid container rowGap={0.5}>
                   <Grid item xs={12}>
-                    Mesurement Max Age
+                    Unit of Measurement
+                  </Grid>
+                  <Grid item xs={12}>
+                    <Select
+                      values={uom ? [UOMList[uom].CODE_TEXT] : []}
+                      defaultValue={uom ? UOMList[uom].CODE_TEXT : ""}
+                      disabled={true}
+                    />
+                  </Grid>
+                </Grid>
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <Grid container rowGap={0.5}>
+                  <Grid item xs={12}>
+                    Value Font Size
                   </Grid>
                   <Grid item xs={12}>
                     <MyNumberTextField
-                      defaultValue={highchartProps["Mesurement Max Age"]}
+                      defaultValue={highchartProps["Value Font Size"]}
                       handleChangeFunc={(value) => {
-                        handleChangeFunc("Mesurement Max Age", value);
+                        handleChangeFunc("Value Font Size", value);
                       }}
                     />
                   </Grid>
                 </Grid>
               </Grid>
-
+              <Grid item xs={12} sm={6}>
+                <Grid container rowGap={0.5}>
+                  <Grid item xs={12}>
+                    Unit Font Size
+                  </Grid>
+                  <Grid item xs={12}>
+                    <MyNumberTextField
+                      defaultValue={highchartProps["Unit Font Size"]}
+                      handleChangeFunc={(value) => {
+                        handleChangeFunc("Unit Font Size", value);
+                      }}
+                    />
+                  </Grid>
+                </Grid>
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <Grid container rowGap={0.5}>
+                  <Grid item xs={12}>
+                    Time Stamp Font Size
+                  </Grid>
+                  <Grid item xs={12}>
+                    <MyNumberTextField
+                      defaultValue={highchartProps["Time Stamp Font Size"]}
+                      handleChangeFunc={(value) => {
+                        handleChangeFunc("Time Stamp Font Size", value);
+                      }}
+                    />
+                  </Grid>
+                </Grid>
+              </Grid>
               <Grid item xs={12} sm={6}>
                 <Grid container rowGap={0.5}>
                   <Grid item xs={12}>
@@ -286,35 +340,40 @@ const SolidPopUp = (props) => {
         <Grid container>
           <Grid item xs={12}>
             <List sx={{ width: "100%", bgcolor: "inherit" }}>
-              {["Name", "Measurement", "Unit", "Enable Export", "Tag Name"].map(
-                (value) => {
-                  const labelId = `checkbox-list-label-${value}`;
-                  return (
-                    <ListItem key={value} disablePadding>
-                      <ListItemButton
-                        role={undefined}
-                        onClick={() => {
-                          handleChangeFunc(`Show ${value}`, !values[value]);
-                        }}
-                        dense
-                      >
-                        <ListItemIcon>
-                          <Checkbox
-                            edge="start"
-                            checked={
-                              value === "Name" ? !values[value] : values[value]
-                            }
-                            tabIndex={-1}
-                            disableRipple
-                            inputProps={{ "aria-labelledby": labelId }}
-                          />
-                        </ListItemIcon>
-                        <ListItemText id={labelId} primary={`${value}`} />
-                      </ListItemButton>
-                    </ListItem>
-                  );
-                }
-              )}
+              {[
+                "Name",
+                "Measurement",
+                "Unit",
+                "Enable Export",
+                "Timestamp",
+                "Tag Name",
+              ].map((value) => {
+                const labelId = `checkbox-list-label-${value}`;
+                return (
+                  <ListItem key={value} disablePadding>
+                    <ListItemButton
+                      role={undefined}
+                      onClick={() => {
+                        handleChangeFunc(`Show ${value}`, !values[value]);
+                      }}
+                      dense
+                    >
+                      <ListItemIcon>
+                        <Checkbox
+                          edge="start"
+                          checked={
+                            value === "Name" ? !values[value] : values[value]
+                          }
+                          tabIndex={-1}
+                          disableRipple
+                          inputProps={{ "aria-labelledby": labelId }}
+                        />
+                      </ListItemIcon>
+                      <ListItemText id={labelId} primary={`${value}`} />
+                    </ListItemButton>
+                  </ListItem>
+                );
+              })}
             </List>
           </Grid>
         </Grid>

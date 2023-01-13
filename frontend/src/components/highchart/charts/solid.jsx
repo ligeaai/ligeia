@@ -59,7 +59,18 @@ export const Solid = ({ highchartProps, width, height }) => {
       height: "80%",
     },
     credits: {
-      enabled: false,
+      enabled: highchartProps["Show Timestamp"],
+      position: {
+        align: "center",
+        bottom: -5,
+      },
+      style: {
+        fontSize: highchartProps["Time Stamp Font Size"]
+          ? highchartProps["Time Stamp Font Size"]
+          : 12,
+      },
+      text: categories,
+      href: null,
     },
     title: {
       text:
@@ -148,11 +159,21 @@ export const Solid = ({ highchartProps, width, height }) => {
           }`,
         },
         dataLabels: {
-          format: `${highchartProps["Show Measurement"] ? "{y}" : ""} ${
+          format: `<div style="font-size: ${
+            highchartProps["Value Font Size"]
+              ? highchartProps["Value Font Size"]
+              : "9"
+          }px">${
+            highchartProps["Show Measurement"] ? "{y}" : ""
+          }</div> <div style="font-size: ${
+            highchartProps["Unit Font Size"]
+              ? highchartProps["Unit Font Size"]
+              : "9"
+          }px">${
             highchartProps.UOM && highchartProps["Show Unit"]
               ? uom[highchartProps.UOM].CODE_TEXT
               : ""
-          }`,
+          } </div>`,
         },
       },
     ],
