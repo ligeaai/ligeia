@@ -207,7 +207,7 @@ export const cardinalityCheck = (selectItems, selectedItemFromType) => async (di
         return returnVal
     }
     //---------out
-    if (!isOut && mySelectItem.TO_CARDINALITY === "1" && mySelectItem.FROM_CARDINALITY === "*") {
+    if (!isOut && mySelectItem.TO_CARDINALITY === "*" && mySelectItem.FROM_CARDINALITY === "1") {
         var returnVal = true
         await Promise.all(
             Object.keys(checkedItem).map(async e => {
@@ -229,7 +229,7 @@ export const cardinalityCheck = (selectItems, selectedItemFromType) => async (di
         return returnVal
 
     }
-    if (!isOut && mySelectItem.TO_CARDINALITY === "*" && mySelectItem.FROM_CARDINALITY === "1") {
+    if (!isOut && mySelectItem.TO_CARDINALITY === "1" && mySelectItem.FROM_CARDINALITY === "*") {
         let returnVal = true
         if (parseInt(checkedItemLength) > 1) {
             return false
