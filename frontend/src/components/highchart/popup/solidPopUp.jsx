@@ -144,7 +144,6 @@ const SolidPopUp = (props) => {
   const Unit = useSelector(
     (state) => state.overviewDialog.highchartProps["Show Unit"]
   );
-
   const TagName = useSelector(
     (state) => state.overviewDialog.highchartProps["Show Tag Name"]
   );
@@ -297,6 +296,21 @@ const SolidPopUp = (props) => {
                       defaultValue={highchartProps["Unit Font Size"]}
                       handleChangeFunc={(value) => {
                         handleChangeFunc("Unit Font Size", value);
+                      }}
+                    />
+                  </Grid>
+                </Grid>
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <Grid container rowGap={0.5}>
+                  <Grid item xs={12}>
+                    Tag Name Font Size
+                  </Grid>
+                  <Grid item xs={12}>
+                    <MyNumberTextField
+                      defaultValue={highchartProps["Tag Name Font Size"]}
+                      handleChangeFunc={(value) => {
+                        handleChangeFunc("Tag Name Font Size", value);
                       }}
                     />
                   </Grid>

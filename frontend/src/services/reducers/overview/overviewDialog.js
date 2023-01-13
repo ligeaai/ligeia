@@ -30,6 +30,7 @@ const initialState = {
         "Value Font Size": "",
         "Unit Font Size": "",
         "Time Stamp Font Size": "",
+        "Tag Name Font Size": "",
     },
 
     highchartProps: {
@@ -50,6 +51,7 @@ const initialState = {
         "Value Font Size": "",
         "Unit Font Size": "",
         "Time Stamp Font Size": "",
+        "Tag Name Font Size": "",
     },
     measuremenetData: []
 

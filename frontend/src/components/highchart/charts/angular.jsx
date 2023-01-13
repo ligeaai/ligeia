@@ -4,6 +4,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import exporting from "highcharts/modules/exporting";
 import { wsBaseUrl } from "../../../services/baseApi";
+import { dateFormatDDMMYYHHMMSS } from "../../../services/utils/dateFormatter";
 exporting(Highcharts);
 var client;
 var W3CWebSocket = require("websocket").w3cwebsocket;
@@ -71,11 +72,21 @@ export const Angular = ({ highchartProps, width, height }) => {
           ? highchartProps["Time Stamp Font Size"]
           : 12,
       },
-      text: categories,
+      text: dateFormatDDMMYYHHMMSS(new Date(categories)),
       href: null,
     },
     title: {
-      text: "",
+      text:
+        measuremenetData && highchartProps["Show Tag Name"]
+          ? measuremenetData.filter(
+              (e) => e.TAG_ID === highchartProps.Measurement
+            )[0].NAME
+          : "",
+      style: {
+        fontSize: highchartProps["Tag Name Font Size"]
+          ? highchartProps["Tag Name Font Size"]
+          : "12px",
+      },
     },
 
     pane: {
@@ -84,6 +95,7 @@ export const Angular = ({ highchartProps, width, height }) => {
       background: null,
       center: ["50%", "50%"],
       size: "80%",
+      zIndex: 0,
     },
     exporting: {
       enabled: highchartProps["Show Enable Export"],
@@ -112,15 +124,7 @@ export const Angular = ({ highchartProps, width, height }) => {
           fontSize: "14px",
         },
       },
-      title: {
-        text:
-          measuremenetData && highchartProps["Show Tag Name"]
-            ? measuremenetData.filter(
-                (e) => e.TAG_ID === highchartProps.Measurement
-              )[0].NAME
-            : "",
-        y: 10,
-      },
+
       plotBands: [...plotBands],
     },
 
@@ -152,13 +156,14 @@ export const Angular = ({ highchartProps, width, height }) => {
             highchartProps["Unit Font Size"]
               ? highchartProps["Unit Font Size"]
               : "9"
-          }px">${
+          }px">( ${
             highchartProps.UOM && highchartProps["Show Unit"]
               ? uom[highchartProps.UOM].CODE_TEXT
               : ""
-          } </div>`,
+          } ) </div>`,
           borderWidth: 0,
           y: (height / 100) * 15,
+          zIndex: 2231,
           color:
             (Highcharts.defaultOptions.title &&
               Highcharts.defaultOptions.title.style &&

@@ -66,11 +66,12 @@ export const LineChart = ({
       console.log("Connection Error");
     };
     client.onopen = function () {
-      console.log("WebSocket Client Connected");
+      //client.send(JSON.stringify({ text: "Tag 1" }));
     };
 
     client.onmessage = function (e) {
       console.log(e);
+
       function sendNumber() {
         if (client.readyState === client.OPEN) {
           if (typeof e.data === "string") {
@@ -184,7 +185,7 @@ export const LineChart = ({
     },
     legend: {
       enabled: highchartProps["Enable Graph Legend"],
-      layout: "vertical",
+      layout: "horizontal",
       itemStyle: {
         fontSize: highchartProps["Graph Legend Font Size (em)"]
           ? `${highchartProps["Graph Legend Font Size (em)"]}px`

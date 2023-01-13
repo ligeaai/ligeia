@@ -6,6 +6,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import exporting from "highcharts/modules/exporting";
 import { wsBaseUrl } from "../../../services/baseApi";
+import { dateFormatDDMMYYHHMMSS } from "../../../services/utils/dateFormatter";
 exporting(Highcharts);
 highchartsMore(Highcharts);
 solidGauge(Highcharts);
@@ -69,7 +70,7 @@ export const Solid = ({ highchartProps, width, height }) => {
           ? highchartProps["Time Stamp Font Size"]
           : 12,
       },
-      text: categories,
+      text: dateFormatDDMMYYHHMMSS(new Date(categories)),
       href: null,
     },
     title: {
@@ -79,6 +80,11 @@ export const Solid = ({ highchartProps, width, height }) => {
               (e) => e.TAG_ID === highchartProps.Measurement
             )[0].NAME
           : "",
+      style: {
+        fontSize: highchartProps["Tag Name Font Size"]
+          ? highchartProps["Tag Name Font Size"]
+          : "12px",
+      },
     },
     exporting: {
       enabled: highchartProps["Show Enable Export"],
@@ -169,11 +175,11 @@ export const Solid = ({ highchartProps, width, height }) => {
             highchartProps["Unit Font Size"]
               ? highchartProps["Unit Font Size"]
               : "9"
-          }px">${
+          }px">( ${
             highchartProps.UOM && highchartProps["Show Unit"]
               ? uom[highchartProps.UOM].CODE_TEXT
               : ""
-          } </div>`,
+          } )</div>`,
         },
       },
     ],

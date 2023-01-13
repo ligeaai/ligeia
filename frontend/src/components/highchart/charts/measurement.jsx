@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import { wsBaseUrl } from "../../../services/baseApi";
-import { dateFormatDDMMYYHHMM } from "../../../services/utils/dateFormatter";
+import { dateFormatDDMMYYHHMMSS } from "../../../services/utils/dateFormatter";
 var client;
 var W3CWebSocket = require("websocket").w3cwebsocket;
 
@@ -51,7 +51,7 @@ export const Measurement = ({ highchartProps, width, height }) => {
             let data = JSON.parse(e.data);
             if (data.message.value) {
               let timestamp = new Date(data.message.timestamp);
-              const time = dateFormatDDMMYYHHMM(timestamp);
+              const time = dateFormatDDMMYYHHMMSS(timestamp);
               setCategories((prev) => time);
 
               setData((prev) => data.message.value);
@@ -77,6 +77,9 @@ export const Measurement = ({ highchartProps, width, height }) => {
           width: "100%",
           textAlign: "center",
           display: highchartProps["Show Tag Name"] ? "inline-block" : "none",
+          fontSize: highchartProps["Tag Name Font Size"]
+            ? highchartProps["Tag Name Font Size"]
+            : "12px",
         }}
       >
         {measuremenetData
