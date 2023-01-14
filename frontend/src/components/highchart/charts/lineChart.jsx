@@ -35,7 +35,7 @@ export const LineChart = ({
     if (!highchartProps[`[${e.NAME}] Disable Data Grouping`]) {
       yAxisTitles.push({
         title: {
-          text: UOMList[e.UOM].CODE_TEXT,
+          text: e.UOM,
         },
         max: parseInt(e.NORMAL_MAXIMUM),
         min: parseInt(e.NORMAL_MINIMUM),
@@ -61,13 +61,13 @@ export const LineChart = ({
     }
     if (backfillData) {
       client = new W3CWebSocket(`${wsBaseUrl}/ws/tags/backfill/`);
-    } else client = new W3CWebSocket(`ws://34.125.220.112:8001/ws/tags/`);
+    } else client = new W3CWebSocket(`${wsBaseUrl}/ws/tags/`);
     client.onerror = function () {
       console.log("Connection Error");
     };
     client.onopen = function () {
       console.log("connedted");
-      client.send(JSON.stringify({ text: "Tag 1" }));
+      //client.send(JSON.stringify({ text: "Tag 1" }));
     };
 
     client.onmessage = function (e) {

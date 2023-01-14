@@ -140,7 +140,7 @@ export const Measurement = ({ highchartProps, width, height }) => {
                     : "14px",
               }}
             >
-              ( {highchartProps.UOM ? uom[highchartProps.UOM].CODE_TEXT : ""} )
+              ( {highchartProps.UOM ? highchartProps.UOM : ""} )
             </Grid>
           </Grid>
         </Grid>

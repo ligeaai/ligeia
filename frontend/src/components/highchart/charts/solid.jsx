@@ -160,9 +160,7 @@ export const Solid = ({ highchartProps, width, height }) => {
           },
         ],
         tooltip: {
-          valueSuffix: ` ${
-            highchartProps.UOM ? uom[highchartProps.UOM].CODE_TEXT : ""
-          }`,
+          valueSuffix: ` ${highchartProps.UOM ? highchartProps.UOM : ""}`,
         },
         dataLabels: {
           format: `<div style="font-size: ${
@@ -177,7 +175,7 @@ export const Solid = ({ highchartProps, width, height }) => {
               : "9"
           }px">( ${
             highchartProps.UOM && highchartProps["Show Unit"]
-              ? uom[highchartProps.UOM].CODE_TEXT
+              ? highchartProps.UOM
               : ""
           } )</div>`,
         },

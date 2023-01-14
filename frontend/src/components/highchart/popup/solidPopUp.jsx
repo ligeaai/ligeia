@@ -264,8 +264,8 @@ const SolidPopUp = (props) => {
                   </Grid>
                   <Grid item xs={12}>
                     <Select
-                      values={uom ? [UOMList[uom].CODE_TEXT] : []}
-                      defaultValue={uom ? UOMList[uom].CODE_TEXT : ""}
+                      values={uom ? [uom] : []}
+                      defaultValue={uom ? uom : ""}
                       disabled={true}
                     />
                   </Grid>

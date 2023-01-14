@@ -141,9 +141,7 @@ export const Angular = ({ highchartProps, width, height }) => {
           ),
         ],
         tooltip: {
-          valueSuffix: ` ${
-            highchartProps.UOM ? uom[highchartProps.UOM].CODE_TEXT : ""
-          }`,
+          valueSuffix: ` ${highchartProps.UOM}`,
         },
         dataLabels: {
           format: `<div style="font-size: ${
@@ -158,7 +156,7 @@ export const Angular = ({ highchartProps, width, height }) => {
               : "9"
           }px">( ${
             highchartProps.UOM && highchartProps["Show Unit"]
-              ? uom[highchartProps.UOM].CODE_TEXT
+              ? highchartProps.UOM
               : ""
           } ) </div>`,
           borderWidth: 0,
