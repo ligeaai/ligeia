@@ -5,3 +5,9 @@ class UomDetailsSerializer(serializers.ModelSerializer):
     class Meta:
         model = uom
         fields = '__all__'
+
+
+class UomQuantitySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = uom
+        fields = ['QUANTITY_TYPE']

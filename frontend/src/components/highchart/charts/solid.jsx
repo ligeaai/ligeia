@@ -6,6 +6,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import exporting from "highcharts/modules/exporting";
 import { wsBaseUrl } from "../../../services/baseApi";
+import { dateFormatDDMMYYHHMMSS } from "../../../services/utils/dateFormatter";
 exporting(Highcharts);
 highchartsMore(Highcharts);
 solidGauge(Highcharts);
@@ -15,6 +16,18 @@ export const Solid = ({ highchartProps, width, height }) => {
   const [categories, setCategories] = React.useState("");
   const uom = useSelector((state) => state.tapsOverview.UOMList);
   const [value, setValue] = React.useState("");
+  const measuremenetData = useSelector(
+    (state) => state.overviewDialog.measuremenetData
+  );
+  let i = 0;
+  let stops = [];
+  while (i < parseInt(highchartProps.Stops)) {
+    stops.push([
+      highchartProps[`[${i}] Stops`],
+      highchartProps[`[${i}] Color`],
+    ]);
+    i++;
+  }
   React.useEffect(() => {
     client = new W3CWebSocket(`${wsBaseUrl}/ws/tags/`);
     client.onerror = function () {
@@ -47,10 +60,41 @@ export const Solid = ({ highchartProps, width, height }) => {
       height: "80%",
     },
     credits: {
-      enabled: false,
+      enabled: highchartProps["Show Timestamp"],
+      position: {
+        align: "center",
+        bottom: -5,
+      },
+      style: {
+        fontSize: highchartProps["Time Stamp Font Size"]
+          ? highchartProps["Time Stamp Font Size"]
+          : 12,
+      },
+      text: dateFormatDDMMYYHHMMSS(new Date(categories)),
+      href: null,
     },
     title: {
-      text: "",
+      text:
+        measuremenetData && highchartProps["Show Tag Name"]
+          ? measuremenetData.filter(
+              (e) => e.TAG_ID === highchartProps.Measurement
+            )[0].NAME
+          : "",
+      style: {
+        fontSize: highchartProps["Tag Name Font Size"]
+          ? highchartProps["Tag Name Font Size"]
+          : "12px",
+      },
+    },
+    exporting: {
+      enabled: highchartProps["Show Enable Export"],
+    },
+    navigation: {
+      buttonOptions: {
+        verticalAlign: "top",
+        y: -10,
+        x: -1,
+      },
     },
     pane: {
       center: ["50%", "85%"],
@@ -73,12 +117,7 @@ export const Solid = ({ highchartProps, width, height }) => {
     yAxis: {
       min: parseInt(highchartProps.Minimum),
       max: parseInt(highchartProps.Maximum),
-      stops: [
-        [highchartProps["[0] Stops"], highchartProps["[0] Color"]],
-        [highchartProps["[1] Stops"], highchartProps["[1] Color"]],
-        [highchartProps["[2] Stops"], highchartProps["[2] Color"]],
-        [highchartProps["[3] Stops"], highchartProps["[3] Color"]],
-      ],
+      stops: [...stops],
       lineWidth: 0,
       tickWidth: 0,
       minorTickInterval: null,
@@ -121,17 +160,24 @@ export const Solid = ({ highchartProps, width, height }) => {
           },
         ],
         tooltip: {
-          valueSuffix: ` ${
-            highchartProps.UOM ? uom[highchartProps.UOM].CODE_TEXT : ""
-          }`,
+          valueSuffix: ` ${highchartProps.UOM ? highchartProps.UOM : ""}`,
         },
         dataLabels: {
-          format:
-            '<div style="text-align:center">' +
-            `<span style="font-size:14px">{y} ${
-              highchartProps.UOM ? uom[highchartProps.UOM].CODE_TEXT : ""
-            }</span><br/> ` +
-            "</div>",
+          format: `<div style="font-size: ${
+            highchartProps["Value Font Size"]
+              ? highchartProps["Value Font Size"]
+              : "9"
+          }px">${
+            highchartProps["Show Measurement"] ? "{y}" : ""
+          }</div> <div style="font-size: ${
+            highchartProps["Unit Font Size"]
+              ? highchartProps["Unit Font Size"]
+              : "9"
+          }px">( ${
+            highchartProps.UOM && highchartProps["Show Unit"]
+              ? highchartProps.UOM
+              : ""
+          } )</div>`,
         },
       },
     ],

@@ -72,7 +72,9 @@ const LinkEditor = () => {
             <Box key={i}>
               <Divider sx={{ backgroundColor: "primary.main" }} />
               <Box sx={{ p: 1 }}>
-                <Box sx={{ mb: 1, fontSize: "14px" }}>{res[e].TYPE_LABEL}</Box>
+                <Box sx={{ mb: 1, fontSize: "14px", fontWeight: "bold" }}>
+                  {res[e].TYPE_LABEL}
+                </Box>
                 <Box>
                   <Dialog data={res[e]} dataSelectItemPath="data" />
                 </Box>
@@ -157,7 +159,19 @@ const LinkEditor = () => {
                                 container
                                 sx={{ fontSize: "12px", color: "text.primary" }}
                               >
-                                <Grid item xs={12}>
+                                <Grid
+                                  item
+                                  xs={12}
+                                  sx={{
+                                    "& div": {
+                                      "& div": {
+                                        fieldset: {
+                                          borderColor: "white",
+                                        },
+                                      },
+                                    },
+                                  }}
+                                >
                                   Start:
                                   <DatePicker
                                     time={new Date(links[a].START_DATETIME)}
@@ -171,8 +185,7 @@ const LinkEditor = () => {
                                     "& div": {
                                       "& div": {
                                         fieldset: {
-                                          borderColor:
-                                            "rgba(0, 0, 0, 0.23) !important",
+                                          borderColor: "white !important",
                                         },
                                       },
                                     },
@@ -220,7 +233,7 @@ const LinkEditor = () => {
             <Box key={i}>
               <Divider sx={{ backgroundColor: "primary.main" }} />
               <Box sx={{ p: 1 }}>
-                <Box sx={{ mb: 1, fontSize: "14px" }}>
+                <Box sx={{ mb: 1, fontSize: "14px", fontWeight: "bold" }}>
                   {resFromType[e].TYPE_LABEL}
                 </Box>
                 <Box>
@@ -297,7 +310,7 @@ const LinkEditor = () => {
                               sx={{ borderRight: "1px solid white", p: 1 }}
                             >
                               <Grid container sx={{ fontSize: "14px" }}>
-                                <Grid item xs={12} >
+                                <Grid item xs={12}>
                                   {links[a].TO_ITEM_TYPE}
                                 </Grid>
                                 <Grid item xs={12} sx={{ fontSize: "12px" }}>
@@ -307,7 +320,19 @@ const LinkEditor = () => {
                             </Grid>
                             <Grid item xs={6} sx={{ p: 1 }}>
                               <Grid container sx={{ fontSize: "12px" }}>
-                                <Grid item xs={12}>
+                                <Grid
+                                  item
+                                  xs={12}
+                                  sx={{
+                                    "& div": {
+                                      "& div": {
+                                        fieldset: {
+                                          borderColor: "white",
+                                        },
+                                      },
+                                    },
+                                  }}
+                                >
                                   Start:
                                   <DatePicker
                                     time={new Date(links[a].START_DATETIME)}
@@ -321,8 +346,7 @@ const LinkEditor = () => {
                                     "& div": {
                                       "& div": {
                                         fieldset: {
-                                          borderColor:
-                                            "rgba(0, 0, 0, 0.23) !important",
+                                          borderColor: "white !important",
                                         },
                                       },
                                     },

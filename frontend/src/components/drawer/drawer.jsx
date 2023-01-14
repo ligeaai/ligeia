@@ -6,7 +6,10 @@ import { Box } from "@mui/material";
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
 import App from "./app";
 import { ComponentError, ComponentErrorBody } from "../index";
-import { loadDrawerMenu } from "../../services/actions/drawerMenu/drawerMenu";
+import {
+  loadDrawerMenu,
+  setSelectedDrawerItem,
+} from "../../services/actions/drawerMenu/drawerMenu";
 import { LoadingComponent } from "../../components";
 const Drawer = () => {
   const dispatch = useDispatch();
@@ -15,6 +18,10 @@ const Drawer = () => {
   const isAuth = useSelector((state) => state.auth.isAuthenticated);
   React.useEffect(() => {
     dispatch(loadDrawerMenu());
+    if (window.location.pathname === "/") {
+      dispatch(setSelectedDrawerItem({ SHORT_LABEL: "Home" }));
+    }
+    console.log();
   }, [isAuth]);
   return (
     <Box

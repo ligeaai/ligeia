@@ -12,32 +12,19 @@ import axios from "axios"
 import { instance, config } from "../../couchApi"
 import { uuidv4 } from "../../utils/uuidGenerator"
 import { loadTapsOverview } from "./taps"
-import ItemLinkService from "../../api/itemLink"
 
 
-let cancelTokenLinks;
 export const fillProperties = async (props) => async (dispatch, getState) => {
     //api call and fill the properties
     const selectedItem = getState().collapseMenu.selectedItem.TO_ITEM_ID
-    if (cancelTokenLinks) {
-        cancelTokenLinks.cancel()
-    }
-    cancelTokenLinks = axios.CancelToken.source();
+
     try {
         let res = await instance
             .get(
                 `/highchartproperties/${props}`,
                 config
             )
-        const body = JSON.stringify({ ID: selectedItem })
 
-        let itemLinkRes = await ItemLinkService.getItemLink(body, cancelTokenLinks)
-        let tags = itemLinkRes.data.TO_ITEM_ID.filter(e => e.FROM_ITEM_TYPE === "TAG_CACHE")
-
-        dispatch({
-            type: SET_MEASUREMENT_DATA,
-            payload: tags
-        })
         dispatch({
             type: FILL_VALUES_OVERVIEW_DIALOG,
             payload: res.data.properties

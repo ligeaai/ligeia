@@ -7,6 +7,7 @@ const MyNumberTextField = (props) => {
     errFunc = () => {
       return false;
     },
+    ...rest
   } = props;
   const [value, setValue] = React.useState(defaultValue);
   const handleChange = (e) => {
@@ -30,10 +31,12 @@ const MyNumberTextField = (props) => {
           fontSize: "14px",
           paddingTop: "4px",
           paddingBottom: "4px",
+          paddingRight: "2px",
         },
         width: "100%",
         minWidth: 125,
       }}
+      {...rest}
     />
   );
 };

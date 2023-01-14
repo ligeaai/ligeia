@@ -13,11 +13,11 @@ const fabStyle = {
   position: "absolute",
   bottom: 16,
   left: 16,
-  backgroundColor: "icon.primary",
+  backgroundColor: "icon.main",
 };
 const MyFab = () => {
   return (
-    <Fab sx={fabStyle} aria-label="Add" color="primary">
+    <Fab sx={fabStyle} aria-label="Add">
       <AddIcon />
     </Fab>
   );

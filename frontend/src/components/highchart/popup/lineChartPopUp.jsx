@@ -81,12 +81,9 @@ const YAxis = (props) => {
     return (
       <React.Fragment key={i}>
         <Grid item xs={12}>
-          {e.FROM_ITEM_ID}
+          {e.NAME}
         </Grid>
-        <MinMaxSelection
-          highchartProps={props.highchartProps}
-          name={e.FROM_ITEM_ID}
-        />
+        <MinMaxSelection highchartProps={props.highchartProps} name={e.NAME} />
       </React.Fragment>
     );
   });
@@ -106,7 +103,7 @@ const ColorPicker = () => {
   return Inputs.map((e, i) => (
     <Grid container key={i}>
       <Grid item xs={12}>
-        Input,{e.FROM_ITEM_ID}
+        Input,{e.NAME}
       </Grid>
       <Grid item xs={12}>
         <Grid container rowGap={0.5}>
@@ -117,9 +114,9 @@ const ColorPicker = () => {
               </Grid>
               <Grid item xs={12}>
                 <ColorTextfield
-                  defaultValue={highchartProps[`[${e.FROM_ITEM_ID}] Color`]}
+                  defaultValue={highchartProps[`[${e.NAME}] Color`]}
                   handleChangeFunc={(value) => {
-                    handleChangeFunc(`[${e.FROM_ITEM_ID}] Color`, value);
+                    handleChangeFunc(`[${e.NAME}] Color`, value);
                   }}
                 />
               </Grid>
@@ -133,11 +130,11 @@ const ColorPicker = () => {
               <Grid item xs={12}>
                 <MyCheckBox
                   defaultValue={
-                    highchartProps[`[${e.FROM_ITEM_ID}] Disable Data Grouping`]
+                    highchartProps[`[${e.NAME}] Disable Data Grouping`]
                   }
                   handleChangeFunc={(value) => {
                     handleChangeFunc(
-                      `[${e.FROM_ITEM_ID}] Disable Data Grouping`,
+                      `[${e.NAME}] Disable Data Grouping`,
                       value
                     );
                   }}
@@ -165,14 +162,10 @@ const Inputs = (props) => {
   const tags = useSelector((state) => state.overviewDialog.measuremenetData);
   const [checked, setChecked] = React.useState([]);
   const [left, setLeft] = React.useState(
-    tags.filter(
-      (e) => !props.defaultValue.some((a) => a.FROM_ITEM_ID === e.FROM_ITEM_ID)
-    )
+    tags.filter((e) => !props.defaultValue.some((a) => a.TAG_ID === e.TAG_ID))
   );
   const [right, setRight] = React.useState(
-    tags.filter((e) =>
-      props.defaultValue.some((a) => a.FROM_ITEM_ID === e.FROM_ITEM_ID)
-    )
+    tags.filter((e) => props.defaultValue.some((a) => a.TAG_ID === e.TAG_ID))
   );
   const leftChecked = intersection(checked, left);
   const rightChecked = intersection(checked, right);
@@ -190,25 +183,11 @@ const Inputs = (props) => {
   };
 
   const handleAllRight = () => {
-    left.map(async (e) => {
-      try {
-        const body = JSON.stringify({ TAG_ID: e.FROM_ITEM_ID });
-        let res = await TagService.getTagItemS(body);
-        dispatch(
-          changeValeus(
-            `${e.FROM_ITEM_ID} Y-Axis Minimum`,
-            res.data[0].NORMAL_MINIMUM
-          )
-        );
-        dispatch(
-          changeValeus(
-            `${e.FROM_ITEM_ID} Y-Axis Maximum`,
-            res.data[0].NORMAL_MAXIMUM
-          )
-        );
-      } catch {}
-    });
     setRight(right.concat(left));
+    left.map(async (e) => {
+      dispatch(changeValeus(`${e.NAME} Y-Axis Minimum`, e.NORMAL_MINIMUM));
+      dispatch(changeValeus(`${e.NAME} Y-Axis Maximum`, e.NORMAL_MAXIMUM));
+    });
     setLeft([]);
     handleChangeFunc(right.concat(left));
   };
@@ -216,6 +195,10 @@ const Inputs = (props) => {
   const handleCheckedRight = () => {
     setRight(right.concat(leftChecked));
     handleChangeFunc(right.concat(leftChecked));
+    leftChecked.map(async (e) => {
+      dispatch(changeValeus(`${e.NAME} Y-Axis Minimum`, e.NORMAL_MINIMUM));
+      dispatch(changeValeus(`${e.NAME} Y-Axis Maximum`, e.NORMAL_MAXIMUM));
+    });
     setLeft(not(left, leftChecked));
     setChecked(not(checked, leftChecked));
   };
@@ -238,8 +221,7 @@ const Inputs = (props) => {
       sx={{
         width: {
           xs: 150,
-          sm: 200,
-          md: 500,
+          md: 375,
         },
         height: 230,
         overflow: "auto",
@@ -266,7 +248,7 @@ const Inputs = (props) => {
                   }}
                 />
               </ListItemIcon>
-              <ListItemText id={labelId} primary={`${value.FROM_ITEM_ID}`} />
+              <ListItemText id={labelId} primary={`${value.NAME}`} />
             </ListItem>
           );
         })}
@@ -333,7 +315,7 @@ const Linechart = (props) => {
     dispatch(changeValeus(key, val));
   };
   return (
-    <Grid container rowGap={2}>
+    <Grid container rowGap={2} sx={{ div: { fontSize: "14px" } }}>
       <Grid item xs={12}>
         <Grid container columnSpacing={2}>
           <Grid item xs={12} sm={6} md={3}>
@@ -471,9 +453,9 @@ const Linechart = (props) => {
               </Grid>
               <Grid item xs={12}>
                 <MyCheckBox
-                  defaultValue={highchartProps["Enable Export"]}
+                  defaultValue={highchartProps["Show Enable Export"]}
                   handleChangeFunc={(value) => {
-                    handleChangeFunc("Enable Export", value);
+                    handleChangeFunc("Show Enable Export", value);
                   }}
                 />
               </Grid>

@@ -80,7 +80,8 @@ const Widgets = React.forwardRef((props, ref) => {
                   sx={{
                     ml: 0.5,
                     display:
-                      highchartProps.Type === "Linechart [Highchart]"
+                      highchartProps.Type === "Linechart [Highchart]" &&
+                      highchartProps["Enable Title"]
                         ? "inline-block"
                         : "none",
                     fontSize:

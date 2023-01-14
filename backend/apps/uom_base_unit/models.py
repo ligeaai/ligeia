@@ -5,7 +5,7 @@ from django.utils import timezone
 
 class uom_base_unit(models.Model): 
 	NAME=models.CharField(max_length=50,null=False,db_index=True)
-	QUALITY_TYPE=models.CharField(max_length=1000,null=False)
+	QUANTITY_TYPE=models.CharField(max_length=1000,null=False)
 	CATALOG_NAME=models.CharField(max_length=1000,null=False)
 	CATALOG_SYMBOL=models.CharField(max_length=1000,null=False)
 	RP66_SYMBOL=models.CharField(max_length=1000,null=True)

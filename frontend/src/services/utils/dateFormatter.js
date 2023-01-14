@@ -23,3 +23,11 @@ export function dateFormatDDMMYYHHMM(date) {
     var newdate = d + "/" + m + "/" + y + " " + h + ":" + min;
     return newdate
 }
+
+export function dateFormatDDMMYYHHMMSS(date) {
+    var s = addZero(date.getSeconds());
+    const dateDDMMYYHHMM = dateFormatDDMMYYHHMM(date);
+    console.log(s);
+    var newdate = dateDDMMYYHHMM + ":" + s;
+    return newdate
+}

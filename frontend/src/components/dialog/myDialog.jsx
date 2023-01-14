@@ -37,7 +37,7 @@ export default function AlertDialog({ Button, DialogBody, ...rest }) {
         open={open}
         ref={nodeRef}
         onClose={handleClose}
-        maxWidth="lg"
+        maxWidth="md"
         PaperComponent={PaperComponent}
         aria-labelledby="draggable-dialog-title"
       >

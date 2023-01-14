@@ -73,7 +73,6 @@ export const addNewCodeListItemSchema = () => async (dispatch, getState) => {
 export const refreshDataGridCodelist = () => async (dispatch, getState) => {
     const ROW_ID = getState().treeview.selectedItem.ROW_ID;
     const body = JSON.stringify({ ROW_ID });
-
     try {
         let res = await CodelistService.getCodelistDetail(body);
         dispatch({

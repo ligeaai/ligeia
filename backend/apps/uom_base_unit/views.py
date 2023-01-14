@@ -2,9 +2,10 @@ from django.shortcuts import render
 from rest_framework import generics, permissions,status
 from rest_framework.response import Response
 from .models import uom_base_unit
-from .serializers import UomUnitDetailsSerializer
+from .serializers import UomUnitDetailsSerializer,UomUnitQuantitySerializer
 import uuid
-
+from apps.uoms.models import uom
+from apps.uoms.serializers import UomQuantitySerializer
 from services.parsers.addData.type import typeAddData
 
 class UomUnitSaveView(generics.CreateAPIView):
@@ -28,21 +29,44 @@ class UomUnitScriptView(generics.ListAPIView):
         return Response({"Message": "Succsessfull"}, status=status.HTTP_200_OK)
 
 
-class UomUnitDetialsView(generics.CreateAPIView):
+class UomUnitDetailView(generics.CreateAPIView):
     
     serializer_class = UomUnitDetailsSerializer
     permission_classes = [permissions.AllowAny]
 
     def post(self, request, *args, **kwargs):
-        queryset = uom_base_unit.objects.filter(RP66_SYMBOL = request.data.get('UOM'))
-      
+        queryset = uom_base_unit.objects.filter(CATALOG_SYMBOL = request.data.get('UOM'))
         serializer = UomUnitDetailsSerializer(queryset,many = True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
-class UomUnitsDetailView(generics.ListAPIView):
+
+class UomUnitDetailsView(generics.ListAPIView):
     serializer_class = UomUnitDetailsSerializer
     permission_classes = [permissions.AllowAny]
     def get(self, request, *args, **kwargs):
         queryset = uom_base_unit.objects.all()
+        serializer = UomUnitDetailsSerializer(queryset,many = True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+class UomQuantityTypeDetailView(generics.ListAPIView):
+    serializer_class = UomUnitQuantitySerializer
+    permission_classes = [permissions.AllowAny]
+    def get_queryset(self):
+        pass
+    def get(self, request, *args, **kwargs):
+        queryset = uom_base_unit.objects.all().distinct("QUANTITY_TYPE")
+        queryset2 = uom.objects.all().distinct("QUANTITY_TYPE")
+        serializerUnit = UomUnitQuantitySerializer(queryset,many = True)
+        serializer = UomQuantitySerializer(queryset2,many = True)
+        data = list(serializerUnit.data) + list(serializer.data)
+        return Response(data, status=status.HTTP_200_OK)
+
+
+class UomUnitsNameView(generics.CreateAPIView):
+    serializer_class = UomUnitDetailsSerializer
+    permission_classes = [permissions.AllowAny]
+    def post(self, request, *args, **kwargs):
+        queryset = uom_base_unit.objects.filter(QUANTITY_TYPE = request.data.get('QUANTITY_TYPE'))
         serializer = UomUnitDetailsSerializer(queryset,many = True)
         return Response(serializer.data, status=status.HTTP_200_OK)

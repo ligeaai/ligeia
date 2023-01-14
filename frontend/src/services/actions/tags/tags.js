@@ -134,12 +134,13 @@ export const saveNewTag = () => async (dispatch, getState) => {
     const anyChanges = getState().tags.anyChanges
     const values = getState().tags.saveValues
     const properties = getState().tags.tagValues
+    const name = getState().treeview.selectedItem.NAME
     var user = getState().auth.user.email
     if (anyChanges) {
         dispatch(
             setConfirmation({
-                title: "Are you sure you want to save this?",
-                body: <></>,
+                title: "You want to save this ?",
+                body: <>{name}</>,
                 agreefunction: async () => {
                     if (_checkmandatoryFields(values, properties)) {
                         dispatch({
