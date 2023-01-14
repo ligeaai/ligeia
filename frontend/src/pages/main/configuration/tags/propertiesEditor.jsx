@@ -4,7 +4,7 @@ import Grid from "@mui/material/Grid";
 import { makeStyles } from "@mui/styles";
 
 import { useDispatch, useSelector } from "react-redux";
-
+import { Select } from "../../../../components";
 import TextFields from "./textfields";
 import { _fillTagData } from "../../../../services/actions/tags/tags";
 import { useIsMount } from "../../../../hooks/useIsMount";
@@ -14,6 +14,8 @@ import {
   setTitleConfirmation,
 } from "../../../../services/actions/confirmation/historyConfirmation";
 import { saveTag, addNewTag } from "../../../../services/actions/tags/tags";
+import { config, instance } from "../../../../services/baseApi";
+import { addSaveTagValue } from "../../../../services/actions/tags/tags";
 const useStyles = makeStyles((theme) => {
   return {
     box: {
@@ -123,6 +125,7 @@ const PropertiesEditor = () => {
                 </Grid>
               </Grid>
             </Grid>
+            {/* <Uom  /> */}
             {Object.keys(tagValues.TAG_INFORMATIONS).map((e, key) => {
               if (
                 tagValues.TAG_INFORMATIONS[e].PROPERTY_TYPE !== "GUID" &&
@@ -141,7 +144,9 @@ const PropertiesEditor = () => {
                 tagValues.TAG_INFORMATIONS[e].PROPERTY_NAME !== "DESCRIPTION" &&
                 tagValues.TAG_INFORMATIONS[e].PROPERTY_NAME !== "START_DATETIME"
               ) {
-                return (
+                return tagValues.TAG_INFORMATIONS[e].PROPERTY_NAME === "UOM" ? (
+                  <TextFields row={tagValues.TAG_INFORMATIONS[e]} />
+                ) : (
                   <Grid item xs={12} md={6} key={key}>
                     <Grid container className={classes.selectBox}>
                       <Grid

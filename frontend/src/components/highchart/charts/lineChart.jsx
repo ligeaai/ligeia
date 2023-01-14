@@ -61,12 +61,13 @@ export const LineChart = ({
     }
     if (backfillData) {
       client = new W3CWebSocket(`${wsBaseUrl}/ws/tags/backfill/`);
-    } else client = new W3CWebSocket(`${wsBaseUrl}/ws/tags/`);
+    } else client = new W3CWebSocket(`ws://34.125.220.112:8001/ws/tags/`);
     client.onerror = function () {
       console.log("Connection Error");
     };
     client.onopen = function () {
-      //client.send(JSON.stringify({ text: "Tag 1" }));
+      console.log("connedted");
+      client.send(JSON.stringify({ text: "Tag 1" }));
     };
 
     client.onmessage = function (e) {

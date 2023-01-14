@@ -1,6 +1,6 @@
 import React from "react";
 import Box from "@mui/material/Box";
-
+import Grid from "@mui/material/Grid";
 import { makeStyles } from "@mui/styles";
 
 import {
@@ -18,6 +18,145 @@ import { addSaveTagValue } from "../../../../services/actions/tags/tags";
 import axios from "axios";
 import { setIsActiveConfirmation } from "../../../../services/actions/confirmation/historyConfirmation";
 import { useIsMount } from "../../../../hooks/useIsMount";
+const useStyles = makeStyles((theme) => {
+  return {
+    box: {
+      boxShadow: theme.shadows[1],
+      padding: "8px",
+      borderRadius: "3px",
+      margin: "8px",
+    },
+    selectBox: {
+      alignItems: "center",
+      marginBottom: "4px",
+      width: "100%",
+    },
+    field: {
+      width: "calc(100% - 200px)",
+      minWidth: "125px",
+    },
+    label: {
+      width: "180px",
+      fontSize: "14px",
+      fontFamily: theme.typography.fontFamily,
+    },
+    labelFields: {
+      width: "calc(100% - 200px)",
+    },
+  };
+});
+const Uom = () => {
+  const dispatch = useDispatch();
+  const classes = useStyles();
+  const [qt, setqt] = React.useState([]);
+  const [uom, setuom] = React.useState([]);
+  const qtDefault = useSelector(
+    (state) => state.tags.saveValues.UOM_QUANTITY_TYPE
+  );
+  const tagId = useSelector((state) => state.treeview.selectedItem.TAG_ID);
+  const umDefault = useSelector((state) => state.tags.saveValues.UOM_NAME);
+  const uomDefault = useSelector((state) => state.tags.saveValues.UOM);
+
+  React.useEffect(() => {
+    setuom([]);
+    const myFunc = async () => {
+      try {
+        let res = await instance.get("/uom_unit/type/", config());
+        console.log(res);
+        setqt(res.data);
+      } catch {
+        console.log("tageditor 57");
+      }
+    };
+    myFunc();
+  }, [tagId]);
+  React.useEffect(() => {
+    const myFunc = async () => {
+      try {
+        const body = JSON.stringify({ QUANTITY_TYPE: qtDefault });
+        let res = await instance.post("/uom_unit/name/", body, config());
+        console.log(res);
+        setuom(res.data);
+      } catch {
+        console.log("tageditor 57");
+      }
+    };
+    myFunc();
+  }, [qtDefault]);
+  const handleChangeFunc = (e) => {
+    dispatch(addSaveTagValue("UOM_QUANTITY_TYPE", e));
+    // const myFunc = async () => {
+    //   const body = JSON.stringify({ QUANTITY_TYPE: e });
+    //   try {
+    //     let res = await instance.post("/uom_unit/name/", body, config());
+    //     console.log(res);
+    //     setuom(res.data);
+    //   } catch {
+    //     console.log("tageditor 57");
+    //   }
+    // };
+    // myFunc();
+  };
+  return (
+    <>
+      <Grid item xs={12} md={6}>
+        <Grid container className={classes.selectBox}>
+          <Grid item className={classes.label} sx={{ color: "primary.main" }}>
+            Quantity Type
+          </Grid>
+          <Grid item className={classes.labelFields}>
+            <Select
+              values={qt}
+              valuesPath="QUANTITY_TYPE"
+              dataTextPath="QUANTITY_TYPE"
+              defaultValue={qtDefault}
+              handleChangeFunc={handleChangeFunc}
+            />
+          </Grid>
+        </Grid>
+      </Grid>
+      <Grid item xs={12} md={6}>
+        <Grid container className={classes.selectBox}>
+          <Grid item className={classes.label} sx={{ color: "primary.main" }}>
+            Uom Name
+          </Grid>
+          <Grid item className={classes.labelFields}>
+            <Select
+              values={uom}
+              valuesPath="NAME"
+              dataTextPath="NAME"
+              defaultValue={umDefault}
+              disabled={uom.length === 0}
+              handleChangeFunc={(e) => {
+                dispatch(addSaveTagValue("UOM_NAME", e));
+              }}
+            />
+          </Grid>
+        </Grid>
+      </Grid>
+      <Grid item xs={12} md={6}>
+        <Grid container className={classes.selectBox}>
+          <Grid item className={classes.label} sx={{ color: "primary.main" }}>
+            Unit Of Measure
+          </Grid>
+          <Grid item className={classes.labelFields}>
+            <Select
+              values={uom}
+              valuesPath="CATALOG_SYMBOL"
+              dataTextPath="CATALOG_SYMBOL"
+              defaultValue={uomDefault}
+              disabled={uom.length === 0}
+              handleChangeFunc={(e) => {
+                dispatch(addSaveTagValue("UOM", e));
+              }}
+            />
+          </Grid>
+        </Grid>
+      </Grid>
+    </>
+  );
+};
+
 const TransactionPropertySelect = ({ defaultValue }) => {
   const isMount = useIsMount();
   const dispatch = useDispatch();
@@ -182,6 +321,9 @@ const TextFields = (props) => {
         a.CODE_TEXT > b.CODE_TEXT ? 1 : -1
       );
       values = values.concat(sortedCode);
+      if (row.PROPERTY_NAME === "UOM") {
+        return <Uom />;
+      }
       return (
         <Select
           errFunc={errFunc}
