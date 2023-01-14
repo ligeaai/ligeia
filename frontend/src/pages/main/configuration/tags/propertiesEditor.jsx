@@ -67,7 +67,7 @@ const PropertiesEditor = () => {
     }
   }, [tagId, name]);
 
-  if (Object.keys(tagValues).length > 0 && tagId) {
+  if (Object.keys(tagValues).length > 0 && (tagId || selectedIndex === -2)) {
     return (
       <Grid container>
         <Grid item xs={12} className={classes.box}>

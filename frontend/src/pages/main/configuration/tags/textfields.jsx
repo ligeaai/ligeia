@@ -84,6 +84,7 @@ const Uom = () => {
     myFunc();
   }, [qtDefault]);
   const handleChangeFunc = (e) => {
+    dispatch(setIsActiveConfirmation(true));
     dispatch(addSaveTagValue("UOM_QUANTITY_TYPE", e));
     // const myFunc = async () => {
     //   const body = JSON.stringify({ QUANTITY_TYPE: e });
@@ -128,6 +129,7 @@ const Uom = () => {
               defaultValue={umDefault}
               disabled={uom.length === 0}
               handleChangeFunc={(e) => {
+                dispatch(setIsActiveConfirmation(true));
                 dispatch(addSaveTagValue("UOM_NAME", e));
               }}
             />
@@ -147,6 +149,7 @@ const Uom = () => {
               defaultValue={uomDefault}
               disabled={uom.length === 0}
               handleChangeFunc={(e) => {
+                dispatch(setIsActiveConfirmation(true));
                 dispatch(addSaveTagValue("UOM", e));
               }}
             />
