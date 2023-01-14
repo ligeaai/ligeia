@@ -20,7 +20,8 @@ df3 = df2.select(
         "version",
         "company",
         "insert",
-        "TAG_NAME",
+        "tag_name",
+        "uom",
     ),
     "topic",
     "timestamp",
@@ -40,7 +41,8 @@ df3 = df2.select(
     "version",
     "company",
     "insert",
-    "TAG_NAME",
+    "tag_name",
+    "uom",
     "topic",
     "timestamp",
 )
@@ -50,7 +52,7 @@ df4 = (
     .withColumn("vibration_x", df3["vibration_x"].cast(FloatType()))
     .withColumn("vibration_y", df3["vibration_y"].cast(FloatType()))
     .withColumn("vibration_motor", df3["vibration_motor"].cast(FloatType()))
-    .withColumn("TAG_NAME", df3["TAG_NAME"].cast(StringType()))
+    .withColumn("tag_name", df3["tag_name"].cast(StringType()))
     .withColumn("time", to_timestamp("time", "dd/MM/yyyy HH:mm:ss"))
     .withColumn("quality", lit(192))
     .withColumn("step-status", lit("formatting"))
@@ -111,7 +113,8 @@ df16 = (
         "date",
         "time1",
         "DiffInHours",
-        "TAG_NAME",
+        "tag_name",
+        "uom",
         "value",
     )
     .select(
@@ -135,7 +138,8 @@ df16 = (
         "date",
         "time1",
         "DiffInHours",
-        "TAG_NAME",
+        "tag_name",
+        "uom",
         "value",
     )
     .select(
@@ -159,7 +163,8 @@ df16 = (
         "date",
         "time1",
         "DiffInHours",
-        "TAG_NAME",
+        "tag_name",
+        "uom",
         "value",
     )
     .select(
@@ -191,7 +196,8 @@ df16 = (
         "date",
         "time1",
         "DiffInHours",
-        "TAG_NAME",
+        "tag_name",
+        "uom",
         "value",
     )
     .select(
@@ -217,7 +223,8 @@ df16 = (
         "date",
         "time1",
         "DiffInHours",
-        "TAG_NAME",
+        "tag_name",
+        "uom",
         "value",
     )
     .withColumnRenamed("quality", "q")
@@ -247,7 +254,8 @@ df17 = (
         "vibration_motor",
         "DiffInHours",
         "step-status",
-        "TAG_NAME",
+        "tag_name",
+        "uom",
         "value",
     )
 )
@@ -262,7 +270,8 @@ df18 = df17.select(
     "vibration_motor",
     "DiffInHours",
     "step-status",
-    "TAG_NAME",
+    "tag_name",
+    "uom",
     "value",
     df17.payload.insert.vqts.id,
     df17.header.version,
@@ -303,7 +312,8 @@ df19 = (
         "vibration_y",
         "vibration_motor",
         "DiffInHours",
-        "TAG_NAME",
+        "tag_name",
+        "uom",
     )
 )
 df19.printSchema()

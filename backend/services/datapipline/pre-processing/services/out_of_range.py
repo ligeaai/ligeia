@@ -7,6 +7,7 @@ import pip._vendor.requests as requests
 import os
 from request import req
 
+
 requ = os.environ.get("TAG_NAME_ENDPOINT")
 host = "localhost:9092"
 topic = "out_of_range"
@@ -51,7 +52,7 @@ def data_range_check(data, min_max_values):
             quality = quality - 126
         data["quality"] = quality
     except:
-        data["TAG_NAME"] = "no such tag value found"
+        data["tag_name"] = "no such tag value found"
     return data
 
 
@@ -62,11 +63,9 @@ for message in consumer:
     data = literal_eval(df.decode("utf8"))
     df2 = dict(data)
     if data["quality"] == 192:
-        data_range_check(data, tag_name_check(data["TAG_NAME"], incoming_tag_name))
-    if data["TAG_NAME"] != "no such tag value found":
-        del data["TAG_NAME"]
+        data_range_check(data, tag_name_check(data["tag_name"], incoming_tag_name))
     key = data["id"].encode("utf-8")
     del data["step-status"]
-    print(data)
+    print(data["tag_name"])
     producer.send(data["message_type"], value=data, key=key)
     producer.flush()

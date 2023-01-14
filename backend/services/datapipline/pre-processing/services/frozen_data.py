@@ -74,12 +74,13 @@ def frozen_data_check(data_check):
 
 
 for message in consumer:
+
     old_data.append(message.value.decode("utf-8"))
     # print(message.value.decode('utf-8'))
     df = message.value
     data = literal_eval(df.decode("utf8"))
     df2 = dict(data)
-    data_check = get_value_type(df2, data["value"])
+    data_check = get_value_type(df2, data["type_value"])
     print(len(data_dict.get(data_check)))
     if len(data_dict.get(data_check)) > 3:
         frozen_data_check(data_check)
