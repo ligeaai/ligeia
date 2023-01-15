@@ -10,4 +10,4 @@ class UomDetailsSerializer(serializers.ModelSerializer):
 class UomQuantitySerializer(serializers.ModelSerializer):
     class Meta:
         model = uom
-        fields = ['QUANTITY_TYPE']
+        fields = ['QUANTITY_TYPE','NAME','CATALOG_SYMBOL']
