@@ -259,6 +259,7 @@ const TransactionTypeSelect = ({ row, defaultValue }) => {
     const myFunc = async () => {
       let res = await instance.get("/tags/links/", config());
       if (!ignore) {
+        console.log(res);
         setvalues(res.data);
         loadItems(defaultValue);
       }
