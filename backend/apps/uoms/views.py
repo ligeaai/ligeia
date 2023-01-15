@@ -18,7 +18,7 @@ class UomSaveView(generics.CreateAPIView):
     def post(self, request, *args, **kwargs):
         data = request.data
         data['ROW_ID'] = uuid.uuid4().hex
-        data['RESULT'] = "(A + BX) / (C + DX)"
+        data['RESULT'] = "(A + (B*X)) / (C + (D*X))"
         instance = uom.objects.create(**data)
         instance.save()
         return Response({"Message": "successful"}, status=status.HTTP_200_OK)
@@ -37,7 +37,7 @@ class UomDetialsView(generics.CreateAPIView):
     permission_classes = [permissions.AllowAny]
 
     def post(self, request, *args, **kwargs):
-        queryset = uom.objects.filter(RP66_SYMBOL = request.data.get('UOM'))
+        queryset = uom.objects.filter(QUANTITY_TYPE = request.data.get('QUANTITY_TYPE'))
       
         serializer = UomDetailsSerializer(queryset,many = True)
         return Response(serializer.data, status=status.HTTP_200_OK)
