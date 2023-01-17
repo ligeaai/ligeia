@@ -29,6 +29,16 @@ SITE_ID = 1
 ALLOWED_HOSTS = env("ALLOWED_HOSTS").split(" ")
 
 CORS_ALLOW_ALL_ORIGINS = True
+# settings.py
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [(env('REDIS_HOST'), 6379)],
+        },
+    },
+}
 
 DJANGO_APPS = [
     "daphne",
@@ -188,6 +198,7 @@ REST_FRAMEWORK = {
         "rest_framework.parsers.FormParser",
         "rest_framework.parsers.MultiPartParser",
     ),
+    'DATE_FORMAT': '%d-%m-%Y'
     # 'COERCE_DECIMAL_TO_STRING': False # TYPE SORT_ORDER STRING TO DECIMAL
 }
 
