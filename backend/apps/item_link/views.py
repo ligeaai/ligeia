@@ -9,6 +9,8 @@ from utils.models_utils import validate_model_not_null
 from apps.item_property.serializers import ItemPropertyNameSerializer
 from django.db.models import Q
 from apps.tags.models import tags
+from apps.item.models import item
+from apps.item.serializers import ItemDetailsSerializer
 from apps.tags.serializers import TagsDetiailsSerializer
 # Create your views here.
 
@@ -86,47 +88,6 @@ class ItemLinkUpdateView(generics.UpdateAPIView):
         quaryset.update(**request.data)
         return Response("Succsesful",status=status.HTTP_200_OK)
 
-class ItemLinkHierarchyView(generics.ListAPIView):
-    permission_classes = [permissions.AllowAny]
-    def get_queryset(self):
-        pass
-
-    def get(self, request, *args, **kwargs):
-        quaryset  = item_link.objects.filter(Q(TO_ITEM_TYPE = "COMPANY"),~Q(LINK_TYPE='TAG_ITEM'))
-        validate_find(quaryset,request)
-        tempt ={}
-        serializer = ItemLinkDetailsSerializer(quaryset,many = True)
-        self._getChild(serializer.data,tempt)
-        return Response(serializer.data)
-    
-    def _getChild(self,data,tempt):
-        for index in range(len(data)):
-            self._getName(data[index])
-            quaryset  = item_link.objects.filter(Q(TO_ITEM_ID = data[index].get('FROM_ITEM_ID')),~Q(LINK_TYPE='TAG_ITEM'))
-            if quaryset:
-                serializer = ItemLinkDetailsSerializer(quaryset,many = True)
-                data[index]['CHILD'] = serializer.data
-                self._getChild(serializer.data,tempt)
-                
-            else:
-               new_dict = {
-                'TO_ITEM_NAME':data[index].get('FROM_ITEM_NAME'),
-                "TO_ITEM_ID": data[index].get('FROM_ITEM_ID'),
-                "TO_ITEM_TYPE": data[index].get('FROM_ITEM_TYPE'),
-               }
-               data[index]['CHILD'] = [new_dict]
-               
-                
-
-    def _getName(self,data):
-            quaryset_from = item_property.objects.filter(ITEM_ID = data.get('FROM_ITEM_ID'),PROPERTY_TYPE = 'NAME').order_by('START_DATETIME')
-            quaryset_to = item_property.objects.filter(ITEM_ID = data.get('TO_ITEM_ID'),PROPERTY_TYPE = 'NAME').order_by('START_DATETIME')
-            serializer_from = ItemPropertyNameSerializer(quaryset_from,many = True)
-            serializer_to = ItemPropertyNameSerializer(quaryset_to,many = True)
-            if quaryset_from:
-                data['FROM_ITEM_NAME'] = serializer_from.data[0].get("PROPERTY_STRING")
-            if quaryset_to:
-                data['TO_ITEM_NAME'] = serializer_to.data[0].get("PROPERTY_STRING")
 
     # def _getChild(self,data,tempt):
     #     for index in range(len(data)):
@@ -199,3 +160,48 @@ class TagsLinksView(generics.CreateAPIView):
             #     "TO_ITEM_TYPE": data[index].get('FROM_ITEM_TYPE'),
             #    }
             #    data[index]['CHILD'] = [new_dict]
+class ItemLinkHierarchyView(generics.ListAPIView):
+    permission_classes = [permissions.AllowAny]
+    def get_queryset(self):
+        pass
+
+    def get(self, request, *args, **kwargs):
+        itemqs = item.objects.filter(ITEM_TYPE ='COMPANY')
+            # return Response(data[index])
+        tempt = {}
+        serializer = ItemDetailsSerializer(itemqs,many = True)
+        for index in range(len(serializer.data)):
+            serializer.data[index]['FROM_ITEM_ID'] = serializer.data[index].get('ITEM_ID')
+            serializer.data[index]['LINK_ID'] = serializer.data[index].get('ITEM_ID')
+        self._getChild(serializer.data,tempt)
+        return Response(serializer.data)
+    
+    def _getChild(self,data,tempt):
+        for index in range(len(data)):
+            self._getName(data[index])
+            quaryset  = item_link.objects.filter(Q(TO_ITEM_ID = data[index].get('FROM_ITEM_ID')),~Q(LINK_TYPE='TAG_ITEM'))
+            if quaryset:
+                serializer = ItemLinkDetailsSerializer(quaryset,many = True)
+                data[index]['CHILD'] = serializer.data
+                self._getChild(serializer.data,tempt)
+                
+            else:
+               new_dict = {
+                'FROM_ITEM_NAME':data[index].get('FROM_ITEM_NAME'),
+                "FROM_ITEM_ID": data[index].get('FROM_ITEM_ID'),
+                "LINK_ID": data[index].get('FROM_ITEM_ID'),
+                "FROM_ITEM_TYPE": data[index].get('FROM_ITEM_TYPE'),
+               }
+               data[index]['CHILD'] = [new_dict]
+               
+                
+
+    def _getName(self,data):
+            quaryset_from = item_property.objects.filter(ITEM_ID = data.get('FROM_ITEM_ID'),PROPERTY_TYPE = 'NAME').order_by('START_DATETIME')
+            quaryset_to = item_property.objects.filter(ITEM_ID = data.get('TO_ITEM_ID'),PROPERTY_TYPE = 'NAME').order_by('START_DATETIME')
+            serializer_from = ItemPropertyNameSerializer(quaryset_from,many = True)
+            serializer_to = ItemPropertyNameSerializer(quaryset_to,many = True)
+            if quaryset_from:
+                data['FROM_ITEM_NAME'] = serializer_from.data[0].get("PROPERTY_STRING")
+            if quaryset_to:
+                data['TO_ITEM_NAME'] = serializer_to.data[0].get("PROPERTY_STRING")
