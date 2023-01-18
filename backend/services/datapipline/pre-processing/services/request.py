@@ -3,13 +3,12 @@ import json
 import requests
 import os
 
-base_url = "http://34.125.220.112:8001"
+base_url = "http://34.125.220.112:8000"
 # from request import req
 def getTagNameData():
     req = base_url + "/api/v1/tags/details/"
     r = requests.get(req)
     incoming_tag_name = r.json()
-
     return incoming_tag_name
 
 
