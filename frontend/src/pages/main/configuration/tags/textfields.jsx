@@ -127,11 +127,7 @@ const Uom = () => {
               valuesPath="NAME"
               dataTextPath="NAME"
               defaultValue={umDefault}
-              disabled={uom.length === 0}
-              handleChangeFunc={(e) => {
-                dispatch(setIsActiveConfirmation(true));
-                dispatch(addSaveTagValue("UOM_NAME", e));
-              }}
+              disabled={true}
             />
           </Grid>
         </Grid>
@@ -151,6 +147,12 @@ const Uom = () => {
               handleChangeFunc={(e) => {
                 dispatch(setIsActiveConfirmation(true));
                 dispatch(addSaveTagValue("UOM", e));
+                dispatch(
+                  addSaveTagValue(
+                    "UOM_NAME",
+                    uom.filter((a) => a.CATALOG_SYMBOL === e)[0].NAME
+                  )
+                );
               }}
             />
           </Grid>
@@ -259,6 +261,7 @@ const TransactionTypeSelect = ({ row, defaultValue }) => {
     const myFunc = async () => {
       let res = await instance.get("/tags/links/", config());
       if (!ignore) {
+        console.log(res);
         setvalues(res.data);
         loadItems(defaultValue);
       }

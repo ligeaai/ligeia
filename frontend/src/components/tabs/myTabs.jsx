@@ -163,9 +163,10 @@ function MyTabs() {
   return (
     <Box
       sx={{
-        bgcolor: "background.paper",
+        backgroundColor: "background.info",
         position: "relative",
         height: "40px",
+        px: 1,
         header: {
           height: "40px",
         },

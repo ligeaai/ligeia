@@ -4,8 +4,9 @@ from rest_framework.response import Response
 from .models import uom_base_unit
 from .serializers import UomUnitDetailsSerializer,UomUnitQuantitySerializer
 import uuid
+from django.db.models import Q
 from apps.uoms.models import uom
-from apps.uoms.serializers import UomQuantitySerializer
+from apps.uoms.serializers import UomQuantitySerializer,UomDetailsSerializer
 from services.parsers.addData.type import typeAddData
 
 class UomUnitSaveView(generics.CreateAPIView):
@@ -35,7 +36,7 @@ class UomUnitDetailView(generics.CreateAPIView):
     permission_classes = [permissions.AllowAny]
 
     def post(self, request, *args, **kwargs):
-        queryset = uom_base_unit.objects.filter(CATALOG_SYMBOL = request.data.get('UOM'))
+        queryset = uom_base_unit.objects.filter(QUANTITY_TYPE = request.data.get('QUANTITY_TYPE'))
         serializer = UomUnitDetailsSerializer(queryset,many = True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
@@ -67,6 +68,9 @@ class UomUnitsNameView(generics.CreateAPIView):
     serializer_class = UomUnitDetailsSerializer
     permission_classes = [permissions.AllowAny]
     def post(self, request, *args, **kwargs):
-        queryset = uom_base_unit.objects.filter(QUANTITY_TYPE = request.data.get('QUANTITY_TYPE'))
-        serializer = UomUnitDetailsSerializer(queryset,many = True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        querysetBaseUom = uom_base_unit.objects.filter(Q(QUANTITY_TYPE = request.data.get('QUANTITY_TYPE')),~Q(CATALOG_SYMBOL ='(Deprecated)')).distinct("CATALOG_SYMBOL")
+        querysetUoms = uom.objects.filter(Q(QUANTITY_TYPE = request.data.get('QUANTITY_TYPE')),~Q(CATALOG_SYMBOL ='(Deprecated)')).distinct("CATALOG_SYMBOL")
+        serializerBaseUom = UomUnitDetailsSerializer(querysetBaseUom,many = True)
+        serializerUoms = UomDetailsSerializer(querysetUoms,many = True)
+        data = list(serializerBaseUom.data) + list(serializerUoms.data)
+        return Response(data, status=status.HTTP_200_OK)

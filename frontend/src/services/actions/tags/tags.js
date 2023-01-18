@@ -176,7 +176,6 @@ export const saveTag = () => async (dispatch, getState) => {
             payload: false
         })
         await _newTagSave(saveValues, user)
-        console.log("---------");
         dispatch(loadTreeviewItem(TagService.getAll, "NAME"))
         dispatch(setIsActiveConfirmation(false))
         console.log(true);

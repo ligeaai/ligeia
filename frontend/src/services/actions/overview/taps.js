@@ -6,24 +6,17 @@ import {
   REFRESH_WIDGETS_OVERVIEW,
   SET_REV,
   UPDATE_LAYOUT,
-  LOAD_UOMLIST,
   SET_MEASUREMENT_DATA
 } from "../types";
 import { instance, config } from "../../couchApi";
-import { uuidv4 } from "../../utils/uuidGenerator";
-import CodeListService from "../../api/codeList";
+
 import ItemLinkService from "../../api/itemLink"
 
-import axios from "axios";
-let cancelTokenLinks;
 export const loadTapsOverview = () => async (dispatch, getState) => {
-  const linkId = getState().collapseMenu.selectedItem.TO_ITEM_ID;
+  const linkId = getState().collapseMenu.selectedItem.LINK_ID;
   try {
     let res = await instance.get(`/taplinks/${linkId}`, config);
     var titles = Object.keys(res.data.data);
-    const uomBody = JSON.stringify({
-      ROW_ID: "24257d53b23d4c269e4905e042fddaf7",
-    });
     // TODO don't use patches, tends to leak code
     const body = JSON.stringify({ ID: linkId })
     let itemLinkRes = await ItemLinkService.getTags(body)
@@ -32,25 +25,7 @@ export const loadTapsOverview = () => async (dispatch, getState) => {
       type: SET_MEASUREMENT_DATA,
       payload: itemLinkRes.data
     })
-    if (cancelTokenLinks) {
-      cancelTokenLinks.cancel();
-    }
-    cancelTokenLinks = axios.CancelToken.source();
-    try {
-      let uomList = await CodeListService.getCodelistDetail(
-        uomBody,
-        cancelTokenLinks
-      );
-      let uomValues = {};
-      uomList.data.map((e) => {
-        uomValues[e.ROW_ID] = e;
-      });
 
-      dispatch({
-        type: LOAD_UOMLIST,
-        payload: uomValues,
-      });
-    } catch { }
     dispatch({
       type: FILL_TAPS_OVERVIEW,
       payload: { titles, widgets: res.data.data, data: res.data },
@@ -103,7 +78,7 @@ export const deleteChart = (id, revId) => async (dispatch, getState) => {
     e.i === id ? myData.data[selected].layouts.xxs.splice(i, 1) : null
   );
 
-  const selectedLink = getState().collapseMenu.selectedItem.TO_ITEM_ID;
+  const selectedLink = getState().collapseMenu.selectedItem.LINK_ID;
   // const tablinkBody = {
   //     ...myData, data: {
   //         ...myData.data, [selected]: [...myData.data[selected]]
@@ -131,7 +106,7 @@ function _newTapNameChoser(keys) {
 }
 
 export const addNewTabItem = () => async (dispatch, getState) => {
-  const selectedLink = getState().collapseMenu.selectedItem.TO_ITEM_ID;
+  const selectedLink = getState().collapseMenu.selectedItem.LINK_ID;
 
   const resData = getState().tapsOverview.data;
   const newTabName = _newTapNameChoser(Object.keys(resData.data));
@@ -171,7 +146,7 @@ const _checkHeader = (oldHeader, newHeader, keys) => {
 
 export const updateTabHeader =
   (oldHeader, newHeader) => async (dispatch, getState) => {
-    const selectedLink = getState().collapseMenu.selectedItem.TO_ITEM_ID;
+    const selectedLink = getState().collapseMenu.selectedItem.LINK_ID;
     const resData = getState().tapsOverview.data;
 
     if (_checkHeader(oldHeader, newHeader, Object.keys(resData.data))) {
@@ -207,7 +182,7 @@ function _deleteAllCharts(charts) {
 }
 
 export const deleteTapHeader = (header) => async (dispatch, getState) => {
-  const selectedLink = getState().collapseMenu.selectedItem.TO_ITEM_ID;
+  const selectedLink = getState().collapseMenu.selectedItem.LINK_ID;
   const resData = getState().tapsOverview.data;
   const charts = resData.data[header].widgets;
   delete resData.data[header];
@@ -258,7 +233,7 @@ export const updateChartLayout = (layout) => async (dispatch, getState) => {
 };
 
 export const updateCouchDb = () => async (dispatch, getState) => {
-  const selectedLink = getState().collapseMenu.selectedItem.TO_ITEM_ID;
+  const selectedLink = getState().collapseMenu.selectedItem.LINK_ID;
   const resData = getState().tapsOverview.data;
   const tablinkBody = {
     ...resData,

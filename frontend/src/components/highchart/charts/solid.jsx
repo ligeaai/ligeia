@@ -13,6 +13,7 @@ solidGauge(Highcharts);
 var client;
 var W3CWebSocket = require("websocket").w3cwebsocket;
 export const Solid = ({ highchartProps, width, height }) => {
+  const tags = useSelector((state) => state.overviewDialog.measuremenetData);
   const [categories, setCategories] = React.useState("");
   const uom = useSelector((state) => state.tapsOverview.UOMList);
   const [value, setValue] = React.useState("");
@@ -160,7 +161,12 @@ export const Solid = ({ highchartProps, width, height }) => {
           },
         ],
         tooltip: {
-          valueSuffix: ` ${highchartProps.UOM ? highchartProps.UOM : ""}`,
+          valueSuffix: ` ${
+            tags && highchartProps["Show Unit"]
+              ? tags.filter((a) => a.TAG_ID === highchartProps.Measurement)[0]
+                  .UOM
+              : ""
+          }`,
         },
         dataLabels: {
           format: `<div style="font-size: ${
@@ -174,8 +180,9 @@ export const Solid = ({ highchartProps, width, height }) => {
               ? highchartProps["Unit Font Size"]
               : "9"
           }px">( ${
-            highchartProps.UOM && highchartProps["Show Unit"]
-              ? highchartProps.UOM
+            tags && highchartProps["Show Unit"]
+              ? tags.filter((a) => a.TAG_ID === highchartProps.Measurement)[0]
+                  .UOM
               : ""
           } )</div>`,
         },

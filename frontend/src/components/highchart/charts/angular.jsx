@@ -11,10 +11,12 @@ var W3CWebSocket = require("websocket").w3cwebsocket;
 
 export const Angular = ({ highchartProps, width, height }) => {
   const [categories, setCategories] = React.useState("");
+  const tags = useSelector((state) => state.overviewDialog.measuremenetData);
   const uom = useSelector((state) => state.tapsOverview.UOMList);
   const measuremenetData = useSelector(
     (state) => state.overviewDialog.measuremenetData
   );
+
   const [value, setValue] = React.useState("");
   let i = 0;
   let plotBands = [];
@@ -141,7 +143,12 @@ export const Angular = ({ highchartProps, width, height }) => {
           ),
         ],
         tooltip: {
-          valueSuffix: ` ${highchartProps.UOM}`,
+          valueSuffix: ` ${
+            tags && highchartProps["Show Unit"]
+              ? tags.filter((a) => a.TAG_ID === highchartProps.Measurement)[0]
+                  .UOM
+              : ""
+          }`,
         },
         dataLabels: {
           format: `<div style="font-size: ${
@@ -155,8 +162,9 @@ export const Angular = ({ highchartProps, width, height }) => {
               ? highchartProps["Unit Font Size"]
               : "9"
           }px">( ${
-            highchartProps.UOM && highchartProps["Show Unit"]
-              ? highchartProps.UOM
+            tags && highchartProps["Show Unit"]
+              ? tags.filter((a) => a.TAG_ID === highchartProps.Measurement)[0]
+                  .UOM
               : ""
           } ) </div>`,
           borderWidth: 0,

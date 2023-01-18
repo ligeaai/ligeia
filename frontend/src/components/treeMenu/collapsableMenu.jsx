@@ -98,13 +98,13 @@ const MyStyledTreeItem = React.memo(({ myItems, path }) => {
       return (
         <StyledTreeItem
           key={i}
-          nodeId={e.TO_ITEM_ID}
-          label={e.TO_ITEM_NAME}
+          nodeId={e.LINK_ID}
+          label={e.FROM_ITEM_NAME}
           onClick={async () => {
             dispatch(updateCouchDb());
             dispatch(await setSelectedCollapseMenu(e));
             dispatch(loadTapsOverview());
-            history.push(`/${path}/${e.TO_ITEM_NAME}`);
+            history.push(`/${path}/${e.FROM_ITEM_NAME}`);
           }}
         >
           {/* <StyledTreeItem
@@ -119,7 +119,7 @@ const MyStyledTreeItem = React.memo(({ myItems, path }) => {
           ></StyledTreeItem> */}
           <MyStyledTreeItem
             myItems={e.CHILD}
-            path={`${path}/${e.TO_ITEM_NAME}`}
+            path={`${path}/${e.FROM_ITEM_NAME}`}
           ></MyStyledTreeItem>
 
           {/* <StyledTreeItem
@@ -131,13 +131,13 @@ const MyStyledTreeItem = React.memo(({ myItems, path }) => {
     return (
       <StyledTreeItem
         key={i}
-        nodeId={e.TO_ITEM_ID}
-        label={e.TO_ITEM_NAME}
+        nodeId={e.LINK_ID}
+        label={e.FROM_ITEM_NAME}
         onClick={async () => {
           dispatch(updateCouchDb());
           dispatch(await setSelectedCollapseMenu(e));
           dispatch(loadTapsOverview());
-          history.push(`/${path}/${e.TO_ITEM_NAME}`);
+          history.push(`/${path}/${e.FROM_ITEM_NAME}`);
         }}
       ></StyledTreeItem>
     );

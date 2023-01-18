@@ -10,6 +10,7 @@ var W3CWebSocket = require("websocket").w3cwebsocket;
 
 export const Measurement = ({ highchartProps, width, height }) => {
   const uom = useSelector((state) => state.tapsOverview.UOMList);
+  const tags = useSelector((state) => state.overviewDialog.measuremenetData);
   const measuremenetData = useSelector(
     (state) => state.overviewDialog.measuremenetData
   );
@@ -140,7 +141,12 @@ export const Measurement = ({ highchartProps, width, height }) => {
                     : "14px",
               }}
             >
-              ( {highchartProps.UOM ? highchartProps.UOM : ""} )
+              ({" "}
+              {tags && highchartProps["Show Unit"]
+                ? tags.filter((a) => a.TAG_ID === highchartProps.Measurement)[0]
+                    .UOM
+                : ""}{" "}
+              )
             </Grid>
           </Grid>
         </Grid>

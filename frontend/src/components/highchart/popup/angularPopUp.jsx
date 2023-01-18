@@ -148,7 +148,9 @@ const AngularPopUp = (props) => {
   const { highchartProps, handleClose } = props;
   const tags = useSelector((state) => state.overviewDialog.measuremenetData);
   const UOMList = useSelector((state) => state.tapsOverview.UOMList);
-  const uom = useSelector((state) => state.overviewDialog.highchartProps.UOM);
+  const measure = useSelector(
+    (state) => state.overviewDialog.highchartProps.Measurement
+  );
   const Name = useSelector(
     (state) => state.overviewDialog.highchartProps["Show Name"]
   );
@@ -279,8 +281,16 @@ const AngularPopUp = (props) => {
                   </Grid>
                   <Grid item xs={12}>
                     <Select
-                      values={uom ? [uom] : []}
-                      defaultValue={uom ? uom : ""}
+                      values={
+                        tags && measure
+                          ? [tags.filter((e) => e.TAG_ID === measure)[0].UOM]
+                          : []
+                      }
+                      defaultValue={
+                        tags && measure
+                          ? tags.filter((e) => e.TAG_ID === measure)[0].UOM
+                          : ""
+                      }
                       disabled={true}
                     />
                   </Grid>
