@@ -16,7 +16,7 @@ import { loadTapsOverview } from "./taps"
 
 export const fillProperties = async (props) => async (dispatch, getState) => {
     //api call and fill the properties
-    const selectedItem = getState().collapseMenu.selectedItem.TO_ITEM_ID
+    const selectedItem = getState().collapseMenu.selectedItem.LINK_ID
 
     try {
         let res = await instance
@@ -75,7 +75,7 @@ export const changeValeus = (key, value) => dispatch => {
 
 export const saveChart = () => async (dispatch, getState) => {
     const chartProps = getState().overviewDialog.highchartProps
-    const selectedLink = getState().collapseMenu.selectedItem.TO_ITEM_ID
+    const selectedLink = getState().collapseMenu.selectedItem.LINK_ID
     const selected = getState().tapsOverview.selected
     const selectedChartType = getState().overviewDialog.selectedItem
     const resData = getState().tapsOverview.data

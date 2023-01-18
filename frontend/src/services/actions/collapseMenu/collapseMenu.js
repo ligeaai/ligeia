@@ -4,7 +4,7 @@ import { config, instance } from "../../couchApi"
 export const loadCollapseMenu = (path) => async dispatch => {
     try {
         let res = await path();
-
+        console.log(res);
         dispatch({
             type: LOAD_COLLAPSABLE_MENU_ITEMS,
             payload: res.data
