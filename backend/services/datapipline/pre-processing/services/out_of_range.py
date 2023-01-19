@@ -66,6 +66,7 @@ for message in consumer:
         data_range_check(data, tag_name_check(data["tag_name"], incoming_tag_name))
     key = data["id"].encode("utf-8")
     del data["step-status"]
+    del data["uom"]
     print(data["tag_name"])
     producer.send(data["message_type"], value=data, key=key)
     producer.flush()

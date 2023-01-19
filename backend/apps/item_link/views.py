@@ -185,14 +185,6 @@ class ItemLinkHierarchyView(generics.ListAPIView):
                 data[index]['CHILD'] = serializer.data
                 self._getChild(serializer.data,tempt)
                 
-            else:
-               new_dict = {
-                'FROM_ITEM_NAME':data[index].get('FROM_ITEM_NAME'),
-                "FROM_ITEM_ID": data[index].get('FROM_ITEM_ID'),
-                "LINK_ID": data[index].get('FROM_ITEM_ID'),
-                "FROM_ITEM_TYPE": data[index].get('FROM_ITEM_TYPE'),
-               }
-               data[index]['CHILD'] = [new_dict]
                
                 
 
