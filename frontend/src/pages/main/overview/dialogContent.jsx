@@ -17,6 +17,8 @@ import LinechartPopUp from "../../../components/highchart/popup/lineChartPopUp";
 import AngularPopUp from "../../../components/highchart/popup/angularPopUp";
 import SolidPopUp from "../../../components/highchart/popup/solidPopUp";
 import MeasurementPopUp from "../../../components/highchart/popup/measurementPopUp";
+import BarPopUp from "../../../components/highchart/nivoPopUp/barChart";
+import PiePopUp from "../../../components/highchart/nivoPopUp/pieChart";
 const DialogContent = ({ handleClose }) => {
   const dispatch = useDispatch();
   const selectedItem = useSelector(
@@ -41,6 +43,12 @@ const DialogContent = ({ handleClose }) => {
     ),
     "Measurement [Custom]": (
       <MeasurementPopUp highchartProps={properties} handleClose={handleClose} />
+    ),
+    "Bar Chart [Nivo]": (
+      <BarPopUp highchartProps={properties} handleClose={handleClose} />
+    ),
+    "Pie Chart [Nivo]": (
+      <PiePopUp highchartProps={properties} handleClose={handleClose} />
     ),
   };
   React.useEffect(() => {

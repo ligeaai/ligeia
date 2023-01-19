@@ -103,6 +103,7 @@ const Measurement = () => {
           <Grid item xs={12}>
             <MyNumberTextField
               defaultValue={minimum}
+              disabled={true}
               handleChangeFunc={(value) => {
                 handleChangeFunc("Minimum", value);
               }}
@@ -118,6 +119,7 @@ const Measurement = () => {
           <Grid item xs={12}>
             <MyNumberTextField
               defaultValue={maximum}
+              disabled={true}
               handleChangeFunc={(value) => {
                 handleChangeFunc("Maximum", value);
               }}

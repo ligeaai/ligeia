@@ -13,7 +13,8 @@ import LinechartPopUp from "../../../components/highchart/popup/lineChartPopUp";
 import AngularPopUp from "../../../components/highchart/popup/angularPopUp";
 import SolidPopUp from "../../../components/highchart/popup/solidPopUp";
 import MeasurementPopUp from "../../../components/highchart/popup/measurementPopUp";
-
+import BarPopUp from "../../../components/highchart/nivoPopUp/barChart";
+import PiePopUp from "../../../components/highchart/nivoPopUp/pieChart";
 const DialogContent = ({ highchartProps, chartId, ...rest }) => {
   const dispatch = useDispatch();
   const type = useSelector((state) => state.overviewDialog.values.Type);
@@ -31,6 +32,8 @@ const DialogContent = ({ highchartProps, chartId, ...rest }) => {
     "Measurement [Custom]": (
       <MeasurementPopUp highchartProps={highchartProps} {...rest} />
     ),
+    "Bar Chart [Nivo]": <BarPopUp highchartProps={highchartProps} {...rest} />,
+    "Pie Chart [Nivo]": <PiePopUp highchartProps={highchartProps} {...rest} />,
   };
   React.useEffect(() => {
     async function myFunc() {

@@ -46,6 +46,7 @@ const MinMaxSelection = (props) => {
             <Grid item xs={12}>
               <MyNumberTextField
                 defaultValue={minimum}
+                disabled={true}
                 handleChangeFunc={(value) => {
                   handleChangeFunc(`${name} Y-Axis Minimum`, value);
                 }}
@@ -61,6 +62,7 @@ const MinMaxSelection = (props) => {
             <Grid item xs={12}>
               <MyNumberTextField
                 defaultValue={maximum}
+                disabled={true}
                 handleChangeFunc={(value) => {
                   handleChangeFunc(`${name} Y-Axis Maximum`, value);
                 }}
