@@ -89,6 +89,7 @@ const StyledTreeItem = styled((props) => (
     overflow: "hidden",
     whiteSpace: "nowrap",
     textOverflow: "ellipsis",
+    padding: "4px",
   },
 }));
 const MyStyledTreeItem = React.memo(({ myItems, path }) => {
