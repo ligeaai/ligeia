@@ -58,7 +58,10 @@ const DrawerMenu = (props) => {
     setWidth(true);
   }
   function onOpen(e) {
-    if (e > leftMenuWidth) setLeftMenuWidth(e);
+    if (e > leftMenuWidth) {
+      setLeftMenuWidth(e);
+      dispatch(updateTreeViewCouch(path, e));
+    }
     setWidth(false);
   }
   return (

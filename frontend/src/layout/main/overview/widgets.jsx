@@ -124,6 +124,8 @@ const Widgets = React.forwardRef((props, ref) => {
               <FormControlLabel
                 control={
                   <Switch
+                    color="error"
+                    size="small"
                     checked={tabular}
                     onChange={() => {
                       setTabular((prev) => {
@@ -133,11 +135,13 @@ const Widgets = React.forwardRef((props, ref) => {
                     }}
                   />
                 }
-                label="Tabular View"
+                label="Tabular"
               />
               <FormControlLabel
                 control={
                   <Switch
+                    color="error"
+                    size="small"
                     checked={liveData}
                     onChange={() => {
                       setLiveData((prev) => {
@@ -152,6 +156,8 @@ const Widgets = React.forwardRef((props, ref) => {
               <FormControlLabel
                 control={
                   <Switch
+                    color="error"
+                    size="small"
                     checked={backfill}
                     onChange={() => {
                       setbackfill((prev) => {
