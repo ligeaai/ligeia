@@ -78,11 +78,44 @@ export const LineChart = ({
           if (typeof e.data === "string") {
             let jsonData = JSON.parse(e.data);
             if (Object.keys(jsonData.message).length > 5) {
+              // let timestamp = new Date(jsonData.message.createdtime);
               let timestamp = new Date(jsonData.message.timestamp);
               const time = dateFormatDDMMYYHHMM(timestamp);
               setCategories((prev) => [...prev, time]);
               setAllData((prev) => [...prev, jsonData.message]);
+              console.log(timestamp);
+              var series = options.series[0].data;
               setData((prev) => [...prev, parseInt(jsonData.message.value)]);
+              // series.push([
+              //   Date.UTC(
+              //     timestamp.getFullYear(),
+              //     timestamp.getMonth() + 1,
+              //     timestamp.getDay(),
+              //     timestamp.getHours(),
+              //     timestamp.getMinutes(),
+              //     timestamp.getSeconds()
+              //   ),
+              //   parseInt(jsonData.message.value),
+              // ]);
+              // setData((prev) => [
+              //   ...prev,
+              //   [
+              //     Date.UTC(
+              //       timestamp.getFullYear(),
+              //       timestamp.getMonth(),
+              //       timestamp.getDay(),
+              //       timestamp.getHours(),
+              //       timestamp.getMinutes(),
+              //       timestamp.getSeconds()
+              //     ),
+              //     parseInt(jsonData.message.value),
+              //   ],
+              // ]);
+              // series.addPoint(
+              //   [timestamp, parseInt(jsonData.message.value)],
+              //   true,
+              //   true
+              // );
             }
 
             //setTimeout(sendNumber, 10000);
@@ -99,6 +132,7 @@ export const LineChart = ({
     };
   }, [liveData]);
   const options = {
+    constructorType: "stockChart",
     chart: {
       zoomBySingleTouch: true,
       zoomType: "x",
@@ -106,6 +140,7 @@ export const LineChart = ({
       reflow: true,
     },
     rangeSelector: {
+      //  enabled: !liveData,
       buttons: [
         {
           type: "minutes",
@@ -177,6 +212,9 @@ export const LineChart = ({
     exporting: {
       enabled: highchartProps["Show Enable Export"],
     },
+    // navigator: {
+    //   enabled: !liveData,
+    // },
     navigation: {
       buttonOptions: {
         verticalAlign: "top",
@@ -203,19 +241,36 @@ export const LineChart = ({
     series: [...series],
   };
   if (!tabular) {
+    if (liveData)
+      return (
+        <HighchartsReact
+          highcharts={Highcharts}
+          options={{
+            ...options,
+            chart: {
+              ...options.chart,
+              width: width,
+              height: height,
+            },
+          }}
+          // constructorType={"stockChart"}
+        />
+      );
     return (
-      <HighchartsReact
-        highcharts={Highcharts}
-        options={{
-          ...options,
-          chart: {
-            ...options.chart,
-            width: width,
-            height: height,
-          },
-        }}
-        constructorType={"stockChart"}
-      />
+      <Box>
+        <HighchartsReact
+          highcharts={Highcharts}
+          options={{
+            ...options,
+            chart: {
+              ...options.chart,
+              width: width,
+              height: height,
+            },
+          }}
+          constructorType={"stockChart"}
+        />
+      </Box>
     );
   }
   return (
