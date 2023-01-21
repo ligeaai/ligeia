@@ -328,10 +328,10 @@ const LineCharts = ({
     xAxis: {
       type: "datetime",
       labels: {
-        formatter: function() {
-          return Highcharts.dateFormat('%b/%e/%Y', this.value);
-        }
-      }
+        formatter: function () {
+          return Highcharts.dateFormat("%d.%m.%Y %H:%M:%S ", this.value);
+        },
+      },
       // categories: categories,
     },
     yAxis: [...yAxisTitles],
