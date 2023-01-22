@@ -9,7 +9,7 @@ from request import req
 
 
 requ = os.environ.get("TAG_NAME_ENDPOINT")
-host = "localhost:9092"
+host = "broker:29092"
 topic = "out_of_range"
 consumer = KafkaConsumer(
     group_id=topic,

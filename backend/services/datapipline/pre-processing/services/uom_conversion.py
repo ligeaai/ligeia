@@ -8,7 +8,7 @@ import os
 import request
 
 requ = os.environ.get("TAG_NAME_ENDPOINT")
-host = "localhost:9092"
+host = "broker:29092"
 topic = "uom_conversion"
 consumer = KafkaConsumer(
     group_id=topic,

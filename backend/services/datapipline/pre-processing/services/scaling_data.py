@@ -7,7 +7,7 @@ import pandas as pd
 from ast import literal_eval
 import json
 
-host = "localhost:9092"
+host = "broker:29092"
 topic = "scaling_data"
 consumer = KafkaConsumer(
     group_id=topic,

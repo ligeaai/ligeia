@@ -3,9 +3,6 @@ import findspark
 findspark.init()
 import os
 
-os.environ[
-    "PYSPARK_SUBMIT_ARGS"
-] = "--packages org.apache.spark:spark-sql-kafka-0-10_2.11:2.3.1 pyspark-shell"
 from pyspark.sql import SparkSession
 from pyspark.sql import functions as F
 from pyspark.sql.types import *
