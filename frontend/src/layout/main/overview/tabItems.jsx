@@ -10,6 +10,10 @@ import {
   updateCouchDb,
   loadTapsOverview,
 } from "../../../services/actions/overview/taps";
+import Widget from "./widgets";
+
+import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
+import { ComponentErrorBody, ComponentError } from "../../../components";
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
 function setBreakPoint() {
@@ -87,15 +91,16 @@ const TabItems = (props) => {
       breakpoint={breakpoint}
       width={width}
     >
-      {widgets.map((widget) => {
+      {widgets.map((widget, i) => {
         return (
-          <GridItem
-            ref={ref}
+          <Widget
             key={`${widget}`}
             widget={widget}
-            item={widget}
+            root={props.item}
             {...props}
-          ></GridItem>
+          >
+            {props.children}
+          </Widget>
         );
       })}
     </ResponsiveGridLayout>

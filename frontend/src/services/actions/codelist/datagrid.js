@@ -62,7 +62,7 @@ export const addNewCodeListItemSchema = () => async (dispatch, getState) => {
         payload: payload
     })
     var pathnames = window.location.pathname.split("/").filter((x) => x);
-    pathnames[3] = "new"
+    pathnames[2] = "new"
     var routeTo = "";
     pathnames.map(e => {
         routeTo += `/${e}`

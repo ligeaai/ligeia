@@ -13,6 +13,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { LoadingComponent, MyDialog } from "../../../components";
 import MyHighchart from "./highchart";
 import UpdatePopUp from "./updatePopup";
+import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
+import { ComponentErrorBody, ComponentError } from "../../../components";
 import "../../../assets/css/dashboard.css";
 const Widgets = React.forwardRef((props, ref) => {
   const { widget, style, className, children, ...rest } = props;
@@ -122,6 +124,8 @@ const Widgets = React.forwardRef((props, ref) => {
               <FormControlLabel
                 control={
                   <Switch
+                    color="error"
+                    size="small"
                     checked={tabular}
                     onChange={() => {
                       setTabular((prev) => {
@@ -131,11 +135,13 @@ const Widgets = React.forwardRef((props, ref) => {
                     }}
                   />
                 }
-                label="Tabular View"
+                label="Tabular"
               />
               <FormControlLabel
                 control={
                   <Switch
+                    color="error"
+                    size="small"
                     checked={liveData}
                     onChange={() => {
                       setLiveData((prev) => {
@@ -150,6 +156,8 @@ const Widgets = React.forwardRef((props, ref) => {
               <FormControlLabel
                 control={
                   <Switch
+                    color="error"
+                    size="small"
                     checked={backfill}
                     onChange={() => {
                       setbackfill((prev) => {
@@ -177,14 +185,23 @@ const Widgets = React.forwardRef((props, ref) => {
           </Grid>
         </Box>
         <Box className="grid-item__graph">
-          <MyHighchart
-            highchartProps={highchartProps}
-            width={width}
-            height={height}
-            liveData={liveData}
-            backfillData={backfill}
-            tabular={tabular}
-          ></MyHighchart>
+          <ComponentError
+            errMsg={
+              <ComponentErrorBody
+                text="Something went wrong"
+                icon={<ErrorOutlineIcon />}
+              />
+            }
+          >
+            <MyHighchart
+              highchartProps={highchartProps}
+              width={width}
+              height={height}
+              liveData={liveData}
+              backfillData={backfill}
+              tabular={tabular}
+            ></MyHighchart>
+          </ComponentError>
         </Box>
         {children}
       </Box>

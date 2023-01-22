@@ -89,6 +89,7 @@ const StyledTreeItem = styled((props) => (
     overflow: "hidden",
     whiteSpace: "nowrap",
     textOverflow: "ellipsis",
+    padding: "4px",
   },
 }));
 const MyStyledTreeItem = React.memo(({ myItems, path }) => {
@@ -143,13 +144,16 @@ const MyStyledTreeItem = React.memo(({ myItems, path }) => {
     );
   });
 });
-function CustomizedTreeView() {
+function CustomizedTreeView({ onOpen, setWidthTrue }) {
   const ref = React.createRef();
   const dispatch = useDispatch();
   const items = useSelector((state) => state.collapseMenu.menuItems);
   const expandedItems = useSelector(
     (state) => state.treeview.width.values.overviewHierarchy
   );
+  const timerOnOpen = () => {
+    onOpen(document.getElementById("treeItems").offsetWidth);
+  };
   const onNodeSelect = (event, nodeId) => {
     if (event.target.tagName === "svg" || event.target.tagName === "path") {
       const index = expandedItems.indexOf(nodeId);
@@ -160,6 +164,8 @@ function CustomizedTreeView() {
         copyExpanded.splice(index, 1);
       }
       dispatch(updateCollapseMenuCouch(copyExpanded));
+      setWidthTrue();
+      setTimeout(timerOnOpen, 400);
     }
   };
   React.useEffect(() => {

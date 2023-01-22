@@ -30,4 +30,4 @@ export function dateFormatDDMMYYHHMMSS(date) {
     console.log(s);
     var newdate = dateDDMMYYHHMM + ":" + s;
     return newdate
-}
+}   

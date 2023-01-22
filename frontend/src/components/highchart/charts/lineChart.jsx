@@ -16,7 +16,7 @@ var client;
 var W3CWebSocket = require("websocket").w3cwebsocket;
 exporting(Highcharts);
 accessibility(Highcharts);
-export const LineChart = ({
+const LineCharts = ({
   highchartProps,
   width,
   height,
@@ -43,7 +43,7 @@ export const LineChart = ({
       });
       series.push({
         name: e.NAME,
-        data: data,
+
         color: highchartProps["Enable Custom Colors"]
           ? highchartProps[`[${e.NAME}] Color`]
           : "",
@@ -51,61 +51,187 @@ export const LineChart = ({
     }
   });
 
-  React.useEffect(() => {
-    if (client) {
-      setAllData([]);
-      setData([]);
-      client.onclose = function () {
-        console.log("WebSocket Client Closed");
-      };
-    }
-    if (backfillData) {
-      client = new W3CWebSocket(`${wsBaseUrl}/ws/tags/backfill/`);
-    } else client = new W3CWebSocket(`${wsBaseUrl}/ws/tags/`);
-    client.onerror = function () {
-      console.log("Connection Error");
-    };
-    client.onopen = function () {
-      console.log("connedted");
-      //client.send(JSON.stringify({ text: "Tag 1" }));
-    };
+  // React.useEffect(() => {
+  //   if (client) {
+  //     setAllData([]);
+  //     setData([]);
+  //     client.onclose = function () {
+  //       console.log("WebSocket Client Closed");
+  //     };
+  //   }
+  //   if (backfillData) {
+  //     client = new W3CWebSocket(`${wsBaseUrl}/ws/tags/backfill/`);
+  //   } else client = new W3CWebSocket(`${wsBaseUrl}/ws/tags/`);
+  //   client.onerror = function () {
+  //     console.log("Connection Error");
+  //   };
+  //   client.onopen = function () {
+  //     console.log("connedted");
+  //     //client.send(JSON.stringify({ text: "Tag 1" }));
+  //   };
 
-    client.onmessage = function (e) {
-      console.log(e);
+  //   client.onmessage = function (e) {
+  //     console.log(e);
 
-      function sendNumber() {
-        if (client.readyState === client.OPEN) {
-          if (typeof e.data === "string") {
-            let jsonData = JSON.parse(e.data);
-            if (Object.keys(jsonData.message).length > 5) {
-              let timestamp = new Date(jsonData.message.timestamp);
-              const time = dateFormatDDMMYYHHMM(timestamp);
-              setCategories((prev) => [...prev, time]);
-              setAllData((prev) => [...prev, jsonData.message]);
-              setData((prev) => [...prev, parseInt(jsonData.message.value)]);
-            }
+  //     function sendNumber() {
+  //       if (client.readyState === client.OPEN) {
+  //         if (typeof e.data === "string") {
+  //           let jsonData = JSON.parse(e.data);
+  //           if (Object.keys(jsonData.message).length > 5) {
+  //             // let timestamp = new Date(jsonData.message.createdtime);
+  //             let timestamp = new Date(jsonData.message.timestamp);
+  //             const time = dateFormatDDMMYYHHMM(timestamp);
+  //             setCategories((prev) => [...prev, time]);
+  //             setAllData((prev) => [...prev, jsonData.message]);
+  //             console.log(timestamp);
+  //             var series = options.series[0].data;
+  //             setData((prev) => [...prev, parseInt(jsonData.message.value)]);
+  //             // series.push([
+  //             //   Date.UTC(
+  //             //     timestamp.getFullYear(),
+  //             //     timestamp.getMonth() + 1,
+  //             //     timestamp.getDay(),
+  //             //     timestamp.getHours(),
+  //             //     timestamp.getMinutes(),
+  //             //     timestamp.getSeconds()
+  //             //   ),
+  //             //   parseInt(jsonData.message.value),
+  //             // ]);
+  //             // setData((prev) => [
+  //             //   ...prev,
+  //             //   [
+  //             //     Date.UTC(
+  //             //       timestamp.getFullYear(),
+  //             //       timestamp.getMonth(),
+  //             //       timestamp.getDay(),
+  //             //       timestamp.getHours(),
+  //             //       timestamp.getMinutes(),
+  //             //       timestamp.getSeconds()
+  //             //     ),
+  //             //     parseInt(jsonData.message.value),
+  //             //   ],
+  //             // ]);
+  //             // series.addPoint(
+  //             //   [timestamp, parseInt(jsonData.message.value)],
+  //             //   true,
+  //             //   true
+  //             // );
+  //           }
 
-            //setTimeout(sendNumber, 10000);
-            return data;
-          }
-        }
-      }
-      sendNumber();
-    };
-    return () => {
-      client.onclose = function () {
-        console.log("WebSocket Client Closed");
-      };
-    };
-  }, [liveData]);
+  //           //setTimeout(sendNumber, 10000);
+  //           return data;
+  //         }
+  //       }
+  //     }
+  //     sendNumber();
+  //   };
+  //   return () => {
+  //     client.onclose = function () {
+  //       console.log("WebSocket Client Closed");
+  //     };
+  //   };
+  // }, [liveData]);
   const options = {
+    constructorType: "stockChart",
     chart: {
       zoomBySingleTouch: true,
       zoomType: "x",
       type: "spline",
       reflow: true,
+      events: {
+        load: function () {
+          var series = this.series[0]; //TODO As for filtering by tag name, fix hard coded
+          var series1 = this.series[1];
+          var series2 = this.series[2];
+          if (client) {
+            setAllData([]);
+            setData([]);
+            client.onclose = function () {
+              console.log("WebSocket Client Closed");
+            };
+          }
+          if (backfillData) {
+            client = new W3CWebSocket(`${wsBaseUrl}/ws/tags/backfill/`);
+          } else client = new W3CWebSocket(`${wsBaseUrl}/ws/tags/`);
+          client.onerror = function () {
+            console.log("Connection Error");
+          };
+          client.onopen = function () {
+            console.log("connedted");
+            //client.send(JSON.stringify({ text: "Tag 1" }));
+          };
+
+          client.onmessage = function (e) {
+            console.log(e);
+
+            function sendNumber() {
+              if (client.readyState === client.OPEN) {
+                if (typeof e.data === "string") {
+                  let jsonData = JSON.parse(e.data);
+                  if (Object.keys(jsonData.message).length > 5) {
+                    // let timestamp = new Date(jsonData.message.createdtime);
+                    let timestamp = new Date(jsonData.message.timestamp);
+                    const time = dateFormatDDMMYYHHMM(timestamp);
+                    setCategories((prev) => [...prev, time]);
+                    setAllData((prev) => [...prev, jsonData.message]);
+                    console.log(series);
+
+                    setData((prev) => [
+                      ...prev,
+                      parseInt(jsonData.message.value),
+                    ]);
+                    var dataPoint1 = {
+                      x: new Date(timestamp).getTime(),
+                      y: Math.round(jsonData.message.value),
+                    };
+
+                    series.addPoint(dataPoint1);
+                    series1.addPoint(dataPoint1);
+                    series2.addPoint(dataPoint1);
+                    // series.push([
+                    //   Date.UTC(
+                    //     timestamp.getFullYear(),
+                    //     timestamp.getMonth() + 1,
+                    //     timestamp.getDay(),
+                    //     timestamp.getHours(),
+                    //     timestamp.getMinutes(),
+                    //     timestamp.getSeconds()
+                    //   ),
+                    //   parseInt(jsonData.message.value),
+                    // ]);
+                    // setData((prev) => [
+                    //   ...prev,
+                    //   [
+                    //     Date.UTC(
+                    //       timestamp.getFullYear(),
+                    //       timestamp.getMonth(),
+                    //       timestamp.getDay(),
+                    //       timestamp.getHours(),
+                    //       timestamp.getMinutes(),
+                    //       timestamp.getSeconds()
+                    //     ),
+                    //     parseInt(jsonData.message.value),
+                    //   ],
+                    // ]);
+                    // series.addPoint(
+                    //   [timestamp, parseInt(jsonData.message.value)],
+                    //   true,
+                    //   true
+                    // );
+                  }
+
+                  //setTimeout(sendNumber, 10000);
+                  return data;
+                }
+              }
+            }
+            sendNumber();
+          };
+        },
+      },
     },
     rangeSelector: {
+      //  enabled: !liveData,
       buttons: [
         {
           type: "minutes",
@@ -177,6 +303,9 @@ export const LineChart = ({
     exporting: {
       enabled: highchartProps["Show Enable Export"],
     },
+    // navigator: {
+    //   enabled: !liveData,
+    // },
     navigation: {
       buttonOptions: {
         verticalAlign: "top",
@@ -197,25 +326,48 @@ export const LineChart = ({
       text: "",
     },
     xAxis: {
-      categories: categories,
+      type: "datetime",
+      labels: {
+        formatter: function () {
+          return Highcharts.dateFormat("%d.%m.%Y %H:%M:%S ", this.value);
+        },
+      },
+      // categories: categories,
     },
     yAxis: [...yAxisTitles],
     series: [...series],
   };
   if (!tabular) {
+    if (liveData)
+      return (
+        <HighchartsReact
+          highcharts={Highcharts}
+          options={{
+            ...options,
+            chart: {
+              ...options.chart,
+              width: width,
+              height: height,
+            },
+          }}
+          // constructorType={"stockChart"}
+        />
+      );
     return (
-      <HighchartsReact
-        highcharts={Highcharts}
-        options={{
-          ...options,
-          chart: {
-            ...options.chart,
-            width: width,
-            height: height,
-          },
-        }}
-        constructorType={"stockChart"}
-      />
+      <Box>
+        <HighchartsReact
+          highcharts={Highcharts}
+          options={{
+            ...options,
+            chart: {
+              ...options.chart,
+              width: width,
+              height: height,
+            },
+          }}
+          constructorType={"stockChart"}
+        />
+      </Box>
     );
   }
   return (
@@ -233,3 +385,5 @@ export const LineChart = ({
     </Box>
   );
 };
+
+export default React.memo(LineCharts);

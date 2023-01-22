@@ -15,5 +15,6 @@ modelApp = [
     "apps.websocket",
     "apps.uoms",
     "apps.uom_base_unit",
+    "apps.calculated_tag"
     ]
 #     "apps.uom",
