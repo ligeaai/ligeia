@@ -104,14 +104,15 @@ services:
     networks:
       - net
   zookeeper:
-    image: confluentinc/cp-zookeeper:5.3.1
     hostname: zookeeper
-    container_name: ligeiaai-zookeeper-1
+    container_name: zookeeper
+    image: 'bitnami/zookeeper:latest'
     ports:
       - "2181:2181"
     environment:
-      ZOOKEEPER_CLIENT_PORT: 2181
-      ZOOKEEPER_TICK_TIME: 2000
+       -  ZOOKEEPER_CLIENT_PORT=2181
+       -  ZOOKEEPER_TICK_TIME=2000
+       -  ALLOW_ANONYMOUS_LOGIN=yes  
     networks:
       - net
   apache-kafka-broker1:
@@ -139,10 +140,42 @@ services:
     networks:
       - net
   apache-spark:
+    restart: unless-stopped
+    build:
+      context: .
+      dockerfile: ./dockerfile/local/datapipline/Spark/Dockerfile
     image: gettyimages/spark:2.4.1-hadoop-3.0
     container_name: ligeiaai-apache-spark
     volumes:
       - ./:/app
+    ports:
+      - '4040:4040'
+    depends_on:
+      - apache-kafka-broker1
+      - zookeeper
+    networks:
+      - net
+  nifi:
+    build:
+      context: .
+      dockerfile: ./dockerfile/local/datapipline/Nifi/Dockerfile
+    restart: unless-stopped
+    image: apache/nifi:latest
+    ports:
+      - "8080:8080" 
+    volumes:
+      - ./backend/services/datapipline/pre-processing:/datapipline
+    environment:
+      NIFI_WEB_HTTP_PORT: 8080
+      NIFI_CLUSTER_IS_NODE: 'true'
+      NIFI_CLUSTER_NODE_PROTOCOL_PORT: 8082
+      NIFI_ZK_CONNECT_STRING: "zookeeper:2181"
+      NIFI_ELECTION_MAX_WAIT: "1 min"
+      NIFI_ZK_ROOT_NODE: "/nifi"
+      NIFI_SENSITIVE_PROPS_KEY: '12345678912345'
+    depends_on:
+      - apache-kafka-broker1
+      - zookeeper
     networks:
       - net
   apache-cassandra:
