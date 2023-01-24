@@ -35,6 +35,7 @@ const Project = Loadable(React.lazy(() => import("../pages/main/configuration/pr
 const Register = Loadable(React.lazy(() => import("../pages/authorization/register/register")));
 const RegisterPageTwo = Loadable(React.lazy(() => import("../pages/authorization/register/registerPageTwo")));
 const Reporting = Loadable(React.lazy(() => import("../pages/main/asset/reporting")));
+const ReportingDesigner = Loadable(React.lazy(() => import("../pages/main/configuration/initialize/reportDesign/reportDesigner")));
 const Tags = Loadable(React.lazy(() => import("../pages/main/configuration/tags/tags")));
 const Types = Loadable(React.lazy(() => import("../pages/main/configuration/types/types")));
 
@@ -50,6 +51,7 @@ const AppRouter1 = () => {
             <Route exact path="/overview/*" element={<Overview />} />
             <Route path="/analytics" element={<Analytics />} />
             <Route path="/reporting" element={<Reporting />} />
+            <Route path="/tools/report_designer" element={<ReportingDesigner />} />
             <Route path="/administration" element={<Administration />} />
             <Route exact path="/configuration" element={<Configuration way="Configuration" />} />
             <Route exact path="/configuration/:myKey" element={<MyNavigator way="Configuration" />} />

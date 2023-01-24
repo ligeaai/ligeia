@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@grapecity/activereports": "^3.2.2",
     "@grapecity/activereports-react": "^3.2.0",
     "@material-ui/lab": "^4.0.0-alpha.61",
     "@mui/x-data-grid": "^5.17.7",
