@@ -19,7 +19,7 @@ import { MyTextField } from "../../../pages/main/configuration/items/properties/
 import { uuidv4 } from "../../utils/uuidGenerator";
 import { instance, config } from "../../baseApi";
 import { loadTreeviewItem, selectTreeViewItem } from "../treeview/treeview"
-
+import { dateFormatter, newDate } from "../../utils/dateFormatter";
 
 const typeFinder = {
     "BOOL": "PROPERTY_STRING",
@@ -27,7 +27,8 @@ const typeFinder = {
     "NUMBER": "PROPERTY_VALUE",
     "INT": "PROPERTY_VALUE",
     "CODE": "PROPERTY_CODE",
-    "BLOB_ID": "PROPERTY_BINARY"
+    "BLOB_ID": "PROPERTY_BINARY",
+    "DATE": "PROPERTY_DATE"
 }
 
 const MemoizedInputBaseEditInputCell = React.memo(MyTextField);
@@ -134,18 +135,23 @@ export const loadItemRowsDataGrid = () => async (dispatch, getState) => {
 
             })
         )
+        console.log(res);
         Promise.all(
             Object.keys(res.data).map(a => {
                 columnsId.push(a)
                 res.data[a].map(e => {
-                    if (e.PROPERTY_INFO !== "BOOL") {
+                    if (e.PROPERTY_INFO === "DATE") {
+                        console.log(e[typeFinder[e.PROPERTY_INFO]]);
+
+                        itemRows[e.PROPERTY_TYPE] = { ...itemRows[e.PROPERTY_TYPE], [a]: newDate(e[typeFinder[e.PROPERTY_INFO]]) }
+                    } else if (e.PROPERTY_INFO !== "BOOL") {
                         itemRows[e.PROPERTY_TYPE] = { ...itemRows[e.PROPERTY_TYPE], [a]: e[typeFinder[e.PROPERTY_INFO]] }
                     } else {
                         itemRows[e.PROPERTY_TYPE] = { ...itemRows[e.PROPERTY_TYPE], [a]: e[typeFinder[e.PROPERTY_INFO]] === "False" ? false : true }
                     }
 
                 })
-                itemRows["HISTORY"] = { ...itemRows["HISTORY"], [a]: a }
+                itemRows["HISTORY"] = { ...itemRows["HISTORY"], [a]: newDate(a) }
             })
         )
         dispatch({
@@ -206,8 +212,9 @@ export const saveItem = () => async (dispatch, getState) => {
         Promise.all(
             Object.keys(getState().itemDataGrid.columns).map(async (a, i) => {
                 if (i > 3) {
+                    console.log(typeof getState().itemDataGrid.rows["HISTORY"][a]);
                     COLUMNS.push({
-                        "START_TIME": a,
+                        "START_TIME": typeof getState().itemDataGrid.rows["HISTORY"][a] === "object" ? dateFormatter(getState().itemDataGrid.rows["HISTORY"][a]) : getState().itemDataGrid.rows["HISTORY"][a],
                     })
                     Object.keys(getState().itemDataGrid.rows).map((e) => {
                         //&& getState().itemDataGrid.rows[e][a] === null && getState().itemDataGrid.rows[e][a] === ""
@@ -244,6 +251,17 @@ export const saveItem = () => async (dispatch, getState) => {
                                     }
                                 }
                             }
+                            else if (getState().itemDataGrid.rows[e].PROPERTY_TYPE === "DATE") {
+                                console.log(getState().itemDataGrid.rows[e][a]);
+                                COLUMNS[i - 4] = {
+                                    ...COLUMNS[i - 4],
+                                    [getState().itemDataGrid.rows[e].PROPERTY_NAME]: {
+                                        "VALUE": dateFormatter(getState().itemDataGrid.rows[e][a]),
+                                        "VALUE_TYPE": getState().itemDataGrid.rows[e].PROPERTY_TYPE,
+                                        "ROW_ID": propsRowUuid.replace(/-/g, "")
+                                    }
+                                }
+                            }
                             else {
                                 COLUMNS[i - 4] = {
                                     ...COLUMNS[i - 4],
@@ -267,6 +285,7 @@ export const saveItem = () => async (dispatch, getState) => {
                 }
             })
         )
+        console.log(COLUMNS);
         const body = JSON.stringify({ ITEM, COLUMNS });
         try {
             console.log(body);

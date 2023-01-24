@@ -112,7 +112,10 @@ const InputCell = (params) => {
 export const MyTextField = (params) => {
   if (params.row.PROPERTY_TYPE === "TEXT") {
     return <GridEditInputCell {...params} />;
-  } else if (params.row.PROPERTY_TYPE === "HISTORY") {
+  } else if (
+    params.row.PROPERTY_TYPE === "HISTORY" ||
+    params.row.PROPERTY_TYPE === "DATE"
+  ) {
     return (
       <GridEditDateCell
         type="date"
@@ -138,12 +141,15 @@ export const MyTextFieldRender = (params) => {
     return (
       <GridBooleanCell disabled checked={false} type="checkbox" {...params} />
     );
-  } else if (params.row.PROPERTY_TYPE === "HISTORY") {
+  } else if (
+    params.row.PROPERTY_TYPE === "HISTORY" ||
+    params.row.PROPERTY_TYPE === "DATE"
+  ) {
     var d = params.row[params.field].getDate();
     var m = params.row[params.field].getMonth();
     m += 1;
     var y = params.row[params.field].getFullYear();
-    var newdate = d + "." + y + "." + m;
+    var newdate = d + "." + m + "." + y;
     return <Box>{newdate}</Box>;
   } else {
     return <Box>{params.row[params.field]}</Box>;
