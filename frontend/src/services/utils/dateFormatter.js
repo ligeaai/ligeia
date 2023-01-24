@@ -30,4 +30,12 @@ export function dateFormatDDMMYYHHMMSS(date) {
     console.log(s);
     var newdate = dateDDMMYYHHMM + ":" + s;
     return newdate
+}
+
+export function newDate(date) {
+    var date = date.split("-");
+    var day = date[0];
+    var month = date[1];
+    var year = date[2];
+    return new Date(year, month - 1, day);
 }   
