@@ -1,9 +1,9 @@
 import axios from "axios";
 
-const baseUrl = "http://34.125.220.112:8000"
+const baseUrl = "http://34.125.121.93:8000"
 // const baseUrl = "http://localhost:8000"
 const apiVersion = "/api/v1"
-export const wsBaseUrl = "ws://34.125.220.112:8000"
+export const wsBaseUrl = "ws://34.125.121.93:8000"
 export const instance = axios.create({
     baseURL: `${baseUrl}${apiVersion}`
 });

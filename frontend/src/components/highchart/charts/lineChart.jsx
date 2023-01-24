@@ -11,8 +11,8 @@ import { wsBaseUrl } from "../../../services/baseApi";
 import { DataGrid } from "../../index";
 import { dateFormatDDMMYYHHMM } from "../../../services/utils/dateFormatter";
 import { useSelector } from "react-redux";
-
-var client;
+import { uuidv4 } from "../../../services/utils/uuidGenerator";
+let client = [];
 var W3CWebSocket = require("websocket").w3cwebsocket;
 exporting(Highcharts);
 accessibility(Highcharts);
@@ -31,6 +31,7 @@ const LineCharts = ({
   const [categories, setCategories] = React.useState([]);
   const [data, setData] = React.useState([]);
   const [allData, setAllData] = React.useState([]);
+
   highchartProps.Inputs.map((e) => {
     if (!highchartProps[`[${e.NAME}] Disable Data Grouping`]) {
       yAxisTitles.push({
@@ -41,96 +42,102 @@ const LineCharts = ({
         min: parseInt(e.NORMAL_MINIMUM),
         opposite: false,
       });
-      series.push({
-        name: e.NAME,
+      // series.push({
+      //   name: e.NAME,
 
-        color: highchartProps["Enable Custom Colors"]
-          ? highchartProps[`[${e.NAME}] Color`]
-          : "",
-      });
+      //   color: highchartProps["Enable Custom Colors"]
+      //     ? highchartProps[`[${e.NAME}] Color`]
+      //     : "",
+      // });
     }
   });
 
-  // React.useEffect(() => {
-  //   if (client) {
-  //     setAllData([]);
-  //     setData([]);
-  //     client.onclose = function () {
-  //       console.log("WebSocket Client Closed");
-  //     };
-  //   }
-  //   if (backfillData) {
-  //     client = new W3CWebSocket(`${wsBaseUrl}/ws/tags/backfill/`);
-  //   } else client = new W3CWebSocket(`${wsBaseUrl}/ws/tags/`);
-  //   client.onerror = function () {
-  //     console.log("Connection Error");
-  //   };
-  //   client.onopen = function () {
-  //     console.log("connedted");
-  //     //client.send(JSON.stringify({ text: "Tag 1" }));
-  //   };
+  React.useEffect(() => {
+    // if (client) {
+    //   setAllData([]);
+    //   setData([]);
+    //   client.onclose = function () {
+    //     console.log("WebSocket Client Closed");
+    //   };
+    // }
+    // if (backfillData) {
+    //   client = new W3CWebSocket(`${wsBaseUrl}/ws/tags/backfill/`);
+    // } else client = new W3CWebSocket(`${wsBaseUrl}/ws/tags/`);
+    // client.onerror = function () {
+    //   console.log("Connection Error");
+    // };
+    // client.onopen = function () {
+    //   console.log("connedted");
+    //   //client.send(JSON.stringify({ text: "Tag 1" }));
+    // };
 
-  //   client.onmessage = function (e) {
-  //     console.log(e);
+    // client.onmessage = function (e) {
+    //   console.log(e);
 
-  //     function sendNumber() {
-  //       if (client.readyState === client.OPEN) {
-  //         if (typeof e.data === "string") {
-  //           let jsonData = JSON.parse(e.data);
-  //           if (Object.keys(jsonData.message).length > 5) {
-  //             // let timestamp = new Date(jsonData.message.createdtime);
-  //             let timestamp = new Date(jsonData.message.timestamp);
-  //             const time = dateFormatDDMMYYHHMM(timestamp);
-  //             setCategories((prev) => [...prev, time]);
-  //             setAllData((prev) => [...prev, jsonData.message]);
-  //             console.log(timestamp);
-  //             var series = options.series[0].data;
-  //             setData((prev) => [...prev, parseInt(jsonData.message.value)]);
-  //             // series.push([
-  //             //   Date.UTC(
-  //             //     timestamp.getFullYear(),
-  //             //     timestamp.getMonth() + 1,
-  //             //     timestamp.getDay(),
-  //             //     timestamp.getHours(),
-  //             //     timestamp.getMinutes(),
-  //             //     timestamp.getSeconds()
-  //             //   ),
-  //             //   parseInt(jsonData.message.value),
-  //             // ]);
-  //             // setData((prev) => [
-  //             //   ...prev,
-  //             //   [
-  //             //     Date.UTC(
-  //             //       timestamp.getFullYear(),
-  //             //       timestamp.getMonth(),
-  //             //       timestamp.getDay(),
-  //             //       timestamp.getHours(),
-  //             //       timestamp.getMinutes(),
-  //             //       timestamp.getSeconds()
-  //             //     ),
-  //             //     parseInt(jsonData.message.value),
-  //             //   ],
-  //             // ]);
-  //             // series.addPoint(
-  //             //   [timestamp, parseInt(jsonData.message.value)],
-  //             //   true,
-  //             //   true
-  //             // );
-  //           }
+    //   function sendNumber() {
+    //     if (client.readyState === client.OPEN) {
+    //       if (typeof e.data === "string") {
+    //         let jsonData = JSON.parse(e.data);
+    //         if (Object.keys(jsonData.message).length > 5) {
+    //           // let timestamp = new Date(jsonData.message.createdtime);
+    //           let timestamp = new Date(jsonData.message.timestamp);
+    //           const time = dateFormatDDMMYYHHMM(timestamp);
+    //           setCategories((prev) => [...prev, time]);
+    //           setAllData((prev) => [...prev, jsonData.message]);
+    //           console.log(timestamp);
+    //           var series = options.series[0].data;
+    //           setData((prev) => [...prev, parseInt(jsonData.message.value)]);
+    //           // series.push([
+    //           //   Date.UTC(
+    //           //     timestamp.getFullYear(),
+    //           //     timestamp.getMonth() + 1,
+    //           //     timestamp.getDay(),
+    //           //     timestamp.getHours(),
+    //           //     timestamp.getMinutes(),
+    //           //     timestamp.getSeconds()
+    //           //   ),
+    //           //   parseInt(jsonData.message.value),
+    //           // ]);
+    //           // setData((prev) => [
+    //           //   ...prev,
+    //           //   [
+    //           //     Date.UTC(
+    //           //       timestamp.getFullYear(),
+    //           //       timestamp.getMonth(),
+    //           //       timestamp.getDay(),
+    //           //       timestamp.getHours(),
+    //           //       timestamp.getMinutes(),
+    //           //       timestamp.getSeconds()
+    //           //     ),
+    //           //     parseInt(jsonData.message.value),
+    //           //   ],
+    //           // ]);
+    //           // series.addPoint(
+    //           //   [timestamp, parseInt(jsonData.message.value)],
+    //           //   true,
+    //           //   true
+    //           // );
+    //         }
 
-  //           //setTimeout(sendNumber, 10000);
-  //           return data;
-  //         }
-  //       }
-  //     }
-  //     sendNumber();
-  //   };
-  //   return () => {
-  //     client.onclose = function () {
-  //       console.log("WebSocket Client Closed");
-  //     };
-  //   };
-  // }, [liveData]);
+    //         //setTimeout(sendNumber, 10000);
+    //         return data;
+    //       }
+    //     }
+    //   }
+    //   sendNumber();
+    // };
+    return () => {
+      client.map((e) => {
+        setAllData([]);
+        e.onclose = function () {
+          console.log("WebSocket Client Closed");
+        };
+      });
+      // client.onclose = function () {
+      //   console.log("WebSocket Client Closed");
+      // };
+    };
+  }, [liveData]);
   const options = {
     constructorType: "stockChart",
     chart: {
@@ -140,54 +147,115 @@ const LineCharts = ({
       reflow: true,
       events: {
         load: function () {
-          var series = this.series[0]; //TODO As for filtering by tag name, fix hard coded
-          var series1 = this.series[1];
-          var series2 = this.series[2];
-          if (client) {
+          var series = this;
+          let dataList = [];
+          client.map((e) => {
             setAllData([]);
-            setData([]);
-            client.onclose = function () {
+            e.onclose = function () {
               console.log("WebSocket Client Closed");
             };
-          }
-          if (backfillData) {
-            client = new W3CWebSocket(`${wsBaseUrl}/ws/tags/backfill/`);
-          } else client = new W3CWebSocket(`${wsBaseUrl}/ws/tags/`);
-          client.onerror = function () {
-            console.log("Connection Error");
-          };
-          client.onopen = function () {
-            console.log("connedted");
-            //client.send(JSON.stringify({ text: "Tag 1" }));
-          };
+          });
+          console.log("lsşakdlksşad");
+          highchartProps.Inputs.map((tag, index) => {
+            console.log(client);
+            const myindex = index;
 
-          client.onmessage = function (e) {
-            console.log(e);
+            if (backfillData) {
+              client[index] = new W3CWebSocket(
+                `${wsBaseUrl}/ws/tags/backfill/${tag.ROW_ID}`
+              );
+            } else {
+              client[index] = new W3CWebSocket(
+                `${wsBaseUrl}/ws/tags/${tag.ROW_ID}`
+              );
+            }
+            client[index].onerror = function () {
+              console.log("Connection Error");
+            };
+            client[index].onopen = function () {
+              console.log("connedted");
+              //client.send(JSON.stringify({ text: "Tag 1" }));
+            };
+            console.log(index);
+            dataList[index] = series.series[index];
+            client[index].onmessage = function (e) {
+              console.log("askdlşsad");
+              async function sendNumber() {
+                if (client.readyState === client.OPEN) {
+                  if (typeof e.data === "string") {
+                    let jsonData = JSON.parse(e.data);
+                    console.log(jsonData);
 
-            function sendNumber() {
-              if (client.readyState === client.OPEN) {
-                if (typeof e.data === "string") {
-                  let jsonData = JSON.parse(e.data);
-                  if (Object.keys(jsonData.message).length > 5) {
                     // let timestamp = new Date(jsonData.message.createdtime);
-                    let timestamp = new Date(jsonData.message.timestamp);
-                    const time = dateFormatDDMMYYHHMM(timestamp);
-                    setCategories((prev) => [...prev, time]);
-                    setAllData((prev) => [...prev, jsonData.message]);
-                    console.log(series);
+                    // let timestamp = new Date(jsonData.message.timestamp);
+                    // const time = dateFormatDDMMYYHHMM(timestamp);
+                    // setCategories((prev) => [...prev, time]);
+                    // setAllData((prev) => [...prev, jsonData.message]);
+                    // console.log(series);
 
-                    setData((prev) => [
-                      ...prev,
-                      parseInt(jsonData.message.value),
-                    ]);
-                    var dataPoint1 = {
-                      x: new Date(timestamp).getTime(),
-                      y: Math.round(jsonData.message.value),
-                    };
+                    // setData((prev) => [
+                    //   ...prev,
+                    //   parseInt(jsonData.message.value),
+                    // ]);
+                    console.log(myindex);
 
-                    series.addPoint(dataPoint1);
-                    series1.addPoint(dataPoint1);
-                    series2.addPoint(dataPoint1);
+                    console.log("asds");
+                    Promise.all(
+                      Object.keys(jsonData).map((f) => {
+                        jsonData[f][1].map((d) => {
+                          dataList[myindex].addPoint({
+                            x: d[0] * 1000,
+                            y: d[1],
+                          });
+                          setAllData((prev) => [
+                            ...prev,
+                            {
+                              created_by: tag.NAME,
+                              timestamp: d[0],
+                              value: d[1],
+                              id: uuidv4(),
+                            },
+                          ]);
+                        });
+                      })
+                    );
+
+                    // jsonData["temperature:20"][1].map((d) => {
+                    //   var dataPoint1 = {
+                    //     x: d[0],
+                    //     y: Math.round(d[1]),
+                    //   };
+
+                    //   dataList[index] = series.series[index];
+                    //   dataList[index].addPoint(dataPoint1);
+                    // });
+                    // jsonData["vibration_x:20"][1].map((d) => {
+                    //   var dataPoint1 = {
+                    //     x: d[0],
+                    //     y: Math.round(d[1]),
+                    //   };
+
+                    //   dataList[index] = series.series[index];
+                    //   dataList[index].addPoint(dataPoint1);
+                    // });
+
+                    // jsonData["pressure:19"][1].map((d) => {
+                    //   var dataPoint1 = {
+                    //     x: d[0],
+                    //     y: Math.round(d[1]),
+                    //   };
+
+                    //   dataList[index] = series.series[index];
+                    //   dataList[index].addPoint(dataPoint1);
+                    // });
+                    // var dataPoint1 = {
+                    //   x: new Date(timestamp).getTime(),
+                    //   y: Math.round(jsonData.message.value),
+                    // };
+
+                    // dataList[index] = series.series[index];
+                    // dataList[index].addPoint(jsonData[1]);
+
                     // series.push([
                     //   Date.UTC(
                     //     timestamp.getFullYear(),
@@ -218,15 +286,16 @@ const LineCharts = ({
                     //   true,
                     //   true
                     // );
-                  }
 
-                  //setTimeout(sendNumber, 10000);
-                  return data;
+                    //setTimeout(sendNumber, 10000);
+                    //return data;
+                    return true;
+                  }
                 }
               }
-            }
-            sendNumber();
-          };
+              sendNumber();
+            };
+          });
         },
       },
     },
@@ -329,13 +398,22 @@ const LineCharts = ({
       type: "datetime",
       labels: {
         formatter: function () {
-          return Highcharts.dateFormat("%d.%m.%Y %H:%M:%S ", this.value);
+          return Highcharts.dateFormat("%d.%m.%Y %H:%M:%S", this.value);
         },
       },
       // categories: categories,
     },
     yAxis: [...yAxisTitles],
-    series: [...series],
+    series: [
+      ...highchartProps.Inputs.map((e) => {
+        return {
+          name: e.NAME,
+          color: highchartProps["Enable Custom Colors"]
+            ? highchartProps[`[${e.NAME}] Color`]
+            : "",
+        };
+      }),
+    ],
   };
   if (!tabular) {
     if (liveData)
@@ -375,8 +453,8 @@ const LineCharts = ({
       <DataGrid
         columns={[
           { field: "created_by", headerName: "Created By" },
-          { field: "createdtime", headerName: "Created Time" },
-          { field: "message_type", headerName: "Message Type" },
+          //  { field: "createdtime", headerName: "Created Time" },
+          //  { field: "message_type", headerName: "Message Type" },
           { field: "timestamp", headerName: "Time Stamp" },
           { field: "value", headerName: "Value" },
         ]}
