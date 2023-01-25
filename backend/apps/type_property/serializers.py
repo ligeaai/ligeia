@@ -39,7 +39,9 @@ class TypePropertySerializer(serializers.ModelSerializer):
             "SORT_ORDER",
             "ROW_ID",
             "LAYER_NAME",
-            "PROP_UNIQUE"
+            "PROP_UNIQUE",
+            "HIDDEN",
+            "UNICODE"
         ]
 
 class TypePropertySaveUpdateSerializer(serializers.Serializer):
