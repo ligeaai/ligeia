@@ -100,7 +100,9 @@ export const loadTypeRowsDataGrid = () => async (dispatch, getState) => {
         };
         Object.keys(res.data).map(e => {
             res.data[e].map(a => {
-                response[a.PROPERTY_NAME] = a
+                if (a.HIDDEN === "False") {
+                    response[a.PROPERTY_NAME] = a
+                }
             })
         })
         dispatch({
