@@ -69,18 +69,17 @@ class UserLoginSerializer(serializers.Serializer):
             user = authenticate(
                 request=self.context.get("request"), username=email, password=password
             )
-            user_qs = User.objects.filter(email=email)
-            if user_qs:
-                msg = _("Unable to log in with provided credentials(Password).")
-                raise serializers.ValidationError({"Message":msg}, code="authorization")
-            else:
-                msg = _("Account doesn't exists")
-                raise serializers.ValidationError({"Message":msg}, code="authorization")
+            if not user:
+                user_qs = User.objects.filter(email=email)
+                if user_qs:
+                    msg = _("Unable to log in with provided credentials(Password).")
+                    raise serializers.ValidationError({"Message":msg}, code="authorization")
+                else:
+                    msg = _("Account doesn't exists")
+                    raise serializers.ValidationError({"Message":msg}, code="authorization")
         
             
-            # if not user:
-            #     msg = _("Unable to log in with provided credentials.")
-            #     raise serializers.ValidationError(msg, code="authorization")
+
 
 
 
