@@ -42,6 +42,24 @@ class ItemPropertyDetailsSerializer(serializers.ModelSerializer):
 
 
 class ItemPropertyCustomSaveSerializer(serializers.Serializer):
+    
+    def _validated_prop_uniq(self,tempt_data,index,type_of_value,item_id):
+        try:
+            for keys in tempt_data[index].keys():
+                condition_value =tempt_data[index].get(keys).get('VALUE')
+                if (condition_value == "" or condition_value == None ):
+                    continue
+                typeValue = type_of_value.get(tempt_data[index].get(keys).get('VALUE_TYPE'))
+                if tempt_data[index].get(keys).get('UNICODE') == "True":
+                    value = tempt_data[index].get(keys).get('VALUE')
+                    qs_uniqe = item_property.objects.filter(Q(PROPERTY_TYPE = keys) & Q(**{typeValue:value}) & ~Q(ITEM_ID = item_id))
+                    if qs_uniqe:
+                        msg = (str(keys) + " must be unique")
+                        raise serializers.ValidationError(msg, code="authorization")
+                    
+        except BaseException as e:
+            raise serializers.ValidationError({"Message":e}, code="authorization")
+
     def save(self, validated_data):
         item_id = validated_data.data.get('ITEM').get('ITEM_ID')
         type_of_value = {
@@ -65,7 +83,11 @@ class ItemPropertyCustomSaveSerializer(serializers.Serializer):
             time = tempt_data[index].get('START_TIME')
             tempt_data[index].pop("START_TIME")
             tempt_keys = tempt_data[index].keys()
+
+            self._validated_prop_uniq(tempt_data,index,type_of_value,item_id)
             try:
+                queryset = item.objects.filter(ITEM_ID = item_id).delete()
+                queryset = item_property.objects.filter(ITEM_ID = item_id).delete()
                 for keys in tempt_keys:
                     condition_value =tempt_data[index].get(keys).get('VALUE')
                     if (condition_value == "" or condition_value == None ):
@@ -94,8 +116,6 @@ class ItemPropertyCustomSaveSerializer(serializers.Serializer):
                     tempt_data[index].get(keys).pop('VALUE_TYPE')
                     tempt_data[index].get(keys).pop('VALUE')
                     item_propertys = item_property.objects.create(**tempt_data[index].get(keys))
-                    queryset = item.objects.filter(ITEM_ID = item_id).delete()
-                    queryset = item_property.objects.filter(ITEM_ID = item_id).delete()
                     item_data = validated_data.data['ITEM']
                     item_data['START_DATETIME'] = time
                     validate_model_not_null(item_data,"item",validated_data)
