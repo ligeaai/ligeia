@@ -46,6 +46,7 @@ class ItemPropertyCustomSaveSerializer(serializers.Serializer):
             "CODE":"PROPERTY_CODE",
             "BLOB_ID":"PROPERTY_BINARY",
             "PERCENT":"PROPERTY_VALUE",
+            "DATE":"PROPERTY_DATE"
         }
         item_data = validated_data.get('ITEM')
         tempt_data = validated_data.get('COLUMNS')

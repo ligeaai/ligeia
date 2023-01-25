@@ -118,7 +118,9 @@ class TypeEditorBaseView(generics.CreateAPIView):
         queryset  = Type.objects.all()
         serializer = TypeDetailsSerializer(queryset,many = True)
         self._getResourceList(serializer.data,request.data.get('CULTURE'))
-        return Response({"Message": serializer.data}, status=status.HTTP_200_OK)
+        sorted_list = sorted(list(serializer.data), key=lambda d: str(d['TYPE']))
+        
+        return Response({"Message": sorted_list}, status=status.HTTP_200_OK)
    
     def _getResourceList(self,data,culture):
         for index in range(0,len(data)):

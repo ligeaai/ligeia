@@ -57,7 +57,8 @@ class TagsDetailsView(generics.ListAPIView):
     def get(self, request, *args, **kwargs):
         queryset = tags.objects.all()
         serializer = TagsDetiailsSerializer(queryset,many = True)
-        return Response(serializer.data,status=status.HTTP_200_OK)
+        sorted_list = sorted(list(serializer.data), key=lambda d: str(d['NAME']))
+        return Response(sorted_list,status=status.HTTP_200_OK)
 
 class TagsSpesificDetailsView(generics.CreateAPIView):
 

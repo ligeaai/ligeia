@@ -108,9 +108,9 @@ class ItemDetailsView(generics.ListAPIView):
                         serializer.data[index]['NAME'] = value
         message = "Succsesfull listed for items"
         logger.info(message,request = request)
-        
-        Red.set(cache_key,(serializer.data))
-        return Response(serializer.data,status=status.HTTP_200_OK)
+        sorted_list = sorted(list(serializer.data), key=lambda d: d['NAME']) 
+        Red.set(cache_key,(sorted_list))
+        return Response(sorted_list,status=status.HTTP_200_OK)
 
 
 

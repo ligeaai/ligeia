@@ -102,6 +102,9 @@ class CodeListParentView(generics.CreateAPIView):
         serializer = CodeListDetailsSerializer(queryset, many=True)
         serializer = null_value_to_space(serializer.data,request=request)
         logger.info(request=request, message="Code list details only one fields")
+        sorted_list = sorted(list(serializer), key=lambda d: d['CODE_TEXT']) 
+        Red.set(cache_key,(sorted_list))
+        return Response(sorted_list,status=status.HTTP_200_OK)
         # Red.set(cache_key, serializer)
         return Response(serializer, status=status.HTTP_200_OK)
 
