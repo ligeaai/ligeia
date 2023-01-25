@@ -75,8 +75,8 @@ export const login = (email, password) => async dispatch => {
             type: LOGIN_SUCCESS,
             payload: res.data.token
         });
-        dispatch(setLoaderFalse());
-        dispatch(loadUser());
+        await dispatch(setLoaderFalse());
+        await dispatch(loadUser());
         history.push(`/`);
     } catch (err) {
         console.log(err);

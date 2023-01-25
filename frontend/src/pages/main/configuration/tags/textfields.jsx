@@ -201,6 +201,7 @@ const TransactionTypeSelect = ({ row, defaultValue }) => {
   const selectedIndex = useSelector(
     (state) => state.treeview.selectedItem.selectedIndex
   );
+  const culture = useSelector((state) => state.lang.cultur);
   const dispatch = useDispatch();
   const [values, setvalues] = React.useState([]);
 
@@ -258,8 +259,9 @@ const TransactionTypeSelect = ({ row, defaultValue }) => {
   };
   React.useEffect(() => {
     var ignore = false;
+    const body = JSON.stringify({ CULTURE: culture });
     const myFunc = async () => {
-      let res = await instance.get("/tags/links/", config());
+      let res = await instance.post("/tags/links/", body, config());
       if (!ignore) {
         console.log(res);
         setvalues(res.data);
@@ -280,7 +282,7 @@ const TransactionTypeSelect = ({ row, defaultValue }) => {
       values={values}
       valuesPath="TO_TYPE"
       defaultValue={defaultValue}
-      dataTextPath="TO_TYPE"
+      dataTextPath="SHORT_LABEL"
       handleChangeFunc={handleChangeFunc}
     />
   );
