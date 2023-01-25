@@ -41,23 +41,22 @@ for msg in consumer:
     time_for_redis = convert_to_time(data["createdtime"][0:19])
     # ----------------- VALUES -----------------
     columns = {
+        "completion": data["completion"],
         "version": data["version"],
-        "id": data["id"],
         "created_by": data["created_by"],
         "createdtime": data["createdtime"],
         "message_type": data["message_type"],
         "fqn": data["fqn"],
         "timestamp": data["timestamp"],
         "quality": data["quality"],
-        "value": data["value"],
+        "tag_value": data["tag_value"],
         "tag_name": data["tag_name"],
-        "type_value": data["type_value"],
     }
     timestamp = time_for_redis
-    value = str(data["value"])
+    value = str(data["tag_value"])
     key_times = str(data["createdtime"][8]) + str(data["createdtime"][9])
     print(key_times)
-    key = data["type_value"] + ":" + key_times
+    key = data["tag_name"] + ":" + key_times
     # ------------------------------------------
     # Create Redis Db
     created_redis_db(key, columns)
@@ -66,7 +65,7 @@ for msg in consumer:
     add_to_created_database(key, timestamp, value, columns)
     print("Complete")
     # ------------------------------------------
-    mget_filters = ["id=1"]
+    mget_filters = ["completion=15"]
     mget_reply = rds.ts().mget(mget_filters, with_labels=True)
     print(json.dumps(mget_reply, indent=4) + "\n")
     # Redis Cli Command --> TS.MGET WITHLABELS FILTER area_id=20

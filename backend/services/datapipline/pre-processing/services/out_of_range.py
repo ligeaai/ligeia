@@ -41,7 +41,7 @@ def tag_name_check(data_tag_name, incoming_tag_name):
 def data_range_check(data, min_max_values):
     try:
         quality = data["quality"]
-        data_value = float(data["value"])
+        data_value = float(data["tag_value"])
         min_values = float(min_max_values[0])
         max_values = float(min_max_values[1])
         print(max_values)
@@ -64,9 +64,8 @@ for message in consumer:
     df2 = dict(data)
     if data["quality"] == 192:
         data_range_check(data, tag_name_check(data["tag_name"], incoming_tag_name))
-    key = data["id"].encode("utf-8")
+    key = data["completion"].encode("utf-8")
     del data["step-status"]
-    del data["uom"]
     print(data["tag_name"])
     producer.send(data["message_type"], value=data, key=key)
     producer.flush()

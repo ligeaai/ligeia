@@ -28,9 +28,9 @@ consumer.seek_to_end()
 
 
 def scale_data(data):
-    scaled_data = float(data["value"])
-    data["value"] = scaled_data * 1
-    return data["value"]
+    scaled_data = float(data["tag_value"])
+    data["tag_value"] = scaled_data * 1
+    return data["tag_value"]
 
 
 for message in consumer:

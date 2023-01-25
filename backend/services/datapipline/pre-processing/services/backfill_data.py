@@ -44,9 +44,6 @@ for message in consumer:
     df = message.value
     data = literal_eval(df.decode("utf8"))
     data["step-status"] = "backfill_data"
-    keep_data_type_value = data["value"]
-    data["value"] = data["type_value"]
-    data["type_value"] = keep_data_type_value
     checkBackData(data, data["DiffInHours"])
     producer.send("frozen_data", value=data)
     producer.flush()

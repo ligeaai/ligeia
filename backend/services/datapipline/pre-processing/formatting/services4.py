@@ -11,7 +11,7 @@ query = (
 )
 
 query2 = (
-    df19.selectExpr("CAST(id AS STRING) AS key", "to_json(struct(*)) AS value")
+    df19.selectExpr("CAST(completion AS STRING) AS key", "to_json(struct(*)) AS value")
     .writeStream.format("kafka")
     .option("kafka.bootstrap.servers", "broker:29092")
     .option("topic", "backorlive")
@@ -21,6 +21,14 @@ query2 = (
     )
     .start()
 )
+
+query4 = (
+    df19.writeStream.option("truncate", False)
+    .outputMode("Append")
+    .format("console")
+    .start()
+)
+
 query.awaitTermination()
 
 # query9 = df7.selectExpr("CAST(id AS STRING) AS key", "to_json(struct(*)) AS value") \

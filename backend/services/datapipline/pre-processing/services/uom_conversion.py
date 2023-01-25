@@ -65,9 +65,9 @@ for message in consumer:
     formules = request.getFormule(tags.get("UOM_QUANTITY_TYPE"))
     new_value = matchUomAndTagUom(data, tags, formules)
     if new_value:
-        data["value"] = new_value
+        data["tag_value"] = new_value
     df2 = dict(data)
-    print(data["value"], new_value)
+    print(data["tag_value"], new_value)
     # uom_check("F", data["UOM"])
     producer.send("out_of_range", value=data)
     producer.flush()
