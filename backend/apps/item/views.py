@@ -40,17 +40,17 @@ class ItemScriptSaveView(generics.CreateAPIView):
     def post(self, request, *args, **kwargs):
        item_id = request.data.get('ITEM').get('ITEM_ID')
        cache_key = str(request.user) + item_id
-       queryset = item.objects.filter(ITEM_ID = item_id).delete()
-       queryset = item_property.objects.filter(ITEM_ID = item_id).delete()
-       item_data = request.data['ITEM']
-       item_data['START_DATETIME'] = request.data.get('COLUMNS')[0].get('START_TIME')
-       validate_model_not_null(item_data,"item",request)
-       serializer = ItemCustomSaveSerializer(data = item_data)
-       serializer.is_valid()
-       serializer.save(item_data)
+    #    queryset = item.objects.filter(ITEM_ID = item_id).delete()
+    #    queryset = item_property.objects.filter(ITEM_ID = item_id).delete()
+    #    item_data = request.data['ITEM']
+    #    item_data['START_DATETIME'] = request.data.get('COLUMNS')[0].get('START_TIME')
+    #    validate_model_not_null(item_data,"item",request)
+    #    serializer = ItemCustomSaveSerializer(data = item_data)
+    #    serializer.is_valid()
+    #    serializer.save(item_data)
        serializer_prop = ItemPropertyCustomSaveSerializer(data = request.data)
        serializer_prop.is_valid()
-       serializer_prop.save(request.data)
+       serializer_prop.save(request)
        Red.delete(cache_key)
        return Response(request.data,status=status.HTTP_201_CREATED)
 
@@ -110,7 +110,7 @@ class ItemDetailsView(generics.ListAPIView):
         logger.info(message,request = request)
         sorted_list = sorted(list(serializer.data), key=lambda d: d['NAME']) 
         Red.set(cache_key,(sorted_list))
-        return Response(sorted_list,status=status.HTTP_200_OK)
+        return Response(serializer.data,status=status.HTTP_200_OK)
 
 
 

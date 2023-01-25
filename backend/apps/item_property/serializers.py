@@ -1,9 +1,14 @@
 from datetime import datetime
 import uuid
-
+from django.db.models import Q
 from rest_framework import serializers
-
+from apps.item.models import item
+from apps.item.serializers import ItemCustomSaveSerializer
 from .models import item_property
+from utils.models_utils import (
+                                validate_model_not_null,
+                                validate_find,
+                                )
 
 
 class ItemPropertySaveSerializer(serializers.ModelSerializer):
@@ -38,6 +43,7 @@ class ItemPropertyDetailsSerializer(serializers.ModelSerializer):
 
 class ItemPropertyCustomSaveSerializer(serializers.Serializer):
     def save(self, validated_data):
+        item_id = validated_data.data.get('ITEM').get('ITEM_ID')
         type_of_value = {
             "TEXT":"PROPERTY_STRING",
             "NUMBER":"PROPERTY_VALUE",
@@ -48,8 +54,9 @@ class ItemPropertyCustomSaveSerializer(serializers.Serializer):
             "PERCENT":"PROPERTY_VALUE",
             "DATE":"PROPERTY_DATE"
         }
-        item_data = validated_data.get('ITEM')
-        tempt_data = validated_data.get('COLUMNS')
+        item_data = validated_data.data.get('ITEM')
+        tempt_data = validated_data.data.get('COLUMNS')
+        user = item_data.get('LAST_UPDT_USER')
         for index in range(0,len(tempt_data)):
             try:
                 end_time =  tempt_data[index+1].get('START_TIME')
@@ -63,26 +70,41 @@ class ItemPropertyCustomSaveSerializer(serializers.Serializer):
                     condition_value =tempt_data[index].get(keys).get('VALUE')
                     if (condition_value == "" or condition_value == None ):
                         continue
+                    typeValue = type_of_value.get(tempt_data[index].get(keys).get('VALUE_TYPE'))
+                    if tempt_data[index].get(keys).get('UNICODE') == "True":
+                        value = tempt_data[index].get(keys).get('VALUE')
+                        qs_uniqe = item_property.objects.filter(Q(PROPERTY_TYPE = keys) & Q(**{typeValue:value}) & ~Q(ITEM_ID = item_id))
+
+                        if qs_uniqe:
+                            msg = (str(keys) + " must be unique")
+                            raise serializers.ValidationError(msg, code="authorization")
+                    tempt_data[index].get(keys).pop('UNICODE')
                     tempt_data[index].get(keys)['START_DATETIME'] = time
                     tempt_data[index].get(keys)['ITEM_ID'] = item_data.get('ITEM_ID')
                     tempt_data[index].get(keys)['ITEM_TYPE'] = item_data.get('ITEM_TYPE')
                     tempt_data[index].get(keys)['CREATE_SOURCE'] = "x"
                     tempt_data[index].get(keys)['UPDATE_SOURCE'] = "x"
-                    tempt_data[index].get(keys)['LAST_UPDT_USER'] = item_data.get('LAST_UPDT_USER')
+                    tempt_data[index].get(keys)['LAST_UPDT_USER'] = user
                     tempt_data[index].get(keys)['LAST_UPDT_DATE'] = str(datetime.now()).split(" ")[0]
                     tempt_data[index].get(keys)['VERSION'] = uuid.uuid4().hex
                     tempt_data[index].get(keys)['END_DATETIME'] = end_time
                     tempt_data[index].get(keys)['PROPERTY_TYPE'] = keys
                     tempt_data[index].get(keys)['PROPERTY_INFO'] = tempt_data[index].get(keys).get('VALUE_TYPE')
-                    typeValue = type_of_value.get(tempt_data[index].get(keys).get('VALUE_TYPE'))
                     tempt_data[index].get(keys)[typeValue] = tempt_data[index].get(keys).get('VALUE')
                     tempt_data[index].get(keys).pop('VALUE_TYPE')
                     tempt_data[index].get(keys).pop('VALUE')
                     item_propertys = item_property.objects.create(**tempt_data[index].get(keys))
+                    queryset = item.objects.filter(ITEM_ID = item_id).delete()
+                    queryset = item_property.objects.filter(ITEM_ID = item_id).delete()
+                    item_data = validated_data.data['ITEM']
+                    item_data['START_DATETIME'] = time
+                    validate_model_not_null(item_data,"item",validated_data)
+                    serializer = ItemCustomSaveSerializer(data = item_data)
+                    serializer.is_valid()
+                    serializer.save(item_data)
                     item_propertys.save()
             except Exception as e:
-                print(e)
-                print(keys)
+                raise serializers.ValidationError({"Message":e}, code="authorization")
         return tempt_data
 
 
