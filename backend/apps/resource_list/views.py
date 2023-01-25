@@ -175,7 +175,9 @@ class ResourceListEditorTreeMenuView(generics.CreateAPIView):
         queryset = resource_list.objects.filter(CULTURE=request.data.get('CULTURE')).distinct("PARENT")
         validate_find(queryset, request)
         serializer = ResourceListDetailsSerializer(queryset, many=True)
-        return Response(serializer.data,
+
+        sorted_list = sorted(list(serializer.data), key=lambda d: str(d['PARENT']))
+        return Response(sorted_list,
             status=status.HTTP_200_OK,
         )
 
