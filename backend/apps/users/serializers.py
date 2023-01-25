@@ -61,6 +61,7 @@ class UserLoginSerializer(serializers.Serializer):
     password = serializers.CharField(write_only=True)
 
     def validate(self, data):
+        from rest_framework.exceptions import ValidationError
         email = data.get("email")
         password = data.get("password")
 
@@ -68,10 +69,20 @@ class UserLoginSerializer(serializers.Serializer):
             user = authenticate(
                 request=self.context.get("request"), username=email, password=password
             )
+            user_qs = User.objects.filter(email=email)
+            if user_qs:
+                msg = _("Unable to log in with provided credentials(Password).")
+                raise serializers.ValidationError({"Message":msg}, code="authorization")
+            else:
+                msg = _("Account doesn't exists")
+                raise serializers.ValidationError({"Message":msg}, code="authorization")
+        
+            
+            # if not user:
+            #     msg = _("Unable to log in with provided credentials.")
+            #     raise serializers.ValidationError(msg, code="authorization")
 
-            if not user:
-                msg = _("Unable to log in with provided credentials.")
-                raise serializers.ValidationError(msg, code="authorization")
+
 
         else:
             msg = _('Must include "username" and "password".')
@@ -211,7 +222,7 @@ class SocialLoginSerializer(serializers.Serializer):
             `allauth.socialaccount.SocialLoginView` instance
         """
         request = self._get_request()
-        print("----------------------------------------->", str(request))
+        print("----------------------------------------->", str(token))
         social_login = adapter.complete_login(request, app, token, response=response)
         social_login.token = token
         return social_login

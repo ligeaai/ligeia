@@ -21,8 +21,9 @@ django-cities-light
 django-smart-selects
 django-mptt
 channels
+channels-redis
 daphne
-
+channels_redis
 # Kafka-Python
 kafka-python
 
@@ -50,7 +51,7 @@ django-celery-beat
 
 dj-rest-auth
 #social-auth-app-django
-django-allauth
+django-allauth==0.51.0
 
 #Datapipline
 findspark

@@ -278,6 +278,7 @@ class GoogleLogin(SocialLoginView):
 
 class GoogleRegister(SocialLoginView):
     adapter_class = GoogleOAuth2Adapter
+    serializer_class = SocialLoginSerializer
 
 class FacebookRegister(SocialLoginView):
     adapter_class = GoogleOAuth2Adapter
