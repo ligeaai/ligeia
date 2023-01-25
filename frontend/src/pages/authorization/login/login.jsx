@@ -48,9 +48,7 @@ const MyBody = () => {
     validationSchema: validationSchema,
     onSubmit: (values) => {
       dispatch(setLoaderTrue());
-      dispatch(login(values.email, values.password)).then(() => {
-        history.push(`/`);
-      });
+      dispatch(login(values.email, values.password));
     },
   });
 

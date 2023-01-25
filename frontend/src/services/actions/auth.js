@@ -30,6 +30,7 @@ import {
 
 import { instance } from '../baseApi';
 import { createTreeViewCouch } from './treeview/treeview';
+import history from '../../routers/history';
 export const loadUser = () => async dispatch => {
     if (localStorage.getItem('token')) {
         const config = {
@@ -76,6 +77,7 @@ export const login = (email, password) => async dispatch => {
         });
         dispatch(setLoaderFalse());
         dispatch(loadUser());
+        history.push(`/`);
     } catch (err) {
         console.log(err);
         dispatch({
@@ -83,10 +85,13 @@ export const login = (email, password) => async dispatch => {
         })
         dispatch({
             type: ADD_ERROR_SUCCESS,
-            payload: "Username or password is incorrect"
+            payload: err.response.data.Message[0]
         })
         dispatch(setLoaderFalse());
 
+        if (err.response.data.Message[0] === "Account doesn't exists") {
+            history.push("signup")
+        }
     }
 };
 
