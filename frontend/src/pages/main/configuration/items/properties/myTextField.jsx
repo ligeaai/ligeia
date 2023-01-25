@@ -105,13 +105,16 @@ const InputCell = (params) => {
       type="number"
       onKeyDown={(evt) => evt.key === "e" && evt.preventDefault()}
       {...params}
+      error={true}
+      className={"errorhandling"}
     />
   );
 };
 
 export const MyTextField = (params) => {
   if (params.row.PROPERTY_TYPE === "TEXT") {
-    return <GridEditInputCell {...params} />;
+    console.log(params.row);
+    return <GridEditInputCell {...params} error={true} />;
   } else if (
     params.row.PROPERTY_TYPE === "HISTORY" ||
     params.row.PROPERTY_TYPE === "DATE"
@@ -152,6 +155,6 @@ export const MyTextFieldRender = (params) => {
     var newdate = d + "." + m + "." + y;
     return <Box>{newdate}</Box>;
   } else {
-    return <Box>{params.row[params.field]}</Box>;
+    return <Box> asd{params.row[params.field]}</Box>;
   }
 };

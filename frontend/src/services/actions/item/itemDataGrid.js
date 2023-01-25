@@ -11,7 +11,8 @@ import {
     CLEAR_COLUMN_ITEM,
     SELECT_TREEVIEW_ITEM,
     DELETE_COLUMN_ITEM,
-    CLEAN_ITEM_AND_ROWS
+    CLEAN_ITEM_AND_ROWS,
+
 } from "../types"
 import axios from "axios";
 import ItemService from "../../api/item"
@@ -48,6 +49,7 @@ export class column {
         this.renderCell = myMemoFunction;
         this.renderEditCell = myMemoFunction;
         this.cellClassName = "myRenderCell"
+
     }
 }
 
@@ -220,7 +222,7 @@ export const saveItem = () => async (dispatch, getState) => {
                     })
                     Object.keys(getState().itemDataGrid.rows).map((e) => {
                         //&& getState().itemDataGrid.rows[e][a] === null && getState().itemDataGrid.rows[e][a] === ""
-                        if (e !== "HISTORY") {
+                        if (e !== "HISTORY") {//TODO refactor
                             var propsRowUuid = uuidv4()
                             if (getState().itemDataGrid.rows[e].PROPERTY_TYPE === "NUMBER" || getState().itemDataGrid.rows[e].PROPERTY_TYPE === "INT") {
                                 COLUMNS[i - 4] = {
@@ -228,7 +230,8 @@ export const saveItem = () => async (dispatch, getState) => {
                                     [getState().itemDataGrid.rows[e].PROPERTY_NAME]: {
                                         "VALUE": parseInt(getState().itemDataGrid.rows[e][a]),
                                         "VALUE_TYPE": getState().itemDataGrid.rows[e].PROPERTY_TYPE,
-                                        "ROW_ID": propsRowUuid.replace(/-/g, "")
+                                        "ROW_ID": propsRowUuid.replace(/-/g, ""),
+                                        "UNICODE": getState().itemDataGrid.rows[getState().itemDataGrid.rows[e].PROPERTY_NAME].UNICODE
                                     }
 
                                 }
@@ -239,7 +242,8 @@ export const saveItem = () => async (dispatch, getState) => {
                                     [getState().itemDataGrid.rows[e].PROPERTY_NAME]: {
                                         "VALUE": getState().itemDataGrid.rows[e][a] ? "True" : "False",
                                         "VALUE_TYPE": getState().itemDataGrid.rows[e].PROPERTY_TYPE,
-                                        "ROW_ID": propsRowUuid.replace(/-/g, "")
+                                        "ROW_ID": propsRowUuid.replace(/-/g, ""),
+                                        "UNICODE": getState().itemDataGrid.rows[getState().itemDataGrid.rows[e].PROPERTY_NAME].UNICODE
                                     }
                                 }
                             }
@@ -249,7 +253,8 @@ export const saveItem = () => async (dispatch, getState) => {
                                     [getState().itemDataGrid.rows[e].PROPERTY_NAME]: {
                                         "VALUE": getState().itemDataGrid.rows[e][a],
                                         "VALUE_TYPE": getState().itemDataGrid.rows[e].PROPERTY_TYPE,
-                                        "ROW_ID": propsRowUuid.replace(/-/g, "")
+                                        "ROW_ID": propsRowUuid.replace(/-/g, ""),
+                                        "UNICODE": getState().itemDataGrid.rows[getState().itemDataGrid.rows[e].PROPERTY_NAME].UNICODE
                                     }
                                 }
                             }
@@ -260,7 +265,8 @@ export const saveItem = () => async (dispatch, getState) => {
                                     [getState().itemDataGrid.rows[e].PROPERTY_NAME]: {
                                         "VALUE": dateFormatter(getState().itemDataGrid.rows[e][a]),
                                         "VALUE_TYPE": getState().itemDataGrid.rows[e].PROPERTY_TYPE,
-                                        "ROW_ID": propsRowUuid.replace(/-/g, "")
+                                        "ROW_ID": propsRowUuid.replace(/-/g, ""),
+                                        "UNICODE": getState().itemDataGrid.rows[getState().itemDataGrid.rows[e].PROPERTY_NAME].UNICODE
                                     }
                                 }
                             }
@@ -270,7 +276,8 @@ export const saveItem = () => async (dispatch, getState) => {
                                     [getState().itemDataGrid.rows[e].PROPERTY_NAME]: {
                                         "VALUE": getState().itemDataGrid.rows[e][a],
                                         "VALUE_TYPE": getState().itemDataGrid.rows[e].PROPERTY_TYPE,
-                                        "ROW_ID": propsRowUuid.replace(/-/g, "")
+                                        "ROW_ID": propsRowUuid.replace(/-/g, ""),
+                                        "UNICODE": getState().itemDataGrid.rows[getState().itemDataGrid.rows[e].PROPERTY_NAME].UNICODE
                                     }
                                 }
                             }
@@ -302,6 +309,11 @@ export const saveItem = () => async (dispatch, getState) => {
             }, "NAME"))
             return res
         } catch (err) {
+            console.log(err);
+            dispatch({
+                type: ADD_ERROR_SUCCESS,
+                payload: err.response.data.Message
+            })
             return err
         }
     }

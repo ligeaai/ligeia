@@ -18,6 +18,7 @@ import {
   updateCouchDb,
 } from "../../services/actions/overview/taps";
 import history from "../../routers/history";
+import { Box } from "@mui/material";
 // web.cjs is required for IE11 support
 //import { useSpring, animated } from 'react-spring/web.cjs';
 
@@ -175,21 +176,23 @@ function CustomizedTreeView({ onOpen, setWidthTrue }) {
     };
   }, []);
   return (
-    <TreeView
-      aria-label="customized"
-      expanded={expandedItems}
-      defaultCollapseIcon={<MinusSquare className="MyIcon" />}
-      defaultExpandIcon={<PlusSquare className="MyIcon" />}
-      defaultEndIcon={<CloseSquare />}
-      onNodeSelect={onNodeSelect}
-      ref={ref}
-    >
-      <MyStyledTreeItem
-        myItems={items}
-        path={"overview"}
+    <Box>
+      <TreeView
+        aria-label="customized"
+        expanded={expandedItems}
+        defaultCollapseIcon={<MinusSquare className="MyIcon" />}
+        defaultExpandIcon={<PlusSquare className="MyIcon" />}
+        defaultEndIcon={<CloseSquare />}
         onNodeSelect={onNodeSelect}
-      ></MyStyledTreeItem>
-    </TreeView>
+        ref={ref}
+      >
+        <MyStyledTreeItem
+          myItems={items}
+          path={"overview"}
+          onNodeSelect={onNodeSelect}
+        ></MyStyledTreeItem>
+      </TreeView>
+    </Box>
   );
 }
 

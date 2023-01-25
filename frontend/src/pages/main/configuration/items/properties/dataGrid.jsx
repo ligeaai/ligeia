@@ -82,6 +82,9 @@ const MyDataGrid = () => {
           "& .MuiDataGrid-cell--editing": {
             backgroundColor: "background.secondary",
           },
+          ".myRenderCell:has(.errorhandling)": {
+            border: "1px solid red",
+          },
         }}
         componentsProps={{
           basePopper: {
