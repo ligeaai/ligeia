@@ -36,7 +36,7 @@ services:
       - redis
       - postgres
       - apache-kafka-broker1
-      - es
+      # - es
     ports:
       - "8000:8000"
     networks:
@@ -52,18 +52,18 @@ services:
       - COUCHDB_PASSWORD=${COUCHDB_PASSWORD}
     volumes:
       - couch-data:/opt/couchdb/data
-  es:
-    image: elasticsearch:8.4.2
-    container_name: ligeiaai-es-1
-    environment:
-      - discovery.type=single-node
-    ports:
-      - "9200:9200"
-    deploy:
-      resources: 
-        limits: 
-          cpus: "0.20"  # Use at most 50% of one CPU core
-          memory: 1GB
+  # es:
+  #   image: elasticsearch:8.4.2
+  #   container_name: ligeiaai-es-1
+  #   environment:
+  #     - discovery.type=single-node
+  #   ports:
+  #     - "9200:9200"
+  #   deploy:
+  #     resources: 
+  #       limits: 
+  #         cpus: "0.20"  # Use at most 50% of one CPU core
+  #         memory: 1GB
   postgres:
     restart: unless-stopped
     image: postgres:latest
@@ -110,9 +110,9 @@ services:
     ports:
       - "2181:2181"
     environment:
-       -  ZOOKEEPER_CLIENT_PORT=2181
-       -  ZOOKEEPER_TICK_TIME=2000
-       -  ALLOW_ANONYMOUS_LOGIN=yes  
+      - ZOOKEEPER_CLIENT_PORT=2181
+      - ZOOKEEPER_TICK_TIME=2000
+      - ALLOW_ANONYMOUS_LOGIN=yes
     networks:
       - net
   apache-kafka-broker1:
@@ -162,7 +162,7 @@ services:
     restart: unless-stopped
     image: apache/nifi:latest
     ports:
-      - "8080:8080" 
+      - "8080:8080"
     volumes:
       - ./backend/services/datapipline/pre-processing:/datapipline
     environment:
@@ -173,6 +173,21 @@ services:
       NIFI_ELECTION_MAX_WAIT: "1 min"
       NIFI_ZK_ROOT_NODE: "/nifi"
       NIFI_SENSITIVE_PROPS_KEY: '12345678912345'
+    depends_on:
+      - apache-kafka-broker1
+      - zookeeper
+    networks:
+      - net
+  mongodb-timescale:
+    image: mongo:latest
+    ports:
+      - 27017:27017
+    volumes:
+      - mongodb-data:/data/db
+    environment:
+      TZ: 'Etc/UTC'
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: admin
     depends_on:
       - apache-kafka-broker1
       - zookeeper
@@ -240,20 +255,20 @@ services:
       - apache-kafka-broker1
     environment:
       CONNECT_BOOTSTRAP_SERVERS: broker:29092
-      CONNECT_GROUP_ID: "connect-group" 
-      CONNECT_CONFIG_STORAGE_TOPIC: "connect-config-storage" 
-      CONNECT_OFFSET_STORAGE_TOPIC: "connect-offset-storage" 
-      CONNECT_STATUS_STORAGE_TOPIC: "connect-status-storage" 
-      CONNECT_KEY_CONVERTER: "org.apache.kafka.connect.storage.StringConverter" 
-      CONNECT_VALUE_CONVERTER: "org.apache.kafka.connect.converters.ByteArrayConverter" 
-      CONNECT_INTERNAL_KEY_CONVERTER: "org.apache.kafka.connect.json.JsonConverter" 
+      CONNECT_GROUP_ID: "connect-group"
+      CONNECT_CONFIG_STORAGE_TOPIC: "connect-config-storage"
+      CONNECT_OFFSET_STORAGE_TOPIC: "connect-offset-storage"
+      CONNECT_STATUS_STORAGE_TOPIC: "connect-status-storage"
+      CONNECT_KEY_CONVERTER: "org.apache.kafka.connect.storage.StringConverter"
+      CONNECT_VALUE_CONVERTER: "org.apache.kafka.connect.converters.ByteArrayConverter"
+      CONNECT_INTERNAL_KEY_CONVERTER: "org.apache.kafka.connect.json.JsonConverter"
       CONNECT_INTERNAL_VALUE_CONVERTER: "org.apache.kafka.connect.json.JsonConverter"
-      CONNECT_PLUGIN_PATH: "/usr/share/confluent-hub-components" 
-      CONNECT_REST_ADVERTISED_HOST_NAME: "connect" 
-      CONNECT_REST_HOST_NAME: "connect" 
-      CONNECT_REST_PORT: "8088" 
-      CONNECT_CONFIG_STORAGE_REPLICATION_FACTOR: 1 
-      CONNECT_OFFSET_STORAGE_REPLICATION_FACTOR: 1 
+      CONNECT_PLUGIN_PATH: "/usr/share/confluent-hub-components"
+      CONNECT_REST_ADVERTISED_HOST_NAME: "connect"
+      CONNECT_REST_HOST_NAME: "connect"
+      CONNECT_REST_PORT: "8088"
+      CONNECT_CONFIG_STORAGE_REPLICATION_FACTOR: 1
+      CONNECT_OFFSET_STORAGE_REPLICATION_FACTOR: 1
       CONNECT_STATUS_STORAGE_REPLICATION_FACTOR: 1
       CONNECT_LOG4J_ROOT_LOGLEVEL: "INFO"
       CLASSPATH: /usr/share/java/monitoring-interceptors/monitoring-interceptors-5.1.1.jar
@@ -261,40 +276,40 @@ services:
       CONNECT_CONSUMER_INTERCEPTOR_CLASSES: "io.confluent.monitoring.clients.interceptor.MonitoringConsumerInterceptor"
     networks:
       - net
-  celery_worker:
-    restart: on-failure
-    build:
-      context: .
-      dockerfile: ./dockerfile/local/django/Dockerfile
-    command: /start-celeryworker
-    image: doccano_backend:prod
-    volumes:
-      - .:/django
-    env_file:
-      - .env
-    depends_on:
-      - redis
-      - postgres
-      - django
-    networks:
-      - net
-  flower:
-    build:
-      context: .
-      dockerfile: ./dockerfile/local/django/Dockerfile
-    command: /start-flower
-    volumes:
-      - .:/django
-    env_file:
-      - .env
-    ports:
-      - "5557:5555"
-    depends_on:
-      - redis
-      - postgres
-      - celery_worker
-    networks:
-      - net
+  # celery_worker:
+  #   restart: on-failure
+  #   build:
+  #     context: .
+  #     dockerfile: ./dockerfile/local/django/Dockerfile
+  #   command: /start-celeryworker
+  #   image: doccano_backend:prod
+  #   volumes:
+  #     - .:/django
+  #   env_file:
+  #     - .env
+  #   depends_on:
+  #     - redis
+  #     - postgres
+  #     - django
+  #   networks:
+  #     - net
+  # flower:
+  #   build:
+  #     context: .
+  #     dockerfile: ./dockerfile/local/django/Dockerfile
+  #   command: /start-flower
+  #   volumes:
+  #     - .:/django
+  #   env_file:
+  #     - .env
+  #   ports:
+  #     - "5557:5555"
+  #   depends_on:
+  #     - redis
+  #     - postgres
+  #     - celery_worker
+  #   networks:
+  #     - net
 networks:
   net:
     driver: bridge
@@ -307,3 +322,4 @@ volumes:
   broker_data: null
   connect_data: null
   cassandra_data: null
+  mongodb-data: null

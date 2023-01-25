@@ -19,6 +19,7 @@ RUN apt-get install -y openjdk-8-jdk
 RUN update-alternatives --config java
 RUN python3 -m pip install --upgrade pyspark
 RUN python3 -m pip install findspark
+RUN python3 -m pip install pymongo
 
 # Download Spark
 RUN wget https://archive.apache.org/dist/spark/spark-2.4.5/spark-2.4.5-bin-hadoop2.7.tgz
