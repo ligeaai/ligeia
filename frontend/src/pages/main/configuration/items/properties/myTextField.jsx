@@ -85,6 +85,11 @@ const SingleSelectCell = (params) => {
           border: "none",
         },
       }}
+      className={
+        params.row[params.field] === "" && params.row.MANDATORY === "True"
+          ? "errorhandling"
+          : ""
+      }
     >
       <Select
         values={values}
@@ -106,7 +111,11 @@ const InputCell = (params) => {
       onKeyDown={(evt) => evt.key === "e" && evt.preventDefault()}
       {...params}
       error={true}
-      className={"errorhandling"}
+      className={
+        params.row[params.field] === "" && params.row.MANDATORY === "True"
+          ? "errorhandling"
+          : ""
+      }
     />
   );
 };
@@ -114,7 +123,16 @@ const InputCell = (params) => {
 export const MyTextField = (params) => {
   if (params.row.PROPERTY_TYPE === "TEXT") {
     console.log(params.row);
-    return <GridEditInputCell {...params} error={true} />;
+    return (
+      <GridEditInputCell
+        {...params}
+        className={
+          params.row[params.field] === "" && params.row.MANDATORY === "True"
+            ? "errorhandling"
+            : ""
+        }
+      />
+    );
   } else if (
     params.row.PROPERTY_TYPE === "HISTORY" ||
     params.row.PROPERTY_TYPE === "DATE"
@@ -124,6 +142,11 @@ export const MyTextField = (params) => {
         type="date"
         value={params.row[params.field]}
         {...params}
+        className={
+          params.row[params.field] === "" && params.row.MANDATORY === "True"
+            ? "errorhandling"
+            : ""
+        }
       />
     );
   } else if (params.row.PROPERTY_TYPE === "NUMBER") {
@@ -131,11 +154,31 @@ export const MyTextField = (params) => {
   } else if (params.row.PROPERTY_TYPE === "INT") {
     return <InputCell {...params} />;
   } else if (params.row.PROPERTY_TYPE === "BOOL") {
-    return <GridEditBooleanCell checked={false} type="checkbox" {...params} />;
+    return (
+      <GridEditBooleanCell
+        checked={false}
+        type="checkbox"
+        {...params}
+        className={
+          params.row[params.field] === "" && params.row.MANDATORY === "True"
+            ? "errorhandling"
+            : ""
+        }
+      />
+    );
   } else if (params.row.PROPERTY_TYPE === "CODE") {
     return <SingleSelectCell {...params} />;
   } else {
-    return <GridEditInputCell {...params} />;
+    return (
+      <GridEditInputCell
+        {...params}
+        className={
+          params.row[params.field] === "" && params.row.MANDATORY === "True"
+            ? "errorhandling"
+            : ""
+        }
+      />
+    );
   }
 };
 
