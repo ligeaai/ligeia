@@ -17,8 +17,10 @@ def import_data(data):
         "ITEM_PROPERTY": "item-property",
         "ITEM": "item",
         "LAYER": "layer",
+        "UOM":'uoms',
+        "UOM_UNIT":'uom_unit'
     }
-    base_url = "http://34.125.220.112:8000/api/v1/" + urlDict.get(data) + "/save/"
+    base_url = "http://34.125.121.93:8001/api/v1/" + urlDict.get(data) + "/save/"
     _create_method(base_url, data)
 
 
@@ -46,5 +48,6 @@ def _create_method(url, data):
 
             if type(value) == type(float(5)):
                 data[keys] = int(value)
-
+                
+                
         requests.post(url, json.dumps(data), headers=headers)
