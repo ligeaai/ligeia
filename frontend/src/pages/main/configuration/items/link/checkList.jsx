@@ -131,11 +131,13 @@ const MyCheckList = (props) => {
         </Grid>
       </Box>
       <Divider />
-      <CheckboxList
-        data={data}
-        dataTextPath="NAME"
-        handleToggleFunc={handleToggleFunc}
-      />
+      <Box sx={{ overflowY: "scroll" }}>
+        <CheckboxList
+          data={data}
+          dataTextPath="NAME"
+          handleToggleFunc={handleToggleFunc}
+        />
+      </Box>
       <Divider />
       <Grid
         container

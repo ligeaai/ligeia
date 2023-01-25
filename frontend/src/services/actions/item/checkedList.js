@@ -9,7 +9,6 @@ import { instance, config } from '../../baseApi';
 import { loadLinks } from "./itemLinkEditor";
 
 import { dateFormatter } from "../../utils/dateFormatter"
-
 let cancelToken;
 export const loadCheckedList = (type, inOut) => async (dispatch, getState) => {
     if (cancelToken) {
@@ -116,7 +115,7 @@ export const cardinalityCheck = (selectItems, selectedItemFromType) => async (di
         return true
 
     //------ in
-    if (isOut && mySelectItem.TO_CARDINALITY === "*" && mySelectItem.FROM_CARDINALITY === "1") {
+    if (isOut && mySelectItem.TO_CARDINALITY === "1" && mySelectItem.FROM_CARDINALITY === "*") {
         let returnVal = true
         if (parseInt(checkedItemLength) > 1) {
             return false
@@ -131,7 +130,7 @@ export const cardinalityCheck = (selectItems, selectedItemFromType) => async (di
         })
         return returnVal
     }
-    if (isOut && mySelectItem.TO_CARDINALITY === "1" && mySelectItem.FROM_CARDINALITY === "*") {
+    if (isOut && mySelectItem.TO_CARDINALITY === "*" && mySelectItem.FROM_CARDINALITY === "1") {
         try {
             if (parseInt(checkedItemLength) > 1) {
                 return false

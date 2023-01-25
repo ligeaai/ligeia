@@ -11,6 +11,8 @@ import {
 import axios from "axios";
 import ItemLinkService from "../../api/itemLink"
 import { dateFormatter } from "../../utils/dateFormatter";
+import { newDate } from "../../utils/dateFormatter";
+
 let cancelToken;
 export const loadItemLinkSchema = () => async (dispatch, getState) => {
     if (cancelToken) {
@@ -90,12 +92,12 @@ export const loadLinks = () => async (dispatch, getState) => {
         const body = JSON.stringify({ ID: selectedItem })
         let itemLinkRes = await ItemLinkService.getItemLink(body, cancelTokenLinks)
         itemLinkRes.data.TO_ITEM_ID.map(e => {
-            e.END_DATETIME = new Date(e.END_DATETIME)
-            e.START_DATETIME = new Date(e.START_DATETIME)
+            e.END_DATETIME = newDate(e.END_DATETIME)
+            e.START_DATETIME = newDate(e.START_DATETIME)
         })
         itemLinkRes.data.FROM_ITEM_ID.map(e => {
-            e.END_DATETIME = new Date(e.END_DATETIME)
-            e.START_DATETIME = new Date(e.START_DATETIME)
+            e.END_DATETIME = newDate(e.END_DATETIME)
+            e.START_DATETIME = newDate(e.START_DATETIME)
         })
         var links = []
         itemLinkRes.data.TO_ITEM_ID.map(e => {

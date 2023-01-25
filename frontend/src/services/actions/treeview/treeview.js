@@ -62,13 +62,9 @@ export const loadTreeviewItem = (path, sortPath) => async (dispatch, getState) =
         let res = await path(body, cancelToken);
         var sortedResponse;
         if (sortPath === "TYPE") {//todo need to change api end point 
-            sortedResponse = res.data.Message.sort((a, b) =>
-                a[sortPath] > b[sortPath] ? 1 : -1
-            )
+            sortedResponse = res.data.Message
         } else {
-            sortedResponse = res.data.sort((a, b) =>
-                a[sortPath] > b[sortPath] ? 1 : -1
-            )
+            sortedResponse = res.data
         }
 
         dispatch({
