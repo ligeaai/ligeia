@@ -92,7 +92,6 @@ class ItemDetailsView(generics.ListAPIView):
     lookup_field = 'pk'
     def list(self, request, *args, **kwargs):
         cache_key = str(request.user) + str(self.kwargs['item'])
-        print(str(cache_key))
         cache_data = Red.get(cache_key)
         if cache_data:
             Response(cache_data,status=status.HTTP_200_OK)
@@ -110,7 +109,7 @@ class ItemDetailsView(generics.ListAPIView):
         logger.info(message,request = request)
         sorted_list = sorted(list(serializer.data), key=lambda d: d['NAME']) 
         Red.set(cache_key,(sorted_list))
-        return Response(serializer.data,status=status.HTTP_200_OK)
+        return Response(sorted_list,status=status.HTTP_200_OK)
 
 
 
