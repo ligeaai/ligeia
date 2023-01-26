@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 import Box from "@mui/material/Box";
 import { styled } from "@mui/material/styles";
 import { Angular, LineChart, Solid, Measurement } from "./charts";
-import { Bar, Pie, HeatMap } from "./nivoCharts";
+import { Bar, Pie, HeatMap, Line } from "./nivoCharts";
 import { Matrix } from "./customWidget";
 const MyBox = styled(Box)(({ theme }) => {
   return {
@@ -116,6 +116,9 @@ const Highchart = ({
     ),
     "Matrix [Custom]": (
       <Matrix highchartProps={highchartProps} width={width} height={height} />
+    ),
+    "Line Chart [Nivo]": (
+      <Line highchartProps={highchartProps} width={width} height={height} />
     ),
   };
 

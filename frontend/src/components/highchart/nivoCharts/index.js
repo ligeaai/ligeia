@@ -1,4 +1,5 @@
 import Bar from "./bar";
 import Pie from "./pie";
 import HeatMap from "./heatMap";
-export { Bar, Pie, HeatMap }
+import Line from "./line";
+export { Bar, Pie, HeatMap, Line }

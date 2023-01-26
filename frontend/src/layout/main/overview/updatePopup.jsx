@@ -17,6 +17,7 @@ import BarPopUp from "../../../components/highchart/nivoPopUp/barChart";
 import PiePopUp from "../../../components/highchart/nivoPopUp/pieChart";
 import HeatMapPopUp from "../../../components/highchart/nivoPopUp/heatMapPopUp";
 import MatrixPopUp from "../../../components/highchart/customPopUp/matrixPopUp";
+import LinePopUp from "../../../components/highchart/nivoPopUp/lineChart";
 const DialogContent = ({ highchartProps, chartId, ...rest }) => {
   const dispatch = useDispatch();
   const type = useSelector((state) => state.overviewDialog.values.Type);
@@ -42,6 +43,7 @@ const DialogContent = ({ highchartProps, chartId, ...rest }) => {
     "Matrix [Custom]": (
       <MatrixPopUp highchartProps={highchartProps} {...rest} />
     ),
+    "Line Chart [Nivo]": <LinePopUp highchartProps={highchartProps} {...rest} />,
   };
   React.useEffect(() => {
     async function myFunc() {
