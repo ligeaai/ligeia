@@ -20,6 +20,7 @@ import MeasurementPopUp from "../../../components/highchart/popup/measurementPop
 import BarPopUp from "../../../components/highchart/nivoPopUp/barChart";
 import PiePopUp from "../../../components/highchart/nivoPopUp/pieChart";
 import HeatMapPopUp from "../../../components/highchart/nivoPopUp/heatMapPopUp";
+import MatrixPopUp from "../../../components/highchart/customPopUp/matrixPopUp";
 const DialogContent = ({ handleClose }) => {
   const dispatch = useDispatch();
   const selectedItem = useSelector(
@@ -53,6 +54,9 @@ const DialogContent = ({ handleClose }) => {
     ),
     "Heat Map [Nivo]": (
       <HeatMapPopUp highchartProps={properties} handleClose={handleClose} />
+    ),
+    "Matrix [Custom]": (
+      <MatrixPopUp highchartProps={properties} handleClose={handleClose} />
     ),
   };
   React.useEffect(() => {

@@ -16,6 +16,7 @@ import MeasurementPopUp from "../../../components/highchart/popup/measurementPop
 import BarPopUp from "../../../components/highchart/nivoPopUp/barChart";
 import PiePopUp from "../../../components/highchart/nivoPopUp/pieChart";
 import HeatMapPopUp from "../../../components/highchart/nivoPopUp/heatMapPopUp";
+import MatrixPopUp from "../../../components/highchart/customPopUp/matrixPopUp";
 const DialogContent = ({ highchartProps, chartId, ...rest }) => {
   const dispatch = useDispatch();
   const type = useSelector((state) => state.overviewDialog.values.Type);
@@ -37,6 +38,9 @@ const DialogContent = ({ highchartProps, chartId, ...rest }) => {
     "Pie Chart [Nivo]": <PiePopUp highchartProps={highchartProps} {...rest} />,
     "Heat Map [Nivo]": (
       <HeatMapPopUp highchartProps={highchartProps} {...rest} />
+    ),
+    "Matrix [Custom]": (
+      <MatrixPopUp highchartProps={highchartProps} {...rest} />
     ),
   };
   React.useEffect(() => {
