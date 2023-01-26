@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 import Box from "@mui/material/Box";
 import { styled } from "@mui/material/styles";
 import { Angular, LineChart, Solid, Measurement } from "./charts";
-import { Bar, Pie } from "./nivoCharts";
+import { Bar, Pie, HeatMap } from "./nivoCharts";
 const MyBox = styled(Box)(({ theme }) => {
   return {
     ".highcharts-background": {
@@ -109,6 +109,9 @@ const Highchart = ({
     ),
     "Pie Chart [Nivo]": (
       <Pie highchartProps={highchartProps} width={width} height={height} />
+    ),
+    "Heat Map [Nivo]": (
+      <HeatMap highchartProps={highchartProps} width={width} height={height} />
     ),
   };
 

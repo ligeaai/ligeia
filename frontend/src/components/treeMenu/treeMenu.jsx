@@ -15,7 +15,7 @@ const RenderRow = (props) => {
     data,
     index,
     style,
-    selectFunc = () => { },
+    selectFunc = () => {},
     selectedIndex = -999,
     primaryText = "", //Specifies the path to reach the text in data
   } = props;

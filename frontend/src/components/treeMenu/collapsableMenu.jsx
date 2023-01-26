@@ -148,6 +148,8 @@ const MyStyledTreeItem = React.memo(({ myItems, path }) => {
 function CustomizedTreeView({ onOpen, setWidthTrue }) {
   const ref = React.createRef();
   const dispatch = useDispatch();
+  const isFullScreen = useSelector((state) => state.fullScreen.isFullScreen);
+
   const items = useSelector((state) => state.collapseMenu.menuItems);
   const expandedItems = useSelector(
     (state) => state.treeview.width.values.overviewHierarchy
@@ -176,7 +178,25 @@ function CustomizedTreeView({ onOpen, setWidthTrue }) {
     };
   }, []);
   return (
-    <Box>
+    <Box
+      sx={{
+        height: isFullScreen
+          ? "calc(100vh - 85px )"
+          : "calc(100vh - 85px - 60px - 4px)",
+        minHeight: "416px",
+        overflowY: "auto",
+        "&::-webkit-scrollbar": {
+          width: "0.25em",
+        },
+        "&::-webkit-scrollbar-track": {
+          boxShadow: "inset 0 0 6px rgba(0,0,0,0.00)",
+          webkitBoxShadow: "inset 0 0 6px rgba(0,0,0,0.00)",
+        },
+        "&::-webkit-scrollbar-thumb": {
+          backgroundColor: "rgba(0,0,0,.2)",
+        },
+      }}
+    >
       <TreeView
         aria-label="customized"
         expanded={expandedItems}

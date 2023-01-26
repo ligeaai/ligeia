@@ -15,6 +15,7 @@ import SolidPopUp from "../../../components/highchart/popup/solidPopUp";
 import MeasurementPopUp from "../../../components/highchart/popup/measurementPopUp";
 import BarPopUp from "../../../components/highchart/nivoPopUp/barChart";
 import PiePopUp from "../../../components/highchart/nivoPopUp/pieChart";
+import HeatMapPopUp from "../../../components/highchart/nivoPopUp/heatMapPopUp";
 const DialogContent = ({ highchartProps, chartId, ...rest }) => {
   const dispatch = useDispatch();
   const type = useSelector((state) => state.overviewDialog.values.Type);
@@ -34,6 +35,9 @@ const DialogContent = ({ highchartProps, chartId, ...rest }) => {
     ),
     "Bar Chart [Nivo]": <BarPopUp highchartProps={highchartProps} {...rest} />,
     "Pie Chart [Nivo]": <PiePopUp highchartProps={highchartProps} {...rest} />,
+    "Heat Map [Nivo]": (
+      <HeatMapPopUp highchartProps={highchartProps} {...rest} />
+    ),
   };
   React.useEffect(() => {
     async function myFunc() {
