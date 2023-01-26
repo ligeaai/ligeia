@@ -18,6 +18,7 @@ import PiePopUp from "../../../components/highchart/nivoPopUp/pieChart";
 import HeatMapPopUp from "../../../components/highchart/nivoPopUp/heatMapPopUp";
 import MatrixPopUp from "../../../components/highchart/customPopUp/matrixPopUp";
 import LinePopUp from "../../../components/highchart/nivoPopUp/lineChart";
+import TreeMapPopUp from "../../../components/highchart/nivoPopUp/treeMapChart";
 const DialogContent = ({ highchartProps, chartId, ...rest }) => {
   const dispatch = useDispatch();
   const type = useSelector((state) => state.overviewDialog.values.Type);
@@ -48,6 +49,9 @@ const DialogContent = ({ highchartProps, chartId, ...rest }) => {
     ),
     "Line Chart [Nivo]": (
       <LinePopUp highchartProps={highchartProps} {...rest} />
+    ),
+    "TreeMap Chart [Nivo]": (
+      <TreeMapPopUp highchartProps={highchartProps} {...rest} />
     ),
   };
   React.useEffect(() => {
