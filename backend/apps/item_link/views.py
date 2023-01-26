@@ -173,27 +173,27 @@ class ItemLinkHierarchyView(generics.ListAPIView):
         for index in range(len(serializer.data)):
             serializer.data[index]['FROM_ITEM_ID'] = serializer.data[index].get('ITEM_ID')
             serializer.data[index]['LINK_ID'] = serializer.data[index].get('ITEM_ID')
-        self._getChild(serializer.data,tempt)
+        self._getName(serializer.data)
+        self._getChild(serializer.data)
         return Response(serializer.data)
     
-    def _getChild(self,data,tempt):
+    def _getChild(self,data):
         for index in range(len(data)):
-            self._getName(data[index])
             quaryset  = item_link.objects.filter(Q(TO_ITEM_ID = data[index].get('FROM_ITEM_ID')),~Q(LINK_TYPE='TAG_ITEM'))
             if quaryset:
                 serializer = ItemLinkDetailsSerializer(quaryset,many = True)
-                data[index]['CHILD'] = serializer.data
-                self._getChild(serializer.data,tempt)
-                
-               
-                
+                self._getName(serializer.data)
+                sorted_data = sorted([d for d in serializer.data if d.get('FROM_ITEM_NAME') != None], key=lambda x: x['FROM_ITEM_NAME'])
+                data[index]['CHILD'] = sorted_data
+                self._getChild(sorted_data)
 
     def _getName(self,data):
-            quaryset_from = item_property.objects.filter(ITEM_ID = data.get('FROM_ITEM_ID'),PROPERTY_TYPE = 'NAME').order_by('START_DATETIME')
-            quaryset_to = item_property.objects.filter(ITEM_ID = data.get('TO_ITEM_ID'),PROPERTY_TYPE = 'NAME').order_by('START_DATETIME')
+        for index in range(len(data)):
+            quaryset_from = item_property.objects.filter(ITEM_ID = data[index].get('FROM_ITEM_ID'),PROPERTY_TYPE = 'NAME').order_by('START_DATETIME')
+            quaryset_to = item_property.objects.filter(ITEM_ID = data[index].get('TO_ITEM_ID'),PROPERTY_TYPE = 'NAME').order_by('START_DATETIME')
             serializer_from = ItemPropertyNameSerializer(quaryset_from,many = True)
             serializer_to = ItemPropertyNameSerializer(quaryset_to,many = True)
             if quaryset_from:
-                data['FROM_ITEM_NAME'] = serializer_from.data[0].get("PROPERTY_STRING")
+                data[index]['FROM_ITEM_NAME'] = serializer_from.data[0].get("PROPERTY_STRING")
             if quaryset_to:
-                data['TO_ITEM_NAME'] = serializer_to.data[0].get("PROPERTY_STRING")
+                data[index]['TO_ITEM_NAME'] = serializer_to.data[0].get("PROPERTY_STRING")
