@@ -263,7 +263,7 @@ export const saveItem = () => async (dispatch, getState) => {
                                 COLUMNS[i - 4] = {
                                     ...COLUMNS[i - 4],
                                     [getState().itemDataGrid.rows[e].PROPERTY_NAME]: {
-                                        "VALUE": dateFormatter(getState().itemDataGrid.rows[e][a]),
+                                        "VALUE": getState().itemDataGrid.rows[e][a] === "" ? "" : dateFormatter(getState().itemDataGrid.rows[e][a]),
                                         "VALUE_TYPE": getState().itemDataGrid.rows[e].PROPERTY_TYPE,
                                         "ROW_ID": propsRowUuid.replace(/-/g, ""),
                                         "UNICODE": getState().itemDataGrid.rows[getState().itemDataGrid.rows[e].PROPERTY_NAME].UNICODE
