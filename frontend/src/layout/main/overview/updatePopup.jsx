@@ -26,6 +26,9 @@ const DialogContent = ({ highchartProps, chartId, ...rest }) => {
     "Linechart [Highchart]": (
       <LinechartPopUp highchartProps={highchartProps} {...rest} />
     ),
+    "Area Chart [Highchart]": (
+      <LinechartPopUp highchartProps={highchartProps} {...rest} />
+    ),
     "Gauge(Angular) [Highchart]": (
       <AngularPopUp highchartProps={highchartProps} {...rest} />
     ),
@@ -43,7 +46,9 @@ const DialogContent = ({ highchartProps, chartId, ...rest }) => {
     "Matrix [Custom]": (
       <MatrixPopUp highchartProps={highchartProps} {...rest} />
     ),
-    "Line Chart [Nivo]": <LinePopUp highchartProps={highchartProps} {...rest} />,
+    "Line Chart [Nivo]": (
+      <LinePopUp highchartProps={highchartProps} {...rest} />
+    ),
   };
   React.useEffect(() => {
     async function myFunc() {

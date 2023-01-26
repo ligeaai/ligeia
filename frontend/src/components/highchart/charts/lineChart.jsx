@@ -23,6 +23,7 @@ const LineCharts = ({
   liveData,
   backfillData,
   tabular,
+  chartType,
 }) => {
   console.log(highchartProps.Inputs);
   const UOMList = useSelector((state) => state.tapsOverview.UOMList);
@@ -143,7 +144,7 @@ const LineCharts = ({
     chart: {
       zoomBySingleTouch: true,
       zoomType: "x",
-      type: "spline",
+      type: chartType,
       reflow: true,
       events: {
         load: function () {

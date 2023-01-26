@@ -37,6 +37,9 @@ const DialogContent = ({ handleClose }) => {
     "Linechart [Highchart]": (
       <LinechartPopUp highchartProps={properties} handleClose={handleClose} />
     ),
+    "Area Chart [Highchart]": (
+      <LinechartPopUp highchartProps={properties} handleClose={handleClose} />
+    ),
     "Gauge(Angular) [Highchart]": (
       <AngularPopUp highchartProps={properties} handleClose={handleClose} />
     ),

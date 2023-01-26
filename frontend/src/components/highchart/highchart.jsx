@@ -93,6 +93,18 @@ const Highchart = ({
         liveData={liveData}
         backfillData={backfillData}
         tabular={tabular}
+        chartType="spline"
+      />
+    ),
+    "Area Chart [Highchart]": (
+      <LineChart
+        highchartProps={highchartProps}
+        width={width}
+        height={height}
+        liveData={liveData}
+        backfillData={backfillData}
+        tabular={tabular}
+        chartType="area"
       />
     ),
     "Gauge(Solid) [Highchart]": (
