@@ -9,7 +9,9 @@ import { confirmationPushHistory } from "../../services/utils/historyPush";
 import { setGoFunctionConfirmation } from "../../services/actions/confirmation/historyConfirmation";
 const Breadcrumbs = () => {
   const dispatch = useDispatch();
-  var pathnames = window.location.pathname.split("/").filter((x) => x);
+  var pathnames = decodeURI(window.location.pathname)
+    .split("/")
+    .filter((x) => x);
   const { params } = useParams(); //  important for updating breadcrumb
   return (
     <MUIBreadcrumbs
@@ -23,7 +25,12 @@ const Breadcrumbs = () => {
     >
       <HomeIcon
         fontSize="small"
-        sx={{ position: "relative", top: "3px", cursor: "pointer", color: "icon.primary" }}
+        sx={{
+          position: "relative",
+          top: "3px",
+          cursor: "pointer",
+          color: "icon.primary",
+        }}
         onClick={() => {
           dispatch(setGoFunctionConfirmation(() => history.push("home")));
           dispatch(confirmationPushHistory());
