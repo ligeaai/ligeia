@@ -3,14 +3,8 @@ import json
 import environ
 from channels.generic.websocket import WebsocketConsumer
 import redis
-from cassandra.cluster import Cluster	
-from cassandra.auth import PlainTextAuthProvider
-from cassandra.query import ordered_dict_factory
+from pymongo import MongoClient
 import time
-from cassandra.cluster import Cluster	
-from cassandra.auth import PlainTextAuthProvider
-from cassandra.query import ordered_dict_factory
-from multiprocessing import Process
 from threading import Thread
 from apps.tags.models import tags
 from apps.tags.serializers import TagsFieldsSerializer
@@ -18,11 +12,11 @@ from apps.tags.serializers import TagsFieldsSerializer
 env = environ.Env(DEBUG=(bool, False))
 
 def retrieve_data(self,start='-',end='+',tag_id=""):
-    tag = tags.objects.filter(ROW_ID = tag_id)    
+    tag = tags.objects.filter(ROW_ID = tag_id)  
     if tag:
         serializer = TagsFieldsSerializer(tag,many = True).data[0]
         while self.is_active:
-            # data = self.rds.ts().mrange(start,end,['tag_name=' +"(KNOC.Temperature-1,Tag 1)"],with_labels = True)
+            # data = self.rds.ts().mrange(start,end,['tag_name=' +"(Частота турб вращения)"],with_labels = True)
             data = self.rds.ts().mrange(start,end,['tag_name=' +str(serializer.get("NAME"))],with_labels = True)
             filtered_data = []
             max_values = []
@@ -37,12 +31,12 @@ def retrieve_data(self,start='-',end='+',tag_id=""):
 
             for items in filtered_data:
                 if start == "-":
-                    self.send(json.dumps(items))
+                    self.send(json.dumps(items,ensure_ascii=False))
                 else:
                     key = list(items.keys())[0]
                     labels, values = items[key]
                     for item in values:
-                        self.send(json.dumps({key: [labels, values]}))
+                        self.send(json.dumps({key: [labels, values]},ensure_ascii=False))
             
             if max_values:
                 start = (max(max_values))+1
@@ -55,9 +49,8 @@ def retrieve_data(self,start='-',end='+',tag_id=""):
 class WSLiveConsumer(WebsocketConsumer):
     def connect(self):
         self.accept()
-        # self.rds = redis.StrictRedis(env('REDIS_HOST'),port=6379,db=1)
         try:
-            self.rds = redis.StrictRedis('redis-test',port=6379)
+            self.rds = redis.StrictRedis('redis-test1',port=6379)
             self.tag_id = self.scope['url_route']['kwargs']['tag_id']
             # (if, else block) written to test that active data is received, will be deleted
             if self.tag_id.split('*')[0] == "add_data":
@@ -181,25 +174,37 @@ class WSConsumeOnlyLastData(WebsocketConsumer):
 
 
 
-
-
-
 class WSConsumerBackfill(WebsocketConsumer):
     def connect(self):
         self.accept()
-        auth_provider = PlainTextAuthProvider(username ='cassandra', password='cassandra')
-        cluster=Cluster(['cassandra'], auth_provider=auth_provider)
-        session = cluster.connect('backfilldata')
-        session.row_factory = ordered_dict_factory
-        self.rows = session.execute('SELECT * FROM backfilldata')
+        self.client = MongoClient("mongodb://root:admin@mongodb-timescale:27017/")
+        self.mongo_db = self.client["backfilldata"]
+        self.timeseries_collection = self.mongo_db["backfilldata"]
+        self.tag_id = self.scope['url_route']['kwargs']['tag_id']
+        tag = tags.objects.filter(ROW_ID = self.tag_id)  
+        if tag:
+            self.serializer = TagsFieldsSerializer(tag,many = True).data[0]
+            data = self.timeseries_collection.find({
+                        "tag_name":self.serializer.get('NAME')
+                        })
+            for x in data:
+                x.pop('_id')
+                self.send(json.dumps(x,ensure_ascii=False))
     
     def receive(self, text_data):
-        print(self.rows[0])
-        # for row in self.rows:
-        #     print(row)
-        #     filterTagName(self,row,text_data)
-
+        data = self.timeseries_collection.find({
+                '$and': [
+                    {"tag_name": self.serializer.get('NAME')},
+                    {"timestamp": {"$gte": str(text_data).split(',')[0]}},
+                    {"timestamp": {"$lte": str(text_data).split(',')[1]}}
+                ]
+            })
+            
+        for x in data:
+            x.pop('_id')
+            self.send(json.dumps(x,ensure_ascii=False))
                     
     
     def disconnect(self, close_code):
+        self.client.close()
         print('disconnect')
