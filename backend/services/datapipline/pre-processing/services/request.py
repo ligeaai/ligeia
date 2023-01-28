@@ -1,9 +1,9 @@
-req = "http://34.125.220.112:8000/api/v1/tags/details/"
+req = "http://34.125.121.93:8000/api/v1/tags/details/"
 import json
 import requests
 import os
 
-base_url = "http://34.125.220.112:8000"
+base_url = "http://34.125.121.93:8000"
 # from request import req
 def getTagNameData():
     req = base_url + "/api/v1/tags/details/"

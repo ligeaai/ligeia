@@ -28,15 +28,16 @@ consumer.seek_to_end()
 
 
 def scale_data(data):
-    scaled_data = float(data["tag_value"])
-    data["tag_value"] = scaled_data * 1
-    return data["tag_value"]
+    scaled_data = float(data["payload"]["insert"][0]["vqts"][0]["v"])
+    data["payload"]["insert"][0]["vqts"][0]["v"] = scaled_data * 1
+    return data["payload"]["insert"][0]["vqts"][0]["v"]
 
 
 for message in consumer:
     df = message.value
     data = literal_eval(df.decode("utf8"))
     df2 = dict(data)
-    scale_data(data)
+    print(scale_data(data))
+
     producer.send("uom_conversion", value=data)
     producer.flush()

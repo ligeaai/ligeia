@@ -5,7 +5,7 @@ import datetime
 from kafka import KafkaConsumer
 
 # Create a Redis Connection
-rds = redis.StrictRedis("redis-test", port=6379)
+rds = redis.StrictRedis("redis-test1", port=6379)
 # Create Kafka Consumer
 consumer = KafkaConsumer("live_data", bootstrap_servers=["broker:29092"])
 
@@ -29,7 +29,7 @@ def add_to_created_database(key, timestamp, value, columns):
 def convert_to_time(time):
     timestamp_for_redis = int(
         timelibrary.mktime(
-            datetime.datetime.strptime(time, "%Y-%m-%d %H:%M:%S").timetuple()
+            datetime.datetime.strptime(time, "%Y-%m-%d %H:%M:%S.%f").timetuple()
         )
     )
     return timestamp_for_redis
@@ -37,26 +37,28 @@ def convert_to_time(time):
 
 for msg in consumer:
     data = json.loads(msg.value)
-    print(data["createdtime"][0:19])
-    time_for_redis = convert_to_time(data["createdtime"][0:19])
+    time_for_redis = convert_to_time(data["payload"]["insert"][0]["vqts"][0]["t"])
+    print(time_for_redis)
     # ----------------- VALUES -----------------
     columns = {
-        "completion": data["completion"],
-        "version": data["version"],
-        "created_by": data["created_by"],
-        "createdtime": data["createdtime"],
-        "message_type": data["message_type"],
-        "fqn": data["fqn"],
-        "timestamp": data["timestamp"],
-        "quality": data["quality"],
-        "tag_value": data["tag_value"],
-        "tag_name": data["tag_name"],
+        "completion": data["header"]["asset"],
+        "version": data["header"]["version"],
+        "created_by": data["header"]["created_by"],
+        "createdTime": data["header"]["createdTime"],
+        "message_type": data["header"]["message_type"],
+        "layer": data["header"]["layer"],
+        "asset": data["header"]["asset"],
+        "timestamp": data["payload"]["insert"][0]["vqts"][0]["t"],
+        "quality": data["payload"]["insert"][0]["vqts"][0]["q"],
+        "tag_value": data["payload"]["insert"][0]["vqts"][0]["v"],
+        "tag_name": data["payload"]["insert"][0]["fqn"],
+        "uom": data["payload"]["insert"][0]["vqts"][0]["s"],
     }
-    timestamp = time_for_redis
-    value = str(data["tag_value"])
-    key_times = str(data["createdtime"][8]) + str(data["createdtime"][9])
+    timestamp = str(time_for_redis)
+    value = str(data["payload"]["insert"][0]["vqts"][0]["v"])
+    key_times = timestamp
     print(key_times)
-    key = data["tag_name"] + ":" + key_times
+    key = data["payload"]["insert"][0]["fqn"] + ":" + key_times
     # ------------------------------------------
     # Create Redis Db
     created_redis_db(key, columns)

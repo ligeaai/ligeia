@@ -39,33 +39,33 @@ def tag_name_check(data_tag_name, incoming_tag_name):
 
 
 def data_range_check(data, min_max_values):
-    try:
-        quality = data["quality"]
-        data_value = float(data["tag_value"])
-        min_values = float(min_max_values[0])
-        max_values = float(min_max_values[1])
-        print(max_values)
-        print(min_values)
-        if data_value < min_values:
-            quality = quality - 127
-        elif data_value > max_values:
-            quality = quality - 126
-        data["quality"] = quality
-    except:
-        data["tag_name"] = "no such tag value found"
+    # try:
+    quality = data["payload"]["insert"][0]["vqts"][0]["q"]
+    data_value = float(data["payload"]["insert"][0]["vqts"][0]["v"])
+    min_values = 50.0  # float(min_max_values[0])
+    max_values = 100.0  # float(min_max_values[1])
+    print(max_values)
+    print(min_values)
+    if data_value < min_values:
+        quality = quality - 127
+    elif data_value > max_values:
+        quality = quality - 126
+    data["payload"]["insert"][0]["vqts"][0]["q"] = quality
+    # except:
+    #     data["payload"]["insert"][0]["fqn"] = "no such tag value found"
     return data
 
 
 for message in consumer:
-    r = requests.get(req)
-    incoming_tag_name = r.json()
+    # r = requests.get(req)
+    # incoming_tag_name = r.json()
     df = message.value
     data = literal_eval(df.decode("utf8"))
-    df2 = dict(data)
-    if data["quality"] == 192:
-        data_range_check(data, tag_name_check(data["tag_name"], incoming_tag_name))
-    key = data["completion"].encode("utf-8")
-    del data["step-status"]
-    print(data["tag_name"])
-    producer.send(data["message_type"], value=data, key=key)
+    # df2 = dict(data)
+    # if data["payload"]["insert"][0]["vqts"][0]["q"] == 192:
+    #     data_range_check(data, tag_name_check(data["payload"]["insert"][0]["fqn"], incoming_tag_name))
+    # key = data["header"]["asset"].encode("utf-8")
+    # del data["step-status"]
+    print(data)
+    producer.send(data["header"]["message_Type"], value=data)
     producer.flush()

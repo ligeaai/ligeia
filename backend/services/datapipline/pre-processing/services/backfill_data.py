@@ -8,7 +8,7 @@ from ast import literal_eval
 import json
 
 host = "broker:29092"
-topic = "backorlive"
+topic = "backorlivee"
 consumer = KafkaConsumer(
     group_id=topic,
     bootstrap_servers=host,
@@ -28,21 +28,22 @@ consumer.seek_to_end()
 
 
 def checkBackData(data, time_difference):
-    if time_difference > 5:
+    if time_difference > 96:
         print("Incoming data is backfill data")
-        data["message_type"] = "backfill_data"
+        data["header"]["message_type"] = "backfill_data"
         del data["DiffInHours"]
         return data
     else:
         print("Incoming data is live data")
-        data["message_type"] = "live_data"
+        data["header"]["message_type"] = "live_data"
         del data["DiffInHours"]
         return data
 
 
 for message in consumer:
     df = message.value
-    data = literal_eval(df.decode("utf8"))
+    data = literal_eval(df.decode("utf-8"))
+    print(data)
     data["step-status"] = "backfill_data"
     checkBackData(data, data["DiffInHours"])
     producer.send("frozen_data", value=data)

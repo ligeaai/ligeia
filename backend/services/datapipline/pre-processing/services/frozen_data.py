@@ -27,64 +27,55 @@ consumer.poll()
 consumer.seek_to_end()
 old_data = []
 type_value_data = []
-temperature_list = []
-pressure_list = []
-vibration_x_list = []
-vibration_y_list = []
-vibration_motor_list = []
-data_dict = {
-    "temperature": temperature_list,
-    "pressure": pressure_list,
-    "vibration_x": vibration_x_list,
-    "vibration_y": vibration_y_list,
-    "vibration_motor": vibration_motor_list,
-}
 
 
 def get_value_type(df2, get_value):
     data = get_value
-    try:
-        list(df2.keys()).index(data)
-        incomingData = str(df2.get(data)) + " " + str(data)
-        data_dict.get(data).append(incomingData)
-        return data
-    except:
-        print("No defined data is coming")
+    print(data)
+    print("--------------**************---------------------")
+    # try:
+    incomingData = df2 + " " + str(data)
+    type_value_data.append(incomingData)
+    return data
+    # except:
+    #     print("No defined data is coming")
 
 
 def frozen_data_check(data_check):
-    valueType = data_dict.get(data_check)
     print(
         "\n VALUE -1 = ",
-        valueType[-1],
+        type_value_data[-1],
         "----------->",
         "VALUE -2= ",
-        valueType[-2],
+        type_value_data[-2],
         "\n",
     )
-    if valueType[-1] == valueType[-2]:
-        if len(valueType) > 3:
+    if type_value_data[-1] == type_value_data[-2]:
+        if len(type_value_data) > 3:
             print(
                 "----------------------------THE DATA IS COMING SAME PLEASE CHECK----------------------------"
             )
-            data["quality"] = data["quality"] - 125
+            data["payload"]["insert"][0]["vqts"][0]["q"] = (
+                data["payload"]["insert"][0]["vqts"][0]["q"] - 125
+            )
     else:
-        data_dict.get(data_check).clear()
-    return valueType
+        type_value_data.clear()
+    return type_value_data
 
 
 for message in consumer:
-
     old_data.append(message.value.decode("utf-8"))
     # print(message.value.decode('utf-8'))
     df = message.value
     data = literal_eval(df.decode("utf8"))
     df2 = dict(data)
-    data_check = get_value_type(df2, data["type_value"])
-    print(len(data_dict.get(data_check)))
-    if len(data_dict.get(data_check)) > 3:
+    data_check = get_value_type(
+        data["payload"]["insert"][0]["fqn"],
+        data["payload"]["insert"][0]["vqts"][0]["v"],
+    )
+    print(len(type_value_data))
+    if len(type_value_data) > 3:
         frozen_data_check(data_check)
-    del data[data_check]
     data["step-status"] = "frozen-data"
     producer.send("scaling_data", value=data)
     producer.flush()
