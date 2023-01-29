@@ -14,7 +14,7 @@ const Tabular = ({ highchartProps, width, height, backfillData }) => {
         Promise.all(
           client.map((e) => {
             setAllData([]);
-            e.clsoe();
+            e.close();
           })
         );
       }
