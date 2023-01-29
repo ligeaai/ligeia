@@ -106,7 +106,7 @@ class TagsPropertysView(generics.CreateAPIView):
     def _resourceLabel(self,data,dataList,culture):
         for item in (data):
             if item.get('CODE_LIST'):
-                qs_codeList = code_list.objects.filter(LIST_TYPE = item.get('CODE_LIST'))
+                qs_codeList = code_list.objects.filter(LIST_TYPE = item.get('CODE_LIST'),CULTURE = culture)
                 item['CODE'] = CodeListORM.getCodeList(qs_codeList,culture=culture,hierarchy=False)
 
             qs_resource = resource_list.objects.filter(ID = item.get('LABEL_ID'),CULTURE = culture)
