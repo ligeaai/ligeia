@@ -65,10 +65,8 @@ const LineCharts = ({
             })
           );
           highchartProps.Inputs.map((tag, index) => {
-            const myindex = index;
-
             client[index] = new W3CWebSocket(
-              `${wsBaseUrl}/ws/tags/${tag.ROW_ID}`
+              `${wsBaseUrl}/ws/tags/backfill/${tag.ROW_ID}`
             );
 
             client[index].onerror = function () {
@@ -82,18 +80,14 @@ const LineCharts = ({
               async function sendNumber() {
                 if (client.readyState === client.OPEN) {
                   if (typeof e.data === "string") {
+                    console.log("klşsakdkaşsdlk");
                     let jsonData = JSON.parse(e.data);
+                    console.log(jsonData);
+                    dataList[index].addPoint({
+                      x: parseInt(jsonData.timestamp) * 1000,
+                      y: jsonData.tag_value,
+                    });
 
-                    Promise.all(
-                      Object.keys(jsonData).map((f) => {
-                        jsonData[f][1].map((d) => {
-                          dataList[myindex].addPoint({
-                            x: d[0] * 1000,
-                            y: d[1],
-                          });
-                        });
-                      })
-                    );
                     return true;
                   }
                 }
@@ -222,18 +216,20 @@ const LineCharts = ({
   };
 
   return (
-    <HighchartsReact
-      highcharts={Highcharts}
-      options={{
-        ...options,
-        chart: {
-          ...options.chart,
-          width: width,
-          height: height,
-        },
-      }}
-      // constructorType={"stockChart"}
-    />
+    <Box>
+      <HighchartsReact
+        highcharts={Highcharts}
+        options={{
+          ...options,
+          chart: {
+            ...options.chart,
+            width: width,
+            height: height,
+          },
+        }}
+        constructorType={"stockChart"}
+      />
+    </Box>
   );
 };
 

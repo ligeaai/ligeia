@@ -14,11 +14,12 @@ import ItemLinkService from "../../api/itemLink"
 
 export const loadTapsOverview = () => async (dispatch, getState) => {
   const linkId = getState().collapseMenu.selectedItem.LINK_ID;
+  const fromId = getState().collapseMenu.selectedItem.FROM_ITEM_ID
   try {
     let res = await instance.get(`/taplinks/${linkId}`, config);
     var titles = Object.keys(res.data.data);
     // TODO don't use patches, tends to leak code
-    const body = JSON.stringify({ ID: linkId })
+    const body = JSON.stringify({ ID: fromId })
     let itemLinkRes = await ItemLinkService.getTags(body)
 
     dispatch({

@@ -5,7 +5,14 @@ import React from "react";
 import { useSelector } from "react-redux";
 import Box from "@mui/material/Box";
 import { styled } from "@mui/material/styles";
-import { Angular, LineChart, Solid, Measurement } from "./charts";
+import {
+  Angular,
+  LineChart,
+  Solid,
+  Measurement,
+  Tabular,
+  Backfill,
+} from "./charts";
 import { Bar, Pie, HeatMap, Line, TreeMap } from "./nivoCharts";
 import { Matrix } from "./customWidget";
 const MyBox = styled(Box)(({ theme }) => {
@@ -85,7 +92,27 @@ const Highchart = ({
     "Gauge(Angular) [Highchart]": (
       <Angular highchartProps={highchartProps} width={width} height={height} />
     ),
-    "Linechart [Highchart]": (
+    "Linechart [Highchart]": tabular ? (
+      <Tabular
+        highchartProps={highchartProps}
+        width={width}
+        height={height}
+        liveData={liveData}
+        backfillData={backfillData}
+        tabular={tabular}
+        chartType="spline"
+      />
+    ) : backfillData ? (
+      <Backfill
+        highchartProps={highchartProps}
+        width={width}
+        height={height}
+        liveData={liveData}
+        backfillData={backfillData}
+        tabular={tabular}
+        chartType="spline"
+      />
+    ) : (
       <LineChart
         highchartProps={highchartProps}
         width={width}
@@ -97,15 +124,16 @@ const Highchart = ({
       />
     ),
     "Area Chart [Highchart]": (
-      <LineChart
-        highchartProps={highchartProps}
-        width={width}
-        height={height}
-        liveData={liveData}
-        backfillData={backfillData}
-        tabular={tabular}
-        chartType="area"
-      />
+      <>areaChart</>
+      // <LineChart
+      //   highchartProps={highchartProps}
+      //   width={width}
+      //   height={height}
+      //   liveData={liveData}
+      //   backfillData={backfillData}
+      //   tabular={tabular}
+      //   chartType="area"
+      // />
     ),
     "Gauge(Solid) [Highchart]": (
       <Solid highchartProps={highchartProps} width={width} height={height} />
