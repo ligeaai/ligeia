@@ -76,7 +76,9 @@ export const Solid = ({ highchartProps, width, height }) => {
     },
     title: {
       text:
-        measuremenetData && highchartProps["Show Tag Name"]
+        measuremenetData &&
+        highchartProps["Show Tag Name"] &&
+        measuremenetData.length > 0
           ? measuremenetData.filter(
               (e) => e.TAG_ID === highchartProps.Measurement
             )[0].NAME
@@ -162,7 +164,7 @@ export const Solid = ({ highchartProps, width, height }) => {
         ],
         tooltip: {
           valueSuffix: ` ${
-            tags && highchartProps["Show Unit"]
+            tags && highchartProps["Show Unit"] && measuremenetData.length > 0
               ? tags.filter((a) => a.TAG_ID === highchartProps.Measurement)[0]
                   .UOM
               : ""
@@ -180,7 +182,7 @@ export const Solid = ({ highchartProps, width, height }) => {
               ? highchartProps["Unit Font Size"]
               : "9"
           }px">( ${
-            tags && highchartProps["Show Unit"]
+            tags && highchartProps["Show Unit"] && measuremenetData.length > 0
               ? tags.filter((a) => a.TAG_ID === highchartProps.Measurement)[0]
                   .UOM
               : ""

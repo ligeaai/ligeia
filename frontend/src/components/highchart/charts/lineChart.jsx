@@ -37,12 +37,11 @@ const LineCharts = ({
 
   React.useEffect(() => {
     return () => {
-      client.map((e) => {
-        console.log(e);
-        e.onclose = function () {
-          console.log("WebSocket Client Closed");
-        };
-      });
+      Promise.all(
+        client.map((e) => {
+          e.close();
+        })
+      );
     };
   }, [liveData]);
   const options = {
@@ -77,6 +76,9 @@ const LineCharts = ({
             client[index].onopen = function () {
               console.log("connedted");
             };
+            client[index].onclose = function () {
+              console.log("WebSocket Client Closed");
+            };
             dataList[index] = series.series[index];
             client[index].onmessage = function (e) {
               async function sendNumber() {
@@ -87,86 +89,74 @@ const LineCharts = ({
                     Promise.all(
                       Object.keys(jsonData).map((f) => {
                         jsonData[f][1].map((d) => {
-                          dataList[myindex].addPoint({
-                            x: d[0] * 1000,
-                            y: d[1],
-                          });
+                          dataList[myindex].addPoint(
+                            {
+                              x: d[0] * 1000,
+                              y: d[1],
+                            },
+                            false,
+                            false,
+                            false
+                          );
                         });
                       })
                     );
+                    // var xAxis = this.xAxis[0];
+                    // var min = xAxis.dataMax;
+                    // var max = xAxis.dataMax;
+                    // xAxis.setExtremes(min - 86400000, max);
                     return true;
                   }
                 }
               }
               sendNumber();
             };
+
+            // console.log(new Date(1670007227 * 1000));
+            // var newDate = new Date().getTime();
+            // series.xAxis[0].dataMax = newDate;
+            // series.xAxis[0].setExtremes(
+            //   new Date(2000, 1, 1).getTime(),
+            //   newDate,
+            //   true
+            // );
+            // series.xAxis[0].setExtremes(
+            //   new Date().getTime() - 86400,
+            //   new Date().getTime()
+            // );
           });
         },
       },
     },
     rangeSelector: {
-      //  enabled: !liveData,
+      enabled: false,
       buttons: [
         {
-          type: "minutes",
-          count: 1,
-          text: "1m",
-        },
-        {
-          type: "minutes",
-          count: 5,
-          text: "5m",
-        },
-        {
-          type: "minutes",
-          count: 15,
-          text: "15m",
-        },
-        {
-          type: "minutes",
-          count: 30,
-          text: "30m",
-        },
-        {
-          type: "hours",
-          count: 1,
-          text: "1h",
-        },
-        {
-          type: "hours",
-          count: 6,
-          text: "6h",
-        },
-        {
-          type: "days",
+          type: "day",
           count: 1,
           text: "1d",
         },
         {
-          type: "weeks",
+          type: "week",
           count: 1,
           text: "1w",
         },
         {
-          type: "months",
+          type: "month",
           count: 1,
           text: "1m",
         },
         {
-          type: "months",
-          count: 3,
-          text: "3m",
-        },
-        {
-          type: "months",
-          count: 6,
-          text: "6m",
+          type: "year",
+          count: 1,
+          text: "1y",
         },
         {
           type: "all",
-          text: "Full",
+          text: "All",
         },
       ],
+      selected: 0,
     },
     credits: {
       enabled: false,
@@ -177,9 +167,39 @@ const LineCharts = ({
     exporting: {
       enabled: highchartProps["Show Enable Export"],
     },
-    // navigator: {
-    //   enabled: !liveData,
-    // },
+    navigator: {
+      enabled: true,
+      xAxis: {
+        type: "datetime",
+        min: new Date().getTime() - 30 * 24 * 60 * 60 * 1000,
+        max: new Date().getTime() + 1000,
+        // range: 86000,
+        //minRange: 24 * 3600 * 1000,
+        ordinal: false,
+        endOnTick: false,
+        startOnTick: false,
+        // events: {
+        //   afterSetExtremes: function (e) {
+        //     if (e.trigger === "syncExtremes") {
+        //       this.setExtremes(e.min, e.max, false, false, {
+        //         trigger: "syncExtremes",
+        //       });
+        //     }
+        //   },
+        // },
+        // categories: categories,
+      },
+      series: [
+        ...highchartProps.Inputs.map((e) => {
+          return {
+            name: e.NAME,
+            color: highchartProps["Enable Custom Colors"]
+              ? highchartProps[`[${e.NAME}] Color`]
+              : "",
+          };
+        }),
+      ],
+    },
     navigation: {
       buttonOptions: {
         verticalAlign: "top",
@@ -201,11 +221,29 @@ const LineCharts = ({
     },
     xAxis: {
       type: "datetime",
-      labels: {
-        formatter: function () {
-          return Highcharts.dateFormat("%d.%m.%Y %H:%M:%S", this.value);
-        },
-      },
+      min: new Date().getTime() - 1 * 24 * 60 * 60 * 1000,
+      max: new Date().getTime() + 1000,
+      //range: 86000,
+      lineWidth: 1,
+      tickWidth: 2,
+      //minRange: 24 * 3600 * 1000,
+      endOnTick: false,
+      startOnTick: false,
+      ordinal: false,
+      // events: {
+      //   afterSetExtremes: function (e) {
+      //     if (e.trigger === "syncExtremes") {
+      //       this.setExtremes(e.min, e.max, false, false, {
+      //         trigger: "syncExtremes",
+      //       });
+      //     }
+      //   },
+      // },
+      // labels: {
+      //   formatter: function () {
+      //     return Highcharts.dateFormat("%d.%m.%Y %H:%M:%S", this.value);
+      //   },
+      // },
       // categories: categories,
     },
     yAxis: [...yAxisTitles],
@@ -216,6 +254,12 @@ const LineCharts = ({
           color: highchartProps["Enable Custom Colors"]
             ? highchartProps[`[${e.NAME}] Color`]
             : "",
+          dataGrouping: {
+            units: [
+              ["week", [1]],
+              ["month", [1, 2, 3, 4, 6]],
+            ],
+          },
         };
       }),
     ],
@@ -232,7 +276,7 @@ const LineCharts = ({
           height: height,
         },
       }}
-      // constructorType={"stockChart"}
+      constructorType={"stockChart"}
     />
   );
 };

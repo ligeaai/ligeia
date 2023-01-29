@@ -39,9 +39,7 @@ const LineCharts = ({
     return () => {
       client.map((e) => {
         console.log(e);
-        e.onclose = function () {
-          console.log("WebSocket Client Closed");
-        };
+        e.close();
       });
     };
   }, [liveData]);
@@ -74,6 +72,9 @@ const LineCharts = ({
             };
             client[index].onopen = function () {
               console.log("connedted");
+            };
+            client[index].onclose = function () {
+              console.log("WebSocket Client Closed");
             };
             dataList[index] = series.series[index];
             client[index].onmessage = function (e) {

@@ -83,7 +83,7 @@ export const Measurement = ({ highchartProps, width, height }) => {
             : "12px",
         }}
       >
-        {measuremenetData
+        {measuremenetData && measuremenetData.length > 0
           ? measuremenetData.filter(
               (e) => e.TAG_ID === highchartProps.Measurement
             )[0].NAME
@@ -142,7 +142,9 @@ export const Measurement = ({ highchartProps, width, height }) => {
               }}
             >
               ({" "}
-              {tags && highchartProps["Show Unit"]
+              {tags &&
+              highchartProps["Show Unit"] &&
+              measuremenetData.length > 0
                 ? tags.filter((a) => a.TAG_ID === highchartProps.Measurement)[0]
                     .UOM
                 : ""}{" "}

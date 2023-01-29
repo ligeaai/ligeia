@@ -20,12 +20,6 @@ export const loadTapsOverview = () => async (dispatch, getState) => {
     var titles = Object.keys(res.data.data);
     // TODO don't use patches, tends to leak code
     const body = JSON.stringify({ ID: fromId })
-    let itemLinkRes = await ItemLinkService.getTags(body)
-
-    dispatch({
-      type: SET_MEASUREMENT_DATA,
-      payload: itemLinkRes.data
-    })
 
     dispatch({
       type: FILL_TAPS_OVERVIEW,
@@ -34,6 +28,13 @@ export const loadTapsOverview = () => async (dispatch, getState) => {
     dispatch({
       type: REFRESH_WIDGETS_OVERVIEW,
     });
+    let itemLinkRes = await ItemLinkService.getTags(body)
+
+    dispatch({
+      type: SET_MEASUREMENT_DATA,
+      payload: itemLinkRes.data
+    })
+
   } catch (err) {
     if (err.response.status === 404) {
       const body = JSON.stringify({ _id: linkId, data: {} });

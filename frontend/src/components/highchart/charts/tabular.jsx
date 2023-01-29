@@ -14,9 +14,7 @@ const Tabular = ({ highchartProps, width, height, backfillData }) => {
         Promise.all(
           client.map((e) => {
             setAllData([]);
-            e.onclose = function () {
-              console.log("WebSocket Client Closed");
-            };
+            e.clsoe();
           })
         );
       }
@@ -33,7 +31,9 @@ const Tabular = ({ highchartProps, width, height, backfillData }) => {
       client[index].onopen = function () {
         console.log("connedted");
       };
-
+      client[index].onclose = function () {
+        console.log("WebSocket Client Closed");
+      };
       client[index].onmessage = function (e) {
         async function sendNumber() {
           if (client.readyState === client.OPEN) {
