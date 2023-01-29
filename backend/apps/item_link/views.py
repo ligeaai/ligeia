@@ -2,7 +2,7 @@ from django.shortcuts import render
 from rest_framework import generics,permissions,status
 from rest_framework.response import Response 
 from .models import item_link
-from .serializers import ItemLinkSaveSerializer,ItemLinkDetailsSerializer
+from .serializers import ItemLinkSaveSerializer,ItemLinkDetailsSerializer,ItemLinkDetailsTagSerializer
 from utils.models_utils import validate_find
 from apps.item_property.models import item_property 
 from utils.models_utils import validate_model_not_null
@@ -12,6 +12,7 @@ from apps.tags.models import tags
 from apps.item.models import item
 from apps.item.serializers import ItemDetailsSerializer
 from apps.tags.serializers import TagsDetiailsSerializer
+import threading
 # Create your views here.
 
 
@@ -122,33 +123,29 @@ class TagsLinksView(generics.CreateAPIView):
     permission_classes = [permissions.AllowAny]
 
     def post(self, request, *args, **kwargs):
-        quaryset  = item_link.objects.filter(Q(TO_ITEM_ID = request.data.get('ID')),~Q(LINK_TYPE='TAG_ITEM'))
+        quaryset  = item_link.objects.filter(Q(TO_ITEM_ID__exact = request.data.get('ID')),~Q(LINK_TYPE='TAG_ITEM'))
         if not quaryset:
-            quaryset  = item_link.objects.filter(Q(FROM_ITEM_ID= request.data.get('ID')),~Q(LINK_TYPE='TAG_ITEM'))
-            
-        tempt ={}
+            quaryset  = item_link.objects.filter(Q(FROM_ITEM_ID__exact= request.data.get('ID')),~Q(LINK_TYPE='TAG_ITEM'))
+    
         tagsList = []
         serializer = ItemLinkDetailsSerializer(quaryset,many = True)
-        self._getChild(serializer.data,tempt,tagsList)
+        self._getChild(serializer.data,tagsList)
         return Response(tagsList)
     
     
-    def _getChild(self,data,tempt,tagsList):
+    def _getChild(self,data,tagsList):
         for index in range(len(data)):
-            print('girdi')
-            quaryset  = item_link.objects.filter(Q(TO_ITEM_ID = data[index].get('FROM_ITEM_ID')),~Q(LINK_TYPE='TAG_ITEM'))
+            quaryset  = item_link.objects.filter(Q(TO_ITEM_ID__exact= data[index].get('FROM_ITEM_ID')),~Q(LINK_TYPE='TAG_ITEM'))
             if quaryset:
-                serializer = ItemLinkDetailsSerializer(quaryset,many = True)
-                data[index]['CHILD'] = serializer.data
-                self._getChild(serializer.data,tempt,tagsList)
-                find_tags = tags.objects.filter(ITEM_ID = data[index].get('TO_ITEM_ID'))
+                serializer = ItemLinkDetailsTagSerializer(quaryset,many = True)
+                self._getChild(serializer.data,tagsList)
+                find_tags = tags.objects.filter(ITEM_ID__exact = data[index].get('TO_ITEM_ID'))
                 if find_tags:
                     for item in TagsDetiailsSerializer(find_tags,many=True).data:
                         tagsList.append(item)
                         
-                
             else:
-                find_tags = tags.objects.filter(ITEM_ID = data[index].get('FROM_ITEM_ID'))
+                find_tags = tags.objects.filter(ITEM_ID__exact = data[index].get('FROM_ITEM_ID'))
                 if find_tags:
                     for item in TagsDetiailsSerializer(find_tags,many=True).data:
                         tagsList.append(item)
@@ -160,6 +157,43 @@ class TagsLinksView(generics.CreateAPIView):
             #     "TO_ITEM_TYPE": data[index].get('FROM_ITEM_TYPE'),
             #    }
             #    data[index]['CHILD'] = [new_dict]
+
+
+
+# class TagsLinksTestView(generics.CreateAPIView):
+#     permission_classes = [permissions.AllowAny]
+   
+
+#     def post(self, request, *args, **kwargs):
+#         quaryset  = item_link.objects.filter(Q(TO_ITEM_ID = request.data.get('ID')),~Q(LINK_TYPE='TAG_ITEM'))
+#         if not quaryset:
+#             quaryset  = item_link.objects.filter(Q(FROM_ITEM_ID= request.data.get('ID')),~Q(LINK_TYPE='TAG_ITEM'))
+#         thread_list = []
+#         tempt ={}
+#         tagsList = []
+#         serializer = ItemLinkDetailsSerializer(quaryset,many = True)
+#         print(serializer.data)
+#         return Response(tagsList)
+    
+    
+#     def _getChild(self,data,tempt,tagsList):
+#             quaryset  = item_link.objects.filter(Q(TO_ITEM_ID = data.get('FROM_ITEM_ID')),~Q(LINK_TYPE='TAG_ITEM'))
+#             if quaryset:
+#                 serializer = ItemLinkDetailsSerializer(quaryset,many = True)
+#                 data['CHILD'] = serializer.data
+#                 self._getChild(serializer.data,tempt,tagsList)
+#                 find_tags = tags.objects.filter(ITEM_ID = data.get('TO_ITEM_ID'))
+#                 if find_tags:
+#                     for item in TagsDetiailsSerializer(find_tags,many=True).data:
+#                         tagsList.append(item)
+                
+#             else:
+#                 find_tags = tags.objects.filter(ITEM_ID = data.get('FROM_ITEM_ID'))
+#                 if find_tags:
+#                     for item in TagsDetiailsSerializer(find_tags,many=True).data:
+#                         tagsList.append(item)
+
+
 class ItemLinkHierarchyView(generics.ListAPIView):
     permission_classes = [permissions.AllowAny]
     def get_queryset(self):

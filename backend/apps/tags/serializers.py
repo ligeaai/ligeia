@@ -24,7 +24,19 @@ class TagsSaveSerializer(serializers.Serializer):
 class TagsDetiailsSerializer(serializers.ModelSerializer):
     class Meta:
         model = tags
-        fields = '__all__'
+        fields = [
+                    "ITEM_ID",
+                    "TAG_ID",
+                    "NAME",
+                    "UOM",
+                    "UOM_QUANTITY_TYPE",
+                    "UOM_NAME",
+                    "NORMAL_MAXIMUM",
+                    "NORMAL_MINIMUM",
+                    "ROW_ID",
+                    "TRANSACTION_TYPE",
+                    "TRANSACTION_PROPERTY"
+                    ]
     
 class TagsFieldsSerializer(serializers.ModelSerializer):
     class Meta:

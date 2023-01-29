@@ -23,6 +23,8 @@ django-mptt
 channels
 channels-redis
 daphne
+pymongo
+confluent_kafka
 channels_redis
 # Kafka-Python
 kafka-python

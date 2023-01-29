@@ -22,3 +22,8 @@ class ItemLinkDetailsSerializer(serializers.ModelSerializer):
     class Meta:
         model = item_link
         fields = ["LINK_ID","LINK_TYPE","FROM_ITEM_ID","FROM_ITEM_TYPE","TO_ITEM_ID","TO_ITEM_TYPE","START_DATETIME","END_DATETIME"]
+
+class ItemLinkDetailsTagSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = item_link
+        fields = ["FROM_ITEM_ID",]
