@@ -13,6 +13,7 @@ class tags(models.Model):
 	UOM=models.CharField(max_length=100,null=True,)
 	UOM_QUANTITY_TYPE=models.CharField(max_length=100,null=True,)
 	UOM_NAME=models.CharField(max_length=100,null=True,)
+	SHORT_NAME=models.CharField(max_length=100,null=True,)
 	DATA_TYPE=models.CharField(max_length=100,null=True,)
 	DERIVE_EQUATION=models.CharField(max_length=1000,null=True,)
 	EXCEPTION_DEV=models.CharField(max_length=1000,null=True,)
