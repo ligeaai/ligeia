@@ -9,43 +9,51 @@ import numpy as np
 from kafka import KafkaProducer
 from confluent_kafka.serialization import StringSerializer
 
-producer = KafkaProducer(
-    bootstrap_servers=os.environ.get("Kafka_Host"),
-    value_serializer=StringSerializer(),
-    linger_ms=10,
-)
+producer = KafkaProducer(bootstrap_servers=os.environ.get('Kafka_Host'),
+                                    value_serializer=StringSerializer(),
+                                    linger_ms=10)
 file_name = ""
 with os.scandir(os.getcwd()) as find:
     for file in find:
         if file.name.endswith("csv"):
-            file_name = file.name
-data = pd.read_csv(file_name, sep=";", encoding="WINDOWS-1251")
+            file_name = (file.name)
+data = pd.read_csv(file_name,sep = ';',encoding='WINDOWS-1251')
 data = data.astype(object).replace(np.nan, None)
 keys = data.keys()
 # temp = []
 for row_index in range(len(data)):
-    for keys_index in range(6, len(keys)):
+    for keys_index in range(6,len(keys)):
         raw_data = {}
         raw_data["completion"] = data[keys[1]][row_index]
         raw_data["created_by"] = data[keys[4]][row_index]
-        raw_data["date"] = data[keys[5]][row_index]
-        raw_data["tag_name"] = keys[keys_index].split(",")[0]
+        date = data[keys[5]][row_index].split('+')
+        date_string = date[0].replace("   ", "")
         try:
-            datetime_object = parser.parse(raw_data.get("date"))
+            date_object = datetime.strptime(date_string, "%Y-%m-%d %H:%M:%S.%f")
+            if len(date) > 1:
+                new_time = date_object + datetime.timedelta(seconds=int(date[1]))
+        except:
+            continue    
+        raw_data["date"] = data[keys[5]][row_index]
+        raw_data['tag_name'] = keys[keys_index].split(',')[0]
+        try:
+            datetime_object = parser.parse(raw_data.get('date'))
         except:
             continue
 
-        if len(keys[keys_index].split(",")) > 1:
-            raw_data["uom"] = keys[keys_index].split(",")[1]
+        if len(keys[keys_index].split(',')) > 1:
+            raw_data['uom'] = keys[keys_index].split(',')[1]
         else:
-            raw_data["uom"] = "blank"
-
+            raw_data['uom'] = "blank"
+        
         if data[keys[keys_index]][row_index] is not None:
             raw_data["tag_value"] = float(data[keys[keys_index]][row_index])
             # temp.append(raw_data)
+            print(raw_data)
             raw_data = json.dumps(raw_data, ensure_ascii=False)
-            producer.send("raw-data", value=raw_data)
-            # os.environ.get('Kafka_Topic_Raw_Data')
+            producer.send("raw-data", value = raw_data)
+            # print(raw_data)
+            #os.environ.get('Kafka_Topic_Raw_Data')
         else:
             continue
 # print(temp[0])

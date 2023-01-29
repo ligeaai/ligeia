@@ -12,7 +12,7 @@ from apps.tags.serializers import TagsFieldsSerializer
 env = environ.Env(DEBUG=(bool, False))
 
 def retrieve_data(self,start='-',end='+',tag_id=""):
-    tag = tags.objects.filter(ROW_ID = tag_id)  
+    tag = tags.objects.filter(ROW_ID = tag_id)
     if tag:
         serializer = TagsFieldsSerializer(tag,many = True).data[0]
         while self.is_active:
@@ -178,8 +178,8 @@ class WSConsumerBackfill(WebsocketConsumer):
     def connect(self):
         self.accept()
         self.client = MongoClient("mongodb://root:admin@mongodb-timescale:27017/")
-        self.mongo_db = self.client["backfilldata"]
-        self.timeseries_collection = self.mongo_db["backfilldata"]
+        self.mongo_db = self.client["backfilldata3"]
+        self.timeseries_collection = self.mongo_db["backfilldata3"]
         self.tag_id = self.scope['url_route']['kwargs']['tag_id']
         tag = tags.objects.filter(ROW_ID = self.tag_id)  
         if tag:
