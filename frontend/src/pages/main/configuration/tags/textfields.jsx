@@ -45,6 +45,63 @@ const useStyles = makeStyles((theme) => {
     },
   };
 });
+const TagName = () => {
+  const dispatch = useDispatch();
+  const classes = useStyles();
+  const items = useSelector((state) => state.tags.items);
+  const transaction_prop = useSelector(
+    (state) => state.tags.saveValues.TRANSACTION_PROPERTY
+  );
+  const shortName = useSelector((state) => state.tags.saveValues.SHORT_NAME);
+  const name = useSelector((state) => state.tags.saveValues.NAME);
+  let asset =
+    items.length > 0 && transaction_prop
+      ? items.filter((e) => e.ITEM_ID === transaction_prop)[0].NAME
+      : "";
+  React.useEffect(() => {
+    dispatch(
+      addSaveTagValue(
+        "NAME",
+        `${asset ? asset : ""}.${shortName ? shortName : ""}`
+      )
+    );
+  }, [transaction_prop, asset]);
+  const handleChangeFunc = (e) => {
+    console.log(asset);
+    dispatch(setIsActiveConfirmation(true));
+    dispatch(addSaveTagValue("SHORT_NAME", e));
+    dispatch(addSaveTagValue("NAME", `${asset}.${e}`));
+  };
+
+  return (
+    <>
+      <Grid item xs={12} md={6}>
+        <Grid container className={classes.selectBox}>
+          <Grid item className={classes.label} sx={{ color: "primary.main" }}>
+            Short Name
+          </Grid>
+          <Grid item className={classes.labelFields}>
+            <MyTextField
+              defaultValue={shortName}
+              handleChangeFunc={handleChangeFunc}
+            />
+          </Grid>
+        </Grid>
+      </Grid>
+      <Grid item xs={12} md={6}>
+        <Grid container className={classes.selectBox}>
+          <Grid item className={classes.label} sx={{ color: "primary.main" }}>
+            Tag Name
+          </Grid>
+          <Grid item className={classes.labelFields}>
+            <MyTextField disabled={true} defaultValue={name} />
+          </Grid>
+        </Grid>
+      </Grid>
+    </>
+  );
+};
+
 const Uom = () => {
   const dispatch = useDispatch();
   const classes = useStyles();
@@ -356,6 +413,9 @@ const TextFields = (props) => {
     );
   }
   if (row.PROPERTY_TYPE === "TEXT") {
+    if (row.PROPERTY_NAME === "NAME") {
+      return <TagName></TagName>;
+    }
     if (row.PROPERTY_NAME !== "DESCRIPTION") {
       return (
         <MyTextField

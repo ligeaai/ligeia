@@ -146,6 +146,8 @@ const PropertiesEditor = () => {
               ) {
                 return tagValues.TAG_INFORMATIONS[e].PROPERTY_NAME === "UOM" ? (
                   <TextFields row={tagValues.TAG_INFORMATIONS[e]} />
+                ) : tagValues.TAG_INFORMATIONS[e].PROPERTY_NAME === "NAME" ? (
+                  <TextFields row={tagValues.TAG_INFORMATIONS[e]} />
                 ) : (
                   <Grid item xs={12} md={6} key={key}>
                     <Grid container className={classes.selectBox}>

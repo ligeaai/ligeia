@@ -85,6 +85,18 @@ export const addNewTag = () => async (dispatch, getState) => {
     await dispatch(loadTagsLabel())
     const sortedTagLink = getState().tags.tagValues.TAG_LINK
     const sortedTagInfo = getState().tags.tagValues.TAG_INFORMATIONS
+    dispatch({
+        type: SET_TAG_SAVE_VALUES,
+        payload: { key: "NAME", value: "." }
+    })
+    dispatch({
+        type: SET_TAG_SAVE_VALUES,
+        payload: { key: "SHORT_NAME", value: "" }
+    })
+    dispatch({
+        type: SET_TAG_SAVE_VALUES,
+        payload: { key: "TRANSACTION_PROPERTY", value: "" }
+    })
     dispatch(_fillUuids(sortedTagInfo.concat(sortedTagLink)))
 }
 
