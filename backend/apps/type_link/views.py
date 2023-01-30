@@ -37,6 +37,7 @@ class TypeLinkView(generics.ListAPIView):
         typeAddData.import_data("TYPE_LINK")
         return Response({"Message":'successful'}, status=status.HTTP_200_OK)
 
+
 class TypeLinkDetailsView(generics.CreateAPIView):
     
     
@@ -73,6 +74,7 @@ class TypeLinkDetailsView(generics.CreateAPIView):
         
         qs_ToType = Type.objects.filter(TYPE = ToTypes)
         ToType_serializer = TypeResourceListManagerSerializer(qs_ToType,many = True)
+        linkType = str('TYPE.') + str(linkType)
         qsLinkType = resource_list.objects.filter(ID = linkType,CULTURE = culture)
         resource_list_LinkTypeserialzer = ResourceListDetailsSerializer(qsLinkType,many = True)
         
@@ -97,5 +99,3 @@ class TypeLinkDetailsView(generics.CreateAPIView):
                 return data
             except:
                 pass
-                
-               
