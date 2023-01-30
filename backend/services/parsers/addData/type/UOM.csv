@@ -17,9 +17,9 @@ per barrel,per volume,POSC,1/bbl,1/bbl,1/m3,0,1,0.1589873,0
 per centimetre,per length,POSC,1/cm,1/cm,1/m,0,100,1,0
 per centimetre,wave number,POSC,1/cm,1/cm,1/m,0,100,1,0
 per day,per time,POSC,1/d,1/d,1/s,0,1,86400,0
-per degree Celsius,volumetric thermal expansion,POSC,1/degC,1/degC,1/K,0,1,1,0
-per degree Fahrenheit,volumetric thermal expansion,POSC,1/degF,1/degF,1/K,0,9,5,0
-per degree Rankine,volumetric thermal expansion,POSC,1/degR,1/degR,1/K,0,9,5,0
+per degree Celsius,volumetric thermal expansion,POSC,1/C,1/C,1/K,0,1,1,0
+per degree Fahrenheit,volumetric thermal expansion,POSC,1/F,1/F,1/K,0,9,5,0
+per degree Rankine,volumetric thermal expansion,POSC,1/R,1/R,1/K,0,9,5,0
 per foot,per length,POSC,1/ft,1/ft,1/m,0,1,0.3048,0
 per square foot,per area,POSC,1/ft2,1/ft2,1/m2,0,1,0.09290304,0
 per cubic foot,per volume,POSC,1/ft3,1/ft3,1/m3,0,1,0.02831685,0
@@ -76,7 +76,7 @@ Ampere/millimetre,magnetization,POSC,A/mm,A/mm,A/m,0,1000,1,0
 Ampere/square millimetre,current density,POSC,A/mm2,A/mm2,A/m2,0,1000000,1,0
 acre,area,POSC,acre,acre,m2,0,4.046.873,1,0
 acre foot,volume,POSC,acre.ft,acre.ft,m3,0,1.233.489,1,0
-acre feet/million stbs. 60 deg F,volume per standard volume,POSC,acre.ft/MMstb,acre.ft,m3/scm(15C),0,1.233.489,158987.3,0
+acre feet/million stbs. 60 F,volume per standard volume,POSC,acre.ft/MMstb,acre.ft,m3/scm(15C),0,1.233.489,158987.3,0
 attogram,mass,POSC,ag,ag,kg,0,1.00E-21,1,0
 attojoule,energy,POSC,aJ,aJ,J,0,1.00E-18,1,0
 attojoule,work,POSC,aJ,aJ,J,0,1.00E-18,1,0
@@ -129,10 +129,10 @@ barrel per day per kilopascal,productivity index,POSC,bbl/kPa.d,bbl/(d.kPa),m3/P
 barrel per million cubic feet,volume per volume,POSC,bbl/M(ft3),bbl/(d.kPa),Euc,0,0.1589873,28316.85,0
 barrel/mile,volume per length,POSC,bbl/mi,bbl/mi,m2,0,0.1589873,1.609.344,0
 barrel per minute,volume flow rate,POSC,bbl/min,bbl/min,m3/s,0,0.1589873,60,0
-barrels/million std cubic feet. 60 degF,volume per standard volume,POSC,bbl/MMscf(60F),bbl/min,m3/scm(15C),0,0.1589873,28.262.357,0
+barrels/million std cubic feet. 60 F,volume per standard volume,POSC,bbl/MMscf(60F),bbl/min,m3/scm(15C),0,0.1589873,28.262.357,0
 barrel per day per psi,productivity index,POSC,bbl/psi.d,bbl/psi.d,m3/Pa.s,0,0.1589873,595707004.8,0
 barrel per day per psi,productivity index,POSC,bbl/psi.d,bbl/(d.psi),m3/Pa.s,0,0.1589873,595707004.8,0
-barrels/stock tank barrel. 60 deg F,volume per standard volume,POSC,bbl/stb(60F),bbl/(d.psi),m3/scm(15C),0,1,1,0
+barrels/stock tank barrel. 60 F,volume per standard volume,POSC,bbl/stb(60F),bbl/(d.psi),m3/scm(15C),0,1,1,0
 barrel per U.K. ton,specific volume,POSC,bbl/tonUK,bbl/tonUK,m3/kg,0,1.564.763,1,0
 barrel per U.K. ton,massic volume,POSC,bbl/tonUK,bbl/tonUK,m3/kg,0,1.564.763,1,0
 barrel per U.S. ton,specific volume,POSC,bbl/tonUS,bbl/tonUS,m3/kg,0,1.752.535,1,0
@@ -141,9 +141,9 @@ billion cubic feet,volume,POSC,bcf,bbl/tonUS,m3,0,28316850,1,0
 bit,digital storage,POSC,bit,bbl/tonUS,byte,0,1,8,0
 British thermal unit,energy,POSC,Btu,Btu,J,0,1.055.056,1,0
 British thermal unit,work,POSC,Btu,Btu,J,0,1.055.056,1,0
-Btus/hour foot squared deg F per inch,energy length per time area temperature,POSC,Btu.in/hr.ft2.F,Btu.in/h.ft2.degF,W/m.K,0,0.1442279,1,0
-million Btus/hour,heat flow rate,POSC,Btu(million)/hr,Btu.in/h.ft2.degF,W,0,293071.1,1,0
-million Btus/hour,heat flow rate,POSC,(Deprecated),Btu.in/h.ft2.degF,W,0,293071.1,1,0
+Btus/hour foot squared F per inch,energy length per time area temperature,POSC,Btu.in/hr.ft2.F,Btu.in/h.ft2.F,W/m.K,0,0.1442279,1,0
+million Btus/hour,heat flow rate,POSC,Btu(million)/hr,Btu.in/h.ft2.F,W,0,293071.1,1,0
+million Btus/hour,heat flow rate,POSC,(Deprecated),Btu.in/h.ft2.F,W,0,293071.1,1,0
 British thermal units/barrel,normal stress,POSC,Btu/bbl,Btu/bbl,J/m3,0,1.055.056,0.1589873,0
 British thermal units/barrel,shear stress,POSC,Btu/bbl,Btu/bbl,J/m3,0,1.055.056,0.1589873,0
 British thermal units/barrel,modulus of elasticity,POSC,Btu/bbl,Btu/bbl,J/m3,0,1.055.056,0.1589873,0
@@ -182,7 +182,7 @@ British thermal units/U.S. gallon,modulus of compression,POSC,Btu/galUS,Btu/galU
 British thermal units/U.S. gallon,electromagnetic energy density,POSC,Btu/galUS,Btu/galUS,J/m3,0,278716.3,1,0
 British thermal units/U.S. gallon,radiant energy density,POSC,Btu/galUS,Btu/galUS,J/m3,0,278716.3,1,0
 British thermal unit/hour,heat flow rate,POSC,Btu/hr,Btu/h,W,0,0.2930711,1,0
-British thermal units/hour foot deg F,thermal conductivity,POSC,Btu/hr.ft.degF,Btu/h.ft.degF,W/m.K,0,1.730.735,1,0
+British thermal units/hour foot deg F,thermal conductivity,POSC,Btu/hr.ft.F,Btu/h.ft.F,W/m.K,0,1.730.735,1,0
 Btus/hour per square foot,density of heat flow rate,POSC,Btu/hr.ft2,Btu/h.ft2,W/m2,0,3.154.591,1,0
 Btus/hour per square foot,poynting vector,POSC,Btu/hr.ft2,Btu/h.ft2,W/m2,0,3.154.591,1,0
 Btus/hour per square foot,radiant energy,POSC,Btu/hr.ft2,Btu/h.ft2,W/m2,0,3.154.591,1,0
@@ -191,16 +191,16 @@ Btus/hour per square foot,radiant exitance,POSC,Btu/hr.ft2,Btu/h.ft2,W/m2,0,3.15
 Btus/hour per square foot,irradiance,POSC,Btu/hr.ft2,Btu/h.ft2,W/m2,0,3.154.591,1,0
 Btus/hour per square foot,sound intensity,POSC,Btu/hr.ft2,Btu/h.ft2,W/m2,0,3.154.591,1,0
 Btus/hour per square foot,energy fluence rate,POSC,Btu/hr.ft2,Btu/h.ft2,W/m2,0,3.154.591,1,0
-Btus/hour foot squared deg F,heat transfer coefficient,POSC,Btu/hr.ft2.degF,Btu/h.ft2.degF,W/m2.K,0,5.678.263,1,0
-Btus/hour foot squared deg R,heat transfer coefficient,POSC,Btu/hr.ft2.degR,Btu/hr.ft2.degR,W/m2.K,0,5.678.263,1,0
+Btus/hour foot squared deg F,heat transfer coefficient,POSC,Btu/hr.ft2.F,Btu/h.ft2.F,W/m2.K,0,5.678.263,1,0
+Btus/hour foot squared deg R,heat transfer coefficient,POSC,Btu/hr.ft2.R,Btu/hr.ft2.R,W/m2.K,0,5.678.263,1,0
 British thermal units/hour cubic foot,power per volume,POSC,Btu/hr.ft3,Btu/h.ft3,W/m3,0,1.034.971,1,0
-Btus/hour foot cubed deg F,volumetric heat transfer coefficient,POSC,Btu/hr.ft3.degF,Btu/h.ft3.degF,W/m3.K,0,1.862.947,1,0
-Btus/hour metre squared deg C,heat transfer coefficient,POSC,Btu/hr.m2.degC,Btu/h.m2.degC,W/m2.K,0,0.2930711,1,0
+Btus/hour foot cubed deg F,volumetric heat transfer coefficient,POSC,Btu/hr.ft3.F,Btu/h.ft3.F,W/m3.K,0,1.862.947,1,0
+Btus/hour metre squared deg C,heat transfer coefficient,POSC,Btu/hr.m2.C,Btu/h.m2.C,W/m2.K,0,0.2930711,1,0
 British thermal units/pound mass,specific energy,POSC,Btu/lbm,Btu/lbm,J/kg,0,2326,1,0
-British thermal units/pound mass deg F,specific heat capacity,POSC,Btu/lbm.degF,Btu/lbm.degF,J/kg.K,0,4186.8,1,0
-British thermal units/pound mass deg F,massic heat capacity,POSC,Btu/lbm.degF,Btu/lbm.degF,J/kg.K,0,4186.8,1,0
-British thermal units/pound mass deg R,specific heat capacity,POSC,Btu/lbm.degR,Btu/lbm.degR,J/kg.K,0,4186.8,1,0
-British thermal units/pound mass deg R,massic heat capacity,POSC,Btu/lbm.degR,Btu/lbm.degR,J/kg.K,0,4186.8,1,0
+British thermal units/pound mass deg F,specific heat capacity,POSC,Btu/lbm.F,Btu/lbm.F,J/kg.K,0,4186.8,1,0
+British thermal units/pound mass deg F,massic heat capacity,POSC,Btu/lbm.F,Btu/lbm.F,J/kg.K,0,4186.8,1,0
+British thermal units/pound mass deg R,specific heat capacity,POSC,Btu/lbm.R,Btu/lbm.R,J/kg.K,0,4186.8,1,0
+British thermal units/pound mass deg R,massic heat capacity,POSC,Btu/lbm.R,Btu/lbm.R,J/kg.K,0,4186.8,1,0
 British thermal units/minute,heat flow rate,POSC,Btu/min,Btu/min,W,0,1.758.427,1,0
 British thermal units/pound mass mol,molar thermodynamic energy,POSC,Btu/lbmole,Btu/min,J/mol,0,2.326,1,0
 British thermal units/pound mass mol,chemical potential,POSC,Btu/lbmole,Btu/min,J/mol,0,2.326,1,0
@@ -223,9 +223,9 @@ British thermal units/second square foot,radiant exitance,POSC,Btu/s.ft2,Btu/s.f
 British thermal units/second square foot,irradiance,POSC,Btu/s.ft2,Btu/s.ft2,W/m2,0,11356.53,1,0
 British thermal units/second square foot,sound intensity,POSC,Btu/s.ft2,Btu/s.ft2,W/m2,0,11356.53,1,0
 British thermal units/second square foot,energy fluence rate,POSC,Btu/s.ft2,Btu/s.ft2,W/m2,0,11356.53,1,0
-Btus/second per square foot deg F,heat transfer coefficient,POSC,Btu/s.ft2.degF,Btu/s.ft2.degF,W/m2.K,0,20441.75,1,0
+Btus/second per square foot deg F,heat transfer coefficient,POSC,Btu/s.ft2.F,Btu/s.ft2.F,W/m2.K,0,20441.75,1,0
 Btus/second per cubic foot,power per volume,POSC,Btu/s.ft3,Btu/s.ft3,W/m3,0,37258.95,1,0
-Btus/second per cubic foot deg F,volumetric heat transfer coefficient,POSC,Btu/s.ft3.degF,Btu/s.ft3.degF,W/m3.K,0,67066.11,1,0
+Btus/second per cubic foot deg F,volumetric heat transfer coefficient,POSC,Btu/s.ft3.F,Btu/s.ft3.F,W/m3.K,0,67066.11,1,0
 cycle,plane angle,POSC,c,c,rad,0,6.283.185.307,1,0
 Coulombs/square centimetre,electric polarization,POSC,C/cm2,C/cm2,C/m2,0,1,0.0001,0
 Coulombs/cubic centimeter,charge density,POSC,C/cm3,C/cm3,C/m3,0,1,0.000001,0
@@ -252,7 +252,7 @@ calories/cubic centimetre,radiant energy density,POSC,cal/cm3,cal/cm3,J/m3,0,4.1
 calories/gram,specific energy,POSC,cal/g,cal/g,J/kg,0,4184,1,0
 calories/gram degree Kelvin,specific heat capacity,POSC,cal/g.K,cal/g.K,J/kg.K,0,4184,1,0
 calories/gram degree Kelvin,massic heat capacity,POSC,cal/g.K,cal/g.K,J/kg.K,0,4184,1,0
-calories/hour centimetre degree Celsius,thermal conductivity,POSC,cal/h.cm.degC,cal/h.cm.degC,W/m.K,0,0.1162222,1,0
+calories/hour centimetre degree Celsius,thermal conductivity,POSC,cal/h.cm.C,cal/h.cm.C,W/m.K,0,0.1162222,1,0
 calories/hour centimetre squared,density of heat flow rate,POSC,cal/h.cm2,cal/h.cm2,W/m2,0,1.162.222,1,0
 calories/hour centimetre squared,poynting vector,POSC,cal/h.cm2,cal/h.cm2,W/m2,0,1.162.222,1,0
 calories/hour centimetre squared,radiant energy,POSC,cal/h.cm2,cal/h.cm2,W/m2,0,1.162.222,1,0
@@ -261,7 +261,7 @@ calories/hour centimetre squared,radiant exitance,POSC,cal/h.cm2,cal/h.cm2,W/m2,
 calories/hour centimetre squared,irradiance,POSC,cal/h.cm2,cal/h.cm2,W/m2,0,1.162.222,1,0
 calories/hour centimetre squared,sound intensity,POSC,cal/h.cm2,cal/h.cm2,W/m2,0,1.162.222,1,0
 calories/hour centimetre squared,energy fluence rate,POSC,cal/h.cm2,cal/h.cm2,W/m2,0,1.162.222,1,0
-calories/hour square centimetre deg C,heat transfer coefficient,POSC,cal/h.cm2.degC,cal/h.cm2.degC,W/m2.K,0,1.162.222,1,0
+calories/hour square centimetre deg C,heat transfer coefficient,POSC,cal/h.cm2.C,cal/h.cm2.C,W/m2.K,0,1.162.222,1,0
 calories/hour cubic centimetre,power per volume,POSC,cal/h.cm3,cal/h.cm3,W/m3,0,1.162.222,1,0
 calories/kilogram,specific energy,POSC,cal/kg,cal/kg,J/kg,0,4.184,1,0
 calories/pound mass,specific energy,POSC,cal/lbm,cal/lbm,J/kg,0,9.224.141,1,0
@@ -283,14 +283,14 @@ calories/cubic millimetre,bulk modulus,POSC,cal/mm3,cal/mm3,J/m3,0,4.184,0.00000
 calories/cubic millimetre,modulus of compression,POSC,cal/mm3,cal/mm3,J/m3,0,4.184,0.000000001,0
 calories/cubic millimetre,electromagnetic energy density,POSC,cal/mm3,cal/mm3,J/m3,0,4.184,0.000000001,0
 calories/cubic millimetre,radiant energy density,POSC,cal/mm3,cal/mm3,J/m3,0,4.184,0.000000001,0
-calories/gram mol degree celsius,molar heat capacity,POSC,cal/mol.degC,cal/mm3,J/mol.K,0,4.184,1,0
-calories/gram mol degree celsius,molar entropy,POSC,cal/mol.degC,cal/mm3,J/mol.K,0,4.184,1,0
-calories/gram mol degree celsius,molar gas constant,POSC,cal/mol.degC,cal/mm3,J/mol.K,0,4.184,1,0
-calories/gram mol degree celsius,molar heat capacity,POSC,cal/mol(g).degC,cal/mm3,J/mol.K,0,4184,1,0
+calories/gram mol degree celsius,molar heat capacity,POSC,cal/mol.C,cal/mm3,J/mol.K,0,4.184,1,0
+calories/gram mol degree celsius,molar entropy,POSC,cal/mol.C,cal/mm3,J/mol.K,0,4.184,1,0
+calories/gram mol degree celsius,molar gas constant,POSC,cal/mol.C,cal/mm3,J/mol.K,0,4.184,1,0
+calories/gram mol degree celsius,molar heat capacity,POSC,cal/mol(g).C,cal/mm3,J/mol.K,0,4184,1,0
 calories/gram mol degree celsius,molar entropy,POSC,(Deprecated),cal/mm3,J/mol.K,0,4184,1,0
 calories/gram mol degree celsius,molar gas constant,POSC,(Deprecated),cal/mm3,J/mol.K,0,4184,1,0
-calories/second centimetre deg C,thermal conductivity,POSC,cal/s.cm.degC,cal/s.cm.degC,W/m.K,0,418.4,1,0
-calories/second square centimetre deg C,heat transfer coefficient,POSC,cal/s.cm2.degC,cal/s.cm2.degC,W/m2.K,0,41840,1,0
+calories/second centimetre deg C,thermal conductivity,POSC,cal/s.cm.C,cal/s.cm.C,W/m.K,0,418.4,1,0
+calories/second square centimetre deg C,heat transfer coefficient,POSC,cal/s.cm2.C,cal/s.cm2.C,W/m2.K,0,41840,1,0
 calories/second cubic centimetre,power per volume,POSC,cal/s.cm3,cal/s.cm3,W/m3,0,4184000,1,0
 centesimal second,plane angle,POSC,ccgr,cal/s.cm3,rad,0,31.415.926.535.898,2000000,0
 centiEuclid,dimensionless,POSC,cEuc,%,Euc,0,0.01,1,0
@@ -372,8 +372,8 @@ cubic centimetre/cubic metre,volume per volume,POSC,cm3/m3,cm3/m3,Euc,0,0.000001
 cubic centimeter per minute,volume flow rate,POSC,cm3/min,cm3/min,m3/s,0,0.000001,60,0
 cubic centimeter per second,volume flow rate,POSC,cm3/s,cm3/s,m3/s,0,0.000001,1,0
 centimetres fourth,second moment of area,POSC,cm4,cm4,m4,0,0.00000001,1,0
-cm of water at 4 degC.,force per area,POSC,cmH2O(4degC),cm4,Pa,0,980.638,1,0
-cm of water at 4 degC.,pressure,POSC,cmH2O(4degC),cm4,Pa,0,980.638,1,0
+cm of water at 4 C.,force per area,POSC,cmH2O(4C),cm4,Pa,0,980.638,1,0
+cm of water at 4 C.,pressure,POSC,cmH2O(4C),cm4,Pa,0,980.638,1,0
 centipoise,dynamic viscosity,POSC,cP,cP,Pa.s,0,0.001,1,0
 ten milli second,time,POSC,cs,cP,s,0,0.01,1,0
 centiStoke,kinematic viscosity,POSC,cSt,cP,m2/s,0,0.000001,1,0
@@ -415,53 +415,53 @@ decibels/foot,attenuation per length,POSC,dB/ft,dB/ft,B/m,0,0.1,0.3048,0
 decibels/metre,attenuation per length,POSC,dB/m,dB/m,B/m,0,0.1,1,0
 decibels/kilometre,attenuation per length,POSC,dB/km,dB/km,B/m,0,0.0001,1,0
 decibels/octave,attenuation,POSC,dB/O,dB/km,B/O,0,0.1,1,0
-change in degrees Celsius,delta temperature,POSC,ddegC,degC,K,0,1,1,0
-change in degrees Fahrenheit,delta temperature,POSC,ddegF,degF,K,0,5,9,0
-change in degrees Kelvin,delta temperature,POSC,ddegK,K,K,0,1,1,0
-change in degrees Rankine,delta temperature,POSC,ddegR,degR,K,0,5,9,0
-degree of an angle,plane angle,POSC,dega,dega,rad,0,0.01745329,1,0
-degrees of an angle/100 feet,angle per length,POSC,dega/100ft,dega,rad/m,0,0.01745329,30.48,0
-degrees of an angle per thirty feet,angle per length,POSC,dega/30ft,dega,rad/m,0,0.01745329,9.144,0
-degrees of an angle/30 metres,angle per length,POSC,dega/30m,dega,rad/m,0,0.01745329,30,0
-degrees of an angle/foot,angle per length,POSC,dega/ft,dega/ft,rad/m,0,0.01745329,0.3048,0
-degrees of an angle/100 feet,angle per length,POSC,dega/ft(100),dega/ft,rad/m,0,0.01745329,30.48,0
-degrees of an angle/100 feet,angle per length,POSC,(Deprecated),dega/ft,rad/m,0,0.01745329,30.48,0
-degrees of an angle per hour,rotational frequency,POSC,dega/h,dega/h,rad/s,0,0.01745329,3600,0
-degrees of an angle per hour,circular frequency,POSC,dega/h,dega/h,rad/s,0,0.01745329,3600,0
-degrees of an angle per hour,angle per time,POSC,dega/h,dega/h,rad/s,0,0.01745329,3600,0
-degrees of an angle per hour,rotational velocity,POSC,dega/h,dega/h,rad/s,0,0.01745329,3600,0
-degrees of an angle/metre,angle per length,POSC,dega/m,dega/m,rad/m,0,0.01745329,1,0
-degrees of an angle/30 metres,angle per length,POSC,dega/m(30),dega/m,rad/m,0,0.01745329,30,0
-degrees of an angle/30 metres,angle per length,POSC,(Deprecated),dega/m,rad/m,0,0.01745329,30,0
-degrees of an angle/minute,rotational frequency,POSC,dega/min,dega/min,rad/s,0,0.01745329,60,0
-degrees of an angle/minute,circular frequency,POSC,dega/min,dega/min,rad/s,0,0.01745329,60,0
-degrees of an angle/minute,angle per time,POSC,dega/min,dega/min,rad/s,0,0.01745329,60,0
-degrees of an angle/minute,rotational velocity,POSC,dega/min,dega/min,rad/s,0,0.01745329,60,0
-degrees of an angle per second,rotational frequency,POSC,dega/s,dega/s,rad/s,0,0.01745329,1,0
-degrees of an angle per second,circular frequency,POSC,dega/s,dega/s,rad/s,0,0.01745329,1,0
-degrees of an angle per second,angle per time,POSC,dega/s,dega/s,rad/s,0,0.01745329,1,0
-degrees Celsius,thermodynamic temperature,POSC,degC,degC,K,273.15,1,1,0
-degrees C square metres hours/kilocal,thermal insulance,POSC,degC.m2.h/kcal,degC.m2.h/kcal,K.m2/W,0,0.8604208,1,0
-degrees C square metres hours/kilocal,coefficient of thermal insulation,POSC,degC.m2.h/kcal,degC.m2.h/kcal,K.m2/W,0,0.8604208,1,0
-degrees Celsius per hundred metre,temperature per length,POSC,degC/100m,degC.m2.h/kcal,K/m,0,0.01,1,0
-degrees Celsius per foot,temperature per length,POSC,degC/ft,degC/ft,K/m,0,1,0.3048,0
-degrees Celsius per hour,temperature per time,POSC,degC/h,degC/h,K/s,0,1,3600,0
-degrees Celsius/kilometre,temperature per length,POSC,degC/km,degC/km,K/m,0,0.001,1,0
-degrees Celsius/metre,temperature per length,POSC,degC/m,degC/m,K/m,0,1,1,0
-degrees Celsius per minute,temperature per time,POSC,degC/min,degC/min,K/s,0,1,60,0
-degrees Celsius per second,temperature per time,POSC,degC/s,degC/s,K/s,0,1,1,0
-degree Fahrenheit,thermodynamic temperature,POSC,degF,degF,K,2298.35,5,9,0
-degrees F square feet hours/Btu,thermal insulance,POSC,degF.ft2.h/Btu,degF.ft2.h/Btu,K.m2/W,0,0.1761102,1,0
-degrees F square feet hours/Btu,coefficient of thermal insulation,POSC,degF.ft2.h/Btu,degF.ft2.h/Btu,K.m2/W,0,0.1761102,1,0
-degrees Fahrenheit/100 feet.,temperature per length,POSC,degF/100ft,degF.ft2.h/Btu,K/m,0,0.01822689,1,0
-degrees Fahrenheit/foot,temperature per length,POSC,degF/ft,degF/ft,K/m,0,1.822.689,1,0
-degrees Fahrenheit/100 feet.,temperature per length,POSC,degF/ft(100),degF/ft,K/m,0,0.01822689,1,0
-degrees Fahrenheit/100 feet.,temperature per length,POSC,(Deprecated),degF/ft,K/m,0,0.01822689,1,0
-degrees Fahrenheit per hour,temperature per time,POSC,degF/h,degF/h,K/s,0,5,32400,0
-degrees Fahrenheit per meter,temperature per length,POSC,degF/m,degF/m,K/m,0,5,9,0
-degrees Fahrenheit per minute,temperature per time,POSC,degF/min,degF/min,K/s,0,5,540,0
-degrees Fahrenheit per second,temperature per time,POSC,degF/s,degF/s,K/s,0,5,9,0
-degrees Rankine,thermodynamic temperature,POSC,degR,degR,K,0,5,9,0
+change in degrees Celsius,delta temperature,POSC,C,C,K,0,1,1,0
+change in degrees Fahrenheit,delta temperature,POSC,F,F,K,0,5,9,0
+change in degrees Kelvin,delta temperature,POSC,K,K,K,0,1,1,0
+change in degrees Rankine,delta temperature,POSC,R,R,K,0,5,9,0
+degree of an angle,plane angle,POSC,a,a,rad,0,0.01745329,1,0
+degrees of an angle/100 feet,angle per length,POSC,a/100ft,a,rad/m,0,0.01745329,30.48,0
+degrees of an angle per thirty feet,angle per length,POSC,a/30ft,a,rad/m,0,0.01745329,9.144,0
+degrees of an angle/30 metres,angle per length,POSC,a/30m,a,rad/m,0,0.01745329,30,0
+degrees of an angle/foot,angle per length,POSC,a/ft,a/ft,rad/m,0,0.01745329,0.3048,0
+degrees of an angle/100 feet,angle per length,POSC,a/ft(100),a/ft,rad/m,0,0.01745329,30.48,0
+degrees of an angle/100 feet,angle per length,POSC,(Deprecated),a/ft,rad/m,0,0.01745329,30.48,0
+degrees of an angle per hour,rotational frequency,POSC,a/h,a/h,rad/s,0,0.01745329,3600,0
+degrees of an angle per hour,circular frequency,POSC,a/h,a/h,rad/s,0,0.01745329,3600,0
+degrees of an angle per hour,angle per time,POSC,a/h,a/h,rad/s,0,0.01745329,3600,0
+degrees of an angle per hour,rotational velocity,POSC,a/h,a/h,rad/s,0,0.01745329,3600,0
+degrees of an angle/metre,angle per length,POSC,a/m,a/m,rad/m,0,0.01745329,1,0
+degrees of an angle/30 metres,angle per length,POSC,a/m(30),a/m,rad/m,0,0.01745329,30,0
+degrees of an angle/30 metres,angle per length,POSC,(Deprecated),a/m,rad/m,0,0.01745329,30,0
+degrees of an angle/minute,rotational frequency,POSC,da/min,a/min,rad/s,0,0.01745329,60,0
+degrees of an angle/minute,circular frequency,POSC,a/min,a/min,rad/s,0,0.01745329,60,0
+degrees of an angle/minute,angle per time,POSC,a/min,a/min,rad/s,0,0.01745329,60,0
+degrees of an angle/minute,rotational velocity,POSC,a/min,a/min,rad/s,0,0.01745329,60,0
+degrees of an angle per second,rotational frequency,POSC,a/s,a/s,rad/s,0,0.01745329,1,0
+degrees of an angle per second,circular frequency,POSC,a/s,a/s,rad/s,0,0.01745329,1,0
+degrees of an angle per second,angle per time,POSC,a/s,a/s,rad/s,0,0.01745329,1,0
+degrees Celsius,thermodynamic temperature,POSC,C,C,K,273.15,1,1,0
+degrees C square metres hours/kilocal,thermal insulance,POSC,C.m2.h/kcal,C.m2.h/kcal,K.m2/W,0,0.8604208,1,0
+degrees C square metres hours/kilocal,coefficient of thermal insulation,POSC,C.m2.h/kcal,C.m2.h/kcal,K.m2/W,0,0.8604208,1,0
+degrees Celsius per hundred metre,temperature per length,POSC,C/100m,C.m2.h/kcal,K/m,0,0.01,1,0
+degrees Celsius per foot,temperature per length,POSC,C/ft,C/ft,K/m,0,1,0.3048,0
+degrees Celsius per hour,temperature per time,POSC,C/h,C/h,K/s,0,1,3600,0
+degrees Celsius/kilometre,temperature per length,POSC,C/km,C/km,K/m,0,0.001,1,0
+degrees Celsius/metre,temperature per length,POSC,C/m,C/m,K/m,0,1,1,0
+degrees Celsius per minute,temperature per time,POSC,C/min,C/min,K/s,0,1,60,0
+degrees Celsius per second,temperature per time,POSC,C/s,C/s,K/s,0,1,1,0
+degree Fahrenheit,thermodynamic temperature,POSC,F,F,K,2298.35,5,9,0
+degrees F square feet hours/Btu,thermal insulance,POSC,F.ft2.h/Btu,F.ft2.h/Btu,K.m2/W,0,0.1761102,1,0
+degrees F square feet hours/Btu,coefficient of thermal insulation,POSC,F.ft2.h/Btu,F.ft2.h/Btu,K.m2/W,0,0.1761102,1,0
+degrees Fahrenheit/100 feet.,temperature per length,POSC,F/100ft,F.ft2.h/Btu,K/m,0,0.01822689,1,0
+degrees Fahrenheit/foot,temperature per length,POSC,F/ft,F/ft,K/m,0,1.822.689,1,0
+degrees Fahrenheit/100 feet.,temperature per length,POSC,F/ft(100),F/ft,K/m,0,0.01822689,1,0
+degrees Fahrenheit/100 feet.,temperature per length,POSC,(Deprecated),F/ft,K/m,0,0.01822689,1,0
+degrees Fahrenheit per hour,temperature per time,POSC,F/h,F/h,K/s,0,5,32400,0
+degrees Fahrenheit per meter,temperature per length,POSC,F/m,F/m,K/m,0,5,9,0
+degrees Fahrenheit per minute,temperature per time,POSC,F/min,F/min,K/s,0,5,540,0
+degrees Fahrenheit per second,temperature per time,POSC,F/s,F/s,K/s,0,5,9,0
+degrees Rankine,thermodynamic temperature,POSC,R,R,K,0,5,9,0
 decimetre,length,POSC,dm,dm,m,0,0.1,1,0
 decimetre,breadth,POSC,dm,dm,m,0,0.1,1,0
 decimetre,height,POSC,dm,dm,m,0,0.1,1,0
@@ -605,7 +605,7 @@ feet per 100 feet,linear concentration,POSC,ft/100ft,ft.lbm,Euc,0,0.01,1,0
 feet per 100 feet,length per length,POSC,ft/100ft,ft.lbm,Euc,0,0.01,1,0
 feet/barrel,length per volume,POSC,ft/bbl,ft/bbl,1/m2,0,1.917.134,1,0
 feet/day,velocity,POSC,ft/d,ft/d,m/s,0,0.3048,86400,0
-feet/degree Fahrenheit,length per temperature,POSC,ft/degF,ft/degF,m/K,0,0.54864,1,0
+feet/degree Fahrenheit,length per temperature,POSC,ft/F,ft/F,m/K,0,0.54864,1,0
 feet per feet,linear strain,POSC,ft/ft,ft/ft,Euc,0,1,1,0
 feet per feet,relative elongation,POSC,ft/ft,ft/ft,Euc,0,1,1,0
 feet per feet,scale,POSC,ft/ft,ft/ft,Euc,0,1,1,0
@@ -919,7 +919,7 @@ tenth of an inch,diameter,POSC,in/10,in,m,0,0.00254,1,0
 64th of an inch,Cartesian coordinates,POSC,in/64,1/64 in,m,0,0.000396875,1,0
 64th of an inch,diameter,POSC,in/64,1/64 in,m,0,0.000396875,1,0
 inches/year,velocity,POSC,in/a,in/a,m/s,0,0.0254,31558150,0
-inches/inch degree Fahrenheit,linear thermal expansion,POSC,in/in.degF,in/in.degF,1/K,0,1.Ağu,1,0
+inches/inch degree Fahrenheit,linear thermal expansion,POSC,in/in.F,in/in.F,1/K,0,1.Ağu,1,0
 inches/minute,velocity,POSC,in/min,in/min,m/s,0,0.0254,60,0
 inches/second,velocity,POSC,in/s,in/s,m/s,0,0.0254,1,0
 square inches,area,POSC,in2,in2|sq in,m2,0,0.00064516,1,0
@@ -960,7 +960,7 @@ joules/gram degree Kelvin,specific heat capacity,POSC,J/g.K,J/g.K,J/kg.K,0,1000,
 joules/gram degree Kelvin,massic heat capacity,POSC,J/g.K,J/g.K,J/kg.K,0,1000,1,0
 joules/metre,energy per length,POSC,J/m,J/m,N,0,1,1,0
 joules/square metre,energy per area,POSC,J/m2,J/m2,N/m,0,1,1,0
-joules/second square metre deg C,heat transfer coefficient,POSC,J/s.m2.degC,J/s.m2.degC,W/m2.K,0,1,1,0
+joules/second square metre deg C,heat transfer coefficient,POSC,J/s.m2.C,J/s.m2.C,W/m2.K,0,1,1,0
 degrees Kelvin square metres/kilowatt,thermal insulance,POSC,K.m2/kW,K.m2/kW,K.m2/W,0,0.001,1,0
 degrees Kelvin square metres/kilowatt,coefficient of thermal insulation,POSC,K.m2/kW,K.m2/kW,K.m2/W,0,0.001,1,0
 kiloampere,electric current,POSC,kA,kA,A,0,1000,1,0
@@ -985,11 +985,11 @@ kilocalories/cubic centimetre,electromagnetic energy density,POSC,kcal/cm3,kcal/
 kilocalories/cubic centimetre,radiant energy density,POSC,kcal/cm3,kcal/cm3,J/m3,0,4184,0.000001,0
 kilocalories/gram,specific energy,POSC,kcal/g,kcal/g,J/kg,0,4184,0.001,0
 kilocalories/hour,power,POSC,kcal/h,kcal/h,W,0,1.162.222,1,0
-kilocalories/hour metre degree Celsius,thermal conductivity,POSC,kcal/h.m.degC,kcal/h.m.degC,W/m.K,0,1.162.222,1,0
-kilocalorie/hour square metre deg C,heat transfer coefficient,POSC,kcal/h.m2.degC,kcal/h.m2.degC,W/m2.K,0,1.162.222,1,0
+kilocalories/hour metre degree Celsius,thermal conductivity,POSC,kcal/h.m.C,kcal/h.m.C,W/m.K,0,1.162.222,1,0
+kilocalorie/hour square metre deg C,heat transfer coefficient,POSC,kcal/h.m2.,kcal/h.m2.C,W/m2.K,0,1.162.222,1,0
 kilocalories/kilogram,specific energy,POSC,kcal/kg,kcal/kg,J/kg,0,4184,1,0
-kilocalories/kilogram degree Celsius,specific heat capacity,POSC,kcal/kg.degC,kcal/kg.degC,J/kg.K,0,4184,1,0
-kilocalories/kilogram degree Celsius,massic heat capacity,POSC,kcal/kg.degC,kcal/kg.degC,J/kg.K,0,4184,1,0
+kilocalories/kilogram degree Celsius,specific heat capacity,POSC,kcal/kg.,kcal/kg.C,J/kg.K,0,4184,1,0
+kilocalories/kilogram degree Celsius,massic heat capacity,POSC,kcal/kg.C,kcal/kg.C,J/kg.K,0,4184,1,0
 kilocalroies/cubic metre,normal stress,POSC,kcal/m3,kcal/m3,J/m3,0,4184,1,0
 kilocalroies/cubic metre,shear stress,POSC,kcal/m3,kcal/m3,J/m3,0,4184,1,0
 kilocalroies/cubic metre,modulus of elasticity,POSC,kcal/m3,kcal/m3,J/m3,0,4184,1,0
@@ -1158,8 +1158,8 @@ kilowatt hours/decimetre,modulus of compression,POSC,kW.h/dm3,kW.h/dm3,J/m3,0,36
 kilowatt hours/decimetre,electromagnetic energy density,POSC,kW.h/dm3,kW.h/dm3,J/m3,0,3600000,0.001,0
 kilowatt hours/decimetre,radiant energy density,POSC,kW.h/dm3,kW.h/dm3,J/m3,0,3600000,0.001,0
 kilowatt hours/kilogram,specific energy,POSC,kW.h/kg,kW.h/kg,J/kg,0,3600000,1,0
-kilowatt hours/kilogram degree C,specific heat capacity,POSC,kW.h/kg.degC,kW.h/kg.degC,J/kg.K,0,3600000,1,0
-kilowatt hours/kilogram degree C,massic heat capacity,POSC,kW.h/kg.degC,kW.h/kg.degC,J/kg.K,0,3600000,1,0
+kilowatt hours/kilogram degree C,specific heat capacity,POSC,kW.h/kg.C,kW.h/kg.C,J/kg.K,0,3600000,1,0
+kilowatt hours/kilogram degree C,massic heat capacity,POSC,kW.h/kg.C,kW.h/kg.C,J/kg.K,0,3600000,1,0
 kilowatt hours/cubic metres,normal stress,POSC,kW.h/m3,kW.h/m3,J/m3,0,3600000,1,0
 kilowatt hours/cubic metres,shear stress,POSC,kW.h/m3,kW.h/m3,J/m3,0,3600000,1,0
 kilowatt hours/cubic metres,modulus of elasticity,POSC,kW.h/m3,kW.h/m3,J/m3,0,3600000,1,0
@@ -1843,8 +1843,8 @@ parts per thousand,volumic concentration,POSC,ppk,ppk,Euc,0,0.001,1,0
 parts per thousand,mass concentration,POSC,ppk,ppk,Euc,0,0.001,1,0
 parts per million,volumic concentration,POSC,ppm,ppm,Euc,0,0.000001,1,0
 parts per million,mass concentration,POSC,ppm,ppm,Euc,0,0.000001,1,0
-part per million per degree Celsius,volumetric thermal expansion,POSC,ppm/degC,ppm/degC,1/K,0,0.000001,1,0
-part per million per degree Fahrenheit,volumetric thermal expansion,POSC,ppm/degF,ppm/degF,1/K,0,0.0000018,1,0
+part per million per degree Celsius,volumetric thermal expansion,POSC,ppm/C,ppm/C,1/K,0,0.000001,1,0
+part per million per degree Fahrenheit,volumetric thermal expansion,POSC,ppm/F,ppm/F,1/K,0,0.0000018,1,0
 picosecond,time,POSC,ps,ps,s,0,0.000000000001,1,0
 picosiemens,electric conductance,POSC,pS,pS,S,0,0.000000001,1,0
 picosiemens,admittance,POSC,pS,pS,S,0,0.000000001,1,0
