@@ -12,8 +12,58 @@ import {
   Button,
   ListItemText,
 } from "@mui/material";
-
+import { FixedSizeList } from "react-window";
+import AutoSizer from "react-virtualized-auto-sizer";
 import { changeValeus } from "../../../services/actions/overview/overviewDialog";
+import {
+  updateChecked,
+  setCheckeds,
+} from "../../../services/actions/overview/taps";
+const RenderRow = (props) => {
+  const {
+    data,
+    index,
+    style,
+    selectFunc = () => {},
+    primaryText = "", //Specifies the path to reach the text in data
+  } = props;
+  const selected = useSelector(
+    (state) => state.tapsOverview.isChecked[data[index].TAG_ID]
+  );
+  console.log(data);
+  return (
+    <ListItem
+      style={style}
+      key={index}
+      component="div"
+      disablePadding
+      sx={{
+        ".MuiButtonBase-root": {
+          py: 0.5,
+        },
+      }}
+      onClick={(event) => {
+        selectFunc(data[index], !selected);
+      }}
+    >
+      <ListItemIcon>
+        <Checkbox checked={selected} tabIndex={-1} disableRipple />
+      </ListItemIcon>
+      <ListItemText
+        primary={`${data[index][primaryText]}`}
+        sx={{
+          span: {
+            color: "primary.main",
+            fontSize: "14px",
+            overflow: "hidden",
+            whiteSpace: "nowrap",
+            textOverflow: "ellipsis",
+          },
+        }}
+      />
+    </ListItem>
+  );
+};
 
 function not(a, b) {
   return a.filter((value) => b.indexOf(value) === -1);
@@ -28,19 +78,31 @@ const Inputs = (props) => {
   const { handleChangeFunc } = props;
   const tags = useSelector((state) => state.overviewDialog.measuremenetData);
   const [checked, setChecked] = React.useState([]);
+  console.log("0");
   const [left, setLeft] = React.useState(
     tags.filter((e) => !props.defaultValue.some((a) => a.TAG_ID === e.TAG_ID))
   );
+  console.log("1");
   const [right, setRight] = React.useState(
     tags.filter((e) => props.defaultValue.some((a) => a.TAG_ID === e.TAG_ID))
   );
+  console.log("2");
   const leftChecked = intersection(checked, left);
+  console.log("3");
   const rightChecked = intersection(checked, right);
-  console.log("dsalşdkş");
-  const handleToggle = (value) => () => {
+  console.log("4");
+  React.useEffect(() => {
+    return () => {
+      dispatch(setCheckeds(tags));
+    };
+  }, []);
+  const handleToggle = (value, val) => {
+    console.log(value);
+    console.log(val);
+    dispatch(updateChecked(value.TAG_ID, val));
     const currentIndex = checked.indexOf(value);
     const newChecked = [...checked];
-
+    console.log(leftChecked);
     if (currentIndex === -1) {
       newChecked.push(value);
     } else {
@@ -49,17 +111,23 @@ const Inputs = (props) => {
     setChecked(newChecked);
   };
 
-  const handleAllRight = () => {
-    setRight(right.concat(left));
-    left.map(async (e) => {
-      dispatch(changeValeus(`${e.NAME} Y-Axis Minimum`, e.NORMAL_MINIMUM));
-      dispatch(changeValeus(`${e.NAME} Y-Axis Maximum`, e.NORMAL_MAXIMUM));
-    });
-    setLeft([]);
-    handleChangeFunc(right.concat(left));
-  };
+  // const handleAllRight = () => {
+  //   leftChecked.map((e) => {
+  //     dispatch(updateChecked(e.TAG_ID, false));
+  //   });
+  //   setRight(right.concat(left));
+  //   left.map(async (e) => {
+  //     dispatch(changeValeus(`${e.NAME} Y-Axis Minimum`, e.NORMAL_MINIMUM));
+  //     dispatch(changeValeus(`${e.NAME} Y-Axis Maximum`, e.NORMAL_MAXIMUM));
+  //   });
+  //   setLeft([]);
+  //   handleChangeFunc(right.concat(left));
+  // };
 
   const handleCheckedRight = () => {
+    leftChecked.map((e) => {
+      dispatch(updateChecked(e.TAG_ID, false));
+    });
     setRight(right.concat(leftChecked));
     handleChangeFunc(right.concat(leftChecked));
     leftChecked.map(async (e) => {
@@ -71,17 +139,23 @@ const Inputs = (props) => {
   };
 
   const handleCheckedLeft = () => {
+    rightChecked.map((e) => {
+      dispatch(updateChecked(e.TAG_ID, false));
+    });
     setLeft(left.concat(rightChecked));
     setRight(not(right, rightChecked));
     handleChangeFunc(not(right, rightChecked));
     setChecked(not(checked, rightChecked));
   };
 
-  const handleAllLeft = () => {
-    setLeft(left.concat(right));
-    setRight([]);
-    handleChangeFunc([]);
-  };
+  // const handleAllLeft = () => {
+  //   rightChecked.map((e) => {
+  //     dispatch(updateChecked(e.TAG_ID, false));
+  //   });
+  //   setLeft(left.concat(right));
+  //   setRight([]);
+  //   handleChangeFunc([]);
+  // };
 
   const customList = (items) => (
     <Paper
@@ -94,13 +168,33 @@ const Inputs = (props) => {
         overflow: "auto",
       }}
     >
-      <List dense component="div" role="list">
-        {items.map((value, index) => {
-          const labelId = `transfer-list-item-${index}-label`;
+      <AutoSizer>
+        {({ height, width }) => (
+          <FixedSizeList
+            height={height}
+            width={width}
+            itemSize={35}
+            itemCount={items.length}
+            itemData={items}
+            overscanCount={5}
+          >
+            {(props) =>
+              RenderRow({
+                ...props,
+                selectFunc: handleToggle,
+                primaryText: "NAME",
+              })
+            }
+          </FixedSizeList>
+        )}
+      </AutoSizer>
+      {/* <List dense component="div" role="list">
+        {items.map((value) => {
+          const labelId = `transfer-list-item-${value.TAG_ID}-label`;
 
           return (
             <ListItem
-              key={index}
+              key={value.TAG_ID}
               role="listitem"
               button
               onClick={handleToggle(value)}
@@ -119,7 +213,7 @@ const Inputs = (props) => {
             </ListItem>
           );
         })}
-      </List>
+      </List> */}
     </Paper>
   );
 
@@ -128,7 +222,7 @@ const Inputs = (props) => {
       <Grid item>{customList(left)}</Grid>
       <Grid item>
         <Grid container direction="column" alignItems="center">
-          <Button
+          {/* <Button
             sx={{ my: 0.5 }}
             variant="outlined"
             size="small"
@@ -137,7 +231,7 @@ const Inputs = (props) => {
             aria-label="move all right"
           >
             ≫
-          </Button>
+          </Button> */}
           <Button
             sx={{ my: 0.5 }}
             variant="outlined"
@@ -158,7 +252,7 @@ const Inputs = (props) => {
           >
             &lt;
           </Button>
-          <Button
+          {/* <Button
             sx={{ my: 0.5 }}
             variant="outlined"
             size="small"
@@ -167,7 +261,7 @@ const Inputs = (props) => {
             aria-label="move all left"
           >
             ≪
-          </Button>
+          </Button> */}
         </Grid>
       </Grid>
       <Grid item>{customList(right)}</Grid>

@@ -30,29 +30,38 @@ export const Angular = ({ highchartProps, width, height }) => {
     i++;
   }
   React.useEffect(() => {
-    client = new W3CWebSocket(`${wsBaseUrl}/ws/tags/`);
+    client = new W3CWebSocket(
+      `${wsBaseUrl}/ws/live/last_data/${highchartProps.Measurement}`
+    );
     client.onerror = function () {
       console.log("Connection Error");
     };
     client.onopen = function () {
       console.log("WebSocket Client Connected");
     };
-
+    client.onclose = function () {
+      console.log("WebSocket Client Closed");
+    };
     client.onmessage = function (e) {
+      console.log("kdlsaşkdlşaskd------------");
       function sendNumber() {
         if (client.readyState === client.OPEN) {
           if (typeof e.data === "string") {
             let data = JSON.parse(e.data);
-            if (data.message.value) {
-              setCategories((prev) => data.message.timestamp);
-              setValue((prev) => data.message.value);
-            }
+            Object.keys(data).map((e) => {
+              setCategories((prev) => new Date(data[e][1] * 1000));
+              setValue((prev) => data[e][2]);
+            });
+
             //setTimeout(sendNumber, 5000);
             return data;
           }
         }
       }
       sendNumber();
+    };
+    return () => {
+      client.close();
     };
   }, []);
   const options = {

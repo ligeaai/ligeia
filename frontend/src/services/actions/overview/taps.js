@@ -6,7 +6,9 @@ import {
   REFRESH_WIDGETS_OVERVIEW,
   SET_REV,
   UPDATE_LAYOUT,
-  SET_MEASUREMENT_DATA
+  SET_MEASUREMENT_DATA,
+  SET_ISCHECKED,
+  SET_UPDATE_ISCHECKED
 } from "../types";
 import { instance, config } from "../../couchApi";
 
@@ -35,6 +37,7 @@ export const loadTapsOverview = () => async (dispatch, getState) => {
       payload: itemLinkRes.data
     })
 
+    setCheckeds(itemLinkRes.data)
   } catch (err) {
     if (err.response.status === 404) {
       const body = JSON.stringify({ _id: linkId, data: {} });
@@ -249,3 +252,23 @@ export const updateCouchDb = () => async (dispatch, getState) => {
     console.log(err);
   }
 };
+
+
+export const updateChecked = (key, val) => (dispatch) => {
+  dispatch({
+    type: SET_UPDATE_ISCHECKED,
+    payload: { key: key, val: val },
+  });
+}
+
+export const setCheckeds = (val) => (dispatch) => {
+
+  let temp = {}
+  val.map(e => {
+    temp[e.TAG_ID] = false
+  })
+  dispatch({
+    type: SET_ISCHECKED,
+    payload: temp
+  })
+}

@@ -30,29 +30,38 @@ export const Solid = ({ highchartProps, width, height }) => {
     i++;
   }
   React.useEffect(() => {
-    client = new W3CWebSocket(`${wsBaseUrl}/ws/tags/`);
+    console.log(highchartProps.Measurement);
+    client = new W3CWebSocket(
+      `${wsBaseUrl}/ws/live/last_data/${highchartProps.Measurement}`
+    );
     client.onerror = function () {
       console.log("Connection Error");
     };
     client.onopen = function () {
       console.log("WebSocket Client Connected");
     };
-
+    client.onclose = function () {
+      console.log("WebSocket Client Closed");
+    };
     client.onmessage = function (e) {
       function sendNumber() {
         if (client.readyState === client.OPEN) {
           if (typeof e.data === "string") {
             let data = JSON.parse(e.data);
-            if (data.message.value) {
-              setCategories((prev) => data.message.createdtime);
-              setValue((prev) => data.message.value);
-            }
+            Object.keys(data).map((e) => {
+              setCategories((prev) => data[e][1] * 1000);
+              setValue((prev) => data[e][2]);
+            });
+
             //setTimeout(sendNumber, 5000);
             return data;
           }
         }
       }
       sendNumber();
+    };
+    return () => {
+      client.close();
     };
   }, []);
   const options = {
@@ -118,8 +127,14 @@ export const Solid = ({ highchartProps, width, height }) => {
     },
     // the value axis
     yAxis: {
-      min: parseInt(highchartProps.Minimum),
-      max: parseInt(highchartProps.Maximum),
+      min:
+        parseInt(highchartProps.Minimum) === ""
+          ? 0
+          : parseInt(highchartProps.Maximum),
+      max:
+        parseInt(highchartProps.Maximum) === ""
+          ? 100
+          : parseInt(highchartProps.Maximum),
       stops: [...stops],
       lineWidth: 0,
       tickWidth: 0,

@@ -19,10 +19,7 @@ export const Measurement = ({ highchartProps, width, height }) => {
   function colorPicker(val) {
     let color = "inherit";
     let i = 0;
-    console.log(typeof parseInt(highchartProps[`[${i}] Low`]));
     while (i < parseInt(highchartProps.Stops)) {
-      console.log(i);
-      console.log(highchartProps.Stops);
       if (
         parseInt(highchartProps[`[${i}] Low`]) < val &&
         parseInt(highchartProps[`[${i}] High`]) > val
@@ -31,38 +28,43 @@ export const Measurement = ({ highchartProps, width, height }) => {
       }
       i++;
     }
-
-    console.log(color);
     return color;
   }
 
   React.useEffect(() => {
-    client = new W3CWebSocket(`${wsBaseUrl}/ws/tags/`);
+    client = new W3CWebSocket(
+      `${wsBaseUrl}/ws/live/last_data/${highchartProps.Measurement}`
+    );
     client.onerror = function () {
       console.log("Connection Error");
     };
     client.onopen = function () {
       console.log("WebSocket Client Connected");
     };
-
+    client.onclose = function () {
+      console.log("WebSocket Client Closed");
+    };
     client.onmessage = function (e) {
       function sendNumber() {
         if (client.readyState === client.OPEN) {
           if (typeof e.data === "string") {
             let data = JSON.parse(e.data);
-            if (data.message.value) {
-              let timestamp = new Date(data.message.timestamp);
-              const time = dateFormatDDMMYYHHMMSS(timestamp);
-              setCategories((prev) => time);
+            Object.keys(data).map((e) => {
+              setCategories((prev) =>
+                dateFormatDDMMYYHHMMSS(new Date(data[e][1] * 1000))
+              );
+              setData((prev) => data[e][2]);
+            });
 
-              setData((prev) => data.message.value);
-            }
             //setTimeout(sendNumber, 5000);
             return data;
           }
         }
       }
       sendNumber();
+    };
+    return () => {
+      client.close();
     };
   }, []);
   return (

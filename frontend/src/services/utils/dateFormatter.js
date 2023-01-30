@@ -7,6 +7,15 @@ export function dateFormatter(date) {
     return newdate
 }
 
+export function dateFormatterDMY(date) {
+    var d = date.getDate();
+    var m = date.getMonth();
+    m += 1;
+    var y = date.getFullYear();
+    var newdate = (d + "." + m + "." + y);
+    return newdate
+}
+
 function addZero(i) {
     if (i < 10) { i = "0" + i }
     return i;

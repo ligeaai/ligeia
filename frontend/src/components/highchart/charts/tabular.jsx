@@ -3,6 +3,7 @@ import Box from "@mui/material/Box";
 import DataGrid from "../../datagrid/dataGrid";
 import { wsBaseUrl } from "../../../services/baseApi";
 import { uuidv4 } from "../../../services/utils/uuidGenerator";
+import { dateFormatterDMY } from "../../../services/utils/dateFormatter";
 var W3CWebSocket = require("websocket").w3cwebsocket;
 const client = [];
 const Tabular = ({ highchartProps, width, height, backfillData }) => {
@@ -10,14 +11,7 @@ const Tabular = ({ highchartProps, width, height, backfillData }) => {
   React.useEffect(() => {
     highchartProps.Inputs.map((tag, index) => {
       console.log(index);
-      if (client.length !== 0) {
-        Promise.all(
-          client.map((e) => {
-            setAllData([]);
-            e.close();
-          })
-        );
-      }
+
       if (backfillData) {
         client[index] = new W3CWebSocket(
           `${wsBaseUrl}/ws/tags/backfill/${tag.ROW_ID}`
@@ -45,8 +39,17 @@ const Tabular = ({ highchartProps, width, height, backfillData }) => {
                 setAllData((prev) => [
                   ...prev,
                   {
-                    created_by: tag.NAME,
-                    timestamp: jsonData.timestamp,
+                    tag_name: tag.NAME,
+                    completion: jsonData.completion,
+                    created_by: jsonData.created_by,
+                    createdTime: dateFormatterDMY(
+                      new Date(jsonData.createdTime)
+                    ),
+                    layer: jsonData.layer,
+                    uom: jsonData.uom,
+                    timestamp: dateFormatterDMY(
+                      new Date(jsonData.timestamp * 1000)
+                    ),
                     value: jsonData.tag_value,
                     id: uuidv4(),
                   },
@@ -55,18 +58,24 @@ const Tabular = ({ highchartProps, width, height, backfillData }) => {
               }
               Promise.all(
                 Object.keys(jsonData).map((f, i) => {
-                  console.log(i);
-                  jsonData[f][1].map((d) => {
-                    setAllData((prev) => [
-                      ...prev,
-                      {
-                        created_by: tag.NAME,
-                        timestamp: d[0],
-                        value: d[1],
-                        id: uuidv4(),
-                      },
-                    ]);
-                  });
+                  console.log(jsonData);
+
+                  setAllData((prev) => [
+                    ...prev,
+                    {
+                      tag_name: tag.NAME,
+                      completion: jsonData[f][0].completion,
+                      created_by: jsonData[f][0].created_by,
+                      createdTime: dateFormatterDMY(
+                        new Date(jsonData[f][0].createdTime)
+                      ),
+                      layer: jsonData[f][0].layer,
+                      uom: jsonData[f][0].uom,
+                      timestamp: jsonData[f][1][0][0],
+                      value: jsonData[f][1][0][1],
+                      id: uuidv4(),
+                    },
+                  ]);
                 })
               );
               return true;
@@ -80,9 +89,7 @@ const Tabular = ({ highchartProps, width, height, backfillData }) => {
     return () => {
       client.map((e) => {
         setAllData([]);
-        e.onclose = function () {
-          console.log("WebSocket Client Closed");
-        };
+        e.close();
       });
     };
   }, [backfillData]);
@@ -91,10 +98,15 @@ const Tabular = ({ highchartProps, width, height, backfillData }) => {
     <Box sx={{ width: width, height: height }}>
       <DataGrid
         columns={[
+          { field: "tag_name", headerName: "Tag Name" },
+          { field: "completion", headerName: "Completion" },
           { field: "created_by", headerName: "Created By" },
+          { field: "createdTime", headerName: "Created Time" },
+          { field: "layer", headerName: "Layer" },
+          { field: "uom", headerName: "UoM" },
           //  { field: "createdtime", headerName: "Created Time" },
           //  { field: "message_type", headerName: "Message Type" },
-          { field: "timestamp", headerName: "Time Stamp" },
+          { field: "timestamp", headerName: "Time Stamp", type: "dateTime" },
           { field: "value", headerName: "Value" },
         ]}
         rows={allData}

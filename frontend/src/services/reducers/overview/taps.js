@@ -6,6 +6,8 @@ import {
     REFRESH_WIDGETS_OVERVIEW,
     SET_REV,
     UPDATE_LAYOUT,
+    SET_ISCHECKED,
+    SET_UPDATE_ISCHECKED
 } from "../../actions/types"
 
 
@@ -17,6 +19,7 @@ const initialState = {
     selected: null,
     refresh: false,
     isActive: false,
+    isChecked: {}
 };
 
 
@@ -25,6 +28,19 @@ export default function (state = initialState, action) {
     const { type, payload } = action;
 
     switch (type) {
+        case SET_ISCHECKED:
+            return {
+                ...state,
+                isChecked: payload
+            }
+        case SET_UPDATE_ISCHECKED:
+            return {
+                ...state,
+                isChecked: {
+                    ...state.isChecked,
+                    [payload.key]: payload.val
+                }
+            }
         case UPDATE_LAYOUT:
             return {
                 ...state,
@@ -52,7 +68,8 @@ export default function (state = initialState, action) {
                 data: [],
                 selected: null,
                 refresh: false,
-                isActive: false
+                isActive: false,
+                isChecked: {}
             }
         case SET_SELECT_TAB_ITEM:
             return {
