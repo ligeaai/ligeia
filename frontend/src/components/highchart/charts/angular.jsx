@@ -37,13 +37,12 @@ export const Angular = ({ highchartProps, width, height }) => {
       console.log("Connection Error");
     };
     client.onopen = function () {
-      console.log("WebSocket Client Connected");
+      console.log("WebSocket Client Connected Angular");
     };
     client.onclose = function () {
       console.log("WebSocket Client Closed");
     };
     client.onmessage = function (e) {
-      console.log("kdlsaşkdlşaskd------------");
       function sendNumber() {
         if (client.readyState === client.OPEN) {
           if (typeof e.data === "string") {

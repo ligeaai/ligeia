@@ -14,10 +14,10 @@ const Tabular = ({ highchartProps, width, height, backfillData }) => {
 
       if (backfillData) {
         client[index] = new W3CWebSocket(
-          `${wsBaseUrl}/ws/tags/backfill/${tag.ROW_ID}`
+          `${wsBaseUrl}/ws/tags/backfill/${tag.TAG_ID}`
         );
       } else {
-        client[index] = new W3CWebSocket(`${wsBaseUrl}/ws/tags/${tag.ROW_ID}`);
+        client[index] = new W3CWebSocket(`${wsBaseUrl}/ws/tags/${tag.TAG_ID}`);
       }
       client[index].onerror = function () {
         console.log("Connection Error");
@@ -98,16 +98,14 @@ const Tabular = ({ highchartProps, width, height, backfillData }) => {
     <Box sx={{ width: width, height: height }}>
       <DataGrid
         columns={[
+          { field: "completion", headerName: "Asset" },
           { field: "tag_name", headerName: "Tag Name" },
-          { field: "completion", headerName: "Completion" },
+          { field: "timestamp", headerName: "Time Stamp", type: "dateTime" },
+          { field: "value", headerName: "Value" },
+          { field: "uom", headerName: "UoM" },
           { field: "created_by", headerName: "Created By" },
           { field: "createdTime", headerName: "Created Time" },
           { field: "layer", headerName: "Layer" },
-          { field: "uom", headerName: "UoM" },
-          //  { field: "createdtime", headerName: "Created Time" },
-          //  { field: "message_type", headerName: "Message Type" },
-          { field: "timestamp", headerName: "Time Stamp", type: "dateTime" },
-          { field: "value", headerName: "Value" },
         ]}
         rows={allData}
       />

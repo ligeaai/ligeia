@@ -5,6 +5,7 @@ import Box from "@mui/material/Box";
 
 import HighchartsReact from "highcharts-react-official";
 import exporting from "highcharts/modules/exporting";
+import data from "highcharts/modules/data";
 import accessibility from "highcharts/modules/accessibility";
 import { wsBaseUrl } from "../../../services/baseApi";
 
@@ -12,6 +13,7 @@ let client = [];
 var W3CWebSocket = require("websocket").w3cwebsocket;
 exporting(Highcharts);
 accessibility(Highcharts);
+data(Highcharts);
 const LineCharts = ({
   highchartProps,
   width,
@@ -28,8 +30,9 @@ const LineCharts = ({
         title: {
           text: e.UOM,
         },
-        max: parseInt(e.NORMAL_MAXIMUM) ? parseInt(e.NORMAL_MAXIMUM) : null,
-        min: parseInt(e.NORMAL_MINIMUM) ? parseInt(e.NORMAL_MINIMUM) : null,
+
+        endOnTick: true,
+        startOnTick: true,
         opposite: false,
       });
     }
@@ -66,7 +69,7 @@ const LineCharts = ({
           highchartProps.Inputs.map((tag, index) => {
             const myindex = index;
             client[index] = new W3CWebSocket(
-              `${wsBaseUrl}/ws/tags/${tag.ROW_ID}`
+              `${wsBaseUrl}/ws/tags/${tag.TAG_ID}`
             );
             client[index].onerror = function () {
               console.log("Connection Error");
@@ -92,7 +95,7 @@ const LineCharts = ({
                               x: d[0] * 1000,
                               y: d[1],
                             },
-                            false,
+                            true,
                             false,
                             false
                           );
@@ -246,8 +249,9 @@ const LineCharts = ({
     },
     yAxis: [...yAxisTitles],
     series: [
-      ...highchartProps.Inputs.map((e) => {
+      ...highchartProps.Inputs.map((e, i) => {
         return {
+          yAxis: i,
           name: e.NAME,
           color: highchartProps["Enable Custom Colors"]
             ? highchartProps[`[${e.NAME}] Color`]
