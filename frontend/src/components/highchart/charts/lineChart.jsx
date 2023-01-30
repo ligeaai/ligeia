@@ -65,16 +65,14 @@ const LineCharts = ({
           );
           highchartProps.Inputs.map((tag, index) => {
             const myindex = index;
-
             client[index] = new W3CWebSocket(
               `${wsBaseUrl}/ws/tags/${tag.ROW_ID}`
             );
-
             client[index].onerror = function () {
               console.log("Connection Error");
             };
             client[index].onopen = function () {
-              console.log("connedted");
+              console.log("connected");
             };
             client[index].onclose = function () {
               console.log("WebSocket Client Closed");
