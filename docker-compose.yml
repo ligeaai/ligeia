@@ -103,10 +103,10 @@ services:
       - "6379:6379"
     networks:
       - net
-  redis2:
+  redis-ts:
     restart: on-failure
     image: redislabs/redistimeseries:latest
-    container_name: redis-test1
+    container_name: ligeiaai-redis-ts
     ports:
       - "6380:6380"
     networks:
@@ -147,22 +147,6 @@ services:
       KAFKA_JMX_HOSTNAME: localhost
     networks:
       - net
-  # apache-spark:
-  #   restart: unless-stopped
-  #   build:
-  #     context: .
-  #     dockerfile: ./dockerfile/local/datapipline/Spark/Dockerfile
-  #   image: gettyimages/spark:2.4.1-hadoop-3.0
-  #   container_name: ligeiaai-apache-spark
-  #   volumes:
-  #     - ./:/app
-  #   ports:
-  #     - '4040:4040'
-  #   depends_on:
-  #     - apache-kafka-broker1
-  #     - zookeeper
-  #   networks:
-  #     - net
   nifi:
     build:
       context: .
@@ -184,6 +168,15 @@ services:
     depends_on:
       - apache-kafka-broker1
       - zookeeper
+    networks:
+      - net
+  rabbitmq:
+    image: rabbitmq:3-management
+    hostname: localhost
+    container_name: ligeiaai-rabbitmq
+    ports:
+      - '15672:15672'
+      - '5672:5672'
     networks:
       - net
   mongodb-timescale:
@@ -214,6 +207,22 @@ volumes:
   connect_data: null
   cassandra_data: null
   mongodb-data: null
+  # apache-spark:
+  #   restart: unless-stopped
+  #   build:
+  #     context: .
+  #     dockerfile: ./dockerfile/local/datapipline/Spark/Dockerfile
+  #   image: gettyimages/spark:2.4.1-hadoop-3.0
+  #   container_name: ligeiaai-apache-spark
+  #   volumes:
+  #     - ./:/app
+  #   ports:
+  #     - '4040:4040'
+  #   depends_on:
+  #     - apache-kafka-broker1
+  #     - zookeeper
+  #   networks:
+  #     - net
   # apache-cassandra:
   #   container_name: ligeiaai-apache-cassandra
   #   hostname: 'cassandra'
@@ -235,15 +244,6 @@ volumes:
   #   depends_on:
   #     - apache-kafka-broker1
   #     - zookeeper
-  # rabbitmq:
-  #   image: rabbitmq:3-management
-  #   hostname: localhost
-  #   container_name: ligeiaai-rabbitmq
-  #   ports:
-  #     - '15672:15672'
-  #     - '5672:5672'
-  #   networks:
-  #     - net
   # control-center:
   #   image: confluentinc/cp-enterprise-control-center:5.3.1
   #   hostname: control-center

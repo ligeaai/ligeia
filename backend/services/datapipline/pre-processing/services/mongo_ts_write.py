@@ -10,8 +10,8 @@ topic = "backfill_data"
 consumer = KafkaConsumer(topic, bootstrap_servers="broker:29092")
 
 client = MongoClient("mongodb://root:admin@mongodb-timescale:27017/")
-mongo_db = client["backfilldata1"]
-timeseries_collection = mongo_db["backfilldata1"]
+mongo_db = client["backfilldata3"]
+timeseries_collection = mongo_db["backfilldata3"]
 
 
 def convert_to_time(time):
@@ -57,6 +57,6 @@ for message in consumer:
         ]
     }
     print(new_data)
-    timeseries_collection.insert_one(new_data)
+    timeseries_collection.insert_one(columns)
     # for doc in timeseries_collection.find():
     #     print(doc)
