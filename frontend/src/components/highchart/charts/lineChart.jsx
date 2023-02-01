@@ -28,7 +28,7 @@ const LineCharts = ({
     if (!highchartProps[`[${e.NAME}] Disable Data Grouping`]) {
       yAxisTitles.push({
         title: {
-          text: e.UOM,
+          text: `${e.UOM_QUANTITY_TYPE} (${e.UOM})`,
         },
 
         endOnTick: true,

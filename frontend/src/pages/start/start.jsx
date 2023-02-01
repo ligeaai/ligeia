@@ -3,7 +3,7 @@ import { Box, Grid, Typography } from "@mui/material";
 
 import StartComponent from "../../layout/start/start";
 
-const Element = () => {
+const Start = () => {
   return (
     <Grid
       container
@@ -30,14 +30,6 @@ const Element = () => {
         </Typography>
       </Grid>
     </Grid>
-  );
-};
-
-const Start = () => {
-  return (
-    <Box>
-      <StartComponent Element={Element} searchBarTheme="dark" />
-    </Box>
   );
 };
 

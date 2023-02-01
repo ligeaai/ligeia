@@ -121,8 +121,8 @@ export const Angular = ({ highchartProps, width, height }) => {
     },
     // the value axis
     yAxis: {
-      min: parseInt(highchartProps.Minimum),
-      max: parseInt(highchartProps.Maximum),
+      min: 0,
+      max: 150,
       tickPixelInterval: 72,
       tickPosition: "inside",
       tickColor: Highcharts.defaultOptions.chart.backgroundColor || "#FFFFFF",

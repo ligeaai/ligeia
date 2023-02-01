@@ -19,7 +19,6 @@ import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined
 import { palette } from "@mui/system";
 import history from "../../../routers/history";
 
-import Start from "../../../layout/start/start";
 import Layout from "../../../layout/authorization/layout";
 
 import { login } from "../../../services/actions/auth";
@@ -175,12 +174,8 @@ const MyBody = () => {
   );
 };
 
-const authorizationLayout = () => {
-  return <Layout Element={MyBody} isSignInPanel={true} />;
-};
-
 const Login = () => {
-  return <Start Element={authorizationLayout} />;
+  return <Layout Element={MyBody} isSignInPanel={true} />;
 };
 
 export default Login;

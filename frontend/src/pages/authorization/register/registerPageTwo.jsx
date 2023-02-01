@@ -133,12 +133,8 @@ const MyBody = () => {
   );
 };
 
-const authorizationLayout = () => {
-  return <Layout Element={MyBody} isSignInPanel={false} />;
-};
-
 const RegisterPageTwo = () => {
-  return <Start Element={authorizationLayout} />;
+  return <Layout Element={MyBody} isSignInPanel={false} />;
 };
 
 export default RegisterPageTwo;

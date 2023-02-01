@@ -23,7 +23,7 @@ const validationSchema = yup.object({
   }),
 });
 
-const MyBody = () => {
+const ForgotPassword = () => {
   const dispatch = useDispatch();
   const { token } = useParams();
   const [passVisible, setPassVisible] = React.useState(false);
@@ -46,7 +46,6 @@ const MyBody = () => {
       sx={{
         justifyContent: "center",
         alignItems: "center",
-        height: { xs: "calc(100vh - 250px)", sm: "calc(100vh - 200px)" },
         minHeight: "349px",
       }}
     >
@@ -168,10 +167,6 @@ const MyBody = () => {
       </Grid>
     </Grid>
   );
-};
-
-const ForgotPassword = () => {
-  return <Start Element={MyBody} />;
 };
 
 export default ForgotPassword;

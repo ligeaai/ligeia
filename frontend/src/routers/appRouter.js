@@ -10,13 +10,10 @@ import history from "./history";
 
 import PrivateRoute from "./privateRouter";
 import PublicRoute from "./publicRouter";
-import Start from "../pages/start/start";
 
-import Main from "../pages/main/main";
 import { Confirmation, MyNavigator, Loadable, HistoryConfirmation } from "../components";
 import ErrorMessage from "../components/errorMessage/errorMessage";
 
-import { setLoaderTrue } from "../services/actions/loader";
 import "react-grid-layout/css/styles.css";
 import "react-resizable/css/styles.css";
 
@@ -28,6 +25,7 @@ const Configuration = Loadable(React.lazy(() => import("../pages/main/configurat
 const ForgotPassword = Loadable(React.lazy(() => import("../pages/authorization/forgotPassword/forgotPassword")));
 const ForgotPasswordConfirm = Loadable(React.lazy(() => import("../pages/authorization/forgotPassword/forgotPasswordConfirm")));
 const Login = Loadable(React.lazy(() => import("../pages/authorization/login/login")));
+const Main = Loadable(React.lazy(() => import("../pages/main/main")));
 const NotFoundPage = Loadable(React.lazy(() => import("../pages/error/notFound")));
 const Items = Loadable(React.lazy(() => import("../pages/main/configuration/items/item")));
 const Overview = Loadable(React.lazy(() => import("../pages/main/overview/overview")));
@@ -36,6 +34,7 @@ const Register = Loadable(React.lazy(() => import("../pages/authorization/regist
 const RegisterPageTwo = Loadable(React.lazy(() => import("../pages/authorization/register/registerPageTwo")));
 const Reporting = Loadable(React.lazy(() => import("../pages/main/asset/reporting")));
 const ReportingDesigner = Loadable(React.lazy(() => import("../pages/main/configuration/initialize/reportDesign/reportDesigner")));
+const Start = Loadable(React.lazy(() => import("../pages/start/start")));
 const Tags = Loadable(React.lazy(() => import("../pages/main/configuration/tags/tags")));
 const Types = Loadable(React.lazy(() => import("../pages/main/configuration/types/types")));
 
@@ -71,15 +70,12 @@ const AppRouter1 = () => {
           </Route>
           <Route exact path="/" element={<PublicRoute />}>
             <Route exact path="/home" element={<Start />} />
-            <Route exact path="/signin">
-              <Route path="" element={<Login />} />
-              <Route path="/signin/forgotpassword" element={<ForgotPassword />} />
-              <Route path="/signin/forgotpasswordconfirm/:token" element={<ForgotPasswordConfirm />} />
-            </Route>
-            <Route exact path="/signup">
-              <Route path="" element={<Register />} />
-              <Route path="/signup/signup" element={<RegisterPageTwo />} />
-            </Route>
+            <Route path="/signin" element={<Login />} />
+            <Route path="/signin/forgotpassword" element={<ForgotPassword />} />
+            <Route path="/signin/forgotpasswordconfirm/:token" element={<ForgotPasswordConfirm />} />
+            <Route path="/signup" element={<Register />} />
+            <Route path="/signup/signup" element={<RegisterPageTwo />} />
+
           </Route>
           <Route path="*" element={<NotFoundPage />} />
         </Routes>

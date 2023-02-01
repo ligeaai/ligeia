@@ -127,14 +127,10 @@ export const Solid = ({ highchartProps, width, height }) => {
     },
     // the value axis
     yAxis: {
-      min:
-        parseInt(highchartProps.Minimum) === ""
-          ? 0
-          : parseInt(highchartProps.Maximum),
-      max:
-        parseInt(highchartProps.Maximum) === ""
-          ? 100
-          : parseInt(highchartProps.Maximum),
+      min: 0,
+
+      max: 150,
+
       stops: [...stops],
       lineWidth: 0,
       tickWidth: 0,

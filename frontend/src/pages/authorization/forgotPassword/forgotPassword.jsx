@@ -15,7 +15,7 @@ const validationSchema = yup.object({
     .required("Email is required"),
 });
 
-const MyBody = () => {
+const ForgotPassword = () => {
   const dispatch = useDispatch();
   const formik = useFormik({
     initialValues: {
@@ -33,7 +33,6 @@ const MyBody = () => {
       sx={{
         justifyContent: "center",
         alignItems: "center",
-        height: { xs: "calc(100vh - 250px)", sm: "calc(100vh - 200px)" },
         minHeight: "349px",
       }}
     >
@@ -89,10 +88,6 @@ const MyBody = () => {
       </Grid>
     </Grid>
   );
-};
-
-const ForgotPassword = () => {
-  return <Start Element={MyBody} />;
 };
 
 export default ForgotPassword;
