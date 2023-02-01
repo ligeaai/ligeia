@@ -174,21 +174,10 @@ const LineCharts = ({
         type: "datetime",
         min: new Date().getTime() - 30 * 24 * 60 * 60 * 1000,
         max: new Date().getTime() + 1000,
-        // range: 86000,
-        //minRange: 24 * 3600 * 1000,
+
         ordinal: false,
         endOnTick: false,
         startOnTick: false,
-        // events: {
-        //   afterSetExtremes: function (e) {
-        //     if (e.trigger === "syncExtremes") {
-        //       this.setExtremes(e.min, e.max, false, false, {
-        //         trigger: "syncExtremes",
-        //       });
-        //     }
-        //   },
-        // },
-        // categories: categories,
       },
       series: [
         ...highchartProps.Inputs.map((e) => {
@@ -231,21 +220,6 @@ const LineCharts = ({
       endOnTick: false,
       startOnTick: false,
       ordinal: false,
-      // events: {
-      //   afterSetExtremes: function (e) {
-      //     if (e.trigger === "syncExtremes") {
-      //       this.setExtremes(e.min, e.max, false, false, {
-      //         trigger: "syncExtremes",
-      //       });
-      //     }
-      //   },
-      // },
-      // labels: {
-      //   formatter: function () {
-      //     return Highcharts.dateFormat("%d.%m.%Y %H:%M:%S", this.value);
-      //   },
-      // },
-      // categories: categories,
     },
     yAxis: [...yAxisTitles],
     series: [

@@ -128,9 +128,7 @@ export const Solid = ({ highchartProps, width, height }) => {
     // the value axis
     yAxis: {
       min: 0,
-
       max: 150,
-
       stops: [...stops],
       lineWidth: 0,
       tickWidth: 0,

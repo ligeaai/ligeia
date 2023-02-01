@@ -109,25 +109,10 @@ const MyStyledTreeItem = React.memo(({ myItems, path }) => {
             history.push(`/${path}/${e.FROM_ITEM_NAME}`);
           }}
         >
-          {/* <StyledTreeItem
-            sx={{ color: "status.primary" }}
-            key={i}
-            nodeId={`${uuidv4()}+1`}
-            label={e.TO_ITEM_NAME}
-            onClick={async () => {
-             
-              history.push(`/${path}/${e.TO_ITEM_NAME}`);
-            }}
-          ></StyledTreeItem> */}
           <MyStyledTreeItem
             myItems={e.CHILD}
             path={`${path}/${e.FROM_ITEM_NAME}`}
           ></MyStyledTreeItem>
-
-          {/* <StyledTreeItem
-            nodeId={`${uuidv4()}`}
-            label={e.TO_ITEM_NAME}
-          ></StyledTreeItem> */}
         </StyledTreeItem>
       );
     return (
