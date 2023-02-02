@@ -80,7 +80,8 @@ export const Solid = ({ highchartProps, width, height }) => {
           ? highchartProps["Time Stamp Font Size"]
           : 12,
       },
-      text: dateFormatDDMMYYHHMMSS(new Date(categories)),
+      text:
+        categories === "" ? "" : dateFormatDDMMYYHHMMSS(new Date(categories)),
       href: null,
     },
     title: {
