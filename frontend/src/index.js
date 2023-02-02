@@ -7,6 +7,9 @@ import { persistor, store } from './store/configureStore';
 
 import App from './pages/App';
 import { ErrorBoundary } from "./components/errorMessage/errorBoundary"
+import "react-grid-layout/css/styles.css";
+import "react-resizable/css/styles.css";
+
 const container = document.getElementById('root');
 const root = createRoot(container);
 

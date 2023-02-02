@@ -92,6 +92,7 @@ const LineCharts = ({
                     sortedJson.map((e) => {
                       let i = true;
                       data.map((s) => {
+                        //TODO delete this when the data is correct
                         console.log(e);
                         if (s[0] === e.timestamp * 1000) i = false;
                       });

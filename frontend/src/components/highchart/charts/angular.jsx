@@ -9,7 +9,7 @@ exporting(Highcharts);
 var client;
 var W3CWebSocket = require("websocket").w3cwebsocket;
 
-export const Angular = ({ highchartProps, width, height }) => {
+const Angular = ({ highchartProps, width, height }) => {
   const [categories, setCategories] = React.useState("");
   const tags = useSelector((state) => state.overviewDialog.measuremenetData);
   const uom = useSelector((state) => state.tapsOverview.UOMList);
@@ -217,3 +217,4 @@ export const Angular = ({ highchartProps, width, height }) => {
     />
   );
 };
+export default React.memo(Angular);

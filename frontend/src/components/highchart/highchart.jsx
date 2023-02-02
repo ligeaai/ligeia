@@ -161,7 +161,9 @@ const Highchart = ({
       <Line highchartProps={highchartProps} width={width} height={height} />
     ),
     "TreeMap Chart [Nivo]": (
-      <TreeMap highchartProps={highchartProps} width={width} height={height} />
+      <div style={{ height: height, width: width }}>
+        <TreeMap highchartProps={highchartProps} />
+      </div>
     ),
   };
 

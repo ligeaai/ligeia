@@ -1,4 +1,4 @@
-import { Angular } from "./angular";
+import Angular from "./angular";
 import LineChart from "./lineChart";
 import { Solid } from "./solid";
 import { Measurement } from "./measurement";

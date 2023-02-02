@@ -15,7 +15,6 @@ import MyHighchart from "./highchart";
 import UpdatePopUp from "./updatePopup";
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
 import { ComponentErrorBody, ComponentError } from "../../../components";
-import "../../../assets/css/dashboard.css";
 const Widgets = React.forwardRef((props, ref) => {
   const { widget, style, className, children, ...rest } = props;
   const [liveData, setLiveData] = React.useState(true);
@@ -185,33 +184,20 @@ const Widgets = React.forwardRef((props, ref) => {
           </Grid>
         </Box>
         <Box className="grid-item__graph">
-          <ComponentError
-            errMsg={
-              <ComponentErrorBody
-                text="Something went wrong"
-                icon={<ErrorOutlineIcon />}
-              />
-            }
-          >
-            <MyHighchart
-              highchartProps={highchartProps}
-              width={width}
-              height={height}
-              liveData={liveData}
-              backfillData={backfill}
-              tabular={tabular}
-            ></MyHighchart>
-          </ComponentError>
+          <MyHighchart
+            highchartProps={highchartProps}
+            width={width}
+            height={height}
+            liveData={liveData}
+            backfillData={backfill}
+            tabular={tabular}
+          ></MyHighchart>
         </Box>
         {children}
       </Box>
     );
   }
-  return (
-    <Grid xs={3} height={300} sx={{ boxShadow: 3, m: 1 }}>
-      <LoadingComponent />
-    </Grid>
-  );
+  return <LoadingComponent />;
 });
 
 export default React.memo(Widgets);

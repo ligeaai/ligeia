@@ -9,8 +9,6 @@ import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
-import "../../assets/css/react-grid-layout.css";
-import "../../assets/css/react-resizable.css";
 import { useDispatch, useSelector } from "react-redux";
 import TabItems from "../../layout/main/overview/tabItems";
 import {
@@ -173,9 +171,9 @@ function MyTabs() {
         ".react-swipeable-view-container": {
           height: "100%",
         },
-        "#myResponsiveGridLayout": {
-          backgroundColor: "background.main",
-        },
+        // "#myResponsiveGridLayout": {
+        //   backgroundColor: "background.main",
+        // },
       }}
     >
       <AppBar position="static" sx={{ width: "100%", boxShadow: "none" }}>
