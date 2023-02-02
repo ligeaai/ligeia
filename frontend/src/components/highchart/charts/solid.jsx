@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 import exporting from "highcharts/modules/exporting";
 import { wsBaseUrl } from "../../../services/baseApi";
 import { dateFormatDDMMYYHHMMSS } from "../../../services/utils/dateFormatter";
+import { Box } from "@mui/material";
 exporting(Highcharts);
 highchartsMore(Highcharts);
 solidGauge(Highcharts);
@@ -15,7 +16,6 @@ var W3CWebSocket = require("websocket").w3cwebsocket;
 export const Solid = ({ highchartProps, width, height }) => {
   const tags = useSelector((state) => state.overviewDialog.measuremenetData);
   const [categories, setCategories] = React.useState("");
-  const uom = useSelector((state) => state.tapsOverview.UOMList);
   const [value, setValue] = React.useState("");
   const measuremenetData = useSelector(
     (state) => state.overviewDialog.measuremenetData
@@ -67,18 +67,18 @@ export const Solid = ({ highchartProps, width, height }) => {
   const options = {
     chart: {
       type: "solidgauge",
-      height: "80%",
     },
     credits: {
       enabled: highchartProps["Show Timestamp"],
       position: {
         align: "center",
-        bottom: -5,
+        verticalAlign: "bottom",
       },
       style: {
         fontSize: highchartProps["Time Stamp Font Size"]
           ? highchartProps["Time Stamp Font Size"]
           : 12,
+        paddingTop: "3px",
       },
       text:
         categories === "" ? "" : dateFormatDDMMYYHHMMSS(new Date(categories)),
@@ -110,7 +110,7 @@ export const Solid = ({ highchartProps, width, height }) => {
       },
     },
     pane: {
-      center: ["50%", "85%"],
+      center: ["50%", "80%"],
       size: "140%",
       startAngle: -90,
       endAngle: 90,
@@ -209,9 +209,11 @@ export const Solid = ({ highchartProps, width, height }) => {
         chart: {
           ...options.chart,
           width: width,
-          height: height,
+          height: height - 15,
         },
       }}
     />
   );
 };
+
+export default React.memo(Solid);

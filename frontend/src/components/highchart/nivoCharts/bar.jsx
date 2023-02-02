@@ -142,10 +142,7 @@ const MyResponsiveBar = ({ data }) => (
     motionDamping={15}
   />
 );
-export default function App({ height, width }) {
-  return (
-    <div style={{ height: height, width: width }}>
-      <MyResponsiveBar data={data} />
-    </div>
-  );
+function App() {
+  return <MyResponsiveBar data={data} />;
 }
+export default React.memo(App);

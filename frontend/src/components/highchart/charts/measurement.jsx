@@ -8,8 +8,7 @@ import { dateFormatDDMMYYHHMMSS } from "../../../services/utils/dateFormatter";
 var client;
 var W3CWebSocket = require("websocket").w3cwebsocket;
 
-export const Measurement = ({ highchartProps, width, height }) => {
-  const uom = useSelector((state) => state.tapsOverview.UOMList);
+export const Measurement = ({ highchartProps }) => {
   const tags = useSelector((state) => state.overviewDialog.measuremenetData);
   const measuremenetData = useSelector(
     (state) => state.overviewDialog.measuremenetData
@@ -71,6 +70,8 @@ export const Measurement = ({ highchartProps, width, height }) => {
     <Box
       sx={{
         position: "relative",
+        width: "100%",
+        height: "100%",
       }}
     >
       <Box
@@ -94,9 +95,9 @@ export const Measurement = ({ highchartProps, width, height }) => {
       <Grid
         container
         sx={{
-          height: height,
+          height: "100%",
           flexDirection: "column",
-          width: width,
+          width: "100%",
           flexWrap: "nowrap",
           justifyContent: "space-evenly",
         }}

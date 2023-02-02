@@ -8,6 +8,7 @@ import exporting from "highcharts/modules/exporting";
 import data from "highcharts/modules/data";
 import accessibility from "highcharts/modules/accessibility";
 import { wsBaseUrl } from "../../../services/baseApi";
+import { height } from "@mui/system";
 
 let client = [];
 var W3CWebSocket = require("websocket").w3cwebsocket;
@@ -50,6 +51,7 @@ const LineCharts = ({
   const options = {
     constructorType: "stockChart",
     chart: {
+      width: width,
       zoomBySingleTouch: true,
       zoomType: "x",
       type: chartType,

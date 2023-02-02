@@ -17,6 +17,8 @@ import { Bar, Pie, HeatMap, Line, TreeMap } from "./nivoCharts";
 import { Matrix } from "./customWidget";
 const MyBox = styled(Box)(({ theme }) => {
   return {
+    width: "100%",
+    height: "100%",
     ".highcharts-background": {
       fill: theme.palette.background.success,
     },
@@ -79,7 +81,6 @@ const MyBox = styled(Box)(({ theme }) => {
     },
   };
 });
-
 const Highchart = ({
   highchartProps,
   width,
@@ -95,8 +96,6 @@ const Highchart = ({
     "Linechart [Highchart]": tabular ? (
       <Tabular
         highchartProps={highchartProps}
-        width={width}
-        height={height}
         liveData={liveData}
         backfillData={backfillData}
         tabular={tabular}
@@ -105,21 +104,21 @@ const Highchart = ({
     ) : backfillData ? (
       <Backfill
         highchartProps={highchartProps}
-        width={width}
-        height={height}
         liveData={liveData}
         backfillData={backfillData}
         tabular={tabular}
+        width={width}
+        height={height}
         chartType="spline"
       />
     ) : (
       <LineChart
         highchartProps={highchartProps}
-        width={width}
-        height={height}
         liveData={liveData}
         backfillData={backfillData}
         tabular={tabular}
+        width={width}
+        height={height}
         chartType="spline"
       />
     ),
@@ -138,33 +137,14 @@ const Highchart = ({
     "Gauge(Solid) [Highchart]": (
       <Solid highchartProps={highchartProps} width={width} height={height} />
     ),
-    "Measurement [Custom]": (
-      <Measurement
-        highchartProps={highchartProps}
-        width={width}
-        height={height}
-      />
-    ),
-    "Bar Chart [Nivo]": (
-      <Bar highchartProps={highchartProps} width={width} height={height} />
-    ),
-    "Pie Chart [Nivo]": (
-      <Pie highchartProps={highchartProps} width={width} height={height} />
-    ),
-    "Heat Map [Nivo]": (
-      <HeatMap highchartProps={highchartProps} width={width} height={height} />
-    ),
-    "Matrix [Custom]": (
-      <Matrix highchartProps={highchartProps} width={width} height={height} />
-    ),
-    "Line Chart [Nivo]": (
-      <Line highchartProps={highchartProps} width={width} height={height} />
-    ),
-    "TreeMap Chart [Nivo]": (
-      <div style={{ height: height, width: width }}>
-        <TreeMap highchartProps={highchartProps} />
-      </div>
-    ),
+
+    "Measurement [Custom]": <Measurement highchartProps={highchartProps} />,
+    "Bar Chart [Nivo]": <Bar highchartProps={highchartProps} />,
+    "Pie Chart [Nivo]": <Pie highchartProps={highchartProps} />,
+    "Heat Map [Nivo]": <HeatMap highchartProps={highchartProps} />,
+    "Matrix [Custom]": <Matrix highchartProps={highchartProps} />,
+    "Line Chart [Nivo]": <Line highchartProps={highchartProps} />,
+    "TreeMap Chart [Nivo]": <TreeMap highchartProps={highchartProps} />,
   };
 
   return <MyBox>{chartType[highchartProps.Type]}</MyBox>;

@@ -109,10 +109,7 @@ const MyResponsivePieCanvas = ({ data /* see data tab */ }) => (
     ]}
   />
 );
-export default function App({ height, width }) {
-  return (
-    <div style={{ height: height, width: width }}>
-      <MyResponsivePieCanvas />
-    </div>
-  );
+function App() {
+  return <MyResponsivePieCanvas />;
 }
+export default React.memo(App);

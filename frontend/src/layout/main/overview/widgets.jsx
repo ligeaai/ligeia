@@ -197,7 +197,22 @@ const Widgets = React.forwardRef((props, ref) => {
       </Box>
     );
   }
-  return <LoadingComponent />;
+  return (
+    <Box
+      ref={ref}
+      className={`grid-item ${className}`}
+      sx={{
+        ...style,
+        boxShadow: 4,
+        borderRadius: "5px",
+        color: "text.primary",
+        backgroundColor: "background.success",
+      }}
+      {...rest}
+    >
+      <LoadingComponent />
+    </Box>
+  );
 });
 
 export default React.memo(Widgets);
