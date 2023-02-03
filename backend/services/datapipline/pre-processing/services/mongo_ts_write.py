@@ -4,10 +4,11 @@ from ast import literal_eval
 import json
 import time as timelibrary
 import datetime
-
+import os 
 
 topic = "backfill_data"
-consumer = KafkaConsumer(topic, bootstrap_servers="broker:29092")
+host = os.environ.get("Kafka_Host_DP")
+consumer = KafkaConsumer(topic, bootstrap_servers=host)
 
 client = MongoClient("mongodb://root:admin@mongodb-timescale:27017/")
 mongo_db = client["backfilldata3"]

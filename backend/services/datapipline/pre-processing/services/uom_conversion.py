@@ -7,7 +7,7 @@ import pandas as pd
 from ast import literal_eval
 import json
 
-host = "broker:29092"
+host = os.environ.get("Kafka_Host_DP")
 topic = "uom_conversion"
 consumer = KafkaConsumer(
     group_id=topic,

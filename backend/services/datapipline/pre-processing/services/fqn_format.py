@@ -8,7 +8,7 @@ from ast import literal_eval
 import json
 import datetime
 
-host = "broker:29092"
+host = os.environ.get("Kafka_Host_DP")
 topic = "raw-data"
 consumer = KafkaConsumer(
     group_id=topic,

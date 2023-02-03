@@ -7,7 +7,7 @@ import pandas as pd
 from ast import literal_eval
 import json
 
-host = "broker:29092"
+host = os.environ.get("Kafka_Host_DP")
 topic = "frozen_data"
 consumer = KafkaConsumer(
     group_id=topic,
@@ -73,6 +73,8 @@ for message in consumer:
         data["payload"]["insert"][0]["fqn"],
         data["payload"]["insert"][0]["vqts"][0]["v"],
     )
+    if data["mahmut"] == "selami":
+        print("SORUN vaar")
     print(len(type_value_data))
     if len(type_value_data) > 3:
         frozen_data_check(data_check)

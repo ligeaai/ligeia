@@ -7,7 +7,8 @@ from kafka import KafkaConsumer
 # Create a Redis Connection
 rds = redis.StrictRedis("redis-test1", port=6379)
 # Create Kafka Consumer
-consumer = KafkaConsumer("live_data", bootstrap_servers=["broker:29092"])
+host = os.environ.get("Kafka_Host_DP")
+consumer = KafkaConsumer("live_data", bootstrap_servers=host)
 
 
 def created_redis_db(key, columns):
