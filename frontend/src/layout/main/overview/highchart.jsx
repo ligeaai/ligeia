@@ -1,6 +1,6 @@
 import React from "react";
 import { Highchart } from "../../../components";
-
+import Box from "@mui/material/Box";
 const OverviewEditor = ({
   highchartProps,
   width,
@@ -11,14 +11,16 @@ const OverviewEditor = ({
 }) => {
   if (highchartProps.Name !== "") {
     return (
-      <Highchart
-        highchartProps={highchartProps}
-        width={width}
-        height={height}
-        liveData={liveData}
-        backfillData={backfillData}
-        tabular={tabular}
-      />
+      <Box sx={{ width: width, height: height }}>
+        <Highchart
+          highchartProps={highchartProps}
+          width={width}
+          height={height}
+          liveData={liveData}
+          backfillData={backfillData}
+          tabular={tabular}
+        />
+      </Box>
     );
   }
   return <></>;

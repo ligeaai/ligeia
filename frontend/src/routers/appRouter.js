@@ -14,8 +14,6 @@ import PublicRoute from "./publicRouter";
 import { Confirmation, MyNavigator, Loadable, HistoryConfirmation } from "../components";
 import ErrorMessage from "../components/errorMessage/errorMessage";
 
-import "react-grid-layout/css/styles.css";
-import "react-resizable/css/styles.css";
 
 const Administration = Loadable(React.lazy(() => import("../pages/main/administration/main")));
 const Analytics = Loadable(React.lazy(() => import("../pages/main/asset/analytics")));
@@ -43,7 +41,7 @@ const AppRouter1 = () => {
   return (
 
     <React.Fragment>
-      <Suspense fallback={<Outlet />}>
+      <Suspense fallback={<Box sx={{ width: "500px", height: "500px", backgroundColor: "red", zIndex: 656 }} />}>
         <Routes>
           <Route exact path="/" element={<PrivateRoute />}>
             <Route exact path="/" element={<Main />} />
@@ -75,7 +73,6 @@ const AppRouter1 = () => {
             <Route path="/signin/forgotpasswordconfirm/:token" element={<ForgotPasswordConfirm />} />
             <Route path="/signup" element={<Register />} />
             <Route path="/signup/signup" element={<RegisterPageTwo />} />
-
           </Route>
           <Route path="*" element={<NotFoundPage />} />
         </Routes>

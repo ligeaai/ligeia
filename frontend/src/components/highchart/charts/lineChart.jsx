@@ -8,6 +8,7 @@ import exporting from "highcharts/modules/exporting";
 import data from "highcharts/modules/data";
 import accessibility from "highcharts/modules/accessibility";
 import { wsBaseUrl } from "../../../services/baseApi";
+import { height } from "@mui/system";
 
 let client = [];
 var W3CWebSocket = require("websocket").w3cwebsocket;
@@ -50,6 +51,7 @@ const LineCharts = ({
   const options = {
     constructorType: "stockChart",
     chart: {
+      width: width,
       zoomBySingleTouch: true,
       zoomType: "x",
       type: chartType,
@@ -58,14 +60,12 @@ const LineCharts = ({
         load: function () {
           var series = this;
           let dataList = [];
-          Promise.all(
-            client.map((e) => {
-              console.log(e);
-              e.onclose = function () {
-                console.log("WebSocket Client Closed");
-              };
-            })
-          );
+          client.map((e) => {
+            console.log(e);
+            e.onclose = function () {
+              console.log("WebSocket Client Closed");
+            };
+          });
           highchartProps.Inputs.map((tag, index) => {
             const myindex = index;
             client[index] = new W3CWebSocket(
@@ -86,14 +86,15 @@ const LineCharts = ({
                 if (client.readyState === client.OPEN) {
                   if (typeof e.data === "string") {
                     let jsonData = JSON.parse(e.data);
-
+                    console.log(jsonData);
                     Promise.all(
-                      Object.keys(jsonData).map((f) => {
-                        jsonData[f][1].map((d) => {
+                      jsonData.map((data) => {
+                        Object.keys(data).map((key) => {
+                          console.log(data[key][1][0]);
                           dataList[myindex].addPoint(
                             {
-                              x: d[0] * 1000,
-                              y: d[1],
+                              x: data[key][1][0][0] * 1000,
+                              y: data[key][1][0][1],
                             },
                             true,
                             false,
@@ -174,21 +175,10 @@ const LineCharts = ({
         type: "datetime",
         min: new Date().getTime() - 30 * 24 * 60 * 60 * 1000,
         max: new Date().getTime() + 1000,
-        // range: 86000,
-        //minRange: 24 * 3600 * 1000,
+
         ordinal: false,
         endOnTick: false,
         startOnTick: false,
-        // events: {
-        //   afterSetExtremes: function (e) {
-        //     if (e.trigger === "syncExtremes") {
-        //       this.setExtremes(e.min, e.max, false, false, {
-        //         trigger: "syncExtremes",
-        //       });
-        //     }
-        //   },
-        // },
-        // categories: categories,
       },
       series: [
         ...highchartProps.Inputs.map((e) => {
@@ -231,21 +221,6 @@ const LineCharts = ({
       endOnTick: false,
       startOnTick: false,
       ordinal: false,
-      // events: {
-      //   afterSetExtremes: function (e) {
-      //     if (e.trigger === "syncExtremes") {
-      //       this.setExtremes(e.min, e.max, false, false, {
-      //         trigger: "syncExtremes",
-      //       });
-      //     }
-      //   },
-      // },
-      // labels: {
-      //   formatter: function () {
-      //     return Highcharts.dateFormat("%d.%m.%Y %H:%M:%S", this.value);
-      //   },
-      // },
-      // categories: categories,
     },
     yAxis: [...yAxisTitles],
     series: [

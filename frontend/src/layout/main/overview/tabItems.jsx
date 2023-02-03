@@ -2,7 +2,6 @@ import React, { useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { Responsive, WidthProvider } from "react-grid-layout";
-import "../../../assets/css/dashboard.css";
 import GridItem from "./gridItem";
 
 import {
@@ -12,8 +11,6 @@ import {
 } from "../../../services/actions/overview/taps";
 import Widget from "./widgets";
 
-import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
-import { ComponentErrorBody, ComponentError } from "../../../components";
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
 function setBreakPoint() {
@@ -39,12 +36,12 @@ const TabItems = (props) => {
   const dispatch = useDispatch();
   const [breakpoint, setBreakpoint] = React.useState(setBreakPoint());
   const { widgetname } = props;
-  const onResize = React.useCallback(() => {
+  const onResize = () => {
     if (refLayout.current) {
       setWidth(document.getElementById("myResponsiveGridLayout").offsetWidth);
       setBreakpoint(setBreakPoint());
     }
-  }, []);
+  };
   const widgets = useSelector((state) => {
     try {
       return state.tapsOverview.widgets[widgetname].widgets;
@@ -59,11 +56,13 @@ const TabItems = (props) => {
       return [];
     }
   });
-  const ref = React.createRef();
   const handleBreakPointChange = (breakpoint) => {
+    console.log(breakpoint);
     setBreakpoint(breakpoint);
   };
   const handleLayoutChange = (newLayout) => {
+    console.log(breakpoint);
+    console.log(newLayout);
     layouts[breakpoint] = newLayout;
     dispatch(updateChartLayout(layouts));
   };

@@ -9,10 +9,9 @@ exporting(Highcharts);
 var client;
 var W3CWebSocket = require("websocket").w3cwebsocket;
 
-export const Angular = ({ highchartProps, width, height }) => {
+const Angular = ({ highchartProps, width, height }) => {
   const [categories, setCategories] = React.useState("");
   const tags = useSelector((state) => state.overviewDialog.measuremenetData);
-  const uom = useSelector((state) => state.tapsOverview.UOMList);
   const measuremenetData = useSelector(
     (state) => state.overviewDialog.measuremenetData
   );
@@ -82,7 +81,8 @@ export const Angular = ({ highchartProps, width, height }) => {
           ? highchartProps["Time Stamp Font Size"]
           : 12,
       },
-      text: dateFormatDDMMYYHHMMSS(new Date(categories)),
+      text:
+        categories === "" ? "" : dateFormatDDMMYYHHMMSS(new Date(categories)),
       href: null,
     },
     title: {
@@ -178,7 +178,7 @@ export const Angular = ({ highchartProps, width, height }) => {
               : ""
           } ) </div>`,
           borderWidth: 0,
-          y: (height / 100) * 15,
+
           zIndex: 2231,
           color:
             (Highcharts.defaultOptions.title &&
@@ -211,9 +211,10 @@ export const Angular = ({ highchartProps, width, height }) => {
         chart: {
           ...options.chart,
           width: width,
-          height: height,
+          height: height - 15,
         },
       }}
     />
   );
 };
+export default React.memo(Angular);

@@ -1,6 +1,6 @@
 import React from "react";
 import Widget from "./widgets";
-
+import Box from "@mui/material/Box";
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
 import { ComponentErrorBody, ComponentError } from "../../../components";
 const GridItemContainer = React.forwardRef(
@@ -14,7 +14,7 @@ const GridItemContainer = React.forwardRef(
           />
         }
       >
-        <Widget ref={ref} widget={widget} root={item} {...props}>
+        <Widget widget={widget} root={item} {...props}>
           {children}
         </Widget>
       </ComponentError>

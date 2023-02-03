@@ -387,10 +387,7 @@ const MyResponsiveHeatMap = () => (
     ]}
   />
 );
-export default function App({ height, width }) {
-  return (
-    <div style={{ height: height, width: width }}>
-      <MyResponsiveHeatMap />
-    </div>
-  );
+function App() {
+  return <MyResponsiveHeatMap />;
 }
+export default React.memo(App);

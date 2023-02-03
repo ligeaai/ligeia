@@ -6,6 +6,7 @@ import Box from "@mui/material/Box";
 import HighchartsReact from "highcharts-react-official";
 import exporting from "highcharts/modules/exporting";
 import data from "highcharts/modules/data";
+import boost from "highcharts/modules/boost";
 import accessibility from "highcharts/modules/accessibility";
 import { wsBaseUrl } from "../../../services/baseApi";
 
@@ -14,6 +15,7 @@ var W3CWebSocket = require("websocket").w3cwebsocket;
 exporting(Highcharts);
 accessibility(Highcharts);
 data(Highcharts);
+boost(Highcharts);
 const LineCharts = ({
   highchartProps,
   width,
@@ -24,14 +26,14 @@ const LineCharts = ({
 }) => {
   console.log(highchartProps.Inputs);
   const yAxisTitles = [];
-  highchartProps.Inputs.map((e) => {
+  highchartProps.Inputs.map((e, index) => {
     if (!highchartProps[`[${e.NAME}] Disable Data Grouping`]) {
       yAxisTitles.push({
-        title: {
-          text: `${e.UOM_QUANTITY_TYPE} (${e.UOM})`,
-        },
+        id: "yaxis-" + index,
         endOnTick: true,
         startOnTick: true,
+        type: "area",
+
         opposite: false,
       });
     }
@@ -56,14 +58,12 @@ const LineCharts = ({
         load: function () {
           var series = this;
           let dataList = [];
-          Promise.all(
-            client.map((e) => {
-              console.log(e);
-              e.onclose = function () {
-                console.log("WebSocket Client Closed");
-              };
-            })
-          );
+          client.map((e) => {
+            console.log(e);
+            e.onclose = function () {
+              console.log("WebSocket Client Closed");
+            };
+          });
           highchartProps.Inputs.map((tag, index) => {
             client[index] = new W3CWebSocket(
               `${wsBaseUrl}/ws/tags/backfill/${tag.TAG_ID}`
@@ -78,17 +78,47 @@ const LineCharts = ({
             client[index].onclose = function () {
               console.log("WebSocket Client Closed");
             };
-            dataList[index] = series.series[index];
+            dataList = series;
             client[index].onmessage = function (e) {
               async function sendNumber() {
                 if (client.readyState === client.OPEN) {
                   if (typeof e.data === "string") {
                     console.log("klşsakdkaşsdlk");
                     let jsonData = JSON.parse(e.data);
-                    console.log(jsonData);
-                    dataList[index].addPoint({
-                      x: parseInt(jsonData.timestamp) * 1000,
-                      y: jsonData.tag_value,
+                    let data = [];
+                    const sortedJson = jsonData.sort((a, b) =>
+                      parseInt(a.timestamp) > parseInt(b.timestamp) ? 1 : -1
+                    );
+                    sortedJson.map((e) => {
+                      let i = true;
+                      data.map((s) => {
+                        //TODO delete this when the data is correct
+                        console.log(e);
+                        if (s[0] === e.timestamp * 1000) i = false;
+                      });
+                      if (i) {
+                        data.push([parseInt(e.timestamp) * 1000, e.tag_value]);
+                      }
+                    });
+
+                    series.addAxis(
+                      {
+                        id: "yaxis-" + index,
+                        opposite: false,
+                        title: {
+                          text: `${tag.UOM_QUANTITY_TYPE} (${tag.UOM})`,
+                        },
+                      },
+                      false
+                    );
+                    series.addSeries({
+                      yAxis: "yaxis-" + index,
+                      name: tag.NAME,
+
+                      color: highchartProps["Enable Custom Colors"]
+                        ? highchartProps[`[${tag.NAME}] Color`]
+                        : "",
+                      data: data,
                     });
 
                     return true;
@@ -103,59 +133,60 @@ const LineCharts = ({
     },
     rangeSelector: {
       //  enabled: !liveData,
+
       buttons: [
         {
-          type: "minutes",
+          type: "minute",
           count: 1,
           text: "1m",
         },
         {
-          type: "minutes",
+          type: "minute",
           count: 5,
           text: "5m",
         },
         {
-          type: "minutes",
+          type: "minute",
           count: 15,
           text: "15m",
         },
         {
-          type: "minutes",
+          type: "minute",
           count: 30,
           text: "30m",
         },
         {
-          type: "hours",
+          type: "hour",
           count: 1,
           text: "1h",
         },
         {
-          type: "hours",
+          type: "hour",
           count: 6,
           text: "6h",
         },
         {
-          type: "days",
+          type: "day",
           count: 1,
           text: "1d",
         },
         {
-          type: "weeks",
+          type: "week",
           count: 1,
           text: "1w",
         },
         {
-          type: "months",
+          type: "month",
           count: 1,
           text: "1m",
         },
         {
-          type: "months",
+          type: "month",
           count: 3,
           text: "3m",
         },
         {
-          type: "months",
+          type: "month",
           count: 6,
           text: "6m",
         },
@@ -174,9 +205,27 @@ const LineCharts = ({
     exporting: {
       enabled: highchartProps["Show Enable Export"],
     },
-    // navigator: {
-    //   enabled: !liveData,
-    // },
+    navigator: {
+      xAxis: {
+        type: "datetime",
+        minRange: 30,
+        // min: new Date().getTime() - 90 * 24 * 60 * 60 * 1000,
+        // max: new Date().getTime() + 1000,
+        // crosshair: true,
+        // ordinal: true,
+      },
+      // series: [
+      //   ...highchartProps.Inputs.map((e, i) => {
+      //     return {
+      //       yAxis: i,
+      //       name: e.NAME,
+      //       color: highchartProps["Enable Custom Colors"]
+      //         ? highchartProps[`[${e.NAME}] Color`]
+      //         : "",
+      //     };
+      //   }),
+      // ],
+    },
     navigation: {
       buttonOptions: {
         verticalAlign: "top",
@@ -196,27 +245,23 @@ const LineCharts = ({
     title: {
       text: "",
     },
+
     xAxis: {
       type: "datetime",
-      labels: {
-        formatter: function () {
-          return Highcharts.dateFormat("%d.%m.%Y %H:%M:%S", this.value);
-        },
-      },
-      // categories: categories,
+      minRange: 30,
+      // ordinal: true,
+      // min: new Date().getTime() - 90 * 24 * 60 * 60 * 1000,
+      // max: new Date().getTime() + 1000,
+      //crosshair: true,
+      // labels: {
+      //   formatter: function () {
+      //     return Highcharts.dateFormat("%d.%m.%Y %H:%M:%S", this.value);
+      //   },
     },
-    yAxis: [...yAxisTitles],
-    series: [
-      ...highchartProps.Inputs.map((e, i) => {
-        return {
-          yAxis: i,
-          name: e.NAME,
-          color: highchartProps["Enable Custom Colors"]
-            ? highchartProps[`[${e.NAME}] Color`]
-            : "",
-        };
-      }),
-    ],
+    // categories: categories,
+    // },
+    //yAxis: [...yAxisTitles],
+    //series: [],
   };
 
   return (
