@@ -24,6 +24,11 @@ class TagsSaveSerializer(serializers.Serializer):
 class TagsDetiailsSerializer(serializers.ModelSerializer):
     class Meta:
         model = tags
+        fields = "__all__"
+
+class TagsNameSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = tags
         fields = [
                     "ITEM_ID",
                     "TAG_ID",

@@ -3,7 +3,7 @@ from .models import tags
 import uuid
 from rest_framework import permissions,status,generics
 from rest_framework.response import Response
-from .serializers import TagsDetiailsSerializer,TagsSaveSerializer,TagsFieldsSerializer
+from .serializers import TagsDetiailsSerializer,TagsSaveSerializer,TagsNameSerializer
 from apps.type_property.models import type_property
 from apps.resource_list.models import resource_list 
 from apps.resource_list.serializers import ResourceListSerializer 
@@ -153,5 +153,5 @@ class TagsNameViews(generics.CreateAPIView):
     permission_classes = [permissions.AllowAny]
     def post(self, request, *args, **kwargs):
         queryset = tags.objects.filter(NAME = request.data.get('TAG_NAME'))
-        serializer = TagsDetiailsSerializer(queryset,many = True)
+        serializer = TagsNameSerializer(queryset,many = True)
         return Response(serializer.data,status=status.HTTP_200_OK)
