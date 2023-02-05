@@ -26,13 +26,20 @@ def checkEvent(message):
     data = json.loads(message.value.decode('utf-8'))
     key = uuid.uuid4().hex
     key = key.encode('utf-8')
-    if data.get('quality') > 66 or data.get('quality') < 65:
+    if data.get('quality') == 66 or data.get('quality') == 65:
         alarms = {
             "LOG_TYPE":"ALARMS",
+             # ALARMS SOURCE ADD
             "CONTENTS":data
         }
         producer.send(os.environ.get('Kafka_Topic'),value = alarms,key=key)
+    
+    if data.get('quality') == 67:
+        alarms = {
+            "LOG_TYPE":"ALARMS",
+             # ALARMS SOURCE ADD
+            "CONTENTS":data
+        }
+  
 for message in consumer:
     checkEvent(message)
-
-
