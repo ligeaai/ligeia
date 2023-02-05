@@ -231,3 +231,19 @@ class ItemLinkHierarchyView(generics.ListAPIView):
                 data[index]['FROM_ITEM_NAME'] = serializer_from.data[0].get("PROPERTY_STRING")
             if quaryset_to:
                 data[index]['TO_ITEM_NAME'] = serializer_to.data[0].get("PROPERTY_STRING")
+
+
+
+
+class TagsLinksSelectedView(generics.CreateAPIView):
+    permission_classes = [permissions.AllowAny]
+
+    def post(self, request, *args, **kwargs):
+        liste = []
+        for item in request.data.get('ID'):
+            print(item)
+            find_tags = tags.objects.filter(ITEM_ID__exact = item)
+            if find_tags:
+                liste.append(list(TagsDetiailsSerializer(find_tags,many=True).data))
+        
+        return Response(sum(liste,[]))                            

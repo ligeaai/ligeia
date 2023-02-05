@@ -8,6 +8,7 @@ from .views import (
     ItemLinkUpdateView,
 ItemLinkHierarchyView,
 ItemLinkCardinaltyView,
+TagsLinksSelectedView,
 TagsLinksView)
 
 urlpatterns = [
@@ -18,5 +19,7 @@ urlpatterns = [
     path("hierarchy/", ItemLinkHierarchyView.as_view(), name="hierarchy"),
     path("cardinalty/", ItemLinkCardinaltyView.as_view(), name="cardinalty"),
     path("tags/", TagsLinksView.as_view(), name="cardinalty"),
+    path("tags/test/", TagsLinksSelectedView.as_view(), name="test"),
+    
    
 ]
