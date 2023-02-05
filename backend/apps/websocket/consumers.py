@@ -99,7 +99,7 @@ def retrieve_last_data(self,tag_id):
         old_data = ""
         while self.is_activeLastData:
             data = self.rds.ts().mget(['tag_name='+str(serializer.get('NAME').split('.')[1]),"asset="+str(serializer.get('NAME').split('.')[0])], with_labels=True, latest=False)
-            self.send(json.dumps(data[-1])) if data[-1] != old_data else old_data
+            self.send(json.dumps(data[-1],ensure_ascii=False)) if data[-1] != old_data else old_data
             old_data = data[-1]
     else:
         raise BaseException('error')
