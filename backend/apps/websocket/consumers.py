@@ -8,12 +8,10 @@ import time
 from threading import Thread
 from apps.tags.models import tags
 from apps.tags.serializers import TagsFieldsSerializer
-
 env = environ.Env(DEBUG=(bool, False))
 
 def retrieve_data(self,start='-',end='+',tag_id=""):
     tag = tags.objects.filter(TAG_ID = tag_id)
-    max_value = []
     if tag:
         serializer = TagsFieldsSerializer(tag,many = True).data[0]
         tag_name = str(serializer.get('NAME').split('.')[1])
@@ -96,15 +94,13 @@ class AlarmsConsumer(WebsocketConsumer):
 
 def retrieve_last_data(self,tag_id):
     tag = tags.objects.filter(TAG_ID = tag_id)
-    print(tag)
     if tag:
         serializer = TagsFieldsSerializer(tag,many = True).data[0]
         old_data = ""
         while self.is_activeLastData:
             data = self.rds.ts().mget(['tag_name='+str(serializer.get('NAME').split('.')[1]),"asset="+str(serializer.get('NAME').split('.')[0])], with_labels=True, latest=False)
-            if data != old_data:
-                self.send(json.dumps(data[-1]))
-                old_data = data
+            self.send(json.dumps(data[-1])) if data[-1] != old_data else old_data
+            old_data = data[-1]
     else:
         raise BaseException('error')
 
