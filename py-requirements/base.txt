@@ -26,6 +26,7 @@ daphne
 pymongo
 confluent_kafka
 channels_redis
+kazoo
 # Kafka-Python
 kafka-python
 
