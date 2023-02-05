@@ -1,5 +1,5 @@
 from django.urls import include, path
-
+from .views import DjangoHealthView
 urlpatterns = [
     path("auth/", include("apps.users.urls")),
     path("layer/", include("apps.layer.urls")),
@@ -16,5 +16,6 @@ urlpatterns = [
     path("uom_unit/", include("apps.uom_base_unit.urls")),
     path("notifications/", include("apps.notifications.urls")),
     # path("menu/", include("apps.page_resource_list.urls")),
+    path("health", DjangoHealthView.as_view(),name ="healt status"),
 ]
 
