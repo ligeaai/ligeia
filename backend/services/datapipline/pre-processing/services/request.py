@@ -2,8 +2,8 @@ import json
 import requests
 import os
 
-base_url = os.environ.get("BASE_URL")
-req = base_url+"/api/v1/tags/details/"
+base_url = os.environ.get("BACKEND_BASE_URL")
+req = base_url + "/api/v1/tags/details/"
 
 # from request import req
 def getTagNameData():

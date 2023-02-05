@@ -3,6 +3,7 @@ import json
 import time as timelibrary
 import datetime
 from kafka import KafkaConsumer
+import os
 
 # Create a Redis Connection
 rds = redis.StrictRedis("redis-test1", port=6379)
