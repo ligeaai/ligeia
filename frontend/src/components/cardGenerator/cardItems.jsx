@@ -5,11 +5,10 @@ import { Box, Grid, Typography } from "@mui/material";
 import { setSelectedDrawerItem } from "../../services/actions/drawerMenu/drawerMenu";
 import history from "../../routers/history";
 
-const CardItems = (props) => {
+const CardItems = ({ card }) => {
   const dispatch = useDispatch();
-  const { card } = props;
-  const [isClick, setIsClick] = useState(false);
-  const [cardFancyTheme, setCardFancyTheme] = useState("success.primary");
+  const [isClicked, setIsClicked] = useState(false);
+  const [cardTheme, setCardTheme] = useState("success.primary");
   return (
     <Grid
       item
@@ -28,26 +27,22 @@ const CardItems = (props) => {
           top: "-3px",
           left: "-3px",
         },
-        top: isClick ? "3px !important" : "0",
-        left: isClick ? "3px !important" : "0",
-        boxShadow: isClick
+        top: isClicked ? "3px !important" : "0",
+        left: isClicked ? "3px !important" : "0",
+        boxShadow: isClicked
           ? "2px 2px 6px rgba(0, 0, 0, 0.2) !important"
           : "3px 3px 8px rgba(0, 0, 0, 0.3)",
       }}
-      onMouseOver={() => setCardFancyTheme("hover.secondary")}
+      onMouseOver={() => setCardTheme("hover.secondary")}
       onMouseLeave={() => {
-        setCardFancyTheme("success.primary");
-        setIsClick(false);
+        setCardTheme("success.primary");
+        setIsClicked(false);
       }}
       onClick={() => {
         history.push(`${card.cardURL}`);
       }}
-      onMouseDown={() => {
-        setIsClick(true);
-      }}
-      onMouseUp={() => {
-        setIsClick(false);
-      }}
+      onMouseDown={() => setIsClicked(true)}
+      onMouseUp={() => setIsClicked(false)}
     >
       <Grid
         container
@@ -56,11 +51,7 @@ const CardItems = (props) => {
       >
         <Grid item>
           <Box
-            sx={{
-              width: "20px",
-              height: "100%",
-              backgroundColor: cardFancyTheme,
-            }}
+            sx={{ width: "20px", height: "100%", backgroundColor: cardTheme }}
           />
         </Grid>
         <Grid item xs={12} sx={{ position: "relative" }}>
@@ -68,10 +59,7 @@ const CardItems = (props) => {
             <Grid item xs={12} sx={{ mb: 2.5, mt: 1.5 }}>
               <Typography
                 variant="h6"
-                sx={{
-                  fontWeight: "700",
-                  color: "text.secondary",
-                }}
+                sx={{ fontWeight: "700", color: "text.secondary" }}
               >
                 {card.cardTitle}
               </Typography>
