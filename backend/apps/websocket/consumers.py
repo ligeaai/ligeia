@@ -63,32 +63,53 @@ class WSLiveConsumer(WebsocketConsumer):
         except BaseException as e:
             print(e)
 
+# class AlarmsConsumer(WebsocketConsumer):
+#     def connect(self):
+#         self.accept()
+#         rds = redis.StrictRedis(env('REDIS_HOST'),port=6379,db=2)
+#         for i in rds.keys():
+#             data = rds.get(i)
+#             data = data.decode('utf-8')
+#             data = json.loads(data)
+#             if data.get('LOG_TYPE') == 'ALARMS':
+#                 print(data)
+#                  # item LAYER match tag_naame
+#                 self.send(json.dumps({'message':data}))
+
+#     def disconnect(self, close_code):
+#         print('disconnect')
+
+#     def receive(self, text_data):
+#         rds = redis.StrictRedis(env('REDIS_HOST'),port=6379,db=2)
+#         for i in rds.keys():
+#             data = rds.get(i)
+#             data = data.decode('utf-8')
+#             data = json.loads(data)
+#             if data.get('LOG_TYPE') == 'ALARMS':
+#                 if data.get('CONTENTS').get('quality') > int(text_data): # item LAYER match tag_naame
+#                     self.send(json.dumps({'message':data.get('CONTENTS')}))
+                    
 class AlarmsConsumer(WebsocketConsumer):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.rds = redis.StrictRedis(env('REDIS_HOST'), port=6379, db=2)
+
     def connect(self):
         self.accept()
-        rds = redis.StrictRedis(env('REDIS_HOST'),port=6379,db=2)
-        for i in rds.keys():
-            data = rds.get(i)
-            data = data.decode('utf-8')
-            data = json.loads(data)
-            if data.get('LOG_TYPE') == 'ALARMS':
-                print(data)
-                 # item LAYER match tag_naame
-                self.send(json.dumps({'message':data}))
+        self.send_data()
 
     def disconnect(self, close_code):
         print('disconnect')
 
     def receive(self, text_data):
-        rds = redis.StrictRedis(env('REDIS_HOST'),port=6379,db=2)
-        for i in rds.keys():
-            data = rds.get(i)
-            data = data.decode('utf-8')
-            data = json.loads(data)
-            if data.get('LOG_TYPE') == 'ALARMS':
-                if data.get('CONTENTS').get('quality') > int(text_data): # item LAYER match tag_naame
-                    self.send(json.dumps({'message':data.get('CONTENTS')}))
-                    
+        self.send_data(int(text_data))
+
+    def send_data(self, quality_threshold=0):
+        for i in self.rds.keys():
+            data = self.rds.get(i)
+            data = json.loads(data.decode('utf-8'))
+            if data.get('LOG_TYPE') == 'ALARMS' and data.get('CONTENTS').get('quality') > quality_threshold:
+                self.send(json.dumps({'message': data.get('CONTENTS')}))
 
 
 
