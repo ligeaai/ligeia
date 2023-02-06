@@ -41,7 +41,7 @@ const AppRouter1 = () => {
   return (
 
     <React.Fragment>
-      <Suspense fallback={<Box sx={{ width: "500px", height: "500px", backgroundColor: "red", zIndex: 656 }} />}>
+      <Suspense fallback={<Outlet />}>
         <Routes>
           <Route exact path="/" element={<PrivateRoute />}>
             <Route exact path="/" element={<Main />} />

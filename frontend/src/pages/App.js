@@ -6,13 +6,12 @@ import AppRouter from "../routers/appRouter";
 import myTheme from "../themes/composeStyle";
 import Loading from "../components/loading/loading";
 
-
 import history from "../routers/history";
 import { loadUser } from "../services/actions/auth";
 
 import { setSelectedDrawerItem } from "../services/actions/drawerMenu/drawerMenu";
 import { LicenseInfo } from "@mui/x-data-grid-pro";
-
+import { MainPageSkeleton } from "../components";
 LicenseInfo.setLicenseKey(
   "c637ab57aafc18858637cdde132c6c6fTz01MzI2NyxFPTE2OTg0OTQ5NTE2MjMsUz1wcm8sTE09c3Vic2NyaXB0aW9uLEtWPTI="
 );

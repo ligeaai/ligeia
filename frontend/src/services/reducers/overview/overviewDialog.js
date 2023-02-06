@@ -4,7 +4,8 @@ import {
     CHANGE_VALUE_OVERVIEW_DIALOG,
     SET_SELECT_ITEM_OVERVIEW_DIALOG,
     SET_HIGHCHART_PROPERTY_OVERVIEW_DIALOG,
-    SET_MEASUREMENT_DATA
+    SET_MEASUREMENT_DATA,
+    SET_ITEM_DATA_OVERVIEW
 } from "../../actions/types"
 
 
@@ -32,7 +33,6 @@ const initialState = {
         "Time Stamp Font Size": "",
         "Tag Name Font Size": "",
     },
-
     highchartProps: {
         "Name": "",
         "Name Font Size(em)": "",
@@ -53,7 +53,8 @@ const initialState = {
         "Time Stamp Font Size": "",
         "Tag Name Font Size": "",
     },
-    measuremenetData: []
+    measuremenetData: [],
+    itemData: []
 
 };
 
@@ -63,6 +64,11 @@ export default function (state = initialState, action) {
     const { type, payload } = action;
 
     switch (type) {
+        case SET_ITEM_DATA_OVERVIEW:
+            return {
+                ...state,
+                itemData: payload
+            }
         case SET_MEASUREMENT_DATA:
             return {
                 ...state,

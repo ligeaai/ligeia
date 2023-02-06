@@ -77,32 +77,23 @@ const Inputs = (props) => {
   const dispatch = useDispatch();
   const { handleChangeFunc } = props;
   const tags = useSelector((state) => state.overviewDialog.measuremenetData);
+  const Inputs = useSelector(
+    (state) => state.overviewDialog.highchartProps["Inputs"]
+  );
   const [checked, setChecked] = React.useState([]);
-  console.log("0");
-  const [left, setLeft] = React.useState(
-    tags.filter((e) => !props.defaultValue.some((a) => a.TAG_ID === e.TAG_ID))
-  );
-  console.log("1");
-  const [right, setRight] = React.useState(
-    tags.filter((e) => props.defaultValue.some((a) => a.TAG_ID === e.TAG_ID))
-  );
-  console.log("2");
+  const [left, setLeft] = React.useState([]);
+  const [right, setRight] = React.useState([]);
   const leftChecked = intersection(checked, left);
-  console.log("3");
   const rightChecked = intersection(checked, right);
-  console.log("4");
   React.useEffect(() => {
-    return () => {
-      dispatch(setCheckeds(tags));
-    };
-  }, []);
+    setLeft(tags.filter((e) => !Inputs.some((a) => a.TAG_ID === e.TAG_ID)));
+    setRight(tags.filter((e) => Inputs.some((a) => a.TAG_ID === e.TAG_ID)));
+    dispatch(setCheckeds(tags));
+  }, [tags]);
   const handleToggle = (value, val) => {
-    console.log(value);
-    console.log(val);
     dispatch(updateChecked(value.TAG_ID, val));
     const currentIndex = checked.indexOf(value);
     const newChecked = [...checked];
-    console.log(leftChecked);
     if (currentIndex === -1) {
       newChecked.push(value);
     } else {
@@ -188,32 +179,6 @@ const Inputs = (props) => {
           </FixedSizeList>
         )}
       </AutoSizer>
-      {/* <List dense component="div" role="list">
-        {items.map((value) => {
-          const labelId = `transfer-list-item-${value.TAG_ID}-label`;
-
-          return (
-            <ListItem
-              key={value.TAG_ID}
-              role="listitem"
-              button
-              onClick={handleToggle(value)}
-            >
-              <ListItemIcon>
-                <Checkbox
-                  checked={checked.indexOf(value) !== -1}
-                  tabIndex={-1}
-                  disableRipple
-                  inputProps={{
-                    "aria-labelledby": labelId,
-                  }}
-                />
-              </ListItemIcon>
-              <ListItemText id={labelId} primary={`${value.NAME}`} />
-            </ListItem>
-          );
-        })}
-      </List> */}
     </Paper>
   );
 

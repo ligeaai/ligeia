@@ -1,8 +1,9 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Button, Grid, Box } from "@mui/material";
+import { IconButton, Grid, Box, Button } from "@mui/material";
 
-import { Select, InputGenerator } from "../../../components";
+import { Select, Stepper, InputGenerator } from "../../../components";
+import CloseIcon from "@mui/icons-material/Close";
 import {
   changeSelectValue,
   changeValeus,
@@ -13,10 +14,10 @@ import {
 } from "../../../services/actions/overview/overviewDialog";
 import { saveChart } from "../../../services/actions/overview/overviewDialog";
 import TagService from "../../../services/api/tags";
-import LinechartPopUp from "../../../components/highchart/popup/lineChartPopUp";
-import AngularPopUp from "../../../components/highchart/popup/angularPopUp";
-import SolidPopUp from "../../../components/highchart/popup/solidPopUp";
-import MeasurementPopUp from "../../../components/highchart/popup/measurementPopUp";
+import linechartPopUp from "../../../components/highchart/newPopUp/lineChartHc";
+import angularPopUp from "../../../components/highchart/newPopUp/angularHc";
+import SolidPopUp from "../../../components/highchart/newPopUp/solidHc";
+import measurementPopUp from "../../../components/highchart/newPopUp/measurementCustom";
 import BarPopUp from "../../../components/highchart/nivoPopUp/barChart";
 import PiePopUp from "../../../components/highchart/nivoPopUp/pieChart";
 import HeatMapPopUp from "../../../components/highchart/nivoPopUp/heatMapPopUp";
@@ -35,22 +36,14 @@ const DialogContent = ({ handleClose }) => {
     dispatch(await changeSelectValue(props));
   };
   const body = {
-    "Linechart [Highchart]": (
-      <LinechartPopUp highchartProps={properties} handleClose={handleClose} />
-    ),
-    "Area Chart [Highchart]": (
-      <LinechartPopUp highchartProps={properties} handleClose={handleClose} />
-    ),
-    "Gauge(Angular) [Highchart]": (
-      <AngularPopUp highchartProps={properties} handleClose={handleClose} />
-    ),
+    "Linechart [Highchart]": linechartPopUp(),
+    "Area Chart [Highchart]": linechartPopUp(),
+    "Gauge(Angular) [Highchart]": angularPopUp(),
+    "Gauge(Solid) [Highchart]": SolidPopUp(),
+    "Measurement [Custom]": measurementPopUp(),
+  };
 
-    "Gauge(Solid) [Highchart]": (
-      <SolidPopUp highchartProps={properties} handleClose={handleClose} />
-    ),
-    "Measurement [Custom]": (
-      <MeasurementPopUp highchartProps={properties} handleClose={handleClose} />
-    ),
+  const bodyTemp = {
     "Bar Chart [Nivo]": (
       <BarPopUp highchartProps={properties} handleClose={handleClose} />
     ),
@@ -77,8 +70,12 @@ const DialogContent = ({ handleClose }) => {
     }
     myFunc();
   }, []);
+  function finishFunc() {
+    dispatch(saveChart());
+    handleClose();
+  }
   return (
-    <Grid container sx={{ p: 1, width: "100%" }}>
+    <Grid container sx={{ width: "100%" }}>
       <Box
         id="draggable-dialog-title"
         sx={{
@@ -94,37 +91,63 @@ const DialogContent = ({ handleClose }) => {
 
       <Grid
         item
+        xs={12}
         sx={{
-          mb: 1,
+          p: 0.5,
+          pl: 1,
         }}
       >
-        <Select
-          values={values}
-          handleChangeFunc={handleChangeFunc}
-          defaultValue={selectedItem}
-        />
-      </Grid>
-
-      {body[properties.Type]}
-
-      <Grid item xs={12}>
-        <Grid container sx={{ flexDirection: "row-reverse" }}>
+        <Grid
+          container
+          sx={{ justifyContent: "space-between", alignItems: "center" }}
+        >
           <Grid item>
-            <Button onClick={handleClose} color="error">
-              Cancel
-            </Button>
-            <Button
-              onClick={() => {
-                dispatch(saveChart());
-                handleClose();
-              }}
-              color="success"
-            >
-              Save
-            </Button>
+            <Select
+              values={values}
+              handleChangeFunc={handleChangeFunc}
+              defaultValue={selectedItem}
+            />
+          </Grid>
+          <Grid item>
+            <IconButton onClick={handleClose} color="error">
+              <CloseIcon fontSize="small" />
+            </IconButton>
           </Grid>
         </Grid>
       </Grid>
+      {body[properties.Type] ? (
+        <Box sx={{ p: 1, height: "75vh", overflowY: "auto", width: "9999px" }}>
+          <Stepper
+            components={body[properties.Type]}
+            finishFunc={finishFunc}
+          ></Stepper>
+        </Box>
+      ) : (
+        bodyTemp[properties.Type]
+      )}
+
+      {body[properties.Type] ? (
+        <></>
+      ) : (
+        <Grid item xs={12}>
+          <Grid container sx={{ flexDirection: "row-reverse" }}>
+            <Grid item>
+              <Button onClick={handleClose} color="error">
+                Cancel
+              </Button>
+              <Button
+                onClick={() => {
+                  dispatch(saveChart());
+                  handleClose();
+                }}
+                color="success"
+              >
+                Save
+              </Button>
+            </Grid>
+          </Grid>
+        </Grid>
+      )}
     </Grid>
   );
 };

@@ -15,6 +15,9 @@ const getItemLink = (body, cancelToken) => {
 const getTags = (body) => {
     return instance.post("/item-link/tags/", body, config())
 }
+const getItemTags = (body, cancelToken) => {
+    return instance.post("/item-link/tags/test/", body, { ...config(), cancelToken: cancelToken.token })
+}
 const remove = (body) => {
     return instance.post("/item-link/delete/", body, config());
 };
@@ -29,6 +32,7 @@ const ItemLinkService = {
     getLinkSchema,
     getItemLink,
     getTags,
+    getItemTags,
     remove,
     update
 };

@@ -7,19 +7,24 @@ import { useSelector } from "react-redux";
 import exporting from "highcharts/modules/exporting";
 import { wsBaseUrl } from "../../../services/baseApi";
 import { dateFormatDDMMYYHHMMSS } from "../../../services/utils/dateFormatter";
-import { Box } from "@mui/material";
+import TagService from "../../../services/api/tags";
 exporting(Highcharts);
 highchartsMore(Highcharts);
 solidGauge(Highcharts);
 var client;
 var W3CWebSocket = require("websocket").w3cwebsocket;
 export const Solid = ({ highchartProps, width, height }) => {
-  const tags = useSelector((state) => state.overviewDialog.measuremenetData);
   const [categories, setCategories] = React.useState("");
   const [value, setValue] = React.useState("");
-  const measuremenetData = useSelector(
-    (state) => state.overviewDialog.measuremenetData
-  );
+  const [measuremenetData, setMeasurementData] = React.useState(null);
+  React.useState(() => {
+    async function myFunc() {
+      const body = JSON.stringify({ TAG_ID: highchartProps.Measurement });
+      let res = await TagService.getTagItemS(body);
+      setMeasurementData(res.data[0]);
+    }
+    myFunc();
+  }, []);
   let i = 0;
   let stops = [];
   while (i < parseInt(highchartProps.Stops)) {
@@ -86,12 +91,8 @@ export const Solid = ({ highchartProps, width, height }) => {
     },
     title: {
       text:
-        measuremenetData &&
-        highchartProps["Show Tag Name"] &&
-        measuremenetData.length > 0
-          ? measuremenetData.filter(
-              (e) => e.TAG_ID === highchartProps.Measurement
-            )[0].NAME
+        measuremenetData && highchartProps["Show Tag Name"]
+          ? measuremenetData.NAME
           : "",
       style: {
         fontSize: highchartProps["Tag Name Font Size"]
@@ -174,9 +175,8 @@ export const Solid = ({ highchartProps, width, height }) => {
         ],
         tooltip: {
           valueSuffix: ` ${
-            tags && highchartProps["Show Unit"] && measuremenetData.length > 0
-              ? tags.filter((a) => a.TAG_ID === highchartProps.Measurement)[0]
-                  .UOM
+            measuremenetData && highchartProps["Show Unit"]
+              ? measuremenetData.UOM
               : ""
           }`,
         },
@@ -192,9 +192,8 @@ export const Solid = ({ highchartProps, width, height }) => {
               ? highchartProps["Unit Font Size"]
               : "9"
           }px">( ${
-            tags && highchartProps["Show Unit"] && measuremenetData.length > 0
-              ? tags.filter((a) => a.TAG_ID === highchartProps.Measurement)[0]
-                  .UOM
+            measuremenetData && highchartProps["Show Unit"]
+              ? measuremenetData.UOM
               : ""
           } )</div>`,
         },

@@ -6,7 +6,7 @@ import { PersistGate } from 'redux-persist/integration/react'
 import { persistor, store } from './store/configureStore';
 
 import App from './pages/App';
-import { ErrorBoundary } from "./components/errorMessage/errorBoundary"
+import { ErrorBoundary } from "./components"
 import "react-grid-layout/css/styles.css";
 import "react-resizable/css/styles.css";
 

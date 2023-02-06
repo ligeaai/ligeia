@@ -8,19 +8,37 @@ import {
   UPDATE_LAYOUT,
   SET_MEASUREMENT_DATA,
   SET_ISCHECKED,
-  SET_UPDATE_ISCHECKED
+  SET_UPDATE_ISCHECKED,
+  SET_ITEM_DATA_OVERVIEW
 } from "../types";
 import { instance, config } from "../../couchApi";
 
 import ItemLinkService from "../../api/itemLink"
-
+const _setLinkedItem = () => (dispatch, getState) => {
+  console.log("lşksalşkşaskdakdkslşaalkksdlksdalş")
+  const selectedItem = getState().collapseMenu.selectedItem;
+  let list = []
+  console.log(selectedItem)
+  function myFunc(myItems) {
+    myItems.map(e => {
+      list.push([e.FROM_ITEM_ID, e.FROM_ITEM_NAME])
+      if (e.CHILD) {
+        myFunc(e.CHILD)
+      }
+    })
+  }
+  myFunc([selectedItem])
+  dispatch({
+    type: SET_ITEM_DATA_OVERVIEW,
+    payload: list
+  })
+}
 export const loadTapsOverview = () => async (dispatch, getState) => {
   const linkId = getState().collapseMenu.selectedItem.LINK_ID;
   const fromId = getState().collapseMenu.selectedItem.FROM_ITEM_ID
   try {
     let res = await instance.get(`/taplinks/${linkId}`, config);
     var titles = Object.keys(res.data.data);
-    // TODO don't use patches, tends to leak code
     const body = JSON.stringify({ ID: fromId })
 
     dispatch({
@@ -30,15 +48,17 @@ export const loadTapsOverview = () => async (dispatch, getState) => {
     dispatch({
       type: REFRESH_WIDGETS_OVERVIEW,
     });
-    let itemLinkRes = await ItemLinkService.getTags(body)
+    dispatch(_setLinkedItem())
+    // let itemLinkRes = await ItemLinkService.getTags(body)
 
-    dispatch({
-      type: SET_MEASUREMENT_DATA,
-      payload: itemLinkRes.data
-    })
+    // dispatch({
+    //   type: SET_MEASUREMENT_DATA,
+    //   payload: itemLinkRes.data
+    // })
 
-    setCheckeds(itemLinkRes.data)
+    //setCheckeds(itemLinkRes.data)
   } catch (err) {
+    console.log(err)
     if (err.response.status === 404) {
       const body = JSON.stringify({ _id: linkId, data: {} });
       await instance.post("/taplinks/", body, config);

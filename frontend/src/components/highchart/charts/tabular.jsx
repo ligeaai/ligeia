@@ -3,7 +3,10 @@ import Box from "@mui/material/Box";
 import DataGrid from "../../datagrid/dataGrid";
 import { wsBaseUrl } from "../../../services/baseApi";
 import { uuidv4 } from "../../../services/utils/uuidGenerator";
-import { dateFormatterDMY } from "../../../services/utils/dateFormatter";
+import {
+  dateFormatterDMY,
+  dateFormatDDMMYYHHMMSS,
+} from "../../../services/utils/dateFormatter";
 var W3CWebSocket = require("websocket").w3cwebsocket;
 const client = [];
 const Tabular = ({ highchartProps, backfillData }) => {
@@ -71,7 +74,7 @@ const Tabular = ({ highchartProps, backfillData }) => {
                       ),
                       layer: data[f][0].layer,
                       uom: data[f][0].uom,
-                      timestamp: dateFormatterDMY(
+                      timestamp: dateFormatDDMMYYHHMMSS(
                         new Date(data[f][1][0][0] * 1000)
                       ),
                       value: data[f][1][0][1],

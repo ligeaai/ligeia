@@ -15,9 +15,6 @@ import { loadTapsOverview } from "./taps"
 
 
 export const fillProperties = async (props) => async (dispatch, getState) => {
-    //api call and fill the properties
-    const selectedItem = getState().collapseMenu.selectedItem.LINK_ID
-
     try {
         let res = await instance
             .get(

@@ -11,76 +11,11 @@ import {
   ListItemText,
 } from "@mui/material";
 
-import { MyNumberTextField, ColorTextfield } from "../..";
-import {
-  changeValeus,
-  cleanStops,
-} from "../../../services/actions/overview/overviewDialog";
+import { changeValeus } from "../../../services/actions/overview/overviewDialog";
+import PopUpItem from "./popUpItem";
 
-import ChoseMeasure from "../popUpLayout/choseMeasure";
-import PopUpItem from "../popUpLayout/popUpItem";
-import Measurement from "../popUpLayout/measurement";
-const Stops = () => {
+const CreateWidget = () => {
   const dispatch = useDispatch();
-  const highchartProps = useSelector(
-    (state) => state.overviewDialog.highchartProps
-  );
-  var loop = [];
-  for (let i = 0; i < highchartProps.Stops; i++) {
-    loop.push(i);
-  }
-  const handleChangeFunc = (key, val) => {
-    dispatch(changeValeus(key, val));
-  };
-  return (
-    <React.Fragment>
-      {loop.map((e, i) => {
-        return (
-          <Grid item xs={12} key={i}>
-            <Grid container columnSpacing={2}>
-              <Grid item xs={12} sm={6} md={3}>
-                <Grid container rowGap={0.5}>
-                  <Grid item xs={12}>
-                    {`[${e}] Stops`}
-                  </Grid>
-                  <Grid item xs={12}>
-                    <MyNumberTextField
-                      defaultValue={highchartProps[`[${e}] Stops`]}
-                      handleChangeFunc={(value) => {
-                        handleChangeFunc(`[${e}] Stops`, value);
-                      }}
-                    />
-                  </Grid>
-                </Grid>
-              </Grid>
-
-              <Grid item xs={12} sm={6} md={3}>
-                <Grid container rowGap={0.5}>
-                  <Grid item xs={12}>
-                    {`[${e}] Color`}
-                  </Grid>
-                  <Grid item xs={12}>
-                    <ColorTextfield
-                      defaultValue={highchartProps[`[${e}] Color`]}
-                      handleChangeFunc={(value) => {
-                        handleChangeFunc(`[${e}] Color`, value);
-                      }}
-                    />
-                  </Grid>
-                </Grid>
-              </Grid>
-            </Grid>
-          </Grid>
-        );
-      })}
-    </React.Fragment>
-  );
-};
-
-const SolidPopUp = (props) => {
-  const dispatch = useDispatch();
-  const { highchartProps } = props;
-
   const Name = useSelector(
     (state) => state.overviewDialog.highchartProps["Show Name"]
   );
@@ -126,13 +61,6 @@ const SolidPopUp = (props) => {
               <PopUpItem type="text" title="Name" />
               <PopUpItem type="number" title="Name Font Size(em)" />
               <PopUpItem type="number" title="Widget Refresh (seconds)" />
-            </Grid>
-          </Grid>
-          <Grid item xs={12}>
-            <Grid container columnSpacing={2} rowGap={2}>
-              <Grid item xs={12}>
-                <ChoseMeasure />
-              </Grid>
               <PopUpItem type="number" title="Value Font Size" />
               <PopUpItem type="number" title="Unit Font Size" />
               <PopUpItem type="number" title="Tag Name Font Size" />
@@ -184,44 +112,8 @@ const SolidPopUp = (props) => {
           </Grid>
         </Grid>
       </Grid>
-      <Grid item xs={12}>
-        <Grid container rowGap={2} columnSpacing={2}>
-          <Measurement />
-          <Grid item xs={12} sm={6} md={2}>
-            <Grid container rowGap={0.5}>
-              <Grid item xs={12}>
-                Stops
-              </Grid>
-              <Grid item xs={12}>
-                <MyNumberTextField
-                  defaultValue={highchartProps["Stops"]}
-                  handleChangeFunc={(value) => {
-                    dispatch(
-                      cleanStops("Stops", value, ["Low", "High", "Color"])
-                    );
-                  }}
-                  sx={{
-                    fontSize: "14px",
-                    "& .MuiOutlinedInput-input": {
-                      fontSize: "14px",
-                      paddingTop: "4px",
-                      paddingBottom: "4px",
-                      paddingRight: "2px",
-                    },
-                    width: 75,
-                    minWidth: 75,
-                  }}
-                />
-              </Grid>
-            </Grid>
-          </Grid>
-        </Grid>
-      </Grid>
-      <Grid item xs={12}>
-        <Stops />
-      </Grid>
     </Grid>
   );
 };
 
-export default SolidPopUp;
+export default CreateWidget;

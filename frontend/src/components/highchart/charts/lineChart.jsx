@@ -62,9 +62,7 @@ const LineCharts = ({
           let dataList = [];
           client.map((e) => {
             console.log(e);
-            e.onclose = function () {
-              console.log("WebSocket Client Closed");
-            };
+            e.close();
           });
           highchartProps.Inputs.map((tag, index) => {
             const myindex = index;
@@ -103,29 +101,12 @@ const LineCharts = ({
                         });
                       })
                     );
-                    // var xAxis = this.xAxis[0];
-                    // var min = xAxis.dataMax;
-                    // var max = xAxis.dataMax;
-                    // xAxis.setExtremes(min - 86400000, max);
                     return true;
                   }
                 }
               }
               sendNumber();
             };
-
-            // console.log(new Date(1670007227 * 1000));
-            // var newDate = new Date().getTime();
-            // series.xAxis[0].dataMax = newDate;
-            // series.xAxis[0].setExtremes(
-            //   new Date(2000, 1, 1).getTime(),
-            //   newDate,
-            //   true
-            // );
-            // series.xAxis[0].setExtremes(
-            //   new Date().getTime() - 86400,
-            //   new Date().getTime()
-            // );
           });
         },
       },
@@ -199,7 +180,7 @@ const LineCharts = ({
       },
     },
     legend: {
-      enabled: highchartProps["Enable Graph Legend"],
+      enabled: highchartProps["Show Enable Graph Legend"],
       layout: "horizontal",
       itemStyle: {
         fontSize: highchartProps["Graph Legend Font Size (em)"]
@@ -214,10 +195,8 @@ const LineCharts = ({
       type: "datetime",
       min: new Date().getTime() - 1 * 24 * 60 * 60 * 1000,
       max: new Date().getTime() + 1000,
-      //range: 86000,
       lineWidth: 1,
       tickWidth: 2,
-      //minRange: 24 * 3600 * 1000,
       endOnTick: false,
       startOnTick: false,
       ordinal: false,

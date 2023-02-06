@@ -35,8 +35,10 @@ import { ItemSperatorLine, ItemSperatorLineXL, Items } from "./nestedMenu/nested
 import SearchBar from "./searchBar/searchBar";
 import SearchBarMobile from "./searchBar/searchBarMobile";
 import Select from "./select/select"
+import MainPageSkeleton from "./skeleton/mainPageSkeleton";
 import MyDialog from "./dialog/myDialog"
 import MyTabs from "./tabs/myTabs"
+import Stepper from "./stepper/stepper"
 import { TreeMenu } from "./treeMenu/treeMenu"
 import TreeMenuItems from "./treeMenu/treeMenuGenerator"
 
@@ -47,5 +49,5 @@ import TreeMenuItems from "./treeMenu/treeMenuGenerator"
 export {
     ActionMenu, Breadcrumb, Cards, CheckboxList, ColorTextfield, CollapsableMenu, Confirmation, ComponentError, ComponentErrorBody, CustomNoRowsOverlay, CustomToolbar, MyDivider, DatePicker, DataGrid, Drawer, ErrorBoundary,
     ErrorMessage, Highchart, InputGenerator, Loadable, Loading, LoadingComponent, MyBox, MyCheckBox, MyNavigator, MyNumberTextField, MyTextField, MyMultilineTextField, PropLinkTabs, SocialButton, TimeRangePicker, TreeView,
-    ItemSperatorLine, ItemSperatorLineXL, Items, SearchBar, SearchBarMobile, Select, TreeMenu, MyDialog, MyTabs, TreeMenuItems, HistoryConfirmation
+    ItemSperatorLine, ItemSperatorLineXL, Items, SearchBar, SearchBarMobile, Select, TreeMenu, MainPageSkeleton, MyDialog, MyTabs, Stepper, TreeMenuItems, HistoryConfirmation
 }

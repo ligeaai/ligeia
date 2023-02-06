@@ -11,148 +11,21 @@ import {
   ListItemText,
 } from "@mui/material";
 
-import {
-  MyTextField,
-  MyNumberTextField,
-  MyCheckBox,
-  Select,
-  ColorTextfield,
-} from "../..";
+import { MyNumberTextField } from "../..";
 import {
   changeValeus,
   cleanStops,
 } from "../../../services/actions/overview/overviewDialog";
 
-import TagService from "../../../services/api/tags";
-
-const Stops = () => {
-  const dispatch = useDispatch();
-  const highchartProps = useSelector(
-    (state) => state.overviewDialog.highchartProps
-  );
-  var loop = [];
-  for (let i = 0; i < highchartProps.Stops; i++) {
-    loop.push(i);
-  }
-  const handleChangeFunc = (key, val) => {
-    dispatch(changeValeus(key, val));
-  };
-  return (
-    <React.Fragment>
-      {loop.map((e, i) => {
-        return (
-          <Grid item xs={12} key={i}>
-            <Grid container columnSpacing={2}>
-              <Grid item xs={12} sm={6} md={4.5}>
-                <Grid container rowGap={0.5}>
-                  <Grid item xs={12}>
-                    {`[${e}] Low`}
-                  </Grid>
-                  <Grid item xs={12}>
-                    <MyNumberTextField
-                      defaultValue={highchartProps[`[${e}] Low`]}
-                      handleChangeFunc={(value) => {
-                        handleChangeFunc(`[${e}] Low`, value);
-                      }}
-                    />
-                  </Grid>
-                </Grid>
-              </Grid>
-              <Grid item xs={12} sm={6} md={4.5}>
-                <Grid container rowGap={0.5}>
-                  <Grid item xs={12}>
-                    {`[${e}] High`}
-                  </Grid>
-                  <Grid item xs={12}>
-                    <MyNumberTextField
-                      defaultValue={highchartProps[`[${e}] High`]}
-                      handleChangeFunc={(value) => {
-                        handleChangeFunc(`[${e}] High`, value);
-                      }}
-                    />
-                  </Grid>
-                </Grid>
-              </Grid>
-              <Grid item xs={12} sm={6} md={3}>
-                <Grid container rowGap={0.5}>
-                  <Grid item xs={12}>
-                    {`[${e}] Color`}
-                  </Grid>
-                  <Grid item xs={12}>
-                    <ColorTextfield
-                      defaultValue={highchartProps[`[${e}] Color`]}
-                      handleChangeFunc={(value) => {
-                        handleChangeFunc(`[${e}] Color`, value);
-                      }}
-                    />
-                  </Grid>
-                </Grid>
-              </Grid>
-            </Grid>
-          </Grid>
-        );
-      })}
-    </React.Fragment>
-  );
-};
-
-const Measurement = () => {
-  const dispatch = useDispatch();
-  const minimum = useSelector(
-    (state) => state.overviewDialog.highchartProps.Minimum
-  );
-  const maximum = useSelector(
-    (state) => state.overviewDialog.highchartProps.Maximum
-  );
-  const handleChangeFunc = (key, val) => {
-    dispatch(changeValeus(key, val));
-  };
-  return (
-    <React.Fragment>
-      <Grid item xs={12} sm={6} md={4.5}>
-        <Grid container rowGap={0.5}>
-          <Grid item xs={12}>
-            Minimum
-          </Grid>
-          <Grid item xs={12}>
-            <MyNumberTextField
-              defaultValue={minimum}
-              disabled={true}
-              handleChangeFunc={(value) => {
-                handleChangeFunc("Minimum", value);
-              }}
-            />
-          </Grid>
-        </Grid>
-      </Grid>
-      <Grid item xs={12} sm={6} md={4.5}>
-        <Grid container rowGap={0.5}>
-          <Grid item xs={12}>
-            Maximum
-          </Grid>
-          <Grid item xs={12}>
-            <MyNumberTextField
-              defaultValue={maximum}
-              disabled={true}
-              handleChangeFunc={(value) => {
-                handleChangeFunc("Maximum", value);
-              }}
-            />
-          </Grid>
-        </Grid>
-      </Grid>
-    </React.Fragment>
-  );
-};
+import ChoseMeasure from "../popUpLayout/choseMeasure";
+import PopUpItem from "../popUpLayout/popUpItem";
+import { Stops } from "../popUpLayout/stops";
+import Measurement from "../popUpLayout/measurement";
 
 const AngularPopUp = (props) => {
   const dispatch = useDispatch();
-  const { highchartProps, handleClose } = props;
-  const tags = useSelector((state) => state.overviewDialog.measuremenetData);
-  const UOMList = useSelector((state) => state.tapsOverview.UOMList);
-  const measure = useSelector(
-    (state) => state.overviewDialog.highchartProps.Measurement
-  );
+  const { highchartProps } = props;
+
   const Name = useSelector(
     (state) => state.overviewDialog.highchartProps["Show Name"]
   );
@@ -195,184 +68,21 @@ const AngularPopUp = (props) => {
         <Grid container rowGap={2}>
           <Grid item xs={12}>
             <Grid container columnSpacing={2} rowGap={2}>
-              <Grid item xs={12} sm={6}>
-                <Grid container rowGap={0.5}>
-                  <Grid item xs={12}>
-                    Name
-                  </Grid>
-                  <Grid item xs={12}>
-                    <MyTextField
-                      defaultValue={highchartProps.Name}
-                      handleChangeFunc={(value) => {
-                        handleChangeFunc("Name", value);
-                      }}
-                    />
-                  </Grid>
-                </Grid>
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <Grid container rowGap={0.5}>
-                  <Grid item xs={12}>
-                    Name Font Size(em)
-                  </Grid>
-                  <Grid item xs={12}>
-                    <MyNumberTextField
-                      defaultValue={highchartProps["Name Font Size(em)"]}
-                      handleChangeFunc={(value) => {
-                        handleChangeFunc("Name Font Size(em)", value);
-                      }}
-                    />
-                  </Grid>
-                </Grid>
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <Grid container rowGap={0.5}>
-                  <Grid item xs={12}>
-                    Widget Refresh (seconds)
-                  </Grid>
-                  <Grid item xs={12}>
-                    <MyNumberTextField
-                      defaultValue={highchartProps["Widget Refresh (seconds)"]}
-                      handleChangeFunc={(value) => {
-                        handleChangeFunc("Widget Refresh (seconds)", value);
-                      }}
-                    />
-                  </Grid>
-                </Grid>
-              </Grid>
+              <PopUpItem type="text" title="Name" />
+              <PopUpItem type="number" title="Name Font Size(em)" />
+              <PopUpItem type="number" title="Widget Refresh (seconds)" />
             </Grid>
           </Grid>
           <Grid item xs={12}>
             <Grid container columnSpacing={2} rowGap={2}>
-              <Grid item xs={12} sm={6}>
-                <Grid container rowGap={0.5}>
-                  <Grid item xs={12}>
-                    Measurement
-                  </Grid>
-                  <Grid item xs={12}>
-                    <Select
-                      values={tags}
-                      valuesPath="TAG_ID"
-                      dataTextPath="NAME"
-                      defaultValue={highchartProps["Measurement"]}
-                      handleChangeFunc={async (value) => {
-                        handleChangeFunc("Measurement", value);
-                        handleChangeFunc(
-                          "Minimum",
-                          tags.filter((e) => e.TAG_ID === value)[0]
-                            .NORMAL_MINIMUM
-                        );
-                        handleChangeFunc(
-                          "Maximum",
-                          tags.filter((e) => e.TAG_ID === value)[0]
-                            .NORMAL_MAXIMUM
-                        );
-                        handleChangeFunc(
-                          "UOM",
-                          tags.filter((e) => e.TAG_ID === value)[0].UOM
-                        );
-                      }}
-                    />
-                  </Grid>
-                </Grid>
+              <Grid item xs={12}>
+                <ChoseMeasure />
               </Grid>
-              <Grid item xs={12} sm={6}>
-                <Grid container rowGap={0.5}>
-                  <Grid item xs={12}>
-                    Unit of Measurement
-                  </Grid>
-                  <Grid item xs={12}>
-                    <Select
-                      values={
-                        tags && measure
-                          ? [tags.filter((e) => e.TAG_ID === measure)[0].UOM]
-                          : []
-                      }
-                      defaultValue={
-                        tags && measure
-                          ? tags.filter((e) => e.TAG_ID === measure)[0].UOM
-                          : ""
-                      }
-                      disabled={true}
-                    />
-                  </Grid>
-                </Grid>
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <Grid container rowGap={0.5}>
-                  <Grid item xs={12}>
-                    Value Font Size
-                  </Grid>
-                  <Grid item xs={12}>
-                    <MyNumberTextField
-                      defaultValue={highchartProps["Value Font Size"]}
-                      handleChangeFunc={(value) => {
-                        handleChangeFunc("Value Font Size", value);
-                      }}
-                    />
-                  </Grid>
-                </Grid>
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <Grid container rowGap={0.5}>
-                  <Grid item xs={12}>
-                    Unit Font Size
-                  </Grid>
-                  <Grid item xs={12}>
-                    <MyNumberTextField
-                      defaultValue={highchartProps["Unit Font Size"]}
-                      handleChangeFunc={(value) => {
-                        handleChangeFunc("Unit Font Size", value);
-                      }}
-                    />
-                  </Grid>
-                </Grid>
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <Grid container rowGap={0.5}>
-                  <Grid item xs={12}>
-                    Tag Name Font Size
-                  </Grid>
-                  <Grid item xs={12}>
-                    <MyNumberTextField
-                      defaultValue={highchartProps["Tag Name Font Size"]}
-                      handleChangeFunc={(value) => {
-                        handleChangeFunc("Tag Name Font Size", value);
-                      }}
-                    />
-                  </Grid>
-                </Grid>
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <Grid container rowGap={0.5}>
-                  <Grid item xs={12}>
-                    Time Stamp Font Size
-                  </Grid>
-                  <Grid item xs={12}>
-                    <MyNumberTextField
-                      defaultValue={highchartProps["Time Stamp Font Size"]}
-                      handleChangeFunc={(value) => {
-                        handleChangeFunc("Time Stamp Font Size", value);
-                      }}
-                    />
-                  </Grid>
-                </Grid>
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <Grid container rowGap={0.5}>
-                  <Grid item xs={12}>
-                    Decimal Places
-                  </Grid>
-                  <Grid item xs={12}>
-                    <MyNumberTextField
-                      defaultValue={highchartProps["Decimal Places"]}
-                      handleChangeFunc={(value) => {
-                        handleChangeFunc("Decimal Places", value);
-                      }}
-                    />
-                  </Grid>
-                </Grid>
-              </Grid>
+              <PopUpItem type="number" title="Value Font Size" />
+              <PopUpItem type="number" title="Unit Font Size" />
+              <PopUpItem type="number" title="Tag Name Font Size" />
+              <PopUpItem type="number" title="Time Stamp Font Size" />
+              <PopUpItem type="number" title="Decimal Places" />
             </Grid>
           </Grid>
         </Grid>
@@ -422,7 +132,7 @@ const AngularPopUp = (props) => {
       <Grid item xs={12}>
         <Grid container rowGap={2} columnSpacing={2}>
           <Measurement />
-          <Grid item xs={12} sm={6} md={3}>
+          <Grid item xs={12} sm={6} md={2}>
             <Grid container rowGap={0.5}>
               <Grid item xs={12}>
                 Stops
@@ -450,8 +160,10 @@ const AngularPopUp = (props) => {
               </Grid>
             </Grid>
           </Grid>
-          <Stops />
         </Grid>
+      </Grid>
+      <Grid item xs={12}>
+        <Stops />
       </Grid>
     </Grid>
   );

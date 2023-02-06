@@ -38,9 +38,9 @@ const Widgets = React.forwardRef((props, ref) => {
     return (
       <Box
         ref={ref}
-        className={`grid-item ${className}`}
+        className={`custom-panel wrapper ${className}`}
+        style={style}
         sx={{
-          ...style,
           boxShadow: 4,
           borderRadius: "5px",
           color: "text.primary",
@@ -169,7 +169,7 @@ const Widgets = React.forwardRef((props, ref) => {
                 label="Backfill"
               />
             </Grid>
-            <Grid item>
+            <Grid item className="cancelDrag">
               <MyDialog
                 Button={
                   <IconButton>

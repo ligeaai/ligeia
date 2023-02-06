@@ -30,12 +30,16 @@ function setBreakPoint() {
 
 const TabItems = (props) => {
   const refLayout = React.useRef(null);
+  const [mounted, setMounted] = React.useState(false);
   const [width, setWidth] = React.useState(
     document.getElementById("myResponsiveGridLayout").offsetWidth
   );
   const dispatch = useDispatch();
   const [breakpoint, setBreakpoint] = React.useState(setBreakPoint());
   const { widgetname } = props;
+  React.useEffect(() => {
+    setMounted(true);
+  }, []);
   const onResize = () => {
     if (refLayout.current) {
       setWidth(document.getElementById("myResponsiveGridLayout").offsetWidth);
@@ -79,6 +83,10 @@ const TabItems = (props) => {
       className="layout"
       layouts={layouts}
       rowHeight={30}
+      useCSSTransforms={mounted}
+      preventCollision={false}
+      allowOverlap={false}
+      draggableCancel=".cancelDrag"
       onBreakpointChange={handleBreakPointChange}
       onLayoutChange={handleLayoutChange}
       isDraggable
@@ -89,6 +97,8 @@ const TabItems = (props) => {
       cols={{ lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }}
       breakpoint={breakpoint}
       width={width}
+      compactType={"vertical"}
+      {...props}
     >
       {widgets.map((widget, i) => {
         return (
@@ -97,9 +107,7 @@ const TabItems = (props) => {
             widget={widget}
             root={props.item}
             {...props}
-          >
-            {props.children}
-          </Widget>
+          ></Widget>
         );
       })}
     </ResponsiveGridLayout>

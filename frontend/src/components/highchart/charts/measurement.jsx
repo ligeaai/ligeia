@@ -5,14 +5,13 @@ import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import { wsBaseUrl } from "../../../services/baseApi";
 import { dateFormatDDMMYYHHMMSS } from "../../../services/utils/dateFormatter";
+import TagService from "../../../services/api/tags";
 var client;
 var W3CWebSocket = require("websocket").w3cwebsocket;
 
 export const Measurement = ({ highchartProps }) => {
-  const tags = useSelector((state) => state.overviewDialog.measuremenetData);
-  const measuremenetData = useSelector(
-    (state) => state.overviewDialog.measuremenetData
-  );
+  const [measuremenetData, setMeasurementData] = React.useState(null);
+
   const [categories, setCategories] = React.useState("");
   const [data, setData] = React.useState("0");
   function colorPicker(val) {
@@ -29,7 +28,14 @@ export const Measurement = ({ highchartProps }) => {
     }
     return color;
   }
-
+  React.useState(() => {
+    async function myFunc() {
+      const body = JSON.stringify({ TAG_ID: highchartProps.Measurement });
+      let res = await TagService.getTagItemS(body);
+      setMeasurementData(res.data[0]);
+    }
+    myFunc();
+  }, []);
   React.useEffect(() => {
     client = new W3CWebSocket(
       `${wsBaseUrl}/ws/live/last_data/${highchartProps.Measurement}`
@@ -81,16 +87,12 @@ export const Measurement = ({ highchartProps }) => {
           width: "100%",
           textAlign: "center",
           display: highchartProps["Show Tag Name"] ? "inline-block" : "none",
-          fontSize: highchartProps["Tag Name Font Size"]
-            ? highchartProps["Tag Name Font Size"]
+          fontSize: highchartProps["Name Font Size"]
+            ? highchartProps["Name Font Size"]
             : "12px",
         }}
       >
-        {measuremenetData && measuremenetData.length > 0
-          ? measuremenetData.filter(
-              (e) => e.TAG_ID === highchartProps.Measurement
-            )[0].NAME
-          : ""}
+        {measuremenetData ? measuremenetData.NAME : ""}
       </Box>
       <Grid
         container
@@ -144,13 +146,10 @@ export const Measurement = ({ highchartProps }) => {
                     : "14px",
               }}
             >
-              ({" "}
-              {tags &&
-              highchartProps["Show Unit"] &&
-              measuremenetData.length > 0
-                ? tags.filter((a) => a.TAG_ID === highchartProps.Measurement)[0]
-                    .UOM
-                : ""}{" "}
+              (
+              {measuremenetData && highchartProps["Show Unit"]
+                ? measuremenetData.UOM
+                : ""}
               )
             </Grid>
           </Grid>

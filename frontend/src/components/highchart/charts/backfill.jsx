@@ -59,16 +59,12 @@ const LineCharts = ({
           var series = this;
           let dataList = [];
           client.map((e) => {
-            console.log(e);
-            e.onclose = function () {
-              console.log("WebSocket Client Closed");
-            };
+            e.close();
           });
           highchartProps.Inputs.map((tag, index) => {
             client[index] = new W3CWebSocket(
               `${wsBaseUrl}/ws/tags/backfill/${tag.TAG_ID}`
             );
-
             client[index].onerror = function () {
               console.log("Connection Error");
             };
@@ -83,7 +79,6 @@ const LineCharts = ({
               async function sendNumber() {
                 if (client.readyState === client.OPEN) {
                   if (typeof e.data === "string") {
-                    console.log("klşsakdkaşsdlk");
                     let jsonData = JSON.parse(e.data);
                     let data = [];
                     const sortedJson = jsonData.sort((a, b) =>
@@ -93,7 +88,6 @@ const LineCharts = ({
                       let i = true;
                       data.map((s) => {
                         //TODO delete this when the data is correct
-                        console.log(e);
                         if (s[0] === e.timestamp * 1000) i = false;
                       });
                       if (i) {
@@ -209,22 +203,7 @@ const LineCharts = ({
       xAxis: {
         type: "datetime",
         minRange: 30,
-        // min: new Date().getTime() - 90 * 24 * 60 * 60 * 1000,
-        // max: new Date().getTime() + 1000,
-        // crosshair: true,
-        // ordinal: true,
       },
-      // series: [
-      //   ...highchartProps.Inputs.map((e, i) => {
-      //     return {
-      //       yAxis: i,
-      //       name: e.NAME,
-      //       color: highchartProps["Enable Custom Colors"]
-      //         ? highchartProps[`[${e.NAME}] Color`]
-      //         : "",
-      //     };
-      //   }),
-      // ],
     },
     navigation: {
       buttonOptions: {
@@ -234,7 +213,7 @@ const LineCharts = ({
       },
     },
     legend: {
-      enabled: highchartProps["Enable Graph Legend"],
+      enabled: highchartProps["Show Enable Graph Legend"],
       layout: "horizontal",
       itemStyle: {
         fontSize: highchartProps["Graph Legend Font Size (em)"]
@@ -249,19 +228,7 @@ const LineCharts = ({
     xAxis: {
       type: "datetime",
       minRange: 30,
-      // ordinal: true,
-      // min: new Date().getTime() - 90 * 24 * 60 * 60 * 1000,
-      // max: new Date().getTime() + 1000,
-      //crosshair: true,
-      // labels: {
-      //   formatter: function () {
-      //     return Highcharts.dateFormat("%d.%m.%Y %H:%M:%S", this.value);
-      //   },
     },
-    // categories: categories,
-    // },
-    //yAxis: [...yAxisTitles],
-    //series: [],
   };
 
   return (

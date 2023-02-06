@@ -1,5 +1,4 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
 import {
   MyCheckBox,
   MyTextField,
@@ -9,48 +8,42 @@ import {
 } from "../";
 
 const InputGenerator = (props) => {
-  const { type, changeFunction } = props;
-  const defaultValue = useSelector(
-    (state) => state.overviewDialog.highchartProps[props.title]
-  );
-  const dispatch = useDispatch();
-  const handleChangeFunc = (val) => {
-    dispatch(changeFunction(props.title, val));
-  };
+  const { type, changeFunction, defaultValue } = props;
+
   const typeToInput = {
     text: (
       <MyTextField
         {...props}
         defaultValue={defaultValue}
-        handleChangeFunc={handleChangeFunc}
+        handleChangeFunc={changeFunction}
       />
     ),
     checkbox: (
       <MyCheckBox
         {...props}
         defaultValue={defaultValue}
-        handleChangeFunc={handleChangeFunc}
+        handleChangeFunc={changeFunction}
       />
     ),
     number: (
       <MyNumberTextField
         {...props}
         defaultValue={defaultValue}
-        handleChangeFunc={handleChangeFunc}
+        handleChangeFunc={changeFunction}
       />
     ),
     select: (
       <Select
         {...props}
         defaultValue={defaultValue}
-        handleChangeFunc={handleChangeFunc}
+        handleChangeFunc={changeFunction}
       />
     ),
     color: (
       <ColorTextfield
         {...props}
         defaultValue={defaultValue}
-        handleChangeFunc={handleChangeFunc}
+        handleChangeFunc={changeFunction}
       />
     ),
   };
