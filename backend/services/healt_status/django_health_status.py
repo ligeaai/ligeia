@@ -5,9 +5,8 @@ from kafka import KafkaProducer
 import json
 
 host = os.environ["Kafka_Host_DP"]
-base_url = os.environ["BASE_URL"]
-url = f"{base_url}:8000/api/v1/health"
 created_time = datetime.datetime.now()
+
 
 def send_alarm(error_message):
     data = {
@@ -17,18 +16,22 @@ def send_alarm(error_message):
         "error_message": error_message,
         "container": "Django",
     }
+    producer.send("alarms", value=data)
+    producer.flush()
+
+
+try:
+    base_url = os.environ["BASE_URL"]
+    url = f"{base_url}:8000/api/v1/health"
+    response = requests.get(url)
+    if response.status_code != 200:
+        raise Exception(f"Django health check failed: HTTP {response.status_code}")
+
     with KafkaProducer(
         bootstrap_servers=host,
         value_serializer=lambda v: json.dumps(v).encode("ascii"),
     ) as producer:
-        producer.send("alarms", value=data)
-
-try:
-    response = requests.get(url)
-    if response.status_code == 200:
         print("Django health check: OK")
-    else:
-        raise Exception(f"Django health check failed: HTTP {response.status_code}")
 
 except Exception as e:
     send_alarm(f"Error: Could not connect to Django: {str(e)}")
