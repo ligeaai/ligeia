@@ -12,41 +12,27 @@ from apps.tags.serializers import TagsFieldsSerializer
 env = environ.Env(DEBUG=(bool, False))
 
 
-# def retrieve_data(self, start="-", end="+", tag_id=""):
-#     tag = tags.objects.filter(TAG_ID=tag_id)
-#     if tag:
-#         serializer = TagsFieldsSerializer(tag, many=True).data[0]
-#         tag_name = str(serializer.get("NAME").split(".")[1])
-#         asset = str(serializer.get("NAME").split(".")[0])
-#         while self.is_active:
-#             data = self.rds.ts().mrange(
-#                 start,
-#                 end,
-#                 ["tag_name=" + tag_name, "asset=" + asset],
-#                 with_labels=True,
-#                 empty=True,
-#             )
-#             try:
-#                 start = (list(data[-1].values())[0][1][0][0]) + 1
-#                 self.send(json.dumps(data, ensure_ascii=False))
-#             except:
-#                 pass
-#     else:
-#         raise BaseException("error")
-
-def retrieve_data(self, tag_id):
-    tag = tags.objects.filter(TAG_ID=tag_id).first()
+def retrieve_data(self, start="-", end="+", tag_id=""):
+    tag = tags.objects.filter(TAG_ID=tag_id)
     if tag:
-        serializer = TagsFieldsSerializer(tag).data
-        tag_name = str(serializer.get('NAME').split('.')[1])
-        asset = str(serializer.get('NAME').split('.')[0])
+        serializer = TagsFieldsSerializer(tag, many=True).data[0]
+        tag_name = str(serializer.get("NAME").split(".")[1])
+        asset = str(serializer.get("NAME").split(".")[0])
         while self.is_active:
-            data = self.rds.ts().mrange("-", "+", ["tag_name=" + tag_name, "asset=" + asset], with_labels=True, empty=True)
-            if data:
+            data = self.rds.ts().mrange(
+                start,
+                end,
+                ["tag_name=" + tag_name, "asset=" + asset],
+                with_labels=True,
+                empty=True,
+            )
+            try:
                 start = (list(data[-1].values())[0][1][0][0]) + 1
                 self.send(json.dumps(data, ensure_ascii=False))
+            except:
+                pass
     else:
-        raise Exception("Error: Tag not found")
+        raise BaseException("error")
 
 
 class WSLiveConsumer(WebsocketConsumer):
@@ -95,57 +81,34 @@ class WSLiveConsumer(WebsocketConsumer):
             print(e)
 
 
-# class AlarmsConsumer(WebsocketConsumer):
-#     def connect(self):
-#         self.accept()
-#         rds = redis.StrictRedis(env('REDIS_HOST'),port=6379,db=2)
-#         for i in rds.keys():
-#             data = rds.get(i)
-#             data = data.decode('utf-8')
-#             data = json.loads(data)
-#             if data.get('LOG_TYPE') == 'ALARMS':
-#                 print(data)
-#                  # item LAYER match tag_naame
-#                 self.send(json.dumps({'message':data}))
-
-#     def disconnect(self, close_code):
-#         print('disconnect')
-
-#     def receive(self, text_data):
-#         rds = redis.StrictRedis(env('REDIS_HOST'),port=6379,db=2)
-#         for i in rds.keys():
-#             data = rds.get(i)
-#             data = data.decode('utf-8')
-#             data = json.loads(data)
-#             if data.get('LOG_TYPE') == 'ALARMS':
-#                 if data.get('CONTENTS').get('quality') > int(text_data): # item LAYER match tag_naame
-#                     self.send(json.dumps({'message':data.get('CONTENTS')}))
-
-
 class AlarmsConsumer(WebsocketConsumer):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.rds = redis.StrictRedis(env("REDIS_HOST"), port=6379, db=2)
-
     def connect(self):
         self.accept()
-        self.send_data()
+        rds = redis.StrictRedis(env("REDIS_HOST"), port=6379, db=2)
+        for i in rds.keys():
+            data = rds.get(i)
+            data = data.decode("utf-8")
+            data = json.loads(data)
+            if data.get("LOG_TYPE") == "ALARMS":
+                print(data)
+                # item LAYER match tag_naame
+                self.send(json.dumps({"message": data}))
 
     def disconnect(self, close_code):
-        print("Disconnected")
+        print("disconnect")
 
     def receive(self, text_data):
-        self.send_data(int(text_data))
+        rds = redis.StrictRedis(env("REDIS_HOST"), port=6379, db=2)
+        for i in rds.keys():
+            data = rds.get(i)
+            data = data.decode("utf-8")
+            data = json.loads(data)
+            if data.get("LOG_TYPE") == "ALARMS":
+                if data.get("CONTENTS").get("quality") > int(
+                    text_data
+                ):  # item LAYER match tag_naame
+                    self.send(json.dumps({"message": data.get("CONTENTS")}))
 
-    def send_data(self, quality_threshold=0):
-        for i in self.rds.keys():
-            data = self.rds.get(i)
-            data = json.loads(data.decode("utf-8"))
-            if (
-                data.get("LOG_TYPE") == "ALARMS"
-                and data.get("CONTENTS").get("quality") > quality_threshold
-            ):
-                self.send(json.dumps({"message": data.get("CONTENTS")}))
 
 
 def retrieve_last_data(self, tag_id):
