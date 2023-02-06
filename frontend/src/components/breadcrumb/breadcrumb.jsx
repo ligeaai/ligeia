@@ -4,15 +4,13 @@ import { Breadcrumbs as MUIBreadcrumbs, Typography } from "@mui/material";
 import HomeIcon from "@mui/icons-material/Home";
 import history from "../../routers/history";
 import { confirmationPushHistory } from "../../services/utils/historyPush";
-import { setGoFunctionConfirmation, selectGoFunction } from "../../services/actions/confirmation/historyConfirmation";
+import { setGoFunctionConfirmation } from "../../services/actions/confirmation/historyConfirmation";
 
 const Breadcrumbs = () => {
   const dispatch = useDispatch();
-  const goFunction = useSelector(selectGoFunction);
-  
   const pathnames = decodeURI(window.location.pathname)
     .split("/")
-    .filter(x => x);
+    .filter((x) => x);
 
   const handleClick = (routeTo) => {
     dispatch(setGoFunctionConfirmation(() => history.push(routeTo)));
@@ -20,14 +18,18 @@ const Breadcrumbs = () => {
   };
 
   return (
-    <MUIBreadcrumbs aria-label="breadcrumb" separator="\" sx={{ ".MuiBreadcrumbs-separator": { mx: 0.5 } }}>
+    <MUIBreadcrumbs
+      aria-label="breadcrumb"
+      separator="\"
+      sx={{ ".MuiBreadcrumbs-separator": { mx: 0.5 } }}
+    >
       <HomeIcon
         fontSize="small"
         sx={{
           position: "relative",
           top: "3px",
           cursor: "pointer",
-          color: "icon.primary"
+          color: "icon.primary",
         }}
         onClick={() => handleClick("home")}
       />
@@ -44,7 +46,7 @@ const Breadcrumbs = () => {
               color: "primary.main",
               cursor: "pointer",
               textTransform: "capitalize",
-              fontWeight: "bold"
+              fontWeight: "bold",
             }}
           >
             {name}
@@ -57,7 +59,7 @@ const Breadcrumbs = () => {
               fontSize: "14px",
               color: "text.primary",
               cursor: "pointer",
-              textTransform: "capitalize"
+              textTransform: "capitalize",
             }}
           >
             {name}
