@@ -43,9 +43,9 @@ class WSConsumerBackfill(WebsocketConsumer):
         print("Disconnected")
 
     def retrieve_backfill_data(self):
-        name = self.serializer.get("NAME").split(".")
-        asset, tag_name = name[0], name[1]
-        data = list(
-            self.collection.find({"tag_name": tag_name, "asset": asset}, {"_id": 0})
-        )
+        query = {
+            "tag_name": self.serializer.get("NAME").split(".")[1],
+            "asset": self.serializer.get("NAME").split(".")[0],
+        }
+        data = list(self.collection.find(query, {"_id": 0}))
         self.send(json.dumps(data, ensure_ascii=False))
