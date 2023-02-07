@@ -5,6 +5,7 @@ from pymongo import MongoClient, DESCENDING
 from apps.tags.models import tags
 from apps.tags.serializers import TagsFieldsSerializer
 
+
 class WSConsumerBackfill(WebsocketConsumer):
     def connect(self):
         self.accept()
@@ -20,17 +21,20 @@ class WSConsumerBackfill(WebsocketConsumer):
 
     def receive(self, text_data):
         start_date, end_date = text_data.split(",")
-        tag_name = self.serializer["NAME"].split(".")[1]
-        asset = self.serializer["NAME"].split(".")[0]
-        data = self.timeseries_collection.find(
-            {
-                "tag_name": tag_name,
-                "asset": asset,
-                "date": {"$gte": start_date, "$lte": end_date},
-            },
-            {"_id": 0},
+        data = list(
+            self.collection.find(
+                {
+                    "$and": [
+                        {"tag_name": self.serializer.get("NAME").split(".")[1]},
+                        {"asset": self.serializer.get("NAME").split(".")[0]},
+                        {"date": {"$gte": start_date}},
+                        {"date": {"$lte": end_date}},
+                    ]
+                },
+                {"_id": 0},
+            )
         )
-        self.send(json.dumps(list(data), ensure_ascii=False))
+        self.send(json.dumps(data, ensure_ascii=False))
 
     def disconnect(self, close_code):
         self.client.close()
@@ -39,9 +43,9 @@ class WSConsumerBackfill(WebsocketConsumer):
         print("Disconnected")
 
     def retrieve_backfill_data(self):
-        tag_name = self.serializer["NAME"].split(".")[1]
-        asset = self.serializer["NAME"].split(".")[0]
-        data = self.timeseries_collection.find(
-            {"tag_name": tag_name, "asset": asset}, {"_id": 0}
+        name = self.serializer.get("NAME").split(".")
+        asset, tag_name = name[0], name[1]
+        data = list(
+            self.collection.find({"tag_name": tag_name, "asset": asset}, {"_id": 0})
         )
-        self.send(json.dumps(list(data), ensure_ascii=False))
+        self.send(json.dumps(data, ensure_ascii=False))
