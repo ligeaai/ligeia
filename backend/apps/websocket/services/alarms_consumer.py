@@ -1,10 +1,8 @@
-import threading 
 import json
 import environ
 from channels.generic.websocket import WebsocketConsumer
 import redis
-import time
-from threading import Thread
+
 env = environ.Env(DEBUG=(bool, False))
 
 class AlarmsConsumer(WebsocketConsumer):
