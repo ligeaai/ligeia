@@ -1,30 +1,9 @@
 import threading
 import json
-import environ
 from channels.generic.websocket import WebsocketConsumer
-import redis
 from pymongo import MongoClient, DESCENDING
-import time
-from threading import Thread
 from apps.tags.models import tags
 from apps.tags.serializers import TagsFieldsSerializer
-
-
-def retrieve_backfill_data(self, tag_id):
-    tag = tags.objects.filter(TAG_ID=self.tag_id)
-    if tag:
-        self.serializer = TagsFieldsSerializer(tag, many=True).data[0]
-        data = list(
-            self.timeseries_collection.find(
-                {
-                    "tag_name": self.serializer.get("NAME").split(".")[1],
-                    "asset": self.serializer.get("NAME").split(".")[0],
-                },
-                {"_id": 0},
-            )
-        )
-        self.send(json.dumps(data, ensure_ascii=False))
-
 
 class WSConsumerBackfill(WebsocketConsumer):
     def connect(self):
@@ -33,30 +12,36 @@ class WSConsumerBackfill(WebsocketConsumer):
         self.mongo_db = self.client["backfilldata3"]
         self.timeseries_collection = self.mongo_db["backfilldata3"]
         self.tag_id = self.scope["url_route"]["kwargs"]["tag_id"]
-        self.thread = threading.Thread(
-            target=retrieve_backfill_data, kwargs={"self": self, "tag_id": self.tag_id}
-        )
-        self.thread.start()
+        tag = tags.objects.filter(TAG_ID=self.tag_id).first()
+        if tag:
+            self.serializer = TagsFieldsSerializer(tag).data
+            self.thread = threading.Thread(target=self.retrieve_backfill_data)
+            self.thread.start()
 
     def receive(self, text_data):
-        # timestampt string olarak kaydedilmiş küçük büyük kontrolü yapamıyorum
-        data = list(
-            self.timeseries_collection.find(
-                {
-                    "$and": [
-                        {"tag_name": self.serializer.get("NAME").split(".")[1]},
-                        {"asset": self.serializer.get("NAME").split(".")[0]},
-                        {"date": {"$gte": (str(text_data).split(",")[0])}},
-                        {"date": {"$lte": (str(text_data).split(",")[1])}},
-                    ]
-                },
-                {"_id": 0},
-            )
+        start_date, end_date = text_data.split(",")
+        tag_name = self.serializer["NAME"].split(".")[1]
+        asset = self.serializer["NAME"].split(".")[0]
+        data = self.timeseries_collection.find(
+            {
+                "tag_name": tag_name,
+                "asset": asset,
+                "date": {"$gte": start_date, "$lte": end_date},
+            },
+            {"_id": 0},
         )
-        self.send(json.dumps(data, ensure_ascii=False))
+        self.send(json.dumps(list(data), ensure_ascii=False))
 
     def disconnect(self, close_code):
         self.client.close()
         self.thread.join()
         del self.thread
-        print("disconnect")
+        print("Disconnected")
+
+    def retrieve_backfill_data(self):
+        tag_name = self.serializer["NAME"].split(".")[1]
+        asset = self.serializer["NAME"].split(".")[0]
+        data = self.timeseries_collection.find(
+            {"tag_name": tag_name, "asset": asset}, {"_id": 0}
+        )
+        self.send(json.dumps(list(data), ensure_ascii=False))
