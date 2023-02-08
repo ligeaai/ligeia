@@ -28,6 +28,32 @@ export default function (state = initialState, action) {
     const { type, payload } = action;
 
     switch (type) {
+        case "persist/REHYDRATE":
+            try {
+                console.log("ksaklşdakldlşsad-----------------------------")
+                return {
+                    ...state,
+                    titles: payload.tapsOverview.titles,
+                    widgets: payload.tapsOverview.widgets,
+                    data: payload.tapsOverview.data,
+                    selected: payload.tapsOverview.selected,
+                    refresh: payload.tapsOverview.refresh,
+                    isActive: payload.tapsOverview.isActive,
+                    isChecked: payload.tapsOverview.isChecked
+                }
+            } catch {
+                console.log("ksaklşdakldlşsad-----------------------------")
+                return {
+                    ...state,
+                    titles: [],
+                    widgets: [],
+                    data: [],
+                    selected: null,
+                    refresh: false,
+                    isActive: false,
+                    isChecked: {}
+                }
+            }
         case SET_ISCHECKED:
             return {
                 ...state,

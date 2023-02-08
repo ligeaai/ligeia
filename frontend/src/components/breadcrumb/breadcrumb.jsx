@@ -1,5 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 import { Breadcrumbs as MUIBreadcrumbs, Typography } from "@mui/material";
 import HomeIcon from "@mui/icons-material/Home";
 import history from "../../routers/history";
@@ -16,7 +17,7 @@ const Breadcrumbs = () => {
     dispatch(setGoFunctionConfirmation(() => history.push(routeTo)));
     dispatch(confirmationPushHistory());
   };
-
+  const { params } = useParams(); //  important for updating breadcrumb
   return (
     <MUIBreadcrumbs
       aria-label="breadcrumb"

@@ -16,9 +16,11 @@ import {
   loadTapsOverview,
   cleanTabs,
   updateCouchDb,
+  selectTab,
 } from "../../services/actions/overview/taps";
 import history from "../../routers/history";
 import { Box } from "@mui/material";
+import { Login } from "@mui/icons-material";
 // web.cjs is required for IE11 support
 //import { useSpring, animated } from 'react-spring/web.cjs';
 
@@ -95,6 +97,13 @@ const StyledTreeItem = styled((props) => (
 }));
 const MyStyledTreeItem = React.memo(({ myItems, path }) => {
   const dispatch = useDispatch();
+  const onHandleClick = async (way, e) => {
+    dispatch(updateCouchDb());
+    dispatch(await setSelectedCollapseMenu({ ...e, path: way }));
+    dispatch(loadTapsOverview());
+    console.log(`/${way}/${e.FROM_ITEM_NAME}`);
+    history.push(`/${way}/${e.FROM_ITEM_NAME}`);
+  };
   return myItems.map((e, i) => {
     if (e.CHILD)
       return (
@@ -103,10 +112,7 @@ const MyStyledTreeItem = React.memo(({ myItems, path }) => {
           nodeId={e.LINK_ID}
           label={e.FROM_ITEM_NAME}
           onClick={async () => {
-            dispatch(updateCouchDb());
-            dispatch(await setSelectedCollapseMenu(e));
-            dispatch(loadTapsOverview());
-            history.push(`/${path}/${e.FROM_ITEM_NAME}`);
+            onHandleClick(path, e);
           }}
         >
           <MyStyledTreeItem
@@ -121,10 +127,7 @@ const MyStyledTreeItem = React.memo(({ myItems, path }) => {
         nodeId={e.LINK_ID}
         label={e.FROM_ITEM_NAME}
         onClick={async () => {
-          dispatch(updateCouchDb());
-          dispatch(await setSelectedCollapseMenu(e));
-          dispatch(loadTapsOverview());
-          history.push(`/${path}/${e.FROM_ITEM_NAME}`);
+          onHandleClick(path, e);
         }}
       ></StyledTreeItem>
     );
@@ -134,7 +137,7 @@ function CustomizedTreeView({ onOpen, setWidthTrue }) {
   const ref = React.createRef();
   const dispatch = useDispatch();
   const isFullScreen = useSelector((state) => state.fullScreen.isFullScreen);
-
+  const selectedItem = useSelector((state) => state.collapseMenu.selectedItem);
   const items = useSelector((state) => state.collapseMenu.menuItems);
   const expandedItems = useSelector(
     (state) => state.treeview.width.values.overviewHierarchy
@@ -157,9 +160,29 @@ function CustomizedTreeView({ onOpen, setWidthTrue }) {
     }
   };
   React.useEffect(() => {
+    async function myFunc(e) {
+      dispatch(updateCouchDb());
+      dispatch(await setSelectedCollapseMenu({ ...e, path: e.path }));
+      dispatch(loadTapsOverview());
+      console.log(e);
+      history.push(`/${e.path}/${e.FROM_ITEM_NAME}`);
+      try {
+        let persist = localStorage.getItem("persist:root");
+        persist = JSON.parse(persist);
+        let tapsOverview = JSON.parse(persist.tapsOverview);
+        console.log(tapsOverview.selected);
+        dispatch(selectTab(tapsOverview.selected));
+      } catch (err) {
+        console.log(err);
+      }
+    }
+    if (selectedItem) myFunc(selectedItem);
     return () => {
       dispatch(updateCouchDb());
       dispatch(cleanTabs());
+      dispatch({
+        type: "CLEAN_COLLAPSE_MENU",
+      });
     };
   }, []);
   return (

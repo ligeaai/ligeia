@@ -36,7 +36,7 @@ function AngularPopUp() {
         />
       </>,
     ],
-    [" ? ? ?", <CustomLineChart />],
+    ["Settings", <CustomLineChart />],
   ];
 }
 

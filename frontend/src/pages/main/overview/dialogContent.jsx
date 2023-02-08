@@ -37,6 +37,7 @@ const DialogContent = ({ handleClose }) => {
   };
   const body = {
     "Linechart [Highchart]": linechartPopUp(),
+    "Line Chart [Nivo]": linechartPopUp(),
     "Area Chart [Highchart]": linechartPopUp(),
     "Gauge(Angular) [Highchart]": angularPopUp(),
     "Gauge(Solid) [Highchart]": SolidPopUp(),
@@ -56,9 +57,9 @@ const DialogContent = ({ handleClose }) => {
     "Matrix [Custom]": (
       <MatrixPopUp highchartProps={properties} handleClose={handleClose} />
     ),
-    "Line Chart [Nivo]": (
-      <LinePopUp highchartProps={properties} handleClose={handleClose} />
-    ),
+    // "Line Chart [Nivo]": (
+    //   <LinePopUp highchartProps={properties} handleClose={handleClose} />
+    // ),
     "TreeMap Chart [Nivo]": (
       <TreeMapPopUp highchartProps={properties} handleClose={handleClose} />
     ),

@@ -150,7 +150,19 @@ function MyTabs() {
   const titles = useSelector((state) => state.tapsOverview.titles);
   const widgets = useSelector((state) => state.tapsOverview.widgets);
   const isFullScreen = useSelector((state) => state.fullScreen.isFullScreen);
+  const selected = useSelector((state) => state.tapsOverview.selected);
+  React.useEffect(() => {
+    Object.keys(widgets).map((e, i) => {
+      console.log(widgets);
+      if (e === selected) {
+        console.log("-----");
+        setValue(i);
+      }
+    });
+    console.log(value);
+  }, [selected]);
   const handleChange = (event, newValue) => {
+    console.log(newValue);
     setValue(newValue);
     dispatch(selectTab(Object.keys(widgets)[newValue]));
   };

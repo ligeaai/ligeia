@@ -37,7 +37,6 @@ const Tags = Loadable(React.lazy(() => import("../pages/main/configuration/tags/
 const Types = Loadable(React.lazy(() => import("../pages/main/configuration/types/types")));
 
 const AppRouter1 = () => {
-
   return (
 
     <React.Fragment>
