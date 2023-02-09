@@ -7,7 +7,7 @@ email_pass = "RTt1ww1rTCdgL0Npge3H"
 email_addr = "telemetry@nordal.kz"
 
 imap_server = "imap.mail.ru"
-mail = imap_lib.IMAP4_SSL(imap_server)
+mail = imaplib.IMAP4_SSL(imap_server)
 mail.login(email_addr, email_pass)
 mail.select('Inbox')
 
