@@ -19,10 +19,12 @@ class WSConsumerBackfill(AsyncWebsocketConsumer):
         self.tag_id = self.scope["url_route"]["kwargs"]["tag_id"]
         self.tag_name,self.asset = await sync_to_async(find_tag)(self.tag_id)
         self.kwargs = {
-            "query" : {
-                        "tag_name": self.tag_name,
-                        "asset": self.asset,
-                      },
+            "query" :  {
+                    "$and": [
+                        {"tag_name": self.tag_name},
+                        {"asset": self.asset},
+                    ]
+                },
             "collection":self.collection}
         qs = await sync_to_async(retrieve_backfill_data)(**self.kwargs)
         await self.send(json.dumps(qs, ensure_ascii=False))
