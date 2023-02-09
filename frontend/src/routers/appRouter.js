@@ -16,7 +16,6 @@ import ErrorMessage from "../components/errorMessage/errorMessage";
 
 
 const Administration = Loadable(React.lazy(() => import("../pages/main/administration/main")));
-const Analytics = Loadable(React.lazy(() => import("../pages/main/asset/analytics")));
 const CodeList = Loadable(React.lazy(() => import("../pages/main/configuration/initialize/codelist/codelist")))
 const ResourceList = Loadable(React.lazy(() => import("../pages/main/configuration/initialize/resource/resourceList")))
 const Configuration = Loadable(React.lazy(() => import("../pages/main/configuration/main")))
@@ -45,7 +44,6 @@ const AppRouter1 = () => {
           <Route exact path="/" element={<PrivateRoute />}>
             <Route exact path="/" element={<Main />} />
             <Route exact path="/overview/*" element={<Overview />} />
-            <Route path="/analytics" element={<Analytics />} />
             <Route path="/reporting" element={<Reporting />} />
             <Route path="/tools/report_designer" element={<ReportingDesigner />} />
             <Route path="/administration" element={<Administration />} />

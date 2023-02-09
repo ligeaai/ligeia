@@ -13,45 +13,36 @@ import LinechartPopUp from "../../../components/highchart/popup/lineChartPopUp";
 import AngularPopUp from "../../../components/highchart/popup/angularPopUp";
 import SolidPopUp from "../../../components/highchart/popup/solidPopUp";
 import MeasurementPopUp from "../../../components/highchart/popup/measurementPopUp";
-import BarPopUp from "../../../components/highchart/nivoPopUp/barChart";
-import PiePopUp from "../../../components/highchart/nivoPopUp/pieChart";
-import HeatMapPopUp from "../../../components/highchart/nivoPopUp/heatMapPopUp";
-import MatrixPopUp from "../../../components/highchart/customPopUp/matrixPopUp";
-import LinePopUp from "../../../components/highchart/nivoPopUp/lineChart";
-import TreeMapPopUp from "../../../components/highchart/nivoPopUp/treeMapChart";
+
 const DialogContent = ({ highchartProps, chartId, ...rest }) => {
   const dispatch = useDispatch();
   const type = useSelector((state) => state.overviewDialog.values.Type);
 
   const body = {
     "Linechart [Highchart]": (
-      <LinechartPopUp highchartProps={highchartProps} {...rest} />
+      <LinechartPopUp title={"Linechart [Highchart]"} {...rest} />
     ),
     "Area Chart [Highchart]": (
-      <LinechartPopUp highchartProps={highchartProps} {...rest} />
+      <LinechartPopUp title={"Area Chart [Highchart]"} {...rest} />
     ),
     "Gauge(Angular) [Highchart]": (
-      <AngularPopUp highchartProps={highchartProps} {...rest} />
+      <AngularPopUp title={"Gauge(Angular) [Highchart]"} {...rest} />
     ),
     "Gauge(Solid) [Highchart]": (
-      <SolidPopUp highchartProps={highchartProps} {...rest} />
+      <SolidPopUp title={"Gauge(Solid) [Highchart]"} {...rest} />
     ),
     "Measurement [Custom]": (
-      <MeasurementPopUp highchartProps={highchartProps} {...rest} />
+      <MeasurementPopUp title={"Measurement [Custom]"} {...rest} />
     ),
-    "Bar Chart [Nivo]": <BarPopUp highchartProps={highchartProps} {...rest} />,
-    "Pie Chart [Nivo]": <PiePopUp highchartProps={highchartProps} {...rest} />,
-    "Heat Map [Nivo]": (
-      <HeatMapPopUp highchartProps={highchartProps} {...rest} />
-    ),
-    "Matrix [Custom]": (
-      <MatrixPopUp highchartProps={highchartProps} {...rest} />
-    ),
+    "Bar Chart [Nivo]": <AngularPopUp title={"Bar Chart [Nivo]"} {...rest} />,
+    "Pie Chart [Nivo]": <AngularPopUp title={"Pie Chart [Nivo]"} {...rest} />,
+    "Heat Map [Nivo]": <AngularPopUp title={"Heat Map [Nivo]"} {...rest} />,
+    "Matrix [Custom]": <AngularPopUp title={"Matrix [Custom]"} {...rest} />,
     "Line Chart [Nivo]": (
-      <LinePopUp highchartProps={highchartProps} {...rest} />
+      <LinechartPopUp title={"Line Chart [Nivo]"} {...rest} />
     ),
     "TreeMap Chart [Nivo]": (
-      <TreeMapPopUp highchartProps={highchartProps} {...rest} />
+      <AngularPopUp title={"TreeMap Chart [Nivo]"} {...rest} />
     ),
   };
   React.useEffect(() => {
@@ -65,27 +56,24 @@ const DialogContent = ({ highchartProps, chartId, ...rest }) => {
     myFunc();
   }, []);
   return (
-    <Grid container sx={{ width: "100%" }}>
-      <Typography
-        id="draggable-dialog-title"
-        sx={{
-          fontWeight: "bold",
-          fontSize: "14px",
-          width: "100%",
-          cursor: "all-scroll",
-          backgroundColor: "background.main",
-          p: 1,
-        }}
-      >
-        {highchartProps.Type}
-      </Typography>
+    <Grid container sx={{ width: "100%", overflow: "hidden" }}>
       {type === highchartProps.Type ? (
-        <Box sx={{ p: 2 }}>{body[highchartProps.Type]}</Box>
+        body[highchartProps.Type]
       ) : (
-        <LoadingComponent />
+        <Grid item xs={12} sx={{ width: "250px", height: "300px" }}>
+          <LoadingComponent />
+        </Grid>
       )}
 
-      <Grid item xs={12}>
+      <Grid
+        item
+        xs={12}
+        sx={{
+          position: "sticky",
+          bottom: 0,
+          backgroundColor: "background.main",
+        }}
+      >
         <Grid container sx={{ flexDirection: "row-reverse", pb: 1, pr: 1 }}>
           <Grid item>
             <Button

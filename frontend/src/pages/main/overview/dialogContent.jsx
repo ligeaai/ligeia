@@ -18,12 +18,7 @@ import linechartPopUp from "../../../components/highchart/newPopUp/lineChartHc";
 import angularPopUp from "../../../components/highchart/newPopUp/angularHc";
 import SolidPopUp from "../../../components/highchart/newPopUp/solidHc";
 import measurementPopUp from "../../../components/highchart/newPopUp/measurementCustom";
-import BarPopUp from "../../../components/highchart/nivoPopUp/barChart";
-import PiePopUp from "../../../components/highchart/nivoPopUp/pieChart";
-import HeatMapPopUp from "../../../components/highchart/nivoPopUp/heatMapPopUp";
-import MatrixPopUp from "../../../components/highchart/customPopUp/matrixPopUp";
-import LinePopUp from "../../../components/highchart/nivoPopUp/lineChart";
-import TreeMapPopUp from "../../../components/highchart/nivoPopUp/treeMapChart";
+
 const DialogContent = ({ handleClose }) => {
   const dispatch = useDispatch();
   const selectedItem = useSelector(
@@ -42,28 +37,13 @@ const DialogContent = ({ handleClose }) => {
     "Gauge(Angular) [Highchart]": angularPopUp(),
     "Gauge(Solid) [Highchart]": SolidPopUp(),
     "Measurement [Custom]": measurementPopUp(),
+    "Bar Chart [Nivo]": measurementPopUp(),
+    "Pie Chart [Nivo]": measurementPopUp(),
+    "Heat Map [Nivo]": measurementPopUp(),
+    "Matrix [Custom]": measurementPopUp(),
+    "TreeMap Chart [Nivo]": measurementPopUp(),
   };
 
-  const bodyTemp = {
-    "Bar Chart [Nivo]": (
-      <BarPopUp highchartProps={properties} handleClose={handleClose} />
-    ),
-    "Pie Chart [Nivo]": (
-      <PiePopUp highchartProps={properties} handleClose={handleClose} />
-    ),
-    "Heat Map [Nivo]": (
-      <HeatMapPopUp highchartProps={properties} handleClose={handleClose} />
-    ),
-    "Matrix [Custom]": (
-      <MatrixPopUp highchartProps={properties} handleClose={handleClose} />
-    ),
-    // "Line Chart [Nivo]": (
-    //   <LinePopUp highchartProps={properties} handleClose={handleClose} />
-    // ),
-    "TreeMap Chart [Nivo]": (
-      <TreeMapPopUp highchartProps={properties} handleClose={handleClose} />
-    ),
-  };
   React.useEffect(() => {
     async function myFunc() {
       await dispatch(await loadSelectItems());
@@ -110,45 +90,18 @@ const DialogContent = ({ handleClose }) => {
             />
           </Grid>
           <Grid item>
-            <IconButton onClick={handleClose} color="error">
+            <IconButton onClick={handleClose}>
               <CloseIcon fontSize="small" />
             </IconButton>
           </Grid>
         </Grid>
       </Grid>
-      {body[properties.Type] ? (
-        <Box sx={{ p: 1, height: "75vh", overflowY: "auto", width: "9999px" }}>
-          <Stepper
-            components={body[properties.Type]}
-            finishFunc={finishFunc}
-          ></Stepper>
-        </Box>
-      ) : (
-        bodyTemp[properties.Type]
-      )}
-
-      {body[properties.Type] ? (
-        <></>
-      ) : (
-        <Grid item xs={12}>
-          <Grid container sx={{ flexDirection: "row-reverse" }}>
-            <Grid item>
-              <Button onClick={handleClose} color="error">
-                Cancel
-              </Button>
-              <Button
-                onClick={() => {
-                  dispatch(saveChart());
-                  handleClose();
-                }}
-                color="success"
-              >
-                Save
-              </Button>
-            </Grid>
-          </Grid>
-        </Grid>
-      )}
+      <Box sx={{ p: 1, height: "75vh", overflowY: "auto", width: "9999px" }}>
+        <Stepper
+          components={body[properties.Type]}
+          finishFunc={finishFunc}
+        ></Stepper>
+      </Box>
     </Grid>
   );
 };

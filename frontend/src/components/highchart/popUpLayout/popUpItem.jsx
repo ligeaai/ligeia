@@ -18,7 +18,7 @@ const PopUpItem = (props) => {
     <Grid item xs={12} sm={6}>
       <Grid container rowGap={0.5}>
         <Grid item xs={12}>
-          {title}
+          {type === "checkbox" ? title.slice(5) : title}
         </Grid>
         <Grid item xs={12}>
           <InputGenerator
