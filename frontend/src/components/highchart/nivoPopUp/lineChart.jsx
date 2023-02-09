@@ -25,6 +25,10 @@ import {
 
 import TagService from "../../../services/api/tags";
 import MyCheckbox from "../../checkbox/checkbox";
+import Inputs from "../popup/inputs";
+
+
+
 const Stops = () => {
     const dispatch = useDispatch();
     const highchartProps = useSelector(
@@ -203,6 +207,22 @@ const MeasurementPopUp = (props) => {
                             </Grid>
 
 
+                        </Grid>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <Grid container rowGap={0.5}>
+                            <Grid item xs={12}>
+                                Inputs
+                            </Grid>
+                            <Grid item xs={12}>
+                                <Inputs
+                                    highchartProps={highchartProps}
+                                    defaultValue={highchartProps["Inputs"]}
+                                    handleChangeFunc={(value) => {
+                                        handleChangeFunc("Inputs", value);
+                                    }}
+                                />
+                            </Grid>
                         </Grid>
                     </Grid>
                     {/* <Grid item xs={12}>

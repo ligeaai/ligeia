@@ -1,351 +1,186 @@
 import React from "react";
 import { ResponsiveLine } from "@nivo/line";
+import socketIOClient from "socket.io-client";
+import { useState, useEffect } from "react";
+import { wsBaseUrl } from "../../../services/baseApi";
 
-// make sure parent container have a defined height when using
-// responsive component, otherwise height will be 0 and
-// no chart will be rendered.
-// website examples showcase many properties,
-// you'll often use just a few of them.
-const MyResponsiveLine = ({ data /* see data tab */ }) => (
-  <ResponsiveLine
-    data={[
-      {
-        id: "japan",
-        color: "hsl(269, 70%, 50%)",
-        data: [
-          {
-            x: "plane",
-            y: 101,
-          },
-          {
-            x: "helicopter",
-            y: 155,
-          },
-          {
-            x: "boat",
-            y: 154,
-          },
-          {
-            x: "train",
-            y: 258,
-          },
-          {
-            x: "subway",
-            y: 206,
-          },
-          {
-            x: "bus",
-            y: 239,
-          },
-          {
-            x: "car",
-            y: 281,
-          },
-          {
-            x: "moto",
-            y: 169,
-          },
-          {
-            x: "bicycle",
-            y: 118,
-          },
-          {
-            x: "horse",
-            y: 136,
-          },
-          {
-            x: "skateboard",
-            y: 52,
-          },
-          {
-            x: "others",
-            y: 66,
-          },
-        ],
-      },
-      {
-        id: "france",
-        color: "hsl(99, 70%, 50%)",
-        data: [
-          {
-            x: "plane",
-            y: 174,
-          },
-          {
-            x: "helicopter",
-            y: 1,
-          },
-          {
-            x: "boat",
-            y: 36,
-          },
-          {
-            x: "train",
-            y: 247,
-          },
-          {
-            x: "subway",
-            y: 80,
-          },
-          {
-            x: "bus",
-            y: 85,
-          },
-          {
-            x: "car",
-            y: 143,
-          },
-          {
-            x: "moto",
-            y: 291,
-          },
-          {
-            x: "bicycle",
-            y: 227,
-          },
-          {
-            x: "horse",
-            y: 13,
-          },
-          {
-            x: "skateboard",
-            y: 34,
-          },
-          {
-            x: "others",
-            y: 259,
-          },
-        ],
-      },
-      {
-        id: "us",
-        color: "hsl(333, 70%, 50%)",
-        data: [
-          {
-            x: "plane",
-            y: 218,
-          },
-          {
-            x: "helicopter",
-            y: 239,
-          },
-          {
-            x: "boat",
-            y: 24,
-          },
-          {
-            x: "train",
-            y: 11,
-          },
-          {
-            x: "subway",
-            y: 79,
-          },
-          {
-            x: "bus",
-            y: 35,
-          },
-          {
-            x: "car",
-            y: 81,
-          },
-          {
-            x: "moto",
-            y: 175,
-          },
-          {
-            x: "bicycle",
-            y: 264,
-          },
-          {
-            x: "horse",
-            y: 53,
-          },
-          {
-            x: "skateboard",
-            y: 233,
-          },
-          {
-            x: "others",
-            y: 127,
-          },
-        ],
-      },
-      {
-        id: "germany",
-        color: "hsl(68, 70%, 50%)",
-        data: [
-          {
-            x: "plane",
-            y: 44,
-          },
-          {
-            x: "helicopter",
-            y: 280,
-          },
-          {
-            x: "boat",
-            y: 132,
-          },
-          {
-            x: "train",
-            y: 16,
-          },
-          {
-            x: "subway",
-            y: 61,
-          },
-          {
-            x: "bus",
-            y: 119,
-          },
-          {
-            x: "car",
-            y: 69,
-          },
-          {
-            x: "moto",
-            y: 176,
-          },
-          {
-            x: "bicycle",
-            y: 111,
-          },
-          {
-            x: "horse",
-            y: 113,
-          },
-          {
-            x: "skateboard",
-            y: 159,
-          },
-          {
-            x: "others",
-            y: 92,
-          },
-        ],
-      },
-      {
-        id: "norway",
-        color: "hsl(356, 70%, 50%)",
-        data: [
-          {
-            x: "plane",
-            y: 26,
-          },
-          {
-            x: "helicopter",
-            y: 95,
-          },
-          {
-            x: "boat",
-            y: 180,
-          },
-          {
-            x: "train",
-            y: 93,
-          },
-          {
-            x: "subway",
-            y: 261,
-          },
-          {
-            x: "bus",
-            y: 116,
-          },
-          {
-            x: "car",
-            y: 6,
-          },
-          {
-            x: "moto",
-            y: 149,
-          },
-          {
-            x: "bicycle",
-            y: 126,
-          },
-          {
-            x: "horse",
-            y: 177,
-          },
-          {
-            x: "skateboard",
-            y: 159,
-          },
-          {
-            x: "others",
-            y: 22,
-          },
-        ],
-      },
-    ]}
-    margin={{ top: 50, right: 110, bottom: 50, left: 60 }}
-    xScale={{ type: "point" }}
-    yScale={{
-      type: "linear",
-      min: "auto",
-      max: "auto",
-      stacked: true,
-      reverse: false,
-    }}
-    yFormat=" >-.2f"
-    axisTop={null}
-    axisRight={null}
-    axisBottom={{
-      orient: "bottom",
-      tickSize: 5,
-      tickPadding: 5,
-      tickRotation: 0,
-      legend: "transportation",
-      legendOffset: 36,
-      legendPosition: "middle",
-    }}
-    axisLeft={{
-      orient: "left",
-      tickSize: 5,
-      tickPadding: 5,
-      tickRotation: 0,
-      legend: "count",
-      legendOffset: -40,
-      legendPosition: "middle",
-    }}
-    pointSize={10}
-    pointColor={{ theme: "background" }}
-    pointBorderWidth={2}
-    pointBorderColor={{ from: "serieColor" }}
-    pointLabelYOffset={-12}
-    useMesh={true}
-    // legends={[
-    //     {
-    //         anchor: 'bottom-right',
-    //         direction: 'column',
-    //         justify: false,
-    //         translateX: 100,
-    //         translateY: 0,
-    //         itemsSpacing: 0,
-    //         itemDirection: 'left-to-right',
-    //         itemWidth: 80,
-    //         itemHeight: 20,
-    //         itemOpacity: 0.75,
-    //         symbolSize: 12,
-    //         symbolShape: 'circle',
-    //         symbolBorderColor: 'rgba(0, 0, 0, .5)',
-    //         effects: [
-    //             {
-    //                 on: 'hover',
-    //                 style: {
-    //                     itemBackground: 'rgba(0, 0, 0, .03)',
-    //                     itemOpacity: 1
-    //                 }
-    //             }
-    //         ]
-    //     }
-    // ]}
-  />
-);
 
-function App() {
-  return <MyResponsiveLine />;
+const MyResponsiveLine = ({ highchartProps, width, height, liveData, chartType }) => {
+
+    const [data, setData] = useState([]);
+
+
+
+
+    const yAxisTitles = [];
+    highchartProps.Inputs.map((e) => {
+        if (!highchartProps[`[${e.NAME}] Disable Data Grouping`]) {
+            yAxisTitles.push({
+                title: {
+                    text: `${e.UOM_QUANTITY_TYPE} (${e.UOM})`,
+                },
+
+                endOnTick: true,
+                startOnTick: true,
+                opposite: false,
+            });
+
+        }
+
+    });
+
+
+
+    const sockets = [];
+
+    useEffect(() => {
+
+        highchartProps.Inputs.map((tag, index) => {
+            const socket = new WebSocket(`${wsBaseUrl}/ws/tags/${tag.TAG_ID}`);
+            sockets.push(socket);
+
+            socket.onopen = function () {
+                console.log("connected");
+            };
+            socket.onmessage = function (e) {
+                let chartData = [];
+                if (typeof e.data === "string") {
+                    let jsonData = JSON.parse(e.data);
+                    jsonData.forEach(data => {
+                        Object.keys(data).forEach(key => {
+                            let dateFormat = new Date(data[key][1][0][0] * 1000);
+                            let dict = {
+                                x: dateFormat,
+                                y: data[key][1][0][1]
+                            };
+                            chartData.push(dict);
+                        });
+                    });
+                }
+                setData([{ id: "data", data: chartData }]);
+            };
+
+            socket.onerror = function () {
+                console.log("Connection Error");
+            };
+
+            socket.onclose = function () {
+                console.log("Connection Closed");
+            };
+        });
+
+        return () => {
+            sockets.forEach(socket => {
+                socket.close();
+            });
+        };
+
+    }, [liveData]);
+
+
+
+
+    return (
+        console.log(yAxisTitles),
+        < ResponsiveLine
+            data={data}
+            xKey='x'
+            yKey='y'
+            enablePointLabel={true}
+            margin={{ top: 50, right: 110, bottom: 50, left: 60 }
+            }
+            xScale={{ type: "time", format: "%Y-%m-%d %H:%M:%S" }}
+            yScale={{
+                type: "linear",
+                stacked: false,
+                min: 'auto',
+                max: 'auto',
+                ticks: {
+                    maxTicksLimit: yAxisTitles.length,
+                    callback: function (value, index, values) {
+                        return yAxisTitles[index].title.text;
+                    }
+                }
+            }}
+            series={highchartProps.Inputs.map((e, i) => {
+                return {
+                    id: e.NAME,
+                    data: data.filter(data => data.id === e.NAME),
+                    yAxis: i,
+                    name: e.NAME,
+                    dataGrouping: {
+                        units: [
+                            ["week", [1]],
+                            ["month", [1, 2, 3, 4, 6]],
+                        ],
+                    },
+                    color: highchartProps["Enable Custom Colors"]
+                        ? highchartProps[`[${e.NAME}] Color`]
+                        : "",
+                };
+            })}
+            axisTop={null}
+            axisRight={null}
+            axisBottom={{
+                format: "%b %d",
+                tickValues: "every 2 days",
+                legend: "time",
+                legendPosition: "middle",
+                legendOffset: 46,
+            }}
+            // axisLeft={yAxisTitles.map((title, index) => ({
+            //     legend: title.title.text,
+            //     legendPosition: "middle",
+            //     legendOffset: -46,
+            //     id: `left-y-axis-${index}`
+            // }))}
+            axisLeft={{
+                legend: yAxisTitles[0].title.text,
+                legendPosition: "middle",
+                legendOffset: -46,
+            }}
+            pointSize={10}
+            pointColor={{ theme: "background" }}
+            pointBorderWidth={2}
+            pointBorderColor={{ from: "serieColor" }}
+            pointLabelYOffset={- 12}
+            useMesh={true}
+        // legends={[
+        //     {
+        //         anchor: 'bottom-right',
+        //         direction: 'column',
+        //         justify: false,
+        //         translateX: 100,
+        //         translateY: 0,
+        //         itemsSpacing: 0,
+        //         itemDirection: 'left-to-right',
+        //         itemWidth: 80,
+        //         itemHeight: 20,
+        //         itemOpacity: 0.75,
+        //         symbolSize: 12,
+        //         symbolShape: 'circle',
+        //         symbolBorderColor: 'rgba(0, 0, 0, .5)',
+        //         effects: [
+        //             {
+        //                 on: 'hover',
+        //                 style: {
+        //                     itemBackground: 'rgba(0, 0, 0, .03)',
+        //                     itemOpacity: 1
+        //                 }
+        //             }
+        //         ]
+        //     }
+        // ]}
+        />
+    );
+
+};
+
+function App(props) {
+    return <MyResponsiveLine {...props}
+    />;
 }
 export default React.memo(App);
+
+
+

@@ -143,7 +143,37 @@ const Highchart = ({
     "Pie Chart [Nivo]": <Pie highchartProps={highchartProps} />,
     "Heat Map [Nivo]": <HeatMap highchartProps={highchartProps} />,
     "Matrix [Custom]": <Matrix highchartProps={highchartProps} />,
-    "Line Chart [Nivo]": <Line highchartProps={highchartProps} />,
+    "Line Chart [Nivo]": tabular ? (
+      <Tabular
+        highchartProps={highchartProps}
+        liveData={liveData}
+        backfillData={backfillData}
+        tabular={tabular}
+        chartType="spline"
+      />
+    ) : backfillData ? (
+      <Backfill
+        highchartProps={highchartProps}
+        liveData={liveData}
+        backfillData={backfillData}
+        tabular={tabular}
+        width={width}
+        height={height}
+        chartType="spline"
+      />
+    ) : (
+      <Line
+        highchartProps={highchartProps}
+        liveData={liveData}
+        backfillData={backfillData}
+        tabular={tabular}
+        width={width}
+        height={height}
+        chartType="spline"
+      />
+    ),
+
+
     "TreeMap Chart [Nivo]": <TreeMap highchartProps={highchartProps} />,
   };
 
