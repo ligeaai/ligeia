@@ -155,10 +155,16 @@ const YAxis = () => {
       </Grid>
       <Grid item xs={12}>
         <Grid container rowGap={0.5}>
-          <PopUpItem type="checkbox" title="Enable Manuel Y-Axis Min/Max" />
-          <PopUpItem type="checkbox" title="Enable Y-Axis Align Ticks" />
-          <PopUpItem type="checkbox" title="Enable Y-Axis Start On Ticks" />
-          <PopUpItem type="checkbox" title="Enable Y-Axis End On Ticks" />
+          <PopUpItem
+            type="checkbox"
+            title="Show Enable Manuel Y-Axis Min/Max"
+          />
+          <PopUpItem type="checkbox" title="Show Enable Y-Axis Align Ticks" />
+          <PopUpItem
+            type="checkbox"
+            title="Show Enable Y-Axis Start On Ticks"
+          />
+          <PopUpItem type="checkbox" title="Show Enable Y-Axis End On Ticks" />
         </Grid>
       </Grid>
       <Grid item xs={12}>

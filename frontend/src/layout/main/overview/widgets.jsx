@@ -23,6 +23,7 @@ const Widgets = React.forwardRef((props, ref) => {
   const dispatch = useDispatch();
   const [highchartProps, setHighChartProps] = React.useState(null);
   const refresh = useSelector((state) => state.tapsOverview.refresh);
+  console.log(props);
   React.useEffect(() => {
     async function myFunc() {
       let res = await instance.get(`/widgets/${widget}`, config);
@@ -38,7 +39,8 @@ const Widgets = React.forwardRef((props, ref) => {
     return (
       <Box
         ref={ref}
-        className={`custom-panel wrapper ${className}`}
+        key={`${widget}`}
+        className={`${className}`}
         style={style}
         sx={{
           boxShadow: 4,
@@ -81,8 +83,9 @@ const Widgets = React.forwardRef((props, ref) => {
                   sx={{
                     ml: 0.5,
                     display:
-                      highchartProps.Type === "Linechart [Highchart]" &&
-                      highchartProps["Enable Title"]
+                      highchartProps.Type === "Linechart [Highchart]" ||
+                      (highchartProps.Type === "Line Chart [Nivo]" &&
+                        highchartProps["Enable Title"])
                         ? "inline-block"
                         : "none",
                     fontSize:
@@ -100,6 +103,7 @@ const Widgets = React.forwardRef((props, ref) => {
               sx={{
                 display:
                   highchartProps.Type === "Linechart [Highchart]" ||
+                  highchartProps.Type === "Line Chart [Nivo]" ||
                   highchartProps["Show Name"]
                     ? "none"
                     : "flex",
@@ -115,7 +119,8 @@ const Widgets = React.forwardRef((props, ref) => {
               item
               sx={{
                 display:
-                  highchartProps.Type === "Linechart [Highchart]"
+                  highchartProps.Type === "Linechart [Highchart]" ||
+                  highchartProps.Type === "Line Chart [Nivo]"
                     ? "flex"
                     : "none",
               }}
@@ -215,4 +220,4 @@ const Widgets = React.forwardRef((props, ref) => {
   );
 });
 
-export default React.memo(Widgets);
+export default Widgets;

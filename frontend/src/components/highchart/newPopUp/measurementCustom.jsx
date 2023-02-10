@@ -12,12 +12,15 @@ import CreateWidget from "../popUpLayout/createWidget";
 import ChoseMeasure from "../popUpLayout/choseMeasure";
 import { Stops } from "../popUpLayout/stops";
 import Measurement from "../popUpLayout/measurement";
-
+import { fillMandatory } from "../../../services/actions/stepper/stepper";
 function MeasuremenCustom() {
   const dispatch = useDispatch();
   const stopsNum = useSelector(
     (state) => state.overviewDialog.highchartProps.Stops
   );
+  React.useEffect(() => {
+    dispatch(fillMandatory([["Name"], ["Measurement"]]));
+  }, []);
   return [
     ["Create Widget", <CreateWidget />],
     ["Chose Measurement", <ChoseMeasure />],

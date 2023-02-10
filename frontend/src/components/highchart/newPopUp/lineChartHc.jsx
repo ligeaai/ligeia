@@ -11,12 +11,19 @@ import {
 import CreateLineWidget from "../popUpLayout/createLineWidget";
 import ChoseLineMeasure from "../popUpLayout/choseLineMeasue";
 import CustomLineChart from "../popUpLayout/customLineChart";
+import { fillMandatory } from "../../../services/actions/stepper/stepper";
 import Inputs from "../popup/inputs";
-function AngularPopUp() {
+function LineChartPopUp() {
   const dispatch = useDispatch();
   const handleChangeFunc = (key, val) => {
     dispatch(changeValeus(key, val));
   };
+  const stopsNum = useSelector(
+    (state) => state.overviewDialog.highchartProps.Stops
+  );
+  React.useEffect(() => {
+    dispatch(fillMandatory([["Name"], ["Transaction Property"], ["Inputs"]]));
+  }, []);
   return [
     ["Create Widget", <CreateLineWidget />],
     [
@@ -40,4 +47,4 @@ function AngularPopUp() {
   ];
 }
 
-export default AngularPopUp;
+export default LineChartPopUp;

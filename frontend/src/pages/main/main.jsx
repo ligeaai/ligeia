@@ -10,11 +10,6 @@ const cards = [
     cardURL: "/overview",
   },
   {
-    cardTitle: "Analytics",
-    cardBody: "Assets analytics",
-    cardURL: "/analytics",
-  },
-  {
     cardTitle: "Reporting",
     cardBody: "Assets reporting",
     cardURL: "/reporting",

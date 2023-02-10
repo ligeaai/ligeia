@@ -5,8 +5,10 @@ import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-
+import { checkMandatory } from "../../services/actions/stepper/stepper";
+import { useDispatch } from "react-redux";
 export default function HorizontalLinearStepper({ components, finishFunc }) {
+  const dispatch = useDispatch();
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set());
   console.log(components);
@@ -19,6 +21,9 @@ export default function HorizontalLinearStepper({ components, finishFunc }) {
   };
 
   const handleNext = () => {
+    if (!dispatch(checkMandatory(activeStep))) {
+      return;
+    }
     let newSkipped = skipped;
     if (isStepSkipped(activeStep)) {
       newSkipped = new Set(newSkipped.values());
@@ -55,14 +60,9 @@ export default function HorizontalLinearStepper({ components, finishFunc }) {
   return (
     <Box sx={{ width: "100%", height: "100%" }}>
       <Stepper activeStep={activeStep}>
-        {components.map((label, index) => {
+        {components().map((label, index) => {
           const stepProps = {};
           const labelProps = {};
-          //   if (isStepOptional(index)) {
-          //     labelProps.optional = (
-          //       <Typography variant="caption"></Typography>
-          //     );
-          //   }
           if (isStepSkipped(index)) {
             stepProps.completed = false;
           }
@@ -73,21 +73,9 @@ export default function HorizontalLinearStepper({ components, finishFunc }) {
           );
         })}
       </Stepper>
-      {/* {activeStep === steps.length ? (
-        <React.Fragment>
-          <Typography sx={{ mt: 2, mb: 1 }}>
-            All steps completed - you&apos;re finished
-          </Typography>
-          <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
-            <Box sx={{ flex: "1 1 auto" }} />
-            <Button onClick={handleReset}>Reset</Button>
-          </Box>
-        </React.Fragment>
-      ) : */}
-
       <React.Fragment>
         <Typography sx={{ mt: 2, mb: 1, minHeight: "calc(100% - 95px)" }}>
-          {components[activeStep][1]}
+          {components()[activeStep][1]}
         </Typography>
         <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
           <Button
@@ -105,7 +93,7 @@ export default function HorizontalLinearStepper({ components, finishFunc }) {
             </Button>
           )}
 
-          {activeStep === components.length - 1 ? (
+          {activeStep === components().length - 1 ? (
             <Button onClick={finishFunc}>Finish </Button>
           ) : (
             <Button onClick={handleNext}> Next </Button>
