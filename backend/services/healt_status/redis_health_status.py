@@ -5,28 +5,19 @@ from kafka import KafkaProducer
 import json
 from helper import send_alarm
 
-def check_ts_redis():
+def check_redis(host, port, component):
     try:
-        redis_conn = redis.StrictRedis("redis-test1", port=6379)
-        redis_conn.ping()
-        print("ok")
+        with redis.StrictRedis(host, port=port) as redis_conn:
+            redis_conn.ping()
     except Exception as e:
         error_message = f"Redis health check failed: {e}"
-        send_alarm(error_message,"Redis-TS")
+        send_alarm(error_message, component)
+    else:
+        print(f"Redis ({component}) health check succeeded")
 
+check_redis("redis-test1", 6379, "Redis-TS")
+check_redis("ligeiaai-redis-1", 6379, "Redis")
 
-def check_cache_redis():
-    try:
-        redis_conn = redis.StrictRedis("ligeiaai-redis-1", port=6379)
-        redis_conn.ping()
-        print("ok")
-    except Exception as e:
-        error_message = f"Redis health check failed: {e}"
-        send_alarm(error_message,"Redis")
-
-
-check_ts_redis()
-check_cache_redis()
 
 
 # host = os.environ.get("Kafka_Host_DP")
