@@ -1,8 +1,15 @@
-import React from "react";
+import React, { Suspense } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { IconButton, Grid, Box, Button } from "@mui/material";
 
-import { Select, Stepper, InputGenerator } from "../../../components";
+import { Route, Routes, Navigate } from "react-router-dom";
+import { Outlet } from "react-router-dom";
+import {
+  Select,
+  Stepper,
+  InputGenerator,
+  LoadingComponent,
+} from "../../../components";
 import CloseIcon from "@mui/icons-material/Close";
 import {
   changeSelectValue,
@@ -21,29 +28,35 @@ import measurementPopUp from "../../../components/highchart/newPopUp/measurement
 
 const DialogContent = ({ handleClose }) => {
   const dispatch = useDispatch();
+  const [refresh, setRefresh] = React.useState(false);
   const selectedItem = useSelector(
     (state) => state.overviewDialog.selectedItem
   );
-  const properties = useSelector((state) => state.overviewDialog.values);
+  const type = useSelector((state) => state.overviewDialog.values.Type);
   const values = useSelector((state) => state.overviewDialog.selectItems);
-
+  const body = {
+    "Linechart [Highchart]": linechartPopUp,
+    "Line Chart [Nivo]": linechartPopUp,
+    "Area Chart [Highchart]": linechartPopUp,
+    "Gauge(Angular) [Highchart]": angularPopUp,
+    "Gauge(Solid) [Highchart]": SolidPopUp,
+    "Measurement [Custom]": measurementPopUp,
+    "Bar Chart [Nivo]": measurementPopUp,
+    "Pie Chart [Nivo]": measurementPopUp,
+    "Heat Map [Nivo]": measurementPopUp,
+    "Matrix [Custom]": measurementPopUp,
+    "TreeMap Chart [Nivo]": measurementPopUp,
+  };
   const handleChangeFunc = async (props) => {
     dispatch(await changeSelectValue(props));
   };
-  const body = {
-    "Linechart [Highchart]": linechartPopUp(),
-    "Line Chart [Nivo]": linechartPopUp(),
-    "Area Chart [Highchart]": linechartPopUp(),
-    "Gauge(Angular) [Highchart]": angularPopUp(),
-    "Gauge(Solid) [Highchart]": SolidPopUp(),
-    "Measurement [Custom]": measurementPopUp(),
-    "Bar Chart [Nivo]": measurementPopUp(),
-    "Pie Chart [Nivo]": measurementPopUp(),
-    "Heat Map [Nivo]": measurementPopUp(),
-    "Matrix [Custom]": measurementPopUp(),
-    "TreeMap Chart [Nivo]": measurementPopUp(),
-  };
+  React.useEffect(() => {
+    setRefresh(false);
 
+    setTimeout(() => {
+      setRefresh(true);
+    }, 400);
+  }, [type]);
   React.useEffect(() => {
     async function myFunc() {
       await dispatch(await loadSelectItems());
@@ -97,10 +110,11 @@ const DialogContent = ({ handleClose }) => {
         </Grid>
       </Grid>
       <Box sx={{ p: 1, height: "75vh", overflowY: "auto", width: "9999px" }}>
-        <Stepper
-          components={body[properties.Type]}
-          finishFunc={finishFunc}
-        ></Stepper>
+        {refresh ? (
+          <Stepper components={body[type]} finishFunc={finishFunc}></Stepper>
+        ) : (
+          <LoadingComponent />
+        )}
       </Box>
     </Grid>
   );

@@ -17,6 +17,7 @@ import loaderReducer from './loaderReducer';
 import overviewDialog from "./overview/overviewDialog";
 import registerFormReducer from './registerFormReducer';
 import searchBarReducer from './searchBarReducer';
+import stepper from "./stepper/stepper"
 import tags from "./tags/tags"
 import tapsOverview from "./overview/taps"
 import themeReducer from './themeReducer';
@@ -27,5 +28,5 @@ import dataGridResourceList from './resource/resource';
 
 export {
     authReducer, confirmation, checkedList, collapseMenu, historyConfirmation, cssUserSelect, dataGridCodeList, dataGridType, drawerMenu, errorReducer, project, fullScreenReducer,
-    itemDataGrid, itemLinkEditor, langReducer, loaderReducer, overviewDialog, registerFormReducer, searchBarReducer, tags, tapsOverview, themeReducer, treeview, dataGridResourceList
+    itemDataGrid, itemLinkEditor, langReducer, loaderReducer, overviewDialog, registerFormReducer, searchBarReducer, stepper, tags, tapsOverview, themeReducer, treeview, dataGridResourceList
 }

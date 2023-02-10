@@ -11,6 +11,7 @@ import {
 import CreateWidget from "../popUpLayout/createWidget";
 import ChoseMeasure from "../popUpLayout/choseMeasure";
 import Measurement from "../popUpLayout/measurement";
+import { fillMandatory } from "../../../services/actions/stepper/stepper";
 const Stops = () => {
   const dispatch = useDispatch();
   const highchartProps = useSelector(
@@ -23,6 +24,7 @@ const Stops = () => {
   const handleChangeFunc = (key, val) => {
     dispatch(changeValeus(key, val));
   };
+
   return (
     <React.Fragment>
       {loop.map((e, i) => {
@@ -72,6 +74,9 @@ function MeasuremenCustom() {
   const stopsNum = useSelector(
     (state) => state.overviewDialog.highchartProps.Stops
   );
+  React.useEffect(() => {
+    dispatch(fillMandatory([["Name"], ["Measurement"]]));
+  }, []);
   return [
     ["Create Widget", <CreateWidget />],
     ["Chose Measurement", <ChoseMeasure />],
