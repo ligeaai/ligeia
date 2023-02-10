@@ -65,7 +65,7 @@ class UomDeleteView(generics.CreateAPIView):
     permission_classes = [permissions.AllowAny]
 
     def post(self, request, *args, **kwargs):
-        queryset = uom.object.filter(ROW_ID=request.data.get("ROW_ID"))
+        queryset = uom.objects.filter(ROW_ID=request.data.get("ROW_ID"))
         validate_find(queryset, request)
         queryset.delete()
         return Response({"Message": "Successful Delete "}, status=status.HTTP_200_OK)
