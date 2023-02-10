@@ -1,8 +1,9 @@
 from django.shortcuts import render
+from utils.models_utils import validate_find
 from rest_framework import generics, permissions,status
 from rest_framework.response import Response
 from .models import uom_base_unit
-from .serializers import UomUnitDetailsSerializer,UomUnitQuantitySerializer
+from .serializers import UomUnitDetailsSerializer,UomUnitQuantitySerializer,BaseUOMSaveUpdateSerializer
 import uuid
 from django.db.models import Q
 from apps.uoms.models import uom
@@ -74,3 +75,28 @@ class UomUnitsNameView(generics.CreateAPIView):
         serializerUoms = UomDetailsSerializer(querysetUoms,many = True)
         data = list(serializerBaseUom.data) + list(serializerUoms.data)
         return Response(data, status=status.HTTP_200_OK)
+
+
+class BaseUomEditorSaveUpdateView(generics.CreateAPIView):
+
+    permission_classes = [permissions.AllowAny]
+
+    def post(self, request, *args, **kwargs):
+        serializer = BaseUOMSaveUpdateSerializer(data = request)
+        serializer.is_valid()
+        serializer.save(request)
+        
+        return Response({"Message": "Succsesful"}, status=status.HTTP_200_OK)
+
+
+
+class BaseUomDeleteView(generics.CreateAPIView):
+    serializer_classes = UomUnitDetailsSerializer
+    permission_classes = [permissions.AllowAny]
+
+    def post(self, request, *args, **kwargs):
+        queryset = uom_base_unit.object.filter(ROW_ID = request.data.get('ROW_ID'))
+        validate_find(queryset,request)
+        queryset.delete()
+        return Response({"Message": "Successful Delete "}, status=status.HTTP_200_OK)
+
