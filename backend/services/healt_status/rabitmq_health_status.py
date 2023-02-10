@@ -4,21 +4,26 @@ import json
 from kafka import KafkaProducer
 from datetime import datetime
 from helper import send_alarm
+
 base_url = os.environ.get("BASE_URL")
 
 
-def HealthCheckForRabbitMQ():
+def check_rabbitmq():
     try:
         response = requests.get(
-            base_url + ":15672/api/aliveness-test/%2F", auth=("guest", "guest")
+            f"{base_url}:15672/api/aliveness-test/%2F", auth=("guest", "guest")
         )
-        if response.status_code == 200 and response.json()["status"] == "ok":
-            print("RabbitMQ is up and running!")
-        else:
-            raise Exception(f"RabbitMQ health check failed: {response.status_code}")
+        response.raise_for_status()
+        if response.json()["status"] != "ok":
+            raise Exception("RabbitMQ aliveness test failed")
     except Exception as e:
         error_message = f"RabbitMQ health check failed: {e}"
-        send_alarm(error_message,"Rabbit-MQ")
+        send_alarm(error_message, "Rabbit-MQ")
+    else:
+        print("RabbitMQ health check succeeded")
+
+
+check_rabbitmq()
 
 
 # HELPER FUNC BW
