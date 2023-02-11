@@ -13,10 +13,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { LoadingComponent, MyDialog } from "../../../components";
 import MyHighchart from "./highchart";
 import UpdatePopUp from "./updatePopup";
-import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
-import { ComponentErrorBody, ComponentError } from "../../../components";
 const Widgets = React.forwardRef((props, ref) => {
   const { widget, style, className, children, ...rest } = props;
+  const [myclass, setMyClass] = React.useState("");
   const [liveData, setLiveData] = React.useState(true);
   const [tabular, setTabular] = React.useState(false);
   const [backfill, setbackfill] = React.useState(false);
@@ -33,6 +32,9 @@ const Widgets = React.forwardRef((props, ref) => {
     }
     myFunc();
   }, [refresh]);
+  React.useEffect(() => {
+    console.log(className);
+  }, [className]);
   const width = parseInt(style.width, 10);
   const height = parseInt(style.height, 10) - 50;
   if (highchartProps) {
@@ -40,8 +42,8 @@ const Widgets = React.forwardRef((props, ref) => {
       <Box
         ref={ref}
         key={`${widget}`}
-        className={`${className}`}
-        style={style}
+        className={`${myclass} ${className}`}
+        style={{ ...style }}
         sx={{
           boxShadow: 4,
           borderRadius: "5px",
@@ -57,6 +59,12 @@ const Widgets = React.forwardRef((props, ref) => {
             "&:hover": {
               cursor: "move",
             },
+          }}
+          onClick={() => {
+            setMyClass("react-draggable-dragging");
+          }}
+          onMouseUp={() => {
+            setMyClass("");
           }}
         >
           <Grid
@@ -220,4 +228,4 @@ const Widgets = React.forwardRef((props, ref) => {
   );
 });
 
-export default Widgets;
+export default React.memo(Widgets);

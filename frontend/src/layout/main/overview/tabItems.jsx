@@ -84,8 +84,6 @@ const TabItems = (props) => {
       layouts={layouts}
       rowHeight={30}
       useCSSTransforms={mounted}
-      preventCollision={false}
-      allowOverlap={false}
       draggableCancel=".cancelDrag"
       onBreakpointChange={handleBreakPointChange}
       onLayoutChange={handleLayoutChange}
@@ -101,17 +99,10 @@ const TabItems = (props) => {
       {...props}
     >
       {widgets.map((widget, i) => {
-        return (
-          <Widget
-            key={`${widget}`}
-            widget={widget}
-            root={props.item}
-            {...props}
-          ></Widget>
-        );
+        return <Widget key={`${widget}`} widget={widget} {...props}></Widget>;
       })}
     </ResponsiveGridLayout>
   );
 };
 
-export default TabItems;
+export default React.memo(TabItems);

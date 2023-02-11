@@ -4,9 +4,8 @@ import { Provider } from 'react-redux'
 import reportWebVitals from './reportWebVitals';
 import { PersistGate } from 'redux-persist/integration/react'
 import { persistor, store } from './store/configureStore';
-
+import { MainPageSkeleton, ErrorBoundary } from "./components"
 import App from './pages/App';
-import { ErrorBoundary } from "./components"
 import "react-grid-layout/css/styles.css";
 import "react-resizable/css/styles.css";
 
@@ -17,7 +16,7 @@ root.render(
     <React.StrictMode>
         <ErrorBoundary>
             <Provider store={store}>
-                <PersistGate loading={null} persistor={persistor}>
+                <PersistGate loading={<MainPageSkeleton />} persistor={persistor} >
                     <App />
                 </PersistGate>
             </Provider>

@@ -15,15 +15,18 @@ const mainPageSkeleton = () => {
     >
       <Box
         variant="rect"
-        height={50}
+        height={58}
         sx={{
-          bgcolor: "primary.main",
+          bgcolor: "primary.dark",
           display: "flex",
+          width: "100%",
+          justifyContent: "flex-end",
         }}
       >
         <Skeleton
           variant="circular"
           sx={{
+            textAlign: "right",
             m: 1,
             backgroundColor: "success.secondary",
           }}
@@ -31,29 +34,39 @@ const mainPageSkeleton = () => {
           <Avatar />
         </Skeleton>
       </Box>
-      <Box
+      <Skeleton
         variant="rect"
         width={248}
         sx={{
           m: 1,
-          minHeight: "calc(100vh - 60px - 8px)",
+          minHeight: "calc(100vh - 60px - 20px)",
           backgroundColor: "success.secondary",
           borderRadius: "5px",
-          p: 1,
+          display: "inline-block",
         }}
-      >
-        {[0, 1, 2, 3, 4, 5].map((e) => (
-          <Skeleton
-            width={e > 4 && e % 5 === 0 ? "80%" : "90%"}
-            sx={{
-              margin: "auto",
-              backgroundColor: "primary.main",
-            }}
-          >
-            <Typography>.</Typography>
-          </Skeleton>
-        ))}
-      </Box>
+      ></Skeleton>
+      <Skeleton
+        variant="rect"
+        width={248}
+        sx={{
+          m: 1,
+          minHeight: "calc(100vh - 60px - 20px)",
+          backgroundColor: "success.secondary",
+          borderRadius: "5px",
+          display: "inline-block",
+        }}
+      ></Skeleton>
+      <Skeleton
+        variant="rect"
+        sx={{
+          m: 1,
+          minHeight: "calc(100vh - 60px - 20px)",
+          backgroundColor: "status.main",
+          borderRadius: "5px",
+          display: "inline-block",
+          width: "calc(100% - 248px - 248px - 48px)",
+        }}
+      ></Skeleton>
     </Box>
   );
 };
