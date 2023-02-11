@@ -7,6 +7,7 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { checkMandatory } from "../../services/actions/stepper/stepper";
 import { useDispatch } from "react-redux";
+import { ADD_ERROR_SUCCESS } from "../../services/actions/types";
 export default function HorizontalLinearStepper({ components, finishFunc }) {
   const dispatch = useDispatch();
   const [activeStep, setActiveStep] = React.useState(0);
@@ -22,6 +23,10 @@ export default function HorizontalLinearStepper({ components, finishFunc }) {
 
   const handleNext = () => {
     if (!dispatch(checkMandatory(activeStep))) {
+      dispatch({
+        type: ADD_ERROR_SUCCESS,
+        payload: "You need to fill mandatory fields.",
+      });
       return;
     }
     let newSkipped = skipped;

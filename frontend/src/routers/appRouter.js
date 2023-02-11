@@ -91,4 +91,4 @@ const AppRouter = () => {
   );
 };
 
-export default AppRouter;
+export default React.memo(AppRouter);
