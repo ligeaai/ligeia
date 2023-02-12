@@ -58,7 +58,7 @@ const CreateWidget = () => {
         <Grid container rowGap={2}>
           <Grid item xs={12}>
             <Grid container columnSpacing={2} rowGap={2}>
-              <PopUpItem type="text" title="Name" />
+              <PopUpItem type="text" title="Name" nullTrue={true} />
               <PopUpItem type="number" title="Name Font Size(em)" />
               <PopUpItem type="number" title="Widget Refresh (seconds)" />
               <PopUpItem type="number" title="Value Font Size" />
