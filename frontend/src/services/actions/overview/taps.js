@@ -19,11 +19,11 @@ const _setLinkedItem = () => (dispatch, getState) => {
   const selectedItem = getState().collapseMenu.selectedItem;
   let list = []
   console.log(selectedItem)
-  function myFunc(myItems) {
+  function myFunc(myItems, index = 0) {
     myItems.map(e => {
-      list.push([e.FROM_ITEM_ID, e.FROM_ITEM_NAME])
+      list.push([e.FROM_ITEM_ID, e.FROM_ITEM_NAME, index])
       if (e.CHILD) {
-        myFunc(e.CHILD)
+        myFunc(e.CHILD, index + 1)
       }
     })
   }

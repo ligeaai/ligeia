@@ -5,6 +5,7 @@ import { changeValeus } from "../../../services/actions/overview/overviewDialog"
 import { Select } from "../..";
 import { instance, config } from "../../../services/baseApi";
 import ItemLinkService from "../../../services/api/itemLink";
+import { IndentSelect } from "../../";
 const ChoseMeasure = () => {
   const dispatch = useDispatch();
   const ItemData = useSelector((state) => state.overviewDialog.itemData);
@@ -47,11 +48,12 @@ const ChoseMeasure = () => {
             Transaction Property
           </Grid>
           <Grid item xs={12}>
-            <Select
+            <IndentSelect
               disabled={ItemData.length === 0 ? true : false}
               values={ItemData}
               valuesPath="0"
               dataTextPath="1"
+              indentPath="2"
               defaultValue={defProp}
               handleChangeFunc={async (value) => {
                 handleChangeFunc("Transaction Property", value);
