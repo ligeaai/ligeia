@@ -11,12 +11,12 @@ import CustomLineChart from "../popUpLayout/customLineChart";
 
 const Linechart = ({ handleClose, title }) => {
   const dispatch = useDispatch();
+  const [selectedWidget, setSelectedWidget] = React.useState("Create Widget");
   const handleChangeFunc = (key, val) => {
     dispatch(changeValeus(key, val));
   };
-  let anchorStyle = {
-    textDecoration: "none",
-    color: "#ffffff",
+  const handeleOnClick = (a) => () => {
+    setSelectedWidget(a);
   };
   return (
     <>
@@ -43,31 +43,28 @@ const Linechart = ({ handleClose, title }) => {
             justifyContent: "space-between",
           }}
         >
-          <Grid item sx={{ alignSelf: "center" }}>
-            <a href="#CreateWidget" style={{ ...anchorStyle }}>
-              {title}
-            </a>
+          <Grid
+            item
+            sx={{ alignSelf: "center" }}
+            onClick={handeleOnClick("Create Widget")}
+          >
+            {title}
           </Grid>
-          <Grid item sx={{ alignSelf: "center" }}>
-            <a href="#CreateWidget" style={{ ...anchorStyle }}>
-              Create Widget
-            </a>
-          </Grid>
-          <Grid item sx={{ alignSelf: "center" }}>
-            <a href="#ChoseMeasurement" style={{ ...anchorStyle }}>
-              Chose Measurement
-            </a>
-          </Grid>
-          <Grid item sx={{ alignSelf: "center" }}>
-            <a href="#ChoseInput" style={{ ...anchorStyle }}>
-              Chose Input
-            </a>
-          </Grid>
-          <Grid item sx={{ alignSelf: "center" }}>
-            <a href="#Settings" style={{ ...anchorStyle }}>
-              Settings
-            </a>
-          </Grid>
+          {[
+            "Create Widget",
+            "Chose Measurement",
+            "Chose Input",
+            "Settings",
+          ].map((e) => (
+            <Grid
+              item
+              sx={{ alignSelf: "center", cursor: "pointer" }}
+              onClick={handeleOnClick(e)}
+            >
+              {e}
+            </Grid>
+          ))}
+
           <Grid item>
             <IconButton onClick={handleClose}>
               <CloseIcon fontSize="small" />
@@ -82,49 +79,70 @@ const Linechart = ({ handleClose, title }) => {
           div: { fontSize: "14px" },
           p: 2,
           overflowY: "auto",
-          maxHeight: "700px",
+          height: "700px",
+          alignContent: "flex-start",
         }}
       >
-        <Typography id={"CreateWidget"}>Create Widget</Typography>
-        <Grid item xs={12}>
-          <Grid container columnSpacing={2} columns={24}>
-            <PopUpItem type="text" title="Name" />
-            <PopUpItem type="number" title="Name Font Size(em)" />
-          </Grid>
-        </Grid>
-        <Grid item xs={12}>
-          <Grid container columnSpacing={2} columns={24}>
-            <PopUpItem type="number" title="Refresh (seconds)" />
-            <PopUpItem type="number" title="X-Axis Duration (minutes)" />
-          </Grid>
-        </Grid>
-        <Grid item xs={12}>
-          <Grid container rowGap={0.5} columns={24}>
-            <PopUpItem type="checkbox" title="Show Enable X-Axis Reset" />
-            <PopUpItem type="checkbox" title="Show Enable Header Buttons" />
-            <PopUpItem type="checkbox" title="Show Enable Title" />
-            <PopUpItem type="checkbox" title="Show Enable Navbar" />
-            <PopUpItem type="checkbox" title="Show Enable Export" />
-            <PopUpItem type="checkbox" title="Show Enable Range Selector" />
-            <PopUpItem type="checkbox" title="Show Enable Graph Legend" />
-          </Grid>
-        </Grid>
-        <Grid item xs={12}>
-          <Grid container columnSpacing={2} columns={24}>
-            <PopUpItem type="number" title="Graph Axis Value Font Size (em)" />
-            <PopUpItem type="number" title="Graph Axis Title Font Size (em)" />
-            <PopUpItem type="number" title="Graph Legend Font Size (em)" />
-            <PopUpItem type="number" title="Graph Title Font Size (em)" />
-          </Grid>
-        </Grid>
-        <Grid item xs={12}>
-          <Grid container rowGap={0.5}>
+        {selectedWidget === "Create Widget" ? (
+          <>
+            <Typography id={"CreateWidget"}>Create Widget</Typography>
+            <Grid item xs={12}>
+              <Grid container columnSpacing={2} columns={24}>
+                <PopUpItem type="text" title="Name" />
+                <PopUpItem type="number" title="Name Font Size(em)" />
+              </Grid>
+            </Grid>
+            <Grid item xs={12}>
+              <Grid container columnSpacing={2} columns={24}>
+                <PopUpItem type="number" title="Refresh (seconds)" />
+                <PopUpItem type="number" title="X-Axis Duration (minutes)" />
+              </Grid>
+            </Grid>
+            <Grid item xs={12}>
+              <Grid container rowGap={0.5} columns={24}>
+                <PopUpItem type="checkbox" title="Show Enable X-Axis Reset" />
+                <PopUpItem type="checkbox" title="Show Enable Header Buttons" />
+                <PopUpItem type="checkbox" title="Show Enable Title" />
+                <PopUpItem type="checkbox" title="Show Enable Navbar" />
+                <PopUpItem type="checkbox" title="Show Enable Export" />
+                <PopUpItem type="checkbox" title="Show Enable Range Selector" />
+                <PopUpItem type="checkbox" title="Show Enable Graph Legend" />
+              </Grid>
+            </Grid>
+            <Grid item xs={12}>
+              <Grid container columnSpacing={2} columns={24}>
+                <PopUpItem
+                  type="number"
+                  title="Graph Axis Value Font Size (em)"
+                />
+                <PopUpItem
+                  type="number"
+                  title="Graph Axis Title Font Size (em)"
+                />
+                <PopUpItem type="number" title="Graph Legend Font Size (em)" />
+                <PopUpItem type="number" title="Graph Title Font Size (em)" />
+              </Grid>
+            </Grid>
+          </>
+        ) : (
+          <></>
+        )}
+        {selectedWidget === "Chose Measurement" ? (
+          <>
             <Typography id={"ChoseMeasurement"}>Chose Measurement</Typography>
-            <ChoseLineMeasure />
+
+            <Grid item xs={12}>
+              <ChoseLineMeasure />
+            </Grid>
+          </>
+        ) : (
+          <></>
+        )}
+        {selectedWidget === "Chose Input" ? (
+          <>
             <Typography id={"ChoseInput"} sx={{ width: "100%" }}>
               Chose Input
             </Typography>
-            <Box sx={{ my: 1 }}>Inputs</Box>
             <Grid item xs={12}>
               <Inputs
                 handleChangeFunc={(value) => {
@@ -132,10 +150,20 @@ const Linechart = ({ handleClose, title }) => {
                 }}
               />
             </Grid>
-          </Grid>
-        </Grid>
-        <Typography id={"Settings"}>Settings</Typography>
-        <CustomLineChart />
+          </>
+        ) : (
+          <></>
+        )}
+        {selectedWidget === "Settings" ? (
+          <>
+            <Typography id={"Settings"}>Settings</Typography>
+            <Grid item>
+              <CustomLineChart />
+            </Grid>
+          </>
+        ) : (
+          <></>
+        )}
       </Grid>
     </>
   );
