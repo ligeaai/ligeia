@@ -195,7 +195,7 @@ function MyTabs() {
           aria-label="action tabs example"
           variant="scrollable"
           scrollButtons="auto"
-          textColor="secondary"
+          textColor="inherit"
           sx={{
             minHeight: "40px",
             backgroundColor: "background.info",
