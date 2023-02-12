@@ -73,8 +73,6 @@ for message in consumer:
         data["payload"]["insert"][0]["fqn"],
         data["payload"]["insert"][0]["vqts"][0]["v"],
     )
-    if data["mahmut"] == "selami":
-        print("SORUN vaar")
     print(len(type_value_data))
     if len(type_value_data) > 3:
         frozen_data_check(data_check)
