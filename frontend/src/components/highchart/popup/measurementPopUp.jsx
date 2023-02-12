@@ -85,22 +85,7 @@ const MeasurementPopUp = ({ handleClose }) => {
         >
           <Grid item sx={{ alignSelf: "center" }}>
             <a href="#CreateWidget" style={{ ...anchorStyle }}>
-              Line Chart [Highchart]
-            </a>
-          </Grid>
-          <Grid item sx={{ alignSelf: "center" }}>
-            <a href="#CreateWidget" style={{ ...anchorStyle }}>
-              Create Widget
-            </a>
-          </Grid>
-          <Grid item sx={{ alignSelf: "center" }}>
-            <a href="#ChoseMeasurement" style={{ ...anchorStyle }}>
-              Chose Measurement
-            </a>
-          </Grid>
-          <Grid item sx={{ alignSelf: "center" }}>
-            <a href="#Stops" style={{ ...anchorStyle }}>
-              Stops
+              Measurement [Highchart]
             </a>
           </Grid>
 
@@ -120,9 +105,10 @@ const MeasurementPopUp = ({ handleClose }) => {
           overflowY: "auto",
           height: "700px",
           p: 2,
+          alignContent: "flex-start",
         }}
       >
-        <Grid item xs={12} sm={9}>
+        <Grid item xs={12} sm={9} sx={{ height: "min-content" }}>
           <Grid container rowGap={2}>
             <Grid item xs={12}>
               <Grid container columnSpacing={2} rowGap={2}>
@@ -145,7 +131,7 @@ const MeasurementPopUp = ({ handleClose }) => {
             </Grid>
           </Grid>
         </Grid>
-        <Grid item xs={12} sm={3}>
+        <Grid item xs={12} sm={3} sx={{ height: "min-content" }}>
           <Grid container>
             <Grid item xs={12}>
               <List sx={{ width: "100%", bgcolor: "inherit" }}>
@@ -185,7 +171,7 @@ const MeasurementPopUp = ({ handleClose }) => {
           </Grid>
         </Grid>
         <Grid item xs={12}>
-          <Grid container rowGap={2} columnSpacing={2}>
+          <Grid container columnSpacing={2}>
             <Measurement />
             <Grid item xs={12} sm={6} md={2}>
               <Grid container rowGap={0.5}>

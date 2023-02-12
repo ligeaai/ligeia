@@ -81,8 +81,8 @@ const Linechart = ({ handleClose, title }) => {
         sx={{
           div: { fontSize: "14px" },
           p: 2,
-          overflowY: "scroll",
-          height: "700px",
+          overflowY: "auto",
+          maxHeight: "700px",
         }}
       >
         <Typography id={"CreateWidget"}>Create Widget</Typography>

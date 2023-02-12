@@ -7,7 +7,7 @@ def find_tag(tag_id):
     tag = tags.objects.filter(TAG_ID=tag_id)
     if tag:
         serializer = TagsFieldsSerializer(tag, many=True).data[0]
-        asset, tag_name = serializer.get("NAME").split(",")
+        asset, tag_name = serializer.get("NAME").split(".")
         return tag_name, asset
     else:
         raise BaseException("Tags not found")

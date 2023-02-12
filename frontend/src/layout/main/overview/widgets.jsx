@@ -32,9 +32,7 @@ const Widgets = React.forwardRef((props, ref) => {
     }
     myFunc();
   }, [refresh]);
-  React.useEffect(() => {
-    console.log(className);
-  }, [className]);
+
   const width = parseInt(style.width, 10);
   const height = parseInt(style.height, 10) - 50;
   if (highchartProps) {
@@ -141,7 +139,6 @@ const Widgets = React.forwardRef((props, ref) => {
                     checked={tabular}
                     onChange={() => {
                       setTabular((prev) => {
-                        setTabular(prev);
                         return !prev;
                       });
                     }}

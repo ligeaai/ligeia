@@ -74,13 +74,22 @@ const DialogContent = ({ highchartProps, chartId, ...rest }) => {
           backgroundColor: "background.main",
         }}
       >
-        <Grid container sx={{ flexDirection: "row-reverse", pb: 1, pr: 1 }}>
+        <Grid
+          container
+          sx={{
+            flexDirection: "row-reverse",
+            p: 0.5,
+            alignItems: "center",
+            height: "100%",
+          }}
+        >
           <Grid item>
             <Button
               color="error"
               onClick={() => {
                 rest.handleClose();
               }}
+              sx={{ mr: 0.5 }}
             >
               Cancel
             </Button>
