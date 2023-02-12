@@ -79,7 +79,7 @@ export default function HorizontalLinearStepper({ components, finishFunc }) {
         })}
       </Stepper>
       <React.Fragment>
-        <Typography sx={{ mt: 2, mb: 1, minHeight: "calc(100% - 95px)" }}>
+        <Typography sx={{ mt: 2, mb: 1, minHeight: "calc(100% - 101px)" }}>
           {components()[activeStep][1]}
         </Typography>
         <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
