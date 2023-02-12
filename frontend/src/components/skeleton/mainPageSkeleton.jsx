@@ -34,7 +34,7 @@ const mainPageSkeleton = () => {
           <Avatar />
         </Skeleton>
       </Box>
-      <Skeleton
+      {/* <Skeleton
         variant="rect"
         width={248}
         sx={{
@@ -66,7 +66,7 @@ const mainPageSkeleton = () => {
           display: "inline-block",
           width: "calc(100% - 248px - 248px - 48px)",
         }}
-      ></Skeleton>
+      ></Skeleton> */}
     </Box>
   );
 };
