@@ -29,6 +29,12 @@ const LineCharts = ({
       yAxisTitles.push({
         title: {
           text: `${e.UOM_QUANTITY_TYPE} (${e.UOM})`,
+          style: {
+            fontSize:
+              highchartProps["Graph Axis Title Font Size (em)"] === ""
+                ? "11px"
+                : `${highchartProps["Graph Axis Title Font Size (em)"]}px`,
+          },
         },
 
         endOnTick: true,
@@ -121,16 +127,6 @@ const LineCharts = ({
           text: "1w",
         },
         {
-          type: "month",
-          count: 1,
-          text: "1m",
-        },
-        {
-          type: "year",
-          count: 1,
-          text: "1y",
-        },
-        {
           type: "all",
           text: "All",
         },
@@ -164,6 +160,14 @@ const LineCharts = ({
             color: highchartProps["Enable Custom Colors"]
               ? highchartProps[`[${e.NAME}] Color`]
               : "",
+            labels: {
+              style: {
+                fontSize:
+                  highchartProps["Graph Axis Value Font Size (em)"] === ""
+                    ? 11
+                    : highchartProps["Graph Axis Value Font Size (em)"],
+              },
+            },
           };
         }),
       ],

@@ -31,7 +31,6 @@ const Widgets = React.forwardRef((props, ref) => {
     }
     myFunc();
   }, [refresh]);
-
   const width = parseInt(style.width, 10);
   const height = parseInt(style.height, 10) - 50;
   if (highchartProps) {
@@ -88,9 +87,9 @@ const Widgets = React.forwardRef((props, ref) => {
                   sx={{
                     ml: 0.5,
                     display:
-                      highchartProps.Type === "Linechart [Highchart]" ||
-                      (highchartProps.Type === "Line Chart [Nivo]" &&
-                        highchartProps["Enable Title"])
+                      (highchartProps.Type === "Linechart [Highchart]" ||
+                        highchartProps.Type === "Line Chart [Nivo]") &&
+                      highchartProps["Show Enable Name"]
                         ? "inline-block"
                         : "none",
                     fontSize:

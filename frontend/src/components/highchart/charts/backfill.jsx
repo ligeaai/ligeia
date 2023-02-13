@@ -92,6 +92,26 @@ const LineCharts = ({ highchartProps, width, height, liveData, chartType }) => {
                         opposite: false,
                         title: {
                           text: `${tag.UOM_QUANTITY_TYPE} (${tag.UOM})`,
+                          style: {
+                            fontSize:
+                              highchartProps[
+                                "Graph Axis Title Font Size (em)"
+                              ] === ""
+                                ? "11px"
+                                : `${highchartProps["Graph Axis Title Font Size (em)"]}px`,
+                          },
+                        },
+                        labels: {
+                          style: {
+                            fontSize:
+                              highchartProps[
+                                "Graph Axis Value Font Size (em)"
+                              ] === ""
+                                ? 11
+                                : highchartProps[
+                                    "Graph Axis Value Font Size (em)"
+                                  ],
+                          },
                         },
                       },
                       false
@@ -103,6 +123,7 @@ const LineCharts = ({ highchartProps, width, height, liveData, chartType }) => {
                       color: highchartProps["Enable Custom Colors"]
                         ? highchartProps[`[${tag.NAME}] Color`]
                         : "",
+
                       data: data,
                     });
 
@@ -117,8 +138,7 @@ const LineCharts = ({ highchartProps, width, height, liveData, chartType }) => {
       },
     },
     rangeSelector: {
-      //  enabled: !liveData,
-
+      enabled: highchartProps["Show Enable Navbar"],
       buttons: [
         {
           type: "minute",
@@ -191,6 +211,7 @@ const LineCharts = ({ highchartProps, width, height, liveData, chartType }) => {
       enabled: highchartProps["Show Enable Export"],
     },
     navigator: {
+      enabled: highchartProps["Show Enable Range Selector"],
       xAxis: {
         type: "datetime",
         minRange: 30,
