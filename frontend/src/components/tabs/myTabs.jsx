@@ -82,6 +82,7 @@ const MyTap = React.forwardRef(
             backgroundColor: "inherit",
             padding: "4px",
             fontSize: active === i ? "14px" : "12px",
+
             display: "flex",
             marginY: "2px",
             marginRight: "2px",
@@ -102,6 +103,7 @@ const MyTap = React.forwardRef(
               maxWidth: "150px",
               textTransform: "capitalize",
               fontSize: "12px",
+              fontWeight: active === i ? "700" : "400",
               ":hover": {
                 textShadow: "0.5px 0.5px 0.5px black",
               },
