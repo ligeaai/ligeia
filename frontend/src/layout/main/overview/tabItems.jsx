@@ -61,12 +61,9 @@ const TabItems = (props) => {
     }
   });
   const handleBreakPointChange = (breakpoint) => {
-    console.log(breakpoint);
     setBreakpoint(breakpoint);
   };
   const handleLayoutChange = (newLayout) => {
-    console.log(breakpoint);
-    console.log(newLayout);
     layouts[breakpoint] = newLayout;
     dispatch(updateChartLayout(layouts));
   };

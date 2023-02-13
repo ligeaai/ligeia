@@ -22,7 +22,6 @@ const Widgets = React.forwardRef((props, ref) => {
   const dispatch = useDispatch();
   const [highchartProps, setHighChartProps] = React.useState(null);
   const refresh = useSelector((state) => state.tapsOverview.refresh);
-  console.log(props);
   React.useEffect(() => {
     async function myFunc() {
       let res = await instance.get(`/widgets/${widget}`, config);

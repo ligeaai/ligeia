@@ -16,14 +16,8 @@ import PopUpItem from "./popUpItem";
 
 const CreateWidget = () => {
   const dispatch = useDispatch();
-  const EnableXaxisReset = useSelector(
-    (state) => state.overviewDialog.highchartProps["Show Enable X-Axis Reset"]
-  );
-  const EnableHeaderButtons = useSelector(
-    (state) => state.overviewDialog.highchartProps["Show Enable Header Buttons"]
-  );
   const EnableTitles = useSelector(
-    (state) => state.overviewDialog.highchartProps["Show Enable Title"]
+    (state) => state.overviewDialog.highchartProps["Show Enable Name"]
   );
   const EnableNavbar = useSelector(
     (state) => state.overviewDialog.highchartProps["Show Enable Navbar"]
@@ -39,9 +33,7 @@ const CreateWidget = () => {
   );
 
   const values = {
-    "Enable X-Axis Reset": EnableXaxisReset,
-    "Enable Header Buttons": EnableHeaderButtons,
-    "Enable Title": EnableTitles,
+    "Enable Name": EnableTitles,
     "Enable Navbar": EnableNavbar,
     "Enable Export": EnableExport,
     "Enable Range Selector": EnableRangeSelector,
@@ -74,7 +66,6 @@ const CreateWidget = () => {
                 title="Graph Axis Title Font Size (em)"
               />
               <PopUpItem type="number" title="Graph Legend Font Size (em)" />
-              <PopUpItem type="number" title="Graph Title Font Size (em)" />
             </Grid>
           </Grid>
         </Grid>
@@ -84,9 +75,7 @@ const CreateWidget = () => {
           <Grid item xs={12}>
             <List sx={{ width: "100%", bgcolor: "inherit" }}>
               {[
-                "Enable X-Axis Reset",
-                "Enable Header Buttons",
-                "Enable Title",
+                "Enable Name",
                 "Enable Navbar",
                 "Enable Export",
                 "Enable Range Selector",

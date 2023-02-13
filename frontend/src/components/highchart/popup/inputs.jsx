@@ -30,7 +30,6 @@ const RenderRow = (props) => {
   const selected = useSelector(
     (state) => state.tapsOverview.isChecked[data[index].TAG_ID]
   );
-  console.log(data);
   return (
     <ListItem
       style={style}

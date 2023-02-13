@@ -16,15 +16,7 @@ exporting(Highcharts);
 accessibility(Highcharts);
 data(Highcharts);
 boost(Highcharts);
-const LineCharts = ({
-  highchartProps,
-  width,
-  height,
-  liveData,
-
-  chartType,
-}) => {
-  console.log(highchartProps.Inputs);
+const LineCharts = ({ highchartProps, width, height, liveData, chartType }) => {
   const yAxisTitles = [];
   highchartProps.Inputs.map((e, index) => {
     if (!highchartProps[`[${e.NAME}] Disable Data Grouping`]) {
@@ -42,7 +34,6 @@ const LineCharts = ({
   React.useEffect(() => {
     return () => {
       client.map((e) => {
-        console.log(e);
         e.close();
       });
     };

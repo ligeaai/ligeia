@@ -23,7 +23,6 @@ const LineCharts = ({
 
   chartType,
 }) => {
-  console.log(highchartProps.Inputs);
   const yAxisTitles = [];
   highchartProps.Inputs.map((e) => {
     if (!highchartProps[`[${e.NAME}] Disable Data Grouping`]) {
@@ -61,7 +60,6 @@ const LineCharts = ({
           var series = this;
           let dataList = [];
           client.map((e) => {
-            console.log(e);
             e.close();
           });
           highchartProps.Inputs.map((tag, index) => {
@@ -84,11 +82,9 @@ const LineCharts = ({
                 if (client.readyState === client.OPEN) {
                   if (typeof e.data === "string") {
                     let jsonData = JSON.parse(e.data);
-                    console.log(jsonData);
                     Promise.all(
                       jsonData.map((data) => {
                         Object.keys(data).map((key) => {
-                          console.log(data[key][1][0]);
                           dataList[myindex].addPoint(
                             {
                               x: data[key][1][0][0] * 1000,

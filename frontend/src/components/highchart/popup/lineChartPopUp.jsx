@@ -8,7 +8,7 @@ import Inputs from "./inputs";
 import ChoseLineMeasure from "../popUpLayout/choseLineMeasue";
 import PopUpItem from "../popUpLayout/popUpItem";
 import CustomLineChart from "../popUpLayout/customLineChart";
-
+import CreateLineWidget from "../popUpLayout/createLineWidget";
 const Linechart = ({ handleClose, title }) => {
   const dispatch = useDispatch();
   const [selectedWidget, setSelectedWidget] = React.useState("Create Widget");
@@ -87,41 +87,7 @@ const Linechart = ({ handleClose, title }) => {
           <>
             <Typography id={"CreateWidget"}>Create Widget</Typography>
             <Grid item xs={12}>
-              <Grid container columnSpacing={2} columns={24}>
-                <PopUpItem type="text" title="Name" />
-                <PopUpItem type="number" title="Name Font Size(em)" />
-              </Grid>
-            </Grid>
-            <Grid item xs={12}>
-              <Grid container columnSpacing={2} columns={24}>
-                <PopUpItem type="number" title="Refresh (seconds)" />
-                <PopUpItem type="number" title="X-Axis Duration (minutes)" />
-              </Grid>
-            </Grid>
-            <Grid item xs={12}>
-              <Grid container rowGap={0.5} columns={24}>
-                <PopUpItem type="checkbox" title="Show Enable X-Axis Reset" />
-                <PopUpItem type="checkbox" title="Show Enable Header Buttons" />
-                <PopUpItem type="checkbox" title="Show Enable Title" />
-                <PopUpItem type="checkbox" title="Show Enable Navbar" />
-                <PopUpItem type="checkbox" title="Show Enable Export" />
-                <PopUpItem type="checkbox" title="Show Enable Range Selector" />
-                <PopUpItem type="checkbox" title="Show Enable Graph Legend" />
-              </Grid>
-            </Grid>
-            <Grid item xs={12}>
-              <Grid container columnSpacing={2} columns={24}>
-                <PopUpItem
-                  type="number"
-                  title="Graph Axis Value Font Size (em)"
-                />
-                <PopUpItem
-                  type="number"
-                  title="Graph Axis Title Font Size (em)"
-                />
-                <PopUpItem type="number" title="Graph Legend Font Size (em)" />
-                <PopUpItem type="number" title="Graph Title Font Size (em)" />
-              </Grid>
+              <CreateLineWidget />
             </Grid>
           </>
         ) : (

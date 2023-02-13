@@ -58,7 +58,6 @@ const ChoseMeasure = () => {
               handleChangeFunc={async (value) => {
                 handleChangeFunc("Transaction Property", value);
                 let res = await ItemLinkService.getTags({ ID: value });
-                console.log(res);
                 setTags(res.data);
               }}
             />
@@ -79,7 +78,6 @@ const ChoseMeasure = () => {
               defaultValue={measure}
               handleChangeFunc={async (value) => {
                 handleChangeFunc("Measurement", value);
-                console.log(tags);
                 handleChangeFunc(
                   "Minimum",
                   tags.filter((e) => e.TAG_ID === value)[0].NORMAL_MINIMUM
