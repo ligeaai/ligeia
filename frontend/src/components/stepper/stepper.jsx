@@ -8,6 +8,69 @@ import Typography from "@mui/material/Typography";
 import { checkMandatory } from "../../services/actions/stepper/stepper";
 import { useDispatch } from "react-redux";
 import { ADD_ERROR_SUCCESS } from "../../services/actions/types";
+import StepConnector, {
+  stepConnectorClasses,
+} from "@mui/material/StepConnector";
+import { styled } from "@mui/material/styles";
+import Check from "@mui/icons-material/Check";
+import { StepButton } from "@mui/material";
+const QontoStepIconRoot = styled("div")(({ theme, ownerState }) => ({
+  color: theme.palette.mode === "dark" ? theme.palette.grey[700] : "#eaeaf0",
+  display: "flex",
+  height: 22,
+  alignItems: "center",
+  ...(ownerState.active && {
+    color: "#784af4",
+  }),
+  "& .QontoStepIcon-completedIcon": {
+    color: "#784af4",
+    zIndex: 1,
+    fontSize: 18,
+  },
+  "& .QontoStepIcon-circle": {
+    width: 8,
+    height: 8,
+    borderRadius: "50%",
+    backgroundColor: "currentColor",
+  },
+}));
+
+function QontoStepIcon(props) {
+  const { active, completed, className } = props;
+
+  return (
+    <QontoStepIconRoot ownerState={{ active }} className={className}>
+      {completed ? (
+        <Check className="QontoStepIcon-completedIcon" />
+      ) : (
+        <div className="QontoStepIcon-circle" />
+      )}
+    </QontoStepIconRoot>
+  );
+}
+const QontoConnector = styled(StepConnector)(({ theme }) => ({
+  [`&.${stepConnectorClasses.alternativeLabel}`]: {
+    top: 10,
+    left: "calc(-50% + 16px)",
+    right: "calc(50% + 16px)",
+  },
+  [`&.${stepConnectorClasses.active}`]: {
+    [`& .${stepConnectorClasses.line}`]: {
+      borderColor: "#784af4",
+    },
+  },
+  [`&.${stepConnectorClasses.completed}`]: {
+    [`& .${stepConnectorClasses.line}`]: {
+      borderColor: "#784af4",
+    },
+  },
+  [`& .${stepConnectorClasses.line}`]: {
+    borderColor:
+      theme.palette.mode === "dark" ? theme.palette.grey[800] : "#eaeaf0",
+    borderTopWidth: 3,
+    borderRadius: 1,
+  },
+}));
 export default function HorizontalLinearStepper({ components, finishFunc }) {
   const dispatch = useDispatch();
   const [activeStep, setActiveStep] = React.useState(0);
@@ -61,10 +124,16 @@ export default function HorizontalLinearStepper({ components, finishFunc }) {
   const handleReset = () => {
     setActiveStep(0);
   };
-
+  const handleStep = (step) => () => {
+    setActiveStep(step);
+  };
   return (
     <Box sx={{ width: "100%", height: "100%" }}>
-      <Stepper activeStep={activeStep}>
+      <Stepper
+        alternativeLabel
+        activeStep={activeStep}
+        connector={<QontoConnector />}
+      >
         {components().map((label, index) => {
           const stepProps = {};
           const labelProps = {};
@@ -73,13 +142,17 @@ export default function HorizontalLinearStepper({ components, finishFunc }) {
           }
           return (
             <Step key={label[0]} {...stepProps}>
-              <StepLabel {...labelProps}>{label[0]}</StepLabel>
+              <StepButton onClick={handleStep(index)}>
+                <StepLabel {...labelProps} StepIconComponent={QontoStepIcon}>
+                  {label[0]}
+                </StepLabel>
+              </StepButton>
             </Step>
           );
         })}
       </Stepper>
       <React.Fragment>
-        <Typography sx={{ mt: 2, mb: 1, minHeight: "calc(100% - 101px)" }}>
+        <Typography sx={{ mt: 2, mb: 1, minHeight: "calc(100% - 134px)" }}>
           {components()[activeStep][1]}
         </Typography>
         <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
