@@ -36,10 +36,10 @@ const Stops = () => {
   };
   return (
     <React.Fragment>
-      {loop.map((e, i) => {
-        return (
-          <Grid item xs={12} key={i}>
-            <Grid container columnSpacing={2}>
+      <Grid container rowGap={2}>
+        {loop.map((e, i) => {
+          return (
+            <Grid container columnSpacing={2} key={i}>
               <Grid item xs={12} sm={6} md={3}>
                 <Grid container rowGap={0.5}>
                   <Grid item xs={12}>
@@ -72,9 +72,9 @@ const Stops = () => {
                 </Grid>
               </Grid>
             </Grid>
-          </Grid>
-        );
-      })}
+          );
+        })}
+      </Grid>
     </React.Fragment>
   );
 };
@@ -102,10 +102,7 @@ const SolidPopUp = ({ handleClose, title }) => {
   const EnableExport = useSelector(
     (state) => state.overviewDialog.highchartProps["Show Enable Export"]
   );
-  let anchorStyle = {
-    textDecoration: "none",
-    color: "#ffffff",
-  };
+
   const values = {
     Name: Name,
     Measurement: Measurements,
@@ -142,10 +139,8 @@ const SolidPopUp = ({ handleClose, title }) => {
             justifyContent: "space-between",
           }}
         >
-          <Grid item sx={{ alignSelf: "center" }}>
-            <a href="#CreateWidget" style={{ ...anchorStyle }}>
-              {title}
-            </a>
+          <Grid item sx={{ alignSelf: "center", color: "text.blue" }}>
+            {title}
           </Grid>
 
           <Grid item>
@@ -237,43 +232,41 @@ const SolidPopUp = ({ handleClose, title }) => {
           </Grid>
         </Grid>
         <Grid item xs={12}>
-          <Grid container rowGap={2}>
-            <Grid item>
-              <Grid container columnSpacing={2}>
-                <Measurement />
-                <Grid item xs={12} sm={6} md={2}>
-                  <Grid container rowGap={0.5}>
-                    <Grid item xs={12}>
-                      Stops
-                    </Grid>
-                    <Grid item xs={12}>
-                      <MyNumberTextField
-                        defaultValue={stops}
-                        handleChangeFunc={(value) => {
-                          dispatch(
-                            cleanStops("Stops", value, ["Low", "High", "Color"])
-                          );
-                        }}
-                        sx={{
-                          fontSize: "14px",
-                          "& .MuiOutlinedInput-input": {
-                            fontSize: "14px",
-                            paddingTop: "4px",
-                            paddingBottom: "4px",
-                            paddingRight: "2px",
-                          },
-                          width: 75,
-                          minWidth: 75,
-                        }}
-                      />
-                    </Grid>
-                  </Grid>
+          <Grid container columnSpacing={2}>
+            <Measurement />
+            <Grid item xs={12} sm={6} md={2}>
+              <Grid container rowGap={0.5}>
+                <Grid item xs={12}>
+                  Stops
+                </Grid>
+                <Grid item xs={12}>
+                  <MyNumberTextField
+                    defaultValue={stops}
+                    handleChangeFunc={(value) => {
+                      dispatch(
+                        cleanStops("Stops", value, ["Low", "High", "Color"])
+                      );
+                    }}
+                    sx={{
+                      fontSize: "14px",
+                      "& .MuiOutlinedInput-input": {
+                        fontSize: "14px",
+                        paddingTop: "4px",
+                        paddingBottom: "4px",
+                        paddingRight: "2px",
+                      },
+                      width: 75,
+                      minWidth: 75,
+                    }}
+                  />
                 </Grid>
               </Grid>
             </Grid>
-            <Grid item xs={12}>
-              <Typography>Stops</Typography>
-            </Grid>
+          </Grid>
+          <Grid item>
+            <Typography>Stops</Typography>
+          </Grid>
+          <Grid item xs={12}>
             <Stops />
           </Grid>
         </Grid>

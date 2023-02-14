@@ -80,7 +80,7 @@ const MeasurementPopUp = ({ handleClose }) => {
             justifyContent: "space-between",
           }}
         >
-          <Grid item sx={{ alignSelf: "center" }}>
+          <Grid item sx={{ alignSelf: "center", color: "text.blue" }}>
             Measurement [Highchart]
           </Grid>
 

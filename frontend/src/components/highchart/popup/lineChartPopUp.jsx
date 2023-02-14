@@ -45,7 +45,7 @@ const Linechart = ({ handleClose, title }) => {
         >
           <Grid
             item
-            sx={{ alignSelf: "center" }}
+            sx={{ alignSelf: "center", color: "text.blue" }}
             onClick={handeleOnClick("Properties")}
           >
             {title}

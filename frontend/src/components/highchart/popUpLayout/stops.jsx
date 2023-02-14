@@ -20,10 +20,10 @@ export const Stops = () => {
   };
   return (
     <React.Fragment>
-      {loop.map((e, i) => {
-        return (
-          <Grid item xs={12} key={i}>
-            <Grid container columnSpacing={2}>
+      <Grid container rowGap={2}>
+        {loop.map((e, i) => {
+          return (
+            <Grid container columnSpacing={2} key={i}>
               <Grid item xs={12} sm={6} md={4.5}>
                 <Grid container rowGap={0.5}>
                   <Grid item xs={12}>
@@ -70,9 +70,9 @@ export const Stops = () => {
                 </Grid>
               </Grid>
             </Grid>
-          </Grid>
-        );
-      })}
+          );
+        })}
+      </Grid>
     </React.Fragment>
   );
 };

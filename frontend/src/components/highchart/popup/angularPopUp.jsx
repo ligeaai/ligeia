@@ -85,7 +85,7 @@ const AngularPopUp = ({ handleClose, title }) => {
             justifyContent: "space-between",
           }}
         >
-          <Grid item sx={{ alignSelf: "center" }}>
+          <Grid item sx={{ alignSelf: "center", color: "text.blue" }}>
             {title}
           </Grid>
 
@@ -177,45 +177,41 @@ const AngularPopUp = ({ handleClose, title }) => {
         </Grid>
 
         <Grid item xs={12}>
-          <Grid container rowGap={2}>
-            <Grid item>
-              <Grid container columnSpacing={2}>
-                <Measurement />
-                <Grid item xs={12} sm={6} md={2}>
-                  <Grid container rowGap={0.5}>
-                    <Grid item xs={12}>
-                      Stops
-                    </Grid>
-                    <Grid item xs={12}>
-                      <MyNumberTextField
-                        defaultValue={stops}
-                        handleChangeFunc={(value) => {
-                          dispatch(
-                            cleanStops("Stops", value, ["Low", "High", "Color"])
-                          );
-                        }}
-                        sx={{
-                          fontSize: "14px",
-                          "& .MuiOutlinedInput-input": {
-                            fontSize: "14px",
-                            paddingTop: "4px",
-                            paddingBottom: "4px",
-                            paddingRight: "2px",
-                          },
-                          width: 75,
-                          minWidth: 75,
-                        }}
-                      />
-                    </Grid>
-                  </Grid>
+          <Grid container columnSpacing={2}>
+            <Measurement />
+            <Grid item xs={12} sm={6} md={2}>
+              <Grid container rowGap={0.5}>
+                <Grid item xs={12}>
+                  Stops
+                </Grid>
+                <Grid item xs={12}>
+                  <MyNumberTextField
+                    defaultValue={stops}
+                    handleChangeFunc={(value) => {
+                      dispatch(
+                        cleanStops("Stops", value, ["Low", "High", "Color"])
+                      );
+                    }}
+                    sx={{
+                      fontSize: "14px",
+                      "& .MuiOutlinedInput-input": {
+                        fontSize: "14px",
+                        paddingTop: "4px",
+                        paddingBottom: "4px",
+                        paddingRight: "2px",
+                      },
+                      width: 75,
+                      minWidth: 75,
+                    }}
+                  />
                 </Grid>
               </Grid>
             </Grid>
-            <Grid item xs={12}>
-              <Typography>Stops</Typography>
-            </Grid>
-            <Stops />
           </Grid>
+        </Grid>
+        <Grid item xs={12}>
+          <Typography sx={{ pb: 2 }}>Stops</Typography>
+          <Stops />
         </Grid>
       </Grid>
     </>
