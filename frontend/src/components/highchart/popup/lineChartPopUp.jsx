@@ -80,7 +80,7 @@ const Linechart = ({ handleClose, title }) => {
       >
         {selectedWidget === "Properties" ? (
           <>
-            <Typography id={"CreateWidget"}>Create Widget</Typography>
+            <Typography>Properties</Typography>
             <Grid item xs={12}>
               <CreateLineWidget />
             </Grid>
@@ -90,7 +90,7 @@ const Linechart = ({ handleClose, title }) => {
         )}
         {selectedWidget === "Assets" ? (
           <>
-            <Typography id={"ChoseMeasurement"}>Chose Measurement</Typography>
+            <Typography>Assets</Typography>
 
             <Grid item xs={12}>
               <ChoseLineMeasure />
@@ -101,9 +101,7 @@ const Linechart = ({ handleClose, title }) => {
         )}
         {selectedWidget === "Measurements" ? (
           <>
-            <Typography id={"ChoseInput"} sx={{ width: "100%" }}>
-              Chose Input
-            </Typography>
+            <Typography sx={{ width: "100%" }}>Measurements</Typography>
             <Grid item xs={12}>
               <Inputs
                 handleChangeFunc={(value) => {
@@ -117,7 +115,7 @@ const Linechart = ({ handleClose, title }) => {
         )}
         {selectedWidget === "Settings" ? (
           <>
-            <Typography id={"Settings"}>Settings</Typography>
+            <Typography>Settings</Typography>
             <Grid item>
               <CustomLineChart />
             </Grid>

@@ -171,21 +171,25 @@ const SolidPopUp = ({ handleClose, title }) => {
           <Grid container rowGap={2}>
             <Grid item xs={12}>
               <Grid container columnSpacing={2} rowGap={2}>
+                <Grid item xs={12}>
+                  <Typography>Properties</Typography>
+                </Grid>
                 <PopUpItem type="text" title="Name" />
                 <PopUpItem type="number" title="Name Font Size(em)" />
                 <PopUpItem type="number" title="Widget Refresh (seconds)" />
-              </Grid>
-            </Grid>
-            <Grid item xs={12}>
-              <Grid container columnSpacing={2} rowGap={2}>
-                <Grid item xs={12}>
-                  <ChoseMeasure />
-                </Grid>
                 <PopUpItem type="number" title="Value Font Size" />
                 <PopUpItem type="number" title="Unit Font Size" />
                 <PopUpItem type="number" title="Tag Name Font Size" />
                 <PopUpItem type="number" title="Time Stamp Font Size" />
                 <PopUpItem type="number" title="Decimal Places" />
+              </Grid>
+            </Grid>
+            <Grid item xs={12}>
+              <Grid container columnSpacing={2} rowGap={2}>
+                <Grid item xs={12}>
+                  <Typography sx={{ pb: 2 }}>Measurement</Typography>
+                  <ChoseMeasure />
+                </Grid>
               </Grid>
             </Grid>
           </Grid>
@@ -233,40 +237,45 @@ const SolidPopUp = ({ handleClose, title }) => {
           </Grid>
         </Grid>
         <Grid item xs={12}>
-          <Grid container rowGap={2} columnSpacing={2}>
-            <Measurement />
-            <Grid item xs={12} sm={6} md={2}>
-              <Grid container rowGap={0.5}>
-                <Grid item xs={12}>
-                  Stops
-                </Grid>
-                <Grid item xs={12}>
-                  <MyNumberTextField
-                    defaultValue={stops}
-                    handleChangeFunc={(value) => {
-                      dispatch(
-                        cleanStops("Stops", value, ["Low", "High", "Color"])
-                      );
-                    }}
-                    sx={{
-                      fontSize: "14px",
-                      "& .MuiOutlinedInput-input": {
-                        fontSize: "14px",
-                        paddingTop: "4px",
-                        paddingBottom: "4px",
-                        paddingRight: "2px",
-                      },
-                      width: 75,
-                      minWidth: 75,
-                    }}
-                  />
+          <Grid container rowGap={2}>
+            <Grid item>
+              <Grid container columnSpacing={2}>
+                <Measurement />
+                <Grid item xs={12} sm={6} md={2}>
+                  <Grid container rowGap={0.5}>
+                    <Grid item xs={12}>
+                      Stops
+                    </Grid>
+                    <Grid item xs={12}>
+                      <MyNumberTextField
+                        defaultValue={stops}
+                        handleChangeFunc={(value) => {
+                          dispatch(
+                            cleanStops("Stops", value, ["Low", "High", "Color"])
+                          );
+                        }}
+                        sx={{
+                          fontSize: "14px",
+                          "& .MuiOutlinedInput-input": {
+                            fontSize: "14px",
+                            paddingTop: "4px",
+                            paddingBottom: "4px",
+                            paddingRight: "2px",
+                          },
+                          width: 75,
+                          minWidth: 75,
+                        }}
+                      />
+                    </Grid>
+                  </Grid>
                 </Grid>
               </Grid>
             </Grid>
+            <Grid item xs={12}>
+              <Typography>Stops</Typography>
+            </Grid>
+            <Stops />
           </Grid>
-        </Grid>
-        <Grid item xs={12}>
-          <Stops />
         </Grid>
       </Grid>
     </>

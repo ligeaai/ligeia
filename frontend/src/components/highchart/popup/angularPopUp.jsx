@@ -47,10 +47,7 @@ const AngularPopUp = ({ handleClose, title }) => {
   const EnableExport = useSelector(
     (state) => state.overviewDialog.highchartProps["Show Enable Export"]
   );
-  let anchorStyle = {
-    textDecoration: "none",
-    color: "#ffffff",
-  };
+
   const values = {
     Name: Name,
     Measurement: Measurements,
@@ -89,9 +86,7 @@ const AngularPopUp = ({ handleClose, title }) => {
           }}
         >
           <Grid item sx={{ alignSelf: "center" }}>
-            <a href="#CreateWidget" style={{ ...anchorStyle }}>
-              {title}
-            </a>
+            {title}
           </Grid>
 
           <Grid item>
@@ -104,6 +99,7 @@ const AngularPopUp = ({ handleClose, title }) => {
       <Grid
         container
         columnSpacing={2}
+        rowGap={2}
         sx={{
           div: { fontSize: "14px" },
           p: 2,
@@ -115,9 +111,7 @@ const AngularPopUp = ({ handleClose, title }) => {
         <Grid item xs={12} sm={9} sx={{ height: "min-content" }}>
           <Grid container rowGap={2}>
             <Grid item xs={12}>
-              <Typography id={"CreateWidget"} sx={{ pb: 1 }}>
-                Create Widget
-              </Typography>
+              <Typography sx={{ pb: 2 }}>Properties</Typography>
               <Grid container columnSpacing={2} rowGap={2}>
                 <PopUpItem type="text" title="Name" />
                 <PopUpItem type="number" title="Name Font Size(em)" />
@@ -132,9 +126,7 @@ const AngularPopUp = ({ handleClose, title }) => {
             <Grid item xs={12}>
               <Grid container columnSpacing={2} rowGap={2}>
                 <Grid item xs={12}>
-                  <Typography id={"ChoseMeasurement"} sx={{ pb: 1 }}>
-                    Chose Measurement
-                  </Typography>
+                  <Typography sx={{ pb: 2 }}>Measurement</Typography>
                   <ChoseMeasure />
                 </Grid>
               </Grid>
@@ -185,40 +177,45 @@ const AngularPopUp = ({ handleClose, title }) => {
         </Grid>
 
         <Grid item xs={12}>
-          <Grid container columnSpacing={2}>
-            <Measurement />
-            <Grid item xs={12} sm={6} md={2}>
-              <Grid container rowGap={0.5}>
-                <Grid item xs={12}>
-                  Stops
-                </Grid>
-                <Grid item xs={12}>
-                  <MyNumberTextField
-                    defaultValue={stops}
-                    handleChangeFunc={(value) => {
-                      dispatch(
-                        cleanStops("Stops", value, ["Low", "High", "Color"])
-                      );
-                    }}
-                    sx={{
-                      fontSize: "14px",
-                      "& .MuiOutlinedInput-input": {
-                        fontSize: "14px",
-                        paddingTop: "4px",
-                        paddingBottom: "4px",
-                        paddingRight: "2px",
-                      },
-                      width: 75,
-                      minWidth: 75,
-                    }}
-                  />
+          <Grid container rowGap={2}>
+            <Grid item>
+              <Grid container columnSpacing={2}>
+                <Measurement />
+                <Grid item xs={12} sm={6} md={2}>
+                  <Grid container rowGap={0.5}>
+                    <Grid item xs={12}>
+                      Stops
+                    </Grid>
+                    <Grid item xs={12}>
+                      <MyNumberTextField
+                        defaultValue={stops}
+                        handleChangeFunc={(value) => {
+                          dispatch(
+                            cleanStops("Stops", value, ["Low", "High", "Color"])
+                          );
+                        }}
+                        sx={{
+                          fontSize: "14px",
+                          "& .MuiOutlinedInput-input": {
+                            fontSize: "14px",
+                            paddingTop: "4px",
+                            paddingBottom: "4px",
+                            paddingRight: "2px",
+                          },
+                          width: 75,
+                          minWidth: 75,
+                        }}
+                      />
+                    </Grid>
+                  </Grid>
                 </Grid>
               </Grid>
             </Grid>
+            <Grid item xs={12}>
+              <Typography>Stops</Typography>
+            </Grid>
+            <Stops />
           </Grid>
-        </Grid>
-        <Grid item xs={12}>
-          <Stops />
         </Grid>
       </Grid>
     </>

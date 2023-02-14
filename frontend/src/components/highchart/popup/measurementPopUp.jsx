@@ -44,10 +44,7 @@ const MeasurementPopUp = ({ handleClose }) => {
   const TimeStamp = useSelector(
     (state) => state.overviewDialog.highchartProps["Show Timestamp"]
   );
-  let anchorStyle = {
-    textDecoration: "none",
-    color: "#ffffff",
-  };
+
   const values = {
     Name: Name,
     Measurement: Measurements,
@@ -84,9 +81,7 @@ const MeasurementPopUp = ({ handleClose }) => {
           }}
         >
           <Grid item sx={{ alignSelf: "center" }}>
-            <a href="#CreateWidget" style={{ ...anchorStyle }}>
-              Measurement [Highchart]
-            </a>
+            Measurement [Highchart]
           </Grid>
 
           <Grid item>
@@ -112,21 +107,25 @@ const MeasurementPopUp = ({ handleClose }) => {
           <Grid container rowGap={2}>
             <Grid item xs={12}>
               <Grid container columnSpacing={2} rowGap={2}>
+                <Grid item xs={12}>
+                  <Typography>Properties</Typography>
+                </Grid>
                 <PopUpItem type="text" title="Name" />
                 <PopUpItem type="number" title="Name Font Size(em)" />
                 <PopUpItem type="number" title="Widget Refresh (seconds)" />
-              </Grid>
-            </Grid>
-            <Grid item xs={12}>
-              <Grid container columnSpacing={2} rowGap={2}>
-                <Grid item xs={12}>
-                  <ChoseMeasure />
-                </Grid>
                 <PopUpItem type="number" title="Value Font Size" />
                 <PopUpItem type="number" title="Unit Font Size" />
                 <PopUpItem type="number" title="Tag Name Font Size" />
                 <PopUpItem type="number" title="Time Stamp Font Size" />
                 <PopUpItem type="number" title="Decimal Places" />
+              </Grid>
+            </Grid>
+            <Grid item xs={12}>
+              <Grid container columnSpacing={2} rowGap={2}>
+                <Grid item xs={12}>
+                  <Typography sx={{ pb: 2 }}>Measurement</Typography>
+                  <ChoseMeasure />
+                </Grid>
               </Grid>
             </Grid>
           </Grid>
@@ -204,6 +203,7 @@ const MeasurementPopUp = ({ handleClose }) => {
           </Grid>
         </Grid>
         <Grid item xs={12}>
+          <Typography sx={{ pb: 2 }}>Stops</Typography>
           <Stops />
         </Grid>
       </Grid>

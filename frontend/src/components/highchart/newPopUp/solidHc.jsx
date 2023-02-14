@@ -78,46 +78,47 @@ function MeasuremenCustom() {
     dispatch(fillMandatory([["Name"], ["Measurement"]]));
   }, []);
   return [
-    ["Create Widget", <CreateWidget />],
-    ["Chose Measurement", <ChoseMeasure />],
+    ["Properties", <CreateWidget />],
+    ["Measurement", <ChoseMeasure />],
     [
       "Stops",
       <>
-        <Grid
-          container
-          columnSpacing={2}
-          rowGap={2}
-          sx={{ div: { fontSize: "14px" } }}
-        >
-          <Measurement />
-          <Grid item xs={12} sm={6} md={3}>
-            <Grid container rowGap={0.5}>
-              <Grid item xs={12}>
-                Stops
-              </Grid>
-              <Grid item xs={12}>
-                <MyNumberTextField
-                  defaultValue={stopsNum}
-                  handleChangeFunc={(value) => {
-                    dispatch(cleanStops("Stops", value, ["Stops", "Color"]));
-                  }}
-                  sx={{
-                    fontSize: "14px",
-                    "& .MuiOutlinedInput-input": {
-                      fontSize: "14px",
-                      paddingTop: "4px",
-                      paddingBottom: "4px",
-                      paddingRight: "2px",
-                    },
-                    width: 75,
-                    minWidth: 75,
-                  }}
-                />
+        <Grid container rowGap={2} sx={{ div: { fontSize: "14px" } }}>
+          <Grid item>
+            <Grid container columnSpacing={2}>
+              <Measurement />
+              <Grid item xs={12} sm={6} md={3}>
+                <Grid container rowGap={0.5}>
+                  <Grid item xs={12}>
+                    Stops
+                  </Grid>
+                  <Grid item xs={12}>
+                    <MyNumberTextField
+                      defaultValue={stopsNum}
+                      handleChangeFunc={(value) => {
+                        dispatch(
+                          cleanStops("Stops", value, ["Stops", "Color"])
+                        );
+                      }}
+                      sx={{
+                        fontSize: "14px",
+                        "& .MuiOutlinedInput-input": {
+                          fontSize: "14px",
+                          paddingTop: "4px",
+                          paddingBottom: "4px",
+                          paddingRight: "2px",
+                        },
+                        width: 75,
+                        minWidth: 75,
+                      }}
+                    />
+                  </Grid>
+                </Grid>
               </Grid>
             </Grid>
           </Grid>
+          <Stops />
         </Grid>
-        <Stops />
       </>,
     ],
   ];
