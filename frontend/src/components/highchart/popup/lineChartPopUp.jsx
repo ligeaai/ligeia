@@ -11,7 +11,7 @@ import CustomLineChart from "../popUpLayout/customLineChart";
 import CreateLineWidget from "../popUpLayout/createLineWidget";
 const Linechart = ({ handleClose, title }) => {
   const dispatch = useDispatch();
-  const [selectedWidget, setSelectedWidget] = React.useState("Create Widget");
+  const [selectedWidget, setSelectedWidget] = React.useState("Properties");
   const handleChangeFunc = (key, val) => {
     dispatch(changeValeus(key, val));
   };
@@ -46,16 +46,11 @@ const Linechart = ({ handleClose, title }) => {
           <Grid
             item
             sx={{ alignSelf: "center" }}
-            onClick={handeleOnClick("Create Widget")}
+            onClick={handeleOnClick("Properties")}
           >
             {title}
           </Grid>
-          {[
-            "Create Widget",
-            "Chose Measurement",
-            "Chose Input",
-            "Settings",
-          ].map((e) => (
+          {["Properties", "Assets", "Measurements", "Settings"].map((e) => (
             <Grid
               item
               sx={{ alignSelf: "center", cursor: "pointer" }}
@@ -83,7 +78,7 @@ const Linechart = ({ handleClose, title }) => {
           alignContent: "flex-start",
         }}
       >
-        {selectedWidget === "Create Widget" ? (
+        {selectedWidget === "Properties" ? (
           <>
             <Typography id={"CreateWidget"}>Create Widget</Typography>
             <Grid item xs={12}>
@@ -93,7 +88,7 @@ const Linechart = ({ handleClose, title }) => {
         ) : (
           <></>
         )}
-        {selectedWidget === "Chose Measurement" ? (
+        {selectedWidget === "Assets" ? (
           <>
             <Typography id={"ChoseMeasurement"}>Chose Measurement</Typography>
 
@@ -104,7 +99,7 @@ const Linechart = ({ handleClose, title }) => {
         ) : (
           <></>
         )}
-        {selectedWidget === "Chose Input" ? (
+        {selectedWidget === "Measurements" ? (
           <>
             <Typography id={"ChoseInput"} sx={{ width: "100%" }}>
               Chose Input

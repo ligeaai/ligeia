@@ -25,15 +25,15 @@ function LineChartPopUp() {
     dispatch(fillMandatory([["Name"], ["Transaction Property"], ["Inputs"]]));
   }, []);
   return [
-    ["Create Widget", <CreateLineWidget />],
+    ["Proporties", <CreateLineWidget />],
     [
-      "Chose Measurement",
+      "Assets",
       <>
         <ChoseLineMeasure />
       </>,
     ],
     [
-      "Chose Input",
+      "Measurements",
       <>
         <Box sx={{ ml: 2, fontSize: "14px" }}>Inputs</Box>
         <Inputs
