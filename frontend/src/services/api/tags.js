@@ -13,12 +13,9 @@ const getTagItem = (body) => {
     return instance.post("/tags/item/", body, { ...config(), cancelToken: cancelToken.token });
 };
 
-
 const getTagItemS = (body) => {
-
     return instance.post("/tags/item/", body, { ...config() });
 };
-
 
 const getTagsProperty = (body) => {
     return instance.post("/tags/tags-property/", body, config());

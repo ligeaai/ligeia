@@ -82,7 +82,6 @@ const MyTap = React.forwardRef(
             backgroundColor: "inherit",
             padding: "4px",
             fontSize: active === i ? "14px" : "12px",
-
             display: "flex",
             marginY: "2px",
             marginRight: "2px",
@@ -250,7 +249,7 @@ function MyTabs() {
             ? "calc(100vh - 56px - 48px )"
             : "calc(100vh - 60px - 50px - 16px - 48px )",
         }}
-        id="myResponsiveGridLayout"
+        //    id="myResponsiveGridLayout"
       >
         {Object.keys(widgets).map((widgetProps, i) => {
           return (
