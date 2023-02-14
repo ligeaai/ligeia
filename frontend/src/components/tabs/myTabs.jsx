@@ -21,7 +21,8 @@ import palette from "../../themes/palette";
 import { MyTextField } from "..";
 import { setConfirmation } from "../../services/reducers/confirmation";
 import { Button } from "@mui/material";
-
+import IconButton from "@mui/material/IconButton";
+import AddIcon from "@mui/icons-material/Add";
 const TabPanel = (props) => {
   const { children, value, index, ...other } = props;
 
@@ -213,28 +214,15 @@ function MyTabs() {
               handleChange={handleChange}
             ></MyTap>
           ))}
-          <Grid
-            key={`a`}
-            container
-            sx={{
-              height: "20px",
-              marginY: "2px",
-              cursor: "pointer",
-              mt: 1,
-              width: "50px",
-              justifyContent: "center",
-              alignItems: "center",
+          <IconButton
+            sx={{ maxHeight: "30px", width: "30px", m: 0.5 }}
+            key="a"
+            onClick={() => {
+              dispatch(addNewTabItem());
             }}
           >
-            <Grid
-              item
-              onClick={() => {
-                dispatch(addNewTabItem());
-              }}
-            >
-              +
-            </Grid>
-          </Grid>
+            <AddIcon />
+          </IconButton>
         </Tabs>
       </AppBar>
 
