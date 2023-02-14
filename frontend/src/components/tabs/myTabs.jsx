@@ -190,7 +190,15 @@ function MyTabs() {
         // },
       }}
     >
-      <AppBar position="static" sx={{ width: "100%", boxShadow: "none" }}>
+      <AppBar
+        position="static"
+        sx={{
+          width: "100%",
+          boxShadow: "none",
+          display: "flex",
+          alignContent: "center",
+        }}
+      >
         <Tabs
           value={value}
           onChange={handleChange}
@@ -214,15 +222,17 @@ function MyTabs() {
               handleChange={handleChange}
             ></MyTap>
           ))}
-          <IconButton
-            sx={{ maxHeight: "30px", width: "30px", m: 0.5 }}
-            key="a"
-            onClick={() => {
-              dispatch(addNewTabItem());
-            }}
-          >
-            <AddIcon />
-          </IconButton>
+          <Grid item>
+            <IconButton
+              sx={{ maxHeight: "30px", width: "30px", mt: "2px" }}
+              key="a"
+              onClick={() => {
+                dispatch(addNewTabItem());
+              }}
+            >
+              <AddIcon fontSize="small" />
+            </IconButton>
+          </Grid>
         </Tabs>
       </AppBar>
 
