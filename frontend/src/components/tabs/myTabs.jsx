@@ -88,6 +88,7 @@ const MyTap = React.forwardRef(
             marginRight: "2px",
             alignItems: "center",
             position: "relative",
+            border: active === i ? "none" : "1px solid #ffffff",
             ":hover": {
               backgroundColor: "hover.primary",
             },
@@ -224,7 +225,13 @@ function MyTabs() {
           ))}
           <Grid item>
             <IconButton
-              sx={{ maxHeight: "30px", width: "30px", mt: "2px" }}
+              variant="outlined"
+              sx={{
+                maxHeight: "30px",
+                width: "30px",
+                mt: "2px",
+                border: "1px solid #ffffff",
+              }}
               key="a"
               onClick={() => {
                 dispatch(addNewTabItem());
