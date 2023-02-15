@@ -19,6 +19,10 @@ import {
   updateChecked,
   setCheckeds,
 } from "../../../services/actions/overview/taps";
+import ItemLinkService from "../../../services/api/itemLink";
+import axios from "axios";
+
+let cancelToken;
 const RenderRow = (props) => {
   const {
     data,
@@ -79,6 +83,9 @@ const Inputs = (props) => {
   const Inputs = useSelector(
     (state) => state.overviewDialog.highchartProps["Inputs"]
   );
+  const transactionProps = useSelector(
+    (state) => state.overviewDialog.highchartProps["Transaction Property"]
+  );
   const [checked, setChecked] = React.useState([]);
   const [left, setLeft] = React.useState([]);
   const [right, setRight] = React.useState([]);
@@ -89,6 +96,25 @@ const Inputs = (props) => {
     setRight(tags.filter((e) => Inputs.some((a) => a.TAG_ID === e.TAG_ID)));
     dispatch(setCheckeds(tags));
   }, [tags]);
+  React.useEffect(() => {
+    async function myFunc() {
+      if (cancelToken) {
+        cancelToken.cancel();
+      }
+      cancelToken = axios.CancelToken.source();
+      let ids = [];
+      transactionProps.map((e) => {
+        ids.push(e[0]);
+      });
+      const body = JSON.stringify({ ID: ids });
+      let res = await ItemLinkService.getItemTags(body, cancelToken);
+      dispatch({
+        type: "SET_MEASUREMENT_DATA",
+        payload: res.data,
+      });
+    }
+    myFunc();
+  }, []);
   const handleToggle = (value, val) => {
     dispatch(updateChecked(value.TAG_ID, val));
     const currentIndex = checked.indexOf(value);

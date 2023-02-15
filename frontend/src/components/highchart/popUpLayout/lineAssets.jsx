@@ -16,10 +16,7 @@ import {
   updateChecked,
   setCheckedsAsset,
 } from "../../../services/actions/overview/taps";
-import ItemLinkService from "../../../services/api/itemLink";
-import axios from "axios";
 
-let cancelToken;
 const RenderRow = (props) => {
   const {
     data,
@@ -94,25 +91,7 @@ const Inputs = (props) => {
     );
     dispatch(setCheckedsAsset(ItemData));
   }, [ItemData]);
-  React.useEffect(() => {
-    async function myFunc() {
-      if (cancelToken) {
-        cancelToken.cancel();
-      }
-      cancelToken = axios.CancelToken.source();
-      let ids = [];
-      transactionProps.map((e) => {
-        ids.push(e[0]);
-      });
-      const body = JSON.stringify({ ID: ids });
-      let res = await ItemLinkService.getItemTags(body, cancelToken);
-      dispatch({
-        type: "SET_MEASUREMENT_DATA",
-        payload: res.data,
-      });
-    }
-    myFunc();
-  }, [transactionProps]);
+
   const handleToggle = (value, val) => {
     dispatch(updateChecked(value[0], val));
     const currentIndex = checked.indexOf(value);
