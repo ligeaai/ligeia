@@ -17,20 +17,6 @@ accessibility(Highcharts);
 data(Highcharts);
 boost(Highcharts);
 const LineCharts = ({ highchartProps, width, height, liveData, chartType }) => {
-  const yAxisTitles = [];
-  highchartProps.Inputs.map((e, index) => {
-    if (!highchartProps[`[${e.NAME}] Disable Data Grouping`]) {
-      yAxisTitles.push({
-        id: "yaxis-" + index,
-        endOnTick: true,
-        startOnTick: true,
-        type: "area",
-
-        opposite: false,
-      });
-    }
-  });
-
   React.useEffect(() => {
     return () => {
       client.map((e) => {

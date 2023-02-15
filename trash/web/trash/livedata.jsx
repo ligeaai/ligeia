@@ -7,7 +7,7 @@ import HighchartsReact from "highcharts-react-official";
 import exporting from "highcharts/modules/exporting";
 import data from "highcharts/modules/data";
 import accessibility from "highcharts/modules/accessibility";
-import { wsBaseUrl } from "../../../services/baseApi";
+import { wsBaseUrl } from "../../../frontend/src/services/baseApi";
 import { height } from "@mui/system";
 
 let client = [];
@@ -26,36 +26,36 @@ const LineCharts = ({
   const yAxisTitles = [];
   let yAxiskey = {};
 
-  highchartProps.Inputs.map((e, i) => {
-    if (!highchartProps[`[${e.NAME}] Disable Data Grouping`]) {
-      if (!yAxiskey.hasOwnProperty(`${e.UOM_QUANTITY_TYPE} (${e.UOM})`)) {
-        yAxiskey[`${e.UOM_QUANTITY_TYPE} (${e.UOM})`] = i;
-        yAxisTitles.push({
-          id: "yaxis-" + i,
-          title: {
-            text: `${e.UOM_QUANTITY_TYPE} (${e.UOM})`,
-            style: {
-              fontSize:
-                highchartProps["Graph Axis Title Font Size (em)"] === ""
-                  ? "11px"
-                  : `${highchartProps["Graph Axis Title Font Size (em)"]}px`,
-            },
-          },
-          labels: {
-            style: {
-              fontSize:
-                highchartProps["Graph Axis Value Font Size (em)"] === ""
-                  ? 11
-                  : highchartProps["Graph Axis Value Font Size (em)"],
-            },
-          },
-          endOnTick: true,
-          startOnTick: true,
-          opposite: false,
-        });
-      }
-    }
-  });
+  // highchartProps.Inputs.map((e, i) => {
+  //   if (!highchartProps[`[${e.NAME}] Disable Data Grouping`]) {
+  //     if (!yAxiskey.hasOwnProperty(`${e.UOM_QUANTITY_TYPE} (${e.UOM})`)) {
+  //       yAxiskey[`${e.UOM_QUANTITY_TYPE} (${e.UOM})`] = i;
+  //       yAxisTitles.push({
+  //         id: "yaxis-" + i,
+  //         title: {
+  //           text: `${e.UOM_QUANTITY_TYPE} (${e.UOM})`,
+  //           style: {
+  //             fontSize:
+  //               highchartProps["Graph Axis Title Font Size (em)"] === ""
+  //                 ? "11px"
+  //                 : `${highchartProps["Graph Axis Title Font Size (em)"]}px`,
+  //           },
+  //         },
+  //         labels: {
+  //           style: {
+  //             fontSize:
+  //               highchartProps["Graph Axis Value Font Size (em)"] === ""
+  //                 ? 11
+  //                 : highchartProps["Graph Axis Value Font Size (em)"],
+  //           },
+  //         },
+  //         endOnTick: true,
+  //         startOnTick: true,
+  //         opposite: false,
+  //       });
+  //     }
+  //   }
+  // });
 
   React.useEffect(() => {
     return () => {
@@ -74,16 +74,13 @@ const LineCharts = ({
       zoomBySingleTouch: true,
       zoomType: "x",
       type: chartType,
-      reflow: true,
       events: {
         load: function () {
           var series = this;
-          let dataList = [];
           client.map((e) => {
             e.close();
           });
           highchartProps.Inputs.map((tag, index) => {
-            const myindex = index;
             client[index] = new W3CWebSocket(
               `${wsBaseUrl}/ws/tags/${tag.TAG_ID}`
             );
@@ -96,23 +93,24 @@ const LineCharts = ({
             client[index].onclose = function () {
               console.log("WebSocket Client Closed");
             };
-            dataList[index] = series.series[index];
             client[index].onmessage = function (e) {
               async function sendNumber() {
                 if (client.readyState === client.OPEN) {
                   if (typeof e.data === "string") {
                     let jsonData = JSON.parse(e.data);
+                    console.log(jsonData);
                     Promise.all(
                       jsonData.map((data) => {
                         Object.keys(data).map((key) => {
-                          dataList[myindex].addPoint(
+                          console.log(series.series);
+                          series.series[index].addPoint(
                             {
                               x: data[key][1][0][0] * 1000,
                               y: data[key][1][0][1],
                             },
                             true,
                             false,
-                            false
+                            true
                           );
                         });
                       })
@@ -121,8 +119,51 @@ const LineCharts = ({
                   }
                 }
               }
+
               sendNumber();
             };
+
+            if (
+              !yAxiskey.hasOwnProperty(`${tag.UOM_QUANTITY_TYPE} (${tag.UOM})`)
+            ) {
+              yAxiskey[`${tag.UOM_QUANTITY_TYPE} (${tag.UOM})`] = index;
+              series.addAxis(
+                {
+                  id: "yaxis-" + index,
+                  opposite: false,
+                  title: {
+                    text: `${tag.UOM_QUANTITY_TYPE} (${tag.UOM})`,
+                    style: {
+                      fontSize:
+                        highchartProps["Graph Axis Title Font Size (em)"] === ""
+                          ? "11px"
+                          : `${highchartProps["Graph Axis Title Font Size (em)"]}px`,
+                    },
+                  },
+                  labels: {
+                    style: {
+                      fontSize:
+                        highchartProps["Graph Axis Value Font Size (em)"] === ""
+                          ? 11
+                          : highchartProps["Graph Axis Value Font Size (em)"],
+                    },
+                  },
+                },
+                false
+              );
+            }
+            console.log(index);
+            series.addSeries({
+              yAxis:
+                "yaxis-" + yAxiskey[`${tag.UOM_QUANTITY_TYPE} (${tag.UOM})`],
+              name: tag.NAME,
+
+              color: highchartProps["Enable Custom Colors"]
+                ? highchartProps[`[${tag.NAME}] Color`]
+                : "",
+
+              data: [],
+            });
           });
         },
       },
@@ -175,7 +216,7 @@ const LineCharts = ({
           text: "All",
         },
       ],
-      selected: highchartProps["Show Enable Navbar"] ? 6 : 8,
+      selected: 7,
     },
     credits: {
       enabled: false,
@@ -193,22 +234,21 @@ const LineCharts = ({
         type: "datetime",
         min: new Date().getTime() - 30 * 24 * 60 * 60 * 1000,
         max: new Date().getTime() + 1000,
-
-        ordinal: false,
         endOnTick: false,
         startOnTick: false,
+        ordinal: false,
       },
-      series: [
-        ...highchartProps.Inputs.map((e) => {
-          return {
-            yAxis: "yaxis-" + yAxiskey[`${e.UOM_QUANTITY_TYPE} (${e.UOM})`],
-            name: e.NAME,
-            color: highchartProps["Enable Custom Colors"]
-              ? highchartProps[`[${e.NAME}] Color`]
-              : "",
-          };
-        }),
-      ],
+      // series: [
+      //   ...highchartProps.Inputs.map((e) => {
+      //     return {
+      //       yAxis: "yaxis-" + yAxiskey[`${e.UOM_QUANTITY_TYPE} (${e.UOM})`],
+      //       name: e.NAME,
+      //       color: highchartProps["Enable Custom Colors"]
+      //         ? highchartProps[`[${e.NAME}] Color`]
+      //         : "",
+      //     };
+      //   }),
+      // ],
     },
     navigation: {
       buttonOptions: {
@@ -239,25 +279,24 @@ const LineCharts = ({
       startOnTick: false,
       ordinal: false,
     },
-    yAxis: [...yAxisTitles],
-    series: [
-      ...highchartProps.Inputs.map((e, i) => {
-        return {
-          yAxis: "yaxis-" + yAxiskey[`${e.UOM_QUANTITY_TYPE} (${e.UOM})`],
-          name: e.NAME,
-          color: highchartProps["Enable Custom Colors"]
-            ? highchartProps[`[${e.NAME}] Color`]
-            : "",
-
-          dataGrouping: {
-            units: [
-              ["week", [1]],
-              ["month", [1, 2, 3, 4, 6]],
-            ],
-          },
-        };
-      }),
-    ],
+    //yAxis: [...yAxisTitles],
+    //series: [
+    // ...highchartProps.Inputs.map((e, i) => {
+    //   return {
+    //     yAxis: "yaxis-" + yAxiskey[`${e.UOM_QUANTITY_TYPE} (${e.UOM})`],
+    //     name: e.NAME,
+    //     color: highchartProps["Enable Custom Colors"]
+    //       ? highchartProps[`[${e.NAME}] Color`]
+    //       : "",
+    //     // dataGrouping: {
+    //     //   units: [
+    //     //     ["week", [1]],
+    //     //     ["month", [1, 2, 3, 4, 6]],
+    //     //   ],
+    //     // },
+    //   };
+    // }),
+    // ],
   };
 
   return (
