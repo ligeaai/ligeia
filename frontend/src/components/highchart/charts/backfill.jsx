@@ -49,6 +49,7 @@ const LineCharts = ({ highchartProps, width, height, liveData, chartType }) => {
         load: function () {
           var series = this;
           let dataList = [];
+          let yAxiskey = {};
           client.map((e) => {
             e.close();
           });
@@ -85,39 +86,48 @@ const LineCharts = ({ highchartProps, width, height, liveData, chartType }) => {
                         data.push([parseInt(e.timestamp) * 1000, e.tag_value]);
                       }
                     });
+                    if (
+                      !yAxiskey.hasOwnProperty(
+                        `${tag.UOM_QUANTITY_TYPE} (${tag.UOM})`
+                      )
+                    ) {
+                      yAxiskey[`${tag.UOM_QUANTITY_TYPE} (${tag.UOM})`] = index;
+                      series.addAxis(
+                        {
+                          id: "yaxis-" + index,
+                          opposite: false,
+                          title: {
+                            text: `${tag.UOM_QUANTITY_TYPE} (${tag.UOM})`,
+                            style: {
+                              fontSize:
+                                highchartProps[
+                                  "Graph Axis Title Font Size (em)"
+                                ] === ""
+                                  ? "11px"
+                                  : `${highchartProps["Graph Axis Title Font Size (em)"]}px`,
+                            },
+                          },
+                          labels: {
+                            style: {
+                              fontSize:
+                                highchartProps[
+                                  "Graph Axis Value Font Size (em)"
+                                ] === ""
+                                  ? 11
+                                  : highchartProps[
+                                      "Graph Axis Value Font Size (em)"
+                                    ],
+                            },
+                          },
+                        },
+                        false
+                      );
+                    }
 
-                    series.addAxis(
-                      {
-                        id: "yaxis-" + index,
-                        opposite: false,
-                        title: {
-                          text: `${tag.UOM_QUANTITY_TYPE} (${tag.UOM})`,
-                          style: {
-                            fontSize:
-                              highchartProps[
-                                "Graph Axis Title Font Size (em)"
-                              ] === ""
-                                ? "11px"
-                                : `${highchartProps["Graph Axis Title Font Size (em)"]}px`,
-                          },
-                        },
-                        labels: {
-                          style: {
-                            fontSize:
-                              highchartProps[
-                                "Graph Axis Value Font Size (em)"
-                              ] === ""
-                                ? 11
-                                : highchartProps[
-                                    "Graph Axis Value Font Size (em)"
-                                  ],
-                          },
-                        },
-                      },
-                      false
-                    );
                     series.addSeries({
-                      yAxis: "yaxis-" + index,
+                      yAxis:
+                        "yaxis-" +
+                        yAxiskey[`${tag.UOM_QUANTITY_TYPE} (${tag.UOM})`],
                       name: tag.NAME,
 
                       color: highchartProps["Enable Custom Colors"]

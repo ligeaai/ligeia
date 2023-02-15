@@ -24,28 +24,34 @@ const LineCharts = ({
   chartType,
 }) => {
   const yAxisTitles = [];
-  highchartProps.Inputs.map((e) => {
-    if (!highchartProps[`[${e.NAME}] Disable Data Grouping`]) {
-      yAxisTitles.push({
-        title: {
-          text: `${e.UOM_QUANTITY_TYPE} (${e.UOM})`,
-          style: {
-            fontSize:
-              highchartProps["Graph Axis Title Font Size (em)"] === ""
-                ? "11px"
-                : `${highchartProps["Graph Axis Title Font Size (em)"]}px`,
-          },
-        },
+  let yAxiskey = {};
 
-        endOnTick: true,
-        startOnTick: true,
-        opposite: false,
-      });
+  highchartProps.Inputs.map((e, i) => {
+    if (!highchartProps[`[${e.NAME}] Disable Data Grouping`]) {
+      if (!yAxiskey.hasOwnProperty(`${e.UOM_QUANTITY_TYPE} (${e.UOM})`)) {
+        yAxiskey[`${e.UOM_QUANTITY_TYPE} (${e.UOM})`] = i;
+        yAxisTitles.push({
+          id: "yaxis-" + i,
+          title: {
+            text: `${e.UOM_QUANTITY_TYPE} (${e.UOM})`,
+            style: {
+              fontSize:
+                highchartProps["Graph Axis Title Font Size (em)"] === ""
+                  ? "11px"
+                  : `${highchartProps["Graph Axis Title Font Size (em)"]}px`,
+            },
+          },
+          endOnTick: true,
+          startOnTick: true,
+          opposite: false,
+        });
+      }
     }
   });
 
   React.useEffect(() => {
     return () => {
+      yAxiskey = {};
       Promise.all(
         client.map((e) => {
           e.close();
@@ -156,6 +162,7 @@ const LineCharts = ({
       series: [
         ...highchartProps.Inputs.map((e) => {
           return {
+            yAxis: "yaxis-" + yAxiskey[`${e.UOM_QUANTITY_TYPE} (${e.UOM})`],
             name: e.NAME,
             color: highchartProps["Enable Custom Colors"]
               ? highchartProps[`[${e.NAME}] Color`]
@@ -205,7 +212,7 @@ const LineCharts = ({
     series: [
       ...highchartProps.Inputs.map((e, i) => {
         return {
-          yAxis: i,
+          yAxis: "yaxis-" + yAxiskey[`${e.UOM_QUANTITY_TYPE} (${e.UOM})`],
           name: e.NAME,
           color: highchartProps["Enable Custom Colors"]
             ? highchartProps[`[${e.NAME}] Color`]
