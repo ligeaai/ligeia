@@ -97,9 +97,13 @@ const StyledTreeItem = styled((props) => (
 }));
 const MyStyledTreeItem = React.memo(({ myItems, path }) => {
   const dispatch = useDispatch();
-  const selected = useSelector(
-    (state) => state.collapseMenu.selectedItem.LINK_ID
-  );
+  const selected = useSelector((state) => {
+    try {
+      return state.collapseMenu.selectedItem.LINK_ID;
+    } catch {
+      return "";
+    }
+  });
   const onHandleClick = async (way, e) => {
     dispatch(updateCouchDb());
     dispatch(await setSelectedCollapseMenu({ ...e, path: way }));
