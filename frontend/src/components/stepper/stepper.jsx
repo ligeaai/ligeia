@@ -1,5 +1,6 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
+import Divider from "@mui/material/Divider";
 import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
@@ -130,7 +131,7 @@ export default function HorizontalLinearStepper({ components, finishFunc }) {
   return (
     <Box sx={{ width: "100%", height: "100%" }}>
       <Stepper
-        alternativeLabel
+        //alternativeLabel
         activeStep={activeStep}
         connector={<QontoConnector />}
       >
@@ -151,6 +152,7 @@ export default function HorizontalLinearStepper({ components, finishFunc }) {
           );
         })}
       </Stepper>
+      <Divider sx={{ mt: 2 }}></Divider>
       <React.Fragment>
         <Typography sx={{ mt: 2, mb: 1, minHeight: "calc(100% - 134px)" }}>
           {components()[activeStep][1]}
