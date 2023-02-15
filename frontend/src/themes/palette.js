@@ -35,6 +35,7 @@ const Palette = () => {
                 secondary: "#616161", // card header text
                 success: "#9e9e9e", //card info text
                 info: "#37474f",
+                blue: "#002984"
 
 
             },
@@ -113,6 +114,8 @@ const Palette = () => {
                 secondary: "#eeeeee", // card header text for dark
                 success: "#e0e0e0", //card info text for dark
                 info: "#424242",
+                blue: "#33eaff"
+
             },
 
             background: {

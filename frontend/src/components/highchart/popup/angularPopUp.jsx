@@ -47,10 +47,7 @@ const AngularPopUp = ({ handleClose, title }) => {
   const EnableExport = useSelector(
     (state) => state.overviewDialog.highchartProps["Show Enable Export"]
   );
-  let anchorStyle = {
-    textDecoration: "none",
-    color: "#ffffff",
-  };
+
   const values = {
     Name: Name,
     Measurement: Measurements,
@@ -88,10 +85,8 @@ const AngularPopUp = ({ handleClose, title }) => {
             justifyContent: "space-between",
           }}
         >
-          <Grid item sx={{ alignSelf: "center" }}>
-            <a href="#CreateWidget" style={{ ...anchorStyle }}>
-              {title}
-            </a>
+          <Grid item sx={{ alignSelf: "center", color: "text.blue" }}>
+            {title}
           </Grid>
 
           <Grid item>
@@ -104,6 +99,7 @@ const AngularPopUp = ({ handleClose, title }) => {
       <Grid
         container
         columnSpacing={2}
+        rowGap={2}
         sx={{
           div: { fontSize: "14px" },
           p: 2,
@@ -115,9 +111,7 @@ const AngularPopUp = ({ handleClose, title }) => {
         <Grid item xs={12} sm={9} sx={{ height: "min-content" }}>
           <Grid container rowGap={2}>
             <Grid item xs={12}>
-              <Typography id={"CreateWidget"} sx={{ pb: 1 }}>
-                Create Widget
-              </Typography>
+              <Typography sx={{ pb: 2 }}>Properties</Typography>
               <Grid container columnSpacing={2} rowGap={2}>
                 <PopUpItem type="text" title="Name" />
                 <PopUpItem type="number" title="Name Font Size(em)" />
@@ -132,9 +126,7 @@ const AngularPopUp = ({ handleClose, title }) => {
             <Grid item xs={12}>
               <Grid container columnSpacing={2} rowGap={2}>
                 <Grid item xs={12}>
-                  <Typography id={"ChoseMeasurement"} sx={{ pb: 1 }}>
-                    Chose Measurement
-                  </Typography>
+                  <Typography sx={{ pb: 2 }}>Measurement</Typography>
                   <ChoseMeasure />
                 </Grid>
               </Grid>
@@ -218,6 +210,7 @@ const AngularPopUp = ({ handleClose, title }) => {
           </Grid>
         </Grid>
         <Grid item xs={12}>
+          <Typography sx={{ pb: 2 }}>Stops</Typography>
           <Stops />
         </Grid>
       </Grid>

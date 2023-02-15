@@ -36,10 +36,10 @@ const Stops = () => {
   };
   return (
     <React.Fragment>
-      {loop.map((e, i) => {
-        return (
-          <Grid item xs={12} key={i}>
-            <Grid container columnSpacing={2}>
+      <Grid container rowGap={2}>
+        {loop.map((e, i) => {
+          return (
+            <Grid container columnSpacing={2} key={i}>
               <Grid item xs={12} sm={6} md={3}>
                 <Grid container rowGap={0.5}>
                   <Grid item xs={12}>
@@ -72,9 +72,9 @@ const Stops = () => {
                 </Grid>
               </Grid>
             </Grid>
-          </Grid>
-        );
-      })}
+          );
+        })}
+      </Grid>
     </React.Fragment>
   );
 };
@@ -102,10 +102,7 @@ const SolidPopUp = ({ handleClose, title }) => {
   const EnableExport = useSelector(
     (state) => state.overviewDialog.highchartProps["Show Enable Export"]
   );
-  let anchorStyle = {
-    textDecoration: "none",
-    color: "#ffffff",
-  };
+
   const values = {
     Name: Name,
     Measurement: Measurements,
@@ -142,10 +139,8 @@ const SolidPopUp = ({ handleClose, title }) => {
             justifyContent: "space-between",
           }}
         >
-          <Grid item sx={{ alignSelf: "center" }}>
-            <a href="#CreateWidget" style={{ ...anchorStyle }}>
-              {title}
-            </a>
+          <Grid item sx={{ alignSelf: "center", color: "text.blue" }}>
+            {title}
           </Grid>
 
           <Grid item>
@@ -171,21 +166,25 @@ const SolidPopUp = ({ handleClose, title }) => {
           <Grid container rowGap={2}>
             <Grid item xs={12}>
               <Grid container columnSpacing={2} rowGap={2}>
+                <Grid item xs={12}>
+                  <Typography>Properties</Typography>
+                </Grid>
                 <PopUpItem type="text" title="Name" />
                 <PopUpItem type="number" title="Name Font Size(em)" />
                 <PopUpItem type="number" title="Widget Refresh (seconds)" />
-              </Grid>
-            </Grid>
-            <Grid item xs={12}>
-              <Grid container columnSpacing={2} rowGap={2}>
-                <Grid item xs={12}>
-                  <ChoseMeasure />
-                </Grid>
                 <PopUpItem type="number" title="Value Font Size" />
                 <PopUpItem type="number" title="Unit Font Size" />
                 <PopUpItem type="number" title="Tag Name Font Size" />
                 <PopUpItem type="number" title="Time Stamp Font Size" />
                 <PopUpItem type="number" title="Decimal Places" />
+              </Grid>
+            </Grid>
+            <Grid item xs={12}>
+              <Grid container columnSpacing={2} rowGap={2}>
+                <Grid item xs={12}>
+                  <Typography sx={{ pb: 2 }}>Measurement</Typography>
+                  <ChoseMeasure />
+                </Grid>
               </Grid>
             </Grid>
           </Grid>
@@ -233,7 +232,7 @@ const SolidPopUp = ({ handleClose, title }) => {
           </Grid>
         </Grid>
         <Grid item xs={12}>
-          <Grid container rowGap={2} columnSpacing={2}>
+          <Grid container columnSpacing={2}>
             <Measurement />
             <Grid item xs={12} sm={6} md={2}>
               <Grid container rowGap={0.5}>
@@ -264,9 +263,12 @@ const SolidPopUp = ({ handleClose, title }) => {
               </Grid>
             </Grid>
           </Grid>
-        </Grid>
-        <Grid item xs={12}>
-          <Stops />
+          <Grid item>
+            <Typography>Stops</Typography>
+          </Grid>
+          <Grid item xs={12}>
+            <Stops />
+          </Grid>
         </Grid>
       </Grid>
     </>

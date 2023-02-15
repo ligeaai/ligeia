@@ -43,7 +43,20 @@ class UomDetialsView(generics.CreateAPIView):
 
     def post(self, request, *args, **kwargs):
         queryset = uom.objects.filter(QUANTITY_TYPE=request.data.get("QUANTITY_TYPE"))
+        serializer = UomDetailsSerializer(queryset, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
+
+class UomDetialsAllView(generics.ListAPIView):
+
+    serializer_class = UomDetailsSerializer
+    permission_classes = [permissions.AllowAny]
+
+    def get_queryset():
+        pass
+
+    def get(self, request, *args, **kwargs):
+        queryset = uom.objects.all()
         serializer = UomDetailsSerializer(queryset, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 

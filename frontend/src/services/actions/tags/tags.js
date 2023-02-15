@@ -34,13 +34,16 @@ const _fillUuids = (rows) => async (dispatch, getState) => {
     })
 
 }
-
+const swapToYYYYMMDD = (props) => {
+    return `${props[6]}${props[7]}${props[8]}${props[9]}-${props[3]}${props[4]}-${props[0]}${props[1]}`
+}
 export const _fillTagData = (tagId) => async (dispatch, getState) => {
     try {
         const body = JSON.stringify({ TAG_ID: tagId })
 
         let res = await TagService.getTagItem(body)
-        console.log(res);
+        res.data[0].LAST_UPDATE_DATE = swapToYYYYMMDD(res.data[0].LAST_UPDATE_DATE)
+        res.data[0].START_DATETIME = swapToYYYYMMDD(res.data[0].START_DATETIME)
         dispatch({
             type: FILL_SAVE_VALUES_TAGS,
             payload: res.data[0]

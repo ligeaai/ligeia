@@ -5,6 +5,7 @@ import { changeValeus } from "../../../services/actions/overview/overviewDialog"
 import { Select } from "../..";
 import { instance, config } from "../../../services/baseApi";
 import ItemLinkService from "../../../services/api/itemLink";
+import { IndentSelect } from "../../";
 const ChoseMeasure = () => {
   const dispatch = useDispatch();
   const ItemData = useSelector((state) => state.overviewDialog.itemData);
@@ -47,16 +48,16 @@ const ChoseMeasure = () => {
             Transaction Property
           </Grid>
           <Grid item xs={12}>
-            <Select
+            <IndentSelect
               disabled={ItemData.length === 0 ? true : false}
               values={ItemData}
               valuesPath="0"
               dataTextPath="1"
+              indentPath="2"
               defaultValue={defProp}
               handleChangeFunc={async (value) => {
                 handleChangeFunc("Transaction Property", value);
                 let res = await ItemLinkService.getTags({ ID: value });
-                console.log(res);
                 setTags(res.data);
               }}
             />
@@ -77,7 +78,6 @@ const ChoseMeasure = () => {
               defaultValue={measure}
               handleChangeFunc={async (value) => {
                 handleChangeFunc("Measurement", value);
-                console.log(tags);
                 handleChangeFunc(
                   "Minimum",
                   tags.filter((e) => e.TAG_ID === value)[0].NORMAL_MINIMUM

@@ -23,6 +23,7 @@ def retive_live_data(start_time="-", end_time="+", tag_name="", asset="", redis=
     )
     try:
         start_time = (list(data[-1].values())[0][1][0][0]) + 1
+
         return start_time, end_time, data
     except:
         return start_time, end_time
@@ -37,3 +38,16 @@ def retive_last_data(tag_name="", asset="", redis=""):
 def retrieve_backfill_data(collection, query):
     data = list(collection.find(query, {"_id": 0}))
     return data
+
+
+def createThread(function):
+    thread = threading.Thread(target=function)
+    thread.start()
+    return thread
+
+
+def delThread(thread):
+    # I delete the previous thread in every message because filtering
+    # the old data while new data is coming in may break the order
+    thread.join()
+    del thread

@@ -35,7 +35,6 @@ export const Solid = ({ highchartProps, width, height }) => {
     i++;
   }
   React.useEffect(() => {
-    console.log(highchartProps.Measurement);
     client = new W3CWebSocket(
       `${wsBaseUrl}/ws/live/last_data/${highchartProps.Measurement}`
     );

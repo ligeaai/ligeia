@@ -97,11 +97,13 @@ const StyledTreeItem = styled((props) => (
 }));
 const MyStyledTreeItem = React.memo(({ myItems, path }) => {
   const dispatch = useDispatch();
+  const selected = useSelector(
+    (state) => state.collapseMenu.selectedItem.LINK_ID
+  );
   const onHandleClick = async (way, e) => {
     dispatch(updateCouchDb());
     dispatch(await setSelectedCollapseMenu({ ...e, path: way }));
     dispatch(loadTapsOverview());
-    console.log(`/${way}/${e.FROM_ITEM_NAME}`);
     history.push(`/${way}/${e.FROM_ITEM_NAME}`);
   };
   return myItems.map((e, i) => {
@@ -113,6 +115,9 @@ const MyStyledTreeItem = React.memo(({ myItems, path }) => {
           label={e.FROM_ITEM_NAME}
           onClick={async () => {
             onHandleClick(path, e);
+          }}
+          ContentProps={{
+            className: e.LINK_ID === selected ? "Mui-selected" : "",
           }}
         >
           <MyStyledTreeItem
@@ -126,6 +131,9 @@ const MyStyledTreeItem = React.memo(({ myItems, path }) => {
         key={i}
         nodeId={e.LINK_ID}
         label={e.FROM_ITEM_NAME}
+        ContentProps={{
+          className: e.LINK_ID === selected ? "Mui-selected" : "",
+        }}
         onClick={async () => {
           onHandleClick(path, e);
         }}
@@ -179,10 +187,6 @@ function CustomizedTreeView({ onOpen, setWidthTrue }) {
     if (selectedItem) myFunc(selectedItem);
     return () => {
       dispatch(updateCouchDb());
-      dispatch(cleanTabs());
-      dispatch({
-        type: "CLEAN_COLLAPSE_MENU",
-      });
     };
   }, []);
   return (

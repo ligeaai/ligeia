@@ -2,19 +2,13 @@ import React, { useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { Responsive, WidthProvider } from "react-grid-layout";
-import GridItem from "./gridItem";
 
-import {
-  updateChartLayout,
-  updateCouchDb,
-  loadTapsOverview,
-} from "../../../services/actions/overview/taps";
+import { updateChartLayout } from "../../../services/actions/overview/taps";
 import Widget from "./widgets";
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
-function setBreakPoint() {
-  const width = document.getElementById("myResponsiveGridLayout").offsetWidth;
+function setBreakPoint(width) {
   if (width >= 1280) {
     return "lg";
   } else if (width >= 992) {
@@ -31,19 +25,20 @@ function setBreakPoint() {
 const TabItems = (props) => {
   const refLayout = React.useRef(null);
   const [mounted, setMounted] = React.useState(false);
-  const [width, setWidth] = React.useState(
-    document.getElementById("myResponsiveGridLayout").offsetWidth
-  );
+  const [width, setWidth] = React.useState(0);
   const dispatch = useDispatch();
-  const [breakpoint, setBreakpoint] = React.useState(setBreakPoint());
+  const [breakpoint, setBreakpoint] = React.useState(setBreakPoint(0));
   const { widgetname } = props;
+
+  const containerRef = useRef(null);
+
   React.useEffect(() => {
     setMounted(true);
   }, []);
   const onResize = () => {
     if (refLayout.current) {
-      setWidth(document.getElementById("myResponsiveGridLayout").offsetWidth);
-      setBreakpoint(setBreakPoint());
+      setWidth(containerRef.current.offsetWidth);
+      setBreakpoint(setBreakPoint(containerRef.current.offsetWidth));
     }
   };
   const widgets = useSelector((state) => {
@@ -60,48 +55,55 @@ const TabItems = (props) => {
       return [];
     }
   });
-  const handleBreakPointChange = (breakpoint) => {
-    console.log(breakpoint);
-    setBreakpoint(breakpoint);
-  };
+
   const handleLayoutChange = (newLayout) => {
-    console.log(breakpoint);
-    console.log(newLayout);
+    console.log(width);
     layouts[breakpoint] = newLayout;
     dispatch(updateChartLayout(layouts));
   };
   React.useEffect(() => {
-    window.addEventListener("resize", onResize);
+    const observer = new ResizeObserver((entries) => {
+      onResize();
+    });
     onResize();
-    return () => {
-      window.removeEventListener("resize", onResize);
-    };
+    observer.observe(document.getElementById("myResponsiveGridLayout"));
   }, []);
+  React.useEffect(() => {
+    refLayout.current.forceUpdate();
+  }, [width]);
+  React.useEffect(() => {
+    setTimeout(() => {
+      window.dispatchEvent(new Event("resize"));
+    }, 100);
+  }, [width]);
   return (
-    <ResponsiveGridLayout
-      ref={refLayout}
-      className="layout"
-      layouts={layouts}
-      rowHeight={30}
-      useCSSTransforms={mounted}
-      draggableCancel=".cancelDrag"
-      onBreakpointChange={handleBreakPointChange}
-      onLayoutChange={handleLayoutChange}
-      isDraggable
-      isRearrangeable
-      isResizable
-      draggableHandle=".grid-item__title"
-      breakpoints={{ lg: 1280, md: 992, sm: 767, xs: 480, xxs: 0 }}
-      cols={{ lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }}
-      breakpoint={breakpoint}
-      width={width}
-      compactType={"vertical"}
-      {...props}
-    >
-      {widgets.map((widget, i) => {
-        return <Widget key={`${widget}`} widget={widget} {...props}></Widget>;
-      })}
-    </ResponsiveGridLayout>
+    <div ref={containerRef} id={"myResponsiveGridLayout"}>
+      <ResponsiveGridLayout
+        bounds="parent"
+        ref={refLayout}
+        className="layout"
+        width={width}
+        layouts={layouts}
+        rowHeight={30}
+        measureBeforeMount={mounted}
+        autoSize={true}
+        useCSSTransforms={mounted}
+        draggableCancel=".cancelDrag"
+        onLayoutChange={handleLayoutChange}
+        isDraggable
+        isRearrangeable
+        isResizable
+        draggableHandle=".grid-item__title"
+        breakpoints={{ lg: 1280, md: 992, sm: 767, xs: 480, xxs: 0 }}
+        cols={{ lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }}
+        breakpoint={breakpoint}
+        {...props}
+      >
+        {widgets.map((widget, i) => {
+          return <Widget key={`${widget}`} widget={widget} {...props}></Widget>;
+        })}
+      </ResponsiveGridLayout>
+    </div>
   );
 };
 

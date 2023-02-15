@@ -1,35 +1,14 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import {
-  Grid,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemIcon,
-  Checkbox,
-  ListItemText,
-} from "@mui/material";
+import { Grid } from "@mui/material";
 
-import {
-  MyTextField,
-  MyNumberTextField,
-  MyCheckBox,
-  Select,
-  ColorTextfield,
-} from "../..";
-import {
-  changeValeus,
-  cleanStops,
-} from "../../../services/actions/overview/overviewDialog";
+import { MyTextField, MyNumberTextField } from "../..";
+import { changeValeus } from "../../../services/actions/overview/overviewDialog";
 
 const MatrixPopup = (props) => {
   const dispatch = useDispatch();
   const { highchartProps, handleClose } = props;
-  const tags = useSelector((state) => state.overviewDialog.measuremenetData);
-  const measure = useSelector(
-    (state) => state.overviewDialog.highchartProps.Measurement
-  );
 
   const handleChangeFunc = (key, val) => {
     dispatch(changeValeus(key, val));

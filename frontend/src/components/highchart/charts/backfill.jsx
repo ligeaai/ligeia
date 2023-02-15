@@ -16,15 +16,7 @@ exporting(Highcharts);
 accessibility(Highcharts);
 data(Highcharts);
 boost(Highcharts);
-const LineCharts = ({
-  highchartProps,
-  width,
-  height,
-  liveData,
-
-  chartType,
-}) => {
-  console.log(highchartProps.Inputs);
+const LineCharts = ({ highchartProps, width, height, liveData, chartType }) => {
   const yAxisTitles = [];
   highchartProps.Inputs.map((e, index) => {
     if (!highchartProps[`[${e.NAME}] Disable Data Grouping`]) {
@@ -42,7 +34,6 @@ const LineCharts = ({
   React.useEffect(() => {
     return () => {
       client.map((e) => {
-        console.log(e);
         e.close();
       });
     };
@@ -58,6 +49,7 @@ const LineCharts = ({
         load: function () {
           var series = this;
           let dataList = [];
+          let yAxiskey = {};
           client.map((e) => {
             e.close();
           });
@@ -94,24 +86,54 @@ const LineCharts = ({
                         data.push([parseInt(e.timestamp) * 1000, e.tag_value]);
                       }
                     });
-
-                    series.addAxis(
-                      {
-                        id: "yaxis-" + index,
-                        opposite: false,
-                        title: {
-                          text: `${tag.UOM_QUANTITY_TYPE} (${tag.UOM})`,
+                    if (
+                      !yAxiskey.hasOwnProperty(
+                        `${tag.UOM_QUANTITY_TYPE} (${tag.UOM})`
+                      )
+                    ) {
+                      yAxiskey[`${tag.UOM_QUANTITY_TYPE} (${tag.UOM})`] = index;
+                      series.addAxis(
+                        {
+                          id: "yaxis-" + index,
+                          opposite: false,
+                          title: {
+                            text: `${tag.UOM_QUANTITY_TYPE} (${tag.UOM})`,
+                            style: {
+                              fontSize:
+                                highchartProps[
+                                  "Graph Axis Title Font Size (em)"
+                                ] === ""
+                                  ? "11px"
+                                  : `${highchartProps["Graph Axis Title Font Size (em)"]}px`,
+                            },
+                          },
+                          labels: {
+                            style: {
+                              fontSize:
+                                highchartProps[
+                                  "Graph Axis Value Font Size (em)"
+                                ] === ""
+                                  ? 11
+                                  : highchartProps[
+                                      "Graph Axis Value Font Size (em)"
+                                    ],
+                            },
+                          },
                         },
-                      },
-                      false
-                    );
+                        false
+                      );
+                    }
+
                     series.addSeries({
-                      yAxis: "yaxis-" + index,
+                      yAxis:
+                        "yaxis-" +
+                        yAxiskey[`${tag.UOM_QUANTITY_TYPE} (${tag.UOM})`],
                       name: tag.NAME,
 
                       color: highchartProps["Enable Custom Colors"]
                         ? highchartProps[`[${tag.NAME}] Color`]
                         : "",
+
                       data: data,
                     });
 
@@ -126,8 +148,7 @@ const LineCharts = ({
       },
     },
     rangeSelector: {
-      //  enabled: !liveData,
-
+      enabled: highchartProps["Show Enable Navbar"],
       buttons: [
         {
           type: "minute",
@@ -200,6 +221,7 @@ const LineCharts = ({
       enabled: highchartProps["Show Enable Export"],
     },
     navigator: {
+      enabled: highchartProps["Show Enable Range Selector"],
       xAxis: {
         type: "datetime",
         minRange: 30,

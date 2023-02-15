@@ -19,8 +19,8 @@ const MyTextfield = (props) => {
   }, [defaultValue]);
   return (
     <TextField
-      {...rest}
       error={errFunc()}
+      {...rest}
       variant="outlined"
       value={value}
       onChange={handleChange}

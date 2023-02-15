@@ -13,8 +13,6 @@ const Tabular = ({ highchartProps, backfillData }) => {
   const [allData, setAllData] = React.useState([]);
   React.useEffect(() => {
     highchartProps.Inputs.map((tag, index) => {
-      console.log(index);
-
       if (backfillData) {
         client[index] = new W3CWebSocket(
           `${wsBaseUrl}/ws/tags/backfill/${tag.TAG_ID}`
@@ -38,7 +36,6 @@ const Tabular = ({ highchartProps, backfillData }) => {
               let jsonData = JSON.parse(e.data);
 
               if (backfillData) {
-                console.log(jsonData);
                 jsonData.map((data) => {
                   setAllData((prev) => [
                     ...prev,
@@ -61,8 +58,6 @@ const Tabular = ({ highchartProps, backfillData }) => {
               }
               jsonData.map((data) => {
                 Object.keys(data).map((f, i) => {
-                  console.log(data);
-
                   setAllData((prev) => [
                     ...prev,
                     {
@@ -90,7 +85,6 @@ const Tabular = ({ highchartProps, backfillData }) => {
         sendNumber();
       };
     });
-    console.log(client);
     return () => {
       setAllData([]);
       client.map((e) => {

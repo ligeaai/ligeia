@@ -21,7 +21,8 @@ import palette from "../../themes/palette";
 import { MyTextField } from "..";
 import { setConfirmation } from "../../services/reducers/confirmation";
 import { Button } from "@mui/material";
-
+import IconButton from "@mui/material/IconButton";
+import AddIcon from "@mui/icons-material/Add";
 const TabPanel = (props) => {
   const { children, value, index, ...other } = props;
 
@@ -102,6 +103,7 @@ const MyTap = React.forwardRef(
               maxWidth: "150px",
               textTransform: "capitalize",
               fontSize: "12px",
+              fontWeight: active === i ? "700" : "400",
               ":hover": {
                 textShadow: "0.5px 0.5px 0.5px black",
               },
@@ -188,14 +190,22 @@ function MyTabs() {
         // },
       }}
     >
-      <AppBar position="static" sx={{ width: "100%", boxShadow: "none" }}>
+      <AppBar
+        position="static"
+        sx={{
+          width: "100%",
+          boxShadow: "none",
+          display: "flex",
+          alignContent: "center",
+        }}
+      >
         <Tabs
           value={value}
           onChange={handleChange}
           aria-label="action tabs example"
           variant="scrollable"
           scrollButtons="auto"
-          textColor="secondary"
+          textColor="inherit"
           sx={{
             minHeight: "40px",
             backgroundColor: "background.info",
@@ -212,27 +222,16 @@ function MyTabs() {
               handleChange={handleChange}
             ></MyTap>
           ))}
-          <Grid
-            key={`a`}
-            container
-            sx={{
-              height: "20px",
-              marginY: "2px",
-              cursor: "pointer",
-              mt: 1,
-              width: "50px",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <Grid
-              item
+          <Grid item>
+            <IconButton
+              sx={{ maxHeight: "30px", width: "30px", mt: "2px" }}
+              key="a"
               onClick={() => {
                 dispatch(addNewTabItem());
               }}
             >
-              +
-            </Grid>
+              <AddIcon fontSize="small" />
+            </IconButton>
           </Grid>
         </Tabs>
       </AppBar>
@@ -248,7 +247,7 @@ function MyTabs() {
             ? "calc(100vh - 56px - 48px )"
             : "calc(100vh - 60px - 50px - 16px - 48px )",
         }}
-        id="myResponsiveGridLayout"
+        //    id="myResponsiveGridLayout"
       >
         {Object.keys(widgets).map((widgetProps, i) => {
           return (

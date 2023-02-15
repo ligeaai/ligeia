@@ -7,7 +7,7 @@ import { changeValeus } from "../../../services/actions/overview/overviewDialog"
 const PopUpItem = (props) => {
   const dispatch = useDispatch();
 
-  const { title, type } = props;
+  const { title, type, nullTrue } = props;
   const defaultValue = useSelector(
     (state) => state.overviewDialog.highchartProps[title]
   );
@@ -25,6 +25,7 @@ const PopUpItem = (props) => {
             type={type}
             defaultValue={defaultValue}
             changeFunction={handleChangeFunc}
+            error={defaultValue === "" && nullTrue ? true : false}
           />
         </Grid>
       </Grid>
