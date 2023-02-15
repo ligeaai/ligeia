@@ -161,20 +161,30 @@ export default function HorizontalLinearStepper({ components, finishFunc }) {
             disabled={activeStep === 0}
             onClick={handleBack}
             sx={{ mr: 1 }}
+            variant="outlined"
           >
             Back
           </Button>
           <Box sx={{ flex: "1 1 auto" }} />
           {isStepOptional(activeStep) && (
-            <Button color="inherit" onClick={handleSkip} sx={{ mr: 1 }}>
+            <Button
+              color="inherit"
+              onClick={handleSkip}
+              sx={{ mr: 1 }}
+              variant="outlined"
+            >
               Skip
             </Button>
           )}
 
           {activeStep === components().length - 1 ? (
-            <Button onClick={finishFunc}>Finish </Button>
+            <Button onClick={finishFunc} variant="outlined">
+              Finish
+            </Button>
           ) : (
-            <Button onClick={handleNext}> Next </Button>
+            <Button onClick={handleNext} variant="outlined">
+              Next
+            </Button>
           )}
         </Box>
       </React.Fragment>

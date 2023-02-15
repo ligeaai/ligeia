@@ -85,19 +85,22 @@ const DialogContent = ({ highchartProps, chartId, ...rest }) => {
         >
           <Grid item>
             <Button
-              color="error"
+              color="inherit"
               onClick={() => {
                 rest.handleClose();
               }}
               sx={{ mr: 0.5 }}
+              variant="outlined"
             >
               Cancel
             </Button>
             <Button
+              color="inherit"
               onClick={() => {
                 dispatch(updateChart(chartId));
                 rest.handleClose();
               }}
+              variant="outlined"
             >
               Save
             </Button>
