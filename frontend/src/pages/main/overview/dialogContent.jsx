@@ -34,6 +34,7 @@ const DialogContent = ({ handleClose }) => {
   );
   const type = useSelector((state) => state.overviewDialog.values.Type);
   const values = useSelector((state) => state.overviewDialog.selectItems);
+  const [widgetType, setWidgetType] = React.useState("Widgets");
   const body = {
     "Linechart [Highchart]": linechartPopUp,
     "Line Chart [Nivo]": linechartPopUp,
@@ -96,11 +97,24 @@ const DialogContent = ({ handleClose }) => {
           sx={{ justifyContent: "space-between", alignItems: "center" }}
         >
           <Grid item>
-            <Select
-              values={values}
-              handleChangeFunc={handleChangeFunc}
-              defaultValue={selectedItem}
-            />
+            <Grid container columnSpacing={2}>
+              <Grid item>
+                <Select
+                  values={["Widgets", "Forms"]}
+                  handleChangeFunc={(val) => {
+                    setWidgetType(val);
+                  }}
+                  defaultValue={widgetType}
+                />
+              </Grid>
+              <Grid item>
+                <Select
+                  values={widgetType === "Widgets" ? values : [" "]}
+                  handleChangeFunc={handleChangeFunc}
+                  defaultValue={widgetType === "Widgets" ? selectedItem : " "}
+                />
+              </Grid>
+            </Grid>
           </Grid>
           <Grid item>
             <IconButton onClick={handleClose}>
@@ -109,13 +123,19 @@ const DialogContent = ({ handleClose }) => {
           </Grid>
         </Grid>
       </Grid>
-      <Box sx={{ p: 1, height: "75vh", overflowY: "auto", width: "9999px" }}>
-        {refresh ? (
-          <Stepper components={body[type]} finishFunc={finishFunc}></Stepper>
-        ) : (
-          <LoadingComponent />
-        )}
-      </Box>
+      {widgetType === "Widgets" ? (
+        <Box sx={{ p: 1, overflowY: "auto", width: "9999px" }}>
+          {refresh ? (
+            <Stepper components={body[type]} finishFunc={finishFunc}></Stepper>
+          ) : (
+            <Box sx={{ height: "450px" }}>
+              <LoadingComponent />
+            </Box>
+          )}
+        </Box>
+      ) : (
+        <Box sx={{ width: "400px", height: "400px" }} />
+      )}
     </Grid>
   );
 };
