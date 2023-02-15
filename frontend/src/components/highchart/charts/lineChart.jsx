@@ -175,7 +175,6 @@ const LineCharts = ({
           text: "All",
         },
       ],
-      selected: highchartProps["Show Enable Navbar"] ? 6 : 8,
     },
     credits: {
       enabled: false,
