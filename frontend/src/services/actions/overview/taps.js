@@ -292,3 +292,15 @@ export const setCheckeds = (val) => (dispatch) => {
     payload: temp
   })
 }
+
+export const setCheckedsAsset = (val) => (dispatch) => {
+
+  let temp = {}
+  val.map(e => {
+    temp[e[0]] = false
+  })
+  dispatch({
+    type: SET_ISCHECKED,
+    payload: temp
+  })
+}

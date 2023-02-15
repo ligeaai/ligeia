@@ -11,9 +11,9 @@ import {
   ListItemText,
   Box,
 } from "@mui/material";
-import { changeValeus } from "../../../services/actions/overview/overviewDialog";
-import Inputs from "../popup/inputs";
-import ItemLinkService from "../../../services/api/itemLink";
+import { changeValeus } from "../../../frontend/src/services/actions/overview/overviewDialog";
+import Inputs from "../../../frontend/src/components/highchart/popup/inputs";
+import ItemLinkService from "../../../frontend/src/services/api/itemLink";
 import axios from "axios";
 let cancelToken;
 const ChoseMeasure = () => {

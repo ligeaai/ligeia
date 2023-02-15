@@ -5,10 +5,10 @@ import { Grid, Box, Typography, IconButton } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import { changeValeus } from "../../../services/actions/overview/overviewDialog";
 import Inputs from "./inputs";
-import ChoseLineMeasure from "../popUpLayout/choseLineMeasue";
 import PopUpItem from "../popUpLayout/popUpItem";
 import CustomLineChart from "../popUpLayout/customLineChart";
 import CreateLineWidget from "../popUpLayout/createLineWidget";
+import LineAssets from "../popUpLayout/lineAssets";
 const Linechart = ({ handleClose, title }) => {
   const dispatch = useDispatch();
   const [selectedWidget, setSelectedWidget] = React.useState("Properties");
@@ -93,7 +93,11 @@ const Linechart = ({ handleClose, title }) => {
             <Typography>Assets</Typography>
 
             <Grid item xs={12}>
-              <ChoseLineMeasure />
+              <LineAssets
+                handleChangeFunc={(value) => {
+                  handleChangeFunc("Transaction Property", value);
+                }}
+              />
             </Grid>
           </>
         ) : (

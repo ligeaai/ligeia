@@ -9,7 +9,7 @@ import {
   cleanStops,
 } from "../../../services/actions/overview/overviewDialog";
 import CreateLineWidget from "../popUpLayout/createLineWidget";
-import ChoseLineMeasure from "../popUpLayout/choseLineMeasue";
+import LineAssets from "../popUpLayout/lineAssets";
 import CustomLineChart from "../popUpLayout/customLineChart";
 import { fillMandatory } from "../../../services/actions/stepper/stepper";
 import Inputs from "../popup/inputs";
@@ -20,7 +20,7 @@ function LineChartPopUp() {
   };
   const stopsNum = useSelector(
     (state) => state.overviewDialog.highchartProps.Stops
-  );
+  ); //it is mandatory strangely
   React.useEffect(() => {
     dispatch(fillMandatory([["Name"], ["Transaction Property"], ["Inputs"]]));
   }, []);
@@ -29,7 +29,11 @@ function LineChartPopUp() {
     [
       "Assets",
       <>
-        <ChoseLineMeasure />
+        <LineAssets
+          handleChangeFunc={(value) => {
+            handleChangeFunc("Transaction Property", value);
+          }}
+        />
       </>,
     ],
     [
