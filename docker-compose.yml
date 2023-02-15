@@ -153,10 +153,12 @@ services:
       dockerfile: ./dockerfile/local/datapipline/Nifi/Dockerfile
     restart: unless-stopped
     image: apache/nifi:latest
+    env_file:
+      - .env
     ports:
       - "8080:8080"
     volumes:
-      - ./backend/services/datapipline/pre-processing:/datapipline
+      - ./backend:/datapipline
     environment:
       NIFI_WEB_HTTP_PORT: 8080
       NIFI_CLUSTER_IS_NODE: 'true'
