@@ -56,7 +56,7 @@ const DialogContent = ({ highchartProps, chartId, ...rest }) => {
     myFunc();
   }, []);
   return (
-    <Grid container sx={{ width: "100%", overflow: "hidden" }}>
+    <Grid container sx={{ width: "100%" }}>
       {type === highchartProps.Type ? (
         body[highchartProps.Type]
       ) : (

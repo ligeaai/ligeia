@@ -104,7 +104,6 @@ const AngularPopUp = ({ handleClose, title }) => {
           div: { fontSize: "14px" },
           p: 2,
           overflowY: "auto",
-          height: "700px",
           alignContent: "flex-start",
         }}
       >

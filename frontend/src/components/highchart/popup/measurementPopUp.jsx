@@ -98,7 +98,6 @@ const MeasurementPopUp = ({ handleClose }) => {
         sx={{
           div: { fontSize: "14px" },
           overflowY: "auto",
-          height: "700px",
           p: 2,
           alignContent: "flex-start",
         }}
