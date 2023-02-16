@@ -20,7 +20,7 @@ class WSConsumeOnlyLastData(AsyncWebsocketConsumer):
 
     async def connect(self):
         await self.accept()
-        self.rds = redis.StrictRedis("redis-test1", port=6379)
+        self.rds = redis.StrictRedis("redis-test1", port=6379, db=1)
         self.tag_id = self.scope["url_route"]["kwargs"]["tag_id"]
         self.is_active = True
         tag_name, asset = await sync_to_async(find_tag)(self.tag_id)
