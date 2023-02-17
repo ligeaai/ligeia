@@ -7,39 +7,32 @@ import pandas as pd
 from ast import literal_eval
 import json
 import uuid
+from services.health_status.helper import send_alarm
 
-
-host = os.environ.get('Kafka_Host')
-topics = ['backfill_data', 'live_data']
+host = os.environ.get("Kafka_Host")
+topics = ["backfill_data", "live_data"]
 bootstrap_servers = host
 consumer = KafkaConsumer(
-    *topics,
-    bootstrap_servers=bootstrap_servers,
-    auto_offset_reset='latest'
-  )
-  
-producer = KafkaProducer(bootstrap_servers=os.environ.get('Kafka_Host'),
-                                      value_serializer=lambda v: json.dumps(v).encode('utf-8'),
-                                    linger_ms=10)
+    *topics, bootstrap_servers=bootstrap_servers, auto_offset_reset="latest"
+)
 consumer.poll()
+
+
 def checkEvent(message):
-    data = json.loads(message.value.decode('utf-8'))
+    data = json.loads(message.value.decode("utf-8"))
     key = uuid.uuid4().hex
-    key = key.encode('utf-8')
-    if data.get('quality') == 66 or data.get('quality') == 65:
-        alarms = {
-            "LOG_TYPE":"ALARMS",
-             # ALARMS SOURCE ADD
-            "CONTENTS":data
-        }
-        producer.send(os.environ.get('Kafka_Topic'),value = alarms,key=key)
-    
-    if data.get('quality') == 67:
-        alarms = {
-            "LOG_TYPE":"ALARMS",
-             # ALARMS SOURCE ADD
-            "CONTENTS":data
-        }
-  
+    key = key.encode("utf-8")
+    if data.get("quality") == 66:
+        data["message_type"] = "out of the range max value"
+
+    if data.get("quality") == 65:
+        data["message_type"] = "out of the range min value"
+
+    if data.get("quality") == 67:
+        data["message_type"] = "frozen_data"
+    return data
+
+
 for message in consumer:
-    checkEvent(message)
+    data = checkEvent(message)
+    send_alarm(data, "DATA")
