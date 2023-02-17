@@ -12,7 +12,26 @@ const alertItem = (props) => {
             {props.container}
           </Grid>
           <Grid item xs={12} sx={{ fontSize: "12px" }}>
-            {props.error_message}
+            {typeof props.error_message === "string" ? (
+              props.error_message
+            ) : (
+              <Grid container>
+                <Grid
+                  item
+                  xs={12}
+                  sx={{ fontSize: "14px", fontWeight: "bold" }}
+                >
+                  Error Message
+                </Grid>
+                {Object.keys(props.error_message).map((e, i) => {
+                  return (
+                    <Grid item xs={12} key={i}>
+                      {e}:{props.error_message[e]}
+                    </Grid>
+                  );
+                })}
+              </Grid>
+            )}
           </Grid>
           <Grid item xs={12}>
             <Grid container sx={{ flexDirection: "row-reverse" }}>

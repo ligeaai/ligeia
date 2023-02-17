@@ -37,7 +37,7 @@ const AlarmsBox = () => {
         if (client.readyState === client.OPEN) {
           if (typeof e.data === "string") {
             let jsonData = JSON.parse(e.data);
-            dispatch(setAlarmsItem(jsonData));
+            dispatch(setAlarmsItem(jsonData.slice(-5)));
             return true;
           }
         }
@@ -64,6 +64,8 @@ const AlarmsBox = () => {
         borderRadius: 4,
         mt: "6px",
         color: "text.main",
+        maxHeight: "500px",
+        overflow: "auto",
       }}
     >
       <Grid item xs={12} sx={{ p: 2, pb: 0 }}>
