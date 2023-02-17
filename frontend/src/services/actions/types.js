@@ -158,3 +158,7 @@ export const SET_UPDATE_ISCHECKED = "SET_UPDATE_ISCHECKED";
 
 //----------STEPPER-------------
 export const FILL_STEPPER_MANDATORY = "FILL_STEPPER_MANDATORY";
+
+//----------Alarms-----------
+export const TOGGLE_ALARMS = "TOGGLE_ALARMS";
+export const SET_ALARMS_ITEM = "SET_ALARMS_ITEM"

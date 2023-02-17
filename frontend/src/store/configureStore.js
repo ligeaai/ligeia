@@ -18,6 +18,7 @@ import {
 } from 'redux-persist'
 
 import {
+    alarms,
     authReducer,
     checkedList,
     confirmation,
@@ -54,6 +55,7 @@ const persistConfig = {
 
 const rootReducer = combineReducers({
     auth: authReducer,
+    alarms: alarms,
     checkedList: checkedList,
     confirmation: confirmation,
     collapseMenu: collapseMenu,

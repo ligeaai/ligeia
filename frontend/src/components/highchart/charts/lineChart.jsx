@@ -8,21 +8,13 @@ import exporting from "highcharts/modules/exporting";
 import data from "highcharts/modules/data";
 import accessibility from "highcharts/modules/accessibility";
 import { wsBaseUrl } from "../../../services/baseApi";
-import { height } from "@mui/system";
 
 let client = [];
 var W3CWebSocket = require("websocket").w3cwebsocket;
 exporting(Highcharts);
 accessibility(Highcharts);
 data(Highcharts);
-const LineCharts = ({
-  highchartProps,
-  width,
-  height,
-  liveData,
-
-  chartType,
-}) => {
+const LineCharts = ({ highchartProps, width, height, liveData, chartType }) => {
   const yAxisTitles = [];
   let yAxiskey = {};
 

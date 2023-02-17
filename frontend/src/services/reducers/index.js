@@ -1,4 +1,5 @@
 import authReducer from './authReducer';
+import alarms from './alarms/alarms';
 import checkedList from './item/checkedList';
 import collapseMenu from './collapseMenu/collapseMenu';
 import historyConfirmation from './confirmation/historyConfirmation';
@@ -27,6 +28,6 @@ import dataGridResourceList from './resource/resource';
 
 
 export {
-    authReducer, confirmation, checkedList, collapseMenu, historyConfirmation, cssUserSelect, dataGridCodeList, dataGridType, drawerMenu, errorReducer, project, fullScreenReducer,
+    authReducer, alarms, confirmation, checkedList, collapseMenu, historyConfirmation, cssUserSelect, dataGridCodeList, dataGridType, drawerMenu, errorReducer, project, fullScreenReducer,
     itemDataGrid, itemLinkEditor, langReducer, loaderReducer, overviewDialog, registerFormReducer, searchBarReducer, stepper, tags, tapsOverview, themeReducer, treeview, dataGridResourceList
 }

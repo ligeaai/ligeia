@@ -1,24 +1,14 @@
 import * as React from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { Avatar, Box, Button, Grid, Typography } from "@mui/material";
-import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
-import BadgeUnstyled, { badgeUnstyledClasses } from "@mui/base/BadgeUnstyled";
+import { Grid } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import MenuIcon from "@mui/icons-material/Menu";
-import TranslateIcon from "@mui/icons-material/Translate";
-import Brightness2OutlinedIcon from "@mui/icons-material/Brightness2Outlined";
-import LanguageIcon from "@mui/icons-material/Language";
 import MenuOpenOutlinedIcon from "@mui/icons-material/MenuOpenOutlined";
 
-import { changeTheme } from "../../services/actions/theme";
-import { changeLanguage, changeLangs } from "../../services/actions/language";
 import { toggleDrawerMenu } from "../../services/actions/drawerMenu/drawerMenu";
 import { SearchBarMobile, SearchBar } from "../../components";
-import NestedMenu from "./nestedMenu";
-import { instance, config } from "../../services/baseApi";
-import history from "../../routers/history";
-
+import AlertIcon from "./alert/alarmsIcon";
 import SettingMenu from "./settingsMenu";
 
 const searchBarSize = {
@@ -76,38 +66,6 @@ const Header = (props) => {
     };
   });
 
-  const StyledBadge = styled(BadgeUnstyled)(
-    ({ theme }) => `
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    font-size: 18px;
-    list-style: none;
-    font-family: IBM Plex Sans, sans-serif;
-    position: relative;
-    display: inline-block;
-    line-height: 1;
-  
-    & .${badgeUnstyledClasses.badge} {
-      z-index: auto;
-      position: absolute;
-      top: 3px;
-      right: 3px;
-      min-width: 22px;
-      height: 22px;
-      background:#EA5455;
-      color: #fff;
-      font-weight: 600;
-      font-size: 12px;
-      line-height: 22px;
-      white-space: nowrap;
-      text-align: center;
-      border-radius: 12px;
-      transform: translate(50%, -50%);
-      transform-origin: 100% 0; 
-    }
-    `
-  );
   return (
     <React.Fragment>
       <MyBox
@@ -143,24 +101,8 @@ const Header = (props) => {
           </Grid>
         </Grid>
         <Grid item>
-          <Grid container sx={{ alignItems: "center" }}>
-            <Grid item sx={{ position: "relative" }}>
-              <Button
-                sx={{
-                  borderRadius: "60px",
-                  height: "49px",
-                  width: "49px !important",
-                }}
-              >
-                <StyledBadge badgeContent={8} max={99}>
-                  <NotificationsNoneIcon
-                    sx={{
-                      color: "primary.light", // this
-                    }}
-                  />
-                </StyledBadge>
-              </Button>
-            </Grid>
+          <Grid container columnSpacing={1} sx={{ alignItems: "center" }}>
+            <AlertIcon />
             <SettingMenu />
           </Grid>
         </Grid>
