@@ -193,7 +193,7 @@ const LineCharts = ({ highchartProps, width, height, liveData, chartType }) => {
         },
         {
           type: "all",
-          text: "Full",
+          text: "All",
         },
       ],
     },
