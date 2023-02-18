@@ -127,19 +127,26 @@ const Inputs = (props) => {
     setChecked(newChecked);
   };
 
-  // const handleAllRight = () => {
-  //   leftChecked.map((e) => {
-  //     dispatch(updateChecked(e.TAG_ID, false));
-  //   });
-  //   setRight(right.concat(left));
-  //   left.map(async (e) => {
-  //     dispatch(changeValeus(`${e.NAME} Y-Axis Minimum`, e.NORMAL_MINIMUM));
-  //     dispatch(changeValeus(`${e.NAME} Y-Axis Maximum`, e.NORMAL_MAXIMUM));
-  //   });
-  //   setLeft([]);
-  //   handleChangeFunc(right.concat(left));
-  // };
-
+  const handleAllRight = () => {
+    leftChecked.map((e) => {
+      dispatch(updateChecked(e.TAG_ID, false));
+    });
+    setRight(right.concat(left));
+    left.map(async (e) => {
+      dispatch(changeValeus(`${e.NAME} Y-Axis Minimum`, e.NORMAL_MINIMUM));
+      dispatch(changeValeus(`${e.NAME} Y-Axis Maximum`, e.NORMAL_MAXIMUM));
+    });
+    setLeft([]);
+    handleChangeFunc(right.concat(left));
+  };
+  const handleAllLeft = () => {
+    rightChecked.map((e) => {
+      dispatch(updateChecked(e.TAG_ID, false));
+    });
+    setLeft(left.concat(right));
+    setRight([]);
+    handleChangeFunc([]);
+  };
   const handleCheckedRight = () => {
     leftChecked.map((e) => {
       dispatch(updateChecked(e.TAG_ID, false));
@@ -163,15 +170,6 @@ const Inputs = (props) => {
     handleChangeFunc(not(right, rightChecked));
     setChecked(not(checked, rightChecked));
   };
-
-  // const handleAllLeft = () => {
-  //   rightChecked.map((e) => {
-  //     dispatch(updateChecked(e.TAG_ID, false));
-  //   });
-  //   setLeft(left.concat(right));
-  //   setRight([]);
-  //   handleChangeFunc([]);
-  // };
 
   const customList = (items) => (
     <Paper
@@ -212,7 +210,7 @@ const Inputs = (props) => {
       <Grid item>{customList(left)}</Grid>
       <Grid item>
         <Grid container direction="column" alignItems="center">
-          {/* <Button
+          <Button
             sx={{ my: 0.5 }}
             variant="outlined"
             size="small"
@@ -221,7 +219,7 @@ const Inputs = (props) => {
             aria-label="move all right"
           >
             ≫
-          </Button> */}
+          </Button>
           <Button
             sx={{ my: 0.5 }}
             variant="outlined"
@@ -242,7 +240,7 @@ const Inputs = (props) => {
           >
             &lt;
           </Button>
-          {/* <Button
+          <Button
             sx={{ my: 0.5 }}
             variant="outlined"
             size="small"
@@ -251,7 +249,7 @@ const Inputs = (props) => {
             aria-label="move all left"
           >
             ≪
-          </Button> */}
+          </Button>
         </Grid>
       </Grid>
       <Grid item>{customList(right)}</Grid>

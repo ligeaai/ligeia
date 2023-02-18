@@ -103,7 +103,22 @@ const Inputs = (props) => {
     }
     setChecked(newChecked);
   };
-
+  const handleAllRight = () => {
+    leftChecked.map((e) => {
+      dispatch(updateChecked(e.TAG_ID, false));
+    });
+    setRight(right.concat(left));
+    setLeft([]);
+    handleChangeFunc(right.concat(left));
+  };
+  const handleAllLeft = () => {
+    rightChecked.map((e) => {
+      dispatch(updateChecked(e.TAG_ID, false));
+    });
+    setLeft(left.concat(right));
+    setRight([]);
+    handleChangeFunc([]);
+  };
   const handleCheckedRight = () => {
     leftChecked.map((e) => {
       dispatch(updateChecked(e[0], false));
@@ -167,6 +182,16 @@ const Inputs = (props) => {
             sx={{ my: 0.5 }}
             variant="outlined"
             size="small"
+            onClick={handleAllRight}
+            disabled={left.length === 0}
+            aria-label="move all right"
+          >
+            ≫
+          </Button>
+          <Button
+            sx={{ my: 0.5 }}
+            variant="outlined"
+            size="small"
             onClick={handleCheckedRight}
             disabled={leftChecked.length === 0}
             aria-label="move selected right"
@@ -182,6 +207,16 @@ const Inputs = (props) => {
             aria-label="move selected left"
           >
             &lt;
+          </Button>
+          <Button
+            sx={{ my: 0.5 }}
+            variant="outlined"
+            size="small"
+            onClick={handleAllLeft}
+            disabled={right.length === 0}
+            aria-label="move all left"
+          >
+            ≪
           </Button>
         </Grid>
       </Grid>
