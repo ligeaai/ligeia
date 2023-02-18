@@ -4,15 +4,15 @@ from ast import literal_eval
 import json
 import time as timelibrary
 import datetime
-import os 
+import os
 
 topic = "backfill_data"
 host = os.environ.get("Kafka_Host_DP")
 consumer = KafkaConsumer(topic, bootstrap_servers=host)
 
 client = MongoClient("mongodb://root:admin@mongodb-timescale:27017/")
-mongo_db = client["backfilldata3"]
-timeseries_collection = mongo_db["backfilldata3"]
+mongo_db = client["backfilldata20"]
+timeseries_collection = mongo_db["backfilldata20"]
 
 
 def convert_to_time(time):

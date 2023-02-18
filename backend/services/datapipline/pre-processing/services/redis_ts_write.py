@@ -4,9 +4,10 @@ import time as timelibrary
 import datetime
 from kafka import KafkaConsumer
 import os
+import base64
 
 # Create a Redis Connection
-rds = redis.StrictRedis("redis-test1", port=6379)
+rds = redis.StrictRedis("redis-test1", port=6379, db=1)
 # Create Kafka Consumer
 host = os.environ.get("Kafka_Host_DP")
 consumer = KafkaConsumer("live_data", bootstrap_servers=host)
@@ -63,6 +64,7 @@ for msg in consumer:
     key = data["payload"]["insert"][0]["fqn"] + ":" + key_times
     # ------------------------------------------
     # Create Redis Db
+    print(columns)
     created_redis_db(key, columns)
     # ------------------------------------------
     # Add Value to Created Redis Db
