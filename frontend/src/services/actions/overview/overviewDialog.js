@@ -47,9 +47,11 @@ export const loadSelectItems = async () => async dispatch => {
                 "/highcharttype/57b054aedfcb4984da539444110006b6",
                 config
             )
+
+        let sortedList = res.data.type.sort((a, b) => (a) > (b) ? 1 : -1)
         dispatch({
             type: SET_SELECT_ITEM_OVERVIEW_DIALOG,
-            payload: res.data.type
+            payload: sortedList
         })
 
 
