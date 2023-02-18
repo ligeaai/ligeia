@@ -66,12 +66,9 @@ const AlarmsBox = () => {
         color: "text.main",
         maxHeight: "500px",
         overflow: "auto",
+        pt: 2,
       }}
     >
-      <Grid item xs={12} sx={{ p: 2, pb: 0 }}>
-        Alarms
-      </Grid>
-      <ItemSperatorLine />
       {alarmsItem.map((props, i) => (
         <AlarmsItem {...props} key={i} />
       ))}
