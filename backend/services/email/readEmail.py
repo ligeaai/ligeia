@@ -30,7 +30,7 @@ if mail_ids:
 
         file_name = part.get_filename()
         if file_name:
-            file_path = os.path.join("/django/backend/services/email", file_name)
+            file_path = os.path.join("/datapipline/services/email", file_name)
 
             if not os.path.isfile(file_path):
                 with open(file_path, "wb") as fp:

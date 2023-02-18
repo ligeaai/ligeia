@@ -56,6 +56,8 @@ for row_index in range(len(data)):
 
         if data[keys[keys_index]][row_index] is not None:
             raw_data["tag_value"] = float(data[keys[keys_index]][row_index])
+            raw_data = json.dumps(raw_data, ensure_ascii=False)
+            # print(raw_data)
             send_to_kafka(raw_data)
 
 os.remove(file_name)
