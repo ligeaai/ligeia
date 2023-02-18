@@ -209,7 +209,14 @@ const AngularPopUp = ({ handleClose, title }) => {
           </Grid>
         </Grid>
         <Grid item xs={12}>
-          <Typography sx={{ pb: 2 }}>Stops</Typography>
+          <Typography
+            sx={{
+              pb: 2,
+              display: stops === "0" || stops === "" ? "none" : "flex",
+            }}
+          >
+            Stops
+          </Typography>
           <Stops />
         </Grid>
       </Grid>

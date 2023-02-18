@@ -263,7 +263,11 @@ const SolidPopUp = ({ handleClose, title }) => {
             </Grid>
           </Grid>
           <Grid item>
-            <Typography>Stops</Typography>
+            <Typography
+              sx={{ display: stops === "0" || stops === "" ? "none" : "flex" }}
+            >
+              Stops
+            </Typography>
           </Grid>
           <Grid item xs={12}>
             <Stops />
