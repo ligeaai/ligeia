@@ -101,7 +101,7 @@ const Header = (props) => {
           </Grid>
         </Grid>
         <Grid item>
-          <Grid container columnSpacing={1} sx={{ alignItems: "center" }}>
+          <Grid container columnSpacing={2} sx={{ alignItems: "center" }}>
             <AlertIcon />
             <SettingMenu />
           </Grid>
