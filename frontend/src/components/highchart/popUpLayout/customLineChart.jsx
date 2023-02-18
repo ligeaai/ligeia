@@ -1,7 +1,15 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { Grid } from "@mui/material";
+import {
+  Grid,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemIcon,
+  Checkbox,
+  ListItemText,
+} from "@mui/material";
 
 import {
   MyTextField,
@@ -122,6 +130,71 @@ const MinMaxSelection = ({ name }) => {
   );
 };
 
+const MyList = () => {
+  const dispatch = useDispatch();
+  const minMax = useSelector(
+    (state) =>
+      state.overviewDialog.highchartProps["Show Enable Manuel Y-Axis Min/Max"]
+  );
+
+  const alignTicks = useSelector(
+    (state) =>
+      state.overviewDialog.highchartProps["Show Enable Y-Axis Align Ticks"]
+  );
+  const startOnTicks = useSelector(
+    (state) =>
+      state.overviewDialog.highchartProps["Show Enable Y-Axis Start On Ticks"]
+  );
+  const endOnTicks = useSelector(
+    (state) =>
+      state.overviewDialog.highchartProps["Show Enable Y-Axis End On Ticks"]
+  );
+
+  const values = {
+    "Enable Manuel Y-Axis Min/Max": minMax,
+    "Enable Y-Axis Align Ticks": alignTicks,
+    "Enable Y-Axis Start On Ticks": startOnTicks,
+    "Enable Y-Axis End On Ticks": endOnTicks,
+  };
+  const handleChangeFunc = (key, val) => {
+    dispatch(changeValeus(key, val));
+  };
+  return (
+    <List sx={{ width: "100%", bgcolor: "inherit" }}>
+      {[
+        "Enable Manuel Y-Axis Min/Max",
+        "Enable Y-Axis Align Ticks",
+        "Enable Y-Axis Start On Ticks",
+        "Enable Y-Axis End On Ticks",
+      ].map((value) => {
+        const labelId = `checkbox-list-label-${value}`;
+        return (
+          <ListItem key={value} disablePadding>
+            <ListItemButton
+              role={undefined}
+              onClick={() => {
+                handleChangeFunc(`Show ${value}`, !values[value]);
+              }}
+              dense
+            >
+              <ListItemIcon>
+                <Checkbox
+                  edge="start"
+                  checked={values[value]}
+                  tabIndex={-1}
+                  disableRipple
+                  inputProps={{ "aria-labelledby": labelId }}
+                />
+              </ListItemIcon>
+              <ListItemText id={labelId} primary={`${value}`} />
+            </ListItemButton>
+          </ListItem>
+        );
+      })}
+    </List>
+  );
+};
+
 const YAxis = () => {
   const dispatch = useDispatch();
   const Inputs = useSelector(
@@ -134,8 +207,8 @@ const YAxis = () => {
     dispatch(changeValeus(key, val));
   };
   return (
-    <React.Fragment>
-      <Grid item xs={12}>
+    <Grid container>
+      <Grid item xs={7}>
         <Grid container rowGap={0.5}>
           <Grid item xs={12}>
             Enable Custom Colors
@@ -153,21 +226,12 @@ const YAxis = () => {
           </Grid>
         </Grid>
       </Grid>
-      <Grid item xs={12}>
+      <Grid item xs={5}>
         <Grid container rowGap={0.5}>
-          <PopUpItem
-            type="checkbox"
-            title="Show Enable Manuel Y-Axis Min/Max"
-          />
-          <PopUpItem type="checkbox" title="Show Enable Y-Axis Align Ticks" />
-          <PopUpItem
-            type="checkbox"
-            title="Show Enable Y-Axis Start On Ticks"
-          />
-          <PopUpItem type="checkbox" title="Show Enable Y-Axis End On Ticks" />
+          <MyList />
         </Grid>
       </Grid>
-      <Grid item xs={12}>
+      <Grid item xs={7}>
         {Inputs.map((e, i) => (
           <React.Fragment>
             <Grid item xs={12} key={i}>
@@ -177,7 +241,7 @@ const YAxis = () => {
           </React.Fragment>
         ))}
       </Grid>
-    </React.Fragment>
+    </Grid>
   );
 };
 
