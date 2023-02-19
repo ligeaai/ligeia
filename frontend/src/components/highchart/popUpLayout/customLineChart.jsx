@@ -1,16 +1,18 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { Grid } from "@mui/material";
-
 import {
-  MyTextField,
-  MyNumberTextField,
-  MyCheckBox,
-  ColorTextfield,
-} from "../..";
+  Grid,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemIcon,
+  Checkbox,
+  ListItemText,
+} from "@mui/material";
+
+import { MyNumberTextField, MyCheckBox, ColorTextfield } from "../..";
 import { changeValeus } from "../../../services/actions/overview/overviewDialog";
-import PopUpItem from "../popUpLayout/popUpItem";
 
 const ColorPicker = () => {
   const dispatch = useDispatch();
@@ -23,52 +25,59 @@ const ColorPicker = () => {
   const handleChangeFunc = (key, val) => {
     dispatch(changeValeus(key, val));
   };
-  return Inputs.map((e, i) => (
-    <Grid container key={i}>
-      <Grid item xs={12}>
-        Input,{e.NAME}
-      </Grid>
-      <Grid item xs={12}>
-        <Grid container rowGap={0.5}>
-          <Grid item>
-            <Grid container rowGap={0.5}>
-              <Grid item xs={12}>
-                Color
-              </Grid>
-              <Grid item xs={12}>
-                <ColorTextfield
-                  defaultValue={highchartProps[`[${e.NAME}] Color`]}
-                  handleChangeFunc={(value) => {
-                    handleChangeFunc(`[${e.NAME}] Color`, value);
-                  }}
-                />
+  return (
+    <Grid container rowGap={2}>
+      {Inputs.map((e, i) => (
+        <Grid item key={i}>
+          <Grid container rowGap={1}>
+            <Grid item xs={12} sx={{ fontSize: "14px", fontWeight: "bold" }}>
+              {e.NAME}
+            </Grid>
+            <Grid item xs={12}>
+              <Grid container rowGap={0.5} columnGap={2}>
+                <Grid item xs={4}>
+                  <Grid container rowGap={0.5}>
+                    <Grid item xs={12} sx={{ fontSize: "12px" }}>
+                      Color
+                    </Grid>
+                    <Grid item xs={12}>
+                      <ColorTextfield
+                        defaultValue={highchartProps[`[${e.NAME}] Color`]}
+                        handleChangeFunc={(value) => {
+                          handleChangeFunc(`[${e.NAME}] Color`, value);
+                        }}
+                      />
+                    </Grid>
+                  </Grid>
+                </Grid>
+                <Grid item xs={4}>
+                  <Grid container rowGap={0.5}>
+                    <Grid item xs={12} sx={{ fontSize: "12px" }}>
+                      Disable Data Grouping
+                    </Grid>
+                    <Grid item xs={12}>
+                      <MyCheckBox
+                        defaultValue={
+                          highchartProps[`[${e.NAME}] Disable Data Grouping`]
+                        }
+                        handleChangeFunc={(value) => {
+                          handleChangeFunc(
+                            `[${e.NAME}] Disable Data Grouping`,
+                            value
+                          );
+                        }}
+                      />
+                    </Grid>
+                  </Grid>
+                </Grid>
               </Grid>
             </Grid>
-          </Grid>
-          <Grid item>
-            <Grid container rowGap={0.5}>
-              <Grid item xs={12}>
-                Disable Data Grouping
-              </Grid>
-              <Grid item xs={12}>
-                <MyCheckBox
-                  defaultValue={
-                    highchartProps[`[${e.NAME}] Disable Data Grouping`]
-                  }
-                  handleChangeFunc={(value) => {
-                    handleChangeFunc(
-                      `[${e.NAME}] Disable Data Grouping`,
-                      value
-                    );
-                  }}
-                />
-              </Grid>
-            </Grid>
+            <MinMaxSelection name={e.NAME} />
           </Grid>
         </Grid>
-      </Grid>
+      ))}
     </Grid>
-  ));
+  );
 };
 
 const MinMaxSelection = ({ name }) => {
@@ -85,9 +94,9 @@ const MinMaxSelection = ({ name }) => {
   return (
     <Grid item xs={12}>
       <Grid container rowGap={0.5} columnGap={2}>
-        <Grid itme xs={12} sm={6} md={3}>
+        <Grid itme xs={12} sm={6} md={4}>
           <Grid container rowGap={0.5}>
-            <Grid item xs={12}>
+            <Grid item xs={12} sx={{ fontSize: "12px" }}>
               Y-Axis Minimum
             </Grid>
             <Grid item xs={12}>
@@ -101,9 +110,9 @@ const MinMaxSelection = ({ name }) => {
             </Grid>
           </Grid>
         </Grid>
-        <Grid itme xs={12} sm={6} md={3}>
+        <Grid itme xs={12} sm={6} md={4}>
           <Grid container rowGap={0.5}>
-            <Grid item xs={12}>
+            <Grid item xs={12} sx={{ fontSize: "12px" }}>
               Y-Axis Maximum
             </Grid>
             <Grid item xs={12}>
@@ -122,62 +131,95 @@ const MinMaxSelection = ({ name }) => {
   );
 };
 
-const YAxis = () => {
+const MyList = () => {
   const dispatch = useDispatch();
-  const Inputs = useSelector(
-    (state) => state.overviewDialog.highchartProps.Inputs
-  );
   const customColor = useSelector(
-    (state) => state.overviewDialog.highchartProps["Enable Custom Colors"]
+    (state) => state.overviewDialog.highchartProps["Show Enable Custom Color"]
   );
+  const minMax = useSelector(
+    (state) =>
+      state.overviewDialog.highchartProps["Show Enable Manuel Y-Axis Min/Max"]
+  );
+
+  const alignTicks = useSelector(
+    (state) =>
+      state.overviewDialog.highchartProps["Show Enable Y-Axis Align Ticks"]
+  );
+  const startOnTicks = useSelector(
+    (state) =>
+      state.overviewDialog.highchartProps["Show Enable Y-Axis Start On Ticks"]
+  );
+  const endOnTicks = useSelector(
+    (state) =>
+      state.overviewDialog.highchartProps["Show Enable Y-Axis End On Ticks"]
+  );
+
+  const values = {
+    "Enable Custom Color": customColor,
+    "Enable Manuel Y-Axis Min/Max": minMax,
+    "Enable Y-Axis Align Ticks": alignTicks,
+    "Enable Y-Axis Start On Ticks": startOnTicks,
+    "Enable Y-Axis End On Ticks": endOnTicks,
+  };
   const handleChangeFunc = (key, val) => {
     dispatch(changeValeus(key, val));
   };
   return (
-    <React.Fragment>
-      <Grid item xs={12}>
-        <Grid container rowGap={0.5}>
-          <Grid item xs={12}>
-            Enable Custom Colors
-          </Grid>
-          <Grid item xs={12}>
-            <MyCheckBox
-              defaultValue={customColor}
-              handleChangeFunc={(value) => {
-                handleChangeFunc("Enable Custom Colors", value);
+    <List sx={{ width: "100%", bgcolor: "inherit" }}>
+      {[
+        "Enable Custom Color",
+        "Enable Manuel Y-Axis Min/Max",
+        "Enable Y-Axis Align Ticks",
+        "Enable Y-Axis Start On Ticks",
+        "Enable Y-Axis End On Ticks",
+      ].map((value) => {
+        const labelId = `checkbox-list-label-${value}`;
+        return (
+          <ListItem key={value} disablePadding>
+            <ListItemButton
+              role={undefined}
+              onClick={() => {
+                handleChangeFunc(`Show ${value}`, !values[value]);
               }}
-            />
-          </Grid>
+              dense
+            >
+              <ListItemIcon>
+                <Checkbox
+                  edge="start"
+                  checked={values[value]}
+                  tabIndex={-1}
+                  disableRipple
+                  inputProps={{ "aria-labelledby": labelId }}
+                />
+              </ListItemIcon>
+              <ListItemText id={labelId} primary={`${value}`} />
+            </ListItemButton>
+          </ListItem>
+        );
+      })}
+    </List>
+  );
+};
+
+const YAxis = () => {
+  const Inputs = useSelector(
+    (state) => state.overviewDialog.highchartProps.Inputs
+  );
+  return (
+    <Grid container>
+      <Grid item xs={7}>
+        <Grid container rowGap={0.5}>
           <Grid item xs={12}>
             <ColorPicker />
           </Grid>
         </Grid>
       </Grid>
-      <Grid item xs={12}>
+      <Grid item xs={5}>
         <Grid container rowGap={0.5}>
-          <PopUpItem
-            type="checkbox"
-            title="Show Enable Manuel Y-Axis Min/Max"
-          />
-          <PopUpItem type="checkbox" title="Show Enable Y-Axis Align Ticks" />
-          <PopUpItem
-            type="checkbox"
-            title="Show Enable Y-Axis Start On Ticks"
-          />
-          <PopUpItem type="checkbox" title="Show Enable Y-Axis End On Ticks" />
+          <MyList />
         </Grid>
       </Grid>
-      <Grid item xs={12}>
-        {Inputs.map((e, i) => (
-          <React.Fragment>
-            <Grid item xs={12} key={i}>
-              {e.NAME}
-            </Grid>
-            <MinMaxSelection name={e.NAME} />
-          </React.Fragment>
-        ))}
-      </Grid>
-    </React.Fragment>
+    </Grid>
   );
 };
 
