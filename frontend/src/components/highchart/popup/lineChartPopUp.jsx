@@ -9,7 +9,7 @@ import PopUpItem from "../popUpLayout/popUpItem";
 import CustomLineChart from "../popUpLayout/customLineChart";
 import CreateLineWidget from "../popUpLayout/createLineWidget";
 import LineAssets from "../popUpLayout/lineAssets";
-const Linechart = ({ handleClose, title }) => {
+const Linechart = ({ handleClose, title, height }) => {
   const dispatch = useDispatch();
   const [selectedWidget, setSelectedWidget] = React.useState("Properties");
   const handleChangeFunc = (key, val) => {
@@ -73,6 +73,7 @@ const Linechart = ({ handleClose, title }) => {
         sx={{
           div: { fontSize: "14px" },
           p: 2,
+          height: height - 88,
           overflowY: "auto",
           alignContent: "flex-start",
         }}

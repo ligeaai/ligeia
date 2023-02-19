@@ -24,7 +24,7 @@ import PopUpItem from "../popUpLayout/popUpItem";
 import { Stops } from "../popUpLayout/stops";
 import Measurement from "../popUpLayout/measurement";
 
-const AngularPopUp = ({ handleClose, title }) => {
+const AngularPopUp = ({ handleClose, title, height }) => {
   const dispatch = useDispatch();
   const stops = useSelector(
     (state) => state.overviewDialog.highchartProps["Stops"]
@@ -103,6 +103,7 @@ const AngularPopUp = ({ handleClose, title }) => {
         sx={{
           div: { fontSize: "14px" },
           p: 2,
+          height: height - 88,
           overflowY: "auto",
           alignContent: "flex-start",
         }}

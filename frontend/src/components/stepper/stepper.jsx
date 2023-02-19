@@ -72,11 +72,15 @@ const QontoConnector = styled(StepConnector)(({ theme }) => ({
     borderRadius: 1,
   },
 }));
-export default function HorizontalLinearStepper({ components, finishFunc }) {
+export default function HorizontalLinearStepper({
+  components,
+  finishFunc,
+  height,
+}) {
   const dispatch = useDispatch();
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set());
-  console.log(components);
+  console.log(height);
   const isStepOptional = (step) => {
     return false;
   };
@@ -153,8 +157,8 @@ export default function HorizontalLinearStepper({ components, finishFunc }) {
         })}
       </Stepper>
       <Divider sx={{ mt: 2 }}></Divider>
-      <React.Fragment>
-        <Typography sx={{ mt: 2, mb: 1, minHeight: "calc(100% - 134px)" }}>
+      <Box sx={{ height: height - 134 }}>
+        <Typography sx={{ mt: 2, mb: 1 }}>
           {components()[activeStep][1]}
         </Typography>
         <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
@@ -189,7 +193,7 @@ export default function HorizontalLinearStepper({ components, finishFunc }) {
             </Button>
           )}
         </Box>
-      </React.Fragment>
+      </Box>
     </Box>
   );
 }

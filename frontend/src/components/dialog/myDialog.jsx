@@ -4,7 +4,7 @@ import Box from "@mui/material/Box";
 import Dialog from "@mui/material/Dialog";
 import Paper from "@mui/material/Paper";
 import Draggable from "react-draggable";
-
+import { ResizableBox } from "react-resizable";
 function PaperComponent(props) {
   const nodeRef = React.useRef(null);
   return (
@@ -21,6 +21,8 @@ function PaperComponent(props) {
 export default function AlertDialog({ Button, DialogBody, ...rest }) {
   const [open, setOpen] = React.useState(false);
   const nodeRef = React.useRef(null);
+  const [width, setWidth] = React.useState(800);
+  const [height, setHeight] = React.useState(500);
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -28,7 +30,10 @@ export default function AlertDialog({ Button, DialogBody, ...rest }) {
   const handleClose = () => {
     setOpen(false);
   };
-
+  const handleResize = (event, { size }) => {
+    setWidth(size.width);
+    setHeight(size.height);
+  };
   return (
     <Box>
       <Box onClick={handleClickOpen}>{Button}</Box>
@@ -37,11 +42,21 @@ export default function AlertDialog({ Button, DialogBody, ...rest }) {
         open={open}
         ref={nodeRef}
         onClose={handleClose}
-        maxWidth="md"
+        maxWidth="xl"
         PaperComponent={PaperComponent}
         aria-labelledby="draggable-dialog-title"
       >
-        <DialogBody handleClose={handleClose} {...rest} />
+        <ResizableBox
+          width={width}
+          height={height}
+          minConstraints={[700, 450]}
+          maxConstraints={[1200, 900]}
+          onResize={handleResize}
+        >
+          <div>
+            <DialogBody handleClose={handleClose} height={height} {...rest} />{" "}
+          </div>
+        </ResizableBox>
       </Dialog>
     </Box>
   );

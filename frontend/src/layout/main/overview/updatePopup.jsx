@@ -56,7 +56,7 @@ const DialogContent = ({ highchartProps, chartId, ...rest }) => {
     myFunc();
   }, []);
   return (
-    <Grid container sx={{ width: "100%" }}>
+    <Grid container sx={{ width: "100%", height: "100%" }}>
       {type === highchartProps.Type ? (
         body[highchartProps.Type]
       ) : (
@@ -69,7 +69,8 @@ const DialogContent = ({ highchartProps, chartId, ...rest }) => {
         item
         xs={12}
         sx={{
-          position: "sticky",
+          position: "fixed",
+          width: "100%",
           bottom: 0,
           backgroundColor: "background.main",
         }}

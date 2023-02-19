@@ -79,7 +79,7 @@ const Stops = () => {
   );
 };
 
-const SolidPopUp = ({ handleClose, title }) => {
+const SolidPopUp = ({ handleClose, title, height }) => {
   const dispatch = useDispatch();
   const stops = useSelector(
     (state) => state.overviewDialog.highchartProps["Stops"]
@@ -157,6 +157,7 @@ const SolidPopUp = ({ handleClose, title }) => {
         sx={{
           div: { fontSize: "14px" },
           p: 2,
+          height: height - 88,
           overflowY: "auto",
           alignContent: "flex-start",
         }}

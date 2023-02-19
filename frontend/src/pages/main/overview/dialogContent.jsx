@@ -26,7 +26,7 @@ import angularPopUp from "../../../components/highchart/newPopUp/angularHc";
 import SolidPopUp from "../../../components/highchart/newPopUp/solidHc";
 import measurementPopUp from "../../../components/highchart/newPopUp/measurementCustom";
 
-const DialogContent = ({ handleClose }) => {
+const DialogContent = ({ handleClose, height }) => {
   const dispatch = useDispatch();
   const [refresh, setRefresh] = React.useState(false);
   const selectedItem = useSelector(
@@ -126,7 +126,11 @@ const DialogContent = ({ handleClose }) => {
       {widgetType === "Widgets" ? (
         <Box sx={{ p: 1, overflowY: "auto", width: "9999px" }}>
           {refresh ? (
-            <Stepper components={body[type]} finishFunc={finishFunc}></Stepper>
+            <Stepper
+              components={body[type]}
+              finishFunc={finishFunc}
+              height={height}
+            ></Stepper>
           ) : (
             <Box sx={{ height: "450px" }}>
               <LoadingComponent />
