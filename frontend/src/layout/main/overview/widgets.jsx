@@ -22,6 +22,7 @@ const Widgets = React.forwardRef((props, ref) => {
   const dispatch = useDispatch();
   const [highchartProps, setHighChartProps] = React.useState(null);
   const refresh = useSelector((state) => state.tapsOverview.refresh);
+  const [refres, setRefres] = React.useState(false);
   React.useEffect(() => {
     async function myFunc() {
       let res = await instance.get(`/widgets/${widget}`, config);
@@ -30,7 +31,7 @@ const Widgets = React.forwardRef((props, ref) => {
       });
     }
     myFunc();
-  }, [refresh]);
+  }, [refresh, refres]);
   const width = parseInt(style.width, 10);
   const height = parseInt(style.height, 10) - 50;
   if (highchartProps) {
@@ -185,6 +186,9 @@ const Widgets = React.forwardRef((props, ref) => {
                   </IconButton>
                 }
                 DialogBody={UpdatePopUp}
+                refresh={() => {
+                  setRefres((prev) => !prev);
+                }}
                 highchartProps={highchartProps}
                 chartId={widget}
               />

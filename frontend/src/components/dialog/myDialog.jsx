@@ -21,7 +21,7 @@ function PaperComponent(props) {
 export default function AlertDialog({ Button, DialogBody, ...rest }) {
   const [open, setOpen] = React.useState(false);
   const nodeRef = React.useRef(null);
-  const [width, setWidth] = React.useState(800);
+  const [width, setWidth] = React.useState(885);
   const [height, setHeight] = React.useState(500);
   const handleClickOpen = () => {
     setOpen(true);

@@ -100,6 +100,7 @@ const DialogContent = ({ highchartProps, chartId, ...rest }) => {
               onClick={() => {
                 dispatch(updateChart(chartId));
                 rest.handleClose();
+                rest.refresh();
               }}
               variant="outlined"
             >

@@ -35,11 +35,9 @@ const _setLinkedItem = () => (dispatch, getState) => {
 }
 export const loadTapsOverview = () => async (dispatch, getState) => {
   const linkId = getState().collapseMenu.selectedItem.LINK_ID;
-  const fromId = getState().collapseMenu.selectedItem.FROM_ITEM_ID
   try {
     let res = await instance.get(`/taplinks/${linkId}`, config);
     var titles = Object.keys(res.data.data);
-    const body = JSON.stringify({ ID: fromId })
 
     dispatch({
       type: FILL_TAPS_OVERVIEW,
@@ -49,14 +47,6 @@ export const loadTapsOverview = () => async (dispatch, getState) => {
       type: REFRESH_WIDGETS_OVERVIEW,
     });
     dispatch(_setLinkedItem())
-    // let itemLinkRes = await ItemLinkService.getTags(body)
-
-    // dispatch({
-    //   type: SET_MEASUREMENT_DATA,
-    //   payload: itemLinkRes.data
-    // })
-
-    //setCheckeds(itemLinkRes.data)
   } catch (err) {
     console.log(err)
     if (err.response.status === 404) {
@@ -232,9 +222,6 @@ export const updateChart = () => async (dispatch, getState) => {
   const body = JSON.stringify({ ...chartProps });
   try {
     await instance.put(`/widgets/${chartProps._id}`, body, config);
-    dispatch(updateCouchDb());
-
-    dispatch(loadTapsOverview());
   } catch { }
 };
 export const updateChartLayout = (layout) => async (dispatch, getState) => {
