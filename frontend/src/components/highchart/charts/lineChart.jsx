@@ -184,7 +184,6 @@ const LineCharts = ({ highchartProps, width, height, liveData, chartType }) => {
         type: "datetime",
         min: new Date().getTime() - 30 * 24 * 60 * 60 * 1000,
         max: new Date().getTime() + 1000,
-
         ordinal: false,
         endOnTick: false,
         startOnTick: false,

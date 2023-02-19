@@ -13,7 +13,7 @@ import {
   Tabular,
   Backfill,
 } from "./charts";
-import { Bar, Pie, HeatMap, Line, TreeMap } from "./nivoCharts";
+import { Bar, Pie, HeatMap, Line, TreeMap, BackFillLine } from "./nivoCharts";
 import { Matrix } from "./customWidget";
 const MyBox = styled(Box)(({ theme }) => {
   return {
@@ -149,30 +149,21 @@ const Highchart = ({
         liveData={liveData}
         backfillData={backfillData}
         tabular={tabular}
-        chartType="spline"
       />
     ) : backfillData ? (
-      <Backfill
+      <BackFillLine
         highchartProps={highchartProps}
         liveData={liveData}
-        backfillData={backfillData}
-        tabular={tabular}
-        width={width}
         height={height}
-        chartType="spline"
       />
     ) : (
+      //<Line highchartProps={highchartProps} liveData={liveData} />
       <Line
         highchartProps={highchartProps}
         liveData={liveData}
-        backfillData={backfillData}
-        tabular={tabular}
-        width={width}
         height={height}
-        chartType="spline"
       />
     ),
-
 
     "TreeMap Chart [Nivo]": <TreeMap highchartProps={highchartProps} />,
   };

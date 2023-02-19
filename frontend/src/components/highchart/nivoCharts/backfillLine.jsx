@@ -1,7 +1,7 @@
 import React from "react";
 import { ResponsiveLine } from "@nivo/line";
 import { saveAs } from "file-saver";
-import { IconButton, Grid } from "@mui/material";
+import { IconButton, Grid, Box } from "@mui/material";
 import GetAppIcon from "@mui/icons-material/GetApp";
 import { useState, useEffect } from "react";
 import { wsBaseUrl } from "../../../services/baseApi";
@@ -50,7 +50,9 @@ const MyResponsiveLine = ({ liveData, highchartProps, height }) => {
       setData((prev) => {
         return [...prev, { id: tag.NAME, data: [] }];
       });
-      client[index] = new W3CWebSocket(`${wsBaseUrl}/ws/tags/${tag.TAG_ID}`);
+      client[index] = new W3CWebSocket(
+        `${wsBaseUrl}/ws/tags/backfill/${tag.TAG_ID}`
+      );
       client[index].onerror = function () {
         console.log("Connection Error");
       };
@@ -65,25 +67,38 @@ const MyResponsiveLine = ({ liveData, highchartProps, height }) => {
           if (client.readyState === client.OPEN) {
             if (typeof e.data === "string") {
               let jsonData = JSON.parse(e.data);
+              let data = [];
+              const sortedJson = jsonData.sort((a, b) =>
+                parseInt(a.timestamp) > parseInt(b.timestamp) ? 1 : -1
+              );
+              sortedJson.map((e) => {
+                let i = true;
+                data.map((s) => {
+                  //TODO delete this when the data is correct
+                  if (s[0] === e.timestamp * 1000) i = false;
+                });
+                if (i) {
+                  data.push([parseInt(e.timestamp) * 1000, e.tag_value]);
+                }
+              });
+
               Promise.all(
-                jsonData.map((e) => {
-                  Object.keys(e).map((key) => {
-                    setData((prev) => {
-                      let newDate = new Date(e[key][1][0][0] * 1000);
-                      return {
-                        ...prev,
-                        [index]: {
-                          ...prev[index],
-                          data: [
-                            ...prev[index].data,
-                            {
-                              x: newDate,
-                              y: e[key][1][0][1],
-                            },
-                          ],
-                        },
-                      };
-                    });
+                data.map((e) => {
+                  setData((prev) => {
+                    let newDate = new Date(e[0] * 1000);
+                    return {
+                      ...prev,
+                      [index]: {
+                        ...prev[index],
+                        data: [
+                          ...prev[index].data,
+                          {
+                            x: newDate,
+                            y: e[1],
+                          },
+                        ],
+                      },
+                    };
                   });
                 })
               );
@@ -127,6 +142,7 @@ const MyResponsiveLine = ({ liveData, highchartProps, height }) => {
         interactive={true}
         enableZoom={true}
         enablePan={true}
+        enablePoints={false}
         height={height - 50}
         margin={{ top: 10, right: 30, bottom: 85, left: 60 }}
         xScale={{ type: "time" }}
@@ -141,7 +157,6 @@ const MyResponsiveLine = ({ liveData, highchartProps, height }) => {
         axisRight={null}
         enableGridX={false}
         enableGridY={true}
-        enablePoints={false}
         pointSize={10}
         pointColor={{ theme: "background" }}
         pointBorderWidth={2}
@@ -203,6 +218,10 @@ function dataURLToBlob(dataURL) {
   return new Blob([arrayBuffer], { type: contentType });
 }
 function App(props) {
-  return <MyResponsiveLine {...props} />;
+  return (
+    <>
+      <MyResponsiveLine {...props} />
+    </>
+  );
 }
 export default React.memo(App);
