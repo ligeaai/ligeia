@@ -4,4 +4,5 @@ import Solid from "./solid";
 import { Measurement } from "./measurement";
 import Tabular from "./tabular";
 import Backfill from "./backfill";
-export { Angular, LineChart, Solid, Measurement, Tabular, Backfill }
+import BarHc from "./barHc"
+export { Angular, BarHc, LineChart, Solid, Measurement, Tabular, Backfill }

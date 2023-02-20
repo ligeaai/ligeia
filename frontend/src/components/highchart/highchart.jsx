@@ -12,6 +12,7 @@ import {
   Measurement,
   Tabular,
   Backfill,
+  BarHc,
 } from "./charts";
 import { Bar, Pie, HeatMap, Line, TreeMap, BackFillLine } from "./nivoCharts";
 import { Matrix } from "./customWidget";
@@ -92,6 +93,9 @@ const Highchart = ({
   const chartType = {
     "Gauge(Angular) [Highchart]": (
       <Angular highchartProps={highchartProps} width={width} height={height} />
+    ),
+    "Bar Chart [Highchart]": (
+      <BarHc highchartProps={highchartProps} width={width} height={height} />
     ),
     "Line Chart [Highchart]": tabular ? (
       <Tabular
