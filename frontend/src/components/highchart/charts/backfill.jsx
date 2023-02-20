@@ -105,6 +105,29 @@ const LineCharts = ({ highchartProps, width, height, liveData, chartType }) => {
                                     ],
                             },
                           },
+                          events: {
+                            afterSetExtremes: function (e) {
+                              if (e.min === e.max) {
+                                this.update({
+                                  labels: {
+                                    enabled: false,
+                                  },
+                                  title: {
+                                    enabled: false,
+                                  },
+                                });
+                              } else {
+                                this.update({
+                                  labels: {
+                                    enabled: true,
+                                  },
+                                  title: {
+                                    enabled: true,
+                                  },
+                                });
+                              }
+                            },
+                          },
                         },
                         false
                       );
@@ -132,6 +155,20 @@ const LineCharts = ({ highchartProps, width, height, liveData, chartType }) => {
           });
         },
       },
+    },
+    responsive: {
+      rules: [
+        {
+          condition: {
+            maxWidth: 1100,
+          },
+          chartOptions: {
+            rangeSelector: {
+              dropdown: "always",
+            },
+          },
+        },
+      ],
     },
     rangeSelector: {
       enabled: highchartProps["Show Enable Navbar"],

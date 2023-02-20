@@ -44,6 +44,29 @@ const LineCharts = ({ highchartProps, width, height, liveData, chartType }) => {
           endOnTick: true,
           startOnTick: true,
           opposite: false,
+          events: {
+            afterSetExtremes: function (e) {
+              if (e.min === e.max) {
+                this.update({
+                  labels: {
+                    enabled: false,
+                  },
+                  title: {
+                    enabled: false,
+                  },
+                });
+              } else {
+                this.update({
+                  labels: {
+                    enabled: true,
+                  },
+                  title: {
+                    enabled: true,
+                  },
+                });
+              }
+            },
+          },
         });
       }
     }
@@ -117,11 +140,36 @@ const LineCharts = ({ highchartProps, width, height, liveData, chartType }) => {
             };
           });
         },
+        // redraw: function () {
+        //   var yAxis = this.yAxis;
+        //   if (yAxis) {
+        //     yAxis.map((e) => {
+        //       console.log(e);
+        //       if ((!e.min || !e.max) && e.title !== "") {
+        //         e.setTitle({ text: "" });
+        //         e.title = "";
+        //       }
+        //     });
+        //   }
+        // },
       },
+    },
+    responsive: {
+      rules: [
+        {
+          condition: {
+            maxWidth: 1000,
+          },
+          chartOptions: {
+            rangeSelector: {
+              dropdown: "always",
+            },
+          },
+        },
+      ],
     },
     rangeSelector: {
       enabled: highchartProps["Show Enable Navbar"],
-      inputEnabled: true,
       buttons: [
         {
           type: "minute",
