@@ -47,3 +47,20 @@ export const updateCollapseMenuCouch = (value) => async (dispatch, getState) => 
         console.log(err);
     }
 }
+
+export const overviewBreadcrumpGo = (items, path) => {
+    let returnVal = "overview"
+    function myFunc(myItems, index = 0, myPath) {
+        Promise.all(myItems.map(e => {
+            myPath += `/${e.FROM_ITEM_NAME}`
+            if (myPath === path) {
+                returnVal = { ...e, path: myPath }
+            }
+            if (e.CHILD) {
+                myFunc(e.CHILD, index + 1, myPath)
+            }
+        }))
+    }
+    myFunc(items, 0, "overview")
+    return returnVal
+}

@@ -158,14 +158,11 @@ function MyTabs() {
     Object.keys(widgets).map((e, i) => {
       console.log(widgets);
       if (e === selected) {
-        console.log("-----");
         setValue(i);
       }
     });
-    console.log(value);
   }, [selected]);
   const handleChange = (event, newValue) => {
-    console.log(newValue);
     setValue(newValue);
     dispatch(selectTab(Object.keys(widgets)[newValue]));
   };

@@ -12,7 +12,10 @@ import {
 import DrawerMenu from "../../../layout/main/asset/collapseTreeMenu";
 
 import Tabs from "./tabs";
-import { loadCollapseMenu } from "../../../services/actions/collapseMenu/collapseMenu";
+import {
+  loadCollapseMenu,
+  overviewBreadcrumpGo,
+} from "../../../services/actions/collapseMenu/collapseMenu";
 import ItemLinkService from "../../../services/api/itemLink";
 
 const Overview = () => {

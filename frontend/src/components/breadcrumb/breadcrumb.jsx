@@ -32,7 +32,7 @@ const Breadcrumbs = () => {
           cursor: "pointer",
           color: "icon.primary",
         }}
-        onClick={() => handleClick("home")}
+        onClick={() => handleClick("/home")}
       />
 
       {pathnames.map((name, index) => {
