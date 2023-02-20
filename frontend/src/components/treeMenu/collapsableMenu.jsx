@@ -200,8 +200,10 @@ function CustomizedTreeView({ onOpen, setWidthTrue }) {
         if (path === selectedItem.path) myFunc(selectedItem);
         else {
           let val = overviewBreadcrumpGo(items, path);
-          console.log(val);
           if (val !== "overview") myFunc(val);
+          else {
+            dispatch(cleanTabs());
+          }
         }
       }
     }
