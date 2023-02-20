@@ -15,9 +15,12 @@ exporting(Highcharts);
 accessibility(Highcharts);
 data(Highcharts);
 const LineCharts = ({ highchartProps, width, height, liveData, chartType }) => {
+  const [key, setKey] = React.useState(0);
   const yAxisTitles = [];
   let yAxiskey = {};
-
+  React.useEffect(() => {
+    setKey(key + 1);
+  }, [highchartProps.Inputs.length]);
   highchartProps.Inputs.map((e, i) => {
     if (!highchartProps[`[${e.NAME}] Disable Data Grouping`]) {
       if (!yAxiskey.hasOwnProperty(`${e.UOM_QUANTITY_TYPE} (${e.UOM})`)) {
@@ -301,6 +304,7 @@ const LineCharts = ({ highchartProps, width, height, liveData, chartType }) => {
 
   return (
     <HighchartsReact
+      key={key}
       highcharts={Highcharts}
       options={{
         ...options,

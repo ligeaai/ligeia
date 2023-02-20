@@ -17,6 +17,10 @@ accessibility(Highcharts);
 data(Highcharts);
 boost(Highcharts);
 const LineCharts = ({ highchartProps, width, height, liveData, chartType }) => {
+  const [key, setKey] = React.useState(1000);
+  React.useEffect(() => {
+    setKey(key + 1);
+  }, [highchartProps.Inputs.length]);
   React.useEffect(() => {
     return () => {
       client.map((e) => {
@@ -279,6 +283,7 @@ const LineCharts = ({ highchartProps, width, height, liveData, chartType }) => {
   return (
     <Box>
       <HighchartsReact
+        key={key}
         highcharts={Highcharts}
         options={{
           ...options,
