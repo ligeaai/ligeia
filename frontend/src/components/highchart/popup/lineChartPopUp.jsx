@@ -106,13 +106,11 @@ const Linechart = ({ handleClose, title, height }) => {
         {selectedWidget === "Measurements" ? (
           <>
             <Typography sx={{ width: "100%" }}>Measurements</Typography>
-            <Grid item xs={12}>
-              <Inputs
-                handleChangeFunc={(value) => {
-                  handleChangeFunc("Inputs", value);
-                }}
-              />
-            </Grid>
+            <Inputs
+              handleChangeFunc={(value) => {
+                handleChangeFunc("Inputs", value);
+              }}
+            />
           </>
         ) : (
           <></>
@@ -132,4 +130,4 @@ const Linechart = ({ handleClose, title, height }) => {
   );
 };
 
-export default Linechart;
+export default React.memo(Linechart);

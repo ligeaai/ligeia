@@ -121,6 +121,7 @@ const LineCharts = ({ highchartProps, width, height, liveData, chartType }) => {
     },
     rangeSelector: {
       enabled: highchartProps["Show Enable Navbar"],
+      inputEnabled: true,
       buttons: [
         {
           type: "minute",

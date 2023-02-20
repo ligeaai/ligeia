@@ -178,7 +178,13 @@ const Widgets = React.forwardRef((props, ref) => {
                 label="Backfill"
               />
             </Grid>
-            <Grid item className="cancelDrag">
+            <Grid
+              item
+              className="cancelDrag"
+              onClick={(e) => {
+                e.stopPropagation();
+              }}
+            >
               <MyDialog
                 Button={
                   <IconButton>

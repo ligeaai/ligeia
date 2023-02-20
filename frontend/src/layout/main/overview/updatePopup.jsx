@@ -113,4 +113,4 @@ const DialogContent = ({ highchartProps, chartId, ...rest }) => {
   );
 };
 
-export default DialogContent;
+export default React.memo(DialogContent);
