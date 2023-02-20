@@ -22,7 +22,7 @@ function AlertDialog({ Button, DialogBody, ...rest }) {
   const [open, setOpen] = React.useState(false);
   const nodeRef = React.useRef(null);
   const [width, setWidth] = React.useState(905);
-  const [height, setHeight] = React.useState(500);
+  const [height, setHeight] = React.useState(505);
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -45,13 +45,20 @@ function AlertDialog({ Button, DialogBody, ...rest }) {
         maxWidth="xl"
         PaperComponent={PaperComponent}
         aria-labelledby="draggable-dialog-title"
+        PaperProps={{
+          sx: {
+            overflow: "hidden",
+          },
+        }}
       >
         <ResizableBox
           width={width}
           height={height}
+          resizeHandles={["n", "e", "s", "w", "ne", "sw", "se", "nw"]}
           minConstraints={[700, 450]}
           maxConstraints={[1200, 900]}
           onResize={handleResize}
+          sx={{ overflow: "hidden" }}
         >
           <div>
             <DialogBody handleClose={handleClose} height={height} {...rest} />{" "}
