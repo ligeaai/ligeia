@@ -93,7 +93,7 @@ const Highchart = ({
     "Gauge(Angular) [Highchart]": (
       <Angular highchartProps={highchartProps} width={width} height={height} />
     ),
-    "Linechart [Highchart]": tabular ? (
+    "Line Chart [Highchart]": tabular ? (
       <Tabular
         highchartProps={highchartProps}
         liveData={liveData}

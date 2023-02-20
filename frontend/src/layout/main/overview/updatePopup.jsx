@@ -19,7 +19,7 @@ const DialogContent = ({ highchartProps, chartId, ...rest }) => {
   const type = useSelector((state) => state.overviewDialog.values.Type);
 
   const body = {
-    "Linechart [Highchart]": (
+    "Line Chart [Highchart]": (
       <LinechartPopUp title={"Linechart [Highchart]"} {...rest} />
     ),
     "Area Chart [Highchart]": (

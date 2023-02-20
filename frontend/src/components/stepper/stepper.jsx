@@ -80,10 +80,6 @@ export default function HorizontalLinearStepper({
   const dispatch = useDispatch();
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set());
-  console.log(height);
-  const isStepOptional = (step) => {
-    return false;
-  };
 
   const isStepSkipped = (step) => {
     return skipped.has(step);
@@ -112,12 +108,6 @@ export default function HorizontalLinearStepper({
   };
 
   const handleSkip = () => {
-    if (!isStepOptional(activeStep)) {
-      // You probably want to guard against something like this,
-      // it should never occur unless someone's actively trying to break something.
-      throw new Error("You can't skip a step that isn't optional.");
-    }
-
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
     setSkipped((prevSkipped) => {
       const newSkipped = new Set(prevSkipped.values());
@@ -126,19 +116,13 @@ export default function HorizontalLinearStepper({
     });
   };
 
-  const handleReset = () => {
-    setActiveStep(0);
-  };
   const handleStep = (step) => () => {
     setActiveStep(step);
   };
+  console.log(components);
   return (
     <Box sx={{ width: "100%", height: "100%" }}>
-      <Stepper
-        //alternativeLabel
-        activeStep={activeStep}
-        connector={<QontoConnector />}
-      >
+      <Stepper activeStep={activeStep} connector={<QontoConnector />}>
         {components().map((label, index) => {
           const stepProps = {};
           const labelProps = {};
@@ -172,7 +156,7 @@ export default function HorizontalLinearStepper({
             Back
           </Button>
           <Box sx={{ flex: "1 1 auto" }} />
-          {isStepOptional(activeStep) && (
+          {false && (
             <Button
               color="inherit"
               onClick={handleSkip}

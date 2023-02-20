@@ -36,7 +36,7 @@ const DialogContent = ({ handleClose, height }) => {
   const values = useSelector((state) => state.overviewDialog.selectItems);
   const [widgetType, setWidgetType] = React.useState("Widgets");
   const body = {
-    "Linechart [Highchart]": linechartPopUp,
+    "Line Chart [Highchart]": linechartPopUp,
     "Line Chart [Nivo]": linechartPopUp,
     "Area Chart [Highchart]": linechartPopUp,
     "Gauge(Angular) [Highchart]": angularPopUp,
@@ -69,6 +69,7 @@ const DialogContent = ({ handleClose, height }) => {
     dispatch(saveChart());
     handleClose();
   }
+  console.log(type);
   return (
     <Grid container sx={{ width: "100%" }}>
       <Box

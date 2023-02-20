@@ -88,7 +88,7 @@ const Widgets = React.forwardRef((props, ref) => {
                   sx={{
                     ml: 0.5,
                     display:
-                      (highchartProps.Type === "Linechart [Highchart]" ||
+                      (highchartProps.Type === "Line Chart [Highchart]" ||
                         highchartProps.Type === "Line Chart [Nivo]") &&
                       highchartProps["Show Enable Name"]
                         ? "inline-block"
@@ -107,7 +107,7 @@ const Widgets = React.forwardRef((props, ref) => {
               item
               sx={{
                 display:
-                  highchartProps.Type === "Linechart [Highchart]" ||
+                  highchartProps.Type === "Line Chart [Highchart]" ||
                   highchartProps.Type === "Line Chart [Nivo]" ||
                   highchartProps["Show Name"]
                     ? "none"
@@ -124,7 +124,7 @@ const Widgets = React.forwardRef((props, ref) => {
               item
               sx={{
                 display:
-                  highchartProps.Type === "Linechart [Highchart]" ||
+                  highchartProps.Type === "Line Chart [Highchart]" ||
                   highchartProps.Type === "Line Chart [Nivo]"
                     ? "flex"
                     : "none",
