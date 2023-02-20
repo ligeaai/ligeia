@@ -85,7 +85,7 @@ const MyTap = React.forwardRef(
             fontSize: active === i ? "14px" : "12px",
             display: "flex",
             marginY: "2px",
-            marginRight: "2px",
+            marginRight: "6px",
             alignItems: "center",
             position: "relative",
             border: !(active === i) ? "none" : "1px solid #ffffff",
