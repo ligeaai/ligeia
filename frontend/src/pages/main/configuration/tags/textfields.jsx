@@ -248,7 +248,7 @@ const TransactionPropertySelect = ({ defaultValue }) => {
       values={values}
       valuesPath="ITEM_ID"
       defaultValue={defaultValue}
-      dataTextPath="NAME"
+      dataTextPath="PROPERTY_STRING"
       handleChangeFunc={handleChangeFunc}
     />
   );
