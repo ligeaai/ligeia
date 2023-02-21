@@ -139,7 +139,9 @@ export const Measurement = ({ highchartProps }) => {
             <Grid
               item
               sx={{
-                display: highchartProps["Show Unit"] ? "inline-block" : "none",
+                display: highchartProps["Show Unit of Measurement"]
+                  ? "inline-block"
+                  : "none",
                 fontSize:
                   highchartProps["Unit Font Size"] !== ""
                     ? `${highchartProps["Unit Font Size"]}px`
@@ -147,7 +149,7 @@ export const Measurement = ({ highchartProps }) => {
               }}
             >
               (
-              {measuremenetData && highchartProps["Show Unit"]
+              {measuremenetData && highchartProps["Show Unit of Measurement"]
                 ? measuremenetData.UOM
                 : ""}
               )

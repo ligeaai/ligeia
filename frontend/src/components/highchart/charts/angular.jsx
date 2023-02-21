@@ -156,7 +156,7 @@ const Angular = ({ highchartProps, width, height }) => {
         ],
         tooltip: {
           valueSuffix: ` ${
-            measuremenetData && highchartProps["Show Unit"]
+            measuremenetData && highchartProps["Show Unit of Measurement"]
               ? measuremenetData.UOM
               : ""
           }`,
@@ -173,7 +173,7 @@ const Angular = ({ highchartProps, width, height }) => {
               ? highchartProps["Unit Font Size"]
               : "9"
           }px">( ${
-            measuremenetData && highchartProps["Show Unit"]
+            measuremenetData && highchartProps["Show Unit of Measurement"]
               ? measuremenetData.UOM
               : ""
           } ) </div>`,

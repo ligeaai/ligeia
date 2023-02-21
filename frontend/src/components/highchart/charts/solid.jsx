@@ -174,7 +174,7 @@ export const Solid = ({ highchartProps, width, height }) => {
         ],
         tooltip: {
           valueSuffix: ` ${
-            measuremenetData && highchartProps["Show Unit"]
+            measuremenetData && highchartProps["Show Unit of Measurement"]
               ? measuremenetData.UOM
               : ""
           }`,
@@ -191,7 +191,7 @@ export const Solid = ({ highchartProps, width, height }) => {
               ? highchartProps["Unit Font Size"]
               : "9"
           }px">( ${
-            measuremenetData && highchartProps["Show Unit"]
+            measuremenetData && highchartProps["Show Unit of Measurement"]
               ? measuremenetData.UOM
               : ""
           } )</div>`,
