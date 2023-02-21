@@ -27,7 +27,7 @@ class ItemPropertySaveSerializer(serializers.ModelSerializer):
 class ItemPropertyNameSerializer(serializers.ModelSerializer):
     class Meta:
         model = item_property
-        fields = ["ITEM_ID", "PROPERTY_STRING"]
+        fields = ["ITEM_ID", "PROPERTY_STRING", "ITEM_TYPE", "ROW_ID"]
 
 
 class ItemPropertyUpdateSerializer(serializers.ModelSerializer):
