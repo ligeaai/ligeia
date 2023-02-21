@@ -8,7 +8,6 @@ from .views import (
     TagsPropertysView,
     TagsTypeLinkView,
     TagsNameViews,
-    TagsSearchViews,
     TagsSpesificDetailsView,
 )
 from .elasticsearch.es_view import ESBlogViewSet
