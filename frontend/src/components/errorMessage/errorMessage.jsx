@@ -2,6 +2,7 @@ import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Snackbar from "@mui/material/Snackbar";
 import IconButton from "@mui/material/IconButton";
+import Alert from "@mui/material/Alert";
 import CloseIcon from "@mui/icons-material/Close";
 
 import { clean_error } from "../../services/actions/error";
@@ -23,25 +24,18 @@ const ErrorMessage = (props) => {
       clearTimeout(timer);
     };
   }, [err.isError]);
-  const action = (
-    <React.Fragment>
-      <IconButton
-        size="small"
-        aria-label="close"
-        color="inherit"
-        onClick={errMsgClose}
-      >
-        <CloseIcon fontSize="small" />
-      </IconButton>
-    </React.Fragment>
-  );
+
   if (!err.isError) {
     return <Element />;
   } else {
     return (
       <React.Fragment>
         <Element />
-        <Snackbar open={true} message={err.errMsg} action={action} />
+        <Snackbar open={true}>
+          <Alert onClose={errMsgClose} severity="error" sx={{ width: "100%" }}>
+            {err.errMsg}
+          </Alert>
+        </Snackbar>
       </React.Fragment>
     );
   }
