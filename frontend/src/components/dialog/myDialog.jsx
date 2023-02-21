@@ -56,7 +56,7 @@ function AlertDialog({ Button, DialogBody, ...rest }) {
           height={height}
           resizeHandles={["n", "e", "s", "w", "ne", "sw", "se", "nw"]}
           minConstraints={[700, 500]}
-          maxConstraints={[1200, 900]}
+          maxConstraints={[1800, 1500]}
           onResize={handleResize}
           sx={{ overflow: "hidden" }}
         >
