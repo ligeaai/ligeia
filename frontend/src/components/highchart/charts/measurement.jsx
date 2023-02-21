@@ -148,11 +148,9 @@ export const Measurement = ({ highchartProps }) => {
                     : "14px",
               }}
             >
-              (
               {measuremenetData && highchartProps["Show Unit of Measurement"]
-                ? measuremenetData.UOM
+                ? `(${measuremenetData.UOM})`
                 : ""}
-              )
             </Grid>
           </Grid>
         </Grid>

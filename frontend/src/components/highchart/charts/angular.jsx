@@ -172,11 +172,11 @@ const Angular = ({ highchartProps, width, height }) => {
             highchartProps["Unit Font Size"]
               ? highchartProps["Unit Font Size"]
               : "9"
-          }px">( ${
+          }px"> ${
             measuremenetData && highchartProps["Show Unit of Measurement"]
-              ? measuremenetData.UOM
+              ? `(${measuremenetData.UOM})`
               : ""
-          } ) </div>`,
+          }  </div>`,
           borderWidth: 0,
 
           zIndex: 2231,
