@@ -51,7 +51,7 @@ const LineCharts = ({ highchartProps, width, height, liveData, chartType }) => {
               console.log("Connection Error");
             };
             client[index].onopen = function () {
-              console.log("connedted");
+              console.log("Connected");
             };
             client[index].onclose = function () {
               console.log("WebSocket Client Closed");
