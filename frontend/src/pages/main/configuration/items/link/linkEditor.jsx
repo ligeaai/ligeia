@@ -61,7 +61,7 @@ const LinkEditor = () => {
       dispatch(loadLinks());
     }
   }, [selectedIndex]);
-  if (res && selectedItem.NAME && links) {
+  if (res && selectedItem.PROPERTY_STRING && links) {
     return (
       <Grid container>
         <Grid item xs={12} md={6}>
