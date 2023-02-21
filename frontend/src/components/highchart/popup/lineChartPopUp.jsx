@@ -89,29 +89,28 @@ const Linechart = ({ handleClose, title, height }) => {
           <></>
         )}
         {selectedWidget === "Assets" ? (
-          <>
-            <Typography>Assets</Typography>
-
-            <Grid item xs={12}>
-              <LineAssets
-                handleChangeFunc={(value) => {
-                  handleChangeFunc("Transaction Property", value);
-                }}
-              />
-            </Grid>
-          </>
+          <Box sx={{ height: "calc(100% - 44px)", width: "100%" }}>
+            <Typography sx={{ mb: 1.5 }}>Assets</Typography>
+            <LineAssets
+              handleChangeFunc={(value) => {
+                handleChangeFunc("Transaction Property", value);
+              }}
+            />
+          </Box>
         ) : (
           <></>
         )}
         {selectedWidget === "Measurements" ? (
-          <>
-            <Typography sx={{ width: "100%" }}>Measurements</Typography>
+          <Box sx={{ height: "calc(100% - 44px)", width: "100%" }}>
+            <Typography sx={{ width: "100%", mb: 1.5 }}>
+              Measurements
+            </Typography>
             <Inputs
               handleChangeFunc={(value) => {
                 handleChangeFunc("Inputs", value);
               }}
             />
-          </>
+          </Box>
         ) : (
           <></>
         )}

@@ -28,24 +28,25 @@ function LineChartPopUp() {
     ["Proporties", <CreateLineWidget />],
     [
       "Assets",
-      <>
+      <Box sx={{ height: "calc(100% - 44px)" }}>
+        <Box sx={{ ml: 2, mb: 1.5, fontSize: "14px" }}>Assets</Box>
         <LineAssets
           handleChangeFunc={(value) => {
             handleChangeFunc("Transaction Property", value);
           }}
         />
-      </>,
+      </Box>,
     ],
     [
       "Measurements",
-      <>
-        <Box sx={{ ml: 2, fontSize: "14px" }}>Inputs</Box>
+      <Box sx={{ height: "calc(100% - 44px)" }}>
+        <Box sx={{ ml: 2, mb: 1.5, fontSize: "14px" }}>Inputs</Box>
         <Inputs
           handleChangeFunc={(value) => {
             handleChangeFunc("Inputs", value);
           }}
         />
-      </>,
+      </Box>,
     ],
     ["Settings", <CustomLineChart />],
   ];

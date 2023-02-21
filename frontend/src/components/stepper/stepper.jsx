@@ -121,7 +121,7 @@ export default function HorizontalLinearStepper({
   };
   console.log(components);
   return (
-    <Box sx={{ width: "100%", height: "100%" }}>
+    <Box sx={{ width: "100%", height: "100%", pt: 2 }}>
       <Stepper activeStep={activeStep} connector={<QontoConnector />}>
         {components().map((label, index) => {
           const stepProps = {};
@@ -140,42 +140,59 @@ export default function HorizontalLinearStepper({
           );
         })}
       </Stepper>
-      <Divider sx={{ mt: 2 }}></Divider>
-      <Box sx={{ height: height - 134 }}>
-        <Typography sx={{ mt: 2, mb: 1 }}>
+      <Divider sx={{ mt: 2, mb: 2 }}></Divider>
+      <Box sx={{ width: "100%" }}>
+        <Typography
+          sx={{ height: height - 166, width: "100%", overflowY: "auto", px: 1 }}
+        >
           {components()[activeStep][1]}
         </Typography>
-        <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
-          <Button
-            color="inherit"
-            disabled={activeStep === 0}
-            onClick={handleBack}
-            sx={{ mr: 1 }}
-            variant="outlined"
+        <Box
+          sx={{
+            display: "fixed",
+            width: "100%",
+            backgroundColor: "background.main",
+          }}
+        >
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              width: "100%",
+              p: 1,
+            }}
           >
-            Back
-          </Button>
-          <Box sx={{ flex: "1 1 auto" }} />
-          {false && (
             <Button
               color="inherit"
-              onClick={handleSkip}
+              disabled={activeStep === 0}
+              onClick={handleBack}
               sx={{ mr: 1 }}
               variant="outlined"
             >
-              Skip
+              Back
             </Button>
-          )}
+            <Box sx={{ flex: "1 1 auto" }} />
+            {false && (
+              <Button
+                color="inherit"
+                onClick={handleSkip}
+                sx={{ mr: 1 }}
+                variant="outlined"
+              >
+                Skip
+              </Button>
+            )}
 
-          {activeStep === components().length - 1 ? (
-            <Button onClick={finishFunc} variant="outlined">
-              Finish
-            </Button>
-          ) : (
-            <Button onClick={handleNext} variant="outlined">
-              Next
-            </Button>
-          )}
+            {activeStep === components().length - 1 ? (
+              <Button onClick={finishFunc} variant="outlined">
+                Finish
+              </Button>
+            ) : (
+              <Button onClick={handleNext} variant="outlined">
+                Next
+              </Button>
+            )}
+          </Box>
         </Box>
       </Box>
     </Box>

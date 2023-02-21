@@ -174,12 +174,8 @@ const Inputs = (props) => {
   const customList = (items) => (
     <Paper
       sx={{
-        width: {
-          xs: 150,
-          md: 375,
-        },
-        height: 230,
-        overflow: "auto",
+        width: "100%",
+        height: "100%",
       }}
     >
       <AutoSizer>
@@ -206,9 +202,16 @@ const Inputs = (props) => {
   );
 
   return (
-    <Grid container spacing={2} justifyContent="center" alignItems="center">
-      <Grid item>{customList(left)}</Grid>
-      <Grid item>
+    <Grid
+      container
+      justifyContent="center"
+      columns={24}
+      sx={{ height: "100%", alignItems: "center" }}
+    >
+      <Grid item xs={10.5} sx={{ height: "100%" }}>
+        {customList(left)}
+      </Grid>
+      <Grid item xs={3}>
         <Grid container direction="column" alignItems="center">
           <Button
             sx={{ my: 0.5 }}
@@ -252,7 +255,9 @@ const Inputs = (props) => {
           </Button>
         </Grid>
       </Grid>
-      <Grid item>{customList(right)}</Grid>
+      <Grid item xs={10.5} sx={{ height: "100%" }}>
+        {customList(right)}
+      </Grid>
     </Grid>
   );
 };

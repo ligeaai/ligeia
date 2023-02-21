@@ -126,7 +126,7 @@ const DialogContent = ({ handleClose, height }) => {
         </Grid>
       </Grid>
       {widgetType === "Widgets" ? (
-        <Box sx={{ p: 1, overflowY: "auto", width: "9999px" }}>
+        <Box sx={{ width: "99999px" }}>
           {refresh ? (
             <Stepper
               components={body[type]}
