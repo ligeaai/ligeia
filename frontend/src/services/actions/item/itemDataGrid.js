@@ -306,7 +306,7 @@ export const saveItem = () => async (dispatch, getState) => {
                 )
             dispatch(loadTreeviewItem(async (body, cancelToken) => {
                 return await ItemService.getAll(body, cancelToken, type);
-            }, "NAME"))
+            }, "PROPERTY_STRING"))
             return res
         } catch (err) {
             console.log(err);
@@ -379,8 +379,8 @@ export const deleteItem = () => async (dispatch, getState) => {
             )
         await dispatch(loadTreeviewItem(async (body, cancelToken) => {
             return await ItemService.getAll(body, cancelToken, type);
-        }, "NAME"))
-        dispatch(selectTreeViewItem(selectedIndex, "NAME"));
+        }, "PROPERTY_STRING"))
+        dispatch(selectTreeViewItem(selectedIndex, "PROPERTY_STRING"));
     }
     catch (err) {
     }

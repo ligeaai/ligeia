@@ -38,7 +38,7 @@ const Menu = () => {
   const type = useSelector((state) => state.drawerMenu.selectedItem.TYPE);
   React.useEffect(() => {
     if (!isMount) {
-      dispatch(loadTreeviewItem(pathFunction, "NAME"));
+      dispatch(loadTreeviewItem(pathFunction, "PROPERTY_STRING"));
     }
     dispatch(loadTypeRowsDataGrid());
     dispatch(loadItemLinkSchema());
@@ -53,7 +53,11 @@ const Menu = () => {
   };
 
   return (
-    <TreeMenuItems path={pathFunction} textPath="NAME" historyPathLevel={3} />
+    <TreeMenuItems
+      path={pathFunction}
+      textPath="PROPERTY_STRING"
+      historyPathLevel={3}
+    />
   );
 };
 

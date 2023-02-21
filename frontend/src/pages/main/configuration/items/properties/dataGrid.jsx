@@ -30,7 +30,9 @@ const MyDataGrid = () => {
     (state) => state.treeview.selectedItem.selectedIndex
   );
   const itemId = useSelector((state) => state.treeview.selectedItem.ITEM_ID);
-  const name = useSelector((state) => state.treeview.selectedItem.NAME);
+  const name = useSelector(
+    (state) => state.treeview.selectedItem.PROPERTY_STRING
+  );
   const [sortModel, setSortModel] = React.useState([
     {
       field: "SORT_ORDER",

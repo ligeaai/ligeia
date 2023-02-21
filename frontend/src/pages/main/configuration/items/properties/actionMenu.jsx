@@ -19,7 +19,9 @@ const PropertiesActionMenu = () => {
   const selectedIndex = useSelector(
     (state) => state.treeview.selectedItem.selectedIndex
   );
-  const name = useSelector((state) => state.treeview.selectedItem.NAME);
+  const name = useSelector(
+    (state) => state.treeview.selectedItem.PROPERTY_STRING
+  );
   const dispatch = useDispatch();
   const btnNew = () => {
     if (isChanged) {
