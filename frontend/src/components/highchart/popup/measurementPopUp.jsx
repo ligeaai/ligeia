@@ -97,7 +97,7 @@ const MeasurementPopUp = ({ handleClose, height }) => {
         rowGap={2}
         sx={{
           div: { fontSize: "14px" },
-          height: height - 88,
+          height: height - 96,
           overflowY: "auto",
           p: 2,
           alignContent: "flex-start",

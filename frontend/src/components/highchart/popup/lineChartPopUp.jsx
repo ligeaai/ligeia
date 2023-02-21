@@ -73,7 +73,7 @@ const Linechart = ({ handleClose, title, height }) => {
         sx={{
           div: { fontSize: "14px" },
           p: 2,
-          height: height - 88,
+          height: height - 96,
           overflowY: "auto",
           alignContent: "flex-start",
         }}

@@ -76,6 +76,7 @@ const DialogContent = ({ highchartProps, chartId, ...rest }) => {
           width: "100%",
           bottom: 0,
           backgroundColor: "background.main",
+          p: 0.5,
         }}
       >
         <Grid
