@@ -23,7 +23,7 @@ const CreateWidget = () => {
     (state) => state.overviewDialog.highchartProps["Show Measurement"]
   );
   const Unit = useSelector(
-    (state) => state.overviewDialog.highchartProps["Show Unit"]
+    (state) => state.overviewDialog.highchartProps["Show Unit of Measurement"]
   );
 
   const TagName = useSelector(
@@ -39,7 +39,7 @@ const CreateWidget = () => {
   const values = {
     Name: Name,
     Measurement: Measurements,
-    Unit: Unit,
+    "Unit of Measurement": Unit,
     "Tag Name": TagName,
     Timestamp: TimeStamp,
     "Enable Export": EnableExport,
@@ -76,11 +76,11 @@ const CreateWidget = () => {
             <List sx={{ width: "100%", bgcolor: "inherit" }}>
               {[
                 "Name",
-                "Measurement",
-                "Unit",
-                "Enable Export",
-                "Timestamp",
                 "Tag Name",
+                "Measurement",
+                "Unit of Measurement",
+                "Timestamp",
+                "Enable Export",
               ].map((value) => {
                 const labelId = `checkbox-list-label-${value}`;
                 return (

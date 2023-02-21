@@ -91,7 +91,7 @@ const SolidPopUp = ({ handleClose, title, height }) => {
     (state) => state.overviewDialog.highchartProps["Show Measurement"]
   );
   const Unit = useSelector(
-    (state) => state.overviewDialog.highchartProps["Show Unit"]
+    (state) => state.overviewDialog.highchartProps["Show Unit of Measurement"]
   );
   const TagName = useSelector(
     (state) => state.overviewDialog.highchartProps["Show Tag Name"]
@@ -106,7 +106,7 @@ const SolidPopUp = ({ handleClose, title, height }) => {
   const values = {
     Name: Name,
     Measurement: Measurements,
-    Unit: Unit,
+    "Unit of Measurement": Unit,
     "Tag Name": TagName,
     Timestamp: TimeStamp,
     "Enable Export": EnableExport,
@@ -195,11 +195,11 @@ const SolidPopUp = ({ handleClose, title, height }) => {
               <List sx={{ width: "100%", bgcolor: "inherit" }}>
                 {[
                   "Name",
-                  "Measurement",
-                  "Unit",
-                  "Enable Export",
-                  "Timestamp",
                   "Tag Name",
+                  "Measurement",
+                  "Unit of Measurement",
+                  "Timestamp",
+                  "Enable Export",
                 ].map((value) => {
                   const labelId = `checkbox-list-label-${value}`;
                   return (

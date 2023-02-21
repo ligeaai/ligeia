@@ -35,7 +35,7 @@ const MeasurementPopUp = ({ handleClose, height }) => {
     (state) => state.overviewDialog.highchartProps["Show Measurement"]
   );
   const Unit = useSelector(
-    (state) => state.overviewDialog.highchartProps["Show Unit"]
+    (state) => state.overviewDialog.highchartProps["Show Unit of Measurement"]
   );
 
   const TagName = useSelector(
@@ -48,7 +48,7 @@ const MeasurementPopUp = ({ handleClose, height }) => {
   const values = {
     Name: Name,
     Measurement: Measurements,
-    Unit: Unit,
+    "Unit of Measurement": Unit,
     "Tag Name": TagName,
     Timestamp: TimeStamp,
   };
@@ -134,37 +134,39 @@ const MeasurementPopUp = ({ handleClose, height }) => {
           <Grid container>
             <Grid item xs={12}>
               <List sx={{ width: "100%", bgcolor: "inherit" }}>
-                {["Name", "Measurement", "Unit", "Timestamp", "Tag Name"].map(
-                  (value) => {
-                    const labelId = `checkbox-list-label-${value}`;
-                    return (
-                      <ListItem key={value} disablePadding>
-                        <ListItemButton
-                          role={undefined}
-                          onClick={() => {
-                            handleChangeFunc(`Show ${value}`, !values[value]);
-                          }}
-                          dense
-                        >
-                          <ListItemIcon>
-                            <Checkbox
-                              edge="start"
-                              checked={
-                                value === "Name"
-                                  ? !values[value]
-                                  : values[value]
-                              }
-                              tabIndex={-1}
-                              disableRipple
-                              inputProps={{ "aria-labelledby": labelId }}
-                            />
-                          </ListItemIcon>
-                          <ListItemText id={labelId} primary={`${value}`} />
-                        </ListItemButton>
-                      </ListItem>
-                    );
-                  }
-                )}
+                {[
+                  "Name",
+                  "Tag Name",
+                  "Measurement",
+                  "Unit of Measurement",
+                  "Timestamp",
+                ].map((value) => {
+                  const labelId = `checkbox-list-label-${value}`;
+                  return (
+                    <ListItem key={value} disablePadding>
+                      <ListItemButton
+                        role={undefined}
+                        onClick={() => {
+                          handleChangeFunc(`Show ${value}`, !values[value]);
+                        }}
+                        dense
+                      >
+                        <ListItemIcon>
+                          <Checkbox
+                            edge="start"
+                            checked={
+                              value === "Name" ? !values[value] : values[value]
+                            }
+                            tabIndex={-1}
+                            disableRipple
+                            inputProps={{ "aria-labelledby": labelId }}
+                          />
+                        </ListItemIcon>
+                        <ListItemText id={labelId} primary={`${value}`} />
+                      </ListItemButton>
+                    </ListItem>
+                  );
+                })}
               </List>
             </Grid>
           </Grid>
