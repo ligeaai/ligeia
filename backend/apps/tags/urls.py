@@ -8,17 +8,19 @@ from .views import (
     TagsPropertysView,
     TagsTypeLinkView,
     TagsNameViews,
-    TagsSpesificDetailsView)
+    TagsSearchViews,
+    TagsSpesificDetailsView,
+)
+from .elasticsearch.es_view import ESBlogViewSet
 
 urlpatterns = [
-    
-    path("save/", TagsSaveView.as_view(),name='tags save '),
-    path("delete/", TagsDeleteView.as_view(),name='tags delete '),
-    path("details/",TagsDetailsView.as_view() ,name='tags details'),
-    path("tags-property/",TagsPropertysView.as_view() ,name='tags property'),
+    path("save/", TagsSaveView.as_view(), name="tags save "),
+    path("delete/", TagsDeleteView.as_view(), name="tags delete "),
+    path("details/", TagsDetailsView.as_view(), name="tags details"),
+    path("tags-property/", TagsPropertysView.as_view(), name="tags property"),
     # path("detailsold/",TypeDetailView.as_view() ,name='typeDetails'),#TypeDetailView.as_view()
-    path("links/",TagsTypeLinkView.as_view() ,name='tags link'),
-    path("item/",TagsSpesificDetailsView.as_view() ,name='tags link'),
-    path("name/",TagsNameViews.as_view() ,name='tags name'),
-    
-] 
+    path("links/", TagsTypeLinkView.as_view(), name="tags link"),
+    path("item/", TagsSpesificDetailsView.as_view(), name="tags link"),
+    path("name/", TagsNameViews.as_view(), name="tags name"),
+    path("es/<str:name>", ESBlogViewSet.as_view({"get": "list"}), name=""),
+]
