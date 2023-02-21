@@ -26,6 +26,7 @@ import {
     FACEBOOK_AUTH_FAIL,
     LOGOUT,
     ADD_ERROR_SUCCESS,
+    SNACKBAR_ERROR
 } from './types';
 
 import { instance } from '../baseApi';
@@ -84,8 +85,8 @@ export const login = (email, password) => async dispatch => {
             type: LOGIN_FAIL
         })
         dispatch({
-            type: ADD_ERROR_SUCCESS,
-            payload: err.response.data.Message[0]
+            type: SNACKBAR_ERROR,
+            payload: { msg: err.response.data.Message[0], type: "info" }
         })
         dispatch(setLoaderFalse());
 
@@ -118,9 +119,10 @@ export const signup = (email, first_name, last_name, password) => async dispatch
             type: SIGNUP_FAIL
         })
         dispatch({
-            type: ADD_ERROR_SUCCESS,
-            payload: err.message
+            type: SNACKBAR_ERROR,
+            payload: { msg: err.message, type: "info" }
         })
+
         dispatch(setLoaderFalse());
         dispatch(cleanState())
 
@@ -143,9 +145,10 @@ export const forget_password = (email) => async dispatch => {
             type: CHANGE_PASSWORD_SUCCESS
         });
         dispatch({
-            type: ADD_ERROR_SUCCESS,
-            payload: "Check your mail"
+            type: SNACKBAR_ERROR,
+            payload: { msg: "Check your mail", type: "info" }
         })
+
     } catch (err) {
         dispatch({
             type: ADD_ERROR_SUCCESS,
@@ -249,9 +252,10 @@ export const myGoogleLogin = (response, path) => async (dispatch) => {
         }
         else {
             dispatch({
-                type: ADD_ERROR_SUCCESS,
-                payload: "You must register first"
+                type: SNACKBAR_ERROR,
+                payload: { msg: "You must register first", type: "info" }
             })
+
         }
         dispatch(setLoaderFalse())
     }

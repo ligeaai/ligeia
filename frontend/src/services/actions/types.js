@@ -28,6 +28,7 @@ export const ADD_ERROR_SUCCESS = 'ADD_ERROR_SUCCESS';
 export const ADD_ERROR_FAIL = 'ADD_ERROR_FAIL';
 export const CLEAN_ERROR_SUCCESS = 'CLEAN_ERROR_SUCCESS';
 export const CLEAN_ERROR_FAIL = 'CLEAN_ERROR_FAIL';
+export const SNACKBAR_ERROR = "SNACKBAR_ERROR"
 
 //-----------TAGS-----------------------
 export const LOAD_TAGS_LABEL = "LOAD_TAGS_LABEL";

@@ -32,7 +32,11 @@ const ErrorMessage = (props) => {
       <React.Fragment>
         <Element />
         <Snackbar open={true}>
-          <Alert onClose={errMsgClose} severity="error" sx={{ width: "100%" }}>
+          <Alert
+            onClose={errMsgClose}
+            severity={err.errType}
+            sx={{ width: "100%" }}
+          >
             {err.errMsg}
           </Alert>
         </Snackbar>
