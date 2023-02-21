@@ -42,7 +42,7 @@ function AlertDialog({ Button, DialogBody, ...rest }) {
         open={open}
         ref={nodeRef}
         onClose={handleClose}
-        maxWidth="xl"
+        maxWidth="false"
         PaperComponent={PaperComponent}
         aria-labelledby="draggable-dialog-title"
         PaperProps={{
@@ -56,7 +56,7 @@ function AlertDialog({ Button, DialogBody, ...rest }) {
           height={height}
           resizeHandles={["n", "e", "s", "w", "ne", "sw", "se", "nw"]}
           minConstraints={[700, 500]}
-          maxConstraints={[1800, 1500]}
+          maxConstraints={[window.innerWidth - 200, window.innerHeight - 200]}
           onResize={handleResize}
           sx={{ overflow: "hidden" }}
         >
