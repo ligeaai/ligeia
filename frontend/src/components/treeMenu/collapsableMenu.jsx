@@ -90,6 +90,13 @@ const StyledTreeItem = styled((props) => (
     textOverflow: "ellipsis",
     padding: "4px",
   },
+
+  ".mySelected": {
+    backgroundColor: "rgba(33, 33, 33, 0.08) !important",
+  },
+  ".mySelectedNo": {
+    backgroundColor: "inherit !important",
+  },
 }));
 const MyStyledTreeItem = React.memo(({ myItems, path, location }) => {
   const dispatch = useDispatch();
@@ -106,6 +113,9 @@ const MyStyledTreeItem = React.memo(({ myItems, path, location }) => {
     history.push(`/${way}/${e.FROM_ITEM_NAME}`);
   };
   return myItems.map((e, i) => {
+    console.log(`${path}/${e.FROM_ITEM_NAME}`);
+    console.log(location.slice(1));
+    const pathname = decodeURI(location.slice(1));
     if (e.CHILD)
       return (
         <StyledTreeItem
@@ -117,9 +127,9 @@ const MyStyledTreeItem = React.memo(({ myItems, path, location }) => {
           }}
           ContentProps={{
             className:
-              `${path}/${e.FROM_ITEM_NAME}` === location.slice(1)
-                ? "Mui-selected"
-                : "",
+              `${path}/${e.FROM_ITEM_NAME}` === pathname
+                ? "mySelected"
+                : "mySelectedNo",
           }}
         >
           <MyStyledTreeItem
@@ -136,9 +146,9 @@ const MyStyledTreeItem = React.memo(({ myItems, path, location }) => {
         label={e.FROM_ITEM_NAME}
         ContentProps={{
           className:
-            `${path}/${e.FROM_ITEM_NAME}` === location.slice(1)
-              ? "Mui-selected"
-              : "",
+            `${path}/${e.FROM_ITEM_NAME}` === pathname
+              ? "mySelected"
+              : "mySelectedNo",
         }}
         onClick={async () => {
           onHandleClick(path, e);
@@ -179,7 +189,6 @@ function CustomizedTreeView({ onOpen, setWidthTrue }) {
     dispatch(updateCouchDb());
     dispatch(await setSelectedCollapseMenu({ ...e }));
     dispatch(loadTapsOverview());
-    console.log(e);
     history.push(`/${e.path}`);
     try {
       let persist = localStorage.getItem("persist:root");
@@ -192,7 +201,6 @@ function CustomizedTreeView({ onOpen, setWidthTrue }) {
   }
   React.useEffect(() => {
     const path = location.pathname.slice(1);
-    console.log(selectedItem);
     if (isMount) {
       if (selectedItem) myFunc(selectedItem);
     } else {
