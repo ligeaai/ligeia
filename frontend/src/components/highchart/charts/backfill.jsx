@@ -87,7 +87,9 @@ const LineCharts = ({ highchartProps, width, height, liveData, chartType }) => {
                           id: "yaxis-" + index,
                           opposite: false,
                           title: {
-                            text: `${tag.UOM_QUANTITY_TYPE} (${tag.UOM})`,
+                            text: tag.UOM
+                              ? `${tag.UOM_QUANTITY_TYPE} (${tag.UOM})`
+                              : "Untitles",
                             style: {
                               fontSize:
                                 highchartProps[
