@@ -89,7 +89,7 @@ const LineCharts = ({ highchartProps, width, height, liveData, chartType }) => {
                           title: {
                             text: tag.UOM
                               ? `${tag.UOM_QUANTITY_TYPE} (${tag.UOM})`
-                              : "Untitles",
+                              : "Undefined (UoM)",
                             style: {
                               fontSize:
                                 highchartProps[

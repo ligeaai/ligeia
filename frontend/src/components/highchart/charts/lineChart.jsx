@@ -28,7 +28,9 @@ const LineCharts = ({ highchartProps, width, height, liveData, chartType }) => {
         yAxisTitles.push({
           id: "yaxis-" + i,
           title: {
-            text: e.UOM ? `${e.UOM_QUANTITY_TYPE} (${e.UOM})` : "Untitles",
+            text: e.UOM
+              ? `${e.UOM_QUANTITY_TYPE} (${e.UOM})`
+              : "Undefined (UoM)",
             style: {
               fontSize:
                 highchartProps["Graph Axis Title Font Size (em)"] === ""
