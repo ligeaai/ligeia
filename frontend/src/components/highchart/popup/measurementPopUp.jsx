@@ -110,14 +110,15 @@ const MeasurementPopUp = ({ handleClose, height }) => {
                 <Grid item xs={12}>
                   <Typography>Properties</Typography>
                 </Grid>
-                <PopUpItem type="text" title="Name" />
+                <PopUpItem type="text" title="Name" nullTrue={true} />
                 <PopUpItem type="number" title="Name Font Size(em)" />
                 <PopUpItem type="number" title="Widget Refresh (seconds)" />
+                <Grid xs={6}></Grid>
+                <PopUpItem type="number" title="Tag Name Font Size" />
                 <PopUpItem type="number" title="Value Font Size" />
                 <PopUpItem type="number" title="Unit Font Size" />
-                <PopUpItem type="number" title="Tag Name Font Size" />
-                <PopUpItem type="number" title="Time Stamp Font Size" />
                 <PopUpItem type="number" title="Decimal Places" />
+                <PopUpItem type="number" title="Time Stamp Font Size" />
               </Grid>
             </Grid>
             <Grid item xs={12}>
