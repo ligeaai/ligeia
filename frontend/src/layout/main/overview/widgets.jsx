@@ -46,6 +46,7 @@ const Widgets = React.forwardRef((props, ref) => {
           borderRadius: "5px",
           color: "text.primary",
           backgroundColor: "background.success",
+          overflow: "hidden",
         }}
         {...rest}
       >

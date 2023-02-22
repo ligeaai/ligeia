@@ -87,9 +87,10 @@ export const Measurement = ({ highchartProps }) => {
           width: "100%",
           textAlign: "center",
           display: highchartProps["Show Tag Name"] ? "inline-block" : "none",
-          fontSize: highchartProps["Name Font Size"]
-            ? highchartProps["Name Font Size"]
-            : "12px",
+          fontSize:
+            highchartProps["Tag Name Font Size"] !== ""
+              ? `${highchartProps["Tag Name Font Size"]}px`
+              : "12px",
         }}
       >
         {measuremenetData ? measuremenetData.NAME : ""}
