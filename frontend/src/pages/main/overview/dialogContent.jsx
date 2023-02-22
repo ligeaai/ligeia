@@ -62,7 +62,7 @@ const DialogContent = ({ handleClose, height }) => {
   React.useEffect(() => {
     async function myFunc() {
       await dispatch(await loadSelectItems());
-      dispatch(await fillProperties("Gauge(Angular) [Highchart]"));
+      dispatch(await fillProperties("Area Chart [Highchart]"));
     }
     myFunc();
   }, []);
