@@ -179,7 +179,7 @@ const Inputs = (props) => {
       <Grid item xs={10.5} sx={{ height: "100%" }}>
         {customList(left)}
       </Grid>
-      <Grid item xs={3} sx={{ height: "100%" }}>
+      <Grid item xs={3}>
         <Grid container direction="column" alignItems="center">
           <Button
             sx={{ my: 0.5 }}
