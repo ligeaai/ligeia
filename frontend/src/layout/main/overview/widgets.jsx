@@ -81,6 +81,7 @@ const Widgets = React.forwardRef((props, ref) => {
             container
             sx={{
               justifyContent: "space-between",
+              flexWrap: "nowrap",
               p: 0.5,
               alignItems:
                 highchartProps["Name Font Size(em)"] !== ""
