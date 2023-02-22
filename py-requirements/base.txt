@@ -4,7 +4,7 @@ psycopg2-binary
 
 # serve files
 whitenoise
-
+haystack
 # Django Framework
 Django
 djangorestframework
@@ -25,6 +25,7 @@ channels-redis
 daphne
 pymongo
 confluent_kafka
+django_elasticsearch_dsl_drf
 channels_redis
 kazoo
 # Kafka-Python
