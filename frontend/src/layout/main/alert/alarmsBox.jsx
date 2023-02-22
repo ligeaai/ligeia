@@ -9,7 +9,7 @@ import {
 } from "../../../services/actions/alarms/alarms";
 import { ItemSperatorLine } from "../../../components";
 import { wsBaseUrl } from "../../../services/baseApi";
-
+import { SnackbarProvider, useSnackbar } from "notistack";
 import AlarmsItem from "./alarmsItem";
 let client = false;
 var W3CWebSocket = require("websocket").w3cwebsocket;
@@ -50,29 +50,18 @@ const AlarmsBox = () => {
       window.removeEventListener("click", handleUserClick);
     };
   }, []);
+
   return (
-    <Grid
+    <SnackbarProvider
+      maxSnack={5}
       className="alarms"
-      container
-      sx={{
-        position: "absolute",
-        backgroundColor: "background.secondary",
-        width: "300px",
-        right: "0",
-        zIndex: 5,
-        boxShadow: 3,
-        borderRadius: 4,
-        mt: "6px",
-        color: "text.main",
-        maxHeight: "500px",
-        overflow: "auto",
-        pt: 2,
-      }}
+      anchorOrigin={{ vertical: "top", horizontal: "right" }}
+      autoHideDuration={null}
     >
-      {alarmsItem.map((props, i) => (
-        <AlarmsItem {...props} key={i} />
-      ))}
-    </Grid>
+      {alarmsItem.map((e) => {
+        return <AlarmsItem {...e} />;
+      })}
+    </SnackbarProvider>
   );
 };
 
