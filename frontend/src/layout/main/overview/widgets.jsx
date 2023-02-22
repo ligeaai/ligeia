@@ -73,7 +73,12 @@ const Widgets = React.forwardRef((props, ref) => {
             sx={{
               justifyContent: "space-between",
               p: 0.5,
-              alignItems: "center",
+              alignItems:
+                highchartProps["Name Font Size(em)"] !== ""
+                  ? highchartProps["Name Font Size(em)"] > 24
+                    ? ""
+                    : "center"
+                  : "center",
             }}
           >
             <Grid item>

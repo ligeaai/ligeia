@@ -70,7 +70,6 @@ const DialogContent = ({ handleClose, height }) => {
     dispatch(saveChart());
     handleClose();
   }
-  console.log(type);
   return (
     <Grid container sx={{ width: "100%" }}>
       <Box
