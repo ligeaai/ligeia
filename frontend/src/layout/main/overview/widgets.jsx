@@ -23,18 +23,27 @@ const Widgets = React.forwardRef((props, ref) => {
   const [highchartProps, setHighChartProps] = React.useState(null);
   const refresh = useSelector((state) => state.tapsOverview.refresh);
   const [refres, setRefres] = React.useState(false);
-  const titleRef = React.useRef(null);
+  const [boxHeight, setBoxHeight] = React.useState(50);
   React.useEffect(() => {
     async function myFunc() {
       let res = await instance.get(`/widgets/${widget}`, config);
       setHighChartProps(() => {
         return res.data;
       });
+      setBoxHeight(
+        res.data["Name Font Size(em)"] === ""
+          ? 50
+          : res.data["Name Font Size(em)"] > 50 / 1.5
+          ? res.data["Name Font Size(em)"] * 1.5 + 4
+          : 50
+      );
     }
+
     myFunc();
   }, [refresh, refres]);
+  console.log(boxHeight);
   const width = parseInt(style.width, 10);
-  const height = parseInt(style.height, 10) - titleRef?.current?.offsetHeight;
+  const height = parseInt(style.height, 10) - boxHeight;
 
   if (highchartProps) {
     return (
@@ -53,7 +62,7 @@ const Widgets = React.forwardRef((props, ref) => {
         {...rest}
       >
         <Box
-          ref={titleRef}
+          id={widget}
           className="grid-item__title"
           sx={{
             fontSize: "14px",
