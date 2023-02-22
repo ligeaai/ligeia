@@ -30,9 +30,10 @@ def checkEvent(message):
 
     if data.get("quality") == 67:
         data["message_type"] = "frozen_data"
+
     return data
 
 
 for message in consumer:
     data = checkEvent(message)
-    send_alarm(data, "DATA")
+    send_alarm("Alarms", data, "DATA", error_message=data.get("message_type"))

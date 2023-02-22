@@ -5,10 +5,14 @@ from kafka import KafkaProducer
 from datetime import datetime
 from helper import send_alarm
 
+
 def HealthCheckForPostgre():
     try:
         conn = psycopg2.connect(
-            host="postgres", database="postgres", user="postgres", password="manager"
+            host=os.environ["PG_HOST"],
+            database=os.environ["PG_DB"],
+            user=os.environ["PG_USER"],
+            password=os.environ["PG_PASS"],
         )
         cur = conn.cursor()
         cur.execute("SELECT 1")
@@ -19,11 +23,10 @@ def HealthCheckForPostgre():
             print("PostgreSQL is not running.")
     except (psycopg2.OperationalError, psycopg2.DatabaseError) as e:
         error_message = ("Error connecting to PostgreSQL:", str(e))
-        send_alarm(error_message,"Postgre-SQL")
+        send_alarm(error_message, "Postgre-SQL")
     finally:
         cur.close()
         conn.close()
-    print("finally")
 
 
 # HELPER FUNC BW

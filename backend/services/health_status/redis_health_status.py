@@ -5,6 +5,7 @@ from kafka import KafkaProducer
 import json
 from helper import send_alarm
 
+
 def check_redis(host, port, component):
     try:
         with redis.StrictRedis(host, port=port) as redis_conn:
@@ -15,9 +16,9 @@ def check_redis(host, port, component):
     else:
         print(f"Redis ({component}) health check succeeded")
 
-check_redis("redis-test1", 6379, "Redis-TS")
-check_redis("ligeiaai-redis-1", 6379, "Redis")
 
+check_redis(os.environ["REDIS_TS_HOST"], os.environ["REDIS_PORT"], "Redis-TS")
+check_redis(os.environ["REDIS_HOST"], os.environ["REDIS_PORT"], "Redis")
 
 
 # host = os.environ.get("Kafka_Host_DP")

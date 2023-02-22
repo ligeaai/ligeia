@@ -5,8 +5,11 @@ from kazoo.client import KazooClient
 from kafka import KafkaProducer
 from helper import send_alarm
 
-zk_hosts = "zookeeper:2181"
-zk_path = "/"
+host = os.environ["ZooKeeper_HOST"]
+port = os.environ["ZooKeeper_PORT"]
+zk_hosts = f"{host}:{port}"
+zk_path = os.environ["ZooKeeper_PATH"]
+
 
 def check_zk_health():
     try:
@@ -19,8 +22,8 @@ def check_zk_health():
     else:
         print("ZooKeeper health check succeeded")
 
-check_zk_health()
 
+check_zk_health()
 
 
 # host = os.environ.get("Kafka_Host_DP")

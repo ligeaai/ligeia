@@ -4,6 +4,7 @@ import datetime
 from kafka import KafkaProducer
 import json
 from helper import send_alarm
+
 host = os.environ["Kafka_Host_DP"]
 
 
@@ -14,11 +15,9 @@ try:
         auto_offset_reset="earliest",
     )
     consumer.topics()
-    print("Ok")
 except Exception as e:
     error_message = f"Kafka health check failed: {e}"
-    send_alarm(error_message,"Apache-kafka")
-
+    send_alarm(error_message, "Apache-kafka")
 
 
 # host = os.environ["Kafka_Host_DP"]
