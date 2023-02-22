@@ -11,7 +11,8 @@ base_url = os.environ.get("BASE_URL")
 def check_rabbitmq():
     try:
         response = requests.get(
-            f"{base_url}:15672/api/aliveness-test/%2F", auth=("guest", "guest")
+            f"{base_url}:15672/api/aliveness-test/%2F",
+            auth=(os.environ["RabbitMQ_USER"], os.environ["RabbitMQ_USER"]),
         )
         response.raise_for_status()
         if response.json()["status"] != "ok":

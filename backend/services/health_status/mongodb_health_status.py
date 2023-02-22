@@ -7,7 +7,7 @@ from helper import send_alarm
 
 
 try:
-    client = MongoClient("mongodb://root:admin@mongodb-timescale:27017/")
+    client = MongoClient(os.environ["Mongo_Client"])
     db = client["test_database"]
     coll = db["test_collection"]
     count = coll.count_documents({})

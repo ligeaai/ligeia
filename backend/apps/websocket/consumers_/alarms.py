@@ -17,7 +17,6 @@ class AlarmsConsumer(AsyncWebsocketConsumer):
             "query": {
                 "$and": [
                     {"layer_name": self.layer_name},
-                    {"LOG_TYPE": "Alarm"},
                 ]
             },
             "collection": self.collection,
@@ -31,7 +30,6 @@ class AlarmsConsumer(AsyncWebsocketConsumer):
             query = {
                 "$and": [
                     {"layer_name": self.layer_name},
-                    {"LOG_TYPE": "Alarm"},
                     {"date": {"$gte": start_date}},
                     {"date": {"$lte": end_date}},
                 ]
