@@ -31,10 +31,12 @@ const Widgets = React.forwardRef((props, ref) => {
         return res.data;
       });
       setBoxHeight(
-        res.data["Name Font Size(em)"] === ""
-          ? 50
-          : res.data["Name Font Size(em)"] > 50 / 1.5
-          ? res.data["Name Font Size(em)"] * 1.5 + 4
+        res.data["Show Enable Name"] || !res.data["Show Name"]
+          ? res.data["Name Font Size(em)"] === ""
+            ? 50
+            : res.data["Name Font Size(em)"] > 50 / 1.5
+            ? res.data["Name Font Size(em)"] * 1.5 + 4
+            : 50
           : 50
       );
     }
