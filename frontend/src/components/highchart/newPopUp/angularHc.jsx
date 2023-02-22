@@ -28,7 +28,7 @@ function AngularPopUp() {
     [
       "Stops",
       <>
-        <Grid container rowGap={2} sx={{ div: { fontSize: "14px" } }}>
+        <Grid container rowGap={2} sx={{ div: { fontSize: "14px" }, pb: 2 }}>
           <Grid item xs={12}>
             <Grid container columnSpacing={2}>
               <Measurement />

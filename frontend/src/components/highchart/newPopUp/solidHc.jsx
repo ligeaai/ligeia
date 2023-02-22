@@ -83,7 +83,7 @@ function MeasuremenCustom() {
     [
       "Stops",
       <>
-        <Grid container rowGap={2} sx={{ div: { fontSize: "14px" } }}>
+        <Grid container rowGap={2} sx={{ div: { fontSize: "14px" }, pb: 2 }}>
           <Grid item>
             <Grid container columnSpacing={2}>
               <Measurement />
