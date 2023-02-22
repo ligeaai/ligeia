@@ -11,7 +11,6 @@ var W3CWebSocket = require("websocket").w3cwebsocket;
 
 export const Measurement = ({ highchartProps }) => {
   const [measuremenetData, setMeasurementData] = React.useState(null);
-
   const [categories, setCategories] = React.useState("");
   const [data, setData] = React.useState("0");
   function colorPicker(val) {
