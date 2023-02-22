@@ -35,7 +35,7 @@ CHANNEL_LAYERS = {
     "default": {
         "BACKEND": "channels_redis.core.RedisChannelLayer",
         "CONFIG": {
-            "hosts": [(env('REDIS_HOST'), 6379)],
+            "hosts": [(env("REDIS_HOST"), 6379)],
         },
     },
 }
@@ -52,11 +52,10 @@ DJANGO_APPS = [
 ]
 
 THIRD_PARTY_APPS = [
-    
     "raven.contrib.django.raven_compat",
     "rest_framework",
     "rest_framework.authtoken",
-    #"knox",
+    # "knox",
     "django_extensions",
     "django_filters",
     # "cities_light",
@@ -70,19 +69,17 @@ THIRD_PARTY_APPS = [
     "rosetta",
     "modeltranslation",
     # "oauth2_provider",
-    'dj_rest_auth',
+    "dj_rest_auth",
     "allauth",
     "allauth.account",
     "allauth.socialaccount",
     "allauth.socialaccount.providers.google",
     "allauth.socialaccount.providers.facebook",
     "allauth.socialaccount.providers.github",
-    'django_elasticsearch_dsl',
+    "django_elasticsearch_dsl",
 ]
 ELASTICSEARCH_DSL = {
-    'default': {
-        'hosts': env('Elastic_Search_Host')
-    },
+    "default": {"hosts": os.environ["Elastic_Search_Host"]},
 }
 SECURE_CROSS_ORIGIN_OPENER_POLICY = None
 LOCAL_APPS = [
@@ -92,7 +89,7 @@ LOCAL_APPS = [
     # "apps.db_dictionaries",
     # "apps.config",
     "apps.users",
-    #"apps.code_list.apps.CodeListConfig",
+    # "apps.code_list.apps.CodeListConfig",
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS + modelApp
@@ -186,8 +183,8 @@ REST_FRAMEWORK = {
         "rest_framework.permissions.IsAuthenticated",
     ],
     "DEFAULT_AUTHENTICATION_CLASSES": (
-        #"knox.auth.TokenAuthentication",
-         "rest_framework.authentication.TokenAuthentication",
+        # "knox.auth.TokenAuthentication",
+        "rest_framework.authentication.TokenAuthentication",
         # "rest_framework.authentication.SessionAuthentication",
         # "rest_framework.authentication.BasicAuthentication",
     ),
@@ -198,7 +195,7 @@ REST_FRAMEWORK = {
         "rest_framework.parsers.FormParser",
         "rest_framework.parsers.MultiPartParser",
     ),
-    'DATE_FORMAT': '%d-%m-%Y'
+    "DATE_FORMAT": "%d-%m-%Y"
     # 'COERCE_DECIMAL_TO_STRING': False # TYPE SORT_ORDER STRING TO DECIMAL
 }
 
@@ -242,80 +239,77 @@ CACHES = {
 LOGIN_REDIRECT_URL = "/"
 
 
-
-ACCOUNT_DEFAULT_HTTP_PROTOCOL = 'https'
+ACCOUNT_DEFAULT_HTTP_PROTOCOL = "https"
 ACCOUNT_USER_MODEL_USERNAME_FIELD = None
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_AUTHENTICATION_METHOD = "email"
 ACCOUNT_ACTIVATION_DAYS = 7  # days
 ACCOUNT_EMAIL_VERIFICATION = "optional"
-ACCOUNT_ADAPTER = 'apps.users.adapter.NoNewUsersAccountAdapter'
-SOCIALACCOUNT_ADAPTER = 'apps.users.adapter.FooAppSocialAccountAdapter'
+ACCOUNT_ADAPTER = "apps.users.adapter.NoNewUsersAccountAdapter"
+SOCIALACCOUNT_ADAPTER = "apps.users.adapter.FooAppSocialAccountAdapter"
 SOCIALACCOUNT_QUERY_EMAIL = True
 SOCIALACCOUNT_AUTO_SIGNUP = False
 
 SOCIALACCOUNT_PROVIDERS = {
-    "github":{
-        'APP': {
-             'client_id': env('Github_Client_Id'),  # !!! THIS App ID
-             'secret': env('Github_Secret'),  # !!! THIS App Secret
-             'key': ''
-                },
-            'SCOPE': [
-            'user',
-            'repo',
-            'read:org',
+    "github": {
+        "APP": {
+            "client_id": env("Github_Client_Id"),  # !!! THIS App ID
+            "secret": env("Github_Secret"),  # !!! THIS App Secret
+            "key": "",
+        },
+        "SCOPE": [
+            "user",
+            "repo",
+            "read:org",
         ],
-        
     },
     "google": {
         # For each OAuth based provider, either add a ``SocialApp``
         # (``socialaccount`` app) containing the required client
         # credentials, or list them here:
         "APP": {
-            "client_id": env('Google_Client_Id'),
-            "secret": env('Google_Secret'),
-            "key": env('Google_Key'),
+            "client_id": env("Google_Client_Id"),
+            "secret": env("Google_Secret"),
+            "key": env("Google_Key"),
         },
         "AUTH_PARAMS": {
             "access_type": "offline",
         },
     },
-     'facebook':
-        {
-         'METHOD': 'oauth2',
-         'SDK_URL': '//connect.facebook.net/{locale}/sdk.js',
-         'SCOPE': ['email', 'public_profile'],
-         'AUTH_PARAMS': {'auth_type': 'reauthenticate'},
-         'INIT_PARAMS': {'cookie': True},
-         'FIELDS': [
-             'id',
-             'first_name',
-             'last_name',
-             'name',
-             'name_format',
-             'picture',
-             'short_name'
-         ],
-         'EXCHANGE_TOKEN': True,
-         'LOCALE_FUNC': lambda request: 'ru_RU',
-         'VERIFIED_EMAIL': False,
-         'VERSION': 'v7.0',
-         # you should fill in 'APP' only if you don't create a Facebook instance at /admin/socialaccount/socialapp/
-         'APP': {
-             'client_id': env('Facebook_Client_Id'), 
-             'secret': env('Facebok_Secret'),  
-             'key': ''
-                }
-         }
+    "facebook": {
+        "METHOD": "oauth2",
+        "SDK_URL": "//connect.facebook.net/{locale}/sdk.js",
+        "SCOPE": ["email", "public_profile"],
+        "AUTH_PARAMS": {"auth_type": "reauthenticate"},
+        "INIT_PARAMS": {"cookie": True},
+        "FIELDS": [
+            "id",
+            "first_name",
+            "last_name",
+            "name",
+            "name_format",
+            "picture",
+            "short_name",
+        ],
+        "EXCHANGE_TOKEN": True,
+        "LOCALE_FUNC": lambda request: "ru_RU",
+        "VERIFIED_EMAIL": False,
+        "VERSION": "v7.0",
+        # you should fill in 'APP' only if you don't create a Facebook instance at /admin/socialaccount/socialapp/
+        "APP": {
+            "client_id": env("Facebook_Client_Id"),
+            "secret": env("Facebok_Secret"),
+            "key": "",
+        },
+    },
 }
 
-ACCOUNT_DEFAULT_HTTP_PROTOCOL = 'https'
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = env('EMAIL_HOST')
+ACCOUNT_DEFAULT_HTTP_PROTOCOL = "https"
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = env("EMAIL_HOST")
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
-EMAIL_PORT = env('EMAIL_PORT')
-EMAIL_HOST_USER = env('EMAIL_USER')
-EMAIL_HOST_PASSWORD = env('EMAIL_PASS')
+EMAIL_PORT = env("EMAIL_PORT")
+EMAIL_HOST_USER = env("EMAIL_USER")
+EMAIL_HOST_PASSWORD = env("EMAIL_PASS")
