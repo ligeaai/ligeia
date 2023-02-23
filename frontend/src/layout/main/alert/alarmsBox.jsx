@@ -1,18 +1,17 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { Grid } from "@mui/material";
-
+import { Box } from "@mui/material";
 import {
   closeAlarms,
   setAlarmsItem,
 } from "../../../services/actions/alarms/alarms";
-import { ItemSperatorLine } from "../../../components";
 import { wsBaseUrl } from "../../../services/baseApi";
 import { SnackbarProvider, useSnackbar } from "notistack";
 import AlarmsItem from "./alarmsItem";
 let client = false;
 var W3CWebSocket = require("websocket").w3cwebsocket;
+
 const AlarmsBox = () => {
   const dispatch = useDispatch();
   const alarmsItem = useSelector((state) => state.alarms.alarmsItem);
@@ -37,6 +36,7 @@ const AlarmsBox = () => {
         if (client.readyState === client.OPEN) {
           if (typeof e.data === "string") {
             let jsonData = JSON.parse(e.data);
+            console.log(jsonData);
             dispatch(setAlarmsItem(jsonData.slice(-5)));
             return true;
           }
@@ -52,16 +52,24 @@ const AlarmsBox = () => {
   }, []);
 
   return (
-    <SnackbarProvider
-      maxSnack={5}
-      className="alarms"
-      anchorOrigin={{ vertical: "top", horizontal: "right" }}
-      autoHideDuration={null}
+    <Box
+      sx={{
+        "& .SnackbarContainer-root": {
+          marginTop: "50px",
+        },
+      }}
     >
-      {alarmsItem.map((e) => {
-        return <AlarmsItem {...e} />;
-      })}
-    </SnackbarProvider>
+      <SnackbarProvider
+        maxSnack={5}
+        className="alarms"
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+        autoHideDuration={null}
+      >
+        {alarmsItem.map((e, i) => {
+          return <AlarmsItem {...e} key={i} />;
+        })}
+      </SnackbarProvider>
+    </Box>
   );
 };
 

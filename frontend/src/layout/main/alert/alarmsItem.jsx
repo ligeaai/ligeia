@@ -1,31 +1,59 @@
-import React from "react";
-import { Grid } from "@mui/material";
-import { ItemSperatorLine } from "../../../components";
+import React, { useState } from "react";
+import { Divider, Grid } from "@mui/material";
+import { ItemSperatorLineXL } from "../../../components";
 import { dateFormatDDMMYYHHMM } from "../../../services/utils/dateFormatter";
-import Snackbar from "@mui/material/Snackbar";
 import IconButton from "@mui/material/IconButton";
-import Alert from "@mui/material/Alert";
 import CloseIcon from "@mui/icons-material/Close";
-import { SnackbarProvider, useSnackbar } from "notistack";
+import { useSnackbar } from "notistack";
+const alarmLevel = {
+  1: "Error",
+  2: "Warning",
+  3: "Info",
+};
+
 const AlertItem = (props) => {
-  console.log(props);
-  const { enqueueSnackbar } = useSnackbar();
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
   const handleClick = () => {
     enqueueSnackbar(
-      <Grid container>
-        <Grid item xs={12}>
-          {props.layer_name}
+      <Grid container rowSpacing={2} sx={{ width: "400px" }}>
+        <Grid item xs={12} sx={{ mb: 1 }}>
+          <Grid container alignItems={"center"} justifyContent="space-between">
+            <Grid item>{props.layer_name}</Grid>
+          </Grid>
         </Grid>
+        <ItemSperatorLineXL />
         <Grid item xs={12}>
-          {props.error_message}
+          {typeof props.error_message === "string" ? (
+            props.error_message
+          ) : (
+            <Grid container>
+              <Grid item xs={12} sx={{ fontSize: "14px", fontWeight: "bold" }}>
+                Error Message
+              </Grid>
+              {Object.keys(props.error_message).map((e, i) => {
+                return (
+                  <Grid item xs={12} key={i}>
+                    {e}:{props.error_message[e]}
+                  </Grid>
+                );
+              })}
+            </Grid>
+          )}
         </Grid>
         <Grid item xs={12}>
           {dateFormatDDMMYYHHMM(new Date(props.timestamp * 1000))}
         </Grid>
       </Grid>,
       {
-        variant: props.LOG_TYPE,
+        variant: alarmLevel[props.priority],
+        action: (key) => (
+          <Grid item sx={{ position: "absolute", top: 4, right: 4 }}>
+            <IconButton onClick={() => closeSnackbar(key)}>
+              <CloseIcon fontSize="small" />
+            </IconButton>
+          </Grid>
+        ),
       }
     );
   };
@@ -48,26 +76,24 @@ const AlertItem = (props) => {
   //           {props.container}
   //         </Grid>
   //         <Grid item xs={12} sx={{ fontSize: "12px" }}>
-  //           {typeof props.error_message === "string" ? (
-  //             props.error_message
-  //           ) : (
-  //             <Grid container>
-  //               <Grid
-  //                 item
-  //                 xs={12}
-  //                 sx={{ fontSize: "14px", fontWeight: "bold" }}
-  //               >
-  //                 Error Message
-  //               </Grid>
-  //               {Object.keys(props.error_message).map((e, i) => {
-  //                 return (
-  //                   <Grid item xs={12} key={i}>
-  //                     {e}:{props.error_message[e]}
-  //                   </Grid>
-  //                 );
-  //               })}
-  //             </Grid>
-  //           )}
+  // {
+  //   typeof props.error_message === "string" ? (
+  //     props.error_message
+  //   ) : (
+  //     <Grid container>
+  //       <Grid item xs={12} sx={{ fontSize: "14px", fontWeight: "bold" }}>
+  //         Error Message
+  //       </Grid>
+  //       {Object.keys(props.error_message).map((e, i) => {
+  //         return (
+  //           <Grid item xs={12} key={i}>
+  //             {e}:{props.error_message[e]}
+  //           </Grid>
+  //         );
+  //       })}
+  //     </Grid>
+  //   );
+  // }
   //         </Grid>
   //         <Grid item xs={12}>
   //           <Grid container sx={{ flexDirection: "row-reverse" }}>
