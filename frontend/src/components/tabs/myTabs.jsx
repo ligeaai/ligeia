@@ -23,6 +23,7 @@ import { setConfirmation } from "../../services/reducers/confirmation";
 import { Button } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import AddIcon from "@mui/icons-material/Add";
+import { useIsMount } from "../../hooks/useIsMount";
 const TabPanel = (props) => {
   const { children, value, index, ...other } = props;
 
@@ -147,6 +148,7 @@ const MyTap = React.forwardRef(
   }
 );
 function MyTabs() {
+  const isMount = useIsMount();
   const ref = React.createRef();
   const dispatch = useDispatch();
   const [value, setValue] = React.useState(null);
@@ -154,14 +156,21 @@ function MyTabs() {
   const widgets = useSelector((state) => state.tapsOverview.widgets);
   const isFullScreen = useSelector((state) => state.fullScreen.isFullScreen);
   const selected = useSelector((state) => state.tapsOverview.selected);
+  const menuSelectedItem = useSelector(
+    (state) => state.collapseMenu.selectedItem.path
+  );
   React.useEffect(() => {
     Object.keys(widgets).map((e, i) => {
-      console.log(widgets);
       if (e === selected) {
         setValue(i);
       }
     });
   }, [selected]);
+  React.useEffect(() => {
+    if (!isMount) {
+      setValue(null);
+    }
+  }, [menuSelectedItem]);
   const handleChange = (event, newValue) => {
     setValue(newValue);
     dispatch(selectTab(Object.keys(widgets)[newValue]));
