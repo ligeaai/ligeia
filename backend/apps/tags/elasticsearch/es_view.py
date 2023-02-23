@@ -16,9 +16,6 @@ class ESBlogViewSet(DocumentViewSet):
         print(name)
         s = Search(index="tags")
         s = s.query("match_phrase_prefix", NAME=name)
-        s = s.source(
-            includes=["NAME", "DESCRIPTION", "UOM", "UOM_QUANTITY_TYPE", "TAG_ID"]
-        )
         s = s.sort({"NAME_ES": {"order": "asc"}})
         s = s.params(size=1000)
         response = s.execute()
