@@ -27,7 +27,16 @@ class Item_PropertyDocument(Document):
         ]
 
     def prepare_START_DATETIME(self, instance):
+        if type(instance.START_DATETIME) == str:
+            instance.START_DATETIME = datetime.strptime(
+                instance.START_DATETIME, "%Y-%m-%d"
+            ).date()
+
         return instance.START_DATETIME.strftime("%Y-%m-%d")
 
     def prepare_END_DATETIME(self, instance):
+        if type(instance.END_DATETIME) == str:
+            instance.END_DATETIME = datetime.strptime(
+                instance.END_DATETIME, "%Y-%m-%d"
+            ).date()
         return instance.END_DATETIME.strftime("%Y-%m-%d")

@@ -15,9 +15,11 @@ class ESItem_PropertyViewSet(DocumentViewSet):
     def post(self, request, *args, **kwargs):
         PROPERTY_STRING = request.data.get("PROPERTY_STRING")
         LAYER_NAME = request.data.get("LAYER_NAME")
+        ITEM_TYPE = request.data.get("ITEM_TYPE")
         s = Search(index="item_property")
         s = s.query("match_phrase_prefix", PROPERTY_STRING=PROPERTY_STRING)
         s = s.filter("match", LAYER_NAME=LAYER_NAME)
+        s = s.filter("match", ITEM_TYPE=ITEM_TYPE)
         s = s.filter("match", PROPERTY_TYPE="NAME")
         s = s.sort({"PROPERTY_STRING_ES": {"order": "asc"}})
         s = s.params(size=1000)
