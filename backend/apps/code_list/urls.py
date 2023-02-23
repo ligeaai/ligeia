@@ -14,6 +14,8 @@ from .views import (
     CodeListTypeDetailView,
     CodeListWIDGET_TYPEView,
 )
+
+from .elasticsearch.es_view import ESCodeListViewSet
 from django.urls.resolvers import URLPattern
 
 urlpatterns = [
@@ -47,4 +49,5 @@ urlpatterns = [
     ),
     path("property-code/", CodeListTypeDetailView.as_view(), name="PropertyCode"),
     path("widget-type/", CodeListWIDGET_TYPEView.as_view(), name="PropertyCode"),
+    path("es/", ESCodeListViewSet.as_view({"get": "list"}), name=""),
 ]
