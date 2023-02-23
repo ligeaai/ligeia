@@ -18,6 +18,7 @@ class ESCodeListViewSet(DocumentViewSet):
         s = Search(index="code_list")
         s = s.query("match_phrase_prefix", CODE_TEXT=code_text)
         s = s.filter("match", CULTURE=culture)
+        s = s.filter("match", LIST_TYPE="CODE_LIST")
         s = s.params(size=1000)
         response = s.execute()
         serializer = self.get_serializer(response.hits, many=True)
