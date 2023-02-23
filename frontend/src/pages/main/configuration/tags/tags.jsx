@@ -20,6 +20,26 @@ import {
 } from "../../../../services/actions/tags/tags";
 
 import TagService from "../../../../services/api/tags";
+import { useIsMount } from "../../../../hooks/useIsMount";
+import { filterMenu } from "../../../../services/actions/treeview/treeview";
+const Menu = () => {
+  const dispatch = useDispatch();
+  const isMount = useIsMount();
+  const text = useSelector((state) => state.searchBar.text);
+
+  React.useEffect(() => {
+    if (!isMount) {
+      dispatch(filterMenu(text, TagService.elasticSearch, {}));
+    }
+  }, [text]);
+  return (
+    <TreeMenuItems
+      path={TagService.getAll}
+      textPath="NAME"
+      historyPathLevel={3}
+    />
+  );
+};
 
 const Tags = ({ isHome }) => {
   const dispatch = useDispatch();
@@ -46,18 +66,8 @@ const Tags = ({ isHome }) => {
       }}
     >
       <Grid item>
-        <DrawerMenu
-          Element={
-            <TreeMenuItems
-              path={TagService.getAll}
-              textPath="NAME"
-              historyPathLevel={3}
-            />
-          }
-          path="tags"
-        />
+        <DrawerMenu Element={<Menu />} path="tags" />
       </Grid>
-
       <Grid
         item
         xs={12}

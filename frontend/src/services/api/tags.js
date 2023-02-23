@@ -30,7 +30,12 @@ const remove = (body) => {
     return instance.post("/tags/delete/", body, config());
 };
 
+const elasticSearch = (text, body, cancelToken) => {
+    return instance.get(`/tags/es/${text}`, { ...config(), cancelToken: cancelToken.token });
+};
+
 const TagService = {
+    elasticSearch,
     getAll,
     getTagItemS,
     getTagItem,

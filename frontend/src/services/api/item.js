@@ -18,10 +18,16 @@ const getItemValues = (body, cancelToken) => {
     )
 }
 
+const elasticSearch = (text, body, cancelToken) => {
+    return instance.post(`/item-property/es/`, body, { ...config(), cancelToken: cancelToken.token });
+};
+
+
 const ItemService = {
     getAll,
     getTypeProperty,
-    getItemValues
+    getItemValues,
+    elasticSearch
 };
 
 export default ItemService;

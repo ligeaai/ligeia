@@ -16,6 +16,7 @@ import DrawerMenu from "../../../../layout/main/asset/treeViewMenu";
 import {
   loadTreeviewItem,
   cleanTreeview,
+  filterMenu,
 } from "../../../../services/actions/treeview/treeview";
 import ItemService from "../../../../services/api/item";
 
@@ -30,12 +31,13 @@ import MyActionMenu from "./properties/actionMenu";
 import DateBreak from "./properties/dateBreak";
 import Link from "./link/link";
 import { loadItemLinkSchema } from "../../../../services/actions/item/itemLinkEditor";
-
 import LinkActionMenu from "./link/linkActionMenu";
 const Menu = () => {
   const isMount = useIsMount();
   const dispatch = useDispatch();
   const type = useSelector((state) => state.drawerMenu.selectedItem.TYPE);
+  const text = useSelector((state) => state.searchBar.text);
+
   React.useEffect(() => {
     if (!isMount) {
       dispatch(loadTreeviewItem(pathFunction, "PROPERTY_STRING"));
@@ -48,6 +50,16 @@ const Menu = () => {
     };
   }, [type]);
 
+  React.useEffect(() => {
+    if (!isMount) {
+      const body = JSON.stringify({
+        PROPERTY_STRING: text,
+        LAYER_NAME: "KNOC",
+      });
+      console.log(body);
+      dispatch(filterMenu(text, ItemService.elasticSearch, body));
+    }
+  }, [text]);
   const pathFunction = async (body, cancelToken) => {
     return await ItemService.getAll(body, cancelToken, type);
   };

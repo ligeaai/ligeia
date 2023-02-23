@@ -18,9 +18,36 @@ import MyActionMenu from "./actionMenu";
 import DataGridPro from "./datagrid";
 import { cleanAllDataGrid } from "../../../../../services/actions/codelist/datagrid";
 
-import { setFilteredLayerName } from "../../../../../services/actions/treeview/treeview";
+import {
+  setFilteredLayerName,
+  filterMenu,
+} from "../../../../../services/actions/treeview/treeview";
 import { instance, config } from "../../../../../services/baseApi";
 import CodelistService from "../../../../../services/api/codeList";
+import { useIsMount } from "../../../../../hooks/useIsMount";
+const Menu = () => {
+  const isMount = useIsMount();
+  const dispatch = useDispatch();
+  const text = useSelector((state) => state.searchBar.text);
+  const cultur = useSelector((state) => state.lang.cultur);
+  React.useEffect(() => {
+    if (!isMount) {
+      const body = JSON.stringify({
+        CODE_TEXT: text,
+        CULTURE: cultur,
+      });
+      dispatch(filterMenu(text, CodelistService.elasticSearch, body));
+    }
+  }, [text]);
+
+  return (
+    <TreeMenuItems
+      path={CodelistService.getAllTreeitem}
+      textPath="CODE_TEXT"
+      historyPathLevel={2}
+    />
+  );
+};
 
 const CodeList = ({ isHome }) => {
   const dispatch = useDispatch();
@@ -63,16 +90,7 @@ const CodeList = ({ isHome }) => {
       }}
     >
       <Grid item>
-        <DrawerMenu
-          Element={
-            <TreeMenuItems
-              path={CodelistService.getAllTreeitem}
-              textPath="CODE_TEXT"
-              historyPathLevel={2}
-            />
-          }
-          path="codelist"
-        />
+        <DrawerMenu Element={<Menu />} path="codelist" />
       </Grid>
 
       <Grid

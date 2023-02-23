@@ -184,3 +184,26 @@ export const createTreeViewCouch = () => async (dispatch, getState) => {
         console.log(err);
     }
 }
+let cancelTokenFiler;
+export const filterMenu = (text, path, body) => async (dispatch, getState) => {
+    let res;
+    let value;
+    if (cancelTokenFiler) {
+        cancelTokenFiler.cancel()
+    }
+    cancelTokenFiler = axios.CancelToken.source();
+    try {
+        res = await path(text, body, cancelTokenFiler);
+        value = res.data;
+        if (text === "") {
+            value = getState().treeview.treeMenuItem
+        }
+    } catch (err) {
+        console.log(err);
+        value = getState().treeview.treeMenuItem
+    }
+    dispatch({
+        type: LOAD_FILTERED_TREEVIEW_ITEM,
+        payload: value
+    })
+}

@@ -31,6 +31,9 @@ const getItemPropCode = (body) => {
     return instance.post("code-list/property-code/", body, config());
 };
 
+const elasticSearch = (text, body, cancelToken) => {
+    return instance.post(`/code-list/es/`, body, { ...config(), cancelToken: cancelToken.token });
+};
 
 
 const CodelistService = {
@@ -39,7 +42,8 @@ const CodelistService = {
     createUpdate,
     remove,
     details,
-    getItemPropCode
+    getItemPropCode,
+    elasticSearch
 };
 
 
