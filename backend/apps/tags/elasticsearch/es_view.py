@@ -19,6 +19,7 @@ class ESBlogViewSet(DocumentViewSet):
         s = s.source(
             includes=["NAME", "DESCRIPTION", "UOM", "UOM_QUANTITY_TYPE", "TAG_ID"]
         )
+        s = s.sort({"NAME_ES": {"order": "asc"}})
         s = s.params(size=1000)
         response = s.execute()
         return response.hits
