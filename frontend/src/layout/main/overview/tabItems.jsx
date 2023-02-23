@@ -43,6 +43,7 @@ const TabItems = (props) => {
   };
   const widgets = useSelector((state) => {
     try {
+      if (!state.tapsOverview.widgets[widgetname].widgets) return [];
       return state.tapsOverview.widgets[widgetname].widgets;
     } catch {
       return [];
@@ -50,12 +51,12 @@ const TabItems = (props) => {
   });
   const layouts = useSelector((state) => {
     try {
+      if (!state.tapsOverview.widgets[widgetname].layouts) return {};
       return state.tapsOverview.widgets[widgetname].layouts;
     } catch {
-      return [];
+      return {};
     }
   });
-
   const handleLayoutChange = (newLayout) => {
     console.log(width);
     layouts[breakpoint] = newLayout;
