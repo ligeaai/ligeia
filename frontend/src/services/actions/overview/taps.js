@@ -37,11 +37,21 @@ export const loadTapsOverview = () => async (dispatch, getState) => {
   const linkId = getState().collapseMenu.selectedItem.LINK_ID;
   try {
     let res = await instance.get(`/taplinks/${linkId}`, config);
-    var titles = Object.keys(res.data.data);
-
+    var titles = [];
+    var widgets = {};
+    var data = {}
+    Promise.all(Object.keys(res.data.data).map(e => {
+      if (res.data.data[e].widgets && res.data.data[e].layouts) {
+        titles.push(e)
+        widgets[e] = res.data.data[e]
+      }
+    }))
+    console.log(titles);
+    console.log(widgets);
+    data = { ...res.data, data: widgets }
     dispatch({
       type: FILL_TAPS_OVERVIEW,
-      payload: { titles, widgets: res.data.data, data: res.data },
+      payload: { titles, widgets: widgets, data: data },
     });
     dispatch({
       type: REFRESH_WIDGETS_OVERVIEW,

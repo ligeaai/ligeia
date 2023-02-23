@@ -113,8 +113,6 @@ const MyStyledTreeItem = React.memo(({ myItems, path, location }) => {
     history.push(`/${way}/${e.FROM_ITEM_NAME}`);
   };
   return myItems.map((e, i) => {
-    console.log(`${path}/${e.FROM_ITEM_NAME}`);
-    console.log(location.slice(1));
     const pathname = decodeURI(location.slice(1));
     if (e.CHILD)
       return (

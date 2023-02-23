@@ -211,17 +211,16 @@ function MyTabs() {
           }}
         >
           {titles.map((x, i) => {
-            if (widgets[x].widgets && widgets[x].layouts)
-              return (
-                <MyTap
-                  ref={ref}
-                  key={`${x}`}
-                  x={x}
-                  i={i}
-                  active={value}
-                  handleChange={handleChange}
-                ></MyTap>
-              );
+            return (
+              <MyTap
+                ref={ref}
+                key={`${x}`}
+                x={x}
+                i={i}
+                active={value}
+                handleChange={handleChange}
+              ></MyTap>
+            );
           })}
           <Grid item>
             <IconButton

@@ -30,7 +30,6 @@ export default function (state = initialState, action) {
     switch (type) {
         case "persist/REHYDRATE":
             try {
-                console.log("ksaklşdakldlşsad-----------------------------")
                 return {
                     ...state,
                     titles: payload.tapsOverview.titles,
@@ -42,7 +41,6 @@ export default function (state = initialState, action) {
                     isChecked: payload.tapsOverview.isChecked
                 }
             } catch {
-                console.log("ksaklşdakldlşsad-----------------------------")
                 return {
                     ...state,
                     titles: [],
