@@ -115,12 +115,14 @@ class ItemDetailsView(generics.ListAPIView):
                 ITEM_ID__in=item_ids,
                 PROPERTY_TYPE="NAME",
             )
-            .values("ITEM_ID", "PROPERTY_STRING")
+            .values("ITEM_ID", "PROPERTY_STRING", "ROW_ID", "ITEM_TYPE")
             .annotate(last_updated=Max("START_DATETIME"))
             .order_by("PROPERTY_STRING", "-last_updated")
         )
         serializer = ItemPropertyNameSerializer(property_names, many=True)
         Red.set(cache_key, (serializer.data))
+        message = f"{request.user} listed the {item_type} items"
+        logger.info(message, request)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 
