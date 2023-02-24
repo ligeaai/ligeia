@@ -27,15 +27,15 @@ export const Measurement = ({ highchartProps }) => {
     }
     return color;
   }
-  React.useState(() => {
+
+  React.useEffect(() => {
     async function myFunc() {
       const body = JSON.stringify({ TAG_ID: highchartProps.Measurement });
       let res = await TagService.getTagItemS(body);
       setMeasurementData(res.data[0]);
     }
     myFunc();
-  }, []);
-  React.useEffect(() => {
+    if (client) client.close();
     client = new W3CWebSocket(
       `${wsBaseUrl}/ws/live/last_data/${highchartProps.Measurement}`
     );
@@ -70,7 +70,7 @@ export const Measurement = ({ highchartProps }) => {
     return () => {
       client.close();
     };
-  }, []);
+  }, [highchartProps.Measurement]);
   return (
     <Box
       sx={{

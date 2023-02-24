@@ -289,12 +289,12 @@ export const saveItem = () => async (dispatch, getState) => {
                         "ITEM_ID": getState().treeview.selectedItem.ITEM_ID ? getState().treeview.selectedItem.ITEM_ID : uuid.replace(/-/g, ""),
                         "ITEM_TYPE": getState().treeview.selectedItem.ITEM_TYPE,
                         "LAST_UPDT_USER": getState().auth.user.email,
-                        "ROW_ID": getState().treeview.selectedItem.ROW_ID ? getState().treeview.selectedItem.ROW_ID : rowUuid.replace(/-/g, "")
+                        "ROW_ID": getState().treeview.selectedItem.ROW_ID ? getState().treeview.selectedItem.ROW_ID : rowUuid.replace(/-/g, ""),
+                        "LAYER_NAME": "KNOC"
                     }
                 }
             })
         )
-        console.log(COLUMNS);
         const body = JSON.stringify({ ITEM, COLUMNS });
         try {
             console.log(body);

@@ -13,14 +13,7 @@ var W3CWebSocket = require("websocket").w3cwebsocket;
 const Angular = ({ highchartProps, width, height }) => {
   const [categories, setCategories] = React.useState("");
   const [measuremenetData, setMeasurementData] = React.useState(null);
-  React.useState(() => {
-    async function myFunc() {
-      const body = JSON.stringify({ TAG_ID: highchartProps.Measurement });
-      let res = await TagService.getTagItemS(body);
-      setMeasurementData(res.data[0]);
-    }
-    myFunc();
-  }, []);
+  const [key, setKey] = React.useState(0);
 
   const [value, setValue] = React.useState("");
   let i = 0;
@@ -35,6 +28,15 @@ const Angular = ({ highchartProps, width, height }) => {
     i++;
   }
   React.useEffect(() => {
+    async function myFunc() {
+      const body = JSON.stringify({ TAG_ID: highchartProps.Measurement });
+      let res = await TagService.getTagItemS(body);
+      console.log(res);
+      setMeasurementData(res.data[0]);
+      setKey(key + 1);
+    }
+    myFunc();
+    if (client) client.close();
     client = new W3CWebSocket(
       `${wsBaseUrl}/ws/live/last_data/${highchartProps.Measurement}`
     );
@@ -67,7 +69,7 @@ const Angular = ({ highchartProps, width, height }) => {
     return () => {
       client.close();
     };
-  }, []);
+  }, [highchartProps.Measurement]);
   const options = {
     chart: {
       type: "gauge",
@@ -205,6 +207,7 @@ const Angular = ({ highchartProps, width, height }) => {
   };
   return (
     <HighchartsReact
+      key={key}
       highcharts={Highcharts}
       options={{
         ...options,

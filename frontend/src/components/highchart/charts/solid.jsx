@@ -17,24 +17,28 @@ export const Solid = ({ highchartProps, width, height }) => {
   const [categories, setCategories] = React.useState("");
   const [value, setValue] = React.useState("");
   const [measuremenetData, setMeasurementData] = React.useState(null);
-  React.useState(() => {
+  const [key, setKey] = React.useState(0);
+
+  let i = 0;
+  let stops = [];
+  while (i < parseInt(highchartProps.Stops)) {
+    if (highchartProps.Stops !== "" && highchartProps.Stops !== "0") {
+      stops.push([
+        highchartProps[`[${i}] Stops`],
+        highchartProps[`[${i}] Color`],
+      ]);
+    }
+    i++;
+  }
+  React.useEffect(() => {
     async function myFunc() {
       const body = JSON.stringify({ TAG_ID: highchartProps.Measurement });
       let res = await TagService.getTagItemS(body);
       setMeasurementData(res.data[0]);
+      setKey(key + 1);
     }
     myFunc();
-  }, []);
-  let i = 0;
-  let stops = [];
-  while (i < parseInt(highchartProps.Stops)) {
-    stops.push([
-      highchartProps[`[${i}] Stops`],
-      highchartProps[`[${i}] Color`],
-    ]);
-    i++;
-  }
-  React.useEffect(() => {
+    if (client) client.close();
     client = new W3CWebSocket(
       `${wsBaseUrl}/ws/live/last_data/${highchartProps.Measurement}`
     );
@@ -67,7 +71,7 @@ export const Solid = ({ highchartProps, width, height }) => {
     return () => {
       client.close();
     };
-  }, []);
+  }, [highchartProps.Measurement]);
   const options = {
     chart: {
       type: "solidgauge",
@@ -129,8 +133,8 @@ export const Solid = ({ highchartProps, width, height }) => {
     // the value axis
     yAxis: {
       min: 0,
-      max: 150,
-      stops: [...stops],
+      max: 500,
+      stops: stops.length > 0 ? [...stops] : null,
       lineWidth: 0,
       tickWidth: 0,
       minorTickInterval: null,
@@ -145,12 +149,24 @@ export const Solid = ({ highchartProps, width, height }) => {
 
     plotOptions: {
       solidgauge: {
+        inside: false,
         dataLabels: {
-          enabled: true,
+          format: `<div style="font-size: ${
+            highchartProps["Value Font Size"]
+              ? highchartProps["Value Font Size"]
+              : "9"
+          }px">${
+            highchartProps["Show Measurement"] ? "{y}" : ""
+          }</div> <div style="font-size: ${
+            highchartProps["Unit Font Size"]
+              ? highchartProps["Unit Font Size"]
+              : "9"
+          }px"> ${
+            measuremenetData && highchartProps["Show Unit of Measurement"]
+              ? `(${measuremenetData.UOM})`
+              : ""
+          } </div>`,
         },
-        linecap: "round",
-        stickyTracking: false,
-        rounded: false,
       },
     },
 
@@ -179,28 +195,12 @@ export const Solid = ({ highchartProps, width, height }) => {
               : ""
           }`,
         },
-        dataLabels: {
-          format: `<div style="font-size: ${
-            highchartProps["Value Font Size"]
-              ? highchartProps["Value Font Size"]
-              : "9"
-          }px">${
-            highchartProps["Show Measurement"] ? "{y}" : ""
-          }</div> <div style="font-size: ${
-            highchartProps["Unit Font Size"]
-              ? highchartProps["Unit Font Size"]
-              : "9"
-          }px"> ${
-            measuremenetData && highchartProps["Show Unit of Measurement"]
-              ? `(${measuremenetData.UOM})`
-              : ""
-          } </div>`,
-        },
       },
     ],
   };
   return (
     <HighchartsReact
+      key={key}
       highcharts={Highcharts}
       options={{
         ...options,
