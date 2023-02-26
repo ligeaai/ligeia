@@ -41,7 +41,6 @@ const SingleLevel = ({ item, url }) => {
   var selectedItem = useSelector(
     (state) => state.drawerMenu.selectedItem.SHORT_LABEL
   );
-
   const handleClick = () => {
     function goFunction() {
       dispatch(setSelectedDrawerItem(item));

@@ -40,6 +40,7 @@ const CardItems = ({ card }) => {
       }}
       onClick={() => {
         history.push(`${card.cardURL}`);
+        dispatch(setSelectedDrawerItem({ SHORT_LABEL: `${card.shortName}` }));
       }}
       onMouseDown={() => setIsClicked(true)}
       onMouseUp={() => setIsClicked(false)}

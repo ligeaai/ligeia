@@ -8,26 +8,31 @@ const cards = [
     cardTitle: "Asset",
     cardBody: "Asset overview",
     cardURL: "/overview",
+    shortName: "Overview",
   },
   {
     cardTitle: "Reporting",
     cardBody: "Assets reporting",
     cardURL: "/reporting",
+    shortName: "Reporting",
   },
   {
     cardTitle: "Adminstration",
     cardBody: "Administration of the platform",
     cardURL: "/administration",
+    shortName: "Adminstration",
   },
   {
     cardTitle: "Tools",
     cardBody: "Tools",
     cardURL: "/tools",
+    shortName: "Tools",
   },
   {
     cardTitle: "Configuration",
     cardBody: "Configuration of the platform",
     cardURL: "/configuration",
+    shortName: "Configuration",
   },
 ];
 
