@@ -1,0 +1,125 @@
+from django.db import models
+import uuid
+from django.utils import timezone
+from apps.widgets.models import Widget
+from apps.tags.models import tags
+
+"""
+ "Transaction Property": [
+    [
+      "fc817687be604c0c90bfa01fab82f687",
+      "304",
+      5
+    ]
+  ],
+
+  bunu 3 parça şeklinde ekleyeceğiz property type transaction property value sıra sıra 1,2,3
+  tagslarda proptype inputs olarak alırız
+
+"""
+
+
+class widget_property(models.Model):
+    WIDGET_ID = models.ManyToManyField(Widget, related_name="property")
+    WIDGET_TYPE = models.CharField(
+        max_length=14,
+        null=True,
+        db_index=True,
+    )
+    PROPERTY_NAME = models.CharField(
+        max_length=1000,
+        null=True,
+        db_index=True,
+    )
+    LAYER_NAME = models.CharField(
+        max_length=50,
+        null=True,
+    )
+    START_DATETIME = models.DateField(
+        null=True,
+        db_index=True,
+    )
+    END_DATETIME = models.DateField(
+        null=True,
+        db_index=True,
+    )
+    PROPERTY_TAG = models.ForeignKey(
+        tags, on_delete=models.CASCADE, related_name="tags", null=True
+    )
+    PROPERTY_TYPE = models.CharField(
+        max_length=150,
+        null=True,
+        db_index=True,
+    )
+    PROPERTY_INFO = models.CharField(
+        max_length=15,
+        null=True,
+        db_index=True,
+    )
+    PROPERTY_VALUE = models.DecimalField(
+        max_digits=28,
+        decimal_places=12,
+        null=True,
+        db_index=True,
+    )
+    PROPERTY_STRING = models.CharField(
+        max_length=200,
+        blank=True,
+        null=True,
+        db_index=True,
+    )
+    PROPERTY_CODE = models.CharField(
+        max_length=32,
+        null=True,
+        db_index=True,
+    )
+    PROPERTY_BINARY = models.CharField(
+        max_length=32,
+        null=True,
+        db_index=True,
+    )
+    PROPERTY_BOOLEAN = models.BooleanField(
+        max_length=32,
+        null=True,
+        db_index=True,
+    )
+    LAST_UPDT_USER = models.CharField(
+        max_length=100,
+        null=True,
+    )
+    LAST_UPDT_DATE = models.DateField(
+        null=True,
+    )
+    VERSION = models.CharField(
+        max_length=32,
+        default=uuid.uuid4,
+        null=True,
+    )
+    DB_ID = models.CharField(
+        max_length=32,
+        null=True,
+    )
+    ROW_ID = models.CharField(
+        max_length=32,
+        default=uuid.uuid4,
+        null=True,
+        db_index=True,
+    )
+    STATUS = models.CharField(
+        max_length=10,
+        null=True,
+    )
+    REV_GRP_ID = models.CharField(
+        max_length=32,
+        null=True,
+    )
+    UPDATE_SOURCE = models.CharField(
+        max_length=1,
+        default="x",
+        null=True,
+    )
+    CREATE_SOURCE = models.CharField(
+        max_length=1,
+        default="x",
+        null=True,
+    )
