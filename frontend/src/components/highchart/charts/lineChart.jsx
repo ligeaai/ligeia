@@ -221,6 +221,7 @@ const LineCharts = ({ highchartProps, width, height, liveData, chartType }) => {
           text: "All",
         },
       ],
+      selected: 8,
     },
     credits: {
       enabled: false,
@@ -241,6 +242,13 @@ const LineCharts = ({ highchartProps, width, height, liveData, chartType }) => {
         ordinal: false,
         endOnTick: false,
         startOnTick: false,
+        events: {
+          afterSetExtremes: function (event) {
+            if (event.trigger !== "navigator-drag") {
+              this.chart.xAxis[0].setExtremes(event.min, event.max);
+            }
+          },
+        },
       },
       series: [
         ...highchartProps.Inputs.map((e) => {
@@ -282,6 +290,13 @@ const LineCharts = ({ highchartProps, width, height, liveData, chartType }) => {
       endOnTick: false,
       startOnTick: false,
       ordinal: false,
+      events: {
+        afterSetExtremes: function (event) {
+          if (event.trigger !== "navigator-drag") {
+            this.chart.xAxis[0].setExtremes(event.min, event.max);
+          }
+        },
+      },
     },
     yAxis: [...yAxisTitles],
     series: [
