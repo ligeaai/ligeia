@@ -8,6 +8,7 @@ from .serializers import (
     TagsSaveSerializer,
     TagsNameSerializer,
     TagsFieldsSerializer,
+    TagsUomConversionSerializer,
 )
 from apps.type_property.models import type_property
 from apps.resource_list.models import resource_list
@@ -28,38 +29,49 @@ import datetime
 
 
 class TagsSaveView(generics.CreateAPIView):
-
+    serializer_class = TagsFieldsSerializer
     permission_classes = [permissions.AllowAny]
 
     def post(self, request, *args, **kwargs):
-        tags_dict = request.data
-        link_dict = dict()
-        try:
-            links_list = [
-                "LINK_ID",
-                "LINK_TYPE",
-                "END_DATETIME",
-                "FROM_ITEM_ID",
-                "FROM_ITEM_TYPE",
-                "TO_ITEM_ID",
-                "TO_ITEM_TYPE",
-            ]
-            for keys in links_list:
-                link_dict[keys] = request.data.get(keys)
-                tags_dict.pop(keys)
-        except:
-            pass
-        link_dict["START_DATETIME"] = tags_dict.get("START_DATETIME")
-        link_dict["ROW_ID"] = uuid.uuid4().hex
-        validate_model_not_null(tags_dict, "tags", request=request)
-        validate_model_not_null(link_dict, "ITEM_LINK", request=request)
-        serializer = TagsSaveSerializer(data=request)
-        serializer.is_valid()
-        message = serializer.save(tags_dict)
-        link_serializer = ItemLinkSaveSerializer(data=request.data.get("LINK"))
-        link_serializer.is_valid()
-        message = link_serializer.save(link_dict)
-        return Response(message, status=status.HTTP_200_OK)
+        data = request.data
+        data["LAYER_NAME"] = "KNOC"
+        tags.objects.create(**data)
+        return Response("okey")
+
+
+# class TagsSaveView(generics.CreateAPIView):
+
+#     permission_classes = [permissions.AllowAny]
+
+#     def post(self, request, *args, **kwargs):
+#         tags_dict = request.data
+#         link_dict = dict()
+#         try:
+#             links_list = [
+#                 "LINK_ID",
+#                 "LINK_TYPE",
+#                 "END_DATETIME",
+#                 "FROM_ITEM_ID",
+#                 "FROM_ITEM_TYPE",
+#                 "TO_ITEM_ID",
+#                 "TO_ITEM_TYPE",
+#             ]
+#             for keys in links_list:
+#                 link_dict[keys] = request.data.get(keys)
+#                 tags_dict.pop(keys)
+#         except:
+#             pass
+#         link_dict["START_DATETIME"] = tags_dict.get("START_DATETIME")
+#         link_dict["ROW_ID"] = uuid.uuid4().hex
+#         validate_model_not_null(tags_dict, "tags", request=request)
+#         validate_model_not_null(link_dict, "ITEM_LINK", request=request)
+#         serializer = TagsSaveSerializer(data=request)
+#         serializer.is_valid()
+#         message = serializer.save(tags_dict)
+#         link_serializer = ItemLinkSaveSerializer(data=request.data.get("LINK"))
+#         link_serializer.is_valid()
+#         message = link_serializer.save(link_dict)
+#         return Response(message, status=status.HTTP_200_OK)
 
 
 class TagsDetailsView(generics.ListAPIView):
@@ -181,3 +193,28 @@ class TagsNameViews(generics.CreateAPIView):
         queryset = tags.objects.filter(NAME=request.data.get("TAG_NAME"))
         serializer = TagsNameSerializer(queryset, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+class TagsSearchViews(generics.CreateAPIView):
+
+    serializer_class = TagsDetiailsSerializer
+    permission_classes = [permissions.AllowAny]
+
+    def post(self, request, *args, **kwargs):
+        qs = tags.objects.filter(NAME__icontains=request.data.get("asset"))
+        serializer = TagsDetiailsSerializer(qs, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+class TagsUomConversionView(generics.ListAPIView):
+
+    permission_classes = [permissions.AllowAny]
+
+    def get_queryset(self):
+        pass
+
+    def get(self, request, *args, **kwargs):
+        queryset = tags.objects.all()
+        serializer = TagsUomConversionSerializer(queryset, many=True)
+        sorted_list = sorted(list(serializer.data), key=lambda d: str(d["NAME"]))
+        return Response(sorted_list, status=status.HTTP_200_OK)

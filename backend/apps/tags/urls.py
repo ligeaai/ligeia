@@ -9,6 +9,7 @@ from .views import (
     TagsTypeLinkView,
     TagsNameViews,
     TagsSpesificDetailsView,
+    TagsUomConversionView,
 )
 from .elasticsearch.es_view import ESBlogViewSet
 
@@ -21,5 +22,6 @@ urlpatterns = [
     path("links/", TagsTypeLinkView.as_view(), name="tags link"),
     path("item/", TagsSpesificDetailsView.as_view(), name="tags link"),
     path("name/", TagsNameViews.as_view(), name="tags name"),
+    path("uom-converison/", TagsUomConversionView.as_view(), name="tags name"),
     path("es/<str:name>", ESBlogViewSet.as_view({"get": "list"}), name=""),
 ]

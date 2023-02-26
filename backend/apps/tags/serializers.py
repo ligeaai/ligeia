@@ -27,6 +27,17 @@ class TagsDetiailsSerializer(serializers.ModelSerializer):
         fields = ["NAME", "TAG_ID"]
 
 
+class TagsUomConversionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = tags
+        fields = [
+            "NAME",
+            "TAG_ID",
+            "UOM_QUANTITY_TYPE",
+            "UOM_NAME",
+        ]
+
+
 class TagsNameSerializer(serializers.ModelSerializer):
     class Meta:
         model = tags

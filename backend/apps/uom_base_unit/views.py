@@ -50,7 +50,7 @@ class UomUnitDetailView(generics.CreateAPIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 
-class UomUnitDetailsView(generics.ListAPIView):
+class UomUnitAllDetailsView(generics.ListAPIView):
     serializer_class = UomUnitDetailsSerializer
     permission_classes = [permissions.AllowAny]
 
