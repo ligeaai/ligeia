@@ -143,7 +143,13 @@ export default function HorizontalLinearStepper({
       <Divider sx={{ mt: 2, mb: 2 }}></Divider>
       <Box sx={{ width: "100%" }}>
         <Typography
-          sx={{ height: height - 166, width: "100%", overflowY: "auto", px: 1 }}
+          sx={{
+            height: height - 166,
+            width: "100%",
+            overflowY: "auto",
+            px: 1,
+            pb: 1.5,
+          }}
         >
           {components()[activeStep][1]}
         </Typography>
