@@ -69,7 +69,7 @@ const DrawerMenu = (props) => {
       sx={{
         backgroundColor: "status.main",
         position: "relative",
-        width: `${leftMenuWidth}px`,
+        width: leftMenuWidth,
         height: "100%",
         borderRadius: "5px",
         minHeight: "500px",
@@ -102,12 +102,32 @@ const DrawerMenu = (props) => {
             right: "-12px",
             zIndex: { xs: 0, sm: 3 },
           }}
-          onClick={() => {
-            setLeftMenuWidth(() => (leftMenuWidth > 0 ? 0 : 250));
-            dispatch(updateTreeViewCouch(path, leftMenuWidth > 0 ? 0 : 250));
+          onClick={async () => {
+            await setLeftMenuWidth(() =>
+              leftMenuWidth > 0 || leftMenuWidth === "min-content"
+                ? 0
+                : "min-content"
+            );
+            dispatch(
+              updateTreeViewCouch(
+                path,
+                leftMenuWidth === 0
+                  ? document.getElementById("collapseTreeView").offsetWidth + 2
+                  : document.getElementById("collapseTreeView").offsetWidth
+              )
+            );
+            setLeftMenuWidth(() =>
+              leftMenuWidth === 0
+                ? document.getElementById("collapseTreeView").offsetWidth + 2
+                : document.getElementById("collapseTreeView").offsetWidth
+            );
           }}
         >
-          {leftMenuWidth > 0 ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+          {leftMenuWidth === "min-content" || leftMenuWidth > 0 ? (
+            <ChevronLeftIcon />
+          ) : (
+            <ChevronRightIcon />
+          )}
         </Box>
         <Box
           sx={{
@@ -118,6 +138,7 @@ const DrawerMenu = (props) => {
           }}
         />
         <Grid
+          id={"collapseTreeView"}
           item
           xs={12}
           sx={{
@@ -127,19 +148,6 @@ const DrawerMenu = (props) => {
               ? "calc(100vh - 84px )"
               : "calc(100vh - 85px - 60px - 4px  )",
             minHeight: "416px",
-            // minHeight: "min-content",
-            //height: "calc(100% - 75px)",
-            // "&::-webkit-scrollbar": {
-            //   width: "0.2em",
-            // },
-            // "&::-webkit-scrollbar-track": {
-            //   boxShadow: "inset 0 0 6px rgba(0,0,0,0.00)",
-            //   webkitBoxShadow: "inset 0 0 6px rgba(0,0,0,0.00)",
-            // },
-            // "&::-webkit-scrollbar-thumb": {
-            //   backgroundColor: "rgba(0,0,0,.1)",
-            //   outline: "1px solid rgba(0,0,0,.3)",
-            // },
           }}
         >
           <Box id="treeItems" sx={{ width: mywidth ? "min-content" : "100%" }}>
