@@ -43,7 +43,6 @@ const Widgets = React.forwardRef((props, ref) => {
 
     myFunc();
   }, [refresh, refres]);
-  console.log(boxHeight);
   const width = parseInt(style.width, 10);
   const height = parseInt(style.height, 10) - boxHeight;
 

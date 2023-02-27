@@ -7,14 +7,12 @@ import { wsBaseUrl } from "../../../services/baseApi";
 import { dateFormatDDMMYYHHMMSS } from "../../../services/utils/dateFormatter";
 import TagService from "../../../services/api/tags";
 exporting(Highcharts);
-var client;
 var W3CWebSocket = require("websocket").w3cwebsocket;
 
 const Angular = ({ highchartProps, width, height }) => {
   const [categories, setCategories] = React.useState("");
   const [measuremenetData, setMeasurementData] = React.useState(null);
   const [key, setKey] = React.useState(0);
-
   const [value, setValue] = React.useState("");
   let i = 0;
   let plotBands = [];
@@ -28,6 +26,8 @@ const Angular = ({ highchartProps, width, height }) => {
     i++;
   }
   React.useEffect(() => {
+    var client;
+
     async function myFunc() {
       const body = JSON.stringify({ TAG_ID: highchartProps.Measurement });
       let res = await TagService.getTagItemS(body);

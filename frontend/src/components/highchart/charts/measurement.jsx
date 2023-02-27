@@ -6,7 +6,7 @@ import Box from "@mui/material/Box";
 import { wsBaseUrl } from "../../../services/baseApi";
 import { dateFormatDDMMYYHHMMSS } from "../../../services/utils/dateFormatter";
 import TagService from "../../../services/api/tags";
-var client;
+
 var W3CWebSocket = require("websocket").w3cwebsocket;
 
 export const Measurement = ({ highchartProps }) => {
@@ -29,12 +29,15 @@ export const Measurement = ({ highchartProps }) => {
   }
 
   React.useEffect(() => {
+    var client;
+
     async function myFunc() {
       const body = JSON.stringify({ TAG_ID: highchartProps.Measurement });
       let res = await TagService.getTagItemS(body);
       setMeasurementData(res.data[0]);
     }
     myFunc();
+
     if (client) client.close();
     client = new W3CWebSocket(
       `${wsBaseUrl}/ws/live/last_data/${highchartProps.Measurement}`
@@ -68,6 +71,7 @@ export const Measurement = ({ highchartProps }) => {
       sendNumber();
     };
     return () => {
+      console.log("measue");
       client.close();
     };
   }, [highchartProps.Measurement]);

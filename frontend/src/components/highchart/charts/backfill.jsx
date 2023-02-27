@@ -10,13 +10,13 @@ import boost from "highcharts/modules/boost";
 import accessibility from "highcharts/modules/accessibility";
 import { wsBaseUrl } from "../../../services/baseApi";
 
-let client = [];
 var W3CWebSocket = require("websocket").w3cwebsocket;
 exporting(Highcharts);
 accessibility(Highcharts);
 data(Highcharts);
 boost(Highcharts);
 const LineCharts = ({ highchartProps, width, height, liveData, chartType }) => {
+  let client = [];
   const [key, setKey] = React.useState(1000);
   React.useEffect(() => {
     setKey(key + 1);

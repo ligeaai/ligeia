@@ -247,7 +247,6 @@ export const updateChartLayout = (layout) => async (dispatch, getState) => {
       },
     },
   };
-  console.log(tablinkBody);
   dispatch({
     type: UPDATE_LAYOUT,
     payload: tablinkBody,

@@ -8,10 +8,10 @@ import {
   dateFormatDDMMYYHHMMSS,
 } from "../../../services/utils/dateFormatter";
 var W3CWebSocket = require("websocket").w3cwebsocket;
-const client = [];
 const Tabular = ({ highchartProps, backfillData }) => {
   const [allData, setAllData] = React.useState([]);
   React.useEffect(() => {
+    const client = [];
     highchartProps.Inputs.map((tag, index) => {
       if (backfillData) {
         client[index] = new W3CWebSocket(
@@ -87,7 +87,9 @@ const Tabular = ({ highchartProps, backfillData }) => {
     });
     return () => {
       setAllData([]);
+
       client.map((e) => {
+        console.log("tabular");
         e.close();
       });
     };

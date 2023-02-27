@@ -11,7 +11,6 @@ import TagService from "../../../services/api/tags";
 exporting(Highcharts);
 highchartsMore(Highcharts);
 solidGauge(Highcharts);
-var client;
 var W3CWebSocket = require("websocket").w3cwebsocket;
 export const Solid = ({ highchartProps, width, height }) => {
   const [categories, setCategories] = React.useState("");
@@ -31,6 +30,7 @@ export const Solid = ({ highchartProps, width, height }) => {
     i++;
   }
   React.useEffect(() => {
+    var client;
     async function myFunc() {
       const body = JSON.stringify({ TAG_ID: highchartProps.Measurement });
       let res = await TagService.getTagItemS(body);

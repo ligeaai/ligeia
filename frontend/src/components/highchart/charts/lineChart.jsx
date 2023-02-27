@@ -9,15 +9,16 @@ import data from "highcharts/modules/data";
 import accessibility from "highcharts/modules/accessibility";
 import { wsBaseUrl } from "../../../services/baseApi";
 
-let client = [];
 var W3CWebSocket = require("websocket").w3cwebsocket;
 exporting(Highcharts);
 accessibility(Highcharts);
 data(Highcharts);
 const LineCharts = ({ highchartProps, width, height, liveData, chartType }) => {
+  const client = [];
   const [key, setKey] = React.useState(0);
   const yAxisTitles = [];
   let yAxiskey = {};
+  console.log("asd");
   React.useEffect(() => {
     setKey(key + 1);
   }, [highchartProps.Inputs.length]);
@@ -48,6 +49,7 @@ const LineCharts = ({ highchartProps, width, height, liveData, chartType }) => {
           },
           endOnTick: true,
           startOnTick: true,
+          alignTicks: true,
           opposite: false,
           events: {
             afterSetExtremes: function (e) {
@@ -82,6 +84,7 @@ const LineCharts = ({ highchartProps, width, height, liveData, chartType }) => {
       yAxiskey = {};
       Promise.all(
         client.map((e) => {
+          console.log("line");
           e.close();
         })
       );
@@ -111,6 +114,7 @@ const LineCharts = ({ highchartProps, width, height, liveData, chartType }) => {
               console.log("Connection Error");
             };
             client[index].onopen = function () {
+              console.log(tag.NAME);
               console.log("connected");
             };
             client[index].onclose = function () {
