@@ -15,6 +15,10 @@ modelApp = [
     "apps.websocket",
     "apps.uoms",
     "apps.uom_base_unit",
-    "apps.calculated_tag"
-    ]
+    "apps.calculated_tag",
+    "apps.widgets",
+    "apps.widget_property",
+    "apps.layouts",
+    "apps.dashbord",
+]
 #     "apps.uom",
