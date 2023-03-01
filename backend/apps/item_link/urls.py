@@ -6,10 +6,12 @@ from .views import (
     ItemLinkDeleteView,
     ItemLinkDetailsView,
     ItemLinkUpdateView,
-ItemLinkHierarchyView,
-ItemLinkCardinaltyView,
-TagsLinksSelectedView,
-TagsLinksView)
+    ItemLinkHierarchyView,
+    ItemLinkCardinaltyView,
+    TagsLinksSelectedView,
+    ItemLinkHierarchySearchView,
+    TagsLinksView,
+)
 
 urlpatterns = [
     path("save/", ItemLinkSaveView.as_view(), name="itemlinksave"),
@@ -20,6 +22,5 @@ urlpatterns = [
     path("cardinalty/", ItemLinkCardinaltyView.as_view(), name="cardinalty"),
     path("tags/", TagsLinksView.as_view(), name="cardinalty"),
     path("tags/test/", TagsLinksSelectedView.as_view(), name="test"),
-    
-   
+    path("hierarchy/search/", ItemLinkHierarchySearchView.as_view(), name="test"),
 ]

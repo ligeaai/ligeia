@@ -17,6 +17,9 @@ from apps.item.models import item
 from apps.item.serializers import ItemDetailsSerializer
 from apps.tags.serializers import TagsFieldsSerializer
 import threading
+import json
+from elasticsearch import Elasticsearch
+
 
 # Create your views here.
 
@@ -227,7 +230,10 @@ class ItemLinkHierarchyView(generics.ListAPIView):
         pass
 
     def get(self, request, *args, **kwargs):
+        self.es = Elasticsearch([{"host": "elasticsearch", "port": 9200}])
         itemqs = item.objects.filter(ITEM_TYPE="COMPANY")
+        self.threads = []
+        self._add_elasticsearch(self, is_first=True)
         # return Response(data[index])
         tempt = {}
         serializer = ItemDetailsSerializer(itemqs, many=True)
@@ -237,7 +243,13 @@ class ItemLinkHierarchyView(generics.ListAPIView):
             )
             serializer.data[index]["LINK_ID"] = serializer.data[index].get("ITEM_ID")
         self._getName(serializer.data)
+        kwargs = {"data": serializer.data, "is_first": False}
+        t = threading.Thread(target=self._add_elasticsearch, kwargs=kwargs)
+        t.start()
+        self.threads.append(t)
         self._getChild(serializer.data)
+        for thread in self.threads:
+            thread.join()
         return Response(serializer.data)
 
     def _getChild(self, data):
@@ -253,6 +265,10 @@ class ItemLinkHierarchyView(generics.ListAPIView):
                     key=lambda x: x["FROM_ITEM_NAME"],
                 )
                 data[index]["CHILD"] = sorted_data
+                kwargs = {"data": serializer.data, "is_first": False}
+                t = threading.Thread(target=self._add_elasticsearch, kwargs=kwargs)
+                t.start()
+                self.threads.append(t)
                 self._getChild(sorted_data)
 
     def _getName(self, data):
@@ -274,6 +290,15 @@ class ItemLinkHierarchyView(generics.ListAPIView):
                     "PROPERTY_STRING"
                 )
 
+    def _add_elasticsearch(self, data="", is_first=False):
+        if is_first == True:
+            self.es.delete_by_query(
+                index="hierarchy", body={"query": {"match_all": {}}}
+            )
+        else:
+            for item in data:
+                self.es.index(index="hierarchy", body=item)
+
 
 class TagsLinksSelectedView(generics.CreateAPIView):
     permission_classes = [permissions.AllowAny]
@@ -287,3 +312,24 @@ class TagsLinksSelectedView(generics.CreateAPIView):
                 liste.append(list(TagsFieldsSerializer(find_tags, many=True).data))
 
         return Response(sum(liste, []))
+
+
+class ItemLinkHierarchySearchView(generics.CreateAPIView):
+    permission_classes = [permissions.AllowAny]
+
+    def post(self, request, *args, **kwargs):
+        es = Elasticsearch([{"host": "elasticsearch", "port": 9200}])
+        item_name = request.data.get("FROM_ITEM_NAME")
+        query = {
+            "query": {
+                "bool": {
+                    "must": [{"match_phrase_prefix": {"FROM_ITEM_NAME": item_name}}]
+                }
+            }
+        }
+        results = es.search(index="hierarchy", body=query)
+        items = []
+        for hit in results["hits"]["hits"]:
+            items.append(hit["_source"])
+
+        return Response(items)
