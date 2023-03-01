@@ -1,6 +1,14 @@
 from django.urls import include, path, re_path
-from .views import ResourceListSaveView, ResourceListView, ResourceListDetailView,ResourceListDrawerMenutView,ResourceListEditorTreeMenuView,ResourceListEditorHierarchyView
+from .views import (
+    ResourceListSaveView,
+    ResourceListView,
+    ResourceListDetailView,
+    ResourceListDrawerMenutView,
+    ResourceListEditorTreeMenuView,
+    ResourceListEditorHierarchyView,
+)
 from django.urls.resolvers import URLPattern
+from .new_views.es_view import ESResourceListViewSet
 
 urlpatterns = [
     path("save/", ResourceListSaveView.as_view(), name="code-list-save"),
@@ -9,5 +17,5 @@ urlpatterns = [
     path("menu/", ResourceListDrawerMenutView.as_view(), name="clDetails"),
     path("parent/", ResourceListEditorTreeMenuView.as_view(), name="test"),
     path("hierarchy/", ResourceListEditorHierarchyView.as_view(), name="test"),
+    path("es/", ESResourceListViewSet.as_view({"get": "list"}), name=""),
 ]
-    
