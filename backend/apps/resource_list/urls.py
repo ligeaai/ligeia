@@ -8,7 +8,7 @@ from .views import (
     ResourceListEditorHierarchyView,
 )
 from django.urls.resolvers import URLPattern
-from .new_views.es_view import ESResourceListViewSet
+from .elasticsearch.es_view import ESResourceListViewSet
 
 urlpatterns = [
     path("save/", ResourceListSaveView.as_view(), name="code-list-save"),
