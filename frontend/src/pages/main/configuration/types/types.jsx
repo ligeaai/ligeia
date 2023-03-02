@@ -18,13 +18,39 @@ import MyActionMenu from "./myActionMenu";
 
 import DataGridPro from "./datagrid";
 
-import { setFilteredLayerName } from "../../../../services/actions/treeview/treeview";
+import {
+  setFilteredLayerName,
+  filterMenu,
+} from "../../../../services/actions/treeview/treeview";
 
 import { instance, config } from "../../../../services/baseApi";
 import { cleanAllDataGrid } from "../../../../services/actions/type/datagrid";
 
 import TypeService from "../../../../services/api/type";
-const CodeList = () => {
+import { useIsMount } from "../../../../hooks/useIsMount";
+const Menu = () => {
+  const isMount = useIsMount();
+  const dispatch = useDispatch();
+  const text = useSelector((state) => state.searchBar.text);
+  React.useEffect(() => {
+    if (!isMount) {
+      const body = JSON.stringify({
+        TYPE: text,
+      });
+      dispatch(filterMenu(text, TypeService.elasticSearch, body));
+    }
+  }, [text]);
+
+  return (
+    <TreeMenuItems
+      path={TypeService.getAll}
+      textPath="TYPE"
+      historyPathLevel={2}
+    />
+  );
+};
+
+const Type = () => {
   const dispatch = useDispatch();
   const isFullScreen = useSelector((state) => state.fullScreen.isFullScreen);
   const filteredLayerName = useSelector(
@@ -63,7 +89,7 @@ const CodeList = () => {
       <Grid item>
         <DrawerMenu
           Element={
-            <TreeMenuItems
+            <Menu
               path={TypeService.getAll}
               textPath="TYPE"
               historyPathLevel={2}
@@ -130,4 +156,4 @@ const CodeList = () => {
   );
 };
 
-export default CodeList;
+export default Type;

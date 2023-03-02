@@ -28,6 +28,9 @@ const deleteProperty = (body) => {
     return instance.post("/type-property/delete/", body, config());
 };
 
+const elasticSearch = (text, body, cancelToken) => {
+    return instance.post(`/type/es/`, body, { ...config(), cancelToken: cancelToken.token });
+};
 
 
 const TypeService = {
@@ -36,7 +39,8 @@ const TypeService = {
     createUpdateType,
     createUpdateProperty,
     deleteType,
-    deleteProperty
+    deleteProperty,
+    elasticSearch
 };
 
 
