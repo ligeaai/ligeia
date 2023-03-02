@@ -40,7 +40,7 @@ const DialogContent = ({ handleClose, height }) => {
     "Line Chart [Nivo]": linechartPopUp,
     "Area Chart [Highchart]": linechartPopUp,
     "Gauge(Angular) [Highchart]": angularPopUp,
-    "Bar Chart [Highchart]": angularPopUp,
+    "Bar Chart [Highchart]": linechartPopUp,
     "Gauge(Solid) [Highchart]": SolidPopUp,
     "Measurement [Custom]": measurementPopUp,
     "Bar Chart [Nivo]": measurementPopUp,

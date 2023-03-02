@@ -29,7 +29,7 @@ const DialogContent = ({ highchartProps, chartId, ...rest }) => {
       <AngularPopUp title={"Gauge(Angular) [Highchart]"} {...rest} />
     ),
     "Bar Chart [Highchart]": (
-      <AngularPopUp title={"Gauge(Angular) [Highchart]"} {...rest} />
+      <LinechartPopUp title={"Bar Chart [Highchart]"} {...rest} />
     ),
     "Gauge(Solid) [Highchart]": (
       <SolidPopUp title={"Gauge(Solid) [Highchart]"} {...rest} />

@@ -2,83 +2,120 @@ import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import React from "react";
 import exporting from "highcharts/modules/exporting";
+import data from "highcharts/modules/data";
+import accessibility from "highcharts/modules/accessibility";
+import { wsBaseUrl } from "../../../services/baseApi";
 exporting(Highcharts);
-
+data(Highcharts);
+accessibility(Highcharts);
+var W3CWebSocket = require("websocket").w3cwebsocket;
 const Bar = ({ highchartProps, width, height }) => {
+  const client = [];
+
+  React.useEffect(() => {
+    return () => {
+      Promise.all(
+        client.map((e) => {
+          console.log("line");
+          e.close();
+        })
+      );
+    };
+  }, []);
+
   const options = {
     chart: {
       type: "bar",
+      events: {
+        load: function () {
+          var chart = this;
+          var mydata = [];
+          client.map((e) => {
+            e.close();
+          });
+          highchartProps.Inputs.map((tag, index) => {
+            client[index] = new W3CWebSocket(
+              `${wsBaseUrl}/ws/live/last_data/${tag.TAG_ID}`
+            );
+            chart.xAxis[0].update(
+              {
+                categories: [...chart.xAxis[0].categories, tag.NAME],
+              },
+              false
+            );
+            client[index].onerror = function () {
+              console.log("Connection Error");
+            };
+            client[index].onopen = function () {
+              console.log("connected");
+            };
+            client[index].onclose = function () {
+              console.log("WebSocket Client Closed");
+            };
+            client[index].onmessage = function (e) {
+              async function sendNumber() {
+                if (client.readyState === client.OPEN) {
+                  if (typeof e.data === "string") {
+                    let jsonData = JSON.parse(e.data);
+                    const series = chart.series[0],
+                      shift = series.data.length > highchartProps.Inputs.length;
+                    Object.keys(jsonData).map((e) => {
+                      mydata[index] = jsonData[e][2];
+                      console.log(mydata);
+                      chart.series[0].addPoint(jsonData[e][2], true, shift);
+                    });
+                    chart.reflow();
+                    return true;
+                  }
+                }
+              }
+              sendNumber();
+            };
+          });
+        },
+        // redraw: function () {
+        //   var yAxis = this.yAxis;
+        //   if (yAxis) {
+        //     yAxis.map((e) => {
+        //       console.log(e);
+        //       if ((!e.min || !e.max) && e.title !== "") {
+        //         e.setTitle({ text: "" });
+        //         e.title = "";
+        //       }
+        //     });
+        //   }
+        // },
+      },
     },
     title: {
-      text: "Historic World Population by Region",
-      align: "left",
+      text: "",
     },
-    subtitle: {
-      text:
-        "Source: <a " +
-        'href="https://en.wikipedia.org/wiki/List_of_continents_and_continental_subregions_by_population"' +
-        'target="_blank">Wikipedia.org</a>',
-      align: "left",
-    },
+    // data: {
+    //   enablePolling: true,
+    //   dataRefreshRate: 1,
+    // },
+
     xAxis: {
-      categories: ["Africa", "America", "Asia", "Europe", "Oceania"],
-      title: {
-        text: null,
-      },
+      type: "category",
     },
     yAxis: {
       min: 0,
-      title: {
-        text: "Population (millions)",
-        align: "high",
-      },
-      labels: {
-        overflow: "justify",
-      },
-    },
-    tooltip: {
-      valueSuffix: " millions",
-    },
-    plotOptions: {
-      bar: {
-        dataLabels: {
-          enabled: true,
-        },
-      },
+      title: false,
     },
     legend: {
-      layout: "vertical",
-      align: "right",
-      verticalAlign: "top",
-      x: -40,
-      y: 80,
-      floating: true,
-      borderWidth: 1,
-      backgroundColor:
-        Highcharts.defaultOptions.legend.backgroundColor || "#FFFFFF",
-      shadow: true,
+      enabled: false,
+      layout: "horizontal",
     },
     credits: {
       enabled: false,
     },
-    series: [
-      {
-        name: "Year 1990",
-        data: [631, 727, 3202, 721, 26],
-      },
-      {
-        name: "Year 2000",
-        data: [814, 841, 3714, 726, 31],
-      },
-      {
-        name: "Year 2010",
-        data: [1044, 944, 4170, 735, 40],
-      },
-      {
-        name: "Year 2018",
-        data: [1276, 1007, 4561, 746, 42],
-      },
-    ],
+
+    // plotOptions: {
+    //   series: {
+    //     stacking: "normal",
+    //   },
+    // },
+    series: [{}],
   };
   return (
     <HighchartsReact
