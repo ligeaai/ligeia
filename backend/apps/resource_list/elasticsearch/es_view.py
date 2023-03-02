@@ -18,7 +18,13 @@ class ESResourceListViewSet(DocumentViewSet):
         s = Search(index="resource_list")
         s = s.query("match_phrase_prefix", PARENT=label)
         s = s.filter("match", CULTURE=culture)
-        s = s.params(size=1)
+        s = s.params(size=1000)
         response = s.execute()
-        serializer = self.get_serializer(response.hits, many=True)
+        unique_hits = []
+        unique_parent_values = set()
+        for hit in response.hits:
+            if hit["PARENT"] not in unique_parent_values:
+                unique_parent_values.add(hit["PARENT"])
+                unique_hits.append(hit)
+        serializer = self.get_serializer(unique_hits, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
