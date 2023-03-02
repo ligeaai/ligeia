@@ -18,9 +18,36 @@ import MyActionMenu from "./actionMenu";
 import DataGridPro from "./resourceDatagrid";
 import { cleanAllDataGrid } from "../../../../../services/actions/resource/datagridResource";
 
-import { setFilteredLayerName } from "../../../../../services/actions/treeview/treeview";
+import {
+  setFilteredLayerName,
+  filterMenu,
+} from "../../../../../services/actions/treeview/treeview";
 import { instance, config } from "../../../../../services/baseApi";
 import ResourcelistService from "../../../../../services/api/resourceList";
+import { useIsMount } from "../../../../../hooks/useIsMount";
+const Menu = () => {
+  const isMount = useIsMount();
+  const dispatch = useDispatch();
+  const text = useSelector((state) => state.searchBar.text);
+  const culture = useSelector((state) => state.lang.cultur);
+  React.useEffect(() => {
+    if (!isMount) {
+      const body = JSON.stringify({
+        PARENT: text,
+        CULTURE: culture,
+      });
+      dispatch(filterMenu(text, ResourcelistService.elasticSearch, body));
+    }
+  }, [text]);
+
+  return (
+    <TreeMenuItems
+      path={ResourcelistService.getAllTreeitem}
+      textPath="PARENT"
+      historyPathLevel={2}
+    />
+  );
+};
 
 const ResourceList = ({ isHome }) => {
   const dispatch = useDispatch();
@@ -63,16 +90,7 @@ const ResourceList = ({ isHome }) => {
       }}
     >
       <Grid item>
-        <DrawerMenu
-          Element={
-            <TreeMenuItems
-              path={ResourcelistService.getAllTreeitem}
-              textPath="PARENT"
-              historyPathLevel={2}
-            />
-          }
-          path="resources"
-        />
+        <DrawerMenu Element={<Menu />} path="resources" />
       </Grid>
       <Grid
         item

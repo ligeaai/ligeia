@@ -30,6 +30,9 @@ const getItemPropCode = (body) => {
     return instance.post("resource-list/property-code/", body, config());
 };
 
+const elasticSearch = (text, body, cancelToken) => {
+    return instance.post(`/resource-list/es/`, body, { ...config(), cancelToken: cancelToken.token });
+};
 
 
 const resourceList = {
@@ -38,7 +41,8 @@ const resourceList = {
     createUpdate,
     remove,
     details,
-    getItemPropCode
+    getItemPropCode,
+    elasticSearch
 };
 
 
