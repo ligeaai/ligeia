@@ -1,12 +1,14 @@
 import {
     LOAD_COLLAPSABLE_MENU_ITEMS,
     SET_SELECTED_COLLAPSE_MENU_ITEM,
-    CLEAN_COLLAPSE_MENU
+    CLEAN_COLLAPSE_MENU,
+    SET_COLLAPSE_FILTER_MENU
 } from "../../actions/types"
 
 
 
 const initialState = {
+    filerMenu: [],
     menuItems: [],
     selectedItem: null
 };
@@ -33,6 +35,11 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 menuItems: payload
+            }
+        case SET_COLLAPSE_FILTER_MENU:
+            return {
+                ...state,
+                filerMenu: payload
             }
         case SET_SELECTED_COLLAPSE_MENU_ITEM:
             return {

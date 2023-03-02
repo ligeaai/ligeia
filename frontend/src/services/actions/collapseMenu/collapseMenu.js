@@ -1,6 +1,13 @@
-import { LOAD_COLLAPSABLE_MENU_ITEMS, SET_SELECTED_COLLAPSE_MENU_ITEM, LOAD_TREE_VIEW_WIDTH, UPDATE_TREE_VIEW_WIDTH_HIERARCHY } from "../types"
+import {
+    LOAD_COLLAPSABLE_MENU_ITEMS,
+    SET_SELECTED_COLLAPSE_MENU_ITEM,
+    LOAD_TREE_VIEW_WIDTH,
+    UPDATE_TREE_VIEW_WIDTH_HIERARCHY,
+    SET_COLLAPSE_FILTER_MENU
+} from "../types"
 
 import { config, instance } from "../../couchApi"
+import axios from "axios"
 export const loadCollapseMenu = (path) => async dispatch => {
     try {
         let res = await path();
@@ -9,6 +16,10 @@ export const loadCollapseMenu = (path) => async dispatch => {
             type: LOAD_COLLAPSABLE_MENU_ITEMS,
             payload: res.data
         });
+        dispatch({
+            type: SET_COLLAPSE_FILTER_MENU,
+            payload: res.data
+        })
         return Promise.resolve(res.data)
     } catch (err) {
         return Promise.reject(err)
@@ -63,4 +74,27 @@ export const overviewBreadcrumpGo = (items, path) => {
     }
     myFunc(items, 0, "overview")
     return returnVal
+}
+let cancelTokenFiler;
+export const filterMenu = (text, path, body) => async (dispatch, getState) => {
+    let res;
+    let value;
+    if (cancelTokenFiler) {
+        cancelTokenFiler.cancel()
+    }
+    cancelTokenFiler = axios.CancelToken.source();
+    try {
+        res = await path(text, body, cancelTokenFiler);
+        value = res.data;
+        if (text === "") {
+            value = getState().collapseMenu.menuItems
+        }
+    } catch (err) {
+        console.log(err);
+        value = getState().collapseMenu.menuItems
+    }
+    dispatch({
+        type: SET_COLLAPSE_FILTER_MENU,
+        payload: value
+    })
 }

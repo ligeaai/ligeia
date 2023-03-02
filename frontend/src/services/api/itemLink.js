@@ -27,6 +27,10 @@ const update = (body) => {
 };
 
 
+const elasticSearch = (text, body, cancelToken) => {
+    return instance.post(`/item-link/hierarchy/search/`, body, { ...config(), cancelToken: cancelToken.token });
+};
+
 const ItemLinkService = {
     hierarchy,
     getLinkSchema,
@@ -34,7 +38,8 @@ const ItemLinkService = {
     getTags,
     getItemTags,
     remove,
-    update
+    update,
+    elasticSearch
 };
 
 export default ItemLinkService;

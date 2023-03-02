@@ -20,9 +20,12 @@ import {
 } from "../../services/actions/overview/taps";
 import history from "../../routers/history";
 import { Box } from "@mui/material";
-import { overviewBreadcrumpGo } from "../../services/actions/collapseMenu/collapseMenu";
+import {
+  overviewBreadcrumpGo,
+  filterMenu,
+} from "../../services/actions/collapseMenu/collapseMenu";
 import { useIsMount } from "../../hooks/useIsMount";
-
+import ItemLinkService from "../../services/api/itemLink";
 function MinusSquare(props) {
   return (
     <SvgIcon fontSize="inherit" style={{ width: 14, height: 14 }} {...props}>
@@ -161,10 +164,11 @@ function CustomizedTreeView({ onOpen, setWidthTrue }) {
   const dispatch = useDispatch();
   const isFullScreen = useSelector((state) => state.fullScreen.isFullScreen);
   const selectedItem = useSelector((state) => state.collapseMenu.selectedItem);
-  const items = useSelector((state) => state.collapseMenu.menuItems);
+  const items = useSelector((state) => state.collapseMenu.filerMenu);
   const expandedItems = useSelector(
     (state) => state.treeview.width.values.overviewHierarchy
   );
+  const text = useSelector((state) => state.searchBar.text);
   const location = useLocation();
   const timerOnOpen = () => {
     onOpen(document.getElementById("treeItems").offsetWidth);
@@ -218,7 +222,14 @@ function CustomizedTreeView({ onOpen, setWidthTrue }) {
       dispatch(updateCouchDb());
     };
   }, [location.pathname]);
-
+  React.useEffect(() => {
+    if (!isMount) {
+      const body = JSON.stringify({
+        FROM_ITEM_NAME: text,
+      });
+      dispatch(filterMenu(text, ItemLinkService.elasticSearch, body));
+    }
+  }, [text]);
   return (
     <Box
       sx={{
