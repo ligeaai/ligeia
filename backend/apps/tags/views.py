@@ -28,50 +28,50 @@ import datetime
 # Create your views here.
 
 
-class TagsSaveView(generics.CreateAPIView):
-    serializer_class = TagsFieldsSerializer
-    permission_classes = [permissions.AllowAny]
-
-    def post(self, request, *args, **kwargs):
-        data = request.data
-        data["LAYER_NAME"] = "KNOC"
-        tags.objects.create(**data)
-        return Response("okey")
-
-
 # class TagsSaveView(generics.CreateAPIView):
-
+#     serializer_class = TagsFieldsSerializer
 #     permission_classes = [permissions.AllowAny]
 
 #     def post(self, request, *args, **kwargs):
-#         tags_dict = request.data
-#         link_dict = dict()
-#         try:
-#             links_list = [
-#                 "LINK_ID",
-#                 "LINK_TYPE",
-#                 "END_DATETIME",
-#                 "FROM_ITEM_ID",
-#                 "FROM_ITEM_TYPE",
-#                 "TO_ITEM_ID",
-#                 "TO_ITEM_TYPE",
-#             ]
-#             for keys in links_list:
-#                 link_dict[keys] = request.data.get(keys)
-#                 tags_dict.pop(keys)
-#         except:
-#             pass
-#         link_dict["START_DATETIME"] = tags_dict.get("START_DATETIME")
-#         link_dict["ROW_ID"] = uuid.uuid4().hex
-#         validate_model_not_null(tags_dict, "tags", request=request)
-#         validate_model_not_null(link_dict, "ITEM_LINK", request=request)
-#         serializer = TagsSaveSerializer(data=request)
-#         serializer.is_valid()
-#         message = serializer.save(tags_dict)
-#         link_serializer = ItemLinkSaveSerializer(data=request.data.get("LINK"))
-#         link_serializer.is_valid()
-#         message = link_serializer.save(link_dict)
-#         return Response(message, status=status.HTTP_200_OK)
+#         data = request.data
+#         data["LAYER_NAME"] = "KNOC"
+#         tags.objects.create(**data)
+#         return Response("okey")
+
+
+class TagsSaveView(generics.CreateAPIView):
+
+    permission_classes = [permissions.AllowAny]
+
+    def post(self, request, *args, **kwargs):
+        tags_dict = request.data
+        link_dict = dict()
+        try:
+            links_list = [
+                "LINK_ID",
+                "LINK_TYPE",
+                "END_DATETIME",
+                "FROM_ITEM_ID",
+                "FROM_ITEM_TYPE",
+                "TO_ITEM_ID",
+                "TO_ITEM_TYPE",
+            ]
+            for keys in links_list:
+                link_dict[keys] = request.data.get(keys)
+                tags_dict.pop(keys)
+        except:
+            pass
+        link_dict["START_DATETIME"] = tags_dict.get("START_DATETIME")
+        link_dict["ROW_ID"] = uuid.uuid4().hex
+        validate_model_not_null(tags_dict, "tags", request=request)
+        validate_model_not_null(link_dict, "ITEM_LINK", request=request)
+        serializer = TagsSaveSerializer(data=request)
+        serializer.is_valid()
+        message = serializer.save(tags_dict)
+        link_serializer = ItemLinkSaveSerializer(data=request.data.get("LINK"))
+        link_serializer.is_valid()
+        message = link_serializer.save(link_dict)
+        return Response(message, status=status.HTTP_200_OK)
 
 
 class TagsDetailsView(generics.ListAPIView):
