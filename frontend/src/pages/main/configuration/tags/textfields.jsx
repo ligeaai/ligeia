@@ -56,7 +56,7 @@ const TagName = () => {
   const name = useSelector((state) => state.tags.saveValues.NAME);
   let asset =
     items.length > 0 && transaction_prop
-      ? items.filter((e) => e.ITEM_ID === transaction_prop)[0].NAME
+      ? items.filter((e) => e.ITEM_ID === transaction_prop)[0]?.PROPERTY_STRING
       : "";
   React.useEffect(() => {
     dispatch(
