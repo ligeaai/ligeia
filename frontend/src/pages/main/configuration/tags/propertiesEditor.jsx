@@ -4,18 +4,14 @@ import Grid from "@mui/material/Grid";
 import { makeStyles } from "@mui/styles";
 
 import { useDispatch, useSelector } from "react-redux";
-import { Select } from "../../../../components";
 import TextFields from "./textfields";
-import { _fillTagData } from "../../../../services/actions/tags/tags";
-import { useIsMount } from "../../../../hooks/useIsMount";
+import { fillTagData } from "../../../../services/actions/tags/tags";
 import {
   setBodyConfirmation,
   setSaveFunctonConfirmation,
   setTitleConfirmation,
 } from "../../../../services/actions/confirmation/historyConfirmation";
 import { saveTag, addNewTag } from "../../../../services/actions/tags/tags";
-import { config, instance } from "../../../../services/baseApi";
-import { addSaveTagValue } from "../../../../services/actions/tags/tags";
 const useStyles = makeStyles((theme) => {
   return {
     box: {
@@ -62,8 +58,8 @@ const PropertiesEditor = () => {
     dispatch(setSaveFunctonConfirmation(saveTag));
     dispatch(setTitleConfirmation("You want to save this ?"));
     dispatch(setBodyConfirmation(`${name ? name : "new"}`));
-    if (selectedIndex !== -2) {
-      dispatch(_fillTagData(tagId));
+    if (selectedIndex !== -2 && selectedIndex !== -3) {
+      dispatch(fillTagData(tagId));
     }
   }, [tagId, name]);
 
@@ -81,18 +77,16 @@ const PropertiesEditor = () => {
             </Grid>
             <Grid item xs={12} md={6} sx={{ color: "primary.main" }}>
               {Object.keys(tagValues.TAG_LINK).map((e, key) => {
-                if (tagValues.TAG_LINK[e].PROPERTY_TYPE !== "GUID") {
-                  return (
-                    <Grid container className={classes.selectBox} key={key}>
-                      <Grid item className={classes.label}>
-                        {tagValues.TAG_LINK[e].SHORT_LABEL}
-                      </Grid>
-                      <Grid item className={classes.labelFields}>
-                        <TextFields row={tagValues.TAG_LINK[e]} />
-                      </Grid>
+                return (
+                  <Grid container className={classes.selectBox} key={key}>
+                    <Grid item className={classes.label}>
+                      {tagValues.TAG_LINK[e].SHORT_LABEL}
                     </Grid>
-                  );
-                }
+                    <Grid item className={classes.labelFields}>
+                      <TextFields row={tagValues.TAG_LINK[e]} />
+                    </Grid>
+                  </Grid>
+                );
               })}
             </Grid>
           </Grid>
@@ -185,9 +179,8 @@ const PropertiesEditor = () => {
         </Grid>
       </Grid>
     );
-  } else {
-    return <></>;
   }
+  return <></>;
 };
 
 export default PropertiesEditor;

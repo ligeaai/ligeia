@@ -79,7 +79,7 @@ const DrawerMenu = (props) => {
           xs={12}
           sx={{ padding: 2, pb: 0, position: "relative", borderRadius: "5px" }}
         >
-          <SearchBarMobile theme={"light"} />
+          <SearchBarMobile />
         </Grid>
         <Box
           sx={{

@@ -7,7 +7,6 @@ import {
   Breadcrumb,
   ItemSperatorLineXL,
   PropLinkTabs,
-  TreeMenuItems,
 } from "../../../../components";
 import DrawerMenu from "../../../../layout/main/asset/treeViewMenu";
 import TagsActionMenu from "./tagsActionMenu";
@@ -17,45 +16,26 @@ import Properties from "./properties";
 import {
   cleanAllTags,
   loadTagsLabel,
+  cleanSaveValue,
 } from "../../../../services/actions/tags/tags";
-
-import TagService from "../../../../services/api/tags";
-import { useIsMount } from "../../../../hooks/useIsMount";
-import { filterMenu } from "../../../../services/actions/treeview/treeview";
-const Menu = () => {
-  const dispatch = useDispatch();
-  const isMount = useIsMount();
-  const text = useSelector((state) => state.searchBar.text);
-
-  React.useEffect(() => {
-    if (!isMount) {
-      dispatch(filterMenu(text, TagService.elasticSearch, {}));
-    }
-  }, [text]);
-  return (
-    <TreeMenuItems
-      path={TagService.getAll}
-      textPath="NAME"
-      historyPathLevel={3}
-    />
-  );
-};
+import { selectTreeViewItem } from "../../../../services/actions/treeview/treeview";
+import Menu from "./treeMenu";
 
 const Tags = ({ isHome }) => {
   const dispatch = useDispatch();
   const isFullScreen = useSelector((state) => state.fullScreen.isFullScreen);
   React.useEffect(() => {
     if (isHome) {
-      dispatch(cleanAllTags());
-      dispatch({
-        type: "TOGGLE_CHANGES_TAGS",
-        payload: false,
-      });
-    } else {
-      dispatch(loadTagsLabel());
+      dispatch(selectTreeViewItem(-3, "", 3));
+      dispatch(cleanSaveValue());
     }
   }, [isHome]);
-
+  React.useEffect(() => {
+    dispatch(loadTagsLabel());
+    return () => {
+      dispatch(cleanAllTags());
+    };
+  }, []);
   return (
     <Grid
       container

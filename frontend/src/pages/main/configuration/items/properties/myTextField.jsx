@@ -18,6 +18,7 @@ import {
 const SingleSelectCell = (params) => {
   const dispatch = useDispatch();
   const CULTURE = useSelector((state) => state.lang.cultur);
+  console.log(params);
   const [values, setValues] = React.useState([
     {
       ROW_ID: "",

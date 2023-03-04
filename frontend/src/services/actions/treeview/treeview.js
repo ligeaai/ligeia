@@ -88,9 +88,15 @@ export const selectTreeViewItem = (index, breadcrumbPath, historyPathLevel) => a
                 payload: { selectedIndex: -2 }
             });
             dispatch(setGoFunctionConfirmation(() => { }));
-
             myHistoryPush(historyPathLevel, "new")
-        } else {
+        }
+        else if (index === -3) {
+            dispatch({
+                type: SELECT_TREEVIEW_ITEM,
+                payload: { selectedIndex: -3 }
+            });
+        }
+        else {
             if (index < 0) {
                 index = filteredMenuLength - 1
             }

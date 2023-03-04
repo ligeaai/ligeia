@@ -15,9 +15,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { instance, config } from "../../../../services/baseApi";
 import { addSaveTagValue } from "../../../../services/actions/tags/tags";
-import axios from "axios";
 import { setIsActiveConfirmation } from "../../../../services/actions/confirmation/historyConfirmation";
-import { useIsMount } from "../../../../hooks/useIsMount";
 const useStyles = makeStyles((theme) => {
   return {
     box: {
@@ -119,11 +117,8 @@ const Uom = () => {
     const myFunc = async () => {
       try {
         let res = await instance.get("/uom_unit/type/", config());
-        console.log(res);
         setqt(res.data);
-      } catch {
-        console.log("tageditor 57");
-      }
+      } catch {}
     };
     myFunc();
   }, [tagId]);
@@ -132,28 +127,14 @@ const Uom = () => {
       try {
         const body = JSON.stringify({ QUANTITY_TYPE: qtDefault });
         let res = await instance.post("/uom_unit/name/", body, config());
-        console.log(res);
         setuom(res.data);
-      } catch {
-        console.log("tageditor 57");
-      }
+      } catch {}
     };
     myFunc();
   }, [qtDefault]);
   const handleChangeFunc = (e) => {
     dispatch(setIsActiveConfirmation(true));
     dispatch(addSaveTagValue("UOM_QUANTITY_TYPE", e));
-    // const myFunc = async () => {
-    //   const body = JSON.stringify({ QUANTITY_TYPE: e });
-    //   try {
-    //     let res = await instance.post("/uom_unit/name/", body, config());
-    //     console.log(res);
-    //     setuom(res.data);
-    //   } catch {
-    //     console.log("tageditor 57");
-    //   }
-    // };
-    // myFunc();
   };
   return (
     <>
@@ -219,55 +200,16 @@ const Uom = () => {
   );
 };
 
-const TransactionPropertySelect = ({ defaultValue }) => {
-  const isMount = useIsMount();
-  const dispatch = useDispatch();
-  const values = useSelector((state) => state.tags.items);
-  const selectedValue = useSelector(
-    (state) => state.treeview.selectedItem.selectedIndex
-  );
-
-  const handleChangeFunc = async (value) => {
-    dispatch(setIsActiveConfirmation(true));
-    dispatch(addSaveTagValue("TO_ITEM_ID", value));
-    dispatch(addSaveTagValue("ITEM_ID", value));
-    dispatch(addSaveTagValue("TRANSACTION_PROPERTY", value));
-  };
-  React.useEffect(() => {
-    if (!isMount && selectedValue !== -3) {
-      dispatch({
-        type: "SET_TAG_SAVE_VALUES",
-        payload: { key: "TO_ITEM_ID", value: defaultValue },
-      });
-    }
-  }, [defaultValue, selectedValue]);
-  return (
-    <Select
-      disabled={values.length === 0 ? true : false}
-      //errFunc={errFunc}
-      values={values}
-      valuesPath="ITEM_ID"
-      defaultValue={defaultValue}
-      dataTextPath="PROPERTY_STRING"
-      handleChangeFunc={handleChangeFunc}
-    />
-  );
-};
-
-const TransactionTypeSelect = ({ row, defaultValue }) => {
+const TransactionTypeSelect = () => {
   const selectedIndex = useSelector(
     (state) => state.treeview.selectedItem.selectedIndex
   );
   const culture = useSelector((state) => state.lang.cultur);
+  const defaultValue = useSelector(
+    (state) => state.tags.saveValues.TRANSACTION_TYPE
+  );
   const dispatch = useDispatch();
   const [values, setvalues] = React.useState([]);
-
-  const setTagSaveVal = (key, value) => {
-    dispatch({
-      type: "SET_TAG_SAVE_VALUES",
-      payload: { key: key, value: value },
-    });
-  };
 
   const loadItems = async (value) => {
     try {
@@ -275,8 +217,6 @@ const TransactionTypeSelect = ({ row, defaultValue }) => {
         `/item/details/${value.toLowerCase()}`,
         config()
       );
-      setTagSaveVal("TO_ITEM_TYPE", value);
-      setTagSaveVal("TRANSACTION_TYPE", value);
       dispatch({
         type: "LOAD_ITEMS_FOR_TAGLINKS",
         payload: res.data,
@@ -286,33 +226,12 @@ const TransactionTypeSelect = ({ row, defaultValue }) => {
         type: "LOAD_ITEMS_FOR_TAGLINKS",
         payload: [],
       });
-      setTagSaveVal(("TO_ITEM_ID", ""));
-      setTagSaveVal(("ITEM_ID", ""));
-      setTagSaveVal(("TRANSACTION_PROPERTY", ""));
     }
   };
 
   const handleChangeFunc = async (value) => {
-    try {
-      let res = await instance.get(
-        `/item/details/${value.toLowerCase()}`,
-        config()
-      );
-      dispatch(addSaveTagValue("TO_ITEM_TYPE", value));
-      dispatch(addSaveTagValue("TRANSACTION_TYPE", value));
-      dispatch({
-        type: "LOAD_ITEMS_FOR_TAGLINKS",
-        payload: res.data,
-      });
-    } catch {
-      dispatch({
-        type: "LOAD_ITEMS_FOR_TAGLINKS",
-        payload: [],
-      });
-      dispatch(addSaveTagValue("TO_ITEM_ID", ""));
-      dispatch(addSaveTagValue("ITEM_ID", ""));
-      dispatch(addSaveTagValue("TRANSACTION_PROPERTY", ""));
-    }
+    loadItems(value);
+    dispatch(addSaveTagValue("TRANSACTION_TYPE", value));
   };
   React.useEffect(() => {
     var ignore = false;
@@ -320,7 +239,6 @@ const TransactionTypeSelect = ({ row, defaultValue }) => {
     const myFunc = async () => {
       let res = await instance.post("/tags/links/", body, config());
       if (!ignore) {
-        console.log(res);
         setvalues(res.data);
         loadItems(defaultValue);
       }
@@ -340,6 +258,31 @@ const TransactionTypeSelect = ({ row, defaultValue }) => {
       valuesPath="TO_TYPE"
       defaultValue={defaultValue}
       dataTextPath="SHORT_LABEL"
+      handleChangeFunc={handleChangeFunc}
+    />
+  );
+};
+
+const TransactionPropertySelect = () => {
+  const dispatch = useDispatch();
+  const values = useSelector((state) => state.tags.items);
+  const defaultValue = useSelector((state) => state.tags.saveValues.ITEM_ID);
+
+  const handleChangeFunc = async (value) => {
+    console.log(value);
+    dispatch(setIsActiveConfirmation(true));
+    dispatch(addSaveTagValue("ITEM_ID", value));
+    dispatch(addSaveTagValue("TRANSACTION_PROPERTY", value));
+  };
+
+  return (
+    <Select
+      disabled={values.length === 0 ? true : false}
+      //errFunc={errFunc}
+      values={values}
+      valuesPath="ITEM_ID"
+      defaultValue={defaultValue}
+      dataTextPath="PROPERTY_STRING"
       handleChangeFunc={handleChangeFunc}
     />
   );
@@ -381,6 +324,8 @@ const TextFields = (props) => {
   }
   if (row.PROPERTY_TYPE === "CODE") {
     if (row.CODE) {
+      console.log(row);
+
       var values = [{ ROW_ID: "", CODE_TEXT: "" }];
       const sortedCode = row.CODE.sort((a, b) =>
         a.CODE_TEXT > b.CODE_TEXT ? 1 : -1

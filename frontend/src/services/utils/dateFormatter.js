@@ -7,6 +7,10 @@ export function dateFormatter(date) {
     return newdate
 }
 
+export const swapDayAndYear = (props) => {
+    return `${props[6]}${props[7]}${props[8]}${props[9]}-${props[3]}${props[4]}-${props[0]}${props[1]}`
+}
+
 export function dateFormatterDMY(date) {
     var d = date.getDate();
     var m = date.getMonth();

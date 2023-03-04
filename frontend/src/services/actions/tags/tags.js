@@ -2,7 +2,6 @@ import {
     LOAD_TAGS_LABEL,
     SET_TAG_SAVE_VALUES,
     CLEAN_ALL_TAGS,
-    TOGGLE_CHANGES_TAGS,
     FILL_SAVE_VALUES_TAGS
 } from "../types"
 
@@ -16,34 +15,27 @@ import TagService from "../../api/tags";
 import { loadTreeviewItem, selectTreeViewItem } from "../treeview/treeview";
 import { setIsActiveConfirmation } from "../confirmation/historyConfirmation";
 import { uuidv4 } from "../../utils/uuidGenerator"
+import { swapDayAndYear } from "../../utils/dateFormatter"
 
 const _fillUuids = (rows) => async (dispatch, getState) => {
     Object.keys(rows).map(e => {
         if (rows[e].PROPERTY_TYPE === "GUID") {
             var newUuid = uuidv4()
+            console.log(rows[e]);
             dispatch({
                 type: SET_TAG_SAVE_VALUES,
                 payload: { key: rows[e].PROPERTY_NAME, value: newUuid.replace(/-/g, "") }
             })
         }
     })
-    var newUuid = uuidv4()
-    dispatch({
-        type: SET_TAG_SAVE_VALUES,
-        payload: { key: "TAG_ID", value: newUuid.replace(/-/g, "") }
-    })
+}
 
-}
-const swapToYYYYMMDD = (props) => {
-    return `${props[6]}${props[7]}${props[8]}${props[9]}-${props[3]}${props[4]}-${props[0]}${props[1]}`
-}
-export const _fillTagData = (tagId) => async (dispatch, getState) => {
+export const fillTagData = (tagId) => async (dispatch, getState) => {
     try {
         const body = JSON.stringify({ TAG_ID: tagId })
-
         let res = await TagService.getTagItem(body)
-        res.data[0].LAST_UPDATE_DATE = swapToYYYYMMDD(res.data[0].LAST_UPDATE_DATE)
-        res.data[0].START_DATETIME = swapToYYYYMMDD(res.data[0].START_DATETIME)
+        res.data[0].LAST_UPDATE_DATE = swapDayAndYear(res.data[0].LAST_UPDATE_DATE)
+        res.data[0].START_DATETIME = swapDayAndYear(res.data[0].START_DATETIME)
         dispatch({
             type: FILL_SAVE_VALUES_TAGS,
             payload: res.data[0]
@@ -58,7 +50,7 @@ export const loadTagsLabel = () => async (dispatch, getState) => {
         const CULTURE = getState().lang.cultur
         const body = JSON.stringify({ CULTURE })
         let res = await TagService.getTagsProperty(body)
-
+        // transfer to backend
         var sortedTagInfo = res.data.TAG_INFORMATIONS.sort((a, b) =>
             parseInt(a.SORT_ORDER) > parseInt(b.SORT_ORDER) ? 1 : -1
         )
@@ -74,13 +66,14 @@ export const loadTagsLabel = () => async (dispatch, getState) => {
         return Promise.reject(err)
     }
 }
-
+export const cleanSaveValue = () => dispatch => {
+    dispatch({
+        type: FILL_SAVE_VALUES_TAGS,
+        payload: {}
+    })
+}
 
 export const addNewTag = () => async (dispatch, getState) => {
-    dispatch({
-        type: TOGGLE_CHANGES_TAGS,
-        payload: true
-    })
     dispatch({
         type: FILL_SAVE_VALUES_TAGS,
         payload: {}
@@ -105,10 +98,6 @@ export const addNewTag = () => async (dispatch, getState) => {
 
 export const addSaveTagValue = (key, value) => (dispatch) => {
     dispatch({
-        type: TOGGLE_CHANGES_TAGS,
-        payload: true
-    })
-    dispatch({
         type: SET_TAG_SAVE_VALUES,
         payload: { key: key, value: value }
     })
@@ -122,10 +111,9 @@ export const cleanAllTags = () => dispatch => {
 
 const _newTagSave = async (saveValues, user) => {
     var newUuid = uuidv4()
-
     const body = JSON.stringify({
         ...saveValues,
-        // "LAST_UPDT_USER": user,
+        "LAST_UPDATE_USER": user,
         // "LAST_UPDT_DATE": new Date(),
         "TO_ITEM_ID": saveValues.TRANSACTION_PROPERTY,
         "TO_ITEM_TYPE": saveValues.TRANSACTION_TYPE,
@@ -137,64 +125,22 @@ const _newTagSave = async (saveValues, user) => {
     })
     try {
         let res = await TagService.createAndUpdate(body)
-        console.log(res);
+        return Promise.resolve(res.data)
     } catch (err) {
         return Promise.reject(err)
     }
 }
 
-export const saveNewTag = () => async (dispatch, getState) => {
-
-    const saveValues = getState().tags.saveValues
-    const anyChanges = getState().tags.anyChanges
-    const values = getState().tags.saveValues
-    const properties = getState().tags.tagValues
-    const name = getState().treeview.selectedItem.NAME
-    var user = getState().auth.user.email
-    if (anyChanges) {
-        dispatch(
-            setConfirmation({
-                title: "You want to save this ?",
-                body: <>{name}</>,
-                agreefunction: async () => {
-                    if (_checkmandatoryFields(values, properties)) {
-                        dispatch({
-                            type: TOGGLE_CHANGES_TAGS,
-                            payload: false
-                        })
-                        await _newTagSave(saveValues, user)
-                        dispatch(setIsActiveConfirmation(false))
-                        dispatch(loadTreeviewItem(TagService.getAll, "NAME"))
-                    } else {
-                        dispatch({
-                            type: "ADD_ERROR_SUCCESS",
-                            payload: "Pleas check mandatory fields"
-                        })
-                    }
-                },
-            })
-        );
-    }
-
-}
-
-
 export const saveTag = () => async (dispatch, getState) => {
     const values = getState().tags.saveValues
     const properties = getState().tags.tagValues
+    var user = getState().auth.user.email
+    const saveValues = getState().tags.saveValues
     if (_checkmandatoryFields(values, properties)) {
-        console.log("asdsa");
-        var user = getState().auth.user.email
-        const saveValues = getState().tags.saveValues
-        dispatch({
-            type: TOGGLE_CHANGES_TAGS,
-            payload: false
-        })
-        await _newTagSave(saveValues, user)
+        let res = await _newTagSave(saveValues, user)
         dispatch(loadTreeviewItem(TagService.getAll, "NAME"))
         dispatch(setIsActiveConfirmation(false))
-        console.log(true);
-        return true
+        return Promise.resolve(res.data)
     }
     else {
         dispatch({
@@ -203,9 +149,20 @@ export const saveTag = () => async (dispatch, getState) => {
         })
         return false
     }
-
 }
 
+export const saveButton = () => async (dispatch, getState) => {
+    const name = getState().treeview.selectedItem.NAME
+    dispatch(
+        setConfirmation({
+            title: "You want to save this ?",
+            body: <>{name}</>,
+            agreefunction: async () => {
+                await dispatch(saveTag())
+            },
+        })
+    );
+}
 
 async function _deleteTag(TAG_ID) {
     try {
@@ -224,10 +181,6 @@ export const deleteTag = () => async (dispatch, getState) => {
             title: "Are you sure you want to delete this?",
             body: <>{name}</>,
             agreefunction: async () => {
-                dispatch({
-                    type: TOGGLE_CHANGES_TAGS,
-                    payload: false
-                })
                 dispatch(cleanAllTags())
                 await _deleteTag(tagId)
                 await dispatch(loadTreeviewItem(TagService.getAll, "NAME"));

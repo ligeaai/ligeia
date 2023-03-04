@@ -8,7 +8,7 @@ import {
   selectTreeViewItem,
   cleanTreeview,
 } from "../../services/actions/treeview/treeview";
-
+import { setText } from "../../services/actions/searchBar";
 const TreeMenuItems = ({ path, textPath, historyPathLevel }) => {
   const dispatch = useDispatch();
   const filteredTreeItems = useSelector(
@@ -24,6 +24,7 @@ const TreeMenuItems = ({ path, textPath, historyPathLevel }) => {
     dispatch(loadTreeviewItem(path, textPath));
     return async () => {
       dispatch(await cleanTreeview());
+      dispatch(setText(""));
     };
   }, []);
   return (
