@@ -10,7 +10,6 @@ import {
   PropLinkTabs,
   Select,
   MyDivider,
-  TreeMenuItems,
 } from "../../../../../components";
 import DrawerMenu from "../../../../../layout/main/asset/treeViewMenu";
 
@@ -20,34 +19,11 @@ import { cleanAllDataGrid } from "../../../../../services/actions/codelist/datag
 
 import {
   setFilteredLayerName,
-  filterMenu,
+  selectTreeViewItem,
 } from "../../../../../services/actions/treeview/treeview";
 import { instance, config } from "../../../../../services/baseApi";
-import CodelistService from "../../../../../services/api/codeList";
-import { useIsMount } from "../../../../../hooks/useIsMount";
-const Menu = () => {
-  const isMount = useIsMount();
-  const dispatch = useDispatch();
-  const text = useSelector((state) => state.searchBar.text);
-  const cultur = useSelector((state) => state.lang.cultur);
-  React.useEffect(() => {
-    if (!isMount) {
-      const body = JSON.stringify({
-        CODE_TEXT: text,
-        CULTURE: cultur,
-      });
-      dispatch(filterMenu(text, CodelistService.elasticSearch, body));
-    }
-  }, [text]);
 
-  return (
-    <TreeMenuItems
-      path={CodelistService.getAllTreeitem}
-      textPath="CODE_TEXT"
-      historyPathLevel={2}
-    />
-  );
-};
+import Menu from "./treeMenu";
 
 const CodeList = ({ isHome }) => {
   const dispatch = useDispatch();
@@ -76,6 +52,7 @@ const CodeList = ({ isHome }) => {
 
   React.useEffect(() => {
     if (isHome) {
+      dispatch(selectTreeViewItem(-3, "", 3));
       dispatch(cleanAllDataGrid());
     }
   }, [isHome]);

@@ -5,16 +5,11 @@ import {
     DRAWER_MENU_SET_OPEN
 } from "../types"
 
-import { instance, config } from '../../couchApi';
-
+import DrawerMenu from "../../api/couch/drawerMenu";
 export const loadDrawerMenu = () => async (dispatch, getState) => {
 
     try {
-        let res = await instance
-            .get(
-                "/drawermenu/d770fc23c7a9bba2a6e3c15a5f02c8b8/",
-                config
-            )
+        let res = await DrawerMenu.get()
 
         dispatch({
             type: LOAD_DRAWER_MENU,

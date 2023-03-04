@@ -17,3 +17,9 @@ export const config = () => {
         }
     }
 };
+
+export const unAuthConfig = {
+    headers: {
+        'Content-Type': 'application/json'
+    }
+}

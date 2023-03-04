@@ -14,16 +14,9 @@ import {
 
 
 import history from "../../../routers/history";
-
 import { uuidv4 } from "../../utils/uuidGenerator"
-
 import { loadTreeviewItem, selectTreeViewItem } from "../treeview/treeview"
-
 import ResourcelistService from "../../api/resourceList";
-import { dateFormatter } from "../../utils/dateFormatter"
-
-
-
 
 const _createNewParent = () => (dispatch, getState) => {
     const culture = getState().lang.cultur
@@ -88,8 +81,6 @@ export const refreshDataGridResourcelist = () => async (dispatch, getState) => {
     }
 }
 
-
-
 export const onChangeCell = (id, field, value) => async (dispatch, getState) => {
     function onlyUnique(value, index, self) {
         return self.indexOf(value) === index;
@@ -129,7 +120,6 @@ const _save = (value, userEmail) => async (dispatch, getState) => {
     } catch (err) {
         return Promise.reject(err)
     }
-
 }
 
 const _checkMandatoryFields = () => (dispatch, getState) => {
@@ -203,7 +193,6 @@ export const deleteResourceList = () => async (dispatch, getState) => {
     } catch (err) {
         return Promise.reject(err)
     }
-
 }
 
 export const saveAndMoveResourceList = (index) => async (dispatch, getState) => {
@@ -215,16 +204,12 @@ export const saveAndMoveResourceList = (index) => async (dispatch, getState) => 
     }
     dispatch(saveResourceList())
     dispatch(selectTreeViewItem(index));
-
 }
-
-
 
 const _createNewChild = () => (dispatch, getState) => {
     const culture = getState().lang.cultur
     const uuid = uuidv4()
     return {
-
         "ROW_ID": uuid.replace(/-/g, ""),
         "CULTURE": culture,
         "PARENT": "",
@@ -243,7 +228,6 @@ const _createNewChild = () => (dispatch, getState) => {
 
     }
 }
-
 
 export const addChildResourceList = () => async (dispatch, getState) => {
     const rows = getState().dataGridResourceList.rows
@@ -275,7 +259,6 @@ export const cleanSelectedRows = () => (dispatch) => {
         type: CLEAN_SELECTED_ROWS_RESOURCELIST
     })
 }
-
 
 export const deleteChild = () => (dispatch, getState) => {
     const newChildRows = getState().dataGridResourceList.newChildRows;

@@ -45,6 +45,7 @@ export const fillTagData = (tagId) => async (dispatch, getState) => {
         return Promise.reject(err)
     }
 }
+
 export const loadTagsLabel = () => async (dispatch, getState) => {
     try {
         const CULTURE = getState().lang.cultur
@@ -66,6 +67,7 @@ export const loadTagsLabel = () => async (dispatch, getState) => {
         return Promise.reject(err)
     }
 }
+
 export const cleanSaveValue = () => dispatch => {
     dispatch({
         type: FILL_SAVE_VALUES_TAGS,

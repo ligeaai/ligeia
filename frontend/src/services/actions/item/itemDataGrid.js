@@ -18,7 +18,6 @@ import axios from "axios";
 import ItemService from "../../api/item"
 import { MyTextField } from "../../../pages/main/configuration/items/properties/myTextField";
 import { uuidv4 } from "../../utils/uuidGenerator";
-import { instance, config } from "../../baseApi";
 import { loadTreeviewItem, selectTreeViewItem } from "../treeview/treeview"
 import { dateFormatter, newDate } from "../../utils/dateFormatter";
 
@@ -49,7 +48,6 @@ export class column {
         this.renderCell = myMemoFunction;
         this.renderEditCell = myMemoFunction;
         this.cellClassName = "myRenderCell"
-
     }
 }
 
@@ -298,12 +296,8 @@ export const saveItem = () => async (dispatch, getState) => {
         const body = JSON.stringify({ ITEM, COLUMNS });
         try {
             console.log(body);
-            let res = await instance
-                .post(
-                    "/item/item-and-property/",
-                    body,
-                    config()
-                )
+            let res = await ItemService.update(body)
+
             dispatch(loadTreeviewItem(async (body, cancelToken) => {
                 return await ItemService.getAll(body, cancelToken, type);
             }, "PROPERTY_STRING"))
@@ -371,12 +365,7 @@ export const deleteItem = () => async (dispatch, getState) => {
     const type = getState().drawerMenu.selectedItem.TYPE
     const body = JSON.stringify({ ITEM_ID });
     try {
-        let res = await instance
-            .post(
-                "/item/delete/",
-                body,
-                config()
-            )
+        let res = await ItemService.remove(body)
         await dispatch(loadTreeviewItem(async (body, cancelToken) => {
             return await ItemService.getAll(body, cancelToken, type);
         }, "PROPERTY_STRING"))

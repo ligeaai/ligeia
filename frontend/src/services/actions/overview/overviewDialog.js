@@ -4,24 +4,18 @@ import {
     CHANGE_VALUE_OVERVIEW_DIALOG,
     SET_SELECT_ITEM_OVERVIEW_DIALOG,
     SET_HIGHCHART_PROPERTY_OVERVIEW_DIALOG,
-    SET_WIDGETS_OVERVIEW,
-    SET_MEASUREMENT_DATA,
 } from "../types"
-import axios from "axios"
 
-import { instance, config } from "../../couchApi"
 import { uuidv4 } from "../../utils/uuidGenerator"
 import { loadTapsOverview } from "./taps"
+import HcProps from "../../api/couch/hcProps"
+import HcType from "../../api/couch/hcProps"
+import Widgets from "../../api/couch/widgets"
+import TabLink from "../../api/couch/taplinks"
 
-
-export const fillProperties = async (props) => async (dispatch, getState) => {
+export const fillProperties = async (props) => async (dispatch) => {
     try {
-        let res = await instance
-            .get(
-                `/highchartproperties/${props}`,
-                config
-            )
-
+        let res = await HcProps.get(props)
         dispatch({
             type: FILL_VALUES_OVERVIEW_DIALOG,
             payload: res.data.properties
@@ -35,26 +29,17 @@ export const fillProperties = async (props) => async (dispatch, getState) => {
             payload: props
         })
         return Promise.resolve(res.data)
-    } catch {
-        console.log("asdasd");
-    }
+    } catch { }
 }
 
 export const loadSelectItems = async () => async dispatch => {
     try {
-        let res = await instance
-            .get(
-                "/highcharttype/57b054aedfcb4984da539444110006b6",
-                config
-            )
-
+        let res = await HcType.get()
         let sortedList = res.data.type.sort((a, b) => (a) > (b) ? 1 : -1)
         dispatch({
             type: SET_SELECT_ITEM_OVERVIEW_DIALOG,
             payload: sortedList
         })
-
-
     } catch (err) {
         return err
     }
@@ -62,7 +47,6 @@ export const loadSelectItems = async () => async dispatch => {
 
 export const changeSelectValue = async (payload) => async (dispatch) => {
     return Promise.resolve(dispatch(await fillProperties(payload)))
-
 }
 
 export const changeValeus = (key, value) => dispatch => {
@@ -80,13 +64,14 @@ export const saveChart = () => async (dispatch, getState) => {
     const resData = getState().tapsOverview.data
     const uuid = uuidv4()
     const body = JSON.stringify({ ...chartProps, _id: uuid, Type: selectedChartType })
-    await instance
-        .post(
-            "/widgets/",
-            body,
-            config
-        )
-
+    await Widgets.create(body)
+    const layout = {
+        "w": 6,
+        "i": uuid,
+        "h": 6,
+        "x": 0,
+        "y": 0
+    }
     const tablinkBody = {
         ...resData, data: {
             ...resData.data, [selected]: {
@@ -94,43 +79,23 @@ export const saveChart = () => async (dispatch, getState) => {
                 layouts: {
                     ...resData.data[selected].layouts,
                     lg: [...resData.data[selected].layouts.lg, {
-                        "w": 6,
-                        "i": uuid,
-                        "h": 6,
-                        "x": 0,
-                        "y": 0
+                        ...layout
                     },
                     ],
                     md: [...resData.data[selected].layouts.md, {
-                        "w": 6,
-                        "i": uuid,
-                        "h": 6,
-                        "x": 0,
-                        "y": 0
+                        ...layout
                     },
                     ],
                     sm: [...resData.data[selected].layouts.sm, {
-                        "w": 6,
-                        "i": uuid,
-                        "h": 6,
-                        "x": 0,
-                        "y": 0
+                        ...layout
                     },
                     ],
                     xs: [...resData.data[selected].layouts.xs, {
-                        "w": 6,
-                        "i": uuid,
-                        "h": 6,
-                        "x": 0,
-                        "y": 0
+                        ...layout
                     },
                     ],
                     xxs: [...resData.data[selected].layouts.xxs, {
-                        "w": 4,
-                        "i": uuid,
-                        "h": 4,
-                        "x": 0,
-                        "y": 0
+                        ...layout
                     },
                     ]
                 }
@@ -138,12 +103,7 @@ export const saveChart = () => async (dispatch, getState) => {
         }
     }
     try {
-        await instance
-            .put(
-                `/taplinks/${selectedLink}`,
-                tablinkBody,
-                config
-            )
+        await TabLink.update(selectedLink, tablinkBody)
         dispatch(loadTapsOverview())
 
     }

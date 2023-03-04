@@ -2,7 +2,6 @@ import * as React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Box } from "@mui/material";
 import { DataGridPro } from "@mui/x-data-grid-pro";
-import { grey } from "@mui/material/colors";
 
 import LinearProgress from "@mui/material/LinearProgress";
 import ConfirmDataGrid from "./confirmDataGrid";
@@ -28,8 +27,6 @@ const groupingColDef = {
   hideDescendantCount: true,
   valueFormatter: () => "",
   width: 50,
-  // minWidth: 0,
-
   resizable: false,
 };
 
@@ -54,7 +51,7 @@ export default function TreeDataWithGap() {
   );
 
   React.useEffect(() => {
-    if (selectedIndex === -2) {
+    if (selectedIndex === -2 && selectedIndex !== -3) {
       dispatch(addNewCodeListItemSchema());
     }
   }, [selectedIndex]);
@@ -65,7 +62,7 @@ export default function TreeDataWithGap() {
         setTitleConfirmation("Are you sure you want to save this code list ? ")
       );
       dispatch(setBodyConfirmation(<ConfirmDataGrid />));
-    } else if (selectedIndex !== -2) {
+    } else if (selectedIndex !== -2 && selectedIndex !== -3) {
       dispatch(refreshDataGridCodelist());
     }
   }, [rowId]);

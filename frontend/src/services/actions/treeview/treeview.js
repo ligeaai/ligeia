@@ -13,15 +13,12 @@ import axios from "axios"
 
 import { confirmationPushHistory, myHistoryPush } from "../../utils/historyPush"
 import { setGoFunctionConfirmation } from "../confirmation/historyConfirmation"
-import { config, instance } from "../../couchApi"
+import TreeView from "../../api/couch/treeView"
+
 export const loadTreeViewWidth = async (path) => async (dispatch, getState) => {
     const userId = getState().auth.user.id
     try {
-        let res = await instance
-            .get(
-                `/treeviewstate/${userId}`,
-                config
-            )
+        let res = await TreeView.get(userId)
         dispatch({
             type: LOAD_TREE_VIEW_WIDTH,
             payload: res.data
@@ -50,6 +47,7 @@ export const loadFilteredTreeviewItem = () => async (dispatch, getState) => {
         })
     }
 }
+
 let cancelToken;
 export const loadTreeviewItem = (path, sortPath) => async (dispatch, getState) => {
     const CULTURE = getState().lang.cultur;
@@ -131,7 +129,6 @@ export const setFilteredLayerName = (layerName = "NONE") => dispatch => {
         type: SET_FILTERED_LAYER_NAME,
         payload: layerName
     })
-    // dispatch(cleanAllDataGrid())
     dispatch(cleanTreeMenuSelect())
     dispatch(loadFilteredTreeviewItem())
 }
@@ -140,7 +137,6 @@ export const cleanTreeview = async () => async dispatch => {
     dispatch({
         type: CLEAN_TREEVIEW,
     })
-
 }
 
 export const updateTreeViewCouch = (path, value) => async (dispatch, getState) => {
@@ -149,12 +145,7 @@ export const updateTreeViewCouch = (path, value) => async (dispatch, getState) =
     width.values[path] = value
     const body = JSON.stringify({ ...width })
     try {
-        let res = await instance
-            .put(
-                `/treeviewstate/${userId}`,
-                body,
-                config
-            )
+        let res = await TreeView.update(userId, body)
         width._rev = res.data.rev
         dispatch({
             type: LOAD_TREE_VIEW_WIDTH,
@@ -179,16 +170,8 @@ export const createTreeViewCouch = () => async (dispatch, getState) => {
         }
     })
     try {
-        await instance
-            .post(
-                "/treeviewstate/",
-                body,
-                config
-            )
-
-    } catch (err) {
-        console.log(err);
-    }
+        await TreeView.create(body)
+    } catch (err) { }
 }
 let cancelTokenFiler;
 export const filterMenu = (text, path, body) => async (dispatch, getState) => {

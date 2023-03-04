@@ -1,8 +1,6 @@
 import {
     ADD_ERROR_SUCCESS,
-    ADD_ERROR_FAIL,
     CLEAN_ERROR_SUCCESS,
-    CLEAN_ERROR_FAIL,
 } from './types';
 
 export const add_error = (errMsg) => async dispatch => {
@@ -11,7 +9,6 @@ export const add_error = (errMsg) => async dispatch => {
         payload: errMsg
     })
 };
-
 
 export const clean_error = () => async dispatch => {
     dispatch({

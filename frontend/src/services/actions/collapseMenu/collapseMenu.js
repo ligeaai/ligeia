@@ -6,8 +6,8 @@ import {
     SET_COLLAPSE_FILTER_MENU
 } from "../types"
 
-import { config, instance } from "../../couchApi"
 import axios from "axios"
+import TreeView from "../../api/couch/treeView"
 export const loadCollapseMenu = (path) => async dispatch => {
     try {
         let res = await path();
@@ -42,12 +42,8 @@ export const updateCollapseMenuCouch = (value) => async (dispatch, getState) => 
     const treeViewWidth = getState().treeview.width
     const body = JSON.stringify({ ...treeViewWidth })
     try {
-        let res = await instance
-            .put(
-                `/treeviewstate/${userId}`,
-                body,
-                config
-            )
+        let res = await TreeView.update(userId, body)
+
         treeViewWidth._rev = res.data.rev
         dispatch({
             type: LOAD_TREE_VIEW_WIDTH,

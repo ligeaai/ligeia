@@ -2,20 +2,16 @@ import {
   FILL_TAPS_OVERVIEW,
   SET_SELECT_TAB_ITEM,
   CLEAN_TABS_OVERVIEW,
-  SET_WIDGETS_OVERVIEW,
   REFRESH_WIDGETS_OVERVIEW,
-  SET_REV,
   UPDATE_LAYOUT,
-  SET_MEASUREMENT_DATA,
   SET_ISCHECKED,
   SET_UPDATE_ISCHECKED,
   SET_ITEM_DATA_OVERVIEW
 } from "../types";
 import { instance, config } from "../../couchApi";
-
-import ItemLinkService from "../../api/itemLink"
+import TabLinks from "../../api/couch/taplinks"
+import Widgets from "../../api/couch/widgets"
 const _setLinkedItem = () => (dispatch, getState) => {
-  console.log("lşksalşkşaskdakdkslşaalkksdlksdalş")
   const selectedItem = getState().collapseMenu.selectedItem;
   let list = []
   console.log(selectedItem)
@@ -36,7 +32,7 @@ const _setLinkedItem = () => (dispatch, getState) => {
 export const loadTapsOverview = () => async (dispatch, getState) => {
   const linkId = getState().collapseMenu.selectedItem.LINK_ID;
   try {
-    let res = await instance.get(`/taplinks/${linkId}`, config);
+    let res = await TabLinks.get(linkId)
     var titles = [];
     var widgets = {};
     var data = {}
@@ -58,10 +54,9 @@ export const loadTapsOverview = () => async (dispatch, getState) => {
     });
     dispatch(_setLinkedItem())
   } catch (err) {
-    console.log(err)
     if (err.response.status === 404) {
       const body = JSON.stringify({ _id: linkId, data: {} });
-      await instance.post("/taplinks/", body, config);
+      await TabLinks.create(body)
     }
     dispatch(loadTapsOverview());
   }
@@ -104,16 +99,11 @@ export const deleteChart = (id, revId) => async (dispatch, getState) => {
   );
 
   const selectedLink = getState().collapseMenu.selectedItem.LINK_ID;
-  // const tablinkBody = {
-  //     ...myData, data: {
-  //         ...myData.data, [selected]: [...myData.data[selected]]
-  //     }
-  // }
+
   const body = JSON.stringify({ ...myData });
   try {
-    await instance.delete(`/widgets/${id}?rev=${revId}`, config);
-    let res = await instance.put(`/taplinks/${selectedLink}`, body, config);
-
+    await Widgets.remove(id, revId)
+    await TabLinks.update(selectedLink, body)
     dispatch(loadTapsOverview());
   } catch (err) {
     console.log(err);
@@ -152,11 +142,9 @@ export const addNewTabItem = () => async (dispatch, getState) => {
     },
   };
   try {
-    await instance.put(`/taplinks/${selectedLink}`, tablinkBody, config);
+    await TabLinks.update(selectedLink, tablinkBody)
     dispatch(loadTapsOverview());
-  } catch (err) {
-    console.log(err);
-  }
+  } catch (err) { }
 };
 
 const _checkHeader = (oldHeader, newHeader, keys) => {
@@ -185,7 +173,7 @@ export const updateTabHeader =
         },
       };
       try {
-        await instance.put(`/taplinks/${selectedLink}`, tablinkBody, config);
+        await TabLinks.update(selectedLink, tablinkBody)
         dispatch(loadTapsOverview());
         dispatch({
           type: SET_SELECT_TAB_ITEM,
@@ -200,8 +188,8 @@ export const updateTabHeader =
 function _deleteAllCharts(charts) {
   charts.map(async (e) => {
     try {
-      let res = await instance.get(`/widgets/${e}`, config);
-      await instance.delete(`/widgets/${e}?rev=${res.data._rev}`, config);
+      let res = await Widgets.get(e)
+      await Widgets.remove(e, res.data._rev)
     } catch { }
   });
 }
@@ -218,8 +206,7 @@ export const deleteTapHeader = (header) => async (dispatch, getState) => {
     },
   };
   try {
-    await instance.put(`/taplinks/${selectedLink}`, tablinkBody, config);
-
+    await TabLinks.update(selectedLink, tablinkBody)
     dispatch(loadTapsOverview());
     _deleteAllCharts(charts);
   } catch (err) {
@@ -231,7 +218,7 @@ export const updateChart = () => async (dispatch, getState) => {
   const chartProps = getState().overviewDialog.highchartProps;
   const body = JSON.stringify({ ...chartProps });
   try {
-    await instance.put(`/widgets/${chartProps._id}`, body, config);
+    await Widgets.update(chartProps._id, body)
   } catch { }
 };
 export const updateChartLayout = (layout) => async (dispatch, getState) => {
@@ -260,13 +247,8 @@ export const updateCouchDb = () => async (dispatch, getState) => {
     ...resData,
   };
   try {
-    let res = await instance.put(`/taplinks/${selectedLink}`, tablinkBody, {
-      ...config,
-    });
-    console.log(res);
-  } catch (err) {
-    console.log(err);
-  }
+    let res = await TabLinks.update(selectedLink, tablinkBody)
+  } catch (err) { }
 };
 
 
@@ -278,7 +260,6 @@ export const updateChecked = (key, val) => (dispatch) => {
 }
 
 export const setCheckeds = (val) => (dispatch) => {
-
   let temp = {}
   val.map(e => {
     temp[e.TAG_ID] = false
@@ -290,7 +271,6 @@ export const setCheckeds = (val) => (dispatch) => {
 }
 
 export const setCheckedsAsset = (val) => (dispatch) => {
-
   let temp = {}
   val.map(e => {
     temp[e[0]] = false

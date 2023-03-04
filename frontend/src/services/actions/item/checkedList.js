@@ -5,11 +5,13 @@ import {
 } from "../types"
 import axios from "axios";
 
-import { instance, config } from '../../baseApi';
 import { loadLinks } from "./itemLinkEditor";
 
 import { dateFormatter } from "../../utils/dateFormatter"
+import ItemService from "../../api/item";
+import ItemLinkService from "../../api/itemLink";
 let cancelToken;
+let cancelDetails;
 export const loadCheckedList = (type, inOut) => async (dispatch, getState) => {
     if (cancelToken) {
         cancelToken.cancel()
@@ -17,17 +19,17 @@ export const loadCheckedList = (type, inOut) => async (dispatch, getState) => {
     cancelToken = axios.CancelToken.source();
     let res;
     try {
-        res = await instance.get(`/item/details/${inOut === "data" ? type.FROM_TYPE : type.TO_TYPE}`,
-            { ...config(), cancelToken: cancelToken.token });
+        const text = inOut === "data" ? type.FROM_TYPE : type.TO_TYPE
+        console.log(text);
+        res = await ItemService.getAll(null, cancelToken, text)
+        console.log(res);
         const selectedItemId = getState().treeview.selectedItem.ITEM_ID;
         try {
-            let itemLinkRes = await instance.post(
-                `/item-link/details/`,
-                {
-                    ID: selectedItemId,
-                },
-                config()
-            );
+            if (cancelDetails) {
+                cancelDetails.cancel()
+            }
+            cancelDetails = axios.CancelToken.source();
+            let itemLinkRes = await ItemLinkService.getItemLink({ ID: selectedItemId }, cancelDetails)
             var data = [];
             res.data.map((e) => {
                 var temp = true;
@@ -143,11 +145,7 @@ export const cardinalityCheck = (selectItems, selectedItemFromType) => async (di
                     const LINK_TYPE = mySelectItem.TYPE
                     const body = JSON.stringify({ TO_ITEM_TYPE, FROM_ITEM_ID, LINK_TYPE })
                     try {
-                        let res = await instance.post(
-                            `/item-link/cardinalty/`,
-                            body,
-                            config()
-                        );
+                        let res = await ItemLinkService.cardinality(body)
                         if (res.data) {
                             returnVal = false
                         }
@@ -178,11 +176,7 @@ export const cardinalityCheck = (selectItems, selectedItemFromType) => async (di
         var FROM_ITEM_ID = selectedItem.ITEM_ID
         const body = JSON.stringify({ TO_ITEM_TYPE, FROM_ITEM_ID, LINK_TYPE })
         try {
-            let res = await instance.post(
-                `/item-link/cardinalty/`,
-                body,
-                config()
-            );
+            let res = await ItemLinkService.cardinality(body)
             if (res.data) {
                 return false
             }
@@ -193,11 +187,7 @@ export const cardinalityCheck = (selectItems, selectedItemFromType) => async (di
                 var FROM_ITEM_ID = checkedItem[e].ITEM_ID
                 const body = JSON.stringify({ TO_ITEM_TYPE, FROM_ITEM_ID, LINK_TYPE })
                 try {
-                    let res = await instance.post(
-                        `/item-link/cardinalty/`,
-                        body,
-                        config()
-                    );
+                    let res = await ItemLinkService.cardinality(body)
                     if (res.data) {
                         returnVal = false
                     }
@@ -215,11 +205,7 @@ export const cardinalityCheck = (selectItems, selectedItemFromType) => async (di
                 var TO_ITEM_ID = checkedItem[e].ITEM_ID
                 const body = JSON.stringify({ FROM_ITEM_TYPE, TO_ITEM_ID, LINK_TYPE })
                 try {
-                    let res = await instance.post(
-                        `/item-link/cardinalty/`,
-                        body,
-                        config()
-                    );
+                    let res = await ItemLinkService.cardinality(body)
                     if (res.data) {
                         returnVal = false
                     }
@@ -263,11 +249,7 @@ export const cardinalityCheck = (selectItems, selectedItemFromType) => async (di
         var TO_ITEM_ID = checkedItem[0].ITEM_ID
         var body = JSON.stringify({ FROM_ITEM_TYPE, TO_ITEM_ID, LINK_TYPE })
         try {
-            let res = await instance.post(
-                `/item-link/cardinalty/`,
-                body,
-                config()
-            );
+            let res = await ItemLinkService.cardinality(body)
             if (res.data) {
                 return false
             }
@@ -278,11 +260,7 @@ export const cardinalityCheck = (selectItems, selectedItemFromType) => async (di
         var FROM_ITEM_ID = selectedItem.ITEM_ID
         var body = JSON.stringify({ TO_ITEM_TYPE, FROM_ITEM_ID, LINK_TYPE })
         try {
-            let res = await instance.post(
-                `/item-link/cardinalty/`,
-                body,
-                config()
-            );
+            let res = await ItemLinkService.cardinality(body)
             if (res.data) {
                 returnVal = false
             }
@@ -317,11 +295,7 @@ export const saveLinks = (date, linkType, isOutCheck) => async (dispatch, getSta
                 ROW_ID: rowUuid.replace(/-/g, ""),
             });
             try {
-                let res = await instance.post(
-                    `/item-link/save/`,
-                    body,
-                    config()
-                );
+                let res = await ItemLinkService.save(body)
                 dispatch(loadLinks());
             } catch (err) { }
         });

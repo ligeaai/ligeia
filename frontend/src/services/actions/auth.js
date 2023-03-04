@@ -1,25 +1,17 @@
-import axios from 'axios';
 import { cleanState } from '../reducers/registerFormReducer';
 import { setLoaderFalse } from './loader';
 import {
     CHANGE_PASSWORD_SUCCESS,
-    CHANGE_PASSWORD_FAIL,
     LOGIN_SUCCESS,
     LOGIN_FAIL,
     USER_LOADED_SUCCESS,
     USER_LOADED_FAIL,
-    AUTHENTICATED_SUCCESS,
-    AUTHENTICATED_FAIL,
     GITHUB_AUTH_SUCCESS,
     GITHUB_AUTH_FAIL,
-    PASSWORD_RESET_SUCCESS,
-    PASSWORD_RESET_FAIL,
     PASSWORD_RESET_CONFIRM_SUCCESS,
     PASSWORD_RESET_CONFIRM_FAIL,
     SIGNUP_SUCCESS,
     SIGNUP_FAIL,
-    ACTIVATION_SUCCESS,
-    ACTIVATION_FAIL,
     GOOGLE_AUTH_SUCCESS,
     GOOGLE_AUTH_FAIL,
     FACEBOOK_AUTH_SUCCESS,
@@ -32,17 +24,12 @@ import {
 import { instance } from '../baseApi';
 import { createTreeViewCouch } from './treeview/treeview';
 import history from '../../routers/history';
+import Auth from "../api/auth"
+
 export const loadUser = () => async dispatch => {
     if (localStorage.getItem('token')) {
-        const config = {
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Token ${localStorage.getItem('token')}`,
-                'Accept': 'application/json'
-            }
-        };
         try {
-            const res = await instance.get(`/auth/user-detail`, config);
+            const res = await Auth.get()
             dispatch({
                 type: USER_LOADED_SUCCESS,
                 payload: res.data
@@ -60,18 +47,10 @@ export const loadUser = () => async dispatch => {
     }
 };
 
-
 export const login = (email, password) => async dispatch => {
-    const config = {
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    };
-
     const body = JSON.stringify({ email, password });
-
     try {
-        const res = await instance.post(`/auth/login/`, body, config);
+        const res = await Auth.login(body)
         dispatch({
             type: LOGIN_SUCCESS,
             payload: res.data.token
@@ -97,15 +76,9 @@ export const login = (email, password) => async dispatch => {
 };
 
 export const signup = (email, first_name, last_name, password) => async dispatch => {
-    const config = {
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    };
     const body = JSON.stringify({ email, first_name, last_name, password });
-
     try {
-        const res = await instance.post(`/auth/register/`, body, config);
+        const res = await Auth.register(body)
         dispatch({
             type: SIGNUP_SUCCESS,
             payload: res.data.token
@@ -131,16 +104,9 @@ export const signup = (email, first_name, last_name, password) => async dispatch
 
 
 export const forget_password = (email) => async dispatch => {
-    const config = {
-        headers: {
-            'Content-Type': 'application/json',
-        }
-    };
-    const body = JSON.stringify({
-        email,
-    });
+    const body = JSON.stringify({ email });
     try {
-        await instance.post(`/auth/Forget-password/`, body, config);
+        await Auth.forgetPass(body)
         dispatch({
             type: CHANGE_PASSWORD_SUCCESS
         });
@@ -160,16 +126,9 @@ export const forget_password = (email) => async dispatch => {
 
 
 export const forgot_password_confirm = (token, password) => async dispatch => {
-    const config = {
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    };
-
     const body = JSON.stringify({ password });
     try {
-        await instance.post(`/auth/reset-new-password/${token}/`, body, config);
-
+        await Auth.resetNewPass(token, body)
         dispatch({
             type: PASSWORD_RESET_CONFIRM_SUCCESS
         });
@@ -185,15 +144,8 @@ export const forgot_password_confirm = (token, password) => async dispatch => {
 };
 
 export const logout = () => async dispatch => {
-    let token = localStorage.getItem('token');
-    const config = {
-        headers: {
-            'Content-Type': 'application/json',
-            "Authorization": `token ${token}`,
-        }
-    };
     try {
-        await instance.get(`/auth/logout/`, config);
+        await Auth.logout()
         dispatch({
             type: LOGOUT
         });
@@ -204,19 +156,16 @@ export const logout = () => async dispatch => {
             payload: err.message
         })
         dispatch(setLoaderFalse())
-
     }
 };
 
 
 export const myFacebookLogin = (accesstoken, path) => async (dispatch) => {
     try {
-        let res = await instance.post(
-            `/auth/facebook/${path}`,
-            {
-                access_token: accesstoken,
-            }
-        );
+        const body = {
+            access_token: accesstoken,
+        }
+        let res = await Auth.socialLogin("facebook", path, body)
         await dispatch({ type: FACEBOOK_AUTH_SUCCESS, payload: res.data.key })
         await dispatch(loadUser())
         await dispatch(setLoaderFalse())
@@ -233,12 +182,10 @@ export const myFacebookLogin = (accesstoken, path) => async (dispatch) => {
 
 export const myGoogleLogin = (response, path) => async (dispatch) => {
     try {
-        let res = await instance.post(
-            `/auth/google/${path}`,
-            {
-                access_token: response.accessToken,
-            }
-        );
+        const body = {
+            access_token: response.accessToken,
+        }
+        let res = await Auth.socialLogin("google", path, body)
         await dispatch({ type: GOOGLE_AUTH_SUCCESS, payload: res.data.key })
         await dispatch(loadUser())
         await dispatch(setLoaderFalse())
@@ -263,12 +210,10 @@ export const myGoogleLogin = (response, path) => async (dispatch) => {
 
 export const myGithubLogin = (access_token, path) => async (dispatch) => {
     try {
-        let res = await instance.post(
-            `/auth/github/${path}`,
-            {
-                access_token: access_token,
-            }
-        );
+        const body = {
+            access_token: access_token,
+        }
+        let res = await Auth.socialLogin("github", path, body)
         await dispatch({ type: GITHUB_AUTH_SUCCESS, payload: res.data.key })
         await dispatch(loadUser())
         await dispatch(setLoaderFalse())

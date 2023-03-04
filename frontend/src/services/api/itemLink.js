@@ -26,6 +26,13 @@ const update = (body) => {
     return instance.put("/item-link/update/", body, config());
 };
 
+const save = (body) => {
+    return instance.post("/item-link/save/", body, config());
+};
+
+const cardinality = (body) => {
+    return instance.post("/item-link/cardinality/", body, config());
+};
 
 const elasticSearch = (text, body, cancelToken) => {
     return instance.post(`/item-link/hierarchy/search/`, body, { ...config(), cancelToken: cancelToken.token });
@@ -39,6 +46,8 @@ const ItemLinkService = {
     getItemTags,
     remove,
     update,
+    save,
+    cardinality,
     elasticSearch
 };
 

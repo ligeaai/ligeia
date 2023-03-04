@@ -65,7 +65,6 @@ const _createNewProperty = (type) => {
 }
 
 export const addNewType = () => dispatch => {
-
     const newType = _createNewType()
     dispatch({
         type: SET_ROW_DATAGRID_TYPE,
@@ -80,6 +79,7 @@ export const addNewType = () => dispatch => {
         payload: { ...newType[0], selectedIndex: -2 }
     });
 }
+
 export const checkmandatoryFields = () => {//todo fill the function
     return true
 }
@@ -182,6 +182,7 @@ export const addNewProperty = () => (dispatch, getState) => {
         payload: { [newProperty.ROW_ID]: newProperty }
     })
 }
+
 const _deleteType = async (body) => {
     try {
         let res = await TypeService.deleteType(body);
