@@ -115,15 +115,8 @@ const _newTagSave = async (saveValues, user) => {
     var newUuid = uuidv4()
     const body = JSON.stringify({
         ...saveValues,
-        "LAST_UPDATE_USER": user,
-        // "LAST_UPDT_DATE": new Date(),
-        "TO_ITEM_ID": saveValues.TRANSACTION_PROPERTY,
-        "TO_ITEM_TYPE": saveValues.TRANSACTION_TYPE,
         "END_DATETIME": "9000-01-01",
         "LINK_ID": saveValues.LINK_ID ? saveValues.LINK_ID : newUuid.replace(/-/g, ""),
-        "FROM_ITEM_ID": saveValues.TAG_ID,
-        "FROM_ITEM_TYPE": "TAG_CACHE",
-        "LINK_TYPE": "TAG_ITEM",
     })
     try {
         let res = await TagService.createAndUpdate(body)
