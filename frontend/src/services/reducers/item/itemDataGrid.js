@@ -1,13 +1,13 @@
 import {
     LOAD_TYPE_ROWS_ITEM,
-    LOAD_ITEM_ROWS_ITEM,
     LOAD_ROWS_ITEM,
     ADD_COLUMN_ITEM,
     CLEAN_DATAGRID_ITEM,
     EDIT_DATAGRID_CELL_ITEM,
     CLEAR_COLUMN_ITEM,
     DELETE_COLUMN_ITEM,
-    CLEAN_ITEM_AND_ROWS
+    CLEAN_ITEM_AND_ROWS,
+    UPDATE_COL_ITEM
 } from "../../actions/types"
 import { Checkbox, TextField } from "@mui/material"
 const columns = {
@@ -51,10 +51,9 @@ const columns = {
 }
 const initialState = {
     columns: columns,
+    col: {},
     typeRows: {},
-    itemRows: {},
     rows: {},
-    isChanged: false,
     loading: false
 };
 
@@ -66,27 +65,30 @@ export default function (state = initialState, action) {
         case CLEAN_ITEM_AND_ROWS:
             return {
                 ...state,
-                itemRows: {},
-                rows: {}
+                rows: {},
+                col: {}
+            }
+        case UPDATE_COL_ITEM:
+            return {
+                ...state,
+                col: { ...state.col, [payload.key]: payload.value },
             }
         case DELETE_COLUMN_ITEM:
             delete state.columns[payload];
             Object.keys(state.rows).map((e) => {
                 delete state.rows[e][payload]
             })
-            Object.keys(state.itemRows).map((e) => {
-                delete state.itemRows[e][payload]
-            })
             return {
                 ...state,
                 columns: { ...state.columns },
                 rows: { ...state.rows },
-                itemRows: { ...state.itemRows }
             }
         case CLEAR_COLUMN_ITEM:
             return {
                 ...state,
                 columns: columns,
+                rows: state.typeRows,
+                col: {}
             }
         case EDIT_DATAGRID_CELL_ITEM:
             return {
@@ -96,21 +98,14 @@ export default function (state = initialState, action) {
                         ...state.rows[payload.id], [payload.field]: payload.value
                     }
                 },
-                itemRows: {
-                    ...state.itemRows, [payload.id]: {
-                        ...state.itemRows[payload.id], [payload.field]: payload.value
-                    }
-                },
-                isChanged: true
             }
 
         case CLEAN_DATAGRID_ITEM:
             return {
                 ...state,
                 typeRows: {},
-                itemRows: {},
                 rows: {},
-                isChanged: false,
+                col: {},
             }
         case ADD_COLUMN_ITEM:
             return {
@@ -126,11 +121,6 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 typeRows: payload
-            }
-        case LOAD_ITEM_ROWS_ITEM:
-            return {
-                ...state,
-                itemRows: payload
             }
         default:
             return {

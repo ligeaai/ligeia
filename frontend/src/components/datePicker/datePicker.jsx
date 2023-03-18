@@ -10,14 +10,11 @@ import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 
 const MaterialUIPickers = ({
   time = "9000-10-10",
-  onChangeFunc = () => { },
+  onChangeFunc = () => {},
   errFunc = () => false,
+  ...props
 }) => {
   const [date, setDate] = React.useState(time);
-
-  React.useEffect(() => {
-    setDate(time);
-  }, [time]);
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <DatePicker
@@ -26,11 +23,13 @@ const MaterialUIPickers = ({
           try {
             setDate(newValue.$d);
             onChangeFunc(newValue.$d);
-          } catch { }
+          } catch {}
         }}
         components={{
           OpenPickerIcon: CalendarTodayIcon,
         }}
+        inputFormat="DD/MM/YYYY"
+        {...props}
         renderInput={(params) => (
           <TextField
             {...params}
@@ -62,4 +61,4 @@ const MaterialUIPickers = ({
   );
 };
 
-export default MaterialUIPickers;
+export default React.memo(MaterialUIPickers);

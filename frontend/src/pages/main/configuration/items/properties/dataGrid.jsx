@@ -3,9 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 
 import { DataGridPro } from "@mui/x-data-grid-pro";
 
-import { useIsMount } from "../../../../../hooks/useIsMount";
 import Box from "@mui/material/Box";
-import { grey } from "@mui/material/colors";
 
 import { CustomToolbar, CustomNoRowsOverlay } from "../../../../../components";
 import CustomColumnMenu from "./customColumnMenu";
@@ -13,7 +11,6 @@ import {
   loadItemRowsDataGrid,
   editDataGridCell,
   saveItem,
-  cleanDataGrid,
 } from "../../../../../services/actions/item/itemDataGrid";
 
 import {
@@ -47,9 +44,8 @@ const MyDataGrid = () => {
     dispatch(setSaveFunctonConfirmation(saveItem));
     dispatch(setTitleConfirmation("Are you sure you want to save this ? "));
     dispatch(setBodyConfirmation(`${name ? name : "new"}`));
-
+    dispatch({ type: "CLEAR_COLUMN_ITEM" });
     if (selectedIndex !== -2 && selectedIndex !== -3) {
-      dispatch({ type: "CLEAR_COLUMN_ITEM" });
       dispatch(loadItemRowsDataGrid());
     }
   }, [itemId, name]);
@@ -125,7 +121,7 @@ const MyDataGrid = () => {
         experimentalFeatures={{ rowPinning: true }}
         onCellEditCommit={onCellEditCommit}
         disableSelectionOnClick={true}
-        //disableVirtualization={true}
+        disableVirtualization={true}
       />
     );
   } else {

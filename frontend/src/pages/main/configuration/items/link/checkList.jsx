@@ -2,28 +2,16 @@ import { Divider } from "@mui/material";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import {
-  Box,
-  Grid,
-  TextField,
-  Button,
-  Select,
-  MenuItem,
-  InputLabel,
-} from "@mui/material/";
+import { Box, Grid, Button, Select, MenuItem } from "@mui/material/";
 
-import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-
-import { CheckboxList } from "../../../../../components";
+import { CheckboxList, DatePicker } from "../../../../../components";
 import {
   loadCheckedList,
   saveLinks,
   toggleChecked,
   cardinalityCheck,
 } from "../../../../../services/actions/item/checkedList";
+
 const MyCheckList = (props) => {
   const dispatch = useDispatch();
   const instanttime = new Date();
@@ -51,6 +39,9 @@ const MyCheckList = (props) => {
   const handleToggleFunc = (data) => {
     dispatch(toggleChecked(data));
   };
+  const onChange = (newValue) => {
+    setDate(newValue);
+  };
   return (
     <React.Fragment>
       <Box sx={{ m: 1 }}>
@@ -59,43 +50,8 @@ const MyCheckList = (props) => {
           style={{ cursor: "move", justifyContent: "space-between" }}
           id="draggable-dialog-title"
         >
-          <Grid item>
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <DatePicker
-                value={date}
-                onChange={(newValue) => {
-                  setDate(newValue.$d);
-                }}
-                components={{
-                  OpenPickerIcon: CalendarTodayIcon,
-                }}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    variant="outlined"
-                    sx={{
-                      width: "125px",
-                      border: "none",
-                      ".MuiInputAdornment-root": {
-                        pl: 0,
-                        ml: 0,
-                        button: {
-                          svg: {
-                            fontSize: "medium",
-                          },
-                          color: "text.primary",
-                        },
-                      },
-                      Input: {
-                        color: "text.primary",
-                        fontSize: "12px",
-                        paddingY: "6px",
-                      },
-                    }}
-                  />
-                )}
-              />
-            </LocalizationProvider>
+          <Grid item sx={{ width: "125px" }}>
+            <DatePicker time={instanttime} onChangeFunc={onChange} />
           </Grid>
           <Grid item>
             <Select

@@ -1,19 +1,16 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Grid, Button, TextField } from "@mui/material";
+import { Grid, Button } from "@mui/material";
 
-import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
+import { DatePicker } from "../../../../../components";
 
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { addNewColumn } from "../../../../../services/actions/item/itemDataGrid";
 import { dateFormatter } from "../../../../../services/utils/dateFormatter";
 const DateBreak = ({ props }) => {
   const dispatch = useDispatch();
   const instanttime = new Date();
   const [date, setDate] = React.useState(instanttime);
-  const usedDates = useSelector((state) => state.itemDataGrid.rows.HISTORY);
+  const usedDates = useSelector((state) => state.itemDataGrid.col);
   const checkDateBreaks = (date) => {
     var returnValue = true;
     Object.keys(usedDates).map((e) => {
@@ -27,6 +24,9 @@ const DateBreak = ({ props }) => {
       }
     });
     return returnValue;
+  };
+  const onChange = (newValue) => {
+    setDate(newValue);
   };
   return (
     <Grid container sx={{ alignItems: "center", height: "100%" }}>
@@ -48,44 +48,12 @@ const DateBreak = ({ props }) => {
           >
             Add a Date Break:
           </Button>
-          <Grid item>
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <DatePicker
-                value={date}
-                onChange={(newValue) => {
-                  setDate(newValue.$d);
-                }}
-                disabled={props}
-                components={{
-                  OpenPickerIcon: CalendarTodayIcon,
-                }}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    variant="outlined"
-                    sx={{
-                      width: "125px",
-                      border: "none",
-                      ".MuiInputAdornment-root": {
-                        pl: 0,
-                        ml: 0,
-                        button: {
-                          svg: {
-                            fontSize: "medium",
-                          },
-                          color: "icon.secondary",
-                        },
-                      },
-                      Input: {
-                        color: "text.primary",
-                        fontSize: "12px",
-                        paddingY: "6px",
-                      },
-                    }}
-                  />
-                )}
-              />
-            </LocalizationProvider>
+          <Grid item sx={{ width: "125px" }}>
+            <DatePicker
+              time={instanttime}
+              onChangeFunc={onChange}
+              disabled={props}
+            />
           </Grid>
         </Grid>
       </Grid>
@@ -93,4 +61,4 @@ const DateBreak = ({ props }) => {
   );
 };
 
-export default DateBreak;
+export default React.memo(DateBreak);

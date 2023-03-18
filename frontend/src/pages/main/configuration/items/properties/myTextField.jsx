@@ -18,7 +18,6 @@ import {
 const SingleSelectCell = (params) => {
   const dispatch = useDispatch();
   const CULTURE = useSelector((state) => state.lang.cultur);
-  console.log(params);
   const [values, setValues] = React.useState([
     {
       ROW_ID: "",
@@ -33,9 +32,11 @@ const SingleSelectCell = (params) => {
     async function myFunc() {
       const body = JSON.stringify({ ROW_ID: params.value });
       try {
-        let res = await CodelistService.details(body);
-        setValues(res.data);
-        return Promise.resolve(res.data);
+        if (params.value) {
+          let res = await CodelistService.details(body);
+          setValues(res.data);
+          return Promise.resolve(res.data);
+        }
       } catch (err) {
         return Promise.reject(err);
       }
@@ -123,7 +124,6 @@ const InputCell = (params) => {
 
 export const MyTextField = (params) => {
   if (params.row.PROPERTY_TYPE === "TEXT") {
-    console.log(params.row);
     return (
       <GridEditInputCell
         {...params}

@@ -2,16 +2,12 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ActionMenu } from "../../../../../components";
 
-import {
-  setConfirmation,
-  setExtraBtn,
-} from "../../../../../services/reducers/confirmation";
+import { setConfirmation } from "../../../../../services/reducers/confirmation";
 
 import { selectTreeViewItem } from "../../../../../services/actions/treeview/treeview";
 import { setIsActiveConfirmation } from "../../../../../services/actions/confirmation/historyConfirmation";
 import {
   saveItem,
-  newItem,
   deleteItem,
 } from "../../../../../services/actions/item/itemDataGrid";
 const PropertiesActionMenu = () => {
@@ -24,30 +20,7 @@ const PropertiesActionMenu = () => {
   );
   const dispatch = useDispatch();
   const btnNew = () => {
-    if (isChanged) {
-      dispatch(
-        setConfirmation({
-          title: "Are you sure you want to save this ?",
-          body: `${name ? name : "new"}`,
-          agreefunction: async () => {
-            dispatch(saveItem());
-            dispatch(newItem());
-            dispatch(setIsActiveConfirmation(false));
-          },
-        })
-      );
-      dispatch(
-        setExtraBtn({
-          extraBtnText: "Don't save go",
-          extrafunction: () => {
-            dispatch(newItem());
-            dispatch(setIsActiveConfirmation(false));
-          },
-        })
-      );
-    } else {
-      dispatch(newItem());
-    }
+    dispatch(selectTreeViewItem(-2, "new", 3));
   };
   const save = () => {
     if (isChanged) {

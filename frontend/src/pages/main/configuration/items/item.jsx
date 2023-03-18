@@ -56,7 +56,6 @@ const Menu = () => {
         PROPERTY_STRING: text,
         LAYER_NAME: "KNOC",
       });
-      console.log(body);
       dispatch(filterMenu(text, ItemService.elasticSearch, body));
     }
   }, [text]);
