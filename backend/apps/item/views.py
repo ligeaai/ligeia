@@ -1,18 +1,19 @@
+import json
 import time
 from django.shortcuts import render
 from rest_framework import generics, permissions, status
 from .models import item
 from .serializers import (
     ItemSaveSerializer,
-    ItemCustomSaveSerializer,
     ItemDetailsSerializer,
+    ItemSpacialSaveSerializer,
 )
 from rest_framework.response import Response
 from services.parsers.addData.type import typeAddData
 import uuid
 from apps.item_property.serializers import (
-    ItemPropertyCustomSaveSerializer,
     ItemPropertyNameSerializer,
+    ItemPropertySpacialSaveSerializer,
 )
 from django.db.models import Max
 from apps.item_property.models import item_property
@@ -26,6 +27,8 @@ from apps.item_link.serializers import ItemLinkDetailsSerializer
 from apps.type_link.serializers import TypeLinkDetailsSerializer
 from services.logging.Handlers import KafkaLogger
 from utils.utils import redisCaching as Red
+from django.db import transaction
+from django.db.models import Max, Subquery, OuterRef
 
 logger = KafkaLogger()
 
@@ -35,7 +38,6 @@ class ItemSaveView(generics.CreateAPIView):
 
     def post(self, request, *args, **kwargs):
         validate_model_not_null(request.data, "item", request)
-        serializer = ItemCustomSaveSerializer(data=request.data)
         serializer.is_valid()
         data = serializer.create(request.data)
         message = "Succsesfull created for item"
@@ -49,42 +51,35 @@ class ItemScriptSaveView(generics.CreateAPIView):
     permission_classes = [permissions.AllowAny]
 
     def post(self, request, *args, **kwargs):
-        item_id = request.data.get("ITEM").get("ITEM_ID")
-        cache_key = str(request.user) + item_id
-        #    queryset = item.objects.filter(ITEM_ID = item_id).delete()
-        #    queryset = item_property.objects.filter(ITEM_ID = item_id).delete()
-        #    item_data = request.data['ITEM']
-        #    item_data['START_DATETIME'] = request.data.get('COLUMNS')[0].get('START_TIME')
-        #    validate_model_not_null(item_data,"item",request)
-        #    serializer = ItemCustomSaveSerializer(data = item_data)
-        #    serializer.is_valid()
-        #    serializer.save(item_data)
-        serializer_prop = ItemPropertyCustomSaveSerializer(data=request.data)
-        serializer_prop.is_valid()
-        serializer_prop.save(request)
-        Red.delete(cache_key)
-        return Response(request.data, status=status.HTTP_201_CREATED)
+        index = 0
+        with transaction.atomic():
+            serializer = ItemSpacialSaveSerializer(data=request.data["ITEM"])
+            serializer.is_valid(raise_exception=True)
+            itemId = request.data["ITEM"].get("ITEM_ID")
+            items = serializer.save(request)
+            try:
+                for property_data in request.data["PROPERTYS"]:
+                    property_data["ITEM_ID"] = itemId
+                    property_data["ITEM_TYPE"] = request.data["ITEM"].get("ITEM_TYPE")
+                    property_data["LAST_UPDT_USER"] = str(request.user)
+                    property_data["LAYER_NAME"] = request.data["ITEM"].get("LAYER_NAME")
+                    property_serializer = ItemPropertySpacialSaveSerializer(
+                        data=property_data
+                    )
+                    property_serializer.is_valid(raise_exception=True)
+                    property_serializer.save(property_data)
 
+                    if request.data.get("DELETED"):
+                        item_property.objects.filter(
+                            ITEM_ID=itemId,
+                            START_DATETIME__in=request.data.get("DELETED"),
+                        ).delete()
+                Red.delete(str(request.user) + request.data["ITEM"].get("ITEM_TYPE"))
+            except Exception as e:
+                transaction.set_rollback(True)
+                return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
-# Create your views here.
-# class ItemScriptSaveView(generics.CreateAPIView):
-#     permission_classes = [permissions.AllowAny]
-
-#     def post(self, request, *args, **kwargs):
-#         item_data = request.data['ITEM']
-#         validate_model_not_null(item_data,"item",request)
-#         serializer = ItemCustomSaveSerializer(data = item_data)
-#         serializer.is_valid()
-#         serializer.save(item_data)
-#         serializer_prop = ItemPropertyCustomSaveSerializer(data = request.data)
-#         prop_item = request.data.get("PROPERTY")
-#         for keys,value in prop_item.items():
-#             validate_model_not_null(value,"item_property",request)
-#         serializer_prop.is_valid()
-#         serializer_prop.save(request.data)
-#         message = "Succsesfull created for item and property"
-#         logger.info(message,request = request)
-#         return Response(message,status=status.HTTP_201_CREATED)
+            return Response({"success": "test"}, status=status.HTTP_200_OK)
 
 
 class ItemView(generics.ListAPIView):
@@ -109,18 +104,21 @@ class ItemDetailsView(generics.ListAPIView):
             Response(cache_data, status=status.HTTP_200_OK)
         items = item.objects.filter(ITEM_TYPE=item_type)
         item_ids = [item.ITEM_ID for item in items]
-
-        property_names = (
+        latest_start_times = (
             item_property.objects.filter(
                 ITEM_ID__in=item_ids,
                 PROPERTY_TYPE="NAME",
             )
-            .values("ITEM_ID", "PROPERTY_STRING", "ROW_ID", "ITEM_TYPE")
-            .annotate(last_updated=Max("START_DATETIME"))
-            .order_by("PROPERTY_STRING", "-last_updated")
+            .values("ITEM_ID")
+            .annotate(latest_start_time=Max("START_DATETIME"))
         )
+        property_names = item_property.objects.filter(
+            ITEM_ID__in=Subquery(latest_start_times.values("ITEM_ID")),
+            PROPERTY_TYPE="NAME",
+            START_DATETIME__in=Subquery(latest_start_times.values("latest_start_time")),
+        ).order_by("PROPERTY_STRING")
         serializer = ItemPropertyNameSerializer(property_names, many=True)
-        Red.set(cache_key, (serializer.data))
+        Red.set(cache_key, serializer.data)
         message = f"{request.user} listed the {item_type} items"
         logger.info(message, request)
         return Response(serializer.data, status=status.HTTP_200_OK)

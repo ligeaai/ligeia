@@ -3,6 +3,7 @@ import uuid
 from rest_framework import serializers
 from datetime import datetime
 from .models import item
+from utils.models_utils import validate_model_not_null
 
 
 class ItemSaveSerializer(serializers.Serializer):
@@ -10,35 +11,29 @@ class ItemSaveSerializer(serializers.Serializer):
         model = item
         fields = "__all__"
 
-    # def save(self, validated_data):
-    #         print('GİRDİ')
-    #         # validated_data['VERSION'] = uuid.uuid4().hex
-    #         # validated_data['ROW_ID'] = uuid.uuid4().hex
-    #
-    #         return True
-
-
-class ItemCustomSaveSerializer(serializers.Serializer):
-    def save(self, validated_data):
-        # ITEM_ID OR ROW_ID
-        queryset = item.objects.filter(ITEM_ID = validated_data['ITEM_ID'])
-        if queryset:
-            queryset.update(**validated_data)
-            return "Update ıtem"
-        else:
-            validated_data['END_DATETIME'] = '9000-01-01'
-            validated_data['LAST_UPDT_DATE'] = str(datetime.now()).split(" ")[0]
-            validated_data['VERSION'] = uuid.uuid4().hex
-            # validated_data['ROW_ID'] = uuid.uuid4().hex
-            validated_data['UPDATE_SOURCE'] = "x"
-            validated_data['CREATE_SOURCE'] = "x"
-            items = item.objects.create(**validated_data)
-            items.save()
-
-            return "Created Item"
-
 
 class ItemDetailsSerializer(serializers.ModelSerializer):
     class Meta:
         model = item
-        fields =["ITEM_ID","ITEM_TYPE","ROW_ID"]
+        fields = ["ITEM_ID"]
+
+
+class ItemSpacialSaveSerializer(serializers.Serializer):
+    def save(self, validated_data):
+        message = " Succsesful"
+        items = validated_data.data.get("ITEM")
+        itemId = items.get("ITEM_ID")
+        isAvailable = item.objects.filter(ITEM_ID=itemId)
+        if isAvailable:
+            isAvailable.update(**items)
+            message = "Update" + message
+        else:
+            items["START_DATETIME"] = datetime.now().strftime("%Y-%m-%d")
+            items["LAST_UPDT_USER"] = str(validated_data.user)
+            validate_model_not_null(items, "ITEM", validated_data)
+            items["VERSION"] = uuid.uuid4().hex
+            property = item.objects.create(**items)
+            property.save()
+            message = "Save" + message
+
+        return message
