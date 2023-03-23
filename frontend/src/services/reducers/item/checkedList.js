@@ -4,13 +4,13 @@ import {
     CLEAN_COMPANY_CHECKED_LIST
 
 } from "../../actions/types"
+
 const initialState = {
     listItem: [],
     checkedItems: []
 };
 
 export default function (state = initialState, action) {
-
     const { type, payload } = action;
 
     switch (type) {

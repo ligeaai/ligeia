@@ -30,7 +30,6 @@ export default function CheckboxList(props) {
       sx={{
         width: "100%",
         minWidth: 360,
-
         height: "500px",
         bgcolor: "background.main",
       }}

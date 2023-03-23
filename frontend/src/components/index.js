@@ -29,7 +29,6 @@ import MyNavigator from "./drawer/myNavigator";
 import PropLinkTabs from "./navigationComp/propLinkTabs"
 import SocialButton from "./buttons/socialButton";
 import MyTextField from "./textfield/textfield";
-import TreeView from "./navigationComp/treeView";
 import IndentSelect from "./select/indentSelect"
 import { ItemSperatorLine, ItemSperatorLineXL, Items } from "./nestedMenu/nestedItems";
 import SearchBar from "./searchBar/searchBar";
@@ -43,11 +42,8 @@ import { TreeMenu } from "./treeMenu/treeMenu"
 import TreeMenuItems from "./treeMenu/treeMenuGenerator"
 
 
-
-
-
 export {
     ActionMenu, Breadcrumb, Cards, CheckboxList, ColorTextfield, CollapsableMenu, Confirmation, ComponentError, ComponentErrorBody, CustomNoRowsOverlay, CustomToolbar, MyDivider, DatePicker, DataGrid, Drawer, ErrorBoundary,
-    ErrorMessage, Highchart, InputGenerator, Loadable, Loading, LoadingComponent, MyBox, MyCheckBox, MyNavigator, MyNumberTextField, MyTextField, MyMultilineTextField, PropLinkTabs, SocialButton, TreeView,
+    ErrorMessage, Highchart, InputGenerator, Loadable, Loading, LoadingComponent, MyBox, MyCheckBox, MyNavigator, MyNumberTextField, MyTextField, MyMultilineTextField, PropLinkTabs, SocialButton,
     IndentSelect, ItemSperatorLine, ItemSperatorLineXL, Items, SearchBar, SearchBarMobile, Select, TreeMenu, MainPageSkeleton, MyDialog, MyTabs, Stepper, TreeMenuItems, HistoryConfirmation
 }

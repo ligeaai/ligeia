@@ -10,6 +10,7 @@ import {
     UPDATE_COL_ITEM
 } from "../../actions/types"
 import { Checkbox, TextField } from "@mui/material"
+
 const columns = {
     "PROPERTY_NAME": {
         field: "PROPERTY_NAME",
@@ -49,6 +50,7 @@ const columns = {
         cellClassName: "super-app-theme--cell",
     }
 }
+
 const initialState = {
     columns: columns,
     col: {},
@@ -58,7 +60,6 @@ const initialState = {
 };
 
 export default function (state = initialState, action) {
-
     const { type, payload } = action;
 
     switch (type) {
@@ -99,7 +100,6 @@ export default function (state = initialState, action) {
                     }
                 },
             }
-
         case CLEAN_DATAGRID_ITEM:
             return {
                 ...state,

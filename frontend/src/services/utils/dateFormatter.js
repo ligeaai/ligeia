@@ -1,3 +1,8 @@
+function addZero(i) {
+    if (i < 10) { i = "0" + i }
+    return i;
+}
+
 export function dateFormatter(date) {
     var d = date.getDate();
     var m = date.getMonth();
@@ -29,11 +34,6 @@ export function dateFormatterDMY(date) {
     return newdate
 }
 
-function addZero(i) {
-    if (i < 10) { i = "0" + i }
-    return i;
-}
-
 export function dateFormatDDMMYYHHMM(date) {
     var d = addZero(date.getDate());
     var m = date.getMonth();
@@ -49,7 +49,6 @@ export function dateFormatDDMMYYHHMM(date) {
 export function dateFormatDDMMYYHHMMSS(date) {
     var s = addZero(date.getSeconds());
     const dateDDMMYYHHMM = dateFormatDDMMYYHHMM(date);
-    console.log(s);
     var newdate = dateDDMMYYHHMM + ":" + s;
     return newdate
 }

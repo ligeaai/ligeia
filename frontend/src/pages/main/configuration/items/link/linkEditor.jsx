@@ -4,9 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
-import IconButton from "@mui/material/IconButton";
-
-import DeleteIcon from "@mui/icons-material/Delete";
 
 import { useIsMount } from "../../../../../hooks/useIsMount";
 import { setIsActiveLink } from "../../../../../services/actions/item/itemLinkEditor";
@@ -17,34 +14,18 @@ import {
   setTitleConfirmation,
 } from "../../../../../services/actions/confirmation/historyConfirmation";
 
-import {
-  loadLinks,
-  updateItemLink,
-  deleteItemLink,
-  saveItemLink,
-} from "../../../../../services/actions/item/itemLinkEditor";
-import DatePicker from "../../../../../components/datePicker/datePicker";
-import Dialog from "./dialog";
-import { TextField } from "@mui/material";
+import { saveItemLink } from "../../../../../services/actions/item/itemLinkEditor";
 
+import ItemLinks from "./itemLinks";
 const LinkEditor = () => {
   const isMount = useIsMount();
   const dispatch = useDispatch();
   const selectedIndex = useSelector(
     (state) => state.treeview.selectedItem.selectedIndex
   );
-
-  const res = useSelector((state) => state.itemLinkEditor.linkEditorSchema);
-  const resFromType = useSelector(
-    (state) => state.itemLinkEditor.linkEditorSchemaFromType
+  const name = useSelector(
+    (state) => state.treeview.selectedItem.PROPERTY_STRING
   );
-  const links = useSelector((state) => state.itemLinkEditor.links);
-  const changedLinks = useSelector(
-    (state) => state.itemLinkEditor.changedLinks
-  );
-  const isFullScreen = useSelector((state) => state.fullScreen.isFullScreen);
-  const selectedItem = useSelector((state) => state.treeview.selectedItem);
-  const name = useSelector((state) => state.treeview.selectedItem.NAME);
   React.useEffect(() => {
     dispatch(setIsActiveLink(true));
     return () => {
@@ -57,157 +38,19 @@ const LinkEditor = () => {
       dispatch(setTitleConfirmation("Are you sure you want to save this ? "));
       dispatch(setBodyConfirmation(`${name ? name : "new"}`));
     }
-    if (selectedIndex !== -2 && selectedIndex !== -3) {
-      dispatch(loadLinks());
-    }
   }, [selectedIndex]);
-  if (res && selectedItem.PROPERTY_STRING && links) {
+  if (name) {
     return (
-      <Grid container>
+      <Grid container sx={{ minHeight: "100%", height: "min-content" }}>
         <Grid item xs={12} md={6}>
           <Box sx={{ width: "100%", textAlign: "center", fontWeight: "bold" }}>
             In
           </Box>
-          {Object.keys(res).map((e, i) => (
-            <Box key={i}>
-              <Divider sx={{ backgroundColor: "primary.main" }} />
-              <Box sx={{ p: 1 }}>
-                <Box sx={{ mb: 1, fontSize: "14px", fontWeight: "bold" }}>
-                  {res[e].TYPE_LABEL}
-                </Box>
-                <Box>
-                  <Dialog data={res[e]} dataSelectItemPath="data" />
-                </Box>
-              </Box>
-              <Grid container spacing={1} sx={{ p: 1, pt: 0 }}>
-                {Object.keys(links).map((a, key) => {
-                  if (links[a].TO_ITEM_TYPE === selectedItem.ITEM_TYPE) {
-                    if (res[e].TYPE === links[a].LINK_TYPE) {
-                      const onChangeStartDateTime = (newDate) => {
-                        dispatch(
-                          updateItemLink(
-                            links[a].LINK_ID,
-                            "START_DATETIME",
-                            newDate
-                          )
-                        );
-                      };
-                      const onChangeEndDateTime = (newDate) => {
-                        dispatch(
-                          updateItemLink(
-                            links[a].LINK_ID,
-                            "END_DATETIME",
-                            newDate
-                          )
-                        );
-                      };
-                      return (
-                        <Grid item key={key}>
-                          <Grid
-                            container
-                            sx={{
-                              maxWidth: "278px",
-                              borderRadius: "5px",
-                              boxShadow: 2,
-                            }}
-                          >
-                            <Grid
-                              item
-                              xs={12}
-                              sx={{
-                                width: "278px",
-                                borderBottom: "1px solid white",
-                              }}
-                            >
-                              <IconButton
-                                onClick={async () => {
-                                  const deleteFunc = async () => {
-                                    dispatch(deleteItemLink(links[a].LINK_ID));
-                                  };
-                                  dispatch({
-                                    type: "confirmation/setConfirmation",
-                                    payload: {
-                                      title: "Are you sure you want to delete?",
-                                      body: `${links[a].FROM_ITEM_NAME} it will be deleted`,
-                                      agreefunction: deleteFunc,
-                                    },
-                                  });
-                                }}
-                              >
-                                <DeleteIcon
-                                  sx={{ color: "text.primary" }}
-                                  fontSize="small"
-                                />
-                              </IconButton>
-                            </Grid>
-                            <Grid
-                              item
-                              xs={6}
-                              sx={{ borderRight: "1px solid white", p: 1 }}
-                            >
-                              <Grid container sx={{ fontSize: "14px" }}>
-                                <Grid item xs={12}>
-                                  {links[a].FROM_ITEM_TYPE}
-                                </Grid>
-                                <Grid item xs={12} sx={{ fontSize: "12px" }}>
-                                  {links[a].FROM_ITEM_NAME}
-                                </Grid>
-                              </Grid>
-                            </Grid>
-                            <Grid item xs={6} sx={{ p: 1 }}>
-                              <Grid
-                                container
-                                sx={{ fontSize: "12px", color: "text.primary" }}
-                              >
-                                <Grid
-                                  item
-                                  xs={12}
-                                  sx={{
-                                    "& div": {
-                                      "& div": {
-                                        fieldset: {
-                                          borderColor: "white",
-                                        },
-                                      },
-                                    },
-                                  }}
-                                >
-                                  Start:
-                                  <DatePicker
-                                    time={new Date(links[a].START_DATETIME)}
-                                    onChangeFunc={onChangeStartDateTime}
-                                  />
-                                </Grid>
-                                <Grid
-                                  item
-                                  xs={12}
-                                  sx={{
-                                    "& div": {
-                                      "& div": {
-                                        fieldset: {
-                                          borderColor: "white !important",
-                                        },
-                                      },
-                                    },
-                                  }}
-                                >
-                                  End:
-                                  <DatePicker
-                                    time={new Date(links[a].END_DATETIME)}
-                                    onChangeFunc={onChangeEndDateTime}
-                                  />
-                                </Grid>
-                              </Grid>
-                            </Grid>
-                          </Grid>
-                        </Grid>
-                      );
-                    }
-                  }
-                })}
-              </Grid>
-            </Box>
-          ))}
+          <ItemLinks
+            itemType={"linkEditorSchema"}
+            connection={"TO_ITEM_ID"}
+            type={"TO_TYPE"}
+          />
         </Grid>
         <Grid item sx={{ position: "relative" }}>
           <Divider
@@ -215,12 +58,7 @@ const LinkEditor = () => {
               position: "absolute",
               left: "50%",
               borderWidth: "0.1px",
-              minHeight: isFullScreen
-                ? "calc(500px - 60px - 51px )"
-                : "calc(500px - 50px - 36px - 33px)",
-              height: isFullScreen
-                ? "calc(100vh - 60px - 51px )"
-                : "calc(100vh - 60px - 50px - 36px - 33px)",
+              height: "100%",
               backgroundColor: "text.primary",
             }}
           />
@@ -229,146 +67,11 @@ const LinkEditor = () => {
           <Box sx={{ width: "100%", textAlign: "center", fontWeight: "bold" }}>
             Out
           </Box>
-          {Object.keys(resFromType).map((e, i) => (
-            <Box key={i}>
-              <Divider sx={{ backgroundColor: "primary.main" }} />
-              <Box sx={{ p: 1 }}>
-                <Box sx={{ mb: 1, fontSize: "14px", fontWeight: "bold" }}>
-                  {resFromType[e].TYPE_LABEL}
-                </Box>
-                <Box>
-                  <Dialog
-                    data={resFromType[e]}
-                    dataSelectItemPath="dataFromType"
-                  />
-                </Box>
-              </Box>
-              <Grid container spacing={1} sx={{ p: 1 }}>
-                {Object.keys(links).map((a, key) => {
-                  if (links[a].FROM_ITEM_TYPE === selectedItem.ITEM_TYPE) {
-                    if (resFromType[e].TYPE === links[a].LINK_TYPE) {
-                      const onChangeStartDateTime = (newDate) => {
-                        dispatch(
-                          updateItemLink(
-                            links[a].LINK_ID,
-                            "START_DATETIME",
-                            newDate
-                          )
-                        );
-                      };
-                      const onChangeEndDateTime = (newDate) => {
-                        dispatch(
-                          updateItemLink(
-                            links[a].LINK_ID,
-                            "END_DATETIME",
-                            newDate
-                          )
-                        );
-                      };
-                      return (
-                        <Grid item key={key}>
-                          <Grid
-                            container
-                            sx={{
-                              maxWidth: "278px",
-                              borderRadius: "5px",
-                              boxShadow: 2,
-                            }}
-                          >
-                            <Grid
-                              item
-                              xs={12}
-                              sx={{
-                                width: "278px",
-                                borderBottom: "1px solid white",
-                              }}
-                            >
-                              <IconButton
-                                onClick={async () => {
-                                  const deleteFunc = async () => {
-                                    dispatch(deleteItemLink(links[a].LINK_ID));
-                                  };
-                                  dispatch({
-                                    type: "confirmation/setConfirmation",
-                                    payload: {
-                                      title: "Are you sure you want to delete?",
-                                      body: `${links[a].FROM_ITEM_NAME} it will be deleted`,
-                                      agreefunction: deleteFunc,
-                                    },
-                                  });
-                                }}
-                              >
-                                <DeleteIcon
-                                  sx={{ color: "text.primary" }}
-                                  fontSize="small"
-                                />
-                              </IconButton>
-                            </Grid>
-                            <Grid
-                              item
-                              xs={6}
-                              sx={{ borderRight: "1px solid white", p: 1 }}
-                            >
-                              <Grid container sx={{ fontSize: "14px" }}>
-                                <Grid item xs={12}>
-                                  {links[a].TO_ITEM_TYPE}
-                                </Grid>
-                                <Grid item xs={12} sx={{ fontSize: "12px" }}>
-                                  {links[a].TO_ITEM_NAME}
-                                </Grid>
-                              </Grid>
-                            </Grid>
-                            <Grid item xs={6} sx={{ p: 1 }}>
-                              <Grid container sx={{ fontSize: "12px" }}>
-                                <Grid
-                                  item
-                                  xs={12}
-                                  sx={{
-                                    "& div": {
-                                      "& div": {
-                                        fieldset: {
-                                          borderColor: "white",
-                                        },
-                                      },
-                                    },
-                                  }}
-                                >
-                                  Start:
-                                  <DatePicker
-                                    time={new Date(links[a].START_DATETIME)}
-                                    onChangeFunc={onChangeStartDateTime}
-                                  />
-                                </Grid>
-                                <Grid
-                                  item
-                                  xs={12}
-                                  sx={{
-                                    "& div": {
-                                      "& div": {
-                                        fieldset: {
-                                          borderColor: "white !important",
-                                        },
-                                      },
-                                    },
-                                  }}
-                                >
-                                  End:
-                                  <DatePicker
-                                    time={new Date(links[a].END_DATETIME)}
-                                    onChangeFunc={onChangeEndDateTime}
-                                  />
-                                </Grid>
-                              </Grid>
-                            </Grid>
-                          </Grid>
-                        </Grid>
-                      );
-                    }
-                  }
-                })}
-              </Grid>
-            </Box>
-          ))}
+          <ItemLinks
+            itemType={"linkEditorSchemaFromType"}
+            connection={"FROM_ITEM_ID"}
+            type={"FROM_TYPE"}
+          />
         </Grid>
       </Grid>
     );

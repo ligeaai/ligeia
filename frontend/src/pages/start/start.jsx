@@ -1,7 +1,5 @@
 import React from "react";
-import { Box, Grid, Typography } from "@mui/material";
-
-import StartComponent from "../../layout/start/start";
+import { Grid, Typography } from "@mui/material";
 
 const Start = () => {
   return (

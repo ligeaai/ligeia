@@ -24,12 +24,11 @@ function PaperComponent(props) {
 
 function SimpleDialog(props) {
   const dispatch = useDispatch();
-  const { onClose, open, data, dataSelectItemPath } = props;
+  const { onClose, open } = props;
   const handleClose = () => {
     onClose();
     dispatch(cleanCompanyCheckedList());
   };
-
   return (
     <Dialog
       onClose={handleClose}
@@ -69,19 +68,10 @@ export default function SimpleDialogDemo(props) {
 
   return (
     <div>
-
       <Button variant="outlined" onClick={handleClickOpen}>
-        <Typography sx={{ color: "primary.main" }}>
-          New
-        </Typography>
+        <Typography sx={{ color: "primary.main" }}>New</Typography>
       </Button>
-
-      <SimpleDialog
-        open={open}
-        onClose={handleClose}
-        data={props.data}
-        dataSelectItemPath={props.dataSelectItemPath}
-      />
+      <SimpleDialog open={open} onClose={handleClose} {...props} />
     </div>
   );
 }

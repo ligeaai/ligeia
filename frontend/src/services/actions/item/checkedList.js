@@ -5,68 +5,30 @@ import {
 } from "../types"
 import axios from "axios";
 
-import { loadLinks } from "./itemLinkEditor";
-
 import { dateFormatter } from "../../utils/dateFormatter"
-import ItemService from "../../api/item";
 import ItemLinkService from "../../api/itemLink";
+import { uuidv4 } from "../../utils/uuidGenerator"
+
 let cancelToken;
-let cancelDetails;
-export const loadCheckedList = (type, inOut) => async (dispatch, getState) => {
+export const loadCheckedList = (itemType, type) => async (dispatch, getState) => {
     if (cancelToken) {
         cancelToken.cancel()
     }
     cancelToken = axios.CancelToken.source();
-    let res;
     try {
-        const text = inOut === "data" ? type.FROM_TYPE : type.TO_TYPE
-        console.log(text);
-        res = await ItemService.getAll(null, cancelToken, text)
-        console.log(res);
         const selectedItemId = getState().treeview.selectedItem.ITEM_ID;
-        try {
-            if (cancelDetails) {
-                cancelDetails.cancel()
-            }
-            cancelDetails = axios.CancelToken.source();
-            let itemLinkRes = await ItemLinkService.getItemLink({ ID: selectedItemId }, cancelDetails)
-            var data = [];
-            res.data.map((e) => {
-                var temp = true;
-                itemLinkRes.data.TO_ITEM_ID.map((a) => {
-                    if (e.ITEM_ID === a.FROM_ITEM_ID) {
-                        if (type.TYPE === a.LINK_TYPE) {
-                            temp = false;
-                        }
-                    }
-                });
-                itemLinkRes.data.FROM_ITEM_ID.map((a) => {
-                    if (e.ITEM_ID === a.TO_ITEM_ID) {
-                        if (type.TYPE === a.LINK_TYPE) {
-                            temp = false;
-                        }
-                    }
-                });
-                if (temp) {
-                    data.push(e);
-                }
-            });
-            dispatch({
-                type: LOAD_CHECKLIST,
-                payload: data
-            })
-        } catch (err) {
-            var data = [];
-            res.data.map((e) => {
-                data.push(e);
-            });
-            dispatch({
-                type: LOAD_CHECKLIST,
-                payload: data
-            })
-        }
-    } catch {
-
+        const body = JSON.stringify({
+            [type === "TO_TYPE" ? "FROM_ITEM_ID" : "TO_ITEM_ID"]: selectedItemId,
+            [type === "TO_TYPE" ? "TO_ITEM_TYPE" : "FROM_ITEM_TYPE"]: itemType,
+            LAYER_NAME: "KNOC"
+        })
+        let res = await ItemLinkService.getChekListItems(body, cancelToken)
+        dispatch({
+            type: LOAD_CHECKLIST,
+            payload: res.data
+        })
+    } catch (err) {
+        console.log(err);
     }
 }
 
@@ -77,240 +39,50 @@ export const toggleChecked = (data) => async (dispatch) => {
     })
 }
 
-function _uuidv4() {
-    return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(
-        /[018]/g,
-        (c) =>
-            (
-                c ^
-                (crypto.getRandomValues(new Uint8Array(1))[0] &
-                    (15 >> (c / 4)))
-            ).toString(16)
-    );
-}
-
-export const cardinalityCheck = (selectItems, selectedItemFromType) => async (dispatch, getState) => {
-    const selectedItem = getState().treeview.selectedItem
-    const links = getState().itemLinkEditor.links
-    const checkedItemLength = getState().checkedList.checkedItems.length
-    const checkedItem = getState().checkedList.checkedItems
-    var isOut = false
-    if (selectItems[0].TO_TYPE === selectedItem.ITEM_TYPE) {
-        isOut = true
-    }
-    var mySelectItem = []
-    if (isOut) {
-        selectItems.map(e => {
-            if (e.FROM_TYPE === selectedItemFromType) {
-                mySelectItem = e
-            }
-        })
-    }
-    else {
-        selectItems.map(e => {
-            if (e.TO_TYPE === selectedItemFromType) {
-                mySelectItem = e
-            }
-        })
-    }
-    if (mySelectItem.TO_CARDINALITY === "*" && mySelectItem.FROM_CARDINALITY === "*")
-        return true
-
-    //------ in
-    if (isOut && mySelectItem.TO_CARDINALITY === "1" && mySelectItem.FROM_CARDINALITY === "*") {
-        let returnVal = true
-        if (parseInt(checkedItemLength) > 1) {
-            return false
-        }
-        Object.keys(links).map(e => {
-            if (links[e].FROM_ITEM_TYPE === mySelectItem.FROM_TYPE) {
-                if (links[e].LINK_TYPE === mySelectItem.TYPE) {
-                    returnVal = false
-                }
-
-            }
-        })
-        return returnVal
-    }
-    if (isOut && mySelectItem.TO_CARDINALITY === "*" && mySelectItem.FROM_CARDINALITY === "1") {
-        try {
-            if (parseInt(checkedItemLength) > 1) {
-                return false
-            }
-            const TO_ITEM_TYPE = mySelectItem.TO_TYPE
-            var returnVal = true
-            await Promise.all(
-                Object.keys(checkedItem).map(async e => {
-                    var FROM_ITEM_ID = checkedItem[e].ITEM_ID
-                    const LINK_TYPE = mySelectItem.TYPE
-                    const body = JSON.stringify({ TO_ITEM_TYPE, FROM_ITEM_ID, LINK_TYPE })
-                    try {
-                        let res = await ItemLinkService.cardinality(body)
-                        if (res.data) {
-                            returnVal = false
-                        }
-                    } catch { }
-                }))
-            return returnVal
-        } catch (err) {
-            console.log(err);
-        }
-    }
-    if (isOut && mySelectItem.TO_CARDINALITY === "1" && mySelectItem.FROM_CARDINALITY === "1") {
-        if (parseInt(checkedItemLength) > 1) {
-            return false
-        }
-        var returnVal = true
-        Object.keys(links).map(e => {
-            if (links[e].FROM_ITEM_TYPE === mySelectItem.FROM_TYPE) {
-                if (links[e].LINK_TYPE === mySelectItem.TYPE) {
-                    returnVal = false
-                }
-            }
-        })
-        if (!returnVal) {
-            return returnVal
-        }
-        const LINK_TYPE = mySelectItem.TYPE
-        const TO_ITEM_TYPE = mySelectItem.FROM_TYPE
-        var FROM_ITEM_ID = selectedItem.ITEM_ID
-        const body = JSON.stringify({ TO_ITEM_TYPE, FROM_ITEM_ID, LINK_TYPE })
-        try {
-            let res = await ItemLinkService.cardinality(body)
-            if (res.data) {
-                return false
-            }
-        } catch { }
-        await Promise.all(
-            Object.keys(checkedItem).map(async e => {
-                const TO_ITEM_TYPE = mySelectItem.TO_TYPE
-                var FROM_ITEM_ID = checkedItem[e].ITEM_ID
-                const body = JSON.stringify({ TO_ITEM_TYPE, FROM_ITEM_ID, LINK_TYPE })
-                try {
-                    let res = await ItemLinkService.cardinality(body)
-                    if (res.data) {
-                        returnVal = false
-                    }
-                } catch { }
-            }))
-        return returnVal
-    }
-    //---------out
-    if (!isOut && mySelectItem.TO_CARDINALITY === "*" && mySelectItem.FROM_CARDINALITY === "1") {
-        var returnVal = true
-        await Promise.all(
-            Object.keys(checkedItem).map(async e => {
-                const LINK_TYPE = mySelectItem.TYPE
-                const FROM_ITEM_TYPE = mySelectItem.FROM_TYPE
-                var TO_ITEM_ID = checkedItem[e].ITEM_ID
-                const body = JSON.stringify({ FROM_ITEM_TYPE, TO_ITEM_ID, LINK_TYPE })
-                try {
-                    let res = await ItemLinkService.cardinality(body)
-                    if (res.data) {
-                        returnVal = false
-                    }
-                } catch { }
-            }))
-        return returnVal
-
-    }
-    if (!isOut && mySelectItem.TO_CARDINALITY === "1" && mySelectItem.FROM_CARDINALITY === "*") {
-        let returnVal = true
-        if (parseInt(checkedItemLength) > 1) {
-            return false
-        }
-        Object.keys(links).map(e => {
-            if (links[e].TO_ITEM_TYPE === mySelectItem.TO_TYPE) {
-                if (links[e].LINK_TYPE === mySelectItem.TYPE) {
-                    returnVal = false
-                }
-            }
-        })
-        return returnVal
-    }
-    if (!isOut && mySelectItem.TO_CARDINALITY === "1" && mySelectItem.FROM_CARDINALITY === "1") {
-        if (parseInt(checkedItemLength) > 1) {
-            return false
-        }
-        Object.keys(links).map(e => {
-            if (links[e].TO_ITEM_TYPE === mySelectItem.TO_TYPE) {
-                if (links[e].LINK_TYPE === mySelectItem.TYPE) {
-                    returnVal = false
-                }
-            }
-        })
-        var returnVal = true
-        if (!returnVal) {
-            return returnVal
-        }
-
-        const LINK_TYPE = mySelectItem.TYPE
-        const FROM_ITEM_TYPE = mySelectItem.FROM_TYPE
-        var TO_ITEM_ID = checkedItem[0].ITEM_ID
-        var body = JSON.stringify({ FROM_ITEM_TYPE, TO_ITEM_ID, LINK_TYPE })
-        try {
-            let res = await ItemLinkService.cardinality(body)
-            if (res.data) {
-                return false
-            }
-        } catch (err) {
-            console.log(err);
-        }
-        var TO_ITEM_TYPE = selectedItemFromType
-        var FROM_ITEM_ID = selectedItem.ITEM_ID
-        var body = JSON.stringify({ TO_ITEM_TYPE, FROM_ITEM_ID, LINK_TYPE })
-        try {
-            let res = await ItemLinkService.cardinality(body)
-            if (res.data) {
-                returnVal = false
-            }
-        } catch { }
-
-        return returnVal
-    }
-    return true
-}
-
-export const saveLinks = (date, linkType, isOutCheck) => async (dispatch, getState) => {
+export const saveLinks = async (date, linkType, TO_TYPE, FROM_TYPE, refresh) => async (dispatch, getState) => {
     const checkedItems = getState().checkedList.checkedItems
     const selectedItem = getState().treeview.selectedItem
-
+    let body = []
     const saveFunc = async () => {
-        checkedItems.map(async (e) => {
+        for (let i = 0; i < checkedItems.length; i++) {
             var isOut = false
-            if (isOutCheck === selectedItem.ITEM_TYPE) {
+            if (TO_TYPE === selectedItem.ITEM_TYPE) {
                 isOut = true
             }
-            const linkUuid = _uuidv4();
-            const rowUuid = _uuidv4();
-            const body = JSON.stringify({
+            const linkUuid = uuidv4();
+            const rowUuid = uuidv4();
+            body.push({
                 LINK_ID: linkUuid.replace(/-/g, ""),
                 LINK_TYPE: linkType,
                 START_DATETIME: dateFormatter(date),
                 END_DATETIME: "9000-1-1",
-                FROM_ITEM_ID: isOut ? e.ITEM_ID : selectedItem.ITEM_ID,
-                FROM_ITEM_TYPE: isOut ? e.ITEM_TYPE : selectedItem.ITEM_TYPE,
-                TO_ITEM_ID: isOut ? selectedItem.ITEM_ID : e.ITEM_ID,
-                TO_ITEM_TYPE: isOut ? selectedItem.ITEM_TYPE : e.ITEM_TYPE,
+                FROM_ITEM_ID: isOut ? checkedItems[i].ITEMS_ID : selectedItem.ITEM_ID,
+                FROM_ITEM_TYPE: isOut ? FROM_TYPE : selectedItem.ITEM_TYPE,
+                TO_ITEM_ID: isOut ? selectedItem.ITEM_ID : checkedItems[i].ITEMS_ID,
+                TO_ITEM_TYPE: isOut ? selectedItem.ITEM_TYPE : TO_TYPE,
                 ROW_ID: rowUuid.replace(/-/g, ""),
             });
-            try {
-                let res = await ItemLinkService.save(body)
-                dispatch(loadLinks());
-            } catch (err) { }
-        });
+        }
+        try {
+            body = JSON.stringify(body)
+            console.log(body);
+
+            await ItemLinkService.save(body)
+        } catch (err) {
+        }
         dispatch(cleanCompanyCheckedList());
+        refresh()
+        return true
     };
     dispatch({
         type: "confirmation/setConfirmation",
         payload: {
             title: "Are you sure you want to save?",
-            body: <>{checkedItems.map((e) => e.NAME)}</>,
+            body: <>{checkedItems.map((e) => e.PROPERTY_STRING)}</>,
             agreefunction: saveFunc,
         },
     });
 }
-
 
 export const cleanCompanyCheckedList = () => dispatch => {
     dispatch({

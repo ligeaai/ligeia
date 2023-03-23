@@ -15,6 +15,9 @@ const MaterialUIPickers = ({
   ...props
 }) => {
   const [date, setDate] = React.useState(time);
+  React.useEffect(() => {
+    setDate(time);
+  }, [time]);
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <DatePicker

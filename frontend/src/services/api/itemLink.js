@@ -5,11 +5,23 @@ const hierarchy = () => {
 };
 
 const getLinkSchema = (body, cancelToken) => {
-    return instance.post("/type-link/details/", body, { ...config(), cancelToken: cancelToken.token });
+    return instance.post("/type-link/schema/", body, { ...config(), cancelToken: cancelToken.token });
+};
+
+const getRelated = (body, cancelToken) => {
+    return instance.post("/type-link/related/", body, { ...config(), cancelToken: cancelToken.token });
 };
 
 const getItemLink = (body, cancelToken) => {
     return instance.post("/item-link/details/", body, { ...config(), cancelToken: cancelToken.token });
+};
+
+const getChekListItems = (body, cancelToken) => {
+    return instance.post("/item-link/schema/", body, { ...config(), cancelToken: cancelToken.token });
+};
+
+const cardinalityCheck = (body) => {
+    return instance.post("/item-link/cardinalty-check/", body, config());
 };
 
 const getTags = (body) => {
@@ -23,15 +35,11 @@ const remove = (body) => {
 };
 
 const update = (body) => {
-    return instance.put("/item-link/update/", body, config());
+    return instance.post("/item-link/update/", body, config());
 };
 
 const save = (body) => {
     return instance.post("/item-link/save/", body, config());
-};
-
-const cardinality = (body) => {
-    return instance.post("/item-link/cardinality/", body, config());
 };
 
 const elasticSearch = (text, body, cancelToken) => {
@@ -47,8 +55,10 @@ const ItemLinkService = {
     remove,
     update,
     save,
-    cardinality,
-    elasticSearch
+    elasticSearch,
+    getRelated,
+    getChekListItems,
+    cardinalityCheck
 };
 
 export default ItemLinkService;

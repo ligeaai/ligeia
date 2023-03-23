@@ -7,8 +7,6 @@ import {
     EDIT_DATAGRID_CELL_ITEM,
     SET_IS_ACTIVE_CONFIRMATION,
     ADD_ERROR_SUCCESS,
-    CLEAR_COLUMN_ITEM,
-    SELECT_TREEVIEW_ITEM,
     DELETE_COLUMN_ITEM,
     CLEAN_ITEM_AND_ROWS,
     UPDATE_COL_ITEM
@@ -18,7 +16,7 @@ import ItemService from "../../api/item"
 import { MyTextField } from "../../../pages/main/configuration/items/properties/myTextField";
 import { uuidv4 } from "../../utils/uuidGenerator";
 import { loadTreeviewItem, selectTreeViewItem } from "../treeview/treeview"
-import { newDate, swapDayAndYear, dateFormatter } from "../../utils/dateFormatter";
+import { newDate, swapDayAndYear } from "../../utils/dateFormatter";
 const typeFinder = {
     "BOOL": "PROPERTY_STRING",
     "TEXT": "PROPERTY_STRING",
@@ -243,9 +241,6 @@ export const saveItem = () => async (dispatch, getState) => {
     const row = getState().itemDataGrid.rows
     const col = getState().itemDataGrid.col
     if (dispatch(checkMandatoryFields())) {
-        const uuid = uuidv4()
-        var ITEM = {}
-        var rowUuid = uuidv4()
         let PROPERTYS = []
         let DELETED = []
         Promise.all(
@@ -258,16 +253,15 @@ export const saveItem = () => async (dispatch, getState) => {
                 })
             })
         )
-        ITEM = {
-            "ITEM_ID": getState().treeview.selectedItem.ITEM_ID ? getState().treeview.selectedItem.ITEM_ID : uuid.replace(/-/g, ""),
+        let ITEM = {
+            "ITEM_ID": getState().treeview.selectedItem.ITEM_ID ? getState().treeview.selectedItem.ITEM_ID : uuidv4().replace(/-/g, ""),
             "ITEM_TYPE": type,
-            "ROW_ID": getState().treeview.selectedItem.ROW_ID ? getState().treeview.selectedItem.ROW_ID : rowUuid.replace(/-/g, ""),
+            "ROW_ID": getState().treeview.selectedItem.ROW_ID ? getState().treeview.selectedItem.ROW_ID : uuidv4().replace(/-/g, ""),
             "LAYER_NAME": "KNOC"
         }
         const body = JSON.stringify({ ITEM, PROPERTYS, DELETED });
         try {
             let res = await ItemService.update(body)
-
             dispatch(loadTreeviewItem(async (body, cancelToken) => {
                 return await ItemService.getAll(body, cancelToken, type);
             }, "PROPERTY_STRING"))

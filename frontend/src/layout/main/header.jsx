@@ -7,16 +7,8 @@ import MenuIcon from "@mui/icons-material/Menu";
 import MenuOpenOutlinedIcon from "@mui/icons-material/MenuOpenOutlined";
 
 import { toggleDrawerMenu } from "../../services/actions/drawerMenu/drawerMenu";
-import { SearchBarMobile, SearchBar } from "../../components";
 import AlertIcon from "./alert/alarmsIcon";
 import SettingMenu from "./settingsMenu";
-
-const searchBarSize = {
-  sm: { focus: "28ch", blur: "16ch" },
-  md: { focus: "60ch", blur: "34ch" },
-  lg: { focus: "60ch", blur: "34ch" },
-  xl: { focus: "60ch", blur: "34ch" },
-};
 
 const DrawerIcon = () => {
   const dispatch = useDispatch();
@@ -52,9 +44,6 @@ const DrawerIcon = () => {
 
 const Header = (props) => {
   const search = useSelector((state) => state.searchBar.isFocus);
-  const { delSearchBar } = props;
-  const theme = useSelector((state) => state.theme.theme);
-
   const MyBox = styled(Grid)(({ theme }) => {
     return {
       backgroundColor: theme.palette.primary.dark, // this
@@ -76,9 +65,7 @@ const Header = (props) => {
             md: "none",
           },
         }}
-      >
-        <SearchBarMobile theme={theme} />
-      </MyBox>
+      ></MyBox>
       <MyBox
         sx={{
           display: {
@@ -91,12 +78,6 @@ const Header = (props) => {
           <Grid container spacing={2.5} alignItems="center">
             <Grid item>
               <DrawerIcon />
-              {delSearchBar ? null : (
-                <SearchBar
-                  searchBarSize={searchBarSize}
-                  searchBarTheme={theme}
-                />
-              )}
             </Grid>
           </Grid>
         </Grid>

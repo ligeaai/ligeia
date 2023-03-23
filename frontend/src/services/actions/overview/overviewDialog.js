@@ -9,7 +9,7 @@ import {
 import { uuidv4 } from "../../utils/uuidGenerator"
 import { loadTapsOverview } from "./taps"
 import HcProps from "../../api/couch/hcProps"
-import HcType from "../../api/couch/hcProps"
+import HcType from "../../api/couch/hcType"
 import Widgets from "../../api/couch/widgets"
 import TabLink from "../../api/couch/taplinks"
 

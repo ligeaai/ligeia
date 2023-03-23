@@ -35,7 +35,7 @@ const Main = (props) => {
   ) : (
     <React.Fragment>
       <Box sx={{ backgroundColor: "background.main" }}>
-        <Header delSearchBar={delSearchBar} />
+        <Header />
         <Grid container sx={{ flexWrap: "nowrap" }}>
           <Grid
             item

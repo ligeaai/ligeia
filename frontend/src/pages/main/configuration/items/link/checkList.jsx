@@ -1,47 +1,59 @@
-import { Divider } from "@mui/material";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { Box, Grid, Button, Select, MenuItem } from "@mui/material/";
+import axios from "axios";
+import { Box, Grid, Button, Divider } from "@mui/material/";
 
-import { CheckboxList, DatePicker } from "../../../../../components";
+import { CheckboxList, DatePicker, Select } from "../../../../../components";
 import {
   loadCheckedList,
   saveLinks,
   toggleChecked,
-  cardinalityCheck,
 } from "../../../../../services/actions/item/checkedList";
+import ItemLinkService from "../../../../../services/api/itemLink";
+import { cardinalityCheck } from "../../../../../services/actions/item/cardinality";
 
+let cancelToken;
 const MyCheckList = (props) => {
   const dispatch = useDispatch();
+  const CULTURE = useSelector((state) => state.lang.cultur);
   const instanttime = new Date();
   const [date, setDate] = React.useState(instanttime);
-  const [selectedItem, setSelectedItem] = React.useState("");
+  const [values, setValues] = React.useState([""]);
+  const [selectedValue, setSelectedValue] = React.useState(false);
   const data = useSelector((state) => state.checkedList.listItem);
   const checkedItemsLen = useSelector(
     (state) => state.checkedList.checkedItems.length
   );
-  const linkEditorData = useSelector(
-    (state) => state.itemLinkEditor[props.dataSelectItemPath]
-  );
-  const selectItems = linkEditorData
-    ? linkEditorData.filter((e) => e.TYPE === props.data.TYPE)
-    : [];
-  const handleChange = (event) => {
-    const e = selectItems.find((e) =>
-      props.dataSelectItemPath === "data"
-        ? e.FROM_TYPE === event.target.value
-        : e.TO_TYPE === event.target.value
-    );
-    setSelectedItem(event.target.value);
-    dispatch(loadCheckedList(e, props.dataSelectItemPath));
-  };
   const handleToggleFunc = (data) => {
     dispatch(toggleChecked(data));
   };
   const onChange = (newValue) => {
     setDate(newValue);
   };
+  React.useEffect(() => {
+    async function myFunc() {
+      try {
+        const body = JSON.stringify({
+          TYPE: props.data.TYPE,
+          [props.type]: props.data[props.type],
+          CULTURE: CULTURE,
+        });
+        if (cancelToken) {
+          cancelToken.cancel();
+        }
+        cancelToken = axios.CancelToken.source();
+        let res = await ItemLinkService.getRelated(body, cancelToken);
+        setValues(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    }
+    myFunc();
+    return () => {
+      setValues([""]);
+    };
+  }, []);
   return (
     <React.Fragment>
       <Box sx={{ m: 1 }}>
@@ -55,42 +67,26 @@ const MyCheckList = (props) => {
           </Grid>
           <Grid item>
             <Select
-              placeholder={props.data.TYPE}
-              value={selectedItem}
-              onChange={handleChange}
-              sx={{
-                fontSize: "14px",
-                "& .MuiOutlinedInput-input": { py: 0.5 },
+              values={values}
+              dataTextPath={"SHORT_LABEL"}
+              handleChangeFunc={(value) => {
+                setSelectedValue(value);
+                dispatch(
+                  loadCheckedList(
+                    value[props.type === "FROM_TYPE" ? "TO_TYPE" : "FROM_TYPE"],
+                    props.type === "FROM_TYPE" ? "TO_TYPE" : "FROM_TYPE"
+                  )
+                );
               }}
-            >
-              {selectItems.map((e) => (
-                <MenuItem
-                  key={
-                    props.dataSelectItemPath === "data"
-                      ? e.FROM_TYPE
-                      : e.TO_TYPE
-                  }
-                  value={
-                    props.dataSelectItemPath === "data"
-                      ? e.FROM_TYPE
-                      : e.TO_TYPE
-                  }
-                  sx={{ fontSize: "14px" }}
-                >
-                  {props.dataSelectItemPath === "data"
-                    ? e.FROM_SHORT_LABEL
-                    : e.TO_SHORT_LABEL}
-                </MenuItem>
-              ))}
-            </Select>
+            />
           </Grid>
         </Grid>
       </Box>
       <Divider />
-      <Box sx={{ overflowY: "scroll" }}>
+      <Box sx={{ overflowY: "auto" }}>
         <CheckboxList
           data={data}
-          dataTextPath="NAME"
+          dataTextPath="PROPERTY_STRING"
           handleToggleFunc={handleToggleFunc}
         />
       </Box>
@@ -117,13 +113,23 @@ const MyCheckList = (props) => {
               <Button
                 onClick={async () => {
                   if (
-                    await dispatch(cardinalityCheck(selectItems, selectedItem))
+                    await dispatch(
+                      cardinalityCheck(
+                        props.data.TYPE,
+                        props.type === "TO_TYPE"
+                          ? "TO_ITEM_ID"
+                          : "FROM_ITEM_ID",
+                        selectedValue
+                      )
+                    )
                   ) {
                     dispatch(
-                      saveLinks(
+                      await saveLinks(
                         date,
-                        selectItems[0].TYPE,
-                        selectItems[0].TO_TYPE
+                        props.data.TYPE,
+                        props.data.TO_TYPE,
+                        props.data.FROM_TYPE,
+                        props.refreshHandle
                       )
                     );
                     props.onClose();

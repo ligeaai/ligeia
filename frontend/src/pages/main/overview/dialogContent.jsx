@@ -1,26 +1,15 @@
-import React, { Suspense } from "react";
+import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { IconButton, Grid, Box, Button } from "@mui/material";
+import { IconButton, Grid, Box } from "@mui/material";
 
-import { Route, Routes, Navigate } from "react-router-dom";
-import { Outlet } from "react-router-dom";
-import {
-  Select,
-  Stepper,
-  InputGenerator,
-  LoadingComponent,
-} from "../../../components";
+import { Select, Stepper, LoadingComponent } from "../../../components";
 import CloseIcon from "@mui/icons-material/Close";
-import {
-  changeSelectValue,
-  changeValeus,
-} from "../../../services/actions/overview/overviewDialog";
+import { changeSelectValue } from "../../../services/actions/overview/overviewDialog";
 import {
   loadSelectItems,
   fillProperties,
 } from "../../../services/actions/overview/overviewDialog";
 import { saveChart } from "../../../services/actions/overview/overviewDialog";
-import TagService from "../../../services/api/tags";
 import linechartPopUp from "../../../components/highchart/newPopUp/lineChartHc";
 import angularPopUp from "../../../components/highchart/newPopUp/angularHc";
 import SolidPopUp from "../../../components/highchart/newPopUp/solidHc";

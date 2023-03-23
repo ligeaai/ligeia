@@ -74,7 +74,6 @@ const Menu = () => {
 
 const UnitOne = ({ isHome }) => {
   const dispatch = useDispatch();
-
   const isFullScreen = useSelector((state) => state.fullScreen.isFullScreen);
   const isLinksActive = useSelector(
     (state) => state.itemLinkEditor.isLinksActive
