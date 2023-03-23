@@ -167,11 +167,10 @@ class TagsTypeLinkView(generics.CreateAPIView):
     def post(self, request, *args, **kwargs):
         culture = request.data.get("CULTURE")
         to_type = list(
-            type_link.objects.filter(TYPE="TAGS")
+            type_link.objects.filter(TYPE="TAG_ITEM")
             .values_list("TO_TYPE", flat=True)
             .order_by("TO_TYPE")
         )
-
         query = (
             type_model.objects.filter(TYPE__in=to_type)
             .values_list("LABEL_ID", flat=True)

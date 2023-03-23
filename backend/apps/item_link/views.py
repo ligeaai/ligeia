@@ -19,99 +19,163 @@ from apps.tags.serializers import TagsFieldsSerializer
 import threading
 import json
 from elasticsearch import Elasticsearch
-
+from django.db.models import F, Value
+from django.db.models.functions import Concat
+from django.db.models import Subquery, OuterRef
+from django.db import transaction
 
 # Create your views here.
+class ItemLinkSchemaView(generics.CreateAPIView):
+    permission_classes = [permissions.AllowAny]
+
+    def _getitemProps(self, request, selected_id_type, selected_item_type):
+        return (
+            item_property.objects.filter(
+                ITEM_ID__in=item.objects.filter(
+                    ITEM_TYPE=request.data.get(selected_item_type)
+                )
+                .exclude(
+                    ITEM_ID__in=item_link.objects.filter(**request.data).values_list(
+                        selected_id_type, flat=True
+                    )
+                )
+                .values_list("ITEM_ID", flat=True),
+                PROPERTY_TYPE="NAME",
+            )
+            .annotate(ITEMS_ID=Concat(F("ITEM_ID"), Value("")))
+            .values("ITEMS_ID", "PROPERTY_STRING")
+            .order_by("PROPERTY_STRING")
+        )
+
+    def _getTagsProps(self, request, selected_id_type, selected_item_type, layer_name):
+        return (
+            tags.objects.filter(LAYER_NAME=layer_name)
+            .exclude(
+                TAG_ID__in=item_link.objects.filter(**request.data).values_list(
+                    selected_id_type, flat=True
+                )
+            )
+            .annotate(
+                PROPERTY_STRING=Concat(F("NAME"), Value("")),
+                ITEMS_ID=Concat(F("TAG_ID"), Value("")),
+            )
+            .values("ITEMS_ID", "PROPERTY_STRING")
+            .order_by("NAME")
+        )
+
+    def post(self, request, *args, **kwargs):
+        layer_name = request.data.pop("LAYER_NAME")
+        selected_id_type = (
+            "TO_ITEM_ID" if request.data.get("FROM_ITEM_ID") else "FROM_ITEM_ID"
+        )
+        selected_item_type = (
+            "TO_ITEM_TYPE" if request.data.get("TO_ITEM_TYPE") else "FROM_ITEM_TYPE"
+        )
+        item_props = (
+            self._getitemProps(request, selected_id_type, selected_item_type)
+            if request.data.get(selected_item_type) != "TAG_CACHE"
+            else self._getTagsProps(
+                request, selected_id_type, selected_item_type, layer_name
+            )
+        )
+        return Response(item_props, status=status.HTTP_201_CREATED)
 
 
 class ItemLinkSaveView(generics.CreateAPIView):
     permission_classes = [permissions.AllowAny]
 
     def post(self, request, *args, **kwargs):
-        validate_model_not_null(request.data, "ITEM_LINK", request=request)
-        serializer = ItemLinkSaveSerializer(data=request.data)
-        serializer.is_valid()
-        serializer.save(request.data)
-        return Response("Created SUCCSESFUL", status=status.HTTP_201_CREATED)
+        with transaction.atomic():
+            try:
+                for item in request.data:
+                    validate_model_not_null(item, "ITEM_LINK", request=request)
+                    serializer = ItemLinkSaveSerializer(data=item)
+                    serializer.is_valid()
+                    serializer.save(item)
+            except Exception as e:
+                transaction.set_rollback(True)
+                return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+        return Response({"Message": "Succsesful"}, status=status.HTTP_200_OK)
 
 
-class ItemLinkCardinaltyView(generics.CreateAPIView):
-    permission_classes = [permissions.AllowAny]
-
+class ItemLinkCardinaltyCheckView(generics.CreateAPIView):
     def post(self, request, *args, **kwargs):
-        if request.data.get("FROM_ITEM_ID"):
-            quaryset = item_link.objects.filter(
-                FROM_ITEM_ID=request.data.get("FROM_ITEM_ID"),
-                TO_ITEM_TYPE=request.data.get("TO_ITEM_TYPE"),
-                LINK_TYPE=request.data.get("LINK_TYPE"),
-            )
-        else:
-            quaryset = item_link.objects.filter(
-                TO_ITEM_ID=request.data.get("TO_ITEM_ID"),
-                FROM_ITEM_TYPE=request.data.get("FROM_ITEM_TYPE"),
-                LINK_TYPE=request.data.get("LINK_TYPE"),
-            )
-        if quaryset:
+        subquery = item_link.objects.filter(**request.data)
+        if subquery:
             return Response(True, status=status.HTTP_200_OK)
         else:
-            return Response(False, status=status.HTTP_400_BAD_REQUEST)
+            return Response(False, status=status.HTTP_200_OK)
 
 
 class ItemLinkDetailsView(generics.CreateAPIView):
     permission_classes = [permissions.AllowAny]
 
+    def _getName(self, request, linked_item, selected_id_type):
+        if request.get("LINK_TYPE") != "TAG_ITEM":
+            return (
+                item_property.objects.filter(
+                    ITEM_ID__in=(linked_item.values(selected_id_type)),
+                    PROPERTY_TYPE="NAME",
+                )
+                .values("PROPERTY_STRING")
+                .order_by("ITEM_ID")
+            )
+        else:
+            return (
+                tags.objects.filter(
+                    TAG_ID__in=(linked_item.values(selected_id_type)),
+                )
+                .annotate(
+                    ITEMS_ID=Concat(F("TAG_ID"), Value("")),
+                    PROPERTY_STRING=Concat(F("NAME"), Value("")),
+                )
+                .order_by("TAG_ID")
+                .values("PROPERTY_STRING")
+            )
+
     def post(self, request, *args, **kwargs):
-        tempt = []
-        quaryset = item_link.objects.filter(TO_ITEM_ID=request.data.get("ID"))
-        quaryset2 = item_link.objects.filter(FROM_ITEM_ID=request.data.get("ID"))
-        # validate_find(quaryset,request)
-        serializer = ItemLinkDetailsSerializer(quaryset, many=True)
-        serializer2 = ItemLinkDetailsSerializer(quaryset2, many=True)
-        data1 = self._getFromItemName(serializer.data, request)
-        data2 = self._getFromItemName(serializer2.data, request)
-        new_dict = {"TO_ITEM_ID": data1, "FROM_ITEM_ID": data2}
-        return Response(new_dict, status=status.HTTP_200_OK)
-
-    def _getFromItemName(self, data, request):
-        try:
-            for index in range(len(data)):
-                item = data[index]
-                propertys = item_property.objects.filter(
-                    ITEM_ID=item.get("FROM_ITEM_ID"), PROPERTY_TYPE="NAME"
-                ).order_by("START_DATETIME")
-                property2 = item_property.objects.filter(
-                    ITEM_ID=item.get("TO_ITEM_ID"), PROPERTY_TYPE="NAME"
-                ).order_by("START_DATETIME")
-                tag_name = tags.objects.filter(TAG_ID=item.get("FROM_ITEM_ID"))
-                # validate_find(property,request)
-                serializer = ItemPropertyNameSerializer(propertys, many=True)
-                serializer2 = ItemPropertyNameSerializer(property2, many=True)
-                if propertys:
-                    data[index]["FROM_ITEM_NAME"] = serializer.data[0].get(
-                        "PROPERTY_STRING"
-                    )
-                if property2:
-                    data[index]["TO_ITEM_NAME"] = serializer2.data[0].get(
-                        "PROPERTY_STRING"
-                    )
-                if tag_name:  # SEE TAG NAME IF ITEM IS NOT IN PROPERTY
-                    data[index]["FROM_ITEM_NAME"] = (
-                        TagsFieldsSerializer(tag_name, many=True).data[0].get("NAME")
-                    )
-
-            return data
-        except Exception as e:
-            raise e
+        selected_id_type = (
+            "TO_ITEM_ID" if request.data.get("FROM_ITEM_ID") else "FROM_ITEM_ID"
+        )
+        selected_item_type = (
+            "TO_ITEM_TYPE" if request.data.get("FROM_ITEM_ID") else "FROM_ITEM_TYPE"
+        )
+        linked_item = (
+            item_link.objects.filter(**request.data)
+            .values(
+                "START_DATETIME",
+                "END_DATETIME",
+                "LINK_ID",
+                selected_id_type,
+                selected_item_type,
+            )
+            .order_by(selected_id_type)
+        )
+        item_prop = self._getName(request.data, linked_item, selected_id_type)
+        new_list = []
+        for links, prop in zip(linked_item, item_prop):
+            new_list.append({**links, **prop})
+        new_list = sorted(new_list, key=lambda x: x["PROPERTY_STRING"])
+        return Response(new_list, status=status.HTTP_200_OK)
 
 
-class ItemLinkUpdateView(generics.UpdateAPIView):
+class ItemLinkUpdateView(generics.CreateAPIView):
     permission_classes = [permissions.AllowAny]
 
-    def put(self, request, *args, **kwargs):
-        quaryset = item_link.objects.filter(LINK_ID=request.data.get("LINK_ID"))
-        validate_find(quaryset, request)
-        quaryset.update(**request.data)
-        return Response("Succsesful", status=status.HTTP_200_OK)
+    def post(self, request, *args, **kwargs):
+        response_list = []
+        for item in request.data.values():
+            new_keys = [key.upper() for key in item.keys()]
+            links_dict = {
+                new_keys[i]: value for i, (_, value) in enumerate(item.items())
+            }
+            print(links_dict)
+            quaryset = item_link.objects.filter(LINK_ID=links_dict.get("LINK_ID"))
+            validate_find(quaryset, request)
+            quaryset.update(**links_dict)
+            response_list.append(links_dict)
+        # serializer = ItemLinkDetailsSerializer(quaryset, many=True)
+        return Response(response_list, status=status.HTTP_200_OK)
 
     # def _getChild(self,data,tempt):
     #     for index in range(len(data)):
@@ -306,7 +370,6 @@ class TagsLinksSelectedView(generics.CreateAPIView):
     def post(self, request, *args, **kwargs):
         liste = []
         for item in request.data.get("ID"):
-            print(item)
             find_tags = tags.objects.filter(ITEM_ID__exact=item)
             if find_tags:
                 liste.append(list(TagsFieldsSerializer(find_tags, many=True).data))

@@ -20,6 +20,5 @@ urlpatterns = [
     path("dashboard/", include("apps.dashbord.urls")),
     path("layouts/", include("apps.layouts.urls")),
     path("widgets/", include("apps.widgets.urls")),
-    # path("menu/", include("apps.page_resource_list.urls")),
     path("health", DjangoHealthView.as_view(), name="healt status"),
 ]

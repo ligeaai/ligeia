@@ -17,6 +17,7 @@ from utils.models_utils import (
     validate_find,
 )
 from services.logging.Handlers import KafkaLogger
+from django.db.models import F
 
 logger = KafkaLogger()
 
@@ -50,7 +51,6 @@ class ItemPropertyDetailsView(generics.CreateAPIView):
     permission_classes = [permissions.AllowAny]
 
     def post(self, request, *args, **kwargs):
-        from django.db.models import F
 
         queryset = item_property.objects.filter(
             ITEM_ID=request.data.get("ITEM_ID")
