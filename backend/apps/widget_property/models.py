@@ -43,8 +43,8 @@ class widget_property(models.Model):
         null=True,
         db_index=True,
     )
-    PROPERTY_TAG = models.ForeignKey(
-        tags, on_delete=models.CASCADE, related_name="tags", null=True
+    PROPERTY_TAG = models.ManyToManyField(
+        tags, related_name="tags", null=True, blank=True
     )
     PROPERTY_TYPE = models.CharField(
         max_length=150,
@@ -68,11 +68,7 @@ class widget_property(models.Model):
         null=True,
         db_index=True,
     )
-    PROPERTY_CODE = models.CharField(
-        max_length=32,
-        null=True,
-        db_index=True,
-    )
+    PROPERTY_JSON = models.JSONField(null=True)
     PROPERTY_BINARY = models.CharField(
         max_length=32,
         null=True,
@@ -92,7 +88,6 @@ class widget_property(models.Model):
     )
     VERSION = models.CharField(
         max_length=32,
-        default=uuid.uuid4,
         null=True,
     )
     DB_ID = models.CharField(
@@ -101,7 +96,6 @@ class widget_property(models.Model):
     )
     ROW_ID = models.CharField(
         max_length=32,
-        default=uuid.uuid4,
         null=True,
         db_index=True,
     )

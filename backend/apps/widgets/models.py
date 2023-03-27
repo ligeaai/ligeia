@@ -19,7 +19,6 @@ class Widget(models.Model):
         db_index=True,
     )
     END_DATETIME = models.DateField(
-        default=timezone.now,
         null=False,
         db_index=True,
     )
@@ -28,12 +27,10 @@ class Widget(models.Model):
         null=True,
     )
     LAST_UPDT_DATE = models.DateField(
-        default=timezone.now,
         null=True,
     )
     VERSION = models.CharField(
         max_length=32,
-        default=uuid.uuid4,
         null=False,
     )
     DB_ID = models.CharField(
@@ -42,7 +39,6 @@ class Widget(models.Model):
     )
     ROW_ID = models.CharField(
         max_length=32,
-        default=uuid.uuid4,
         null=False,
         db_index=True,
     )

@@ -2,6 +2,7 @@ import uuid
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 from .models import Widget
+from datetime import datetime
 
 
 class WidgetSaveSerializer(serializers.ModelSerializer):
@@ -15,10 +16,10 @@ class WidgetSaveSerializer(serializers.ModelSerializer):
 
     def save(self, validated_data):
         try:
-            print(validated_data)
+            validated_data["START_DATETIME"] = "2023-03-25"
+            validated_data["END_DATETIME"] = "9000-01-01"
             widget_id = validated_data.get("WIDGET_ID")
             qs = Widget.objects.filter(WIDGET_ID=widget_id)
-            print(qs)
             if qs.exists():
                 instance = super().update(qs.first(), validated_data)
             else:
