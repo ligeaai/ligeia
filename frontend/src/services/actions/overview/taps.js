@@ -3,14 +3,13 @@ import {
   SET_SELECT_TAB_ITEM,
   CLEAN_TABS_OVERVIEW,
   REFRESH_WIDGETS_OVERVIEW,
-  UPDATE_LAYOUT,
   SET_ISCHECKED,
   SET_UPDATE_ISCHECKED,
   SET_ITEM_DATA_OVERVIEW
 } from "../types";
-import { instance, config } from "../../couchApi";
-import TabLinks from "../../api/couch/taplinks"
-import Widgets from "../../api/couch/widgets"
+import Overview from "../../api/overview";
+import axios from "axios";
+import { uuidv4 } from "../../utils/uuidGenerator";
 const _setLinkedItem = () => (dispatch, getState) => {
   const selectedItem = getState().collapseMenu.selectedItem;
   let list = []
@@ -29,22 +28,20 @@ const _setLinkedItem = () => (dispatch, getState) => {
     payload: list
   })
 }
+let cancelToken;
 export const loadTapsOverview = () => async (dispatch, getState) => {
-  const linkId = getState().collapseMenu.selectedItem.LINK_ID;
+  const linkId = getState().collapseMenu.selectedItem.FROM_ITEM_ID;
   try {
-    let res = await TabLinks.get(linkId)
-    var titles = [];
-    var widgets = {};
+    if (cancelToken) {
+      cancelToken.cancel()
+    }
+    cancelToken = axios.CancelToken.source();
+    const body = JSON.stringify({ ITEM_ID: linkId })
+    let res = await Overview.getDashboards(body, cancelToken)
+    console.log(res);
+    var titles = Object.keys(res.data);
+    var widgets = res.data;
     var data = {}
-    Promise.all(Object.keys(res.data.data).map(e => {
-      if (res.data.data[e].widgets && res.data.data[e].layouts) {
-        titles.push(e)
-        widgets[e] = res.data.data[e]
-      }
-    }))
-    console.log(titles);
-    console.log(widgets);
-    data = { ...res.data, data: widgets }
     dispatch({
       type: FILL_TAPS_OVERVIEW,
       payload: { titles, widgets: widgets, data: data },
@@ -54,11 +51,7 @@ export const loadTapsOverview = () => async (dispatch, getState) => {
     });
     dispatch(_setLinkedItem())
   } catch (err) {
-    if (err.response.status === 404) {
-      const body = JSON.stringify({ _id: linkId, data: {} });
-      await TabLinks.create(body)
-    }
-    dispatch(loadTapsOverview());
+    console.log(err);
   }
 };
 
@@ -75,40 +68,16 @@ export const cleanTabs = () => (dispatch) => {
   });
 };
 
-export const deleteChart = (id, revId) => async (dispatch, getState) => {
-  const selected = getState().tapsOverview.selected;
-  const resData = getState().tapsOverview;
-  let myData = resData.data;
-  myData.data[selected].widgets.find((e, i) =>
-    e === id ? myData.data[selected].widgets.splice(i, 1) : null
-  );
-  myData.data[selected].layouts.lg.find((e, i) =>
-    e.i === id ? myData.data[selected].layouts.lg.splice(i, 1) : null
-  );
-  myData.data[selected].layouts.md.find((e, i) =>
-    e.i === id ? myData.data[selected].layouts.md.splice(i, 1) : null
-  );
-  myData.data[selected].layouts.sm.find((e, i) =>
-    e.i === id ? myData.data[selected].layouts.sm.splice(i, 1) : null
-  );
-  myData.data[selected].layouts.xs.find((e, i) =>
-    e.i === id ? myData.data[selected].layouts.xs.splice(i, 1) : null
-  );
-  myData.data[selected].layouts.xxs.find((e, i) =>
-    e.i === id ? myData.data[selected].layouts.xxs.splice(i, 1) : null
-  );
-
-  const selectedLink = getState().collapseMenu.selectedItem.LINK_ID;
-
-  const body = JSON.stringify({ ...myData });
+export const deleteChart = (id) => async (dispatch) => {
+  const body = JSON.stringify({ WIDGET_ID: id });
   try {
-    await Widgets.remove(id, revId)
-    await TabLinks.update(selectedLink, body)
+    await Overview.removeWidget(body)
     dispatch(loadTapsOverview());
   } catch (err) {
     console.log(err);
   }
 };
+
 function _newTapNameChoser(keys) {
   let i = 0;
   while (true) {
@@ -121,28 +90,20 @@ function _newTapNameChoser(keys) {
 }
 
 export const addNewTabItem = () => async (dispatch, getState) => {
-  const selectedLink = getState().collapseMenu.selectedItem.LINK_ID;
-
-  const resData = getState().tapsOverview.data;
-  const newTabName = _newTapNameChoser(Object.keys(resData.data));
-  const tablinkBody = {
-    ...resData,
-    data: {
-      ...resData.data,
-      [newTabName]: {
-        widgets: [],
-        layouts: {
-          lg: [],
-          md: [],
-          sm: [],
-          xs: [],
-          xxs: [],
-        },
-      },
-    },
-  };
+  const selectedItemID = getState().collapseMenu.selectedItem.FROM_ITEM_ID;
+  const titles = getState().tapsOverview.titles
+  const newTabName = _newTapNameChoser(titles);
+  const culture = getState().lang.cultur
+  const body = JSON.stringify({
+    "NAME": newTabName,
+    "CULTURE": culture,
+    "LAYER_NAME": "KNOC",
+    "ITEM_ID": selectedItemID,
+    "ROW_ID": uuidv4().replace(/-/g, ""),
+    "WIDGETS": []
+  })
   try {
-    await TabLinks.update(selectedLink, tablinkBody)
+    await Overview.updateDashboards(body)
     dispatch(loadTapsOverview());
   } catch (err) { }
 };
@@ -159,22 +120,20 @@ const _checkHeader = (oldHeader, newHeader, keys) => {
 
 export const updateTabHeader =
   (oldHeader, newHeader) => async (dispatch, getState) => {
-    const selectedLink = getState().collapseMenu.selectedItem.LINK_ID;
-    const resData = getState().tapsOverview.data;
-
-    if (_checkHeader(oldHeader, newHeader, Object.keys(resData.data))) {
-      resData.data[newHeader] = resData.data[oldHeader];
-      delete resData.data[oldHeader];
-
-      const tablinkBody = {
-        ...resData,
-        data: {
-          ...resData.data,
-        },
-      };
+    const titles = getState().tapsOverview.titles
+    const widget = getState().tapsOverview.widgets[oldHeader]
+    const culture = getState().lang.cultur
+    if (_checkHeader(oldHeader, newHeader, (titles))) {
+      const body = JSON.stringify({
+        ROW_ID: widget.ROW_ID,
+        NAME: newHeader,
+        CULTURE: culture,
+        LAYER_NAME: "KNOC"
+      })
+      console.log(body);
       try {
-        await TabLinks.update(selectedLink, tablinkBody)
-        dispatch(loadTapsOverview());
+        await Overview.updateDashboards(body)
+        await dispatch(loadTapsOverview());
         dispatch({
           type: SET_SELECT_TAB_ITEM,
           payload: newHeader,
@@ -182,73 +141,31 @@ export const updateTabHeader =
       } catch (err) {
         console.log(err);
       }
-    }
-  };
+    };
 
-function _deleteAllCharts(charts) {
-  charts.map(async (e) => {
-    try {
-      let res = await Widgets.get(e)
-      await Widgets.remove(e, res.data._rev)
-    } catch { }
-  });
-}
+
+  };
 
 export const deleteTapHeader = (header) => async (dispatch, getState) => {
-  const selectedLink = getState().collapseMenu.selectedItem.LINK_ID;
-  const resData = getState().tapsOverview.data;
-  const charts = resData.data[header].widgets;
-  delete resData.data[header];
-  const tablinkBody = {
-    ...resData,
-    data: {
-      ...resData.data,
-    },
-  };
+  const dashboard = getState().tapsOverview.widgets[header];
+
   try {
-    await TabLinks.update(selectedLink, tablinkBody)
+    const body = JSON.stringify({ ROW_ID: dashboard.ROW_ID })
+    await Overview.removeDashboards(body)
     dispatch(loadTapsOverview());
-    _deleteAllCharts(charts);
   } catch (err) {
     console.log(err);
   }
 };
 
-export const updateChart = () => async (dispatch, getState) => {
-  const chartProps = getState().overviewDialog.highchartProps;
-  const body = JSON.stringify({ ...chartProps });
-  try {
-    await Widgets.update(chartProps._id, body)
-  } catch { }
-};
-export const updateChartLayout = (layout) => async (dispatch, getState) => {
+export const updateLayouts = () => async (dispatch, getState) => {
   const selectedTab = getState().tapsOverview.selected;
-  const resData = getState().tapsOverview.data;
-  const tablinkBody = {
-    ...resData,
-    data: {
-      ...resData.data,
-      [selectedTab]: {
-        ...resData.data[selectedTab],
-        layouts: layout,
-      },
-    },
-  };
-  dispatch({
-    type: UPDATE_LAYOUT,
-    payload: tablinkBody,
-  });
-};
-
-export const updateCouchDb = () => async (dispatch, getState) => {
-  const selectedLink = getState().collapseMenu.selectedItem.LINK_ID;
-  const resData = getState().tapsOverview.data;
-  const tablinkBody = {
-    ...resData,
-  };
+  const layouts = getState().tapsOverview.widgets[selectedTab].layouts;
+  const body = JSON.stringify(layouts)
   try {
-    let res = await TabLinks.update(selectedLink, tablinkBody)
-  } catch (err) { }
+    let res = await Overview.layoutUpdate(body)
+    console.log(res);
+  } catch (err) { console.log(err); }
 };
 
 

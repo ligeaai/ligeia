@@ -11,7 +11,6 @@ import {
 } from "@mui/material";
 import { FixedSizeList } from "react-window";
 import AutoSizer from "react-virtualized-auto-sizer";
-import { changeValeus } from "../../../services/actions/overview/overviewDialog";
 import {
   updateChecked,
   setCheckedsAsset,
@@ -74,8 +73,16 @@ const Inputs = (props) => {
   const dispatch = useDispatch();
   const { handleChangeFunc } = props;
   const ItemData = useSelector((state) => state.overviewDialog.itemData);
-  const transactionProps = useSelector(
-    (state) => state.overviewDialog.highchartProps["Transaction Property"]
+  // const assets = useSelector((state) =>
+  //   typeof state.overviewDialog.highchartProps["Assets"] === "string"
+  //     ? JSON.parse(
+  //         state.overviewDialog.highchartProps["Assets"].replace(/'/g, '"')
+  //       )
+  //     : state.overviewDialog.highchartProps["Assets"]
+  // );
+
+  const assets = useSelector(
+    (state) => state.overviewDialog.highchartProps["Assets"]
   );
   const [checked, setChecked] = React.useState([]);
   const [left, setLeft] = React.useState([]);
@@ -83,12 +90,8 @@ const Inputs = (props) => {
   const leftChecked = intersection(checked, left);
   const rightChecked = intersection(checked, right);
   React.useEffect(() => {
-    setLeft(
-      ItemData.filter((e) => !transactionProps.some((a) => a[0] === e[0]))
-    );
-    setRight(
-      ItemData.filter((e) => transactionProps.some((a) => a[0] === e[0]))
-    );
+    setLeft(ItemData.filter((e) => !assets.some((a) => a[0] === e[0])));
+    setRight(ItemData.filter((e) => assets.some((a) => a[0] === e[0])));
     dispatch(setCheckedsAsset(ItemData));
   }, [ItemData]);
 
@@ -103,6 +106,7 @@ const Inputs = (props) => {
     }
     setChecked(newChecked);
   };
+  const getId = (selectedItems) => {};
   const handleAllRight = () => {
     leftChecked.map((e) => {
       dispatch(updateChecked(e.TAG_ID, false));

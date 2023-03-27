@@ -22,7 +22,7 @@ function LineChartPopUp() {
     (state) => state.overviewDialog.highchartProps.Stops
   ); //it is mandatory strangely
   React.useEffect(() => {
-    dispatch(fillMandatory([["Name"], ["Transaction Property"], ["Inputs"]]));
+    dispatch(fillMandatory([["Name"], ["Assets"], ["Inputs"]]));
   }, []);
   return [
     ["Proporties", <CreateLineWidget />],
@@ -32,7 +32,7 @@ function LineChartPopUp() {
         <Box sx={{ ml: 2, mb: 1.5, fontSize: "14px" }}>Assets</Box>
         <LineAssets
           handleChangeFunc={(value) => {
-            handleChangeFunc("Transaction Property", value);
+            handleChangeFunc("Assets", value);
           }}
         />
       </Box>,

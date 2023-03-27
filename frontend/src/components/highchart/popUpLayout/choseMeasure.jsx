@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { Grid } from "@mui/material";
 import { changeValeus } from "../../../services/actions/overview/overviewDialog";
 import { Select } from "../..";
-import { instance, config } from "../../../services/baseApi";
 import ItemLinkService from "../../../services/api/itemLink";
 import { IndentSelect } from "../../";
 const ChoseMeasure = () => {
@@ -12,14 +11,12 @@ const ChoseMeasure = () => {
   const measure = useSelector(
     (state) => state.overviewDialog.highchartProps.Measurement
   );
-
   const defProp = useSelector(
     (state) => state.overviewDialog.highchartProps["Transaction Property"]
   );
   const UOM = useSelector(
     (state) => state.overviewDialog.highchartProps["UOM"]
   );
-
   const [tags, setTags] = React.useState([]);
 
   const handleChangeFunc = (key, val) => {
@@ -35,6 +32,7 @@ const ChoseMeasure = () => {
     };
     myFunc();
   }, [defProp]);
+
   return (
     <Grid
       container
@@ -58,6 +56,8 @@ const ChoseMeasure = () => {
               handleChangeFunc={async (value) => {
                 handleChangeFunc("Transaction Property", value);
                 let res = await ItemLinkService.getTags({ ID: value });
+                console.log(value);
+                console.log(res.data);
                 setTags(res.data);
               }}
             />

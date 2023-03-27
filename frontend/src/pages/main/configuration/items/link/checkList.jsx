@@ -39,11 +39,14 @@ const MyCheckList = (props) => {
           [props.type]: props.data[props.type],
           CULTURE: CULTURE,
         });
+        console.log(body);
         if (cancelToken) {
           cancelToken.cancel();
         }
         cancelToken = axios.CancelToken.source();
+        console.log(body);
         let res = await ItemLinkService.getRelated(body, cancelToken);
+        console.log(res.data);
         setValues(res.data);
       } catch (err) {
         console.log(err);

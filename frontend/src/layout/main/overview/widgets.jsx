@@ -13,6 +13,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { LoadingComponent, MyDialog } from "../../../components";
 import MyHighchart from "./highchart";
 import UpdatePopUp from "./updatePopup";
+import Overview from "../../../services/api/overview";
 const Widgets = React.forwardRef((props, ref) => {
   const { widget, style, className, children, ...rest } = props;
   const [myclass, setMyClass] = React.useState("");
@@ -26,7 +27,9 @@ const Widgets = React.forwardRef((props, ref) => {
   const [boxHeight, setBoxHeight] = React.useState(50);
   React.useEffect(() => {
     async function myFunc() {
-      let res = await instance.get(`/widgets/${widget}`, config);
+      const body = JSON.stringify({ WIDGET_ID: widget });
+      let res = await Overview.getWidget(body);
+      console.log(res.data);
       setHighChartProps(() => {
         return res.data;
       });
@@ -97,7 +100,7 @@ const Widgets = React.forwardRef((props, ref) => {
                 <Grid item>
                   <IconButton
                     onClick={() => {
-                      dispatch(deleteChart(widget, highchartProps._rev));
+                      dispatch(deleteChart(widget));
                     }}
                   >
                     <DeleteForeverIcon />

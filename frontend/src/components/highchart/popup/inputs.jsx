@@ -84,7 +84,7 @@ const Inputs = (props) => {
     (state) => state.overviewDialog.highchartProps["Inputs"]
   );
   const transactionProps = useSelector(
-    (state) => state.overviewDialog.highchartProps["Transaction Property"]
+    (state) => state.overviewDialog.highchartProps["Assets"]
   );
   const [checked, setChecked] = React.useState([]);
   const [left, setLeft] = React.useState([]);

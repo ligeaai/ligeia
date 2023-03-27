@@ -7,14 +7,16 @@ import {
   changeSelectValue,
   changeValeus,
 } from "../../../services/actions/overview/overviewDialog";
-import { loadSelectItems } from "../../../services/actions/overview/overviewDialog";
-import { updateChart } from "../../../services/actions/overview/taps";
+import {
+  loadSelectItems,
+  updateChart,
+} from "../../../services/actions/overview/overviewDialog";
 import LinechartPopUp from "../../../components/highchart/popup/lineChartPopUp";
 import AngularPopUp from "../../../components/highchart/popup/angularPopUp";
 import SolidPopUp from "../../../components/highchart/popup/solidPopUp";
 import MeasurementPopUp from "../../../components/highchart/popup/measurementPopUp";
 
-const DialogContent = ({ highchartProps, chartId, ...rest }) => {
+const DialogContent = ({ highchartProps, chartId, refresh, ...rest }) => {
   const dispatch = useDispatch();
   const type = useSelector((state) => state.overviewDialog.values.Type);
 
@@ -102,9 +104,8 @@ const DialogContent = ({ highchartProps, chartId, ...rest }) => {
             <Button
               color="inherit"
               onClick={() => {
-                dispatch(updateChart(chartId));
+                dispatch(updateChart(chartId, refresh));
                 rest.handleClose();
-                rest.refresh();
               }}
               variant="outlined"
             >

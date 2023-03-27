@@ -93,7 +93,7 @@ const Linechart = ({ handleClose, title, height }) => {
             <Typography sx={{ mb: 1.5 }}>Assets</Typography>
             <LineAssets
               handleChangeFunc={(value) => {
-                handleChangeFunc("Transaction Property", value);
+                handleChangeFunc("Assets", value);
               }}
             />
           </Box>

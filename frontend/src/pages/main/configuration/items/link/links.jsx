@@ -27,6 +27,7 @@ const Links = ({ linkType, connection, refresh }) => {
       [connection]: selectedItemId,
     });
     let res = await ItemLinkService.getItemLink(body, cancelToken);
+    console.log(res.data);
     setLink(res.data);
   }
   React.useEffect(() => {

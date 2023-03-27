@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { Responsive, WidthProvider } from "react-grid-layout";
 
-import { updateChartLayout } from "../../../services/actions/overview/taps";
 import Widget from "./widgets";
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
@@ -26,7 +25,6 @@ const TabItems = (props) => {
   const refLayout = React.useRef(null);
   const [mounted, setMounted] = React.useState(false);
   const [width, setWidth] = React.useState(0);
-  const dispatch = useDispatch();
   const [breakpoint, setBreakpoint] = React.useState(setBreakPoint(0));
   const { widgetname } = props;
 
@@ -43,8 +41,8 @@ const TabItems = (props) => {
   };
   const widgets = useSelector((state) => {
     try {
-      if (!state.tapsOverview.widgets[widgetname].widgets) return [];
-      return state.tapsOverview.widgets[widgetname].widgets;
+      if (!state.tapsOverview.widgets[widgetname].WIDGETS) return [];
+      return state.tapsOverview.widgets[widgetname].WIDGETS;
     } catch {
       return [];
     }
@@ -59,7 +57,6 @@ const TabItems = (props) => {
   });
   const handleLayoutChange = (newLayout) => {
     layouts[breakpoint] = newLayout;
-    dispatch(updateChartLayout(layouts));
   };
   React.useEffect(() => {
     const observer = new ResizeObserver((entries) => {

@@ -9,7 +9,7 @@ import {
   loadSelectItems,
   fillProperties,
 } from "../../../services/actions/overview/overviewDialog";
-import { saveChart } from "../../../services/actions/overview/overviewDialog";
+import { saveNewChart } from "../../../services/actions/overview/overviewDialog";
 import linechartPopUp from "../../../components/highchart/newPopUp/lineChartHc";
 import angularPopUp from "../../../components/highchart/newPopUp/angularHc";
 import SolidPopUp from "../../../components/highchart/newPopUp/solidHc";
@@ -56,7 +56,7 @@ const DialogContent = ({ handleClose, height }) => {
     myFunc();
   }, []);
   function finishFunc() {
-    dispatch(saveChart());
+    dispatch(saveNewChart());
     handleClose();
   }
   return (

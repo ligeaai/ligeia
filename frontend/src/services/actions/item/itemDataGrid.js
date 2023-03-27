@@ -130,10 +130,11 @@ export const loadItemRowsDataGrid = () => async (dispatch, getState) => {
         let rows = {}
         let columnsId = []
         let itemRows = {}
+        console.log(res.data);
         Promise.all(
             Object.keys(typeRows).map(a => {
                 Object.keys(res.data).map(e => {
-                    rows[a] = { [e]: "" }
+                    rows[a] = { [swapDayAndYear(e)]: "" }
                     itemRows = {
                         ...itemRows, [e]: {
                             ...itemRows[e], [a]: {
@@ -152,6 +153,7 @@ export const loadItemRowsDataGrid = () => async (dispatch, getState) => {
 
             })
         )
+        console.log(rows);
         Promise.all(
             Object.keys(res.data).map(a => {
                 let columnId = a[2] === "-" ? swapDayAndYear(a) : a
@@ -165,15 +167,20 @@ export const loadItemRowsDataGrid = () => async (dispatch, getState) => {
                         rows[e.PROPERTY_TYPE] = { ...rows[e.PROPERTY_TYPE], [columnId]: e[typeFinder[e.PROPERTY_INFO]] }
                         itemRows[a][e.PROPERTY_TYPE].VALUE = e[typeFinder[e.PROPERTY_INFO]]
                     } else {
+                        // if ("NORTH" !== e.PROPERTY_TYPE) {
                         rows[e.PROPERTY_TYPE] = { ...rows[e.PROPERTY_TYPE], [columnId]: e[typeFinder[e.PROPERTY_INFO]] === "False" ? false : true }
                         itemRows[a][e.PROPERTY_TYPE].VALUE = e[typeFinder[e.PROPERTY_INFO]] === "False" ? false : true
+                        // }
                     }
+                    // if ("NORTH" !== e.PROPERTY_TYPE) {
                     rows[e.PROPERTY_TYPE] = { ...rows[e.PROPERTY_TYPE], [`${columnId}ID`]: e.ROW_ID }
                     itemRows[a][e.PROPERTY_TYPE].ROW_ID = e.ROW_ID
+                    // }
                 })
                 rows["HISTORY"] = { ...rows["HISTORY"], [columnId]: newDate(a) }
             })
         )
+        console.log(rows);
         dispatch(_conbineTypeAndItemRows(typeRows, rows))
     } catch (err) {
         return Promise.reject(err)

@@ -23,6 +23,7 @@ const MyDataGrid = () => {
   const dispatch = useDispatch();
   const columns = useSelector((state) => state.itemDataGrid.columns);
   const rows = useSelector((state) => state.itemDataGrid.rows);
+  const typeRow = useSelector((state) => state.itemDataGrid.typeRows);
   const selectedIndex = useSelector(
     (state) => state.treeview.selectedItem.selectedIndex
   );
@@ -48,7 +49,7 @@ const MyDataGrid = () => {
     if (selectedIndex !== -2 && selectedIndex !== -3) {
       dispatch(loadItemRowsDataGrid());
     }
-  }, [itemId, name]);
+  }, [itemId, name, selectedIndex]);
   const onCellEditCommit = (cellData) => {
     const { id, field, value } = cellData;
     let myId = id;

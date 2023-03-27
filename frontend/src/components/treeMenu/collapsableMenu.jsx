@@ -15,7 +15,7 @@ import {
 import {
   loadTapsOverview,
   cleanTabs,
-  updateCouchDb,
+  updateLayouts,
   selectTab,
 } from "../../services/actions/overview/taps";
 import history from "../../routers/history";
@@ -105,7 +105,7 @@ const MyStyledTreeItem = React.memo(({ myItems, path, location }) => {
   const dispatch = useDispatch();
 
   const onHandleClick = async (way, e) => {
-    dispatch(updateCouchDb());
+    dispatch(updateLayouts());
     dispatch(
       await setSelectedCollapseMenu({
         ...e,
@@ -188,7 +188,7 @@ function CustomizedTreeView({ onOpen, setWidthTrue }) {
     }
   };
   async function myFunc(e) {
-    dispatch(updateCouchDb());
+    dispatch(updateLayouts());
     dispatch(await setSelectedCollapseMenu({ ...e }));
     dispatch(loadTapsOverview());
     history.push(`/${e.path}`);
@@ -219,7 +219,7 @@ function CustomizedTreeView({ onOpen, setWidthTrue }) {
     }
 
     return () => {
-      dispatch(updateCouchDb());
+      dispatch(updateLayouts());
     };
   }, [location.pathname]);
   React.useEffect(() => {

@@ -10,8 +10,7 @@ import { uuidv4 } from "../../utils/uuidGenerator"
 import { loadTapsOverview } from "./taps"
 import HcProps from "../../api/couch/hcProps"
 import HcType from "../../api/couch/hcType"
-import Widgets from "../../api/couch/widgets"
-import TabLink from "../../api/couch/taplinks"
+import Overview from "../../api/overview"
 
 export const fillProperties = async (props) => async (dispatch) => {
     try {
@@ -56,59 +55,95 @@ export const changeValeus = (key, value) => dispatch => {
     })
 }
 
-export const saveChart = () => async (dispatch, getState) => {
+function getInputsId(props) {
+    let returnVal = []
+    for (let i = 0; i < props.length; i++) {
+        returnVal.push(props[i].TAG_ID)
+    }
+    return returnVal
+}
+
+const chosePropType = (propName) => {
+    switch (propName) {
+        case "Inputs":
+            return "PROPERTY_TAG"
+        case "Measurement":
+            return "PROPERTY_TAG"
+        case "Assets":
+            return "PROPERTY_JSON"
+        default:
+            return "PROPERTY_STRING"
+    }
+
+}
+
+const fillTheProperty = (chartProps, widgetId) => {
+    let properties = []
+
+    for (let i = 0; i < Object.keys(chartProps).length; i++) {
+        properties.push({
+            "WIDGET_TYPE": chartProps.type,
+            "PROPERTY_NAME": Object.keys(chartProps)[i],
+            "LAYER_NAME": "KNOC",
+            "START_DATETIME": "2023-01-01",
+            "END_DATETIME": "9000-01-01",
+            "PROPERTY_TYPE": typeof chartProps[Object.keys(chartProps)[i]],
+            [chosePropType(Object.keys(chartProps)[i])]: Object.keys(chartProps)[i] === "Inputs" ? getInputsId(chartProps[Object.keys(chartProps)[i]]) : chartProps[Object.keys(chartProps)[i]],
+            "WIDGET_ID": [widgetId.replace(/-/g, "")],
+            "ROW_ID": uuidv4().replace(/-/g, "")
+        })
+    }
+    return properties
+}
+
+export const saveNewChart = () => async (dispatch, getState) => {
     const chartProps = getState().overviewDialog.highchartProps
-    const selectedLink = getState().collapseMenu.selectedItem.LINK_ID
     const selected = getState().tapsOverview.selected
+    const dashboardId = getState().tapsOverview.widgets[selected].ROW_ID
     const selectedChartType = getState().overviewDialog.selectedItem
-    const resData = getState().tapsOverview.data
+    console.log(chartProps);
     const uuid = uuidv4()
-    const body = JSON.stringify({ ...chartProps, _id: uuid, Type: selectedChartType })
-    await Widgets.create(body)
-    const layout = {
-        "w": 6,
-        "i": uuid,
-        "h": 6,
-        "x": 0,
-        "y": 0
-    }
-    const tablinkBody = {
-        ...resData, data: {
-            ...resData.data, [selected]: {
-                widgets: [...resData.data[selected].widgets, uuid],
-                layouts: {
-                    ...resData.data[selected].layouts,
-                    lg: [...resData.data[selected].layouts.lg, {
-                        ...layout
-                    },
-                    ],
-                    md: [...resData.data[selected].layouts.md, {
-                        ...layout
-                    },
-                    ],
-                    sm: [...resData.data[selected].layouts.sm, {
-                        ...layout
-                    },
-                    ],
-                    xs: [...resData.data[selected].layouts.xs, {
-                        ...layout
-                    },
-                    ],
-                    xxs: [...resData.data[selected].layouts.xxs, {
-                        ...layout
-                    },
-                    ]
-                }
-            }
-        }
-    }
     try {
-        await TabLink.update(selectedLink, tablinkBody)
+        const WIDGET = {
+            WIDGET_ID: uuid.replace(/-/g, ""),
+            WIDGET_TYPE: selectedChartType,
+            ROW_ID: uuidv4().replace(/-/g, ""),
+            LAYER_NAME: "KNOC"
+        }
+        let PROPERTY = fillTheProperty(chartProps, uuid)
+        const DASHBOARD_ID = dashboardId
+        const body = JSON.stringify({ WIDGET: WIDGET, PROPERTY: PROPERTY, DASHBOARD_ID: DASHBOARD_ID })
+        console.log(body);
+        await Overview.createWidget(body)
         dispatch(loadTapsOverview())
 
     }
     catch (err) { console.log(err); }
 }
+
+const fillTheUpdateProperty = (chartProps, widgetId) => {
+    let properties = []
+    for (let i = 0; i < Object.keys(chartProps).length; i++) {
+        properties.push({
+            "PROPERTY_NAME": Object.keys(chartProps)[i],
+            "LAYER_NAME": "KNOC",
+            [chosePropType(Object.keys(chartProps)[i])]: Object.keys(chartProps)[i] === "Inputs" ? getInputsId(chartProps[Object.keys(chartProps)[i]]) : chartProps[Object.keys(chartProps)[i]],
+            "WIDGET_ID": [widgetId.replace(/-/g, "")],
+        })
+    }
+    return properties
+}
+
+export const updateChart = (widgetId, refresh) => async (dispatch, getState) => {
+    const chartProps = getState().overviewDialog.highchartProps;
+    const body = JSON.stringify({ UPDATE: fillTheUpdateProperty(chartProps, widgetId), DELETE: [] });
+    try {
+        await Overview.updateWidget(body)
+        refresh()
+    } catch (err) {
+        console.log(err);
+    }
+};
 
 export const cleanStops = (key, value, titles) => (dispatch, getState) => {
     const highchartProps = getState().overviewDialog.highchartProps

@@ -10,7 +10,6 @@ const LinkItem = ({ e, i, type, connection }) => {
   const refreshHandle = () => {
     setRefresh((prev) => !prev);
   };
-  console.log(e, i, type, connection);
   return (
     <Box key={i}>
       <Divider sx={{ backgroundColor: "primary.main" }} />
