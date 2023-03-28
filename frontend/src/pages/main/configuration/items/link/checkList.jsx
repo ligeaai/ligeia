@@ -44,9 +44,7 @@ const MyCheckList = (props) => {
           cancelToken.cancel();
         }
         cancelToken = axios.CancelToken.source();
-        console.log(body);
         let res = await ItemLinkService.getRelated(body, cancelToken);
-        console.log(res.data);
         setValues(res.data);
       } catch (err) {
         console.log(err);
@@ -86,7 +84,7 @@ const MyCheckList = (props) => {
         </Grid>
       </Box>
       <Divider />
-      <Box sx={{ overflowY: "auto" }}>
+      <Box sx={{ overflowY: "auto", backgroundColor: "background.main" }}>
         <CheckboxList
           data={data}
           dataTextPath="PROPERTY_STRING"
@@ -129,9 +127,9 @@ const MyCheckList = (props) => {
                     dispatch(
                       await saveLinks(
                         date,
-                        props.data.TYPE,
-                        props.data.TO_TYPE,
-                        props.data.FROM_TYPE,
+                        selectedValue.TYPE,
+                        selectedValue.TO_TYPE,
+                        selectedValue.FROM_TYPE,
                         props.refreshHandle
                       )
                     );

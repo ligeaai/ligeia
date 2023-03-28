@@ -1,17 +1,17 @@
 import ItemLinkService from "../../api/itemLink";
 
 const helperRequest = async (checkedItems, linkType, type) => {
-    for (let i = 0; i < checkedItems.length; i++) {
+    const promises = checkedItems.map(async (item) => {
         const body = JSON.stringify({
             LINK_TYPE: linkType,
-            [type]: checkedItems[i].ITEMS_ID,
+            [type]: item.ITEMS_ID,
         });
-        let res = await ItemLinkService.cardinalityCheck(body);
-        if (res.data) {
-            return false
-        }
-    }
-    return true
+        const res = await ItemLinkService.cardinalityCheck(body);
+        return res.data;
+    });
+
+    const results = await Promise.all(promises);
+    return !results.includes(true);
 }
 
 const oneToMany = async (checkedItems, linkType, type) => {

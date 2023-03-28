@@ -78,7 +78,7 @@ export const saveLinks = async (date, linkType, TO_TYPE, FROM_TYPE, refresh) => 
         type: "confirmation/setConfirmation",
         payload: {
             title: "Are you sure you want to save?",
-            body: <>{checkedItems.map((e) => e.PROPERTY_STRING)}</>,
+            body: <>{checkedItems.map((e) => <div>{e.PROPERTY_STRING}</div>)}</>,
             agreefunction: saveFunc,
         },
     });

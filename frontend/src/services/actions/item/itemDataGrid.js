@@ -130,7 +130,6 @@ export const loadItemRowsDataGrid = () => async (dispatch, getState) => {
         let rows = {}
         let columnsId = []
         let itemRows = {}
-        console.log(res.data);
         Promise.all(
             Object.keys(typeRows).map(a => {
                 Object.keys(res.data).map(e => {
@@ -153,7 +152,6 @@ export const loadItemRowsDataGrid = () => async (dispatch, getState) => {
 
             })
         )
-        console.log(rows);
         Promise.all(
             Object.keys(res.data).map(a => {
                 let columnId = a[2] === "-" ? swapDayAndYear(a) : a
@@ -180,7 +178,6 @@ export const loadItemRowsDataGrid = () => async (dispatch, getState) => {
                 rows["HISTORY"] = { ...rows["HISTORY"], [columnId]: newDate(a) }
             })
         )
-        console.log(rows);
         dispatch(_conbineTypeAndItemRows(typeRows, rows))
     } catch (err) {
         return Promise.reject(err)

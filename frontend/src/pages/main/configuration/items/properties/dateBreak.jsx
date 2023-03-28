@@ -49,11 +49,7 @@ const DateBreak = ({ props }) => {
             Add a Date Break:
           </Button>
           <Grid item sx={{ width: "125px" }}>
-            <DatePicker
-              time={instanttime}
-              onChangeFunc={onChange}
-              disabled={props}
-            />
+            <DatePicker time={date} onChangeFunc={onChange} disabled={props} />
           </Grid>
         </Grid>
       </Grid>
