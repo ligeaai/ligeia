@@ -13,13 +13,16 @@ const LinkActionMenu = () => {
   const selectedIndex = useSelector(
     (state) => state.treeview.selectedItem.selectedIndex
   );
+  const name = useSelector(
+    (state) => state.treeview.selectedItem.PROPERTY_STRING
+  );
   const dispatch = useDispatch();
   const save = () => {
     if (isChanged) {
       dispatch(
         setConfirmation({
           title: "Are you sure you want to save this ?",
-          body: "bodyasd",
+          body: `${name ? name : "new"}`,
           agreefunction: async () => {
             dispatch(saveItemLink());
             dispatch(setIsActiveConfirmation(false));
@@ -33,7 +36,7 @@ const LinkActionMenu = () => {
     dispatch(
       setConfirmation({
         title: "Are you sure you want to delete this ?",
-        body: "bodyasd",
+        body: `${name ? name : "new"}`,
         agreefunction: () => {
           dispatch(deleteItem());
           dispatch(setIsActiveConfirmation(false));
@@ -43,11 +46,11 @@ const LinkActionMenu = () => {
   };
 
   const saveGoPrev = () => {
-    dispatch(selectTreeViewItem(selectedIndex - 1, "NAME"));
+    dispatch(selectTreeViewItem(selectedIndex - 1, "PROPERTY_STRING", 3));
   };
 
   const saveGoNext = () => {
-    dispatch(selectTreeViewItem(selectedIndex + 1, "NAME"));
+    dispatch(selectTreeViewItem(selectedIndex + 1, "PROPERTY_STRING", 3));
   };
 
   return (

@@ -51,11 +51,11 @@ const PropertiesActionMenu = () => {
   };
 
   const saveGoPrev = () => {
-    dispatch(selectTreeViewItem(selectedIndex - 1, "NAME"));
+    dispatch(selectTreeViewItem(selectedIndex - 1, "PROPERTY_STRING", 3));
   };
 
   const saveGoNext = () => {
-    dispatch(selectTreeViewItem(selectedIndex + 1, "NAME"));
+    dispatch(selectTreeViewItem(selectedIndex + 1, "PROPERTY_STRING", 3));
   };
 
   return (
