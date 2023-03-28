@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const baseUrl = "http://34.125.209.98:8001"
+const baseUrl = "http://34.125.209.98:8000"
 // const baseUrl = "http://localhost:8000"
 const apiVersion = "/api/v1"
 export const wsBaseUrl = "ws://34.125.209.98:8000"

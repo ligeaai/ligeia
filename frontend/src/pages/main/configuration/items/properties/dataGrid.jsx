@@ -45,11 +45,11 @@ const MyDataGrid = () => {
     dispatch(setSaveFunctonConfirmation(saveItem));
     dispatch(setTitleConfirmation("Are you sure you want to save this ? "));
     dispatch(setBodyConfirmation(`${name ? name : "new"}`));
-    dispatch({ type: "CLEAR_COLUMN_ITEM" });
+    if (selectedIndex !== -3) dispatch({ type: "CLEAR_COLUMN_ITEM" });
     if (selectedIndex !== -2 && selectedIndex !== -3) {
       dispatch(loadItemRowsDataGrid());
     }
-  }, [itemId, name, selectedIndex]);
+  }, [itemId, name, selectedIndex, typeRow]);
   const onCellEditCommit = (cellData) => {
     const { id, field, value } = cellData;
     let myId = id;
