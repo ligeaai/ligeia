@@ -1,7 +1,7 @@
 import { instance, config, unAuthConfig } from "../baseApi"
 
 const get = () => {
-    return instance.get("/auth/user-detail", config());
+    return instance.get("/auth/user-detail/", config());
 };
 
 const login = (body) => {
