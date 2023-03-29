@@ -1,7 +1,7 @@
 import uuid
 import logging
 from datetime import timedelta
-
+from apps.layer.models import layer
 from django.conf import settings
 from django.contrib.auth.models import (
     AbstractBaseUser,
@@ -79,7 +79,9 @@ class User(AbstractBaseUser, PermissionsMixin):
     first_name = models.CharField(_("First Name"), max_length=50)
     last_name = models.CharField(_("Last Name"), max_length=50)
     email = models.EmailField(_("Email address"), unique=True)
-
+    layer_name = models.ManyToManyField(
+        layer, related_name="layerName", null=True, blank=True
+    )
     is_staff = models.BooleanField(_("staff status"), default=False)
     is_superuser = models.BooleanField(_("superuser status"), default=False)
     is_active = models.BooleanField(_("active"), default=True)
@@ -92,7 +94,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     date_joined = models.DateTimeField(_("date joined"), auto_now_add=True)
     date_updated = models.DateTimeField(_("date updated"), auto_now=True)
 
-    forget_password_token = models.CharField(max_length=100,default="False")
+    forget_password_token = models.CharField(max_length=100, default="False")
     activation_key = models.UUIDField(unique=True, default=uuid.uuid4)  # email
     confirmed_email = models.BooleanField(default=False)
     # groups = models.ForeignKey(Group, on_delete=models.CASCADE, blank=True, null=True)
@@ -136,6 +138,3 @@ class User(AbstractBaseUser, PermissionsMixin):
         verbose_name = _("User")
         verbose_name_plural = _("Users")
         swappable = "AUTH_USER_MODEL"
-
-
-

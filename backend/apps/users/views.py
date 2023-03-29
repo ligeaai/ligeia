@@ -54,13 +54,12 @@ class UserModelViewSet(ModelViewSet):
     http_method_names = ("head", "option", "get")
 
 
-class UserDetails(ModelViewSet):
+class UserDetails(generics.ListAPIView):
     queryset = User.objects.none()
     serializer_class = UserModelSerializer
     authentication_classes = [
         TokenAuthentication,
     ]
-    http_method_names = ("head", "option", "get")
 
     def list(self, request):
         queryset = User.objects.get(email=request.user)
@@ -279,6 +278,7 @@ class GoogleLogin(SocialLoginView):
 class GoogleRegister(SocialLoginView):
     adapter_class = GoogleOAuth2Adapter
     serializer_class = SocialLoginSerializer
+
 
 class FacebookRegister(SocialLoginView):
     adapter_class = GoogleOAuth2Adapter
