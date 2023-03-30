@@ -63,10 +63,12 @@ function getInputsId(props) {
     return returnVal
 }
 
-const chosePropType = (propName) => {
+const chosePropType = (propName, propType) => {
+    if (propType === "boolean") {
+        return "PROPERTY_BOOLEAN"
+    }
     switch (propName) {
         case "Inputs":
-            return "PROPERTY_TAG"
         case "Measurement":
             return "PROPERTY_TAG"
         case "Assets":
@@ -74,7 +76,16 @@ const chosePropType = (propName) => {
         default:
             return "PROPERTY_STRING"
     }
+}
 
+const chosePropValue = (propName, propVal) => {
+    switch (propName) {
+        case "Inputs":
+        case "Measurement":
+            return getInputsId(propVal)
+        default:
+            return propVal
+    }
 }
 
 const fillTheProperty = (chartProps, widgetId) => {
@@ -88,7 +99,7 @@ const fillTheProperty = (chartProps, widgetId) => {
             "START_DATETIME": "2023-01-01",
             "END_DATETIME": "9000-01-01",
             "PROPERTY_TYPE": typeof chartProps[Object.keys(chartProps)[i]],
-            [chosePropType(Object.keys(chartProps)[i])]: Object.keys(chartProps)[i] === "Inputs" ? getInputsId(chartProps[Object.keys(chartProps)[i]]) : chartProps[Object.keys(chartProps)[i]],
+            [chosePropType(Object.keys(chartProps)[i], typeof chartProps[Object.keys(chartProps)[i]])]: chosePropValue(Object.keys(chartProps)[i], chartProps[Object.keys(chartProps)[i]]),
             "WIDGET_ID": [widgetId.replace(/-/g, "")],
             "ROW_ID": uuidv4().replace(/-/g, "")
         })
@@ -127,7 +138,7 @@ const fillTheUpdateProperty = (chartProps, widgetId) => {
         properties.push({
             "PROPERTY_NAME": Object.keys(chartProps)[i],
             "LAYER_NAME": "KNOC",
-            [chosePropType(Object.keys(chartProps)[i])]: Object.keys(chartProps)[i] === "Inputs" ? getInputsId(chartProps[Object.keys(chartProps)[i]]) : chartProps[Object.keys(chartProps)[i]],
+            [chosePropType(Object.keys(chartProps)[i], typeof chartProps[Object.keys(chartProps)[i]])]: chosePropValue(Object.keys(chartProps)[i], chartProps[Object.keys(chartProps)[i]]),
             "WIDGET_ID": [widgetId.replace(/-/g, "")],
         })
     }
@@ -138,6 +149,7 @@ export const updateChart = (widgetId, refresh) => async (dispatch, getState) => 
     const chartProps = getState().overviewDialog.highchartProps;
     const body = JSON.stringify({ UPDATE: fillTheUpdateProperty(chartProps, widgetId), DELETE: [] });
     try {
+        console.log(body);
         await Overview.updateWidget(body)
         refresh()
     } catch (err) {

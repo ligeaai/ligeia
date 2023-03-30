@@ -1,6 +1,4 @@
-import Highcharts from "highcharts";
 import React from "react";
-import { useSelector } from "react-redux";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import { wsBaseUrl } from "../../../services/baseApi";
@@ -32,15 +30,13 @@ export const Measurement = ({ highchartProps }) => {
     var client;
 
     async function myFunc() {
-      const body = JSON.stringify({ TAG_ID: highchartProps.Measurement });
-      let res = await TagService.getTagItemS(body);
-      setMeasurementData(res.data[0]);
+      setMeasurementData(highchartProps.Measurement[0]);
     }
     myFunc();
 
     if (client) client.close();
     client = new W3CWebSocket(
-      `${wsBaseUrl}/ws/live/last_data/${highchartProps.Measurement}`
+      `${wsBaseUrl}/ws/live/last_data/${highchartProps.Measurement[0].TAG_ID}`
     );
     client.onerror = function () {
       console.log("Connection Error");
@@ -62,8 +58,6 @@ export const Measurement = ({ highchartProps }) => {
               );
               setData((prev) => data[e][2]);
             });
-
-            //setTimeout(sendNumber, 5000);
             return data;
           }
         }

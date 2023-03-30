@@ -32,15 +32,13 @@ export const Solid = ({ highchartProps, width, height }) => {
   React.useEffect(() => {
     var client;
     async function myFunc() {
-      const body = JSON.stringify({ TAG_ID: highchartProps.Measurement });
-      let res = await TagService.getTagItemS(body);
-      setMeasurementData(res.data[0]);
+      setMeasurementData(highchartProps.Measurement[0]);
       setKey(key + 1);
     }
     myFunc();
     if (client) client.close();
     client = new W3CWebSocket(
-      `${wsBaseUrl}/ws/live/last_data/${highchartProps.Measurement}`
+      `${wsBaseUrl}/ws/live/last_data/${highchartProps.Measurement[0].TAG_ID}`
     );
     client.onerror = function () {
       console.log("Connection Error");

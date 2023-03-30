@@ -9,7 +9,7 @@ const ChoseMeasure = () => {
   const dispatch = useDispatch();
   const ItemData = useSelector((state) => state.overviewDialog.itemData);
   const measure = useSelector(
-    (state) => state.overviewDialog.highchartProps.Measurement
+    (state) => state.overviewDialog.highchartProps.Measurement[0]?.TAG_ID
   );
   const defProp = useSelector(
     (state) => state.overviewDialog.highchartProps["Transaction Property"]
@@ -18,7 +18,6 @@ const ChoseMeasure = () => {
     (state) => state.overviewDialog.highchartProps["UOM"]
   );
   const [tags, setTags] = React.useState([]);
-
   const handleChangeFunc = (key, val) => {
     dispatch(changeValeus(key, val));
   };
@@ -56,8 +55,6 @@ const ChoseMeasure = () => {
               handleChangeFunc={async (value) => {
                 handleChangeFunc("Transaction Property", value);
                 let res = await ItemLinkService.getTags({ ID: value });
-                console.log(value);
-                console.log(res.data);
                 setTags(res.data);
               }}
             />
@@ -77,7 +74,10 @@ const ChoseMeasure = () => {
               dataTextPath="NAME"
               defaultValue={measure}
               handleChangeFunc={async (value) => {
-                handleChangeFunc("Measurement", value);
+                handleChangeFunc(
+                  "Measurement",
+                  tags.filter((e) => e.TAG_ID === value)
+                );
                 handleChangeFunc(
                   "Minimum",
                   tags.filter((e) => e.TAG_ID === value)[0].NORMAL_MINIMUM

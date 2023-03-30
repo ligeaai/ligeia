@@ -10,6 +10,7 @@ import {
 import Overview from "../../api/overview";
 import axios from "axios";
 import { uuidv4 } from "../../utils/uuidGenerator";
+
 const _setLinkedItem = () => (dispatch, getState) => {
   const selectedItem = getState().collapseMenu.selectedItem;
   let list = []
@@ -28,6 +29,7 @@ const _setLinkedItem = () => (dispatch, getState) => {
     payload: list
   })
 }
+
 let cancelToken;
 export const loadTapsOverview = () => async (dispatch, getState) => {
   const linkId = getState().collapseMenu.selectedItem.FROM_ITEM_ID;
@@ -71,6 +73,7 @@ export const cleanTabs = () => (dispatch) => {
 export const deleteChart = (id) => async (dispatch) => {
   const body = JSON.stringify({ WIDGET_ID: id });
   try {
+    await dispatch(updateLayouts())
     await Overview.removeWidget(body)
     dispatch(loadTapsOverview());
   } catch (err) {
@@ -142,13 +145,10 @@ export const updateTabHeader =
         console.log(err);
       }
     };
-
-
   };
 
 export const deleteTapHeader = (header) => async (dispatch, getState) => {
   const dashboard = getState().tapsOverview.widgets[header];
-
   try {
     const body = JSON.stringify({ ROW_ID: dashboard.ROW_ID })
     await Overview.removeDashboards(body)

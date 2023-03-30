@@ -4,8 +4,6 @@ import {
     CLEAN_TABS_OVERVIEW,
     SET_WIDGETS_OVERVIEW,
     REFRESH_WIDGETS_OVERVIEW,
-    SET_REV,
-    UPDATE_LAYOUT,
     SET_ISCHECKED,
     SET_UPDATE_ISCHECKED
 } from "../../actions/types"
@@ -15,7 +13,6 @@ import {
 const initialState = {
     titles: [],
     widgets: [],
-    data: [],
     selected: null,
     refresh: false,
     isActive: false,
@@ -34,7 +31,6 @@ export default function (state = initialState, action) {
                     ...state,
                     titles: payload.tapsOverview.titles,
                     widgets: payload.tapsOverview.widgets,
-                    data: payload.tapsOverview.data,
                     selected: payload.tapsOverview.selected,
                     refresh: payload.tapsOverview.refresh,
                     isActive: payload.tapsOverview.isActive,
@@ -45,7 +41,6 @@ export default function (state = initialState, action) {
                     ...state,
                     titles: [],
                     widgets: [],
-                    data: [],
                     selected: null,
                     refresh: false,
                     isActive: false,
@@ -65,16 +60,6 @@ export default function (state = initialState, action) {
                     [payload.key]: payload.val
                 }
             }
-        case UPDATE_LAYOUT:
-            return {
-                ...state,
-                data: payload
-            }
-        case SET_REV:
-            return {
-                ...state,
-                data: { ...state.data, _rev: payload }
-            }
         case REFRESH_WIDGETS_OVERVIEW:
             return {
                 ...state,
@@ -89,7 +74,6 @@ export default function (state = initialState, action) {
             return {
                 titles: [],
                 widgets: [],
-                data: [],
                 selected: null,
                 refresh: false,
                 isActive: false,
@@ -105,7 +89,6 @@ export default function (state = initialState, action) {
                 ...state,
                 titles: payload.titles,
                 widgets: payload.widgets,
-                data: payload.data,
                 isActive: true
             }
         default:

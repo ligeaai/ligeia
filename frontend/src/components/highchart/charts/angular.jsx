@@ -29,16 +29,13 @@ const Angular = ({ highchartProps, width, height }) => {
     var client;
 
     async function myFunc() {
-      const body = JSON.stringify({ TAG_ID: highchartProps.Measurement });
-      let res = await TagService.getTagItemS(body);
-      console.log(res);
-      setMeasurementData(res.data[0]);
+      setMeasurementData(highchartProps.Measurement[0]);
       setKey(key + 1);
     }
     myFunc();
     if (client) client.close();
     client = new W3CWebSocket(
-      `${wsBaseUrl}/ws/live/last_data/${highchartProps.Measurement}`
+      `${wsBaseUrl}/ws/live/last_data/${highchartProps.Measurement[0].TAG_ID}`
     );
     client.onerror = function () {
       console.log("Connection Error");
@@ -58,8 +55,6 @@ const Angular = ({ highchartProps, width, height }) => {
               setCategories((prev) => new Date(data[e][1] * 1000));
               setValue((prev) => data[e][2]);
             });
-
-            //setTimeout(sendNumber, 5000);
             return data;
           }
         }
