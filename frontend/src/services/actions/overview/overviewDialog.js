@@ -8,36 +8,38 @@ import {
 
 import { uuidv4 } from "../../utils/uuidGenerator"
 import { loadTapsOverview } from "./taps"
-import HcProps from "../../api/couch/hcProps"
-import HcType from "../../api/couch/hcType"
 import Overview from "../../api/overview"
 
-export const fillProperties = async (props) => async (dispatch) => {
+export const fillProperties = async (WIDGET_TYPE) => async (dispatch) => {
     try {
-        let res = await HcProps.get(props)
+        const body = JSON.stringify({ WIDGET_TYPE })
+        let res = await Overview.getWidgetProps(body)
+        console.log(res);
         dispatch({
             type: FILL_VALUES_OVERVIEW_DIALOG,
-            payload: res.data.properties
+            payload: res.data[0].properties
         })
         dispatch({
             type: SET_HIGHCHART_PROPERTY_OVERVIEW_DIALOG,
-            payload: res.data.properties
+            payload: res.data[0].properties
         })
         dispatch({
             type: SET_SELECTED_ITEM_OVERVIEW_DIALOG,
-            payload: props
+            payload: WIDGET_TYPE
         })
         return Promise.resolve(res.data)
-    } catch { }
+    } catch (err) {
+        console.log(err);
+    }
 }
 
 export const loadSelectItems = async () => async dispatch => {
     try {
-        let res = await HcType.get()
-        let sortedList = res.data.type.sort((a, b) => (a) > (b) ? 1 : -1)
+        let res = await Overview.getWidgetTypeList()
+        console.log(res.data);
         dispatch({
             type: SET_SELECT_ITEM_OVERVIEW_DIALOG,
-            payload: sortedList
+            payload: res.data
         })
     } catch (err) {
         return err

@@ -5,15 +5,15 @@ import {
     DRAWER_MENU_SET_OPEN
 } from "../types"
 
-import DrawerMenu from "../../api/couch/drawerMenu";
+import DrawerMenu from "../../api/drawerMenu";
 export const loadDrawerMenu = () => async (dispatch, getState) => {
-
+    const CULTURE = getState().lang.cultur
     try {
-        let res = await DrawerMenu.get()
-
+        const body = JSON.stringify({ CULTURE })
+        let res = await DrawerMenu.get(body)
         dispatch({
             type: LOAD_DRAWER_MENU,
-            payload: res.data.CONTENTS
+            payload: res.data
         })
 
     } catch (err) {
