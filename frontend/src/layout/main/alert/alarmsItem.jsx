@@ -4,13 +4,22 @@ import { ItemSperatorLineXL } from "../../../components";
 import { dateFormatDDMMYYHHMM } from "../../../services/utils/dateFormatter";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
+import {
+  ErrorOutline,
+  WarningAmberOutlined,
+  InfoOutlined,
+} from "@mui/icons-material";
 import { useSnackbar } from "notistack";
 const alarmLevel = {
   1: "Error",
   2: "Warning",
   3: "Info",
 };
-
+const alarmIcon = {
+  1: <ErrorOutline fontSize="small" />,
+  2: <WarningAmberOutlined fontSize="small" />,
+  3: <InfoOutlined fontSize="small" />,
+};
 const AlertItem = (props) => {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
@@ -18,7 +27,10 @@ const AlertItem = (props) => {
     enqueueSnackbar(
       <Grid container rowSpacing={2} sx={{ width: "400px" }}>
         <Grid item xs={12} sx={{ mb: 1 }}>
-          <Grid container alignItems={"center"} justifyContent="space-between">
+          <Grid container columnGap={0.5}>
+            <Grid item alignItems={"center"}>
+              {alarmIcon[1]}
+            </Grid>
             <Grid item>{props.layer_name}</Grid>
           </Grid>
         </Grid>
