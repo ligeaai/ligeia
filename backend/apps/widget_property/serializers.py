@@ -15,6 +15,7 @@ class Widget_PropertyGetSerializer(serializers.ModelSerializer):
             "PROPERTY_STRING",
             "PROPERTY_TAG",
             "PROPERTY_JSON",
+            "PROPERTY_BOOLEAN",
         )
 
 

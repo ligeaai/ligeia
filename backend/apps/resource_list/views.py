@@ -4,7 +4,11 @@ from rest_framework import generics, permissions
 from rest_framework.response import Response
 import uuid
 from rest_framework import status
-from .serializers import ResourceListDetailsSerializer, ResourceListSaveSerializer,ResourceListParentSerializer
+from .serializers import (
+    ResourceListDetailsSerializer,
+    ResourceListSaveSerializer,
+    ResourceListParentSerializer,
+)
 from apps.type.models import type as Type
 from apps.type.serializers import (
     TypeResourceListManagerSerializer,
@@ -71,7 +75,6 @@ class ResourceListDrawerMenutView(generics.CreateAPIView):
         queryset = resource_list.objects.filter(
             ID="drawerMenu", CULTURE=culture, HIDDEN=False
         ).order_by("SORT_ORDER")
-        print(queryset)
         validate_find(queryset, request)
         serializer = ResourceListDetailsSerializer(queryset, many=True)
         new_dict = dict()
@@ -86,7 +89,6 @@ class ResourceListDrawerMenutView(generics.CreateAPIView):
             serializer = ResourceListDetailsSerializer(queryset, many=True)
             if queryset:
                 tempt = {}
-                print(item.get("PARENT"))
                 for value in serializer.data:
                     layer = value.get("PARENT")
                     if str(layer).split(".")[0] == "TYPE":
@@ -164,20 +166,21 @@ class ResourceListDetailView(generics.CreateAPIView):
         )
 
 
-
-
 class ResourceListEditorTreeMenuView(generics.CreateAPIView):
 
     authentication_classes = []
     permission_classes = []
 
     def post(self, request):
-        queryset = resource_list.objects.filter(CULTURE=request.data.get('CULTURE')).distinct("PARENT")
+        queryset = resource_list.objects.filter(
+            CULTURE=request.data.get("CULTURE")
+        ).distinct("PARENT")
         validate_find(queryset, request)
         serializer = ResourceListDetailsSerializer(queryset, many=True)
 
-        sorted_list = sorted(list(serializer.data), key=lambda d: str(d['PARENT']))
-        return Response(sorted_list,
+        sorted_list = sorted(list(serializer.data), key=lambda d: str(d["PARENT"]))
+        return Response(
+            sorted_list,
             status=status.HTTP_200_OK,
         )
 
@@ -188,14 +191,21 @@ class ResourceListEditorHierarchyView(generics.CreateAPIView):
     permission_classes = []
 
     def post(self, request):
-        queryset = resource_list.objects.filter(CULTURE=request.data.get('CULTURE'),PARENT = request.data.get('PARENT'))
+        queryset = resource_list.objects.filter(
+            CULTURE=request.data.get("CULTURE"), PARENT=request.data.get("PARENT")
+        )
         validate_find(queryset, request)
         serializer = ResourceListDetailsSerializer(queryset, many=True)
         for index in range(len(serializer.data)):
-            spliter = serializer.data[index].get('ID').split(str(request.data.get('PARENT'))+'.')
+            spliter = (
+                serializer.data[index]
+                .get("ID")
+                .split(str(request.data.get("PARENT")) + ".")
+            )
             if len(spliter) > 1:
-                serializer.data[index]['ID'] = spliter[1]
+                serializer.data[index]["ID"] = spliter[1]
 
-        return Response(serializer.data,
+        return Response(
+            serializer.data,
             status=status.HTTP_200_OK,
         )

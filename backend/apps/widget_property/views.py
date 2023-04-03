@@ -40,6 +40,8 @@ class WidgetPropertyGetView(generics.CreateAPIView):
                 new_dict[key] = item.get("PROPERTY_JSON")
             elif item.get("PROPERTY_TAG"):
                 new_dict[key] = item.get("PROPERTY_TAG")
+            elif item.get("PROPERTY_BOOLEAN"):
+                new_dict[key] = item.get("PROPERTY_BOOLEAN")
             else:
                 new_dict[key] = item.get("PROPERTY_STRING")
         return Response(new_dict, status=status.HTTP_201_CREATED)
