@@ -21,7 +21,6 @@ import {
     SNACKBAR_ERROR
 } from './types';
 
-import { instance } from '../baseApi';
 import { createTreeViewCouch } from './treeview/treeview';
 import history from '../../routers/history';
 import Auth from "../api/auth"

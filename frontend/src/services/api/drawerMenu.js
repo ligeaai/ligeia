@@ -7,9 +7,11 @@
 
 import { instance, config } from "../baseApi"
 
-const get = (body) => {
+const get = (body, isEmployee) => {
     console.log(config());
-    return instance.post("/resource-list/menu/user/", body, config());
+    if (isEmployee)
+        return instance.post("/resource-list/menu/user/", body, config());
+    return instance.post("/resource-list/menu/", body, config());
 };
 
 const DrawerMenu = {
