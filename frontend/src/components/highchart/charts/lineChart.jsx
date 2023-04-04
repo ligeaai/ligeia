@@ -1,8 +1,6 @@
 import Highcharts from "highcharts/highstock";
 import React from "react";
 
-import Box from "@mui/material/Box";
-
 import HighchartsReact from "highcharts-react-official";
 import exporting from "highcharts/modules/exporting";
 import data from "highcharts/modules/data";
@@ -93,6 +91,7 @@ const LineCharts = ({ highchartProps, width, height, liveData, chartType }) => {
   const options = {
     constructorType: "stockChart",
     chart: {
+      useGPUTranslations: true,
       width: width,
       zoomBySingleTouch: true,
       zoomType: "x",
@@ -107,6 +106,7 @@ const LineCharts = ({ highchartProps, width, height, liveData, chartType }) => {
           });
           highchartProps.Inputs.map((tag, index) => {
             const myindex = index;
+            console.log(tag.TAG_ID);
             client[index] = new W3CWebSocket(
               `${wsBaseUrl}/ws/tags/${tag.TAG_ID}`
             );
@@ -126,21 +126,55 @@ const LineCharts = ({ highchartProps, width, height, liveData, chartType }) => {
                 if (client.readyState === client.OPEN) {
                   if (typeof e.data === "string") {
                     let jsonData = JSON.parse(e.data);
-                    Promise.all(
-                      jsonData.map((data) => {
-                        Object.keys(data).map((key) => {
-                          dataList[myindex].addPoint(
-                            {
-                              x: data[key][1][0][0] * 1000,
-                              y: data[key][1][0][1],
-                            },
-                            true,
-                            false,
-                            false
-                          );
-                        });
-                      })
-                    );
+                    if (jsonData.length > 1) {
+                      let data = [];
+                      Promise.all(
+                        jsonData.map((e) => {
+                          console.log(e);
+                          console.log(Object.keys(e));
+                          data.push([
+                            parseInt(e[Object.keys(e)[0]][1][0][0]) * 1000,
+                            e[Object.keys(e)[0]][1][0][1],
+                          ]);
+                        })
+                      );
+                      console.log(data);
+                      series.addSeries({
+                        yAxis:
+                          "yaxis-" +
+                          yAxiskey[`${tag.UOM_QUANTITY_TYPE} (${tag.UOM})`],
+                        name: tag.NAME,
+
+                        color: highchartProps["Enable Custom Colors"]
+                          ? highchartProps[`[${tag.NAME}] Color`]
+                          : "",
+
+                        data: data,
+                        dataGrouping: {
+                          units: [
+                            ["week", [1]],
+                            ["month", [1, 2, 3, 4, 6]],
+                          ],
+                        },
+                      });
+                    } else {
+                      Promise.all(
+                        jsonData.map((data) => {
+                          Object.keys(data).map((key) => {
+                            dataList[myindex].addPoint(
+                              {
+                                x: data[key][1][0][0] * 1000,
+                                y: data[key][1][0][1],
+                              },
+                              true,
+                              false,
+                              false
+                            );
+                          });
+                        })
+                      );
+                    }
+
                     return true;
                   }
                 }
@@ -254,17 +288,6 @@ const LineCharts = ({ highchartProps, width, height, liveData, chartType }) => {
           },
         },
       },
-      series: [
-        ...highchartProps.Inputs.map((e) => {
-          return {
-            yAxis: "yaxis-" + yAxiskey[`${e.UOM_QUANTITY_TYPE} (${e.UOM})`],
-            name: e.NAME,
-            color: highchartProps["Enable Custom Colors"]
-              ? highchartProps[`[${e.NAME}] Color`]
-              : "",
-          };
-        }),
-      ],
     },
     navigation: {
       buttonOptions: {
@@ -303,24 +326,6 @@ const LineCharts = ({ highchartProps, width, height, liveData, chartType }) => {
       },
     },
     yAxis: [...yAxisTitles],
-    series: [
-      ...highchartProps.Inputs.map((e, i) => {
-        return {
-          yAxis: "yaxis-" + yAxiskey[`${e.UOM_QUANTITY_TYPE} (${e.UOM})`],
-          name: e.NAME,
-          color: highchartProps["Enable Custom Colors"]
-            ? highchartProps[`[${e.NAME}] Color`]
-            : "",
-
-          dataGrouping: {
-            units: [
-              ["week", [1]],
-              ["month", [1, 2, 3, 4, 6]],
-            ],
-          },
-        };
-      }),
-    ],
   };
 
   return (
