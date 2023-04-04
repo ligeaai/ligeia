@@ -12,53 +12,83 @@ import {
     TextField,
     Checkbox,
     Button,
+    IconButton,
+    Popover,
 } from "@mui/material";
 import { Box } from '@mui/system';
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import { useState, useEffect } from 'react';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
+import EditIcon from "@mui/icons-material/Edit";
+import { config } from '../../../services/baseApi';
 
-
-const StyledTableCell = styled(TableCell)(({ theme }) => ({
-    [`&.${tableCellClasses.head}`]: {
-        backgroundColor: theme.palette.background.success,
-        color: theme.palette.text.primary,
-        fontSize: 18,
-    },
-    [`&.${tableCellClasses.body}`]: {
-        fontSize: 16,
-    },
-}));
-
-const StyledTableRow = styled(TableRow)(({ theme }) => ({
-    '&:nth-of-type(odd)': {
-        backgroundColor: theme.palette.action.hover,
-    },
-    '&:last-child td, &:last-child th': {
-        border: 0,
-    },
-}));
 
 function BasicMenu(props) {
-    const [anchorEl, setAnchorEl] = React.useState(null);
+    const [isOpen, setIsOpen] = React.useState(false);
     const [menuItems, setMenuItems] = React.useState([]);
-    const open = Boolean(anchorEl);
+    const [selectedItems, setSelectedItems] = React.useState([]);
 
-    const handleClick = (event) => {
-        setAnchorEl(event.currentTarget);
+
+    const handleOpen = () => {
+        setIsOpen(true);
     };
 
     const handleClose = () => {
-        setAnchorEl(null);
+        setIsOpen(false);
     };
+
+
 
     const handleSelectItem = (item) => {
-        props.onItemSelected(item.LAYER_NAME);
-        handleClose();
+        const itemName = item.LAYER_NAME;
+
+        if (selectedItems.includes(itemName)) {
+            setSelectedItems(selectedItems.filter((i) => i !== itemName));
+        } else {
+            setSelectedItems([...selectedItems, itemName]);
+        }
     };
 
 
+    // console.log(selectedItems);
+    // console.log("************************///////////");
+
+
+    const handleAddItems = () => {
+        console.log("-----------------------------*");
+        console.log(props);
+
+        try {
+            const body = JSON.stringify({ users: [{ ...props.user, layer_name: selectedItems }] });
+            console.log(body);
+
+
+            fetch("http://34.125.126.30:8001/api/v1/auth/user/layer/update", {
+                method: "POST",
+                headers: {
+                    ...config().headers,
+                },
+                body: body,
+            })
+                .then((response) => response.json())
+                .then((data) => {
+                    setSelectedItems(data);
+                    handleClose();
+                })
+                .catch((error) => {
+                    console.error("Error updating selected items: ", error);
+                });
+
+
+
+            console.log(JSON.stringify(selectedItems));
+
+        } catch (error) {
+            console.log(error);
+        }
+
+    };
 
     React.useEffect(() => {
         fetch('http://34.125.126.30:8000/api/v1/layer/layer-dropdown/')
@@ -70,42 +100,54 @@ function BasicMenu(props) {
 
     return (
         <div>
-            <Button
-                id="demo-positioned-button"
-                aria-controls={open ? 'demo-positioned-menu' : undefined}
-                aria-haspopup="true"
-                aria-expanded={open ? 'true' : undefined}
-                onClick={handleClick}
-            >
-                Layer Name
-            </Button>
-            <Menu
-                id="demo-positioned-menu"
-                aria-labelledby="demo-positioned-button"
-                anchorEl={anchorEl}
-                open={open}
-                onClose={handleClose}
-                anchorOrigin={{
-                    vertical: 'top',
-                    horizontal: 'left',
-                }}
-                transformOrigin={{
-                    vertical: 'top',
-                    horizontal: 'left',
-                }}
-            >
-                {menuItems.map(item => (
-                    <MenuItem key={item.id} onClick={() => handleSelectItem(item)}>
-                        {item.LAYER_NAME}
-                    </MenuItem>
-                ))}
-            </Menu>
+            <IconButton id="demo-positioned-button"
+                onClick={handleOpen}>
+                <EditIcon />
+            </IconButton>
+            {isOpen &&
+                <div style={{
+                    position: "fixed",
+                    top: "50%",
+                    left: "50%",
+                    transform: "translate(-50%, -50%)",
+                    backgroundColor: "lightGray",
+                    zIndex: 1,
+                    borderRadius: "5px",
+                    boxShadow: "0 0 10px rgba(0,0,0,.5)",
+                    padding: "10px",
+                    height: "25vw",
+                    width: "50vw",
+
+                }}>
+                    {menuItems.map((item) => (
+                        <MenuItem key={item.id} onClick={() => handleSelectItem(item)}>
+                            <Checkbox checked={selectedItems.includes(item.LAYER_NAME)} />
+                            {item.LAYER_NAME}
+                        </MenuItem>
+                    ))}
+
+                    <Button
+                        variant="contained"
+                        sx={{
+                            color: "text.main",
+                            backgroundColor: "background.success",
+                            "&:hover": {
+                                backgroundColor: "hover.success",
+                                color: "primary.dark",
+                            },
+                            fontSize: "1vw"
+
+                        }}
+                        onClick={handleAddItems}
+
+                    >
+                        Add
+                    </Button>
+                </div>
+            }
         </div>
     );
 }
-
-
-
 
 
 function UserManagament() {
@@ -114,44 +156,12 @@ function UserManagament() {
     const isFullScreen = useSelector((state) => state.fullScreen.isFullScreen);
     const [users, setUsers] = useState([]);
     const [selectedUsers, setSelectedUsers] = useState([]);
+    const [anchorEl, setAnchorEl] = useState(null);
 
 
-    const handleUserSelection = (user) => {
-        if (selectedUsers.includes(user)) {
-            setSelectedUsers(
-                selectedUsers.filter((selectedUser) => selectedUser !== user)
-            );
-        } else {
-            setSelectedUsers([...selectedUsers, user]);
-        }
+    const handleClose = () => {
+        setAnchorEl(null);
     };
-
-    function handleItemSelected(itemId) {
-        console.log(`Seçilen öğe: ${itemId}`);
-    }
-
-
-
-
-
-    //     fetch('http://34.125.126.30:8001/api/v1/auth/user/layer/update', {
-    //   method: 'PUT',
-    //   headers: {
-    //     'Content-Type': 'application/json'
-    //   },
-    //   body: JSON.stringify({
-    //     layerName: ''
-    //   })
-    // })
-    // .then(response => response.json())
-    // .then(data => {
-    //   console.log(data);
-    // })
-    // .catch(error => {
-    //   console.error(error);
-    // });
-
-
 
     useEffect(() => {
         fetch("http://34.125.126.30:8000/api/v1/auth/user-list", {
@@ -170,6 +180,8 @@ function UserManagament() {
             })
             .catch((error) => console.error(error));
     }, []);
+
+    const open = Boolean(anchorEl);
 
     return (
         <Box sx={{
@@ -198,9 +210,8 @@ function UserManagament() {
                                     <TableCell align="right">E-mail Adress</TableCell>
                                     <TableCell align="right">Date Joined</TableCell>
                                     <TableCell align="right">Permissions</TableCell>
-                                    <TableCell align="right">
-                                        <BasicMenu onItemSelected={handleItemSelected}></BasicMenu>
-                                    </TableCell>
+                                    <TableCell align="right">Layer Name</TableCell>
+
                                 </TableRow>
                             </TableHead>
                             <TableBody>
@@ -213,12 +224,11 @@ function UserManagament() {
                                         <TableCell align="right">{user.date_joined}</TableCell>
                                         <TableCell align="right">{user.permissions}</TableCell>
                                         <TableCell align="right">
-                                            {user.layer_name}
+                                            {user.layer_name.map(e => `${e} `)}
                                         </TableCell>
                                         <TableCell align="right">
-                                            <Checkbox
-                                                checked={selectedUsers.includes(user)}
-                                                onChange={() => handleUserSelection(user)}
+                                            <BasicMenu
+                                                user={user}
                                             />
                                         </TableCell>
 
@@ -232,22 +242,6 @@ function UserManagament() {
                             <Button
                                 variant="contained"
                                 sx={{
-                                    color: "text.main",
-                                    backgroundColor: "background.success",
-                                    "&:hover": {
-                                        backgroundColor: "hover.success",
-                                        color: "text.main",
-                                    },
-                                }}
-                            >
-                                Save
-                            </Button>
-
-                        </Grid>
-                        <Grid item>
-                            <Button
-                                variant="contained"
-                                sx={{
                                     color: "primary.light",
                                     backgroundColor: "primary.dark",
                                     "&:hover": {
@@ -256,7 +250,7 @@ function UserManagament() {
                                     },
                                 }}
                             >
-                                Cancel
+                                ADD USER
                             </Button>
                         </Grid>
                     </Grid>
