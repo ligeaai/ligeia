@@ -24,7 +24,6 @@ class item_property(models.Model):
         db_index=True,
     )
     END_DATETIME = models.DateField(
-        default=timezone.now,
         null=True,
         db_index=True,
     )
@@ -68,12 +67,10 @@ class item_property(models.Model):
         null=True,
     )
     LAST_UPDT_DATE = models.DateField(
-        default=timezone.now,
         null=True,
     )
     VERSION = models.CharField(
         max_length=32,
-        default=uuid.uuid4,
         null=True,
     )
     DB_ID = models.CharField(
@@ -82,7 +79,6 @@ class item_property(models.Model):
     )
     ROW_ID = models.CharField(
         max_length=32,
-        default=uuid.uuid4,
         null=True,
         db_index=True,
     )

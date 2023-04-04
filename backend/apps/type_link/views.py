@@ -61,11 +61,15 @@ class TypeNewLinkSchemasView(generics.CreateAPIView):
                     ID__in=types,
                     CULTURE=culture_val,
                 )
-                .values("SHORT_LABEL", "MOBILE_LABEL")
+                .values("SHORT_LABEL", "MOBILE_LABEL", "ID")
                 .order_by("ID")
             )
             for linksProp, resourceProp in zip(target, resource_label):
-                new_dict[item].append({**linksProp, **resourceProp})
+                typeLabel = "TYPE." + linksProp.get("TYPE")
+                if typeLabel == resourceProp.get("ID"):
+                    new_dict[item].append({**linksProp, **resourceProp})
+            # for linksProp, resourceProp in zip(target, resource_label):
+            #     new_dict[item].append({**linksProp, **resourceProp})
 
         return Response(new_dict, status=status.HTTP_200_OK)
 
@@ -190,6 +194,7 @@ class RelatedTypeView(generics.CreateAPIView):
             )
             .order_by(get_label)
         )
+        print(type_items)
         types = [target_type.get(get_label) for target_type in type_items]
         target_type = Type.objects.filter(TYPE__in=types).values_list("LABEL_ID")
         resource_label = (
@@ -197,10 +202,13 @@ class RelatedTypeView(generics.CreateAPIView):
                 ID__in=target_type,
                 CULTURE=culture_val,
             )
-            .values("SHORT_LABEL", "MOBILE_LABEL")
+            .values("SHORT_LABEL", "MOBILE_LABEL", "ID")
             .order_by("ID")
         )
         new_dict = []
         for linksProp, resourceProp in zip(type_items, resource_label):
-            new_dict.append({**linksProp, **resourceProp})
+            typeLabel = "TYPE." + linksProp.get(get_label)
+            print(typeLabel, "------------->", resourceProp.get("ID"))
+            if typeLabel == resourceProp.get("ID"):
+                new_dict.append({**linksProp, **resourceProp})
         return Response(new_dict, status=status.HTTP_200_OK)

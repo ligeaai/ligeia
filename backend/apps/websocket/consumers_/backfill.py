@@ -19,8 +19,8 @@ class WSConsumerBackfill(AsyncWebsocketConsumer):
     async def connect(self):
         await self.accept()
         self.client = MongoClient("mongodb://root:admin@mongodb-timescale:27017/")
-        self.mongo_db = self.client["backfilldata20"]
-        self.collection = self.mongo_db["backfilldata20"]
+        self.mongo_db = self.client["backfilldata1"]
+        self.collection = self.mongo_db["backfilldata1"]
         self.tag_id = self.scope["url_route"]["kwargs"]["tag_id"]
         self.tag_name, self.asset = await sync_to_async(find_tag)(self.tag_id)
         self.kwargs = {

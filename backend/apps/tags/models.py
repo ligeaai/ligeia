@@ -6,7 +6,6 @@ from django.utils import timezone
 class tags(models.Model):
     ITEM_ID = models.CharField(
         max_length=32,
-        default=uuid.uuid4().hex,
         null=False,
         db_index=True,
     )
@@ -124,7 +123,6 @@ class tags(models.Model):
     )
     VERSION = models.CharField(
         max_length=32,
-        default=uuid.uuid4().hex,
         null=True,
     )
     DB_ID = models.CharField(
@@ -133,7 +131,6 @@ class tags(models.Model):
     )
     ROW_ID = models.CharField(
         max_length=32,
-        default=uuid.uuid4().hex,
         null=True,
         db_index=True,
     )
