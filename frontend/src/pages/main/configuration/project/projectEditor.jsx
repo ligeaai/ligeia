@@ -5,11 +5,9 @@ import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import { MyBox, MyCheckBox, MyTextField, Select } from "../../../../components";
+import { BigBox, MyTextField, Select } from "../../../../components";
 import { makeStyles } from "@mui/styles";
-import { width } from "@mui/system";
 import { instance, config } from "../../../../services/baseApi";
-import { grey } from "@mui/material/colors";
 
 import {
   changeProjectValue,
@@ -242,7 +240,6 @@ const UnitSystem = () => {
 };
 const ProjectEditor = () => {
   const dispatch = useDispatch();
-  const isFullScreen = useSelector((state) => state.fullScreen.isFullScreen);
   const classes = useStyles();
   React.useEffect(() => {
     return () => {
@@ -250,24 +247,7 @@ const ProjectEditor = () => {
     };
   }, []);
   return (
-    <Box
-      sx={{
-        width: `100%`,
-        minHeight: isFullScreen
-          ? "calc(500px - 60px  )"
-          : "calc(500px - 74px  )",
-        height: isFullScreen
-          ? "calc(100vh - 60px )"
-          : "calc(100vh - 60px - 74px )",
-        button: { color: "text.secondary" },
-        m: 0.5,
-
-        border: "0.5px solid",
-        borderColor: "background.main",
-        borderRadius: "5px",
-        overflowY: "scroll",
-      }}
-    >
+    <BigBox>
       <Grid container sx={{ p: 1.5 }}>
         <Grid item xs={12} className={classes.row}>
           <Grid
@@ -317,7 +297,7 @@ const ProjectEditor = () => {
           </Button>
         </Grid>
       </Grid>
-    </Box>
+    </BigBox>
   );
 };
 

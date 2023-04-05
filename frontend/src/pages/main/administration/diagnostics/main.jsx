@@ -7,8 +7,9 @@ import {
   ItemSperatorLineXL,
   MainBox,
 } from "../../../../components";
-import ProjectEditor from "./projectEditor";
-const Project = () => {
+import DiagnosticEditor from "./diagnosticEditor";
+
+const Main = () => {
   return (
     <MainBox>
       <Grid
@@ -22,8 +23,8 @@ const Project = () => {
         <Grid container>
           <BreadcrumbBox />
           <ItemSperatorLineXL />
-          <Grid item xs={12} sx={{ mt: 1, ml: 1, mr: 2 }}>
-            <ProjectEditor />
+          <Grid item xs={12}>
+            <DiagnosticEditor />
           </Grid>
         </Grid>
       </Grid>
@@ -31,4 +32,4 @@ const Project = () => {
   );
 };
 
-export default Project;
+export default Main;

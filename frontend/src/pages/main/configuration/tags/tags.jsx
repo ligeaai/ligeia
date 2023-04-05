@@ -1,12 +1,13 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
-import { Grid, Box } from "@mui/material";
+import { Grid } from "@mui/material";
 
 import {
-  Breadcrumb,
+  BreadcrumbBox,
   ItemSperatorLineXL,
   PropLinkTabs,
+  MainBox,
 } from "../../../../components";
 import DrawerMenu from "../../../../layout/main/asset/treeViewMenu";
 import TagsActionMenu from "./tagsActionMenu";
@@ -23,7 +24,6 @@ import Menu from "./treeMenu";
 
 const Tags = ({ isHome }) => {
   const dispatch = useDispatch();
-  const isFullScreen = useSelector((state) => state.fullScreen.isFullScreen);
   React.useEffect(() => {
     if (isHome) {
       dispatch(selectTreeViewItem(-3, "", 3));
@@ -37,14 +37,7 @@ const Tags = ({ isHome }) => {
     };
   }, []);
   return (
-    <Grid
-      container
-      sx={{
-        minHeight: isFullScreen ? "100vh" : "100%",
-        height: "500px",
-        flexWrap: "nowrap",
-      }}
-    >
+    <MainBox>
       <Grid item>
         <DrawerMenu Element={<Menu />} path="tags" />
       </Grid>
@@ -57,24 +50,7 @@ const Tags = ({ isHome }) => {
         }}
       >
         <Grid container>
-          <Grid
-            item
-            xs={12}
-            sx={{
-              position: "relative",
-              height: "42px",
-              display: "flex",
-              alignItems: "center",
-              backgroundColor: "status.main",
-              color: "text.primary",
-              borderTopLeftRadius: "3px",
-              borderTopRightRadius: "3px",
-            }}
-          >
-            <Box sx={{ ml: 3 }}>
-              <Breadcrumb />
-            </Box>
-          </Grid>
+          <BreadcrumbBox />
           <ItemSperatorLineXL />
           <Grid
             item
@@ -96,7 +72,7 @@ const Tags = ({ isHome }) => {
           </Grid>
         </Grid>
       </Grid>
-    </Grid>
+    </MainBox>
   );
 };
 

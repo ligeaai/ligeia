@@ -1,15 +1,16 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 
-import { Box, Divider, Grid } from "@mui/material";
+import { Grid } from "@mui/material";
 
 import {
-  Breadcrumb,
+  BreadcrumbBox,
   ItemSperatorLineXL,
   ComponentError,
   PropLinkTabs,
   Select,
   MyDivider,
+  MainBox,
 } from "../../../../../components";
 import DrawerMenu from "../../../../../layout/main/asset/treeViewMenu";
 
@@ -27,7 +28,6 @@ import Menu from "./treeMenu";
 
 const CodeList = ({ isHome }) => {
   const dispatch = useDispatch();
-  const isFullScreen = useSelector((state) => state.fullScreen.isFullScreen);
   const filteredLayerName = useSelector(
     (state) => state.treeview.filteredLayerName
   );
@@ -58,14 +58,7 @@ const CodeList = ({ isHome }) => {
   }, [isHome]);
 
   return (
-    <Grid
-      container
-      sx={{
-        minHeight: isFullScreen ? "100vh" : "100%",
-        height: "500px",
-        flexWrap: "nowrap",
-      }}
-    >
+    <MainBox>
       <Grid item>
         <DrawerMenu Element={<Menu />} path="codelist" />
       </Grid>
@@ -80,24 +73,7 @@ const CodeList = ({ isHome }) => {
         }}
       >
         <Grid container>
-          <Grid
-            item
-            xs={12}
-            sx={{
-              position: "relative",
-              height: "42px",
-              display: "flex",
-              alignItems: "center",
-              backgroundColor: "status.main",
-              color: "text.primary",
-              borderTopLeftRadius: "3px",
-              borderTopRightRadius: "3px",
-            }}
-          >
-            <Box sx={{ ml: 2.5 }}>
-              <Breadcrumb />
-            </Box>
-          </Grid>
+          <BreadcrumbBox />
           <ItemSperatorLineXL />
           <Grid container sx={{ alignItems: "center", pl: 2, marginY: "2px" }}>
             <Grid item sx={{ mr: "2px" }}>
@@ -121,7 +97,7 @@ const CodeList = ({ isHome }) => {
           </Grid>
         </Grid>
       </Grid>
-    </Grid>
+    </MainBox>
   );
 };
 

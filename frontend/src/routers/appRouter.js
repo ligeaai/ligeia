@@ -15,9 +15,9 @@ import { Confirmation, MyNavigator, Loadable, HistoryConfirmation } from "../com
 import ErrorMessage from "../components/errorMessage/errorMessage";
 
 
-const Administration = Loadable(React.lazy(() => import("../pages/main/administration/main")));
+const Diagnostics = Loadable(React.lazy(() => import("../pages/main/administration/diagnostics/main")));
 const Users = Loadable(React.lazy(() => import("../pages/main/administration/Users")));
-const Profile = Loadable(React.lazy(() => import("../pages/main/administration/profile")));
+// const Profile = Loadable(React.lazy(() => import("../pages/main/administration/profile")));
 const CodeList = Loadable(React.lazy(() => import("../pages/main/configuration/initialize/codelist/codelist")))
 const ResourceList = Loadable(React.lazy(() => import("../pages/main/configuration/initialize/resource/resourceList")))
 const Configuration = Loadable(React.lazy(() => import("../pages/main/configuration/main")))
@@ -48,9 +48,10 @@ const AppRouter1 = () => {
             <Route exact path="/overview/*" element={<Overview />} />
             <Route path="/reporting" element={<Reporting />} />
             <Route path="/tools/report_designer" element={<ReportingDesigner />} />
-            <Route path="/administration" element={<Administration />} />
+            <Route path="/administration" element={<Configuration way="Administration" />} />
+            <Route path="/administration/diagnostics" element={<Diagnostics />} />
             <Route path="/administration/users" element={<Users />} />
-            <Route path="/administration/profile" element={<Profile />} />
+            {/* <Route path="/administration/profile" element={<Profile />} /> */}
             <Route exact path="/configuration" element={<Configuration way="Configuration" />} />
             <Route exact path="/configuration/:myKey" element={<MyNavigator way="Configuration" />} />
             <Route exact path="/tools" element={<Configuration way="Tools" />} />

@@ -2,7 +2,6 @@ import * as React from "react";
 import PropTypes from "prop-types";
 import SwipeableViews from "react-swipeable-views";
 import ClearIcon from "@mui/icons-material/Clear";
-import { useTheme } from "@mui/material/styles";
 import AppBar from "@mui/material/AppBar";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
@@ -17,10 +16,8 @@ import {
   updateTabHeader,
   deleteTapHeader,
 } from "../../services/actions/overview/taps";
-import palette from "../../themes/palette";
 import { MyTextField } from "..";
 import { setConfirmation } from "../../services/reducers/confirmation";
-import { Button } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import AddIcon from "@mui/icons-material/Add";
 import { useIsMount } from "../../hooks/useIsMount";

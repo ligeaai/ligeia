@@ -61,7 +61,7 @@ function AlertDialog({ Button, DialogBody, ...rest }) {
           sx={{ overflow: "hidden" }}
         >
           <div>
-            <DialogBody handleClose={handleClose} height={height} {...rest} />{" "}
+            <DialogBody handleClose={handleClose} height={height} {...rest} />
           </div>
         </ResizableBox>
       </Dialog>
