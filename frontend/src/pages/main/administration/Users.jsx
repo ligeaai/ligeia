@@ -20,11 +20,11 @@ import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import { useState, useEffect } from 'react';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import EditIcon from "@mui/icons-material/Edit";
+import AddIcon from '@mui/icons-material/Add';
 import { config } from '../../../services/baseApi';
 
 
-function BasicMenu(props) {
+function AddLayerName(props) {
     const [isOpen, setIsOpen] = React.useState(false);
     const [menuItems, setMenuItems] = React.useState([]);
     const [selectedItems, setSelectedItems] = React.useState([]);
@@ -102,7 +102,7 @@ function BasicMenu(props) {
         <div>
             <IconButton id="demo-positioned-button"
                 onClick={handleOpen}>
-                <EditIcon />
+                <AddIcon />
             </IconButton>
             {isOpen &&
                 <div style={{
@@ -149,6 +149,132 @@ function BasicMenu(props) {
     );
 }
 
+function AddPermission(props) {
+    const [isOpen, setIsOpen] = React.useState(false);
+    const roleMenuItems = ["employee", "admin", "super admin"];
+    const [selectedItems, setSelectedItems] = React.useState("");
+
+
+    const handleOpen = () => {
+        setIsOpen(true);
+    };
+
+    const handleClose = () => {
+        setIsOpen(false);
+    };
+
+
+    const [selectedIndex, setSelectedIndex] = React.useState(-1);
+    const handleSelectItem = (index) => {
+        if (selectedIndex === index) {
+            // Clicked the same item again, so deselect it
+            setSelectedIndex(-1);
+            setSelectedItems("");
+        } else {
+            // Clicked a different item, so select it
+            setSelectedIndex(index);
+            setSelectedItems(roleMenuItems[index]);
+        }
+    };
+
+
+
+
+    // console.log(selectedItems);
+    // console.log("************************///////////");
+
+
+    const handleAddItems = () => {
+        const updatedUser = {
+            is_superuser: false,
+            is_admin: false,
+            is_employee: false
+        };
+
+        if (selectedItems === "super admin") {
+            updatedUser.is_superuser = true;
+        } else if (selectedItems === "admin") {
+            updatedUser.is_admin = true;
+        } else if (selectedItems === "employee") {
+            updatedUser.is_employee = true;
+        }
+
+        const body = JSON.stringify({ users: [{ ...props.user, ...updatedUser }], user_permissions: selectedItems });
+        console.log(body);
+
+        try {
+            fetch("http://34.125.126.30:8001/api/v1/auth/user/roles/update", {
+                method: "POST",
+                headers: {
+                    ...config().headers,
+                },
+                body: body,
+            })
+                .then((response) => response.json())
+                .then((data) => {
+                    setSelectedItems(data);
+                    handleClose();
+                })
+                .catch((error) => {
+                    console.error("Error updating selected items: ", error);
+                });
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    return (
+        <div>
+            <IconButton id="demo-positioned-button"
+                onClick={handleOpen}>
+                <AddIcon />
+            </IconButton>
+            {isOpen &&
+                <div style={{
+                    position: "fixed",
+                    top: "50%",
+                    left: "50%",
+                    transform: "translate(-50%, -50%)",
+                    backgroundColor: "lightGray",
+                    zIndex: 1,
+                    borderRadius: "5px",
+                    boxShadow: "0 0 10px rgba(0,0,0,.5)",
+                    padding: "10px",
+                    height: "25vw",
+                    width: "50vw",
+
+                }}>
+                    {roleMenuItems.map((item, index) => (
+                        <MenuItem key={index} onClick={() => handleSelectItem(index)}>
+                            <Checkbox checked={selectedIndex === index} />
+                            {item}
+                        </MenuItem>
+                    ))}
+
+                    <Button
+                        variant="contained"
+                        sx={{
+                            color: "text.main",
+                            backgroundColor: "background.success",
+                            "&:hover": {
+                                backgroundColor: "hover.success",
+                                color: "primary.dark",
+                            },
+                            fontSize: "1vw"
+
+                        }}
+                        onClick={handleAddItems}
+
+                    >
+                        Add
+                    </Button>
+                </div>
+            }
+        </div>
+    );
+
+}
+
 
 function UserManagament() {
 
@@ -174,7 +300,7 @@ function UserManagament() {
             .then((data) => {
                 setUsers(
                     data.map((user) => {
-                        return { ...user, layerName: "" };
+                        return { ...user };
                     })
                 );
             })
@@ -210,6 +336,7 @@ function UserManagament() {
                                     <TableCell align="right">E-mail Adress</TableCell>
                                     <TableCell align="right">Date Joined</TableCell>
                                     <TableCell align="right">Permissions</TableCell>
+                                    <TableCell align="right"></TableCell>
                                     <TableCell align="right">Layer Name</TableCell>
 
                                 </TableRow>
@@ -222,12 +349,17 @@ function UserManagament() {
                                         </TableCell>
                                         <TableCell align="right">{user.email}</TableCell>
                                         <TableCell align="right">{user.date_joined}</TableCell>
-                                        <TableCell align="right">{user.permissions}</TableCell>
+                                        <TableCell align="right">{user.user_permissions}</TableCell>
+                                        <TableCell align="right">
+                                            <AddPermission
+                                                user={user}
+                                            />
+                                        </TableCell>
                                         <TableCell align="right">
                                             {user.layer_name.map(e => `${e} `)}
                                         </TableCell>
                                         <TableCell align="right">
-                                            <BasicMenu
+                                            <AddLayerName
                                                 user={user}
                                             />
                                         </TableCell>
