@@ -24,6 +24,9 @@ export function dateFormatterDDMMYY(date) {
 export const swapDayAndYear = (props) => {
     return `${props[6]}${props[7]}${props[8]}${props[9]}-${props[3]}${props[4]}-${props[0]}${props[1]}`
 }
+export const swapYearAndDay = (props) => {
+    return `${props[8]}${props[9]}-${props[5]}${props[6]}-${props[0]}${props[1]}${props[2]}${props[3]}`
+}
 
 export function dateFormatterDMY(date) {
     var d = date.getDate();

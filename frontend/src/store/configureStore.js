@@ -45,6 +45,7 @@ import {
     tapsOverview,
     themeReducer,
     treeview,
+    users,
 
 } from '../services/reducers'
 
@@ -82,6 +83,7 @@ const rootReducer = combineReducers({
     tapsOverview: tapsOverview,
     theme: themeReducer,
     treeview: treeview,
+    users: users,
 
 })
 

@@ -8,8 +8,13 @@ import ListItemText from "@mui/material/ListItemText";
 import Checkbox from "@mui/material/Checkbox";
 
 export default function CheckboxList(props) {
-  const [checked, setChecked] = React.useState([]);
-  const { data, handleToggleFunc, dataTextPath } = props;
+  const {
+    data,
+    handleToggleFunc,
+    dataTextPath = false,
+    defaultData = [],
+  } = props;
+  const [checked, setChecked] = React.useState(defaultData);
   React.useEffect(() => {
     handleToggleFunc([]);
   }, []);
@@ -45,7 +50,10 @@ export default function CheckboxList(props) {
         const labelId = `checkbox-list-label-${value}`;
 
         return (
-          <ListItem key={value[dataTextPath]} disablePadding>
+          <ListItem
+            key={dataTextPath ? value[dataTextPath] : value}
+            disablePadding
+          >
             <ListItemButton
               role={undefined}
               onClick={handleToggle(value)}
@@ -60,7 +68,10 @@ export default function CheckboxList(props) {
                   inputProps={{ "aria-labelledby": labelId }}
                 />
               </ListItemIcon>
-              <ListItemText id={labelId} primary={value[dataTextPath]} />
+              <ListItemText
+                id={labelId}
+                primary={dataTextPath ? value[dataTextPath] : value}
+              />
             </ListItemButton>
           </ListItem>
         );

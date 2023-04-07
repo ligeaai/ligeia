@@ -25,10 +25,11 @@ import tapsOverview from "./overview/taps"
 import themeReducer from './themeReducer';
 import treeview from './treeview/treeview';
 import dataGridResourceList from './resource/resource';
+import users from './users/users';
 
 
 
 export {
     authReducer, alarms, confirmation, checkedList, collapseMenu, diagnostic, historyConfirmation, cssUserSelect, dataGridCodeList, dataGridType, drawerMenu, errorReducer, project, fullScreenReducer,
-    itemDataGrid, itemLinkEditor, langReducer, loaderReducer, overviewDialog, registerFormReducer, searchBarReducer, stepper, tags, tapsOverview, themeReducer, treeview, dataGridResourceList
+    itemDataGrid, itemLinkEditor, langReducer, loaderReducer, overviewDialog, registerFormReducer, searchBarReducer, stepper, tags, tapsOverview, themeReducer, treeview, dataGridResourceList, users
 }
