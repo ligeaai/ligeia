@@ -149,6 +149,186 @@ function AddLayerName(props) {
     );
 }
 
+function AddNewUser(props) {
+    const [isOpen, setIsOpen] = React.useState(false);
+    const user = useSelector((state) => state.auth.user);
+    const [menuItems, setMenuItems] = React.useState(user.layer_name);
+    const [firstName, setFirstName] = React.useState('');
+    const [lastName, setLastName] = React.useState('');
+    const [email, setEmail] = React.useState('');
+    const [password, setPassword] = React.useState('');
+    const [selectedItems, setSelectedItems] = React.useState([]);
+
+    React.useEffect(() => {
+        setMenuItems(user.layer_name);
+    }, [user.layer_name]);
+
+
+
+    const handleOpen = () => {
+        setIsOpen(true);
+    };
+
+    const handleClose = () => {
+        setIsOpen(false);
+    };
+    const handleSelectItem = (item) => {
+        const itemName = item.LAYER_NAME;
+
+        if (selectedItems.includes(itemName)) {
+            setSelectedItems(selectedItems.filter((i) => i !== itemName));
+        } else {
+            setSelectedItems([...selectedItems, itemName]);
+        }
+    };
+
+
+    console.log(menuItems);
+    console.log("************************///////////");
+
+
+    const handleAddItems = () => {
+        try {
+            const body = JSON.stringify({
+                first_name: firstName,
+                last_name: lastName,
+                email: email,
+                password: password,
+                layer_name: selectedItems,
+            });
+            console.log(body);
+
+            fetch("http://34.125.126.30:8001/api/v1/auth/register/admin/", {
+                method: "POST",
+                headers: {
+                    ...config().headers,
+                },
+                body: body,
+            })
+                .then((response) => response.json())
+                .then((data) => {
+                    console.log("Yeni kullanıcı kaydı oluşturuldu:", data);
+                })
+                .catch((error) => {
+                    console.error("Hata oluştu:", error);
+                });
+
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+
+
+    return (
+        <div>
+            <Button id="demo-positioned-button"
+                onClick={handleOpen}
+                sx={{
+                    color: "primary.light",
+                    backgroundColor: "primary.dark",
+                    "&:hover": {
+                        backgroundColor: "text.info",
+                        color: "primary.light",
+                    },
+                }}
+            >
+                Add User
+            </Button>
+            {isOpen &&
+                <div style={{
+                    position: "fixed",
+                    top: "50%",
+                    left: "50%",
+                    transform: "translate(-50%, -50%)",
+                    backgroundColor: "lightGray",
+                    zIndex: 1,
+                    borderRadius: "5px",
+                    boxShadow: "0 0 10px rgba(0,0,0,.5)",
+                    padding: "10px",
+                    height: "25vw",
+                    width: "50vw",
+
+                }}>
+                    <Grid
+                        container
+                        direction="column"
+                        justifyContent="space-between"
+                        alignItems="stretch"
+                    >
+                        <Grid item >
+                            <TextField
+                                id="first-name-input"
+                                label="First Name"
+                                variant="outlined"
+                                fullWidth
+                                value={firstName}
+                                onChange={(event) => setFirstName(event.target.value)}
+                            />
+                        </Grid>
+                        <Grid item>
+                            <TextField
+                                id="last-name-input"
+                                label="Last Name"
+                                variant="outlined"
+                                fullWidth
+                                value={lastName}
+                                onChange={(event) => setLastName(event.target.value)}
+                            />
+                        </Grid>
+                        <Grid item>
+                            <TextField
+                                id="email-input"
+                                label="E-mail"
+                                variant="outlined"
+                                fullWidth
+                                value={email}
+                                onChange={(event) => setEmail(event.target.value)}
+                            />
+                        </Grid>
+                        <Grid item>
+                            <TextField
+                                id="password-input"
+                                label="Password"
+                                variant="outlined"
+                                fullWidth
+                                value={password}
+                                onChange={(event) => setPassword(event.target.value)}
+                            />
+                        </Grid>
+
+                        {menuItems.map((item) => (
+                            <MenuItem key={item.LAYER_NAME} onClick={() => handleSelectItem(item)}>
+                                <Checkbox checked={selectedItems.includes(item.LAYER_NAME)} />
+                                {item.LAYER_NAME}
+                            </MenuItem>
+                        ))}
+                        <Grid item>
+                            <Button
+                                variant="contained"
+                                sx={{
+                                    color: "text.main",
+                                    backgroundColor: "background.success",
+                                    "&:hover": {
+                                        backgroundColor: "hover.success",
+                                        color: "primary.dark",
+                                    },
+                                    fontSize: "1vw"
+
+                                }}
+                                onClick={handleAddItems}
+
+                            >
+                                Add
+                            </Button>
+                        </Grid>
+                    </Grid>
+                </div>
+            }
+        </div>
+    );
+}
+
 function AddPermission(props) {
     const [isOpen, setIsOpen] = React.useState(false);
     const roleMenuItems = ["employee", "admin", "super admin"];
@@ -176,9 +356,6 @@ function AddPermission(props) {
             setSelectedItems(roleMenuItems[index]);
         }
     };
-
-
-
 
     // console.log(selectedItems);
     // console.log("************************///////////");
@@ -282,12 +459,7 @@ function UserManagament() {
     const isFullScreen = useSelector((state) => state.fullScreen.isFullScreen);
     const [users, setUsers] = useState([]);
     const [selectedUsers, setSelectedUsers] = useState([]);
-    const [anchorEl, setAnchorEl] = useState(null);
 
-
-    const handleClose = () => {
-        setAnchorEl(null);
-    };
 
     useEffect(() => {
         fetch("http://34.125.126.30:8000/api/v1/auth/user-list", {
@@ -307,7 +479,6 @@ function UserManagament() {
             .catch((error) => console.error(error));
     }, []);
 
-    const open = Boolean(anchorEl);
 
     return (
         <Box sx={{
@@ -371,19 +542,7 @@ function UserManagament() {
                     </Grid>
                     <Grid item container justifyContent="flex-end" spacing={2} sx={{ position: "absolute", bottom: "16px", right: "16px" }}>
                         <Grid item>
-                            <Button
-                                variant="contained"
-                                sx={{
-                                    color: "primary.light",
-                                    backgroundColor: "primary.dark",
-                                    "&:hover": {
-                                        backgroundColor: "text.info",
-                                        color: "primary.light",
-                                    },
-                                }}
-                            >
-                                ADD USER
-                            </Button>
+                            <AddNewUser></AddNewUser>
                         </Grid>
                     </Grid>
                 </TableContainer>
