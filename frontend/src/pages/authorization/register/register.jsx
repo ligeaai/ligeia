@@ -19,7 +19,6 @@ import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
 import history from "../../../routers/history";
 
-import Start from "../../../layout/start/start";
 import Layout from "../../../layout/authorization/layout";
 
 import { setEmailPass } from "../../../services/reducers/registerFormReducer";
@@ -29,7 +28,13 @@ const validationSchema = yup.object({
     .string("Enter your email")
     .email("Enter a valid email")
     .required("Email is required"),
-  password: yup.string("Enter your password").required("Password is required"),
+  password: yup
+    .string("Enter your password")
+    .required("Password is required")
+    .matches(
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
+      `Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character`
+    ),
 });
 
 const MyBody = () => {
@@ -115,6 +120,7 @@ const MyBody = () => {
               position: "absolute",
               typography: "subtitle2",
               paddingBottom: "10px",
+              width: "400px",
             }}
           >
             {formik.errors.password}

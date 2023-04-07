@@ -16,7 +16,6 @@ import {
 
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
-import { palette } from "@mui/system";
 import history from "../../../routers/history";
 
 import Layout from "../../../layout/authorization/layout";
@@ -29,7 +28,13 @@ const validationSchema = yup.object({
     .string("Enter your email")
     .email("Enter a valid email")
     .required("Email is required"),
-  password: yup.string("Enter your password").required("Password is required"),
+  password: yup
+    .string("Enter your password")
+    .required("Password is required")
+    .matches(
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
+      "Must Contain 8 Characters, One Uppercase, One Lowercase,\n One Number and One Special Case Character"
+    ),
 });
 
 const navigate = (e, route) => {
@@ -38,7 +43,6 @@ const navigate = (e, route) => {
 };
 const MyBody = () => {
   const dispatch = useDispatch();
-  const theme = useSelector((state) => state.theme.theme);
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -112,6 +116,7 @@ const MyBody = () => {
               position: "absolute",
               typography: "subtitle2",
               paddingBottom: "10px",
+              width: "400px",
             }}
           >
             {formik.errors.password}
