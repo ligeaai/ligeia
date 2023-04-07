@@ -1,11 +1,9 @@
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import React from "react";
-import { useSelector } from "react-redux";
 import exporting from "highcharts/modules/exporting";
 import { wsBaseUrl } from "../../../services/baseApi";
 import { dateFormatDDMMYYHHMMSS } from "../../../services/utils/dateFormatter";
-import TagService from "../../../services/api/tags";
 exporting(Highcharts);
 var W3CWebSocket = require("websocket").w3cwebsocket;
 
@@ -51,6 +49,7 @@ const Angular = ({ highchartProps, width, height }) => {
         if (client.readyState === client.OPEN) {
           if (typeof e.data === "string") {
             let data = JSON.parse(e.data);
+            console.log(data);
             Object.keys(data).map((e) => {
               setCategories((prev) => new Date(data[e][1] * 1000));
               setValue((prev) => data[e][2]);

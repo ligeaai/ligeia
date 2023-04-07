@@ -16,7 +16,6 @@ const LineCharts = ({ highchartProps, width, height, liveData, chartType }) => {
   const [key, setKey] = React.useState(0);
   const yAxisTitles = [];
   let yAxiskey = {};
-  console.log("asd");
   React.useEffect(() => {
     setKey(key + 1);
   }, [highchartProps.Inputs.length]);
@@ -82,7 +81,6 @@ const LineCharts = ({ highchartProps, width, height, liveData, chartType }) => {
       yAxiskey = {};
       Promise.all(
         client.map((e) => {
-          console.log("line");
           e.close();
         })
       );
@@ -106,7 +104,6 @@ const LineCharts = ({ highchartProps, width, height, liveData, chartType }) => {
           });
           highchartProps.Inputs.map((tag, index) => {
             const myindex = index;
-            console.log(tag.TAG_ID);
             client[index] = new W3CWebSocket(
               `${wsBaseUrl}/ws/tags/${tag.TAG_ID}`
             );
@@ -114,7 +111,6 @@ const LineCharts = ({ highchartProps, width, height, liveData, chartType }) => {
               console.log("Connection Error");
             };
             client[index].onopen = function () {
-              console.log(tag.NAME);
               console.log("connected");
             };
             client[index].onclose = function () {
@@ -130,15 +126,12 @@ const LineCharts = ({ highchartProps, width, height, liveData, chartType }) => {
                       let data = [];
                       Promise.all(
                         jsonData.map((e) => {
-                          console.log(e);
-                          console.log(Object.keys(e));
                           data.push([
                             parseInt(e[Object.keys(e)[0]][1][0][0]) * 1000,
                             e[Object.keys(e)[0]][1][0][1],
                           ]);
                         })
                       );
-                      console.log(data);
                       series.addSeries({
                         yAxis:
                           "yaxis-" +
@@ -183,18 +176,6 @@ const LineCharts = ({ highchartProps, width, height, liveData, chartType }) => {
             };
           });
         },
-        // redraw: function () {
-        //   var yAxis = this.yAxis;
-        //   if (yAxis) {
-        //     yAxis.map((e) => {
-        //       console.log(e);
-        //       if ((!e.min || !e.max) && e.title !== "") {
-        //         e.setTitle({ text: "" });
-        //         e.title = "";
-        //       }
-        //     });
-        //   }
-        // },
       },
     },
     responsive: {
