@@ -28,13 +28,7 @@ const validationSchema = yup.object({
     .string("Enter your email")
     .email("Enter a valid email")
     .required("Email is required"),
-  password: yup
-    .string("Enter your password")
-    .required("Password is required")
-    .matches(
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
-      "Must Contain 8 Characters, One Uppercase, One Lowercase,\n One Number and One Special Case Character"
-    ),
+  password: yup.string("Enter your password").required("Password is required"),
 });
 
 const navigate = (e, route) => {
