@@ -8,12 +8,10 @@ import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 
 import { SearchBarMobile } from "../../../components";
 
-import { setCssUserSelect } from "../../../services/reducers/cssUserSelect";
 import {
   loadTreeViewWidth,
   updateTreeViewCouch,
 } from "../../../services/actions/treeview/treeview";
-import { PatternSharp } from "@mui/icons-material";
 
 const DrawerMenu = (props) => {
   const dispatch = useDispatch();
@@ -26,7 +24,7 @@ const DrawerMenu = (props) => {
     const startSize = leftMenuWidth;
     const startPosition = mouseDownEvent.pageX;
     var sonuc = 0;
-    dispatch(setCssUserSelect(true));
+    document.getElementById("main-box").style.userSelect = "none";
     function onMouseMove(mouseMoveEvent) {
       if (startSize - startPosition + mouseMoveEvent.pageX < 10) {
         setLeftMenuWidth(0);
@@ -38,7 +36,7 @@ const DrawerMenu = (props) => {
       }
     }
     function onMouseUp() {
-      dispatch(setCssUserSelect(false));
+      document.getElementById("main-box").style.userSelect = "text";
       dispatch(updateTreeViewCouch(path, sonuc));
       document.body.removeEventListener("mousemove", onMouseMove);
       document.body.removeEventListener("mouseup", onMouseUp);

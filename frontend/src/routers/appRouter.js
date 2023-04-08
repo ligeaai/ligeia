@@ -1,12 +1,10 @@
 import React, { Suspense } from "react";
-import { Route, Routes, Navigate } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import { unstable_HistoryRouter as HistoryRouter, Outlet } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux"
 
 import { Box } from "@mui/material"
 
 import history from "./history";
-
 
 import PrivateRoute from "./privateRouter";
 import PublicRoute from "./publicRouter";
@@ -84,10 +82,9 @@ const AppRouter1 = () => {
 };
 
 const AppRouter = () => {
-  const cssUserSelect = useSelector((state) => state.cssUserSelect.userSelect);
   return (
     <HistoryRouter history={history}>
-      <Box sx={{ userSelect: cssUserSelect ? "none" : "text" }}>
+      <Box id="main-box">
         <ErrorMessage Element={AppRouter1} />
         <Confirmation />
         <HistoryConfirmation />

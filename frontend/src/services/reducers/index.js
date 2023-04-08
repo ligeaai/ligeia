@@ -5,7 +5,6 @@ import collapseMenu from './collapseMenu/collapseMenu';
 import diagnostic from './diagnostic/diagnostic';
 import historyConfirmation from './confirmation/historyConfirmation';
 import confirmation from './confirmation';
-import cssUserSelect from './cssUserSelect';
 import dataGridCodeList from "./codelist/datagrid"
 import dataGridType from "./type/datagrid"
 import drawerMenu from './drawerMenu/drawerMenu';
@@ -30,6 +29,6 @@ import users from './users/users';
 
 
 export {
-    authReducer, alarms, confirmation, checkedList, collapseMenu, diagnostic, historyConfirmation, cssUserSelect, dataGridCodeList, dataGridType, drawerMenu, errorReducer, project, fullScreenReducer,
+    authReducer, alarms, confirmation, checkedList, collapseMenu, diagnostic, historyConfirmation, dataGridCodeList, dataGridType, drawerMenu, errorReducer, project, fullScreenReducer,
     itemDataGrid, itemLinkEditor, langReducer, loaderReducer, overviewDialog, registerFormReducer, searchBarReducer, stepper, tags, tapsOverview, themeReducer, treeview, dataGridResourceList, users
 }
