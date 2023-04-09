@@ -8,7 +8,7 @@ haystack
 # Django Framework
 Django
 djangorestframework
-django-environ-2
+django-environ
 django-filter
 django-rest-knox
 django-extensions

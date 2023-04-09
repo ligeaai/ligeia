@@ -5,7 +5,7 @@ import numpy as np
 import pandas as pd
 import requests
 from numpy import r_
-
+ENV_URL = os.environ.get("BASE_URL")
 
 def import_data(data):
     urlDict = {
@@ -20,7 +20,7 @@ def import_data(data):
         "UOM":'uoms',
         "UOM_UNIT":'uom_unit'
     }
-    base_url = "http://34.125.121.93:8001/api/v1/" + urlDict.get(data) + "/save/"
+    base_url = ENV_URL + ":8000/api/v1/" + urlDict.get(data) + "/save/"
     _create_method(base_url, data)
 
 
