@@ -117,6 +117,22 @@ class UserRegisterView(generics.GenericAPIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+class UserLayerUpdate(generics.GenericAPIView):
+    serializer_class = UserSerializer
+    permission_classes = [AllowAny]
+
+    def post(self, request, *args, **kwargs):
+        try:
+            for value in request.data.get('users'):
+                user = User.objects.get(email=value.get('email'))
+                user.layer_name.set([])
+                user.layer_name.set(value.get("layer_name"))
+                user.save()
+            return Response({"Message":"Succsessful"})
+        except Exception as e:
+            return Response({"Message":str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
+
 class UserLoginView(generics.GenericAPIView):
 
     serializer_class = UserLoginSerializer

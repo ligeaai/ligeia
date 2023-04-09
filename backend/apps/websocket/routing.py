@@ -1,5 +1,5 @@
 from django.urls import path
-from .consumers import WSLiveConsumer,WSConsumerBackfill,AlarmsConsumer,WSConsumeOnlyLastData,MyConsumer
+from .consumers import WSLiveConsumer,WSConsumerBackfill,AlarmsConsumer,WSConsumeOnlyLastData
 #DataConsumer
 
 websocket_urlpatterns = [

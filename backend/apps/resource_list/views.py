@@ -78,6 +78,7 @@ class ResourceListDrawerMenutView(generics.CreateAPIView):
         validate_find(queryset, request)
         serializer = ResourceListDetailsSerializer(queryset, many=True)
         new_dict = dict()
+        self.layers = []
         self._getchild(serializer.data, new_dict, 0, culture)
         return Response(new_dict, status=status.HTTP_200_OK)
 
@@ -91,13 +92,13 @@ class ResourceListDrawerMenutView(generics.CreateAPIView):
                 tempt = {}
                 for value in serializer.data:
                     layer = value.get("PARENT")
+                    self.layers.append(layer)
                     if str(layer).split(".")[0] == "TYPE":
                         try:
                             serializer.data.remove(value)
                         except:
                             pass
                         types = layer.split(".")[1]
-                        # print(types)
                         if types == "OG_STD":
                             queryset = Type.objects.filter(LAYER_NAME=types)
                         else:
@@ -120,17 +121,7 @@ class ResourceListDrawerMenutView(generics.CreateAPIView):
     def _getResourceLabel(self, data, tempt, culture, types):
         find_type = []
         if types == "OG_STD":
-            find_type = [
-                "TYPE.COMPANY",
-                "TYPE.ORG_UNIT1",
-                "TYPE.ORG_UNIT2",
-                "TYPE.ORG_UNIT3",
-                "TYPE.ORG_UNIT4",
-                "TYPE.GEO_UNIT1",
-                "TYPE.GEO_UNIT1",
-                "TYPE.GEO_UNIT2",
-                "TYPE.ORG_UNIT3",
-            ]
+            find_type = self.layers
         for item in data:
             try:
                 x = find_type.index(item.get("LABEL_ID"))

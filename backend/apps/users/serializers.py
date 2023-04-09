@@ -40,6 +40,7 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         user = User.objects.create(**validated_data)
+        user.layer_name.set(['OG_STD'])
         user.set_password(validated_data["password"])
         user.save()
         return user

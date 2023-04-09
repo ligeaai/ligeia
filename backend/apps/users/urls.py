@@ -22,6 +22,7 @@ from .views import (
     logout,
     GoogleRegister,
     FacebookRegister,
+    UserLayerUpdate
 )
 
 from allauth.socialaccount.providers.github import views
@@ -54,6 +55,7 @@ urlpatterns = [
         ResetForgetPassword.as_view(),
         name="resetnewpassword",
     ),
+    path("layer/update/", UserLayerUpdate.as_view(), name="UserLayerUpdate"),
     path("user-list/", UserList.as_view(), name="userlist"),
     path("user-detail/", UserDetails.as_view(), name="UserDetails")
     # re_path(r"^user/$", UserList.as_view(), name="user"),
