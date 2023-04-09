@@ -20,5 +20,6 @@ modelApp = [
     "apps.widget_property",
     "apps.layouts",
     "apps.dashbord",
+    "apps.roles_type"
 ]
 #     "apps.uom",
