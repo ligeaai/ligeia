@@ -55,7 +55,7 @@ urlpatterns = [
         ResetForgetPassword.as_view(),
         name="resetnewpassword",
     ),
-    path("layer/update/", UserLayerUpdate.as_view(), name="UserLayerUpdate"),
+    path("user/layer/update/", UserLayerUpdate.as_view(), name="UserLayerUpdate"),
     path("user-list/", UserList.as_view(), name="userlist"),
     path("user-detail/", UserDetails.as_view(), name="UserDetails")
     # re_path(r"^user/$", UserList.as_view(), name="user"),
