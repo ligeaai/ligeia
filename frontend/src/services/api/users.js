@@ -9,7 +9,7 @@ const getLayers = () => {
 };
 
 const updateUser = (body) => {
-    return instance.post("/auth/user/layer/update", body, config());
+    return instance.post("/auth/user/layer/update/", body, config());
 };
 
 const Users = {

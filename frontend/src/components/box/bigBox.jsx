@@ -14,12 +14,10 @@ const BigBox = ({ Element, ...rest }) => {
     <Box
       sx={{
         width: `100%`,
-        minHeight: isFullScreen
-          ? "calc(500px - 60px  )"
-          : "calc(500px - 74px  )",
+        minHeight: isFullScreen ? "calc(500px - 60px)" : "calc(500px - 74px)",
         height: isFullScreen
-          ? "calc(100vh - 60px )"
-          : "calc(100vh - 60px - 74px )",
+          ? "calc(100vh - 60px)"
+          : "calc(100vh - 60px - 74px)",
         button: { color: "text.secondary" },
         m: 0.5,
         button: { color: "text.secondary" },

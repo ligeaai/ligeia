@@ -9,8 +9,7 @@ import history from "./history";
 import PrivateRoute from "./privateRouter";
 import PublicRoute from "./publicRouter";
 
-import { Confirmation, MyNavigator, Loadable, HistoryConfirmation } from "../components";
-import ErrorMessage from "../components/errorMessage/errorMessage";
+import { Confirmation, MyNavigator, Loadable, HistoryConfirmation, ErrorMessage } from "../components";
 
 
 const Diagnostics = Loadable(React.lazy(() => import("../pages/main/administration/diagnostics/main")));
@@ -31,6 +30,7 @@ const Register = Loadable(React.lazy(() => import("../pages/authorization/regist
 const RegisterPageTwo = Loadable(React.lazy(() => import("../pages/authorization/register/registerPageTwo")));
 const Reporting = Loadable(React.lazy(() => import("../pages/main/asset/reporting")));
 const ReportingDesigner = Loadable(React.lazy(() => import("../pages/main/configuration/initialize/reportDesign/reportDesigner")));
+const Roles = Loadable(React.lazy(() => import("../pages/main/administration/roles/main")));
 const Start = Loadable(React.lazy(() => import("../pages/start/start")));
 const Tags = Loadable(React.lazy(() => import("../pages/main/configuration/tags/tags")));
 const Types = Loadable(React.lazy(() => import("../pages/main/configuration/types/types")));
@@ -50,6 +50,8 @@ const AppRouter1 = () => {
             <Route path="/administration/diagnostics" element={<Diagnostics />} />
             <Route path="/administration/users" element={<Users />} />
             <Route path="/administration/profile" element={<Profile />} />
+            <Route path="/administration/roles" element={<Roles isHome={false} />} />
+            <Route path="/administration/roles/:roles" element={<Roles isHome={true} />} />
             <Route exact path="/configuration" element={<Configuration way="Configuration" />} />
             <Route exact path="/configuration/:myKey" element={<MyNavigator way="Configuration" />} />
             <Route exact path="/tools" element={<Configuration way="Tools" />} />

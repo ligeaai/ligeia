@@ -164,3 +164,11 @@ export const CLEAN_DIAGNOSTIC = "CLEAN_DIAGNOSTIC"
 export const LOAD_USERS_LIST = "LOAD_USERS_LIST"
 export const CLEAN_USERS = "CLEAN_USERS"
 export const LOAD_LAYER_LIST_USERS = "LOAD_LAYER_LIST_USERS"
+
+//-----------Roles------------------------------------
+
+export const CLEAN_ROLES = "CLEAN_ROLES"
+export const UPDATE_ROWS_ROLES = "UPDATE_ROWS_ROLES"
+export const EDIT_CELL_ROLES = "EDIT_CELL_ROLES"
+export const LOAD_ROLES_PROPERTY = "LOAD_ROLES_PROPERTY"
+export const UPDATE_ROLES_NAME_PROPERTY = "UPDATE_ROLES_NAME_PROPERTY"
