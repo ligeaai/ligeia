@@ -20,7 +20,7 @@ const DrawerIcon = () => {
           sx={{
             mx: "9px",
             typography: "h4",
-            color: "#ffffff",
+            color: "primary.main",
           }}
           onClick={() => {
             dispatch(toggleDrawerMenu());
@@ -31,7 +31,7 @@ const DrawerIcon = () => {
           sx={{
             mx: "9px",
             typography: "h4",
-            color: "#ffffff",
+            color: "primary.main",
           }}
           onClick={() => {
             dispatch(toggleDrawerMenu());

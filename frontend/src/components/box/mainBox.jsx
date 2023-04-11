@@ -13,6 +13,7 @@ const MainBox = ({ children }) => {
         minHeight: isFullScreen ? "100vh" : "100%",
         height: "500px",
         flexWrap: "nowrap",
+        backgroundColor: "background.secondary"
       }}
     >
       {children}

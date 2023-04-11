@@ -36,7 +36,7 @@ const SettingsMenu = () => {
         });
         setLanguages(res.data.Message);
         setLangItems([...myRes]);
-      } catch {}
+      } catch { }
     };
     myFunc();
     return;
@@ -56,7 +56,7 @@ const SettingsMenu = () => {
       window.location.reload();
     }, 500);
   };
-  const locationSelect = (location) => {};
+  const locationSelect = (location) => { };
 
   return (
     <Grid item className="settingsMenu">
@@ -82,12 +82,12 @@ const SettingsMenu = () => {
                 sx={{
                   fontWeight: "500",
                   textTransform: "capitalize",
-                  color: "#ffffff",
+                  color: "primary.main",
                 }}
               >
                 {user
                   ? // ? user.first_name.concat(" ", user.last_name)
-                    user.first_name
+                  user.first_name
                   : "name"}
               </Typography>
             </Grid>
@@ -95,7 +95,7 @@ const SettingsMenu = () => {
               <Typography
                 variant="caption"
                 sx={{
-                  color: "#ffffffAA",
+                  color: "primary.main",
                   textTransform: "capitalize",
                 }}
               >
@@ -129,7 +129,7 @@ const SettingsMenu = () => {
                 icon: <Brightness2OutlinedIcon />,
                 fixedText: "Appearance",
                 text: theme,
-                subtable: ["dark", "light"],
+                subtable: ["dark", "light", "temp", "tempDark"],
                 functions: themeSelect,
               },
               {
