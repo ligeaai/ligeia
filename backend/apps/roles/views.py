@@ -1,3 +1,73 @@
 from django.shortcuts import render
+from rest_framework import generics, permissions, status
+from rest_framework.response import Response
+from .serializers import RolesSaveSerializer,RolesSaveAndUpdatePropertySaveSerializer
+from .models import roles
+from apps.roles_property.models import roles_property
+from apps.roles_property.serializers import RolesPropertySaveSerializer
+from django.db import transaction
 
-# Create your views here.
+
+class RolesSaveView(generics.GenericAPIView):
+    serializer_class = RolesSaveAndUpdatePropertySaveSerializer
+    permission_classes = [permissions.AllowAny]
+
+    def save_roles(self,request):
+        data = request.data.get('ROLES')
+        serializer = self.get_serializer(data=data)
+        if serializer.is_valid():
+            roles = serializer.save(data)
+    
+    def save_rolesProperty(self,request):
+        for props in request.data.get('PROPERTY'):
+            props['ROLES_ID'] = [request.data.get('ROLES').get('ROLES_ID')]
+            serializer = RolesPropertySaveSerializer(data=props)
+            if serializer.is_valid():
+                roles_property = serializer.save(props)
+
+    def post(self, request, *args, **kwargs):
+        with transaction.atomic():
+            self.save_roles(request)
+            try:
+                self.save_rolesProperty(request)
+            except Exception as e:
+                transaction.set_rollback(True)
+                return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+                     
+            return Response({"Message": "Succsesful"}, status=status.HTTP_200_OK)
+
+
+class RolesGetView(generics.GenericAPIView):
+    serializer_class = RolesSaveSerializer
+    permission_classes = [permissions.AllowAny]
+
+    def get(self, request, *args, **kwargs):
+        try:
+            queryset = roles.objects.all().order_by('ROLES_NAME')
+            serializer = self.get_serializer(queryset,many = True)
+            return Response(serializer.data)
+        except Exception as e:
+            print(e)
+            return Response(str(e), status=status.HTTP_400_BAD_REQUEST)
+
+
+class RolesDeleteView(generics.GenericAPIView):
+    serializer_class = RolesSaveAndUpdatePropertySaveSerializer
+    permission_classes = [permissions.AllowAny]
+
+    def post(self, request, *args, **kwargs):
+        with transaction.atomic():
+            roles_id = request.data.get('ROLES_ID')
+            queryset = roles.objects.filter(ROLES_ID = roles_id)
+            if queryset:
+                queryset.delete()
+            try:
+                queryset_prop = roles_property.objects.filter(ROLES_ID = roles_id)
+                if queryset_prop:
+                    queryset_prop.delete()
+            except Exception as e:
+                transaction.set_rollback(True)
+                return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+                     
+            return Response({"Message": "Succsesful"}, status=status.HTTP_200_OK)
+

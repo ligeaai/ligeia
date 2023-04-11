@@ -1,9 +1,10 @@
 from django.db import models
-import uuid 
-from django.utils import timezone 
 
 class roles_type(models.Model): 
-	ROLES_TYPE=models.CharField(max_length=100,null=False,)
-	ROLES_INFO=models.CharField(max_length=100,null=False,)
-	ROW_ID=models.CharField(max_length=32,primary_key=True,null=False,)
-	
+    ROLES_TYPES = models.CharField(max_length=100, null=False)
+    ROLES_INFO = models.CharField(max_length=100, null=False)
+    CREATE = models.BooleanField(default=False)
+    READ = models.BooleanField(default=False)
+    UPDATE = models.BooleanField(default=False)
+    DELETE = models.BooleanField(default=False)
+    ROW_ID = models.CharField(max_length=32, primary_key=True, null=False)

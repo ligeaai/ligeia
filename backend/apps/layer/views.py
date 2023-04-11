@@ -19,12 +19,9 @@ class LayerDropDownView(generics.ListAPIView):
     def get_queryset(self):
         return
     def get(self, request, *args, **kwargs):
-        queryset = layer.objects.all()
-        serializer = LayerDropDownSerializer(data=queryset, many=True)
-        serializer.is_valid()
-        print(serializer.data)
+        queryset = list(layer.objects.values_list('LAYER_NAME', flat=True))
         return Response(
-            serializer.data,
+            queryset,
             status=status.HTTP_200_OK,
         )
 

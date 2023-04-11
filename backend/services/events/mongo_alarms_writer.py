@@ -5,6 +5,7 @@ import json
 import time as timelibrary
 import datetime
 import os
+import uuid
 
 topic = os.environ.get("Kafka_Alarms_Topic")
 host = os.environ.get("Kafka_Host_DP")
@@ -28,4 +29,5 @@ for message in consumer:
     time_for_mongo = convert_to_time(data["date"])
     timestamp = str(time_for_mongo)
     data["timestamp"] = timestamp
+    data["row_id"] = uuid.uuid4().hex
     timeseries_collection.insert_one(data)
