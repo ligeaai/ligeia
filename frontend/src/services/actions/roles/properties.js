@@ -133,7 +133,7 @@ const loadRolesProperties = (ROLES_ID) => async dispatch => {
         let res = await Roles.getRoleProp(body)
         let data = {}
         Promise.all(
-            res.data.map(e => {
+            res.data[0].PROPERTY_ID.map(e => {
                 data[e.ROW_ID] = e
             })
         )

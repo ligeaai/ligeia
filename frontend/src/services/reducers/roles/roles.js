@@ -3,7 +3,9 @@ import {
     UPDATE_ROWS_ROLES,
     EDIT_CELL_ROLES,
     LOAD_ROLES_PROPERTY,
-    UPDATE_ROLES_NAME_PROPERTY
+    UPDATE_ROLES_NAME_PROPERTY,
+    SET_LINKS_ACTIVE_ROLE,
+    SET_LINKED_USERS_ROLE
 } from "../../actions/types"
 
 
@@ -14,7 +16,9 @@ const initialState = {
         "ROLES_NAME": "",
         "LAYER_NAME": "",
         "LAST_UPDATE_USER": ""
-    }
+    },
+    linkActive: false,
+    linkedUsers: []
 };
 
 export default function (state = initialState, action) {
@@ -50,6 +54,18 @@ export default function (state = initialState, action) {
                 roles: { ...state.roles, ROLES_NAME: payload },
             }
         }
+        case SET_LINKED_USERS_ROLE: {
+            return {
+                ...state,
+                linkedUsers: payload
+            }
+        }
+        case SET_LINKS_ACTIVE_ROLE: {
+            return {
+                ...state,
+                linkActive: payload
+            }
+        }
         case CLEAN_ROLES: {
             return {
                 rows: [],
@@ -58,7 +74,9 @@ export default function (state = initialState, action) {
                     "ROLES_NAME": "",
                     "LAYER_NAME": "",
                     "LAST_UPDATE_USER": ""
-                }
+                },
+                linkActive: false,
+                linkedUsers: []
             }
         }
         default:
