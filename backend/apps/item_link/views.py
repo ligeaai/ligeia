@@ -18,6 +18,7 @@ from apps.item.serializers import ItemDetailsSerializer
 from apps.tags.serializers import TagsFieldsSerializer
 import threading
 import json
+import os
 from elasticsearch import Elasticsearch
 from django.db.models import F, Value
 from django.db.models.functions import Concat
@@ -333,27 +334,28 @@ class ItemLinkHierarchyView(generics.ListAPIView):
         pass
 
     def get(self, request, *args, **kwargs):
-        self.es = Elasticsearch([{"host": "elasticsearch", "port": 9200}])
+        self.es = Elasticsearch([{"host": os.environ["Elastic_Search_Host"], "port": 9200}])
         itemqs = item.objects.filter(ITEM_TYPE="COMPANY")
         self.threads = []
-        self._add_elasticsearch(self, is_first=True)
+        if itemqs:
+            self._add_elasticsearch(self, is_first=True)
         # return Response(data[index])
-        tempt = {}
-        serializer = ItemDetailsSerializer(itemqs, many=True)
-        for index in range(len(serializer.data)):
-            serializer.data[index]["FROM_ITEM_ID"] = serializer.data[index].get(
-                "ITEM_ID"
-            )
-            serializer.data[index]["LINK_ID"] = serializer.data[index].get("ITEM_ID")
-        self._getName(serializer.data)
-        kwargs = {"data": serializer.data, "is_first": False}
-        t = threading.Thread(target=self._add_elasticsearch, kwargs=kwargs)
-        t.start()
-        self.threads.append(t)
-        self._getChild(serializer.data)
-        for thread in self.threads:
-            thread.join()
-        return Response(serializer.data)
+            tempt = {}
+            serializer = ItemDetailsSerializer(itemqs, many=True)
+            for index in range(len(serializer.data)):
+                serializer.data[index]["FROM_ITEM_ID"] = serializer.data[index].get(
+                    "ITEM_ID"
+                )
+                serializer.data[index]["LINK_ID"] = serializer.data[index].get("ITEM_ID")
+            self._getName(serializer.data)
+            kwargs = {"data": serializer.data, "is_first": False}
+            t = threading.Thread(target=self._add_elasticsearch, kwargs=kwargs)
+            t.start()
+            self.threads.append(t)
+            self._getChild(serializer.data)
+            for thread in self.threads:
+                thread.join()
+            return Response(serializer.data)
 
     def _getChild(self, data):
         for index in range(len(data)):
@@ -394,10 +396,14 @@ class ItemLinkHierarchyView(generics.ListAPIView):
                 )
 
     def _add_elasticsearch(self, data="", is_first=False):
+
         if is_first == True:
-            self.es.delete_by_query(
-                index="hierarchy", body={"query": {"match_all": {}}}
-            )
+            indices = list(self.es.indices.get_alias().keys())
+            if "hierarchy" in indices:
+                self.es.delete_by_query(
+                    index="hierarchy", body={"query": {"match_all": {}}}
+                )
+            
         else:
             for item in data:
                 self.es.index(index="hierarchy", body=item)
