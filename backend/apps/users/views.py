@@ -278,42 +278,20 @@ class UserEmailConfirmationStatusView(generics.GenericAPIView):
         return Response({"status": user.confirmed_email}, status=status.HTTP_200_OK)
 
 
-from .serializers import SocialLoginSerializer
 
+class UserRoleUpdate(generics.GenericAPIView):
+    serializer_class = UserSerializer
+    permission_classes = [AllowAny]
 
-class FacebookLogin(SocialLoginView):
-    adapter_class = FacebookOAuth2Adapter
-    serializer_class = SocialLoginSerializer
-
-
-class GoogleLogin(SocialLoginView):
-    adapter_class = GoogleOAuth2Adapter
-    serializer_class = SocialLoginSerializer
-
-
-class GoogleRegister(SocialLoginView):
-    adapter_class = GoogleOAuth2Adapter
-    serializer_class = SocialLoginSerializer
-
-
-class FacebookRegister(SocialLoginView):
-    adapter_class = GoogleOAuth2Adapter
-
-
-class GitHubLogin(SocialLoginView):
-    adapter_class = GitHubOAuth2Adapter
-    client_class = OAuth2Client
-
-    @property
-    def callback_url(self):
-        # use the same callback url as defined in your GitHub app, this url must
-        # be absolute:
-        return self.request.build_absolute_uri(reverse("github_callback"))
-
-
-import urllib.parse
-
-
-def github_callback(request):
-    params = urllib.parse.urlencode(request.GET)
-    return redirect(f"https://localhost:8000/auth/github?{params}")
+    def post(self, request, *args, **kwargs):
+        try:
+            role_id = request.data.get('role_id')
+            for value in request.data.get('users'):
+                data ={}
+                data["email"] = value
+                data['role_id'] = role_id
+                print(data)
+                user = User.objects.filter(email=data.get('email')).update(**data)
+            return Response({"Message":"Succsessful"})
+        except Exception as e:
+            return Response({"Message":str(e)}, status=status.HTTP_400_BAD_REQUEST)

@@ -2,6 +2,7 @@ import uuid
 import logging
 from datetime import timedelta
 from apps.layer.models import layer
+from apps.roles.models import roles
 from django.conf import settings
 from django.contrib.auth.models import (
     AbstractBaseUser,
@@ -82,6 +83,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     layer_name = models.ManyToManyField(
         layer, related_name="layerName", null=True, blank=True
     )
+    role = models.ForeignKey(roles, on_delete=models.SET_NULL, null=True)
     is_staff = models.BooleanField(_("staff status"), default=False)
     is_superuser = models.BooleanField(_("superuser status"), default=False)
     is_active = models.BooleanField(_("active"), default=True)

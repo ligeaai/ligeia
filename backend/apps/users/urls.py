@@ -5,7 +5,7 @@ from django.urls import include, path, re_path
 from rest_framework.routers import DefaultRouter
 
 from .views import (
-    GitHubLogin,
+
     UserList,
     UserLoginView,
     UserRegisterView,
@@ -15,14 +15,18 @@ from .views import (
     UserEmailConfirmationStatusView,
     UserModelViewSet,
     UserDetails,
+    ResetForgetPassword,
+    logout,
+    UserLayerUpdate,
+    UserRoleUpdate
+)
+from .social_views import (
     FacebookLogin,
     GoogleLogin,
-    ResetForgetPassword,
-    github_callback,
-    logout,
     GoogleRegister,
     FacebookRegister,
-    UserLayerUpdate
+    GitHubLogin,
+    github_callback,
 )
 
 from allauth.socialaccount.providers.github import views
@@ -56,6 +60,7 @@ urlpatterns = [
         name="resetnewpassword",
     ),
     path("user/layer/update/", UserLayerUpdate.as_view(), name="UserLayerUpdate"),
+    path("user/role/update/", UserRoleUpdate.as_view(), name="UserRoleUpdate"),
     path("user-list/", UserList.as_view(), name="userlist"),
     path("user-detail/", UserDetails.as_view(), name="UserDetails")
     # re_path(r"^user/$", UserList.as_view(), name="user"),

@@ -4,9 +4,15 @@ from .models import roles
 
 class RolesSaveSerializer(serializers.ModelSerializer):
     class Meta:
+        model = roles
+        exclude = ("PROPERTY_ID",)
+
+
+class RolesPropertySerializer(serializers.ModelSerializer):
+    class Meta:
         depth = 1
         model = roles
-        fields = "__all__"
+        fields = ["PROPERTY_ID"]
 
 
 
