@@ -6,6 +6,9 @@ from .models import roles
 from apps.roles_property.models import roles_property
 from apps.roles_property.serializers import RolesPropertySaveSerializer
 from django.db import transaction
+from utils.models_utils import (
+    validate_find,
+)
 
 
 class RolesSaveView(generics.GenericAPIView):
@@ -62,18 +65,17 @@ class RolesDeleteView(generics.GenericAPIView):
     def post(self, request, *args, **kwargs):
         with transaction.atomic():
             roles_id = request.data.get('ROLES_ID')
-            queryset = roles.objects.filter(ROLES_ID = roles_id)
-            if queryset:
-                queryset.delete()
+            queryset = roles.objects.get(ROLES_ID = roles_id)
+            validate_find(queryset)
             try:
-                queryset_prop = roles_property.objects.filter(ROLES_ID = roles_id)
-                if queryset_prop:
-                    queryset_prop.delete()
+                queryset.PROPERTY_ID.remove()
+                queryset.delete()
             except Exception as e:
                 transaction.set_rollback(True)
                 return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
-                     
             return Response({"Message": "Succsesful"}, status=status.HTTP_200_OK)
+                
+                
 
 
 class RolesGetPropertyView(generics.GenericAPIView):

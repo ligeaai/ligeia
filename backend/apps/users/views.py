@@ -294,3 +294,45 @@ class UserRoleUpdate(generics.GenericAPIView):
             return Response({"Message":"Succsessful"})
         except Exception as e:
             return Response({"Message":str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
+
+class UserRoleDeleteView(generics.GenericAPIView):
+    serializer_class = UserSerializer
+    permission_classes = [AllowAny]
+
+    def post(self, request, *args, **kwargs):
+        try:
+            data = {}
+            data["email"] = request.data.get('email')
+            data['role_id'] = None
+            user = User.objects.filter(email=data.get('email')).update(**data)
+            return Response({"Message":"Succsessful"})
+        except Exception as e:
+            return Response({"Message":str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
+
+
+class GetUserRolesView(generics.GenericAPIView):
+    serializer_class = UserSerializer
+    permission_classes = [AllowAny]
+
+    def get(self, request, *args, **kwargs):
+        try:
+            qs = User.objects.filter(role = None,layer_name = "OG_STD")
+            serializer = UserSerializer(qs,many = True)
+            return Response(serializer.data)
+        except Exception as e:
+            return Response({"Message":str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
+
+class GetUserByRoleIdView(generics.GenericAPIView):
+    serializer_class = UserSerializer
+    permission_classes = [AllowAny]
+
+    def post(self, request, *args, **kwargs):
+        try:
+            qs = User.objects.filter(role = request.data.get('ROLES_ID'),layer_name = "OG_STD")
+            serializer = UserSerializer(qs,many = True)
+            return Response(serializer.data)
+        except Exception as e:
+            return Response({"Message":str(e)}, status=status.HTTP_400_BAD_REQUEST)
