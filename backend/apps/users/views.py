@@ -290,7 +290,6 @@ class UserRoleUpdate(generics.GenericAPIView):
                 data ={}
                 data["email"] = value
                 data['role_id'] = role_id
-                print(data)
                 user = User.objects.filter(email=data.get('email')).update(**data)
             return Response({"Message":"Succsessful"})
         except Exception as e:
