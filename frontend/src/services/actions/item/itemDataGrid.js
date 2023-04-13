@@ -40,17 +40,28 @@ export class column {
         this.width = 150;
         this.filterable = false;
         this.sortable = false;
-        this.editable = true;
+        this.editable = props.editable;
         this.renderCell = myMemoFunction;
         this.renderEditCell = myMemoFunction;
         this.cellClassName = "myRenderCell"
     }
 }
 
-const _createColumn = (columnId) => dispatch => {
+const _createColumn = (columnId) => (dispatch, getState) => {
+    const isNew = getState().treeview.selectedItem.selectedIndex
+    const create = getState().auth.user.role.PROPERTY_ID.ITEM.CREATE
+    const update = getState().auth.user.role.PROPERTY_ID.ITEM.UPDATE
+    let editable = false;
+    if (isNew === -2 && create) {
+        editable = true
+    } else if (isNew === -2 && !create && update) {
+        editable = false
+    } else if (update) {
+        editable = true
+    }
     dispatch({
         type: ADD_COLUMN_ITEM,
-        payload: { [columnId]: new column({ columnId: columnId }) }
+        payload: { [columnId]: new column({ columnId: columnId, editable: editable }) }
     })
     dispatch({
         type: UPDATE_COL_ITEM,
@@ -263,9 +274,18 @@ export const saveItem = () => async (dispatch, getState) => {
             "ROW_ID": getState().treeview.selectedItem.ROW_ID ? getState().treeview.selectedItem.ROW_ID : uuidv4().replace(/-/g, ""),
             "LAYER_NAME": "KNOC"
         }
-        const body = JSON.stringify({ ITEM, PROPERTYS, DELETED });
+        const body = JSON.stringify({ ITEM, PROPERTYS });
+        const deleteBody = JSON.stringify({ ITEM, DELETED });
+        console.log(deleteBody);
         try {
-            let res = await ItemService.update(body)
+            let res;
+            if (getState().treeview.selectedItem.selectedIndex === -2)
+                res = await ItemService.create(body)
+            else {
+                res = await ItemService.update(body)
+                if (DELETED.length > 0)
+                    res = await ItemService.remove(deleteBody)
+            }
             dispatch(loadTreeviewItem(async (body, cancelToken) => {
                 return await ItemService.getAll(body, cancelToken, type);
             }, "PROPERTY_STRING"))

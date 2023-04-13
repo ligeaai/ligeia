@@ -11,6 +11,9 @@ const DateBreak = ({ props }) => {
   const instanttime = new Date();
   const [date, setDate] = React.useState(instanttime);
   const usedDates = useSelector((state) => state.itemDataGrid.col);
+  const permission = useSelector(
+    (state) => state.auth.user?.role?.PROPERTY_ID?.ITEM
+  );
   const checkDateBreaks = (date) => {
     var returnValue = true;
     Object.keys(usedDates).map((e) => {
@@ -39,7 +42,7 @@ const DateBreak = ({ props }) => {
               color: "status.primary",
               mx: "2px",
             }}
-            disabled={props}
+            disabled={props || !(permission.CREATE || permission.UPDATE)}
             onClick={() => {
               if (checkDateBreaks(date)) {
                 dispatch(addNewColumn(dateFormatter(date)));

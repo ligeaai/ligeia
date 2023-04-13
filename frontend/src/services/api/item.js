@@ -23,6 +23,13 @@ const update = (body) => {
         "/item/item-and-property/", body, config()
     )
 }
+
+const create = (body) => {
+    return instance.post(
+        "/item/create/", body, config()
+    )
+}
+
 const remove = (body) => {
     return instance.post(
         "/item/delete/", body, config()
@@ -38,6 +45,7 @@ const ItemService = {
     getAll,
     getTypeProperty,
     getItemValues,
+    create,
     update,
     remove,
     elasticSearch
