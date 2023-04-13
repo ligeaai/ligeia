@@ -256,20 +256,20 @@ const Palette = () => {
                 mode: "dark",
                 primary: {
                     light: "#ffffff",
-                    main: "#ffffff",
-                    dark: "#212121", // DarkHeader
+                    main: "#AEAAAE",
+                    dark: "#1C1B1E", // DarkHeader
                 },
 
                 success: {
-                    primary: "#616161", // card fancy dark color
+                    primary: "#605D62", // card fancy dark color
                     main: "#ffffff", //selected item for dark
-                    secondary: "#212121", // drawer bg for dark
-                    info: "#616161"
+                    secondary: "#1C1B1E", // drawer bg for dark
+                    info: "#323033"
                 },
 
                 text: {
-                    primary: "#ffffff", // drawer menu text for dark
-                    main: "#eceff1", // select item for drawer text for dark
+                    primary: "#AEAAAE", // drawer menu text for dark
+                    main: "#ffffff", // select item for drawer text for dark
                     secondary: "#eeeeee", // card header text for dark
                     success: "#e0e0e0", //card info text for dark
                     info: "#424242",
@@ -278,11 +278,11 @@ const Palette = () => {
                 },
 
                 background: {
-                    primary: "#616161", //  drawer menu select item background for dark
+                    primary: "#605D62", //  drawer menu select item background for dark
                     main: "#000000", //  paper background for dark
-                    secondary: "#424242", //nested menu dark background
-                    success: "#424242", // card bg dark
-                    info: "#616161", //properties bg
+                    secondary: "#323033", //nested menu dark background and main box bg
+                    success: "#323033", // card bg dark
+                    info: "#323033", //properties bg
                 },
 
                 icon: {
@@ -295,11 +295,11 @@ const Palette = () => {
 
 
                 status: {
-                    main: "#424242", //items 
+                    main: "#323033", //items 
                     primary: "#e0e0e0", // items text
                     secondary: "#e0e0e0", //item text lvl2
-                    success: "#9e9e9e", // search bar
-                    info: "#bdbdbd", //search bar hover
+                    success: "#1C1B1E", // search bar
+                    info: "#48464A", //search bar hover
 
                 },
 
