@@ -37,6 +37,7 @@ from .serializers import (
     UserModelSerializer,
     UserRegistrationSerializer,
     UserSerializer,
+    UserModelTestSerializer
 )
 
 logger = KafkaLogger()
@@ -56,7 +57,7 @@ class UserModelViewSet(ModelViewSet):
 
 class UserDetails(generics.ListAPIView):
     queryset = User.objects.none()
-    serializer_class = UserModelSerializer
+    serializer_class = UserModelTestSerializer
     authentication_classes = [
         TokenAuthentication,
     ]

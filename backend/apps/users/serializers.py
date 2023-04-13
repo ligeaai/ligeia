@@ -23,6 +23,12 @@ class UserModelSerializer(ModelSerializer):
         exclude = ("password",)
         model = User
 
+class UserModelTestSerializer(ModelSerializer):
+    class Meta:
+        depth = 3
+        fields = "__all__"
+        model = User
+
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
