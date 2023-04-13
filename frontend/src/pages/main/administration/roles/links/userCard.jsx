@@ -1,5 +1,5 @@
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { Avatar, Box, Grid, IconButton } from "@mui/material";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
@@ -8,10 +8,10 @@ import { removeRole } from "../../../../../services/actions/roles/link";
 
 const UserCard = ({ user }) => {
   const dispatch = useDispatch();
-  console.log(user);
   const btnDeleteHandle = () => {
     dispatch(removeRole(user.email));
   };
+  const Role = useSelector((state) => state.treeview.selectedItem.ROLES_NAME);
   return (
     <Grid
       container
@@ -41,7 +41,7 @@ const UserCard = ({ user }) => {
             {user.email}
           </Grid>
           <Grid item xs={12}>
-            role
+            {Role}
           </Grid>
         </Grid>
       </Grid>
