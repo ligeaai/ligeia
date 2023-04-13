@@ -5,6 +5,7 @@ import { Navigate, useParams } from "react-router-dom";
 import { setSelectedDrawerItem } from "../../services/actions/drawerMenu/drawerMenu";
 import history from "../../routers/history";
 const MyNavigator = ({ way }) => {
+  document.title = `Liegia.ai | ${way}`;
   const dispatch = useDispatch();
   const { myKey } = useParams();
   const drawerMenu = useSelector((state) => state.drawerMenu.data);

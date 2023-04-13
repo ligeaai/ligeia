@@ -7,6 +7,7 @@ import { LoadingComponent } from "../../../components";
 import { setSelectedDrawerItem } from "../../../services/actions/drawerMenu/drawerMenu";
 
 const Main = ({ way }) => {
+  document.title = `Liegia.ai | ${way}`;
   const dispatch = useDispatch();
   const isFullScreen = useSelector((state) => state.fullScreen.isFullScreen);
   const drawerData = useSelector((state) => state.drawerMenu.data);
@@ -24,12 +25,7 @@ const Main = ({ way }) => {
       url = url.replace(/ /g, "_");
       cards.push({
         cardTitle: drawerDataConfiguration.Items[e].SHORT_LABEL,
-        //cardBody: "Administration of the platform",
         cardURL: `/${way.toLowerCase()}/${url}`,
-        // selectedDrawerItem:
-        //   drawerDataConfiguration.Items[e].Items[
-        //     Object.keys(drawerDataConfiguration.Items[e].Items)[0]
-        //   ],
       });
     });
 

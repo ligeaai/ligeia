@@ -22,6 +22,7 @@ import TreeMenu from "./treeMenu";
 import { cleanRoles } from "../../../../services/actions/roles/roles";
 
 const Main = ({ isHome }) => {
+  document.title = "Ligeia.ai | Roles";
   const dispatch = useDispatch();
   const isLinksActive = useSelector((state) => state.roles.linkActive);
   React.useEffect(() => {

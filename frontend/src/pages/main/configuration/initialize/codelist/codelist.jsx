@@ -27,6 +27,7 @@ import { instance, config } from "../../../../../services/baseApi";
 import Menu from "./treeMenu";
 
 const CodeList = ({ isHome }) => {
+  document.title = `Liegia.ai | Codelist`;
   const dispatch = useDispatch();
   const filteredLayerName = useSelector(
     (state) => state.treeview.filteredLayerName
