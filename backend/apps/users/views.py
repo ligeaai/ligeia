@@ -1,5 +1,4 @@
 import email
-
 from allauth.socialaccount.providers.facebook.views import FacebookOAuth2Adapter
 from allauth.socialaccount.providers.github.views import GitHubOAuth2Adapter
 from allauth.socialaccount.providers.google.views import GoogleOAuth2Adapter
@@ -27,6 +26,7 @@ from rest_framework.viewsets import ModelViewSet
 from services.logging.Handlers import KafkaLogger
 from utils.utils import AtomicMixin
 
+from apps.roles.models import roles
 from .models import *
 from .models import User
 from .serializers import (
@@ -124,9 +124,12 @@ class UserLayerUpdate(generics.GenericAPIView):
     def post(self, request, *args, **kwargs):
         try:
             for value in request.data.get('users'):
+                layers = value.pop("layer_name")
                 user = User.objects.get(email=value.get('email'))
                 user.layer_name.set([])
-                user.layer_name.set(value.get("layer_name"))
+                user.layer_name.set(layers)
+                role = roles.objects.get(ROLES_ID = value.get('role'))
+                user.role = role
                 user.save()
             return Response({"Message":"Succsessful"})
         except Exception as e:
