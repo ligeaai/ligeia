@@ -18,6 +18,9 @@ const PropertiesActionMenu = () => {
   const name = useSelector(
     (state) => state.treeview.selectedItem.PROPERTY_STRING
   );
+  const permission = useSelector(
+    (state) => state.auth.user?.role?.PROPERTY_ID?.ITEM
+  );
   const dispatch = useDispatch();
   const btnNew = () => {
     dispatch(selectTreeViewItem(-2, "new", 3));
@@ -67,6 +70,11 @@ const PropertiesActionMenu = () => {
       btnDelete={btnDelete}
       saveGoPrev={saveGoPrev}
       saveGoNext={saveGoNext}
+      btnNewIsActive={permission?.CREATE}
+      saveIsActive={
+        permission?.CREATE || permission?.UPDATE || permission?.DELETE
+      }
+      btnDeleteIsActive={permission?.DELETE}
     />
   );
 };

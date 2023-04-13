@@ -1,5 +1,6 @@
 import json
 import time
+
 from django.shortcuts import render
 from rest_framework import generics, permissions, status
 from .models import item
@@ -7,6 +8,7 @@ from .serializers import (
     ItemSaveSerializer,
     ItemDetailsSerializer,
     ItemSpacialSaveSerializer,
+    ItemsSaveSerializer,
 )
 from rest_framework.response import Response
 from services.parsers.addData.type import typeAddData
@@ -84,6 +86,54 @@ class ItemScriptSaveView(generics.CreateAPIView):
                 return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
             return Response({"Message": "Succsesful"}, status=status.HTTP_200_OK)
+
+
+class ItemCreateView(generics.CreateAPIView):
+
+    serializer_class = ItemsSaveSerializer
+    permission_classes = [permissions.AllowAny]
+    
+    def _itemSave(self, request):
+        serializer = ItemSpacialSaveSerializer(data=request.data["ITEM"])
+        serializer.is_valid(raise_exception=True)
+        items = serializer.save(request)
+
+    def _propertySave(self, request):
+        for property_data in request.data["PROPERTYS"]:
+            property_data["ITEM_ID"] = request.data["ITEM"].get("ITEM_ID")
+            property_data["ITEM_TYPE"] = request.data["ITEM"].get("ITEM_TYPE")
+            property_data["LAST_UPDT_USER"] = str(request.user)
+            property_data["LAYER_NAME"] = request.data["ITEM"].get("LAYER_NAME")
+            property_serializer = ItemPropertySpacialSaveSerializer(data=property_data)
+            property_serializer.is_valid(raise_exception=True)
+            property_serializer.save(property_data)
+
+    def post(self, request, *args, **kwargs):
+        with transaction.atomic():
+           self._itemSave(request)
+           try:
+               self._propertySave(request)
+           except Exception as e:
+               transaction.set_rollback(True)
+               return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+           return Response({"Message": "Succsesful"}, status=status.HTTP_200_OK)
+
+
+        serializer = ItemsSaveSerializer(data=request.data["ITEM"])
+        serializer.is_valid(raise_exception=True)
+        items = serializer.create_item(request)
+        return Response({"Message": "Successful"}, status=status.HTTP_200_OK)
+
+class ItemUpdateView(generics.CreateAPIView):
+
+    serializer_class = ItemsSaveSerializer
+    permission_classes = [permissions.AllowAny]
+
+    def post(self, request, *args, **kwargs):
+        serializer = ItemsSaveSerializer(data=request.data["ITEM"])
+        serializer.is_valid(raise_exception=True)
+        items = serializer.update_item(request)
+        return Response({"Message": "Successful"}, status=status.HTTP_200_OK)
 
 
 class ItemView(generics.ListAPIView):

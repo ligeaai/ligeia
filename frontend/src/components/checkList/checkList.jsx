@@ -15,9 +15,6 @@ export default function CheckboxList(props) {
     defaultData = [],
   } = props;
   const [checked, setChecked] = React.useState(defaultData);
-  React.useEffect(() => {
-    handleToggleFunc([]);
-  }, []);
   const handleToggle = (value) => () => {
     const currentIndex = checked.indexOf(value);
     const newChecked = [...checked];
@@ -34,9 +31,7 @@ export default function CheckboxList(props) {
     <List
       sx={{
         width: "100%",
-        minWidth: 360,
-        height: "500px",
-        bgcolor: "background.main",
+        height: "100%",
       }}
     >
       {data.length === 0 ? (

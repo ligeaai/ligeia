@@ -23,6 +23,7 @@ import { selectTreeViewItem } from "../../../../services/actions/treeview/treevi
 import Menu from "./treeMenu";
 
 const Tags = ({ isHome }) => {
+  document.title = `Ligeia.ai | Tags`;
   const dispatch = useDispatch();
   React.useEffect(() => {
     if (isHome) {

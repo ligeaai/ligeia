@@ -14,6 +14,7 @@ import {
   cleanUsers,
 } from "../../../../services/actions/users/users";
 const Main = () => {
+  document.title = "Ligeia.ai | Users";
   const dispatch = useDispatch();
 
   React.useEffect(() => {

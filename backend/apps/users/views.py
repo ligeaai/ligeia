@@ -1,5 +1,4 @@
 import email
-
 from allauth.socialaccount.providers.facebook.views import FacebookOAuth2Adapter
 from allauth.socialaccount.providers.github.views import GitHubOAuth2Adapter
 from allauth.socialaccount.providers.google.views import GoogleOAuth2Adapter
@@ -27,6 +26,7 @@ from rest_framework.viewsets import ModelViewSet
 from services.logging.Handlers import KafkaLogger
 from utils.utils import AtomicMixin
 
+from apps.roles.models import roles
 from .models import *
 from .models import User
 from .serializers import (
@@ -37,6 +37,7 @@ from .serializers import (
     UserModelSerializer,
     UserRegistrationSerializer,
     UserSerializer,
+    UserModelTestSerializer
 )
 
 logger = KafkaLogger()
@@ -56,7 +57,7 @@ class UserModelViewSet(ModelViewSet):
 
 class UserDetails(generics.ListAPIView):
     queryset = User.objects.none()
-    serializer_class = UserModelSerializer
+    serializer_class = UserModelTestSerializer
     authentication_classes = [
         TokenAuthentication,
     ]
@@ -124,9 +125,12 @@ class UserLayerUpdate(generics.GenericAPIView):
     def post(self, request, *args, **kwargs):
         try:
             for value in request.data.get('users'):
+                layers = value.pop("layer_name")
                 user = User.objects.get(email=value.get('email'))
                 user.layer_name.set([])
-                user.layer_name.set(value.get("layer_name"))
+                user.layer_name.set(layers)
+                role = roles.objects.get(ROLES_ID = value.get('role'))
+                user.role = role
                 user.save()
             return Response({"Message":"Succsessful"})
         except Exception as e:
@@ -292,5 +296,47 @@ class UserRoleUpdate(generics.GenericAPIView):
                 data['role_id'] = role_id
                 user = User.objects.filter(email=data.get('email')).update(**data)
             return Response({"Message":"Succsessful"})
+        except Exception as e:
+            return Response({"Message":str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
+
+class UserRoleDeleteView(generics.GenericAPIView):
+    serializer_class = UserSerializer
+    permission_classes = [AllowAny]
+
+    def post(self, request, *args, **kwargs):
+        try:
+            data = {}
+            data["email"] = request.data.get('email')
+            data['role_id'] = None
+            user = User.objects.filter(email=data.get('email')).update(**data)
+            return Response({"Message":"Succsessful"})
+        except Exception as e:
+            return Response({"Message":str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
+
+
+class GetUserRolesView(generics.GenericAPIView):
+    serializer_class = UserSerializer
+    permission_classes = [AllowAny]
+
+    def get(self, request, *args, **kwargs):
+        try:
+            qs = User.objects.filter(role = None,layer_name = "OG_STD")
+            serializer = UserSerializer(qs,many = True)
+            return Response(serializer.data)
+        except Exception as e:
+            return Response({"Message":str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
+
+class GetUserByRoleIdView(generics.GenericAPIView):
+    serializer_class = UserSerializer
+    permission_classes = [AllowAny]
+
+    def post(self, request, *args, **kwargs):
+        try:
+            qs = User.objects.filter(role = request.data.get('ROLES_ID'),layer_name = "OG_STD")
+            serializer = UserSerializer(qs,many = True)
+            return Response(serializer.data)
         except Exception as e:
             return Response({"Message":str(e)}, status=status.HTTP_400_BAD_REQUEST)

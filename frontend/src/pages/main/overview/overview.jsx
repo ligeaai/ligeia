@@ -20,6 +20,7 @@ const Overview = () => {
   const dispatch = useDispatch();
   const isActiveTabs = useSelector((state) => state.tapsOverview.isActive);
   React.useEffect(() => {
+    document.title = "Ligeia.ai | Overview";
     dispatch(loadCollapseMenu(ItemLinkService.hierarchy));
   }, []);
   return (

@@ -2,9 +2,9 @@ import React from "react";
 import { Viewer } from "@grapecity/activereports-react";
 import "@grapecity/activereports/styles/ar-js-ui.css";
 import "@grapecity/activereports/styles/ar-js-viewer.css";
-import { MyBox } from "../../../components";
 
 function App() {
+  document.title = "Ligeia.ai | Reporting";
   const report = {
     Name: "Report",
     Type: "report",

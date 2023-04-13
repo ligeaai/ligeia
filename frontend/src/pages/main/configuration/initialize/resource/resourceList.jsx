@@ -26,6 +26,7 @@ import { instance, config } from "../../../../../services/baseApi";
 import ResourcelistService from "../../../../../services/api/resourceList";
 import { useIsMount } from "../../../../../hooks/useIsMount";
 const Menu = () => {
+  document.title = `Ligeia.ai | Resources`;
   const isMount = useIsMount();
   const dispatch = useDispatch();
   const text = useSelector((state) => state.searchBar.text);

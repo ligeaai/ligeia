@@ -1,19 +1,11 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Box, MenuItem, Button } from "@mui/material";
+import { Box, Checkbox } from "@mui/material";
 import { Select } from "../../../../../components";
 
 import CodelistService from "../../../../../services/api/codeList";
 import { editDataGridCell } from "../../../../../services/actions/item/itemDataGrid";
-import {
-  GridEditInputCell,
-  GridEditDateCell,
-  GridEditBooleanCell,
-  GridEditSingleSelectCell,
-  GridCellCheckboxRenderer,
-  GridBooleanCell,
-  GridCell,
-} from "@mui/x-data-grid-pro";
+import { GridEditInputCell, GridEditDateCell } from "@mui/x-data-grid-pro";
 
 const SingleSelectCell = (params) => {
   const dispatch = useDispatch();
@@ -95,6 +87,7 @@ const SingleSelectCell = (params) => {
     >
       <Select
         values={values}
+        disabled={!params.colDef.editable}
         valuesPath={"ROW_ID"}
         dataTextPath={"CODE_TEXT"}
         handleChangeFunc={(value) => {
@@ -113,6 +106,7 @@ const InputCell = (params) => {
       onKeyDown={(evt) => evt.key === "e" && evt.preventDefault()}
       {...params}
       error={true}
+      disabled={!params.colDef.editable}
       className={
         params.row[params.field] === "" && params.row.MANDATORY === "True"
           ? "errorhandling"
@@ -123,10 +117,12 @@ const InputCell = (params) => {
 };
 
 export const MyTextField = (params) => {
+  const dispatch = useDispatch();
   if (params.row.PROPERTY_TYPE === "TEXT") {
     return (
       <GridEditInputCell
         {...params}
+        disabled={!params.colDef.editable}
         className={
           params.row[params.field] === "" && params.row.MANDATORY === "True"
             ? "errorhandling"
@@ -141,6 +137,7 @@ export const MyTextField = (params) => {
     return (
       <GridEditDateCell
         type="date"
+        disabled={!params.colDef.editable}
         value={params.row[params.field]}
         {...params}
         className={
@@ -156,15 +153,21 @@ export const MyTextField = (params) => {
     return <InputCell {...params} />;
   } else if (params.row.PROPERTY_TYPE === "BOOL") {
     return (
-      <GridEditBooleanCell
-        checked={false}
-        type="checkbox"
+      <Checkbox
         {...params}
+        disabled={!params.colDef.editable}
+        onChange={(value) => {
+          dispatch(
+            editDataGridCell(params.id, params.field, value.target.checked)
+          );
+        }}
+        checked={params.value}
         className={
           params.row[params.field] === "" && params.row.MANDATORY === "True"
             ? "errorhandling"
             : ""
         }
+        sx={{ margin: "auto" }}
       />
     );
   } else if (params.row.PROPERTY_TYPE === "CODE") {
@@ -173,6 +176,7 @@ export const MyTextField = (params) => {
     return (
       <GridEditInputCell
         {...params}
+        disabled={!params.colDef.editable}
         className={
           params.row[params.field] === "" && params.row.MANDATORY === "True"
             ? "errorhandling"
@@ -180,25 +184,5 @@ export const MyTextField = (params) => {
         }
       />
     );
-  }
-};
-
-export const MyTextFieldRender = (params) => {
-  if (params.row.PROPERTY_TYPE === "BOOL") {
-    return (
-      <GridBooleanCell disabled checked={false} type="checkbox" {...params} />
-    );
-  } else if (
-    params.row.PROPERTY_TYPE === "HISTORY" ||
-    params.row.PROPERTY_TYPE === "DATE"
-  ) {
-    var d = params.row[params.field].getDate();
-    var m = params.row[params.field].getMonth();
-    m += 1;
-    var y = params.row[params.field].getFullYear();
-    var newdate = d + "." + m + "." + y;
-    return <Box>{newdate}</Box>;
-  } else {
-    return <Box> asd{params.row[params.field]}</Box>;
   }
 };

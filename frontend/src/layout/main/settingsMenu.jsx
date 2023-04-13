@@ -36,7 +36,7 @@ const SettingsMenu = () => {
         });
         setLanguages(res.data.Message);
         setLangItems([...myRes]);
-      } catch { }
+      } catch {}
     };
     myFunc();
     return;
@@ -56,7 +56,7 @@ const SettingsMenu = () => {
       window.location.reload();
     }, 500);
   };
-  const locationSelect = (location) => { };
+  const locationSelect = (location) => {};
 
   return (
     <Grid item className="settingsMenu">
@@ -85,10 +85,7 @@ const SettingsMenu = () => {
                   color: "primary.main",
                 }}
               >
-                {user
-                  ? // ? user.first_name.concat(" ", user.last_name)
-                  user.first_name
-                  : "name"}
+                {user?.first_name}
               </Typography>
             </Grid>
             <Grid item>
@@ -99,15 +96,14 @@ const SettingsMenu = () => {
                   textTransform: "capitalize",
                 }}
               >
-                role
-              </Typography>{" "}
-              {/* //todo add role */}
+                {user?.role?.ROLES_NAME}
+              </Typography>
             </Grid>
           </Grid>
         </Grid>
         <Grid item>
           <Avatar
-            alt={user ? user.first_name.concat(" ", user.last_name) : "name"}
+            alt={user ? user.first_name.concat(" ", user.last_name) : "Unknown"}
             src="/"
           />
         </Grid>

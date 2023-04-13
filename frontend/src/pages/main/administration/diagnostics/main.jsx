@@ -14,6 +14,7 @@ import {
   cleanDiagnostic,
 } from "../../../../services/actions/diagnostic/diagnostic";
 const Main = () => {
+  document.title = "Ligeia.ai | Diagnostic";
   const dispatch = useDispatch();
 
   React.useEffect(() => {

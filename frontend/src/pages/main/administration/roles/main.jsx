@@ -19,16 +19,12 @@ import Link from "./links/link";
 import LinkActionMenu from "./links/linkActionMenu";
 import TreeMenu from "./treeMenu";
 
-import {
-  loadRoles,
-  cleanRoles,
-} from "../../../../services/actions/roles/roles";
+import { cleanRoles } from "../../../../services/actions/roles/roles";
 
 const Main = ({ isHome }) => {
+  document.title = "Ligeia.ai | Roles";
   const dispatch = useDispatch();
-  const isLinksActive = useSelector(
-    (state) => state.itemLinkEditor.isLinksActive
-  );
+  const isLinksActive = useSelector((state) => state.roles.linkActive);
   React.useEffect(() => {
     return () => {
       dispatch(cleanRoles());

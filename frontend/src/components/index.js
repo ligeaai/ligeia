@@ -40,6 +40,7 @@ import Select from "./select/select"
 import MainPageSkeleton from "./skeleton/mainPageSkeleton";
 import MyDialog from "./dialog/myDialog"
 import MyTabs from "./tabs/myTabs"
+import MyRadioButton from "./radioButton/radioButton"
 import Stepper from "./stepper/stepper"
 import { TreeMenu } from "./treeMenu/treeMenu"
 import TreeMenuItems from "./treeMenu/treeMenuGenerator"
@@ -48,5 +49,5 @@ import TreeMenuItems from "./treeMenu/treeMenuGenerator"
 export {
     ActionMenu, Breadcrumb, BreadcrumbBox, Cards, CheckboxList, BigBox, ColorTextfield, CollapsableMenu, Confirmation, ComponentError, ComponentErrorBody, CustomNoRowsOverlay, CustomToolbar, MyDivider, DatePicker, DataGrid, Drawer, ErrorBoundary,
     ErrorMessage, Highchart, InputGenerator, Loadable, Loading, LoadingComponent, MyBox, MyCheckBox, MyNavigator, MyNumberTextField, MyTextField, MyMultilineTextField, PropLinkTabs, SocialButton,
-    IndentSelect, ItemSperatorLine, ItemSperatorLineXL, Items, SearchBar, SearchBarMobile, Select, TreeMenu, MainBox, MainPageSkeleton, MyDialog, MyTabs, Stepper, TreeMenuItems, HistoryConfirmation
+    IndentSelect, ItemSperatorLine, ItemSperatorLineXL, Items, SearchBar, SearchBarMobile, Select, TreeMenu, MainBox, MainPageSkeleton, MyDialog, MyTabs, MyRadioButton, Stepper, TreeMenuItems, HistoryConfirmation
 }
