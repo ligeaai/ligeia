@@ -85,10 +85,7 @@ const SettingsMenu = () => {
                   color: "primary.main",
                 }}
               >
-                {user
-                  ? // ? user.first_name.concat(" ", user.last_name)
-                    user.first_name
-                  : "name"}
+                {user?.first_name}
               </Typography>
             </Grid>
             <Grid item>
@@ -99,14 +96,14 @@ const SettingsMenu = () => {
                   textTransform: "capitalize",
                 }}
               >
-                {user.role.ROLES_NAME}
+                {user?.role?.ROLES_NAME}
               </Typography>
             </Grid>
           </Grid>
         </Grid>
         <Grid item>
           <Avatar
-            alt={user ? user.first_name.concat(" ", user.last_name) : "name"}
+            alt={user ? user.first_name.concat(" ", user.last_name) : "Unknown"}
             src="/"
           />
         </Grid>
