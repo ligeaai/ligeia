@@ -9,7 +9,7 @@ import {
 } from "../../../../components";
 import ProjectEditor from "./projectEditor";
 const Project = () => {
-  document.title = `Liegia.ai | Project`;
+  document.title = `Ligeia.ai | Project`;
   return (
     <MainBox>
       <Grid

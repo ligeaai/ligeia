@@ -7,7 +7,7 @@ import { LoadingComponent } from "../../../components";
 import { setSelectedDrawerItem } from "../../../services/actions/drawerMenu/drawerMenu";
 
 const Main = ({ way }) => {
-  document.title = `Liegia.ai | ${way}`;
+  document.title = `Ligeia.ai | ${way}`;
   const dispatch = useDispatch();
   const isFullScreen = useSelector((state) => state.fullScreen.isFullScreen);
   const drawerData = useSelector((state) => state.drawerMenu.data);

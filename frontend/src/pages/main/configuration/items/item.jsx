@@ -30,7 +30,7 @@ const Item = ({ isHome }) => {
   const shortLabel = useSelector(
     (state) => state.drawerMenu.selectedItem.SHORT_LABEL
   );
-  document.title = `Liegia.ai | ${shortLabel}`;
+  document.title = `Ligeia.ai | ${shortLabel}`;
   React.useEffect(() => {
     if (isHome) {
       dispatch(cleanDataGridItemAndRows());

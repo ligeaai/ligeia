@@ -4,7 +4,7 @@ import "@grapecity/activereports/styles/ar-js-ui.css";
 import "@grapecity/activereports/styles/ar-js-designer.css";
 
 function ReportDesigner() {
-  document.title = "Liegia.ai | Reporting Designer";
+  document.title = "Ligeia.ai | Reporting Designer";
   const report = {
     Name: "Report",
     Type: "report",

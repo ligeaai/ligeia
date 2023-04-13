@@ -30,7 +30,7 @@ import { cleanAllDataGrid } from "../../../../services/actions/type/datagrid";
 import TypeService from "../../../../services/api/type";
 import { useIsMount } from "../../../../hooks/useIsMount";
 const Menu = () => {
-  document.title = `Liegia.ai | Types`;
+  document.title = `Ligeia.ai | Types`;
   const isMount = useIsMount();
   const dispatch = useDispatch();
   const text = useSelector((state) => state.searchBar.text);

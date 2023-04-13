@@ -37,7 +37,7 @@ const cards = [
 ];
 
 const Main = () => {
-  document.title = "Liegia.ai | Home";
+  document.title = "Ligeia.ai | Home";
   const isFullScreen = useSelector((state) => state.fullScreen.isFullScreen);
   return (
     <Box
