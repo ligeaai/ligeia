@@ -1,20 +1,47 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { CheckboxList } from "../../../../components";
+import { CheckboxList, MyRadioButton } from "../../../../components";
 import { Grid, Box, Button } from "@mui/material";
 
 import { updateUser } from "../../../../services/actions/users/users";
+import Roles from "../../../../services/api/roles";
 
 const UpdateDialogBody = ({ handleClose, rowData, ...rest }) => {
   const dispatch = useDispatch();
   const layers = useSelector((state) => state.users.layers);
   const [checked, setChecked] = React.useState(rowData.layer_name);
+  const [roles, setRoles] = React.useState([]);
+  const [checkedRoles, setCheckedRoles] = React.useState(rowData.role);
   function handleToggleFunc(param) {
     setChecked(param);
   }
+
+  function handleToggleRole(param) {
+    console.log(param);
+    setCheckedRoles(param);
+  }
+  React.useEffect(() => {
+    async function myFunc() {
+      let res = await Roles.getRoles();
+      setRoles(res.data);
+    }
+
+    myFunc();
+  }, []);
   return (
-    <Box>
+    <Box sx={{ overflow: "scroll", height: "100%" }}>
+      Roles
+      <Box>
+        <MyRadioButton
+          data={roles}
+          dataTextPath="ROLES_NAME"
+          dataValuePath="ROLES_ID"
+          handleToggleFunc={handleToggleRole}
+          defaultData={checkedRoles}
+        />
+      </Box>
+      Layers
       <Box>
         <CheckboxList
           data={layers}
@@ -54,7 +81,16 @@ const UpdateDialogBody = ({ handleClose, rowData, ...rest }) => {
             <Button
               color="inherit"
               onClick={() => {
-                dispatch(updateUser({ ...rowData, layer_name: checked }));
+                console.log(rowData);
+                console.log(checked);
+                console.log(checkedRoles);
+                dispatch(
+                  updateUser({
+                    ...rowData,
+                    role: checkedRoles,
+                    layer_name: checked,
+                  })
+                );
                 handleClose();
               }}
               variant="outlined"

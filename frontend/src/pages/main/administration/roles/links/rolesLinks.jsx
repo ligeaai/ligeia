@@ -12,9 +12,10 @@ import UserCard from "./userCard";
 const RolesLinks = () => {
   const dispatch = useDispatch();
   const users = useSelector((state) => state.roles.linkedUsers);
+  const roleId = useSelector((state) => state.treeview.selectedItem.ROLES_ID);
   React.useEffect(() => {
     dispatch(loadRoleLink());
-  }, []);
+  }, [roleId]);
   return (
     <Grid container rowGap={2} sx={{ p: 2 }}>
       <Grid item xs={12} sx={{ textAlign: "center", fontSize: "18px" }}>

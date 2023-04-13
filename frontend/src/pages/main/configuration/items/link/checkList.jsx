@@ -84,7 +84,13 @@ const MyCheckList = (props) => {
         </Grid>
       </Box>
       <Divider />
-      <Box sx={{ overflowY: "auto", backgroundColor: "background.main" }}>
+      <Box
+        sx={{
+          overflowY: "auto",
+          backgroundColor: "background.main",
+          height: "500px",
+        }}
+      >
         <CheckboxList
           data={data}
           dataTextPath="PROPERTY_STRING"
