@@ -10,12 +10,9 @@ import {
     CLEAN_ALL_DATAGRID_CODELIST
 } from "../../actions/types"
 
-import { columns } from "../../../pages/main/configuration/initialize/dataGridColumn";
-
 
 const rows = []
 const initialState = {
-    columns: columns,
     rows: rows,
     changedRows: [],
     deletedRows: [],
@@ -80,7 +77,6 @@ export default function (state = initialState, action) {
             }
         case CLEAN_ALL_DATAGRID_CODELIST:
             return {
-                columns: columns,
                 rows: [],
                 changedRows: [],
                 deletedRows: [],

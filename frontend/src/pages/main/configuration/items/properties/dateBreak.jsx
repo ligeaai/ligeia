@@ -42,7 +42,7 @@ const DateBreak = ({ props }) => {
               color: "status.primary",
               mx: "2px",
             }}
-            disabled={props || !(permission.CREATE || permission.UPDATE)}
+            disabled={props || !(permission?.CREATE || permission?.UPDATE)}
             onClick={() => {
               if (checkDateBreaks(date)) {
                 dispatch(addNewColumn(dateFormatter(date)));

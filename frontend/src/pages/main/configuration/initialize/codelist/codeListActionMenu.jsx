@@ -17,12 +17,13 @@ import {
   addChildCodeList,
   deleteChild,
 } from "../../../../../services/actions/codelist/datagrid";
-
+import {
+  isCreated,
+  isDeleted,
+} from "../../../../../services/utils/permissions";
 export const CustomToolbar = () => {
   const dispatch = useDispatch();
-  // const isHaveParent = useSelector(
-  //   (state) => state.treeviewCodeList.selectedItem
-  // );
+
   return (
     <GridToolbarContainer>
       <Grid
@@ -37,7 +38,7 @@ export const CustomToolbar = () => {
             }}
           >
             <IconButton
-              // disabled={!isHaveParent}
+              disabled={!dispatch(isCreated("CODE_LIST"))}
               onClick={() => {
                 dispatch(addChildCodeList());
               }}
@@ -53,7 +54,7 @@ export const CustomToolbar = () => {
             }}
           >
             <IconButton
-              // disabled={!isHaveParent}
+              disabled={!dispatch(isDeleted("CODE_LIST"))}
               onClick={() => {
                 dispatch(deleteChild());
               }}

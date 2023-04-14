@@ -19,7 +19,7 @@ import { uuidv4 } from "../../utils/uuidGenerator"
 import { loadTreeviewItem, selectTreeViewItem } from "../treeview/treeview"
 
 import CodelistService from "../../api/codeList";
-import { dateFormatter } from "../../utils/dateFormatter"
+import { dateFormatter, swapDayAndYear } from "../../utils/dateFormatter"
 
 const _createNewParent = () => (dispatch, getState) => {
     const culture = getState().lang.cultur
@@ -104,6 +104,7 @@ export const onChangeCell = (id, field, value) => async (dispatch, getState) => 
 }
 
 const _save = (value, userEmail) => async (dispatch, getState) => {
+    const isNew = getState().treeview.selectedItem.selectedIndex
     var temp = {}
     Object.keys(value).map(e => {
         if (value[e] !== "" && e !== "HIERARCHY") {
@@ -114,7 +115,9 @@ const _save = (value, userEmail) => async (dispatch, getState) => {
     if (value.ROW_ID !== getState().treeview.selectedItem.ROW_ID) {
         temp.LIST_TYPE = getState().dataGridCodeList.rows[getState().treeview.selectedItem.ROW_ID].CODE
     }
-
+    if (value.LAST_UPDT_DATE !== "") {
+        temp.LAST_UPDT_DATE = swapDayAndYear(value.LAST_UPDT_DATE)
+    }
     if (value.DATE1 !== "") {
         temp.DATE1 = dateFormatter(value.DATE1)
     }
@@ -134,8 +137,14 @@ const _save = (value, userEmail) => async (dispatch, getState) => {
     temp["HIERARCHY"] = [getState().treeview.selectedItem.ROW_ID]
     temp.LAST_UPDT_USER = userEmail
     const body = JSON.stringify({ ...temp })
+    console.log(body);
     try {
-        let res = await CodelistService.createUpdate(body);
+        let res;
+        if (isNew === -2) {
+            res = await CodelistService.create(body);
+        } else {
+            res = await CodelistService.update(body);
+        }
         return Promise.resolve(res.data)
     } catch (err) {
         return Promise.reject(err)

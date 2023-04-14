@@ -6,6 +6,8 @@ import { grey } from "@mui/material/colors";
 
 import LinearProgress from "@mui/material/LinearProgress";
 
+import { getColumns } from "../dataGridColumn";
+
 const getTreeDataPath = (row) => row.HIERARCHY;
 
 const groupingColDef = {
@@ -19,16 +21,9 @@ const groupingColDef = {
 };
 
 export default function TreeDataWithGap() {
+  const dispatch = useDispatch();
   const rows = useSelector((state) => state.dataGridCodeList.rows);
-  const columns = useSelector((state) => state.dataGridCodeList.columns);
-  const [myColumns, setMyColumns] = React.useState([]);
-  React.useEffect(() => {
-    setMyColumns(columns);
-    Object.keys(myColumns).map((e) => {
-      myColumns[e].editable = false;
-      delete myColumns[e].renderCell;
-    });
-  }, []);
+
   const [sortModel, setSortModel] = React.useState([
     {
       field: "CODE",
@@ -95,7 +90,7 @@ export default function TreeDataWithGap() {
             hideFooter={true}
             treeData
             rows={Object.values(rows)}
-            columns={myColumns}
+            columns={dispatch(getColumns())}
             getTreeDataPath={getTreeDataPath}
             getRowId={(row) => row.ROW_ID}
             sortModel={sortModel}

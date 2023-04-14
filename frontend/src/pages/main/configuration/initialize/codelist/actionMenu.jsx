@@ -15,6 +15,10 @@ import {
 import ConfirmDataGrid from "./confirmDataGrid";
 import { selectTreeViewItem } from "../../../../../services/actions/treeview/treeview";
 import { setIsActiveConfirmation } from "../../../../../services/actions/confirmation/historyConfirmation";
+import {
+  isCreated,
+  isDeleted,
+} from "../../../../../services/utils/permissions";
 const CodelistActionMenu = () => {
   const changedRows = useSelector(
     (state) => state.dataGridCodeList.changedRows
@@ -97,6 +101,8 @@ const CodelistActionMenu = () => {
       btnDelete={btnDelete}
       saveGoPrev={saveGoPrev}
       saveGoNext={saveGoNext}
+      btnNewIsDisabled={!dispatch(isCreated("CODE_LIST"))}
+      btnDeleteIsDisabled={!dispatch(isDeleted("CODE_LIST"))}
     />
   );
 };

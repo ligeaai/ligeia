@@ -15,8 +15,12 @@ const getCodelistDetail = (body) => {
     return instance.post("/code-list/deep-details/", body, { ...config(), cancelToken: cancelToken.token });
 };
 
-const createUpdate = (body) => {
-    return instance.put("/code-list/save-update/", body, config());
+const create = (body) => {
+    return instance.post("/code-list/save/", body, config());
+};
+
+const update = (body) => {
+    return instance.post("/code-list/update/", body, config());
 };
 
 const remove = (body) => {
@@ -39,7 +43,8 @@ const elasticSearch = (text, body, cancelToken) => {
 const CodelistService = {
     getAllTreeitem,
     getCodelistDetail,
-    createUpdate,
+    create,
+    update,
     remove,
     details,
     getItemPropCode,

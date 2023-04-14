@@ -20,6 +20,9 @@ import {
   setTitleConfirmation,
 } from "../../../../../services/actions/confirmation/historyConfirmation";
 import { useIsMount } from "../../../../../hooks/useIsMount";
+
+import { getColumns } from "../dataGridColumn";
+
 const getTreeDataPath = (row) => row.HIERARCHY;
 
 const groupingColDef = {
@@ -30,11 +33,10 @@ const groupingColDef = {
   resizable: false,
 };
 
-export default function TreeDataWithGap() {
+function TreeDataWithGap() {
   const isMount = useIsMount();
   const dispatch = useDispatch();
   const rows = useSelector((state) => state.dataGridCodeList.rows);
-  const columns = useSelector((state) => state.dataGridCodeList.columns);
   const selectedParent = useSelector(
     (state) => state.treeview.selectedItem.ROW_ID
   );
@@ -143,7 +145,7 @@ export default function TreeDataWithGap() {
             treeData
             onCellEditCommit={onCellEditCommit}
             rows={Object.values(rows)}
-            columns={columns}
+            columns={dispatch(getColumns())}
             getTreeDataPath={getTreeDataPath}
             getRowId={(row) => row.ROW_ID}
             //loading={childCodeList.loading}
@@ -166,3 +168,5 @@ export default function TreeDataWithGap() {
     </Box>
   );
 }
+
+export default React.memo(TreeDataWithGap);

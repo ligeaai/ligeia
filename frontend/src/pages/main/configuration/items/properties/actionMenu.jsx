@@ -10,6 +10,9 @@ import {
   saveItem,
   deleteItem,
 } from "../../../../../services/actions/item/itemDataGrid";
+
+import { isCreated } from "../../../../../services/utils/permissions";
+
 const PropertiesActionMenu = () => {
   const isChanged = useSelector((state) => state.historyConfirmation.isActive);
   const selectedIndex = useSelector(
@@ -70,9 +73,9 @@ const PropertiesActionMenu = () => {
       btnDelete={btnDelete}
       saveGoPrev={saveGoPrev}
       saveGoNext={saveGoNext}
-      btnNewIsActive={permission?.CREATE}
+      btnNewIsActive={!dispatch(isCreated())}
       saveIsActive={
-        permission?.CREATE || permission?.UPDATE || permission?.DELETE
+        dispatch(isCreated()) || permission?.UPDATE || permission?.DELETE
       }
       btnDeleteIsActive={permission?.DELETE}
     />
