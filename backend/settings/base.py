@@ -27,7 +27,6 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 SITE_ID = 1
 # TODO: n a real production server this should have a proper url
 ALLOWED_HOSTS = env("ALLOWED_HOSTS").split(" ")
-
 CORS_ALLOW_ALL_ORIGINS = True
 # settings.py
 
@@ -106,6 +105,7 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.locale.LocaleMiddleware",
+    "apps.middleware.user_role.UserRoleMiddleware"
     # "social_django.middleware.SocialAuthExceptionMiddleware",
 ]
 
