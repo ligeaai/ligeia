@@ -8,7 +8,6 @@ from apps.templates.orm_CodeList import CodeListORM
 from services.logging.Handlers import KafkaLogger
 from services.parsers.addData.type import typeAddData
 from utils.utils import redisCaching as Red
-
 # Create your views here.
 from .models import code_list
 from .serializers import (
@@ -25,19 +24,38 @@ from utils.models_utils import (
     null_value_to_space,
     validate_find,
 )
-
+from utils.permissions.admin import CreatePermission,ReadPermission,UpdatePermission,DeletePermission
+create_per = CreatePermission(model_type="CODE_LIST")
+read_per = CreatePermission(model_type="CODE_LIST")
+update_per = CreatePermission(model_type="CODE_LIST")
+delete_per = CreatePermission(model_type="CODE_LIST")
 logger = KafkaLogger()
 
 
 class CodeListSaveScriptView(generics.CreateAPIView):
-    permission_classes = [permissions.AllowAny]
+    authentication_classes = ()
+    permission_classes = [permissions.AllowAny,create_per]
     serializer_class = CodeListSaveSerializer
 
     def create(self, request, *args, **kwargs):
+        del request.data['HIERARCHY']
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response({"Message": "Successful"}, status=status.HTTP_200_OK)
+
+class CodeListUpdateView(generics.CreateAPIView):
+    authentication_classes = ()
+    permission_classes = [permissions.AllowAny,update_per]
+    serializer_class = CodeListSaveSerializer
+
+    def post(self, request, *args, **kwargs):
+        del request.data['HIERARCHY']
         serializer = CodeListSaveSerializer(data=request.data)
         serializer.is_valid()
         serializer.save(request.data)
-        return Response("BAŞARILI")
+        # Red.delete(str(request.user) + request.data.get("HIERARCHY")[0])
+        return Response({"Message": "Succsessful"}, status=status.HTTP_200_OK)
 
 
 class CodeListSaveAndUpdateNewView(generics.UpdateAPIView):
@@ -98,25 +116,24 @@ class CodeListView(generics.ListAPIView):
 
 class CodeListParentView(generics.CreateAPIView):
     serializer_class = CodeListDetailsSerializer
-    authentication_classes = []
-    permission_classes = []
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [read_per]
 
     def post(self, request, *args, **kwargs):
         list_types = "CODE_LIST"
         culture = request.data.get("CULTURE")
+        print(request.user)
         cache_key = str(request.user) + list_types + culture
         queryset = code_list.objects.filter(
             LIST_TYPE=list_types,
             CULTURE=culture,
-        )
+        ).order_by('CODE_TEXT')
         validate_find(queryset, request=request)
         serializer = CodeListDetailsSerializer(queryset, many=True)
         serializer = null_value_to_space(serializer.data, request=request)
         logger.info(request=request, message="Code list details only one fields")
-        sorted_list = sorted(list(serializer), key=lambda d: d["CODE_TEXT"])
-        Red.set(cache_key, (sorted_list))
-        return Response(sorted_list, status=status.HTTP_200_OK)
-        # Red.set(cache_key, serializer)
+        # sorted_list = sorted(list(serializer), key=lambda d: d["CODE_TEXT"])
+        Red.set(cache_key, serializer)
         return Response(serializer, status=status.HTTP_200_OK)
 
 
@@ -124,7 +141,7 @@ class CodeListDetailView(generics.CreateAPIView):
 
     serializer_class = CodeListDetailsSerializer
     authentication_classes = []
-    permission_classes = []
+    permission_classes = [read_per]
 
     def post(self, request, *args, **kwargs):
 
@@ -145,7 +162,7 @@ class CodeListDetailView(generics.CreateAPIView):
         serializer = CodeListDetailsSerializer(queryset, many=True)
         serializer = null_value_to_space(serializer.data, request=request)
         logger.info(request=request, message="Code list details only one fields")
-        Red.set(cache_key, serializer)
+        # Red.set(cache_key, serializer)
         return Response(serializer, status=status.HTTP_200_OK)
 
 
@@ -205,7 +222,7 @@ class CodeListParentDeleteView(generics.CreateAPIView):
 
 
 class CodeListDeleteView(generics.CreateAPIView):
-    permission_classes = [permissions.AllowAny]
+    permission_classes = [permissions.AllowAny,delete_per]
 
     def post(self, request, *args, **kwargs):
         message = "Codelist deletion successful"
@@ -224,7 +241,7 @@ class CodeListDeleteView(generics.CreateAPIView):
 
 
 class CodeListDeepDetailView(generics.CreateAPIView):
-    permission_classes = [permissions.AllowAny]
+    permission_classes = [permissions.AllowAny,read_per]
 
     def post(self, request, *args, **kwargs):
 
@@ -246,7 +263,7 @@ class CodeListDeepDetailView(generics.CreateAPIView):
             queryset, culture=culture, hierarchy=True
         )
         respons_value = null_value_to_space(respons_value, request)
-        Red.set(cache_key, respons_value)
+        # Red.set(cache_key, respons_value)
         logger.info(
             request=request,
             message="Code list deep details (Parent-Child Relationship)",

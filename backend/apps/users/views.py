@@ -67,6 +67,8 @@ class UserDetails(generics.ListAPIView):
         serializer = self.serializer_class(queryset)
         try:
             logger.info(request=request, message="User details listed")
+            if request.role:
+                serializer.data["role"]['PROPERTY_ID'] = request.role
             return Response(serializer.data, status=status.HTTP_200_OK)
         except Exception as e:
             logger.warning(

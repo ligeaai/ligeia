@@ -31,7 +31,6 @@ class TypeDetailsSerializer(serializers.ModelSerializer):
 class TypeEditorSaveSerializer(serializers.Serializer):
     def save(self, validated_data):
         qs = Type.objects.filter(TYPE = validated_data.data.get('TYPE'))
-        print(qs)
         if qs:
             try:
                 validate_value(validated_data.data,'TYPE',validated_data)
