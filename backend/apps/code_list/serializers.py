@@ -16,14 +16,24 @@ class CodeListSaveSerializer(serializers.ModelSerializer):
         fields = "__all__"
     
     def save(self, validated_data):
-        try:
-            validated_data["VERSION"] = uuid.uuid4().hex
-            validated_data["ROW_ID"] = uuid.uuid4().hex
-            codeList = code_list.objects.create(**validated_data)
-            codeList.save()
-            return True
-        except Exception as e:
-            raise ValidationError(e)
+        qs = code_list.objects.filter(ROW_ID = validated_data.get('ROW_ID'))
+        print(qs)
+        if qs:
+            try:
+                # validate_value(item,"CODE_LIST",validated_data)
+                qs.update(**validated_data)
+            except Exception as e:
+                logger.error('Update Failed',validated_data,e,'FAULTS')
+                raise ValidationError(e)
+        else:
+            try:
+                validated_data["VERSION"] = uuid.uuid4().hex
+                validated_data["ROW_ID"] = uuid.uuid4().hex
+                codeList = code_list.objects.create(**validated_data)
+                codeList.save()
+                return True
+            except Exception as e:
+                raise ValidationError(e)
 
 
 class CodeListDetailsSerializer(serializers.ModelSerializer):

@@ -1,6 +1,6 @@
 import json
 import time
-
+from utils.permissions.admin import CreatePermission,ReadPermission,UpdatePermission,DeletePermission
 from django.shortcuts import render
 from rest_framework import generics, permissions, status
 from .models import item
@@ -33,7 +33,10 @@ from django.db import transaction
 from django.db.models import Max, Subquery, OuterRef
 
 logger = KafkaLogger()
-
+create_per = CreatePermission(model_type="CODE_LIST")
+read_per = CreatePermission(model_type="CODE_LIST")
+update_per = CreatePermission(model_type="CODE_LIST")
+delete_per = CreatePermission(model_type="CODE_LIST")
 
 class ItemSaveView(generics.CreateAPIView):
     permission_classes = [permissions.AllowAny]
@@ -91,7 +94,7 @@ class ItemScriptSaveView(generics.CreateAPIView):
 class ItemCreateView(generics.CreateAPIView):
 
     serializer_class = ItemsSaveSerializer
-    permission_classes = [permissions.AllowAny]
+    permission_classes = [permissions.AllowAny,create_per]
     
     def _itemSave(self, request):
         serializer = ItemSpacialSaveSerializer(data=request.data["ITEM"])
@@ -127,7 +130,7 @@ class ItemCreateView(generics.CreateAPIView):
 class ItemUpdateView(generics.CreateAPIView):
 
     serializer_class = ItemsSaveSerializer
-    permission_classes = [permissions.AllowAny]
+    permission_classes = [permissions.AllowAny,update_per]
 
     def post(self, request, *args, **kwargs):
         serializer = ItemsSaveSerializer(data=request.data["ITEM"])
@@ -147,7 +150,7 @@ class ItemView(generics.ListAPIView):
 
 
 class ItemDetailsView(generics.ListAPIView):
-    permission_classes = [permissions.AllowAny]
+    permission_classes = [permissions.AllowAny,read_per]
     lookup_field = "pk"
 
     def list(self, request, *args, **kwargs):
@@ -172,14 +175,14 @@ class ItemDetailsView(generics.ListAPIView):
             START_DATETIME__in=Subquery(latest_start_times.values("latest_start_time")),
         ).order_by("PROPERTY_STRING")
         serializer = ItemPropertyNameSerializer(property_names, many=True)
-        Red.set(cache_key, serializer.data)
+        # Red.set(cache_key, serializer.data)
         message = f"{request.user} listed the {item_type} items"
         logger.info(message, request)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 class ItemDeleteView(generics.CreateAPIView):
-    permission_classes = [permissions.AllowAny]
+    permission_classes = [permissions.AllowAny,delete_per]
 
     def post(self, request, *args, **kwargs):
         queryset = item.objects.filter(ITEM_ID=request.data.get("ITEM_ID"))

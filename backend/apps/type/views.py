@@ -73,6 +73,23 @@ class TypeAndPropertySaveView(generics.CreateAPIView):
         return Response({"Message":"Successful"}, status=status.HTTP_201_CREATED)
 
 
+# class TypeAndPropertyUpdateView(generics.CreateAPIView):
+#     permission_classes = [permissions.AllowAny]
+
+#     def post(self, request, *args, **kwargs):
+#         serializer = TypeCustomSaveSerializer(data=request.data)
+#         serializer.is_valid()
+#         serializer.save(request)
+#         serializer = TypePropertyCustomSaveSerializer(data=request.data)
+#         serializer.is_valid()
+#         serializer.save(request)
+#         serializer = ResourceListTypeSerializer(data = request.data)
+#         serializer.is_valid()
+#         serializer.save(request)
+#         return Response({"Message":"Successful"}, status=status.HTTP_201_CREATED)
+
+
+
 
 
 class TypeDeleteView(generics.UpdateAPIView):
@@ -163,7 +180,7 @@ class TypeDetailNewView(generics.CreateAPIView):
         #     return Response(cache_data, status=status.HTTP_200_OK) 
         
         TypePropertys = self._baseModels(request)
-        Red.set(cache_key,TypePropertys)
+        # Red.set(cache_key,TypePropertys)
         return Response(TypePropertys, status=status.HTTP_200_OK)
     
     

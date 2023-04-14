@@ -26,10 +26,10 @@ class LayerDropDownView(generics.ListAPIView):
         )
 
 class LayerSaveView(generics.CreateAPIView):
-
+    serializer_class = LayerSaveSerializer
     permission_classes = [permissions.AllowAny]
 
-    def create(self, request, *args, **kwargs):
+    def post(self, request, *args, **kwargs):
         print(request.data)
         validate_model_not_null(request.data, "LAYER",request=request)
         serializer = LayerSaveSerializer(data=request.data)

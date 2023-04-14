@@ -13,6 +13,7 @@ from .views import (
     CodeListParentView,
     CodeListTypeDetailView,
     CodeListWIDGET_TYPEView,
+    CodeListUpdateView,
 )
 
 from .elasticsearch.es_view import ESCodeListViewSet
@@ -21,6 +22,7 @@ from django.urls.resolvers import URLPattern
 urlpatterns = [
     # path("codelistchild/",CodeListSaveView.as_view(),name='code-list-and-child-create'),
     path("save/", CodeListSaveScriptView.as_view(), name="code-list-save"),
+    path("update/", CodeListUpdateView.as_view(), name="code-list-save"),
     path("culture/", CodeListCultureView.as_view(), name="code-list-culture"),
     path(
         "save-update/",
