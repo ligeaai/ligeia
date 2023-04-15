@@ -22,9 +22,16 @@ const PropertiesDataGrid = () => {
     <DataGrid
       columns={columns}
       rows={Object.values(rows)}
-      hideFooter={true}
+      // hideFooter={true}
       onCellEditCommit={onCellEditCommit}
       getRowId={(row) => row.ROW_ID}
+      pagination
+      componentsProps={{
+        footer: {
+          style: { justifyContent: "flex-start" },
+        },
+      }}
+      autoPageSize={true}
       components={{
         Toolbar: CustomToolbar,
         NoRowsOverlay: CustomNoRowsOverlay,

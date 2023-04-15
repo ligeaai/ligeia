@@ -12,13 +12,14 @@ const UpdateDialogBody = ({ handleClose, rowData, ...rest }) => {
   const layers = useSelector((state) => state.users.layers);
   const [checked, setChecked] = React.useState(rowData.layer_name);
   const [roles, setRoles] = React.useState([]);
-  const [checkedRoles, setCheckedRoles] = React.useState(rowData.role);
+  const [checkedRoles, setCheckedRoles] = React.useState(
+    rowData?.role?.ROLES_ID
+  );
   function handleToggleFunc(param) {
     setChecked(param);
   }
 
   function handleToggleRole(param) {
-    console.log(param);
     setCheckedRoles(param);
   }
   React.useEffect(() => {
@@ -81,9 +82,6 @@ const UpdateDialogBody = ({ handleClose, rowData, ...rest }) => {
             <Button
               color="inherit"
               onClick={() => {
-                console.log(rowData);
-                console.log(checked);
-                console.log(checkedRoles);
                 dispatch(
                   updateUser({
                     ...rowData,

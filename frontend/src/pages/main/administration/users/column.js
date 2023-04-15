@@ -8,6 +8,7 @@ import { MyDialog } from "../../../../components";
 import { swapYearAndDay } from "../../../../services/utils/dateFormatter";
 
 import UpdateDialogBody from "./updateDialogBody"
+
 export const usersColumn = [
     {
         field: "first_name",
@@ -23,6 +24,14 @@ export const usersColumn = [
         field: "email",
         headerName: "Email",
         flex: 2,
+    },
+    {
+        field: "role",
+        headerName: "Role",
+        flex: 1,
+        renderCell: (params) => {
+            return params?.role?.ROLES_NAME
+        },
     },
     {
         field: "date_joined",
