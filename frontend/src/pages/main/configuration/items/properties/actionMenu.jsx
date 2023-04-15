@@ -11,7 +11,11 @@ import {
   deleteItem,
 } from "../../../../../services/actions/item/itemDataGrid";
 
-import { isCreated } from "../../../../../services/utils/permissions";
+import {
+  isCreated,
+  isDeleted,
+  isUpdated,
+} from "../../../../../services/utils/permissions";
 
 const PropertiesActionMenu = () => {
   const isChanged = useSelector((state) => state.historyConfirmation.isActive);
@@ -73,11 +77,15 @@ const PropertiesActionMenu = () => {
       btnDelete={btnDelete}
       saveGoPrev={saveGoPrev}
       saveGoNext={saveGoNext}
-      btnNewIsActive={!dispatch(isCreated())}
-      saveIsActive={
-        dispatch(isCreated()) || permission?.UPDATE || permission?.DELETE
+      btnNewIsDisabled={!dispatch(isCreated("ITEM"))}
+      saveIsDisabled={
+        !(
+          dispatch(isCreated("ITEM")) ||
+          dispatch(isUpdated("ITEM")) ||
+          dispatch(isDeleted("ITEM"))
+        )
       }
-      btnDeleteIsActive={permission?.DELETE}
+      btnDeleteIsDisabled={!dispatch(isDeleted("ITEM"))}
     />
   );
 };
