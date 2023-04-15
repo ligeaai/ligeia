@@ -33,9 +33,7 @@ export const loadUsers = () => dispatch => {
 export const updateUser = (user) => async dispatch => {
     try {
         const body = JSON.stringify({ users: [{ ...user }] })
-        console.log(body);
         let res = await Users.updateUser(body)
-        console.log(res);
         dispatch(getUsers())
     } catch (err) {
         console.log(err);
