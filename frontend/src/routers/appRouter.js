@@ -1,4 +1,5 @@
 import React, { Suspense } from "react";
+import $ from "jquery";
 import { Route, Routes } from "react-router-dom";
 import { unstable_HistoryRouter as HistoryRouter, Outlet } from "react-router-dom";
 
@@ -10,6 +11,7 @@ import PrivateRoute from "./privateRouter";
 import PublicRoute from "./publicRouter";
 
 import { Confirmation, MyNavigator, Loadable, HistoryConfirmation, ErrorMessage } from "../components";
+import { useSelector } from "react-redux";
 
 
 const Diagnostics = Loadable(React.lazy(() => import("../pages/main/administration/diagnostics/main")));
@@ -84,9 +86,11 @@ const AppRouter1 = () => {
 };
 
 const AppRouter = () => {
+  const theme = useSelector(state => state.theme.theme)
   return (
     <HistoryRouter history={history}>
-      <Box id="main-box">
+      {/* <Box id="main-box" className={localStorage.getItem('theme') ? `${localStorage.getItem('theme')}` : "theme-light"}> */}
+      <Box id="main-box" className={`theme-${theme}`}>
         <ErrorMessage Element={AppRouter1} />
         <Confirmation />
         <HistoryConfirmation />

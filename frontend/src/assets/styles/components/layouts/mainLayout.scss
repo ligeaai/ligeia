@@ -1,0 +1,27 @@
+@import "../../palette/palette";
+
+#main-layout {
+  .full-screen-box {
+    min-height: "100vh";
+    border-radius: "3px";
+    display: none;
+    @include themify($themes) {
+      background-color: themed("backgroundColor");
+    }
+  }
+  .full-screen-icon-box {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    margin: 16px;
+    .full-screen-exit-icon {
+      display: none;
+    }
+  }
+  .normal-screen-box {
+    @include themify($themes) {
+      background-color: themed("backgroundColor");
+    }
+    display: auto;
+  }
+}

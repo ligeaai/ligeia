@@ -1,7 +1,5 @@
 import { useSelector } from "react-redux";
-import { grey, red, green, lime, indigo, teal, cyan, blueGrey } from "@material-ui/core/colors"
-import { useState } from 'react';
-import { createMuiTheme } from "@mui/material/styles"
+import { grey } from "@material-ui/core/colors"
 
 const Palette = () => {
     const theme = useSelector((state) => state.theme.theme);

@@ -8,18 +8,20 @@ import { MainPageSkeleton, ErrorBoundary } from "./components"
 import App from './pages/App';
 import "react-grid-layout/css/styles.css";
 import "react-resizable/css/styles.css";
-
+import "./assets/styles/styles.scss"
 const container = document.getElementById('root');
 const root = createRoot(container);
 
 root.render(
-    <ErrorBoundary>
-        <Provider store={store}>
-            <PersistGate loading={<MainPageSkeleton />} persistor={persistor} >
-                <App />
-            </PersistGate>
-        </Provider>
-    </ErrorBoundary>
+    <React.StrictMode>
+        <ErrorBoundary>
+            <Provider store={store}>
+                <PersistGate loading={<MainPageSkeleton />} persistor={persistor} >
+                    <App />
+                </PersistGate>
+            </Provider>
+        </ErrorBoundary>
+    </React.StrictMode>
 );
 
 reportWebVitals();

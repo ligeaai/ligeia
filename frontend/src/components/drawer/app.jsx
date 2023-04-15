@@ -17,7 +17,6 @@ import { useParams } from "react-router-dom";
 
 import { confirmationPushHistory } from "../../services/utils/historyPush";
 import { setGoFunctionConfirmation } from "../../services/actions/confirmation/historyConfirmation";
-
 function App({ menu }) {
   return Object.keys(menu).map((item, key) => (
     <MenuItem key={key} item={menu[item]} url="/" />

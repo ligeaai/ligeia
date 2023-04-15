@@ -1,40 +1,26 @@
 import React from "react";
+import $ from "jquery";
 import { useSelector, useDispatch } from "react-redux";
 
 import { Box, Button, Grid } from "@mui/material";
 import FullscreenExitIcon from "@mui/icons-material/FullscreenExit";
 import FullscreenIcon from "@mui/icons-material/Fullscreen";
 
-import { Drawer, ComponentError, ComponentErrorBody } from "../../components";
+import { Drawer } from "../../components";
 import Header from "./header";
 import { setIsFullScreen } from "../../services/reducers/fullScreenReducer";
-
-import { loadDrawerMenu } from "../../services/actions/drawerMenu/drawerMenu";
 
 const Main = (props) => {
   const dispatch = useDispatch();
   const isFullScreen = useSelector((state) => state.fullScreen.isFullScreen);
-  const { Element, delSearchBar } = props;
+  const { Element } = props;
 
   const drawerWidth = useSelector((state) => state.drawerMenu.width);
 
-  return isFullScreen ? (
-    <React.Fragment>
-      <Box sx={{ minHeight: "100vh", borderRadius: "3px" }}>{Element}</Box>
-
-      <Box sx={{ position: "fixed", bottom: 0, right: 0, m: 2 }}>
-        <Button
-          onClick={() => {
-            dispatch(setIsFullScreen(false));
-          }}
-        >
-          <FullscreenExitIcon />
-        </Button>
-      </Box>
-    </React.Fragment>
-  ) : (
-    <React.Fragment>
-      <Box sx={{ backgroundColor: "background.main" }}>
+  return (
+    <Box id="main-layout">
+      <Box className="full-screen-box">{Element}</Box>
+      <Box className="normal-screen-box">
         <Header />
         <Grid container sx={{ flexWrap: "nowrap" }}>
           <Grid
@@ -64,16 +50,21 @@ const Main = (props) => {
           </Grid>
         </Grid>
       </Box>
-      <Box sx={{ position: "fixed", bottom: 0, right: 0, m: 2 }}>
+      <Box className="full-screen-icon-box">
         <Button
           onClick={() => {
-            dispatch(setIsFullScreen(true));
+            $(".full-screen-box").toggle();
+            $(".normal-screen-box").toggle();
+            $(".full-screen-icon").toggle();
+            $(".full-screen-exit-icon").toggle();
+            dispatch(setIsFullScreen(!isFullScreen));
           }}
         >
-          <FullscreenIcon />
+          <FullscreenIcon className="full-screen-icon" />
+          <FullscreenExitIcon className="full-screen-exit-icon" />
         </Button>
       </Box>
-    </React.Fragment>
+    </Box>
   );
 };
 

@@ -1,7 +1,8 @@
 import * as React from "react";
+import $ from "jquery";
 import { useDispatch, useSelector } from "react-redux";
 
-import { Avatar, Box, Button, Grid, Typography } from "@mui/material";
+import { Avatar, Box, Grid, Typography } from "@mui/material";
 import TranslateIcon from "@mui/icons-material/Translate";
 import Brightness2OutlinedIcon from "@mui/icons-material/Brightness2Outlined";
 import LanguageIcon from "@mui/icons-material/Language";
@@ -43,6 +44,8 @@ const SettingsMenu = () => {
   }, []);
 
   const themeSelect = (theme) => {
+    $("#main-box").removeClass().addClass(`theme-${theme}`);
+    localStorage.setItem("theme", `theme-${theme}`);
     dispatch(changeTheme(theme));
   };
   const langSelect = (language) => {
