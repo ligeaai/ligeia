@@ -141,7 +141,7 @@ class CodeListDetailView(generics.CreateAPIView):
 
     serializer_class = CodeListDetailsSerializer
     authentication_classes = []
-    permission_classes = [read_per]
+    permission_classes = [permissions.AllowAny]
 
     def post(self, request, *args, **kwargs):
 

@@ -33,10 +33,10 @@ from django.db import transaction
 from django.db.models import Max, Subquery, OuterRef
 
 logger = KafkaLogger()
-create_per = CreatePermission(model_type="CODE_LIST")
-read_per = CreatePermission(model_type="CODE_LIST")
-update_per = CreatePermission(model_type="CODE_LIST")
-delete_per = CreatePermission(model_type="CODE_LIST")
+create_per = CreatePermission(model_type="ITEM")
+read_per = CreatePermission(model_type="ITEM")
+update_per = CreatePermission(model_type="ITEM")
+delete_per = CreatePermission(model_type="ITEM")
 
 class ItemSaveView(generics.CreateAPIView):
     permission_classes = [permissions.AllowAny]

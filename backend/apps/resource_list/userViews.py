@@ -28,7 +28,7 @@ class DrawerView(generics.CreateAPIView):
     permission_classes = [permissions.AllowAny]
     def _get_Queryset(self,id):
         return resource_list.objects.filter(
-                Q(ID=id) & Q(CULTURE="en-US") & Q(HIDDEN=False)
+                Q(ID=id) & Q(CULTURE=self.culture) & Q(HIDDEN=False)
             ).order_by("SORT_ORDER")
     
     def _filter_role(self,data,request):
@@ -43,26 +43,31 @@ class DrawerView(generics.CreateAPIView):
             filtered.append(value)
         return filtered
     
-    def _resource_list(self,serializer):
+    def _resource_list(self,serializer,tempt):
         for index, value in enumerate(serializer.data):
-            tempt = {}
             id = (value.get('PARENT'))
             if len(id.split('.'))>1:
                 info = id.split('.')[1]
                 if info == "OG_STD":
-                    type_list = (Type.objects.filter(LAYER_NAME=info)
+                    type_list = list(Type.objects.filter(LAYER_NAME=info)
                                             .values_list('LABEL_ID', flat=True))
+                    print(len(type_list))
+                    for layer in self.layers:
+                        type_list.remove(layer)
                 else:
                     type_list = [id]
+                    self.layers.append(id)
                 qs = resource_list.objects.filter(
-                            Q(ID__in=type_list) & Q(CULTURE="en-US") & Q(HIDDEN=False)
-                            ).order_by("SORT_ORDER")
+                            Q(ID__in=type_list) & Q(CULTURE=self.culture) & Q(HIDDEN=False)
+                            ).order_by("SHORT_LABEL")
                 serializer = ResourceListDetailsSerializer(qs, many=True)
                 for data in serializer.data:
                     label = data.get('SHORT_LABEL')
                     if data.get('SHORT_LABEL') == None:
                         label = data.get('MOBILE_LABEL')
+                    # print(data,"-------------> DATA")
                     tempt[label] = data
+        # print(tempt,"\n\n")
         return tempt
 
     def _filtered_process(self,item,data,request,tempt):
@@ -80,7 +85,8 @@ class DrawerView(generics.CreateAPIView):
     def _process(self,queryset,item,request):
         if queryset:
             serializer = ResourceListDetailsSerializer(queryset, many=True)
-            tempt = self._resource_list(serializer)
+            tempt = {}
+            tempt = self._resource_list(serializer,tempt)
             self._getChild(serializer.data,request)
             parent_label = item.get("SHORT_LABEL")
             self.new_dict[parent_label] =self._filtered_process(
@@ -99,10 +105,12 @@ class DrawerView(generics.CreateAPIView):
             self._process(queryset,item,request)
 
     def post(self, request, *args, **kwargs):
+        self.culture = request.data.get('CULTURE')
+        self.layers = []
         self.roles = request.role.keys()
         queryset = resource_list.objects.filter(
             Q(ID="drawerMenu2")
-            & Q(CULTURE="en-US")
+            & Q(CULTURE=self.culture)
             & Q(HIDDEN=False)
         ).order_by("SORT_ORDER")
         
@@ -114,6 +122,9 @@ class DrawerView(generics.CreateAPIView):
         for keys,value in new_dict_copy.items():
             if not value.get('ID') == "drawerMenu2":
                 del self.new_dict[keys]
+            if value.get('Items') == {}:
+                del self.new_dict[keys]
+                
         return Response(self.new_dict, status=status.HTTP_200_OK)
 
 
