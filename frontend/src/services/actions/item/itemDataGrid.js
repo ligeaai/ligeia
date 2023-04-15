@@ -276,7 +276,6 @@ export const saveItem = () => async (dispatch, getState) => {
         }
         const body = JSON.stringify({ ITEM, PROPERTYS });
         const deleteBody = JSON.stringify({ ITEM, DELETED });
-        console.log(deleteBody);
         try {
             let res;
             if (getState().treeview.selectedItem.selectedIndex === -2)
