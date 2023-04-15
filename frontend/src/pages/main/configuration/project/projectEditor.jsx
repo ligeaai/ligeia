@@ -247,57 +247,59 @@ const ProjectEditor = () => {
     };
   }, []);
   return (
-    <BigBox>
-      <Grid container sx={{ p: 1.5 }}>
-        <Grid item xs={12} className={classes.row}>
-          <Grid
-            container
-            className={classes.selectBox}
-            sx={{ color: "text.main" }}
-          >
-            <Grid item className={classes.label}>
-              Data source:
-            </Grid>
-            <Grid item>
-              <Select values={["Postgre Sql"]} defaultValue={"Postgre Sql"} />
+    <BigBox
+      Element={
+        <Grid container sx={{ p: 1.5 }}>
+          <Grid item xs={12} className={classes.row}>
+            <Grid
+              container
+              className={classes.selectBox}
+              sx={{ color: "text.main" }}
+            >
+              <Grid item className={classes.label}>
+                Data source:
+              </Grid>
+              <Grid item>
+                <Select values={["Postgre Sql"]} defaultValue={"Postgre Sql"} />
+              </Grid>
             </Grid>
           </Grid>
+          <ConnectionString />
+          <DatabaseCreationFile />
+          <ImplementationName />
+          <Typography sx={{ color: "text.main" }}>
+            <Layers
+              key={"Cultures"}
+              path="/code-list/culture/"
+              stateWay="CULTURES"
+              text="Cultures"
+            />
+            <Layers
+              key={"Layers"}
+              path="/layer/layer-dropdown/"
+              stateWay="LAYERS"
+              text="Layers"
+            />
+          </Typography>
+          <UnitSystem />
+          <Grid item>
+            <Button
+              variant="contained"
+              sx={{
+                color: "text.main",
+                backgroundColor: "background.success",
+                "&:hover": {
+                  backgroundColor: "hover.success",
+                  color: "primary.dark",
+                },
+              }}
+            >
+              Save
+            </Button>
+          </Grid>
         </Grid>
-        <ConnectionString />
-        <DatabaseCreationFile />
-        <ImplementationName />
-        <Typography sx={{ color: "text.main" }}>
-          <Layers
-            key={"Cultures"}
-            path="/code-list/culture/"
-            stateWay="CULTURES"
-            text="Cultures"
-          />
-          <Layers
-            key={"Layers"}
-            path="/layer/layer-dropdown/"
-            stateWay="LAYERS"
-            text="Layers"
-          />
-        </Typography>
-        <UnitSystem />
-        <Grid item>
-          <Button
-            variant="contained"
-            sx={{
-              color: "text.main",
-              backgroundColor: "background.success",
-              "&:hover": {
-                backgroundColor: "hover.success",
-                color: "primary.dark",
-              },
-            }}
-          >
-            Save
-          </Button>
-        </Grid>
-      </Grid>
-    </BigBox>
+      }
+    ></BigBox>
   );
 };
 
