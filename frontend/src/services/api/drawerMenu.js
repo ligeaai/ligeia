@@ -1,7 +1,7 @@
 import { instance, config } from "../baseApi"
 
 const get = (body) => {
-    return instance.post("/resource-list/test/", body, config());
+    return instance.post("/resource-list/menu/", body, config());
 };
 
 const DrawerMenu = {

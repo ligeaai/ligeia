@@ -1,38 +1,40 @@
 $themes: (
-  temp: (
-    backgroundColor: #f8f1f9,
+  tempDark2: (backgroundColor: #000000,
   ),
-  tempDark: (
-    backgroundColor: #000000,
+  temp2: (backgroundColor: #f8f1f9,
   ),
-  light: (
-    backgroundColor: #eeeeee,
+  temp: (backgroundColor: #f8f1f9,
   ),
-  dark: (
-    backgroundColor: #757575,
+  tempDark: (backgroundColor: #000000,
   ),
-) !default;
+  light: (backgroundColor: #eeeeee,
+  ),
+  dark: (backgroundColor: #757575,
+  ),
+  ) !default;
 
 $theme-map: null;
 
 @mixin themify($themes: $themes) {
-  @each $theme, $map in $themes {
+
+  @each $theme,
+  $map in $themes {
     .theme-#{$theme} & {
       $theme-map: () !global;
-      @each $key, $submap in $map {
-        $value: map-get(map-get($themes, $theme), "#{$key}");
-        $theme-map: map-merge(
-          $theme-map,
-          (
-            $key: $value,
-          )
-        ) !global;
-      }
 
-      @content;
-      $theme-map: null !global;
+      @each $key,
+      $submap in $map {
+        $value: map-get(map-get($themes, $theme), "#{$key}"
+      );
+      $theme-map: map-merge($theme-map,
+        ($key: $value,
+        )) !global;
     }
+
+    @content;
+    $theme-map: null !global;
   }
+}
 }
 
 @function themed($key) {
