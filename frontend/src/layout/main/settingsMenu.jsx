@@ -37,7 +37,7 @@ const SettingsMenu = () => {
         });
         setLanguages(res.data.Message);
         setLangItems([...myRes]);
-      } catch {}
+      } catch { }
     };
     myFunc();
     return;
@@ -59,7 +59,7 @@ const SettingsMenu = () => {
       window.location.reload();
     }, 500);
   };
-  const locationSelect = (location) => {};
+  const locationSelect = (location) => { };
 
   return (
     <Grid item className="settingsMenu">
@@ -128,7 +128,7 @@ const SettingsMenu = () => {
                 icon: <Brightness2OutlinedIcon />,
                 fixedText: "Appearance",
                 text: theme,
-                subtable: ["dark", "light", "temp", "tempDark"],
+                subtable: ["dark", "light", "temp", "tempDark", "temp2", "tempDark2"],
                 functions: themeSelect,
               },
               {

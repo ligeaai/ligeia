@@ -8,10 +8,9 @@ import {
 import DrawerMenu from "../../api/drawerMenu";
 export const loadDrawerMenu = () => async (dispatch, getState) => {
     const CULTURE = getState().lang.cultur
-    const isEmployee = getState().auth.user.is_employee
     try {
         const body = JSON.stringify({ CULTURE })
-        let res = await DrawerMenu.get(body, isEmployee)
+        let res = await DrawerMenu.get(body)
         dispatch({
             type: LOAD_DRAWER_MENU,
             payload: res.data

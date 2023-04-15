@@ -10,7 +10,9 @@ import Roles from "../../../../services/api/roles";
 const UpdateDialogBody = ({ handleClose, rowData, ...rest }) => {
   const dispatch = useDispatch();
   const layers = useSelector((state) => state.users.layers);
-  const [checked, setChecked] = React.useState(rowData.layer_name);
+  const [checked, setChecked] = React.useState(
+    rowData.layer_name.map((e) => e.LAYER_NAME)
+  );
   const [roles, setRoles] = React.useState([]);
   const [checkedRoles, setCheckedRoles] = React.useState(
     rowData?.role?.ROLES_ID
@@ -85,7 +87,7 @@ const UpdateDialogBody = ({ handleClose, rowData, ...rest }) => {
                 dispatch(
                   updateUser({
                     ...rowData,
-                    role: checkedRoles,
+                    role: checkedRoles ? checkedRoles : null,
                     layer_name: checked,
                   })
                 );

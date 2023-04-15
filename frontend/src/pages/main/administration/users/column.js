@@ -30,7 +30,7 @@ export const usersColumn = [
         headerName: "Role",
         flex: 1,
         renderCell: (params) => {
-            return params?.role?.ROLES_NAME
+            return params?.value?.ROLES_NAME
         },
     },
     {
@@ -46,7 +46,7 @@ export const usersColumn = [
         headerName: "Layer Name",
         renderCell: (params) => {
             return params.value.map((e, i) => {
-                return <Box key={i}>{e}, </Box>
+                return <Box key={i}>{e.LAYER_NAME}, </Box>
             })
         },
         flex: 2,

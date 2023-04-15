@@ -37,7 +37,7 @@ from .serializers import (
     UserModelSerializer,
     UserRegistrationSerializer,
     UserSerializer,
-    UserModelTestSerializer
+    UserModelDepthSerializer
 )
 
 logger = KafkaLogger()
@@ -57,7 +57,7 @@ class UserModelViewSet(ModelViewSet):
 
 class UserDetails(generics.ListAPIView):
     queryset = User.objects.none()
-    serializer_class = UserModelTestSerializer
+    serializer_class = UserModelDepthSerializer
     authentication_classes = [
         TokenAuthentication,
     ]
@@ -79,7 +79,7 @@ class UserDetails(generics.ListAPIView):
 
 class UserList(generics.ListAPIView):
     queryset = User.objects.all()
-    serializer_class = UserSerializer
+    serializer_class = UserModelDepthSerializer
     authentication_classes = [
         TokenAuthentication,
     ]
@@ -89,7 +89,7 @@ class UserList(generics.ListAPIView):
         # Note the use of `get_queryset()` instead of `self.queryset`
         try:
             queryset = self.get_queryset()
-            serializer = UserSerializer(queryset, many=True)
+            serializer = UserModelDepthSerializer(queryset, many=True)
             logger.info(request=request, message="All users listed")
             return Response(serializer.data, status=status.HTTP_200_OK)
         except Exception as e:
@@ -131,11 +131,13 @@ class UserLayerUpdate(generics.GenericAPIView):
                 user = User.objects.get(email=value.get('email'))
                 user.layer_name.set([])
                 user.layer_name.set(layers)
-                role = roles.objects.get(ROLES_ID = value.get('role'))
-                user.role = role
+                if value.get('role'):
+                    role = roles.objects.filter(ROLES_ID = value.get('role')).first()
+                    user.role = role
                 user.save()
             return Response({"Message":"Succsessful"})
         except Exception as e:
+            print(e)
             return Response({"Message":str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
 

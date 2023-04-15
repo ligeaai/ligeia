@@ -308,7 +308,7 @@ const Header = () => {
                       icon: <Brightness2OutlinedIcon />,
                       fixedText: "Appearance",
                       text: themeMode,
-                      subtable: ["dark", "light", "temp", "tempDark"],
+                      subtable: ["dark", "light", "temp", "tempDark", "temp2", "tempDark2"],
                       functions: themeSelect,
                     },
                     {
