@@ -139,4 +139,4 @@ const MyDataGrid = () => {
   }
 };
 
-export default MyDataGrid;
+export default React.memo(MyDataGrid);

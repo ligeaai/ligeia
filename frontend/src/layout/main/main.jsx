@@ -2,7 +2,7 @@ import React from "react";
 import $ from "jquery";
 import { useSelector, useDispatch } from "react-redux";
 
-import { Box, Button, Grid } from "@mui/material";
+import { Box, Button, Grid, IconButton } from "@mui/material";
 import FullscreenExitIcon from "@mui/icons-material/FullscreenExit";
 import FullscreenIcon from "@mui/icons-material/Fullscreen";
 
@@ -51,7 +51,9 @@ const Main = (props) => {
         </Grid>
       </Box>
       <Box className="full-screen-icon-box">
-        <Button
+        <IconButton
+          className="full-screen-icon-box__btn"
+          variant="contained"
           onClick={() => {
             $(".full-screen-box").toggle();
             $(".normal-screen-box").toggle();
@@ -60,9 +62,12 @@ const Main = (props) => {
             dispatch(setIsFullScreen(!isFullScreen));
           }}
         >
-          <FullscreenIcon className="full-screen-icon" />
-          <FullscreenExitIcon className="full-screen-exit-icon" />
-        </Button>
+          <FullscreenIcon className="full-screen-icon" fontSize="medium" />
+          <FullscreenExitIcon
+            className="full-screen-exit-icon"
+            fontSize="medium"
+          />
+        </IconButton>
       </Box>
     </Box>
   );

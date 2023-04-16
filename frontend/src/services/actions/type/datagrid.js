@@ -106,10 +106,10 @@ export const fillPropertyTable = (TYPE) => async (dispatch, getState) => {
             type: SET_PROPERTY_ROW,
             payload: res.data
         })
-    } catch {
-        dispatch({
-            type: CLEAN_ALL_DATAGRID_TYPE
-        })
+    } catch (err) {
+        // dispatch({
+        //     type: CLEAN_ALL_DATAGRID_TYPE
+        // })
     }
 }
 

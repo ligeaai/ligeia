@@ -26,7 +26,16 @@ import {
 
 import { instance, config } from "../../../../services/baseApi";
 import { cleanAllDataGrid } from "../../../../services/actions/type/datagrid";
-
+import {
+  saveTypeFunc,
+  addNewType,
+} from "../../../../services/actions/type/datagrid";
+import {
+  setBodyConfirmation,
+  setSaveFunctonConfirmation,
+  setTitleConfirmation,
+} from "../../../../services/actions/confirmation/historyConfirmation";
+import { refreshDataGridType } from "../../../../services/actions/type/datagrid";
 import TypeService from "../../../../services/api/type";
 import { useIsMount } from "../../../../hooks/useIsMount";
 const Menu = () => {
@@ -53,6 +62,8 @@ const Menu = () => {
 };
 
 const Type = () => {
+  const isMount = useIsMount();
+
   const dispatch = useDispatch();
   const filteredLayerName = useSelector(
     (state) => state.treeview.filteredLayerName
@@ -61,6 +72,23 @@ const Type = () => {
   const selectHandleChangeFunc = (params) => {
     dispatch(setFilteredLayerName(params));
   };
+  const selectedIndex = useSelector(
+    (state) => state.treeview.selectedItem.selectedIndex
+  );
+  const type = useSelector((state) => state.treeview.selectedItem.TYPE);
+  React.useEffect(() => {
+    if (isMount) {
+      dispatch(setSaveFunctonConfirmation(saveTypeFunc));
+      dispatch(setTitleConfirmation("Are you sure you want to save ? "));
+    }
+    dispatch(setBodyConfirmation(`${type ? type : "new"}`));
+    if (selectedIndex === -2) {
+      dispatch(addNewType());
+    } else if (selectedIndex >= 0) {
+      dispatch(refreshDataGridType());
+    }
+  }, [selectedIndex, type]);
+
   React.useEffect(() => {
     const myFunc = async () => {
       try {

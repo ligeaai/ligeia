@@ -23,7 +23,6 @@ const TreeMenu = () => {
   const dispatch = useDispatch();
   const type = useSelector((state) => state.drawerMenu.selectedItem.TYPE);
   const text = useSelector((state) => state.searchBar.text);
-
   React.useEffect(() => {
     if (!isMount) {
       dispatch(loadTreeviewItem(pathFunction, "PROPERTY_STRING"));

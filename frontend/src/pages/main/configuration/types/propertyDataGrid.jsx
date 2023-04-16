@@ -1,16 +1,13 @@
 import * as React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Box } from "@mui/material";
 import { DataGridPro } from "@mui/x-data-grid-pro";
-import { grey } from "@mui/material/colors";
-import { Stack, Paper, Typography, Grid } from "@mui/material";
+import { Stack, Paper } from "@mui/material";
 
 import LinearProgress from "@mui/material/LinearProgress";
 
 import { CustomToolbar } from "./datagridActionMenu";
 
 import { CustomNoRowsOverlay } from "../../../../components";
-import { columns } from "./column";
 import { propColumns } from "./propColumn";
 import {
   onChangeCell,

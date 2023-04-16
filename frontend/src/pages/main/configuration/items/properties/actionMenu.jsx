@@ -25,9 +25,6 @@ const PropertiesActionMenu = () => {
   const name = useSelector(
     (state) => state.treeview.selectedItem.PROPERTY_STRING
   );
-  const permission = useSelector(
-    (state) => state.auth.user?.role?.PROPERTY_ID?.ITEM
-  );
   const dispatch = useDispatch();
   const btnNew = () => {
     dispatch(selectTreeViewItem(-2, "new", 3));

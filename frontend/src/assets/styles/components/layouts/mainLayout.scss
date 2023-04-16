@@ -1,4 +1,5 @@
 @import "../../palette/palette";
+@import "../../palette/shadow.scss";
 
 #main-layout {
   .full-screen-box {
@@ -14,6 +15,10 @@
     bottom: 0;
     right: 0;
     margin: 16px;
+    padding: 12px;
+    &__btn {
+      box-shadow: $shadow-three;
+    }
     .full-screen-exit-icon {
       display: none;
     }

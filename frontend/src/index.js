@@ -13,15 +13,13 @@ const container = document.getElementById('root');
 const root = createRoot(container);
 
 root.render(
-    <React.StrictMode>
-        <ErrorBoundary>
-            <Provider store={store}>
-                <PersistGate loading={<MainPageSkeleton />} persistor={persistor} >
-                    <App />
-                </PersistGate>
-            </Provider>
-        </ErrorBoundary>
-    </React.StrictMode>
+    <ErrorBoundary>
+        <Provider store={store}>
+            <PersistGate loading={<MainPageSkeleton />} persistor={persistor} >
+                <App />
+            </PersistGate>
+        </Provider>
+    </ErrorBoundary>
 );
 
 reportWebVitals();
