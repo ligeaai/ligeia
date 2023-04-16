@@ -55,7 +55,7 @@ const Header = () => {
   const langSelect = (val) => {
     dispatch(changeLanguage(val));
   };
-  const locationSelect = (val) => { };
+  const locationSelect = (val) => {};
   const handleClick = (key) => {
     openValid[key] = true;
     setOpenNavbar(openValid);
@@ -115,7 +115,7 @@ const Header = () => {
                 history.push("/");
               }}
             >
-              <img src={logo} alt="logo" width={"40px"} />
+              <img src={logo} alt="logo" width={"36px"} />
             </Grid>
             <Grid
               item
@@ -308,7 +308,14 @@ const Header = () => {
                       icon: <Brightness2OutlinedIcon />,
                       fixedText: "Appearance",
                       text: themeMode,
-                      subtable: ["dark", "light", "temp", "tempDark", "temp2", "tempDark2"],
+                      subtable: [
+                        "dark",
+                        "light",
+                        "temp",
+                        "tempDark",
+                        "temp2",
+                        "tempDark2",
+                      ],
                       functions: themeSelect,
                     },
                     {
