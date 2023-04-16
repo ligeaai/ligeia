@@ -27,19 +27,15 @@ const Drawer = () => {
     <Box
       sx={{
         minWidth: isOpen ? "248px" : "68px",
-        minHeight: "calc(100vh - 60px - 8px)",
-        height: "500px",
         overflow: "hidden",
-
         width: "min-content",
+        height: "100%",
         typography: {
           xs: {
             display: isOpen ? "inline-block" : "none",
           },
           sm: { display: "inline-block" },
         },
-        mt: 0.5,
-        ml: 0.5,
         boxShadow: 3,
         borderRadius: "3px",
         backgroundColor: "success.secondary",

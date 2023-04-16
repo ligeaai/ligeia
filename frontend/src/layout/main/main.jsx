@@ -22,7 +22,16 @@ const Main = (props) => {
       <Box className="full-screen-box">{Element}</Box>
       <Box className="normal-screen-box">
         <Header />
-        <Grid container sx={{ flexWrap: "nowrap" }}>
+        <Grid
+          container
+          columnSpacing={0.5}
+          sx={{
+            flexWrap: "nowrap",
+            minHeight: "calc(100vh - 59px)",
+            height: "500px",
+            p: 0.5,
+          }}
+        >
           <Grid
             item
             sx={{
@@ -40,10 +49,7 @@ const Main = (props) => {
           <Grid
             item
             sx={{
-              minHeight: "calc(100vh - 60px - 8px)",
-              height: "500px",
               width: `calc(100vw - ${drawerWidth})`,
-              m: 0.5,
             }}
           >
             {Element}
