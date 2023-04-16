@@ -9,7 +9,9 @@ import MenuOpenOutlinedIcon from "@mui/icons-material/MenuOpenOutlined";
 import { toggleDrawerMenu } from "../../services/actions/drawerMenu/drawerMenu";
 import AlertIcon from "./alert/alarmsIcon";
 import SettingMenu from "./settingsMenu";
-
+import logo from "../../assets/Images/header/ligeiaLogo.png";
+import logoDark from "../../assets/Images/header/ligeiaLogoDark.png";
+import history from "../../routers/history";
 const DrawerIcon = () => {
   const dispatch = useDispatch();
   const drawerIsOpen = useSelector((state) => state.drawerMenu.isOpen);
@@ -42,7 +44,8 @@ const DrawerIcon = () => {
   );
 };
 
-const Header = (props) => {
+const Header = () => {
+  const theme = useSelector((state) => state.theme.theme);
   const search = useSelector((state) => state.searchBar.isFocus);
   const MyBox = styled(Grid)(({ theme }) => {
     return {
@@ -75,9 +78,22 @@ const Header = (props) => {
         }}
       >
         <Grid item>
-          <Grid container spacing={2.5} alignItems="center">
+          <Grid container spacing={1.5} alignItems="center">
             <Grid item>
               <DrawerIcon />
+            </Grid>
+            <Grid
+              item
+              sx={{ cursor: "pointer" }}
+              onClick={() => {
+                history.push("/");
+              }}
+            >
+              {theme.includes("Dark") || theme.includes("dark") ? (
+                <img src={logoDark} alt="logo" width={100} />
+              ) : (
+                <img src={logo} alt="logo" width={100} />
+              )}
             </Grid>
           </Grid>
         </Grid>
