@@ -51,7 +51,8 @@ const NestedMenu = (props) => {
   const MyBox = styled(Grid)(({ theme }) => ({
     backgroundColor: theme.palette.background.secondary,
     flexDirection: "column",
-    width: "300px",
+    minWidth: "280px",
+    width: "auto",
     paddingTop: "8px",
     paddingBottom: "8px",
     borderRadius: "5px",

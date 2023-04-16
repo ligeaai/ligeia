@@ -24,7 +24,8 @@ const NestedMenu = (props) => {
       sx={{
         flexDirection: "column",
         backgroundColor: "#1F1F1F",
-        width: "230px",
+        minWidth: "200px",
+        width: "auto",
         pt: 1,
         borderRadius: "5px",
       }}
