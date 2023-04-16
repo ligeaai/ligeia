@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { Grid } from "@mui/material";
+import { Grid, IconButton } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import MenuIcon from "@mui/icons-material/Menu";
 import MenuOpenOutlinedIcon from "@mui/icons-material/MenuOpenOutlined";
@@ -15,29 +15,29 @@ const DrawerIcon = () => {
   const drawerIsOpen = useSelector((state) => state.drawerMenu.isOpen);
   return (
     <Grid item>
-      {!drawerIsOpen ? (
-        <MenuIcon
-          sx={{
-            mx: "9px",
-            typography: "h4",
-            color: "primary.main",
-          }}
-          onClick={() => {
-            dispatch(toggleDrawerMenu());
-          }}
-        />
-      ) : (
-        <MenuOpenOutlinedIcon
-          sx={{
-            mx: "9px",
-            typography: "h4",
-            color: "primary.main",
-          }}
-          onClick={() => {
-            dispatch(toggleDrawerMenu());
-          }}
-        />
-      )}
+      <IconButton>
+        {!drawerIsOpen ? (
+          <MenuIcon
+            sx={{
+              typography: "h4",
+              color: "primary.main",
+            }}
+            onClick={() => {
+              dispatch(toggleDrawerMenu());
+            }}
+          />
+        ) : (
+          <MenuOpenOutlinedIcon
+            sx={{
+              typography: "h4",
+              color: "primary.main",
+            }}
+            onClick={() => {
+              dispatch(toggleDrawerMenu());
+            }}
+          />
+        )}
+      </IconButton>
     </Grid>
   );
 };
