@@ -1,9 +1,9 @@
 import React from "react";
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { styled } from "@mui/material/styles";
-import { Grid, Typography } from "@mui/material";
+import { Grid, Typography, Box } from "@mui/material";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
@@ -17,12 +17,15 @@ import { logout } from "../../services/actions/auth";
 import { setLoaderTrue } from "../../services/actions/loader";
 
 import { ItemSperatorLine, Items } from "../../components";
+import history from "../../routers/history";
 
 const NestedMenu = (props) => {
   const dispatch = useDispatch();
   const { menuItems, isSubmenuOpen, themeMode, setSettingsMenuFunc } = props;
   const [menu, setMenu] = React.useState(menuItems.map(() => false));
   var menuValidator = menuItems.map(() => false);
+  const userName = useSelector((state) => state?.auth?.user?.first_name);
+  const userSurname = useSelector((state) => state?.auth?.user?.last_name);
   const [mainMenu, setMainMenu] = React.useState(true);
   const handleUserClick = (e) => {
     if (!e.target.closest(".settingsMenu")) {
@@ -62,7 +65,16 @@ const NestedMenu = (props) => {
     <MyBox container sx={{ marginTop: "-2px" }}>
       {mainMenu ? (
         <React.Fragment>
-          <Items Icon={AccountCircleIcon} text="Your Profile" />
+          <Box
+            onClick={() => {
+              history.push("/administration/profile");
+            }}
+          >
+            <Items
+              Icon={AccountCircleIcon}
+              text={`${userName} ${userSurname}`}
+            />
+          </Box>
           <ItemSperatorLine />
           {menuItems.map((e, key) => {
             return (
