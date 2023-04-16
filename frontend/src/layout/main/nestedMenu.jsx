@@ -54,6 +54,8 @@ const NestedMenu = (props) => {
     width: "300px",
     paddingTop: "8px",
     paddingBottom: "8px",
+    borderRadius: "5px",
+    boxShadow: "0px 1px 5px rgba(0, 0, 0, 0.1)",
   }));
   return (
     <MyBox container sx={{ marginTop: "-2px" }}>

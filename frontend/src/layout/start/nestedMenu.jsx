@@ -26,6 +26,7 @@ const NestedMenu = (props) => {
         backgroundColor: "#1F1F1F",
         width: "230px",
         pt: 1,
+        borderRadius: "5px",
       }}
     >
       {mainMenu ? (

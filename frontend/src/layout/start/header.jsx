@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Box, Button, Grid, Link } from "@mui/material";
 
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 
 import LanguageIcon from "@mui/icons-material/Language";
 import history from "../../routers/history";
@@ -292,7 +293,16 @@ const Header = () => {
                   sx={{ width: { md: "21px", lg: "27px", xl: "30px" } }}
                 />
                 <KeyboardArrowDownIcon
-                  sx={{ fontSize: { md: "15px", lg: "21px", xl: "24" } }}
+                  sx={{
+                    fontSize: { md: "15px", lg: "21px", xl: "24" },
+                    display: settingsMenu ? "none" : "auto",
+                  }}
+                />
+                <KeyboardArrowUpIcon
+                  sx={{
+                    fontSize: { md: "15px", lg: "21px", xl: "24" },
+                    display: !settingsMenu ? "none" : "auto",
+                  }}
                 />
               </Button>
               <Box

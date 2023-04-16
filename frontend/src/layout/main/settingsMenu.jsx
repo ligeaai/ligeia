@@ -37,7 +37,7 @@ const SettingsMenu = () => {
         });
         setLanguages(res.data.Message);
         setLangItems([...myRes]);
-      } catch { }
+      } catch {}
     };
     myFunc();
     return;
@@ -59,7 +59,7 @@ const SettingsMenu = () => {
       window.location.reload();
     }, 500);
   };
-  const locationSelect = (location) => { };
+  const locationSelect = (location) => {};
 
   return (
     <Grid item className="settingsMenu">
@@ -118,7 +118,6 @@ const SettingsMenu = () => {
             position: "absolute",
             right: { xs: "0" },
             top: "62px",
-            boxShadow: "0px 1px 5px rgba(0, 0, 0, 0.1)",
             zIndex: 3,
           }}
         >
@@ -128,7 +127,14 @@ const SettingsMenu = () => {
                 icon: <Brightness2OutlinedIcon />,
                 fixedText: "Appearance",
                 text: theme,
-                subtable: ["dark", "light", "temp", "tempDark", "temp2", "tempDark2"],
+                subtable: [
+                  "dark",
+                  "light",
+                  "temp",
+                  "tempDark",
+                  "temp2",
+                  "tempDark2",
+                ],
                 functions: themeSelect,
               },
               {
