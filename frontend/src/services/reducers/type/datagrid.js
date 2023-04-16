@@ -20,7 +20,8 @@ const initialState = {
     selectedRows: [],
     newChildRows: [],
     anyChangesType: false,
-    anyChangesProperty: false
+    anyChangesProperty: false,
+    refresh: false
 };
 
 export default function (state = initialState, action) {
@@ -80,7 +81,9 @@ export default function (state = initialState, action) {
             })
             return {
                 ...state,
-                propertyRows: propertyRows
+                propertyRows: propertyRows,
+                refresh: !state.refresh
+
             }
         case SET_ROW_DATAGRID_TYPE:
             const rows = []
@@ -99,7 +102,7 @@ export default function (state = initialState, action) {
                         ...state.rows[payload.id], [payload.field]: payload.value
                     }
                 },
-                anyChangesType: true
+                anyChangesType: true,
             }
         case AFTER_GO_INDEX_TYPE:
             return {

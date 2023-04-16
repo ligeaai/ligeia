@@ -8,14 +8,14 @@ import LinearProgress from "@mui/material/LinearProgress";
 import { CustomToolbar } from "./datagridActionMenu";
 
 import { CustomNoRowsOverlay } from "../../../../components";
-import { propColumns } from "./propColumn";
 import {
   onChangeCell,
   setSelectedRows,
 } from "../../../../services/actions/type/datagrid";
 const DetailPanelContent = () => {
   const dispatch = useDispatch();
-  const propertyRows = useSelector((state) => state.dataGridType.propertyRows);
+  const rows = useSelector((state) => state.dataGridType.propertyRows);
+  const [columns, setColumns] = React.useState([]);
   const onCellEditCommit = React.useMemo(
     () => (cellData) => {
       const { id, field, value } = cellData;
@@ -23,7 +23,86 @@ const DetailPanelContent = () => {
     },
     []
   );
+  const widthMax = (type) => {
+    let max = Math.max(
+      ...Object.keys(rows).map((e) => {
+        return rows[e][type]?.length === undefined ? 0 : rows[e][type]?.length;
+      })
+    );
 
+    return Number.isNaN(max) ? 150 : max * 10 + 24;
+  };
+  React.useEffect(() => {
+    setColumns([
+      {
+        field: "TYPE",
+        headerName: "Type",
+        editable: true,
+        width: widthMax("TYPE"),
+        minWidth: 100,
+      },
+      {
+        field: "PROPERTY_NAME",
+        headerName: "Property Name",
+        editable: true,
+        width: widthMax("PROPERTY_NAME"),
+        minWidth: 100,
+      },
+      {
+        field: "CODE_LIST",
+        headerName: "Code List",
+        editable: true,
+        width: widthMax("CODE_LIST"),
+        minWidth: 100,
+      },
+      {
+        field: "MANDATORY",
+        headerName: "Mandatory",
+        editable: true,
+        width: widthMax("MANDATORY"),
+        minWidth: 100,
+      },
+      {
+        field: "LABEL_ID",
+        headerName: "Label id",
+        editable: true,
+        width: widthMax("LABEL_ID"),
+        minWidth: 100,
+      },
+
+      {
+        field: "PROP_GRP",
+        headerName: "Property Group",
+        editable: true,
+        width: widthMax("PROP_GRP"),
+        minWidth: 100,
+      },
+      {
+        field: "PROPERTY_TYPE",
+        headerName: "Property Type",
+        editable: true,
+        width: widthMax("PROPERTY_TYPE"),
+        minWidth: 100,
+      },
+      {
+        field: "LAYER_NAME",
+        headerName: "Layer Name",
+        editable: true,
+        width: widthMax("LAYER_NAME"),
+        minWidth: 100,
+      },
+      {
+        field: "SORT_ORDER",
+        headerName: "Sort Order",
+        editable: true,
+        type: "number",
+        headerAlign: "left",
+        align: "left",
+        width: widthMax("SORT_ORDER"),
+        minWidth: 100,
+      },
+    ]);
+  }, []);
   return (
     <Stack
       sx={{ height: "100%", px: "50px", boxSizing: "border-box" }}
@@ -67,8 +146,8 @@ const DetailPanelContent = () => {
               NoRowsOverlay: CustomNoRowsOverlay,
               LoadingOverlay: LinearProgress,
             }}
-            columns={propColumns}
-            rows={Object.values(propertyRows)}
+            columns={columns}
+            rows={Object.values(rows)}
             sx={{ flex: 1 }}
             hideFooter
           />
