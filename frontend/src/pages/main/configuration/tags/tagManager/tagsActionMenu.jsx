@@ -1,9 +1,12 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { ActionMenu } from "../../../../components";
-import { selectTreeViewItem } from "../../../../services/actions/treeview/treeview";
-import { deleteTag, saveButton } from "../../../../services/actions/tags/tags";
+import { ActionMenu } from "../../../../../components";
+import { selectTreeViewItem } from "../../../../../services/actions/treeview/treeview";
+import {
+  deleteTag,
+  saveButton,
+} from "../../../../../services/actions/tags/tags";
 const TagsActionMenu = () => {
   const dispatch = useDispatch();
   const selectedIndex = useSelector(

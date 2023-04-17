@@ -8,8 +8,8 @@ import {
   ItemSperatorLineXL,
   PropLinkTabs,
   MainBox,
-} from "../../../../components";
-import DrawerMenu from "../../../../layout/main/asset/treeViewMenu";
+} from "../../../../../components";
+import DrawerMenu from "../../../../../layout/main/asset/treeViewMenu";
 import TagsActionMenu from "./tagsActionMenu";
 
 import Properties from "./properties";
@@ -18,10 +18,10 @@ import {
   cleanAllTags,
   loadTagsLabel,
   cleanSaveValue,
-} from "../../../../services/actions/tags/tags";
-import { selectTreeViewItem } from "../../../../services/actions/treeview/treeview";
+} from "../../../../../services/actions/tags/tags";
+import { selectTreeViewItem } from "../../../../../services/actions/treeview/treeview";
 import Menu from "./treeMenu";
-import { selectDrawerItem } from "../../../../services/actions/drawerMenu/drawerMenu";
+import { selectDrawerItem } from "../../../../../services/actions/drawerMenu/drawerMenu";
 
 const Tags = ({ isHome }) => {
   document.title = `Ligeia.ai | Tag Manager`;

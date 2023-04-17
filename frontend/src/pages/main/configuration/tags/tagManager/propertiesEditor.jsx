@@ -5,13 +5,13 @@ import { makeStyles } from "@mui/styles";
 
 import { useDispatch, useSelector } from "react-redux";
 import TextFields from "./textfields";
-import { fillTagData } from "../../../../services/actions/tags/tags";
+import { fillTagData } from "../../../../../services/actions/tags/tags";
 import {
   setBodyConfirmation,
   setSaveFunctonConfirmation,
   setTitleConfirmation,
-} from "../../../../services/actions/confirmation/historyConfirmation";
-import { saveTag, addNewTag } from "../../../../services/actions/tags/tags";
+} from "../../../../../services/actions/confirmation/historyConfirmation";
+import { saveTag, addNewTag } from "../../../../../services/actions/tags/tags";
 const useStyles = makeStyles((theme) => {
   return {
     box: {

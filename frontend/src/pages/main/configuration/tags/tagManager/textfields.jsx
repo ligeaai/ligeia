@@ -11,11 +11,11 @@ import {
   MyNumberTextField,
   MyMultilineTextField,
   LoadingComponent,
-} from "../../../../components";
+} from "../../../../../components";
 import { useDispatch, useSelector } from "react-redux";
-import { instance, config } from "../../../../services/baseApi";
-import { addSaveTagValue } from "../../../../services/actions/tags/tags";
-import { setIsActiveConfirmation } from "../../../../services/actions/confirmation/historyConfirmation";
+import { instance, config } from "../../../../../services/baseApi";
+import { addSaveTagValue } from "../../../../../services/actions/tags/tags";
+import { setIsActiveConfirmation } from "../../../../../services/actions/confirmation/historyConfirmation";
 const useStyles = makeStyles((theme) => {
   return {
     box: {
