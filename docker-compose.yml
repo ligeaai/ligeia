@@ -50,7 +50,7 @@ services:
     networks:
       - net
   couchserver:
-    image: couchdb
+    image: couchdb:latest
     restart: always
     container_name: ligeiaai-couchserver-1
     ports:
