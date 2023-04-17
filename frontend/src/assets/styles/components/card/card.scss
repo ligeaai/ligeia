@@ -39,12 +39,7 @@
         @include h-6;
         font-weight: 700;
       }
-      .card-container__card-box__body__text {
-        @include subtitle2;
-        @include themify($themes) {
-          color: themed("text-card");
-        }
-      }
+
       .card-container__card-box__body__btn-next {
         position: absolute;
         right: 0;

@@ -36,7 +36,6 @@ const Header = () => {
       <Grid item className="app-header-box">
         <Grid container className="app-header__left-box">
           <DrawerIcon />
-          <Grid item className="app-header__left-box__divider" />
           <Grid item>
             <Box
               className="app-header__left-box__app-logo"

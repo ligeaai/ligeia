@@ -15,11 +15,8 @@ const CardItems = ({ card }) => {
       <Grid container rowGap={2} className="card-container__card-box__body">
         <Grid item xs={12}>
           <Typography className="card-container__card-box__body__title">
-            {card.cardTitle}
+            {card?.cardTitle}
           </Typography>
-        </Grid>
-        <Grid item xs={12} className="card-container__card-box__body__text">
-          {card.cardBody}
         </Grid>
         <Box className="card-container__card-box__body__btn-next">Next</Box>
       </Grid>
