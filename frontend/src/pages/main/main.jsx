@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { Box } from "@mui/material";
 
 import Cards from "../../components/cardGenerator/cards";
+import { selectDrawerItem } from "../../services/actions/drawerMenu/drawerMenu";
 const cards = [
   {
     cardTitle: "Asset",
@@ -38,6 +39,7 @@ const cards = [
 
 const Main = () => {
   document.title = "Ligeia.ai | Home";
+  selectDrawerItem("Home");
   const isFullScreen = useSelector((state) => state.fullScreen.isFullScreen);
   return (
     <Box

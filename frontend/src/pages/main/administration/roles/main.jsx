@@ -20,9 +20,10 @@ import LinkActionMenu from "./links/linkActionMenu";
 import TreeMenu from "./treeMenu";
 
 import { cleanRoles } from "../../../../services/actions/roles/roles";
-
+import { selectDrawerItem } from "../../../../services/actions/drawerMenu/drawerMenu";
 const Main = ({ isHome }) => {
   document.title = "Ligeia.ai | Roles";
+  selectDrawerItem("Roles");
   const dispatch = useDispatch();
   const isLinksActive = useSelector((state) => state.roles.linkActive);
   React.useEffect(() => {

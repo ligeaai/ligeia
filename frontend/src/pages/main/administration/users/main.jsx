@@ -13,8 +13,10 @@ import {
   loadUsers,
   cleanUsers,
 } from "../../../../services/actions/users/users";
+import { selectDrawerItem } from "../../../../services/actions/drawerMenu/drawerMenu";
 const Main = () => {
   document.title = "Ligeia.ai | Users";
+  selectDrawerItem("Users");
   const dispatch = useDispatch();
 
   React.useEffect(() => {

@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React from "react";
+import { useDispatch } from "react-redux";
+import $ from "jquery";
+
 import * as Icons from "@mui/icons-material";
-import { Box, Collapse, List, ListItem, Typography } from "@mui/material";
+import { Box, List, ListItem, Typography } from "@mui/material";
 
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
@@ -11,12 +13,13 @@ import history from "../../routers/history";
 
 import {
   setSelectedDrawerItem,
-  setOpenTab,
+  toggleDrawerSubItem,
 } from "../../services/actions/drawerMenu/drawerMenu";
-import { useParams } from "react-router-dom";
 
 import { confirmationPushHistory } from "../../services/utils/historyPush";
 import { setGoFunctionConfirmation } from "../../services/actions/confirmation/historyConfirmation";
+import { urlFormatter } from "../../services/utils/urlFormatter";
+
 function App({ menu }) {
   return Object.keys(menu).map((item, key) => (
     <MenuItem key={key} item={menu[item]} url="/" />
@@ -29,17 +32,12 @@ const MenuItem = ({ item, url }) => {
 };
 
 const SingleLevel = ({ item, url }) => {
-  url = url + item.SHORT_LABEL.toLowerCase();
-  url = url.replace(/ /g, "_");
+  url = url + urlFormatter(item.SHORT_LABEL);
   if (url === "/home") {
     url = "/";
   }
   const dispatch = useDispatch();
-  const isOpen = useSelector((state) => state.drawerMenu.isOpen);
   const { [item.ICON]: Icon } = Icons;
-  var selectedItem = useSelector(
-    (state) => state.drawerMenu.selectedItem.SHORT_LABEL
-  );
   const handleClick = () => {
     function goFunction() {
       dispatch(setSelectedDrawerItem(item));
@@ -51,44 +49,15 @@ const SingleLevel = ({ item, url }) => {
   return (
     <ListItem
       button
-      sx={{
-        borderRadius: 2,
-        "&:hover": {
-          backgroundColor:
-            item.SHORT_LABEL === selectedItem
-              ? "hover.primary"
-              : "action.hover",
-          opacity: "action.hoverOpacity",
-        },
-        backgroundColor:
-          item.SHORT_LABEL === selectedItem ? "background.primary" : "inherit",
-      }}
+      className={`drawer-menu__list-item drawer-menu__${urlFormatter(
+        item.SHORT_LABEL
+      )}-list-item`}
       onClick={handleClick}
     >
-      {Icon ? (
-        <Icon
-          sx={{
-            color:
-              item.SHORT_LABEL === selectedItem
-                ? "text.main" //iconun seçili hali
-                : "text.primary", // iconun rengi
-          }}
-        />
-      ) : (
-        <Box sx={{ width: "24px" }}></Box>
-      )}
+      {Icon ? <Icon /> : <Box sx={{ width: "24px" }}></Box>}
       <Typography
         variant="subtitle2"
-        sx={{
-          mx: 1,
-          pl: 0.5,
-          display: isOpen ? "inline-block" : "none",
-          color:
-            item.SHORT_LABEL === selectedItem ? "text.main" : "text.primary", //textin rengi
-          overflow: "hidden",
-          whiteSpace: "nowrap",
-          textOverflow: "ellipsis",
-        }}
+        className={"drawer-menu__list-item__text"}
       >
         {item.SHORT_LABEL}
       </Typography>
@@ -98,115 +67,54 @@ const SingleLevel = ({ item, url }) => {
 
 const MultiLevel = ({ item, url }) => {
   const dispatch = useDispatch();
-  url = url + item.SHORT_LABEL.toLowerCase() + "/";
-  const { params } = useParams();
-  const isOpen = useSelector((state) => state.drawerMenu.isOpen);
-  const isOpenTab = useSelector((state) => state.drawerMenu.openTabs[item.id]);
+  url = url + urlFormatter(item.SHORT_LABEL) + "/";
   const { Items: children } = item;
   const { [item.ICON]: Icon } = Icons;
 
   const handleClick = () => {
-    if (isOpen) {
-      //setOpen((prev) => !prev);
-      dispatch(setOpenTab(item.id));
-    }
-    //dispatch(setSelectedDrawerItem(item.SHORT_LABEL));
-    //   history.push(`${item.URL}`);
+    dispatch(toggleDrawerSubItem(item.SHORT_LABEL));
   };
   return (
     <React.Fragment>
       <ListItem
         button
         onClick={handleClick}
-        sx={{
-          borderRadius: 2,
-          position: "relative",
-          "&:hover": {
-            backgroundColor:
-              url.slice(0, -1) === window.location.pathname
-                ? "hover.primary"
-                : "action.hover",
-            opacity: "action.hoverOpacity",
-          },
-          backgroundColor:
-            url.slice(0, -1) === window.location.pathname
-              ? "action.active"
-              : "inherit",
-        }}
+        className={`drawer-menu__list-item
+         drawer-menu__${urlFormatter(item.SHORT_LABEL)}-list-item`}
       >
-        {Icon ? (
-          <Icon
-            sx={{
-              color:
-                url.slice(0, -1) === window.location.pathname
-                  ? "text.main"
-                  : "text.primary",
-            }}
-          />
-        ) : (
-          <Box sx={{ width: "24px" }}></Box>
-        )}
+        {Icon ? <Icon /> : <Box sx={{ width: "24px" }}></Box>}
 
         <Typography
           variant="subtitle2"
-          sx={{
-            mx: 0.5,
-            pl: 1,
-            display: isOpen ? "inline-block" : "none",
-            color:
-              url.slice(0, -1) === window.location.pathname
-                ? "myReverseText"
-                : "text.primary",
-            overflow: "hidden",
-            whiteSpace: "nowrap",
-            textOverflow: "ellipsis",
-          }}
+          className={"drawer-menu__list-item__text"}
         >
           {item.SHORT_LABEL}
         </Typography>
 
-        {isOpenTab && isOpen ? (
-          <ArrowDropUpIcon
-            sx={{
-              position: "absolute",
-              right: "0px",
-              mr: 1,
-              color:
-                url.slice(0, -1) === window.location.pathname
-                  ? "text.main"
-                  : "text.primary",
-              typography: "body1",
-              display: isOpen ? "inline-block" : "none",
-            }}
-          />
-        ) : (
-          <ArrowDropDownIcon
-            sx={{
-              position: "absolute",
-              right: "0px",
-              mr: 1,
-              color:
-                url.slice(0, -1) === window.location.pathname
-                  ? "text.main"
-                  : "text.primary",
-              typography: "body1",
-              display: isOpen ? "inline-block" : "none",
-            }}
-          />
-        )}
+        <ArrowDropUpIcon
+          typography="body1"
+          className={`drawer-menu__arrow-up-icon drawer-menu__${urlFormatter(
+            item.SHORT_LABEL
+          )}opened-list-item__arrow-up-icon drawer-menu__arrow-icon`}
+        />
+        <ArrowDropDownIcon
+          typography="body1"
+          className={`drawer-menu__arrow-down-icon drawer-menu__${urlFormatter(
+            item.SHORT_LABEL
+          )}opened-list-item__arrow-down-icon drawer-menu__arrow-icon`}
+        />
       </ListItem>
-      <Collapse
-        in={isOpenTab && isOpen}
-        timeout="auto"
-        unmountOnExit
-        // style={{ marginLeft: "10px" }}
+
+      <List
+        id={`drawer-menu_${urlFormatter(item.SHORT_LABEL)}-collapse-item`}
+        className="drawer-menu__sub-menu"
+        component="div"
+        disablePadding
       >
-        <List component="div" disablePadding>
-          {Object.keys(children).map((child, key) => (
-            <MenuItem key={key} item={children[child]} url={url} />
-          ))}
-        </List>
-      </Collapse>
+        {Object.keys(children).map((child, key) => (
+          <MenuItem key={key} item={children[child]} url={url} />
+        ))}
+      </List>
     </React.Fragment>
   );
 };

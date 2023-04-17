@@ -13,8 +13,10 @@ import {
   loadDiagnostic,
   cleanDiagnostic,
 } from "../../../../services/actions/diagnostic/diagnostic";
+import { selectDrawerItem } from "../../../../services/actions/drawerMenu/drawerMenu";
 const Main = () => {
-  document.title = "Ligeia.ai | Diagnostic";
+  document.title = "Ligeia.ai | Diagnostics";
+  selectDrawerItem("Diagnostics");
   const dispatch = useDispatch();
 
   React.useEffect(() => {

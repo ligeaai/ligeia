@@ -8,8 +8,10 @@ import {
   MainBox,
 } from "../../../../components";
 import ProjectEditor from "./projectEditor";
+import { selectDrawerItem } from "../../../../services/actions/drawerMenu/drawerMenu";
 const Project = () => {
   document.title = `Ligeia.ai | Project`;
+  selectDrawerItem("Project");
   return (
     <MainBox>
       <Grid

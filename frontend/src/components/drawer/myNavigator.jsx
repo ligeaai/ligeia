@@ -4,8 +4,10 @@ import { Navigate, useParams } from "react-router-dom";
 
 import { setSelectedDrawerItem } from "../../services/actions/drawerMenu/drawerMenu";
 import history from "../../routers/history";
+import { selectDrawerItem } from "../../services/actions/drawerMenu/drawerMenu";
 const MyNavigator = ({ way }) => {
   document.title = `Ligeia.ai | ${way}`;
+  selectDrawerItem(way);
   const dispatch = useDispatch();
   const { myKey } = useParams();
   const drawerMenu = useSelector((state) => state.drawerMenu.data);

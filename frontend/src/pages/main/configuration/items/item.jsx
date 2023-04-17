@@ -21,7 +21,7 @@ import DateBreak from "./properties/dateBreak";
 import Link from "./link/link";
 import LinkActionMenu from "./link/linkActionMenu";
 import TreeMenu from "./treeMenu";
-
+import { selectDrawerItem } from "../../../../services/actions/drawerMenu/drawerMenu";
 const Item = ({ isHome }) => {
   const dispatch = useDispatch();
   const isLinksActive = useSelector(
@@ -31,6 +31,7 @@ const Item = ({ isHome }) => {
     (state) => state.drawerMenu.selectedItem.SHORT_LABEL
   );
   document.title = `Ligeia.ai | ${shortLabel}`;
+  selectDrawerItem(shortLabel);
   React.useEffect(() => {
     if (isHome) {
       dispatch(cleanDataGridItemAndRows());

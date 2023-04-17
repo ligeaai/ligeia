@@ -3,8 +3,11 @@ import { Designer } from "@grapecity/activereports-react";
 import "@grapecity/activereports/styles/ar-js-ui.css";
 import "@grapecity/activereports/styles/ar-js-designer.css";
 
+import { selectDrawerItem } from "../../../../../services/actions/drawerMenu/drawerMenu";
+
 function ReportDesigner() {
   document.title = "Ligeia.ai | Reporting Designer";
+  selectDrawerItem("Reporting Designer");
   const report = {
     Name: "Report",
     Type: "report",

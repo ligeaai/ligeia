@@ -1,4 +1,5 @@
 import * as React from "react";
+import $ from "jquery";
 import { useDispatch, useSelector } from "react-redux";
 
 import { Grid, IconButton } from "@mui/material";
@@ -6,39 +7,22 @@ import { styled } from "@mui/material/styles";
 import MenuIcon from "@mui/icons-material/Menu";
 import MenuOpenOutlinedIcon from "@mui/icons-material/MenuOpenOutlined";
 
-import { toggleDrawerMenu } from "../../services/actions/drawerMenu/drawerMenu";
 import AlertIcon from "./alert/alarmsIcon";
 import SettingMenu from "./settingsMenu";
 import logo from "../../assets/Images/header/ligeiaLogo.png";
 import logoDark from "../../assets/Images/header/ligeiaLogoDark.png";
 import history from "../../routers/history";
 const DrawerIcon = () => {
-  const dispatch = useDispatch();
-  const drawerIsOpen = useSelector((state) => state.drawerMenu.isOpen);
+  function handleClick() {
+    $(".drawer-menu").toggleClass("drawer-menu-closed");
+    $("#drawer-menu-icon-open").toggle();
+    $(".drawer-menu-icon-close").toggle();
+  }
   return (
     <Grid item>
-      <IconButton>
-        {!drawerIsOpen ? (
-          <MenuIcon
-            sx={{
-              typography: "h4",
-              color: "primary.main",
-            }}
-            onClick={() => {
-              dispatch(toggleDrawerMenu());
-            }}
-          />
-        ) : (
-          <MenuOpenOutlinedIcon
-            sx={{
-              typography: "h4",
-              color: "primary.main",
-            }}
-            onClick={() => {
-              dispatch(toggleDrawerMenu());
-            }}
-          />
-        )}
+      <IconButton onClick={handleClick}>
+        <MenuIcon id="drawer-menu-icon-open" className="drawer-menu-icon " />
+        <MenuOpenOutlinedIcon className="drawer-menu-icon drawer-menu-icon-close" />
       </IconButton>
     </Grid>
   );
@@ -48,13 +32,13 @@ const Header = () => {
   const theme = useSelector((state) => state.theme.theme);
   const search = useSelector((state) => state.searchBar.isFocus);
   const MyBox = styled(Grid)(({ theme }) => {
+    console.log(theme);
     return {
       backgroundColor: theme.palette.primary.dark, // this
       alignItems: "center",
       justifyContent: "space-between",
       padding: "13px 21px",
       height: "59px",
-      //borderBottom: "1px solid rgba(0,0,0,0.3)",
     };
   });
 

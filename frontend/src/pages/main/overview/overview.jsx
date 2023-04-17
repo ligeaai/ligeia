@@ -15,12 +15,13 @@ import DrawerMenu from "../../../layout/main/asset/collapseTreeMenu";
 import Tabs from "./tabs";
 import { loadCollapseMenu } from "../../../services/actions/collapseMenu/collapseMenu";
 import ItemLinkService from "../../../services/api/itemLink";
-
+import { selectDrawerItem } from "../../../services/actions/drawerMenu/drawerMenu";
 const Overview = () => {
   const dispatch = useDispatch();
   const isActiveTabs = useSelector((state) => state.tapsOverview.isActive);
   React.useEffect(() => {
     document.title = "Ligeia.ai | Overview";
+    selectDrawerItem("Overview");
     dispatch(loadCollapseMenu(ItemLinkService.hierarchy));
   }, []);
   return (

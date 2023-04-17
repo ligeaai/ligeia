@@ -1,0 +1,6 @@
+@import "../palette/shadow.scss";
+@mixin layoutBox {
+  //drawer
+  box-shadow: $shadow-three;
+  border-radius: 3px;
+}

@@ -3,9 +3,10 @@ import { Avatar, Button, Card, Grid, Typography } from "@mui/material";
 import { useSelector } from "react-redux";
 import TextField from "@mui/material/TextField";
 import { Box } from "@mui/system";
-
+import { selectDrawerItem } from "../../../services/actions/drawerMenu/drawerMenu";
 function FormRow() {
   document.title = "Ligeia.ai | Profile";
+  selectDrawerItem("Profile");
   const user = useSelector((state) => state.auth.user);
   const [firstName, setFirstName] = React.useState(user.first_name);
   const [surName, setSurName] = React.useState(user.last_name);

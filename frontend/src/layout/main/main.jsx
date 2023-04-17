@@ -2,7 +2,7 @@ import React from "react";
 import $ from "jquery";
 import { useSelector, useDispatch } from "react-redux";
 
-import { Box, Button, Grid, IconButton } from "@mui/material";
+import { Box, Grid, IconButton } from "@mui/material";
 import FullscreenExitIcon from "@mui/icons-material/FullscreenExit";
 import FullscreenIcon from "@mui/icons-material/Fullscreen";
 
@@ -10,48 +10,33 @@ import { Drawer } from "../../components";
 import Header from "./header";
 import { setIsFullScreen } from "../../services/reducers/fullScreenReducer";
 
-const Main = (props) => {
+const Main = ({ Element }) => {
   const dispatch = useDispatch();
   const isFullScreen = useSelector((state) => state.fullScreen.isFullScreen);
-  const { Element } = props;
 
-  const drawerWidth = useSelector((state) => state.drawerMenu.width);
+  function btnClickHandle() {
+    //toggle full screen
+    [
+      "full-screen-box",
+      "normal-screen-box",
+      "full-screen-icon",
+      "full-screen-exit-icon",
+    ].map((clsName) => {
+      $(`.${clsName}`).toggle();
+    });
+    dispatch(setIsFullScreen(!isFullScreen));
+  }
 
   return (
-    <Box id="main-layout">
+    <Box className="main-layout">
       <Box className="full-screen-box">{Element}</Box>
       <Box className="normal-screen-box">
         <Header />
-        <Grid
-          container
-          columnSpacing={0.5}
-          sx={{
-            flexWrap: "nowrap",
-            minHeight: "calc(100vh - 59px)",
-            height: "500px",
-            p: 0.5,
-          }}
-        >
-          <Grid
-            item
-            sx={{
-              zIndex: 2,
-              typography: {
-                xs: {
-                  position: "absolute",
-                },
-                sm: { position: "relative" },
-              },
-            }}
-          >
+        <Grid className="main-layout__app-body" container columnSpacing={0.5}>
+          <Grid item>
             <Drawer />
           </Grid>
-          <Grid
-            item
-            sx={{
-              width: `calc(100vw - ${drawerWidth})`,
-            }}
-          >
+          <Grid item xs={12}>
             {Element}
           </Grid>
         </Grid>
@@ -60,13 +45,7 @@ const Main = (props) => {
         <IconButton
           className="full-screen-icon-box__btn"
           variant="contained"
-          onClick={() => {
-            $(".full-screen-box").toggle();
-            $(".normal-screen-box").toggle();
-            $(".full-screen-icon").toggle();
-            $(".full-screen-exit-icon").toggle();
-            dispatch(setIsFullScreen(!isFullScreen));
-          }}
+          onClick={btnClickHandle}
         >
           <FullscreenIcon className="full-screen-icon" fontSize="medium" />
           <FullscreenExitIcon

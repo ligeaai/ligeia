@@ -1,40 +1,99 @@
+//Mui color palette
+$actionHover: rgba(255, 255, 255, 0.08);
+
 $themes: (
-  tempDark2: (backgroundColor: #000000,
+  tempDark2: (
+    //BACKGROUNDS
+    // background
+    bg-all: #000000,
+    // drawer menu background
+    bg-drawer: #1c1b1e,
+    //drawer menu selected Item
+    bg-drawer-selected-item: #605d62,
+    //drawer menu selected list item hover
+    bg-drawer-selected-item-hover: #616161,
+    //drawer menu list item hover
+    bg-drawer-item-hover: $actionHover,
+
+    //TEXTS
+    //drawer menu list item text and icons, drawer menu open icon
+    text-drawer-item: #ffffff,
+    //drawer menu list item text and icons selected
+    text-drawer-selected-item: #ffffff,
   ),
-  temp2: (backgroundColor: #f8f1f9,
+  temp2: (
+    bg-all: #f8f1f9,
+    bg-drawer: #ffffff,
+    bg-drawer-selected-item: #e1dde2,
+    bg-drawer-selected-item-hover: #dad5db,
+    bg-drawer-item-hover: $actionHover,
+
+    text-drawer-item: #424242,
+    text-drawer-selected-item: #000000,
   ),
-  temp: (backgroundColor: #f8f1f9,
+  temp: (
+    bg-all: #f8f1f9,
+    bg-drawer: #ffffff,
+    bg-drawer-selected-item: #e1dde2,
+    bg-drawer-selected-item-hover: #dad5db,
+    bg-drawer-item-hover: $actionHover,
+
+    text-drawer-item: #424242,
+    text-drawer-selected-item: #000000,
   ),
-  tempDark: (backgroundColor: #000000,
+  tempDark: (
+    bg-all: #000000,
+    bg-drawer: #1c1b1e,
+    bg-drawer-selected-item: #605d62,
+    bg-drawer-selected-item-hover: #616161,
+    bg-drawer-item-hover: $actionHover,
+
+    text-drawer-item: #aeaaae,
+    text-drawer-selected-item: #ffffff,
   ),
-  light: (backgroundColor: #eeeeee,
+  light: (
+    bg-all: #eeeeee,
+    bg-drawer: #e0e0e0,
+    bg-drawer-selected-item: #b0bec5,
+    bg-drawer-selected-item-hover: #cfd8dc,
+    bg-drawer-item-hover: $actionHover,
+
+    text-drawer-item: #364868,
+    text-drawer-selected-item: #546e7a,
   ),
-  dark: (backgroundColor: #757575,
+  dark: (
+    bg-all: #757575,
+    bg-drawer: #424242,
+    bg-drawer-selected-item: #616161,
+    bg-drawer-selected-item-hover: #757575,
+    bg-drawer-item-hover: $actionHover,
+
+    text-drawer-item: #ffffff,
+    text-drawer-selected-item: #eceff1,
   ),
-  ) !default;
+) !default;
 
 $theme-map: null;
 
 @mixin themify($themes: $themes) {
-
-  @each $theme,
-  $map in $themes {
+  @each $theme, $map in $themes {
     .theme-#{$theme} & {
       $theme-map: () !global;
 
-      @each $key,
-      $submap in $map {
-        $value: map-get(map-get($themes, $theme), "#{$key}"
-      );
-      $theme-map: map-merge($theme-map,
-        ($key: $value,
-        )) !global;
-    }
+      @each $key, $submap in $map {
+        $value: map-get(map-get($themes, $theme), "#{$key}");
+        $theme-map: map-merge(
+          $theme-map,
+          (
+            $key: $value,
+          )
+        ) !global;
+      }
 
-    @content;
-    $theme-map: null !global;
+      @content;
+      $theme-map: null !global;
+    }
   }
-}
 }
 
 @function themed($key) {

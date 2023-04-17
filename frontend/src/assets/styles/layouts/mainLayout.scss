@@ -1,0 +1,33 @@
+@import "../palette/palette";
+@import "../palette/shadow.scss";
+
+.main-layout {
+  @include themify($themes) {
+    background-color: themed("bg-all");
+  }
+  .full-screen-box {
+    min-height: 100vh;
+    display: none;
+  }
+  .main-layout__app-body {
+    flex-wrap: nowrap;
+    min-height: calc(100vh - 59px);
+    height: 500px;
+    padding: 4px;
+    width: 100%;
+  }
+
+  .full-screen-icon-box {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    margin: 16px;
+    padding: 12px;
+    &__btn {
+      box-shadow: $shadow-three;
+    }
+    .full-screen-exit-icon {
+      display: none;
+    }
+  }
+}

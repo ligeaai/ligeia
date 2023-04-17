@@ -5,9 +5,10 @@ import { Box } from "@mui/material";
 import Cards from "../../../components/cardGenerator/cards";
 import { LoadingComponent } from "../../../components";
 import { setSelectedDrawerItem } from "../../../services/actions/drawerMenu/drawerMenu";
-
+import { selectDrawerItem } from "../../../services/actions/drawerMenu/drawerMenu";
 const Main = ({ way }) => {
   document.title = `Ligeia.ai | ${way}`;
+  selectDrawerItem(way);
   const dispatch = useDispatch();
   const isFullScreen = useSelector((state) => state.fullScreen.isFullScreen);
   const drawerData = useSelector((state) => state.drawerMenu.data);

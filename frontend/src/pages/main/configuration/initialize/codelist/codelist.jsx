@@ -25,9 +25,11 @@ import {
 import { instance, config } from "../../../../../services/baseApi";
 
 import Menu from "./treeMenu";
+import { selectDrawerItem } from "../../../../../services/actions/drawerMenu/drawerMenu";
 
 const CodeList = ({ isHome }) => {
-  document.title = `Ligeia.ai | Codelist`;
+  document.title = `Ligeia.ai | Code List`;
+  selectDrawerItem("Code List");
   const dispatch = useDispatch();
   const filteredLayerName = useSelector(
     (state) => state.treeview.filteredLayerName

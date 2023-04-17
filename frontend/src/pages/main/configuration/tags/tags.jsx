@@ -21,9 +21,11 @@ import {
 } from "../../../../services/actions/tags/tags";
 import { selectTreeViewItem } from "../../../../services/actions/treeview/treeview";
 import Menu from "./treeMenu";
+import { selectDrawerItem } from "../../../../services/actions/drawerMenu/drawerMenu";
 
 const Tags = ({ isHome }) => {
-  document.title = `Ligeia.ai | Tags`;
+  document.title = `Ligeia.ai | Tag Manager`;
+  selectDrawerItem("Tag Manager");
   const dispatch = useDispatch();
   React.useEffect(() => {
     if (isHome) {

@@ -38,8 +38,10 @@ import {
 import { refreshDataGridType } from "../../../../services/actions/type/datagrid";
 import TypeService from "../../../../services/api/type";
 import { useIsMount } from "../../../../hooks/useIsMount";
+import { selectDrawerItem } from "../../../../services/actions/drawerMenu/drawerMenu";
 const Menu = () => {
   document.title = `Ligeia.ai | Types`;
+  selectDrawerItem("Types");
   const isMount = useIsMount();
   const dispatch = useDispatch();
   const text = useSelector((state) => state.searchBar.text);
