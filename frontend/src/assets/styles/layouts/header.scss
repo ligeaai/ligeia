@@ -1,0 +1,41 @@
+@import "../palette/palette.scss";
+@import "../components/divider.scss";
+.app-header {
+  justify-content: space-between;
+  padding: 13px;
+  height: 59px;
+  align-content: center;
+  @include themify($themes) {
+    background-color: themed("bg-app-header");
+  }
+
+  .app-header-box {
+    height: 100%;
+  }
+  .app-header__left-box {
+    height: 100%;
+    align-items: center;
+    .app-header__left-box__divider {
+      @include verticalDivider;
+      height: 65%;
+      margin-right: 15px;
+      margin-left: 7px;
+      @include themify($themes) {
+        background-color: themed("text-drawer-item");
+      }
+    }
+    .app-header__left-box__app-logo {
+      @include themify($themes) {
+        background-image: themed("app-logo");
+      }
+      background-size: contain;
+      background-repeat: no-repeat;
+      width: 87px;
+      height: 26px;
+      cursor: pointer;
+    }
+  }
+  .app-header__right-box {
+    align-items: center;
+  }
+}

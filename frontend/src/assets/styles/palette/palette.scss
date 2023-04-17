@@ -2,6 +2,71 @@
 $actionHover: rgba(255, 255, 255, 0.08);
 
 $themes: (
+  light: (
+    bg-all: #eeeeee,
+    bg-drawer: #e0e0e0,
+    bg-drawer-selected-item: #b0bec5,
+    bg-drawer-selected-item-hover: #cfd8dc,
+    bg-drawer-item-hover: $actionHover,
+    bg-app-header: #819ca9,
+
+    text-drawer-item: #364868,
+    text-drawer-selected-item: #546e7a,
+
+    app-logo: url("../../Images/header/ligeiaLogo.png"),
+  ),
+  dark: (
+    bg-all: #757575,
+    bg-drawer: #424242,
+    bg-drawer-selected-item: #616161,
+    bg-drawer-selected-item-hover: #757575,
+    bg-drawer-item-hover: $actionHover,
+    bg-app-header: #212121,
+
+    text-drawer-item: #ffffff,
+    text-drawer-selected-item: #eceff1,
+
+    app-logo: url("../../Images/header/ligeiaLogoDark.png"),
+  ),
+  temp: (
+    bg-all: #f8f1f9,
+    bg-drawer: #ffffff,
+    bg-drawer-selected-item: #e1dde2,
+    bg-drawer-selected-item-hover: #dad5db,
+    bg-drawer-item-hover: $actionHover,
+    bg-app-header: #ffffff,
+
+    text-drawer-item: #424242,
+    text-drawer-selected-item: #000000,
+
+    app-logo: url("../../Images/header/ligeiaLogo.png"),
+  ),
+  tempDark: (
+    bg-all: #000000,
+    bg-drawer: #1c1b1e,
+    bg-drawer-selected-item: #605d62,
+    bg-drawer-selected-item-hover: #616161,
+    bg-drawer-item-hover: $actionHover,
+    bg-app-header: #1c1b1e,
+
+    text-drawer-item: #aeaaae,
+    text-drawer-selected-item: #ffffff,
+
+    app-logo: url("../../Images/header/ligeiaLogoDark.png"),
+  ),
+  temp2: (
+    bg-all: #f8f1f9,
+    bg-drawer: #ffffff,
+    bg-drawer-selected-item: #e1dde2,
+    bg-drawer-selected-item-hover: #dad5db,
+    bg-drawer-item-hover: $actionHover,
+    bg-app-header: #ffffff,
+
+    text-drawer-item: #424242,
+    text-drawer-selected-item: #000000,
+
+    app-logo: url("../../Images/header/ligeiaLogo.png"),
+  ),
   tempDark2: (
     //BACKGROUNDS
     // background
@@ -14,62 +79,17 @@ $themes: (
     bg-drawer-selected-item-hover: #616161,
     //drawer menu list item hover
     bg-drawer-item-hover: $actionHover,
+    //app - header
+    bg-app-header: #1c1b1e,
 
     //TEXTS
     //drawer menu list item text and icons, drawer menu open icon
     text-drawer-item: #ffffff,
     //drawer menu list item text and icons selected
     text-drawer-selected-item: #ffffff,
-  ),
-  temp2: (
-    bg-all: #f8f1f9,
-    bg-drawer: #ffffff,
-    bg-drawer-selected-item: #e1dde2,
-    bg-drawer-selected-item-hover: #dad5db,
-    bg-drawer-item-hover: $actionHover,
 
-    text-drawer-item: #424242,
-    text-drawer-selected-item: #000000,
-  ),
-  temp: (
-    bg-all: #f8f1f9,
-    bg-drawer: #ffffff,
-    bg-drawer-selected-item: #e1dde2,
-    bg-drawer-selected-item-hover: #dad5db,
-    bg-drawer-item-hover: $actionHover,
-
-    text-drawer-item: #424242,
-    text-drawer-selected-item: #000000,
-  ),
-  tempDark: (
-    bg-all: #000000,
-    bg-drawer: #1c1b1e,
-    bg-drawer-selected-item: #605d62,
-    bg-drawer-selected-item-hover: #616161,
-    bg-drawer-item-hover: $actionHover,
-
-    text-drawer-item: #aeaaae,
-    text-drawer-selected-item: #ffffff,
-  ),
-  light: (
-    bg-all: #eeeeee,
-    bg-drawer: #e0e0e0,
-    bg-drawer-selected-item: #b0bec5,
-    bg-drawer-selected-item-hover: #cfd8dc,
-    bg-drawer-item-hover: $actionHover,
-
-    text-drawer-item: #364868,
-    text-drawer-selected-item: #546e7a,
-  ),
-  dark: (
-    bg-all: #757575,
-    bg-drawer: #424242,
-    bg-drawer-selected-item: #616161,
-    bg-drawer-selected-item-hover: #757575,
-    bg-drawer-item-hover: $actionHover,
-
-    text-drawer-item: #ffffff,
-    text-drawer-selected-item: #eceff1,
+    //Images
+    app-logo: url("../../Images/header/ligeiaLogoDark.png"),
   ),
 ) !default;
 
