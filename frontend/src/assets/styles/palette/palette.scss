@@ -9,9 +9,14 @@ $themes: (
     bg-drawer-selected-item-hover: #cfd8dc,
     bg-drawer-item-hover: $actionHover,
     bg-app-header: #819ca9,
+    bg-card: #e0e0e0,
+
+    border-card: #607d8b,
+    border-card-hover: #00897b,
 
     text-drawer-item: #364868,
     text-drawer-selected-item: #546e7a,
+    text-card: #616161,
 
     app-logo: url("../../Images/header/ligeiaLogo.png"),
   ),
@@ -22,9 +27,14 @@ $themes: (
     bg-drawer-selected-item-hover: #757575,
     bg-drawer-item-hover: $actionHover,
     bg-app-header: #212121,
+    bg-card: #9e9e9e,
+
+    border-card: #424242,
+    border-card-hover: #607d8b,
 
     text-drawer-item: #ffffff,
     text-drawer-selected-item: #eceff1,
+    text-card: #eeeeee,
 
     app-logo: url("../../Images/header/ligeiaLogoDark.png"),
   ),
@@ -35,9 +45,14 @@ $themes: (
     bg-drawer-selected-item-hover: #dad5db,
     bg-drawer-item-hover: $actionHover,
     bg-app-header: #ffffff,
+    bg-card: #ffffff,
+
+    border-card: #43a047,
+    border-card-hover: #66bb6a,
 
     text-drawer-item: #424242,
     text-drawer-selected-item: #000000,
+    text-card: #616161,
 
     app-logo: url("../../Images/header/ligeiaLogo.png"),
   ),
@@ -48,9 +63,14 @@ $themes: (
     bg-drawer-selected-item-hover: #616161,
     bg-drawer-item-hover: $actionHover,
     bg-app-header: #1c1b1e,
+    bg-card: #323033,
+
+    border-card: #605d62,
+    border-card-hover: #607d8b,
 
     text-drawer-item: #aeaaae,
     text-drawer-selected-item: #ffffff,
+    text-card: #eeeeee,
 
     app-logo: url("../../Images/header/ligeiaLogoDark.png"),
   ),
@@ -61,9 +81,14 @@ $themes: (
     bg-drawer-selected-item-hover: #dad5db,
     bg-drawer-item-hover: $actionHover,
     bg-app-header: #ffffff,
+    bg-card: #ffffff,
+
+    border-card: #43a047,
+    border-card-hover: #66bb6a,
 
     text-drawer-item: #424242,
     text-drawer-selected-item: #000000,
+    text-card: #616161,
 
     app-logo: url("../../Images/header/ligeiaLogo.png"),
   ),
@@ -81,12 +106,21 @@ $themes: (
     bg-drawer-item-hover: $actionHover,
     //app - header
     bg-app-header: #1c1b1e,
+    //homepage card
+    bg-card: #323033,
+
+    //BORDERS
+    //home page card border
+    border-card: #605d62,
+    border-card-hover: #009900,
 
     //TEXTS
     //drawer menu list item text and icons, drawer menu open icon
     text-drawer-item: #ffffff,
     //drawer menu list item text and icons selected
     text-drawer-selected-item: #ffffff,
+    //card title,card body
+    text-card: #ffffff,
 
     //Images
     app-logo: url("../../Images/header/ligeiaLogoDark.png"),

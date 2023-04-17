@@ -13,21 +13,21 @@ const Palette = () => {
                 primary: {
                     light: "#cfd8dc",
                     main: "#212121", // typography
-                    dark: "#819ca9", //header
+                    dark: "#819ca9", //moved bg-app-header
                 },
 
                 success: {
-                    primary: "#607d8b", // card fancy color
+                    primary: "#607d8b", // moved border-card
                     main: "#676767", // selected item for light
-                    secondary: "#e0e0e0", // drawer menu bacground
+                    secondary: "#e0e0e0", // moved bg-drawer
                     info: "#eeeeee",
 
                 },
 
                 text: {
-                    primary: "#364868", // drawer menu text
-                    main: "#546e7a", // select item for drawer text
-                    secondary: "#616161", // card header text
+                    primary: "#364868", // moved text-drawer-item
+                    main: "#546e7a", // moved text-drawer-selected-item
+                    secondary: "#616161", // moved card-title
                     success: "#9e9e9e", //card info text
                     info: "#37474f",
                     blue: "#002984"
@@ -37,18 +37,18 @@ const Palette = () => {
 
 
                 background: {
-                    primary: "#b0bec5", // drawer menu select item background
-                    main: "#eeeeee", // paper background
+                    primary: "#b0bec5", // moved bg-drawer-selected-item
+                    main: "#eeeeee", // moved bg-all
                     secondary: "#e0e0e0", // nested menu background
-                    success: "#e0e0e0", // card Background
+                    success: "#e0e0e0", // moved bg-card
                     info: "#eceff1", //properties bg
                 },
 
 
                 hover: {
-                    primary: "#cfd8dc", // nested menu hover
+                    primary: "#cfd8dc", // moved bg-drawer-selected-item-hover
                     main: "#f44336",
-                    secondary: "#00897b", // card fancy hover
+                    secondary: "#00897b", // moved border-card-hover
                     success: "#e0e0e0",// button hover
                 },
 

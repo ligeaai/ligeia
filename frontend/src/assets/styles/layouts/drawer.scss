@@ -1,7 +1,6 @@
 @import "../palette/palette";
 @import "../components/boxes.scss";
 @import "../components/scrollbar.scss";
-@import "../palette/typography.scss";
 .drawer-menu {
   z-index: 2;
   position: "relative";
@@ -70,19 +69,7 @@
     display: none !important;
   }
 }
-.drawer-menu-icon {
-  @include h-4;
-  @include themify($themes) {
-    color: themed("text-drawer-item");
-  }
-}
-.drawer-menu-icon-box {
-  max-width: 50px;
-  min-width: 50px;
-}
-#drawer-menu-icon-open {
-  display: none;
-}
+
 @media screen and (max-width: 480px) {
   .drawer-menu {
     position: absolute;

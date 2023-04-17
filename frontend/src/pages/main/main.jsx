@@ -1,5 +1,4 @@
 import React from "react";
-import { useSelector } from "react-redux";
 import { Box } from "@mui/material";
 
 import Cards from "../../components/cardGenerator/cards";
@@ -14,7 +13,7 @@ const cards = [
   {
     cardTitle: "Reporting",
     cardBody: "Assets reporting",
-    cardURL: "/reporting",
+    cardURL: "/reporting_desinger/reporting",
     shortName: "Reporting",
   },
   {
@@ -40,16 +39,8 @@ const cards = [
 const Main = () => {
   document.title = "Ligeia.ai | Home";
   selectDrawerItem("Home");
-  const isFullScreen = useSelector((state) => state.fullScreen.isFullScreen);
   return (
-    <Box
-      sx={{
-        minHeight: isFullScreen ? "100vh" : "100%",
-        height: "500px",
-        boxShadow: 3,
-        borderRadius: "3px",
-      }}
-    >
+    <Box className="home-main">
       <Cards cards={cards} />
     </Box>
   );

@@ -1,19 +1,21 @@
-import React from "react";
-
-import { Grid } from "@mui/material";
+import React, { useState } from "react";
+import { Box, Grid } from "@mui/material";
 
 import CardItems from "./cardItems";
 import LoadingComponent from "../loading/loadingComopnent";
-
-const Cards = (props) => {
-  const { cards } = props;
+const Cards = ({ cards }) => {
   if (cards) {
     return (
-      <Grid container columns={13} columnGap={3.5} sx={{ p: 2.5 }}>
-        {cards.map((e, i) => (
-          <CardItems key={i} card={e} />
+      <Box
+        display="grid"
+        gridTemplateColumns="repeat(12, 1fr)"
+        gap={3}
+        className="card-container"
+      >
+        {cards.map((card, i) => (
+          <CardItems key={i} card={card} />
         ))}
-      </Grid>
+      </Box>
     );
   } else {
     <LoadingComponent></LoadingComponent>;

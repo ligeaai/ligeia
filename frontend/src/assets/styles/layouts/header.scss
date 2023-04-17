@@ -1,5 +1,6 @@
 @import "../palette/palette.scss";
 @import "../components/divider.scss";
+@import "../palette/typography.scss";
 .app-header {
   justify-content: space-between;
   padding: 13px;
@@ -8,7 +9,19 @@
   @include themify($themes) {
     background-color: themed("bg-app-header");
   }
-
+  .drawer-menu-icon {
+    @include h-4;
+    @include themify($themes) {
+      color: themed("text-drawer-item");
+    }
+  }
+  .drawer-menu-icon-box {
+    max-width: 50px;
+    min-width: 50px;
+  }
+  #drawer-menu-icon-open {
+    display: none;
+  }
   .app-header-box {
     height: 100%;
   }
