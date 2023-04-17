@@ -12,14 +12,18 @@ import SettingMenu from "./settingsMenu";
 import logo from "../../assets/Images/header/ligeiaLogo.png";
 import logoDark from "../../assets/Images/header/ligeiaLogoDark.png";
 import history from "../../routers/history";
+import { setOpenTab } from "../../services/actions/drawerMenu/drawerMenu";
 const DrawerIcon = () => {
+  const dispatch = useDispatch();
   function handleClick() {
     $(".drawer-menu").toggleClass("drawer-menu-closed");
-    $("#drawer-menu-icon-open").toggle();
-    $(".drawer-menu-icon-close").toggle();
+    $(".drawer-menu .drawer-menu__list-item__text").toggle(200);
+    $("#drawer-menu-icon-open").toggle(200);
+    $(".drawer-menu-icon-close").toggle(200);
+    dispatch(setOpenTab("Drawer"));
   }
   return (
-    <Grid item>
+    <Grid item className="drawer-menu-icon-box">
       <IconButton onClick={handleClick}>
         <MenuIcon id="drawer-menu-icon-open" className="drawer-menu-icon " />
         <MenuOpenOutlinedIcon className="drawer-menu-icon drawer-menu-icon-close" />

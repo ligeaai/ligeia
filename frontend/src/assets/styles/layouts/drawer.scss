@@ -25,10 +25,10 @@
       opacity: 0.8;
     }
     .drawer-menu__list-item__text {
+      display: inline-block;
       margin-inline: 8px;
       padding-left: 4px;
       padding-right: 8px;
-      display: inline-block;
       white-space: nowrap;
       @include themify($themes) {
         color: themed("text-drawer-item");
@@ -62,23 +62,23 @@
 }
 .drawer-menu-closed {
   .drawer-menu__list-item {
-    .drawer-menu__list-item__text {
-      display: none;
-    }
     .drawer-menu__arrow-icon {
       display: none !important;
     }
   }
   .drawer-menu__sub-menu {
-    display: none;
+    display: none !important;
   }
 }
 .drawer-menu-icon {
   @include h-4;
-
   @include themify($themes) {
     color: themed("text-drawer-item");
   }
+}
+.drawer-menu-icon-box {
+  max-width: 50px;
+  min-width: 50px;
 }
 #drawer-menu-icon-open {
   display: none;

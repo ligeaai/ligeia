@@ -17,6 +17,7 @@ const initialState = {
         "Organization": true,
         "Routes And Stops": true,
         "Tags": true,
+        "Drawer": true
     }
 };
 
