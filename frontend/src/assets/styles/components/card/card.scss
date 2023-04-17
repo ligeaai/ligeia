@@ -2,6 +2,7 @@
 @import "../../palette/typography.scss";
 .card-container {
   max-width: 1500px;
+  padding: 20px;
   .card-container__card-box {
     @include themify($themes) {
       background-color: themed("bg-card");
