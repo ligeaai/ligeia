@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-
+import $ from "jquery";
 import { Box, Grid } from "@mui/material";
 
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
@@ -16,28 +16,38 @@ import {
 const DrawerMenu = (props) => {
   const dispatch = useDispatch();
   const { Element, path } = props;
+  function saveWidth(width) {
+    dispatch(updateTreeViewCouch(path, width));
+  }
+  function openTreeMenu(width) {
+    $(".treemenu-container__box__toggle-button-left").show();
+    $(".treemenu-container__box__toggle-button-right").hide();
+    $(".treemenu-container__box").animate({ width: width }, 400);
+  }
+  function closeTreeMenu() {
+    $(".treemenu-container__box__toggle-button-left").hide();
+    $(".treemenu-container__box__toggle-button-right").show();
+    $(".treemenu-container__box").animate({ width: 0 }, 400);
+  }
 
-  const [leftMenuWidth, setLeftMenuWidth] = React.useState(0);
-
-  const isFullScreen = useSelector((state) => state.fullScreen.isFullScreen);
   const handler = (mouseDownEvent) => {
-    const startSize = leftMenuWidth;
+    const startSize = $(".treemenu-container__box").width();
     const startPosition = mouseDownEvent.pageX;
-    var sonuc = 0;
     document.getElementById("main-box").style.userSelect = "none";
     function onMouseMove(mouseMoveEvent) {
       if (startSize - startPosition + mouseMoveEvent.pageX < 10) {
-        setLeftMenuWidth(0);
+        $(".treemenu-container__box").width(0);
       } else {
-        setLeftMenuWidth(
-          (prev) => startSize - startPosition + mouseMoveEvent.pageX
+        $(".treemenu-container__box").width(
+          startSize - startPosition + mouseMoveEvent.pageX
         );
-        sonuc = startSize - startPosition + mouseMoveEvent.pageX;
       }
     }
     function onMouseUp() {
       document.getElementById("main-box").style.userSelect = "text";
-      dispatch(updateTreeViewCouch(path, sonuc));
+      dispatch(
+        updateTreeViewCouch(path, $(".treemenu-container__box").width())
+      );
       document.body.removeEventListener("mousemove", onMouseMove);
       document.body.removeEventListener("mouseup", onMouseUp);
     }
@@ -48,105 +58,39 @@ const DrawerMenu = (props) => {
   React.useEffect(() => {
     const myFunc = async () => {
       var res = await dispatch(await loadTreeViewWidth(path));
-      setLeftMenuWidth(res[path]);
+      res[path] > 0 ? openTreeMenu(res[path]) : closeTreeMenu();
     };
     myFunc();
   }, []);
 
   return (
-    <Box
-      sx={{
-        backgroundColor: "status.main",
-        position: "relative",
-        width: `${leftMenuWidth}px`,
-        height: "100%",
-        borderRadius: "5px",
-        minHeight: "500px",
-        boxShadow: 3,
-        mr: 0.5,
-      }}
-    >
-      <Grid
-        container
-        sx={{
-          borderRadius: "5px",
-        }}
-      >
-        <Grid
-          item
-          xs={12}
-          sx={{ padding: 2, pb: 0, position: "relative", borderRadius: "5px" }}
-        >
+    <Box className="treemenu-container">
+      <Box className="treemenu-container__box">
+        <Box className="treemenu-container__box__search-bar">
           <SearchBarMobile />
-        </Grid>
-        <Box
-          sx={{
-            borderRadius: "50px",
-            width: "25px",
-            height: "25px",
-            position: "absolute",
-            boxShadow: 2,
-            backgroundColor: "icon.primary",
-            top: "25px",
-            right: "-12px",
-            zIndex: { xs: 0, sm: 3 },
-          }}
-          onClick={() => {
-            setLeftMenuWidth(() => (leftMenuWidth > 0 ? 0 : 250));
-            dispatch(updateTreeViewCouch(path, leftMenuWidth > 0 ? 0 : 250));
-          }}
-        >
-          {leftMenuWidth > 0 ? <ChevronLeftIcon /> : <ChevronRightIcon />}
         </Box>
         <Box
-          sx={{
-            backgroundColor: "text.disabled",
-            width: "100%",
-            height: "1px",
-            m: 1.5,
-          }}
-        />
-        <Grid
-          item
-          xs={12}
-          sx={{
-            overflowY: "hidden",
-            overflowX: "hidden",
-            height: isFullScreen
-              ? "calc(100vh - 84px )"
-              : "calc(100vh - 85px - 60px - 4px  )",
-            minHeight: "416px",
-            // minHeight: "min-content",
-            //height: "calc(100% - 75px)",
-            // "&::-webkit-scrollbar": {
-            //   width: "0.2em",
-            // },
-            // "&::-webkit-scrollbar-track": {
-            //   boxShadow: "inset 0 0 6px rgba(0,0,0,0.00)",
-            //   webkitBoxShadow: "inset 0 0 6px rgba(0,0,0,0.00)",
-            // },
-            // "&::-webkit-scrollbar-thumb": {
-            //   backgroundColor: "rgba(0,0,0,.1)",
-            //   outline: "1px solid rgba(0,0,0,.3)",
-            // },
+          className="treemenu-container__box__toggle-button"
+          onClick={() => {
+            if ($(".treemenu-container__box").width() > 0) {
+              closeTreeMenu();
+              saveWidth(0);
+            } else {
+              openTreeMenu(250);
+              saveWidth(250);
+            }
           }}
         >
-          {Element}
-        </Grid>
-        <Box
-          sx={{
-            position: "absolute",
-            height: "calc(100% - 4px)",
-            width: "5px",
-            right: 0,
-            "&:hover": {
-              backgroundColor: "text.main",
-              cursor: "w-resize",
-            },
-          }}
-          onMouseDown={handler}
-        />
-      </Grid>
+          <ChevronLeftIcon className="treemenu-container__box__toggle-button-left" />
+          <ChevronRightIcon className="treemenu-container__box__toggle-button-right" />
+        </Box>
+        <Box className="treemenu-container__box__divider" />
+        <Box className="treemenu-container__box__element-box">{Element}</Box>
+      </Box>
+      <Box
+        className="treemenu-container__resize-border"
+        onMouseDown={handler}
+      />
     </Box>
   );
 };

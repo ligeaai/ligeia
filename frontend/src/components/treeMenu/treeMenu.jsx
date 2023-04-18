@@ -1,7 +1,6 @@
 import React from "react";
-import { useSelector } from "react-redux";
 
-import { Box, ListItem, ListItemButton, ListItemText } from "@mui/material";
+import { ListItem, ListItemButton, ListItemText } from "@mui/material";
 
 import { FixedSizeList } from "react-window";
 import AutoSizer from "react-virtualized-auto-sizer";
@@ -28,7 +27,7 @@ const RenderRow = (props) => {
       disablePadding
       sx={{
         ".MuiButtonBase-root": {
-          py: 0.5,
+          paddingY: "3px",
         },
       }}
     >
@@ -40,15 +39,7 @@ const RenderRow = (props) => {
       >
         <ListItemText
           primary={`${data[index][primaryText]}`}
-          sx={{
-            span: {
-              color: "primary.main",
-              fontSize: "14px",
-              overflow: "hidden",
-              whiteSpace: "nowrap",
-              textOverflow: "ellipsis",
-            },
-          }}
+          className="treemenu-container__box__element-box__list__item"
         />
       </ListItemButton>
     </ListItem>
@@ -56,39 +47,30 @@ const RenderRow = (props) => {
 };
 
 const TreeMenuItem = (myProps) => {
-  const isFullScreen = useSelector((state) => state.fullScreen.isFullScreen);
   const { items = [] } = myProps;
   return (
-    <Box
-      sx={{
-        height: isFullScreen
-          ? "calc(100vh - 85px )"
-          : "calc(100vh - 85px - 60px - 4px)",
-        minHeight: "416px",
-      }}
-    >
-      <AutoSizer>
-        {({ height, width }) => (
-          <FixedSizeList
-            height={height}
-            width={width}
-            itemSize={35}
-            itemCount={items.length}
-            itemData={items}
-            overscanCount={5}
-          >
-            {(props) =>
-              RenderRow({
-                ...props,
-                selectFunc: myProps.selectFunc,
-                selectedIndex: myProps.selectedIndex,
-                primaryText: myProps.primaryText,
-              })
-            }
-          </FixedSizeList>
-        )}
-      </AutoSizer>
-    </Box>
+    <AutoSizer>
+      {({ height, width }) => (
+        <FixedSizeList
+          height={height}
+          width={width}
+          itemSize={35}
+          itemCount={items.length}
+          itemData={items}
+          overscanCount={5}
+          className="treemenu-container__box__element-box__list"
+        >
+          {(props) =>
+            RenderRow({
+              ...props,
+              selectFunc: myProps.selectFunc,
+              selectedIndex: myProps.selectedIndex,
+              primaryText: myProps.primaryText,
+            })
+          }
+        </FixedSizeList>
+      )}
+    </AutoSizer>
   );
 };
 

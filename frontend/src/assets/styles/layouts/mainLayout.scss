@@ -12,6 +12,7 @@
   .main-layout__app-body {
     flex-wrap: nowrap;
     height: calc(100vh - 59px);
+    min-height: 500px;
     padding: 4px;
     width: 100%;
   }

@@ -28,14 +28,12 @@ const TreeMenuItems = ({ path, textPath, historyPathLevel }) => {
     };
   }, []);
   return (
-    <>
-      <TreeMenu
-        items={filteredTreeItems}
-        selectFunc={selectFunc}
-        selectedIndex={selectedIndex}
-        primaryText={textPath}
-      />
-    </>
+    <TreeMenu
+      items={filteredTreeItems}
+      selectFunc={selectFunc}
+      selectedIndex={selectedIndex}
+      primaryText={textPath}
+    />
   );
 };
 

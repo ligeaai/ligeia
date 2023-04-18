@@ -12,7 +12,7 @@ const Palette = () => {
                 mode: "light",
                 primary: {
                     light: "#cfd8dc",
-                    main: "#212121", // typography
+                    main: "#212121", // moved tree-menu-text
                     dark: "#819ca9", //moved bg-app-header
                 },
 
@@ -53,7 +53,7 @@ const Palette = () => {
                 },
 
                 icon: {
-                    primary: "#819ca9", //items icon
+                    primary: "#819ca9", //moved tree menü icon
                     secondary: "#263238", // items under icon
                     main: "#819ca9", //seachbar icon
                     success: "#9fa8da", // icon hover text 
@@ -61,7 +61,7 @@ const Palette = () => {
 
 
                 status: {
-                    main: "#efebe9", //items bg
+                    main: "#efebe9", //moved tree menu bg
                     primary: "#424242", // items text
                     secondary: "#37474f", // item text lvl2
                     success: "#e0e0e0", // search bar

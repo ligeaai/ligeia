@@ -1,5 +1,6 @@
 //Mui color palette
 $actionHover: rgba(255, 255, 255, 0.08);
+$text-disabled: rgba(255, 255, 255, 0.5);
 
 $themes: (
   light: (
@@ -10,6 +11,8 @@ $themes: (
     bg-drawer-item-hover: $actionHover,
     bg-app-header: #819ca9,
     bg-card: #e0e0e0,
+    bg-tree-menu: #efebe9,
+    bg-tree-menu-icon: #819ca9,
 
     border-card: #607d8b,
     border-card-hover: #00897b,
@@ -17,6 +20,7 @@ $themes: (
     text-drawer-item: #364868,
     text-drawer-selected-item: #546e7a,
     text-card: #616161,
+    text-tree-menu: #212121,
 
     app-logo: url("../../Images/header/ligeiaLogo.png"),
   ),
@@ -28,6 +32,8 @@ $themes: (
     bg-drawer-item-hover: $actionHover,
     bg-app-header: #212121,
     bg-card: #9e9e9e,
+    bg-tree-menu: #616161,
+    bg-tree-menu-icon: #ffffff,
 
     border-card: #424242,
     border-card-hover: #607d8b,
@@ -35,6 +41,7 @@ $themes: (
     text-drawer-item: #ffffff,
     text-drawer-selected-item: #eceff1,
     text-card: #eeeeee,
+    text-tree-menu: #ffffff,
 
     app-logo: url("../../Images/header/ligeiaLogoDark.png"),
   ),
@@ -46,6 +53,8 @@ $themes: (
     bg-drawer-item-hover: $actionHover,
     bg-app-header: #ffffff,
     bg-card: #ffffff,
+    bg-tree-menu: #f5eff6,
+    bg-tree-menu-icon: #424242,
 
     border-card: #43a047,
     border-card-hover: #66bb6a,
@@ -53,6 +62,7 @@ $themes: (
     text-drawer-item: #424242,
     text-drawer-selected-item: #000000,
     text-card: #616161,
+    text-tree-menu: #616161,
 
     app-logo: url("../../Images/header/ligeiaLogo.png"),
   ),
@@ -64,6 +74,8 @@ $themes: (
     bg-drawer-item-hover: $actionHover,
     bg-app-header: #1c1b1e,
     bg-card: #323033,
+    bg-tree-menu: #323033,
+    bg-tree-menu-icon: #ffffff,
 
     border-card: #605d62,
     border-card-hover: #607d8b,
@@ -71,6 +83,7 @@ $themes: (
     text-drawer-item: #aeaaae,
     text-drawer-selected-item: #ffffff,
     text-card: #eeeeee,
+    text-tree-menu: #aeaaae,
 
     app-logo: url("../../Images/header/ligeiaLogoDark.png"),
   ),
@@ -82,6 +95,8 @@ $themes: (
     bg-drawer-item-hover: $actionHover,
     bg-app-header: #ffffff,
     bg-card: #ffffff,
+    bg-tree-menu: #f5eff6,
+    bg-tree-menu-icon: #424242,
 
     border-card: #43a047,
     border-card-hover: #66bb6a,
@@ -89,6 +104,7 @@ $themes: (
     text-drawer-item: #424242,
     text-drawer-selected-item: #000000,
     text-card: #616161,
+    text-tree-menu: #616161,
 
     app-logo: url("../../Images/header/ligeiaLogo.png"),
   ),
@@ -108,6 +124,10 @@ $themes: (
     bg-app-header: #1c1b1e,
     //homepage card
     bg-card: #323033,
+    //tree menü bg
+    bg-tree-menu: #323033,
+    //tree menü icon bg
+    bg-tree-menu-icon: #ffffff,
 
     //BORDERS
     //home page card border
@@ -117,10 +137,12 @@ $themes: (
     //TEXTS
     //drawer menu list item text and icons, drawer menu open icon
     text-drawer-item: #ffffff,
-    //drawer menu list item text and icons selected
+    //drawer menu list item text and icons selected, treemenu resize border
     text-drawer-selected-item: #ffffff,
     //card title,card body
     text-card: #ffffff,
+    //tree menu text
+    text-tree-menu: #ffffff,
 
     //Images
     app-logo: url("../../Images/header/ligeiaLogoDark.png"),

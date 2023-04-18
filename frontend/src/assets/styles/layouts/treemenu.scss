@@ -1,0 +1,76 @@
+@import "../components/boxes.scss";
+@import "../palette/palette.scss";
+@import "../palette/shadow.scss";
+@import "../components/scrollbar.scss";
+.treemenu-container {
+  position: relative;
+  @include layoutBox;
+  @include themify($themes) {
+    background-color: themed("bg-tree-menu");
+  }
+  &__box {
+    height: 100%;
+    width: 0px;
+    &__search-bar {
+      padding: 16px 16px 0;
+    }
+    &__toggle-button {
+      border-radius: 50px;
+      width: 25px;
+      height: 25px;
+      position: absolute;
+      top: 25px;
+      right: -12px;
+      box-shadow: $shadow-two;
+      z-index: 3;
+      cursor: pointer;
+      @include themify($themes) {
+        background-color: themed("bg-tree-menu-icon");
+      }
+      &:hover {
+        padding: 1.5px;
+        width: 28px;
+        height: 28px;
+        top: 23.5px;
+        right: -12px;
+        box-shadow: $shadow-four;
+      }
+    }
+    &__divider {
+      width: calc(100% - 24px);
+      height: 1px;
+      margin: 12px;
+      background-color: $text-disabled;
+    }
+    &__element-box {
+      height: calc(100% - 79px);
+      &__list {
+        @include defaultScroll;
+        &__item {
+          span {
+            font-size: 14px;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            @include themify($themes) {
+              color: themed("text-tree-menu");
+            }
+          }
+        }
+      }
+    }
+  }
+  &__resize-border {
+    position: absolute;
+    height: 100%;
+    width: 5px;
+    top: 0;
+    right: 0;
+    &:hover {
+      @include themify($themes) {
+        background-color: themed("text-drawer-selected-item");
+      }
+      cursor: w-resize;
+    }
+  }
+}
