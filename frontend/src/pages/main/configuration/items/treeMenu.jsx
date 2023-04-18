@@ -21,7 +21,7 @@ import { loadItemLinkSchema } from "../../../../services/actions/item/itemLinkEd
 const TreeMenu = () => {
   const isMount = useIsMount();
   const dispatch = useDispatch();
-  const type = useSelector((state) => state.drawerMenu.selectedItem.TYPE);
+  const type = useSelector((state) => state.drawerMenu.selectedItem?.TYPE);
   const text = useSelector((state) => state.searchBar.text);
   React.useEffect(() => {
     if (!isMount) {

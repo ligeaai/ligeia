@@ -10,7 +10,7 @@ const cards = [
   },
   {
     cardTitle: "Reporting",
-    cardURL: "/reporting_desinger/reporting",
+    cardURL: "/reporting/reporting_desinger",
   },
   {
     cardTitle: "Adminstration",

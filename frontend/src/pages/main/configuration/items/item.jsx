@@ -28,7 +28,7 @@ const Item = ({ isHome }) => {
     (state) => state.itemLinkEditor.isLinksActive
   );
   const shortLabel = useSelector(
-    (state) => state.drawerMenu.selectedItem.SHORT_LABEL
+    (state) => state.drawerMenu.selectedItem?.SHORT_LABEL
   );
   document.title = `Ligeia.ai | ${shortLabel}`;
   selectDrawerItem(shortLabel);

@@ -21,14 +21,15 @@ const Main = ({ way }) => {
   if (drawerData) {
     const drawerDataConfiguration = drawerData[way];
     var cards = [];
-    Object.keys(drawerDataConfiguration.Items).map((e) => {
-      var url = drawerDataConfiguration.Items[e].SHORT_LABEL.toLowerCase();
-      url = url.replace(/ /g, "_");
-      cards.push({
-        cardTitle: drawerDataConfiguration.Items[e].SHORT_LABEL,
-        cardURL: `/${way.toLowerCase()}/${url}`,
+    if (drawerDataConfiguration)
+      Object.keys(drawerDataConfiguration.Items).map((e) => {
+        var url = drawerDataConfiguration.Items[e].SHORT_LABEL.toLowerCase();
+        url = url.replace(/ /g, "_");
+        cards.push({
+          cardTitle: drawerDataConfiguration.Items[e].SHORT_LABEL,
+          cardURL: `/${way.toLowerCase()}/${url}`,
+        });
       });
-    });
 
     return (
       <Box

@@ -9,7 +9,7 @@ import { loadDrawerMenu } from "../../services/actions/drawerMenu/drawerMenu";
 import { LoadingComponent } from "../../components";
 const Drawer = () => {
   const dispatch = useDispatch();
-  const navItems = useSelector((state) => state.drawerMenu.data);
+  const navItems = useSelector((state) => state.drawerMenu?.data);
   const isAuth = useSelector((state) => state.auth.isAuthenticated);
   React.useEffect(() => {
     dispatch(loadDrawerMenu());
@@ -25,7 +25,11 @@ const Drawer = () => {
     >
       <Box className={`drawer-menu`}>
         {navItems ? (
-          <App menu={navItems} />
+          Object.keys(navItems).length > 0 ? (
+            <App menu={navItems} />
+          ) : (
+            <>Data No Found</>
+          )
         ) : (
           <LoadingComponent></LoadingComponent>
         )}

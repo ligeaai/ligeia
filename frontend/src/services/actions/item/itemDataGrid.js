@@ -49,8 +49,8 @@ export class column {
 
 const _createColumn = (columnId) => (dispatch, getState) => {
     const isNew = getState().treeview.selectedItem.selectedIndex
-    const create = getState().auth.user.role.PROPERTY_ID.ITEM.CREATE
-    const update = getState().auth.user.role.PROPERTY_ID.ITEM.UPDATE
+    const create = getState().auth.user.role?.PROPERTY_ID?.ITEM?.CREATE
+    const update = getState().auth.user.role?.PROPERTY_ID?.ITEM?.UPDATE
     let editable = false;
     if (isNew === -2 && create) {
         editable = true
