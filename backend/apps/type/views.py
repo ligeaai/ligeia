@@ -1,14 +1,15 @@
 import re
-
+import couchdb
 from apps.code_list.models import code_list
 from apps.code_list.serializers import codeListNameSerializer
-from apps.resource_list.models import resource_list
-from apps.resource_list.serializers import (
-    ResourceListSaveSerializer,
-    ResourceListSerializer,
-    ResourceListTypeSerializer
+from apps.resources_types.models import resources_types
+from apps.resources_types.serializers import (
+    ResourceTypesSaveSerializer,
+    ResourceTypesSerializer,
+    ResourceTypesTypeSerializer
 )
 
+from utils.utils import import_data
 from apps.type_property.models import type_property
 from apps.type_property.serializers import (
     TypePropertySaveSerializer,
@@ -42,7 +43,7 @@ from utils.utils import redisCaching as Red
 class TypeSaveView(generics.CreateAPIView):
 
     serializer_class = TypeSaveSerializer
-    res = ResourceListSaveSerializer
+    res = ResourceTypesSaveSerializer
     permission_classes = [permissions.AllowAny]
     
 
@@ -67,7 +68,7 @@ class TypeAndPropertySaveView(generics.CreateAPIView):
         serializer = TypePropertyCustomSaveSerializer(data=request.data)
         serializer.is_valid()
         serializer.save(request)
-        serializer = ResourceListTypeSerializer(data = request.data)
+        serializer = ResourceTypesTypeSerializer(data = request.data)
         serializer.is_valid()
         serializer.save(request)
         return Response({"Message":"Successful"}, status=status.HTTP_201_CREATED)
@@ -83,7 +84,7 @@ class TypeAndPropertySaveView(generics.CreateAPIView):
 #         serializer = TypePropertyCustomSaveSerializer(data=request.data)
 #         serializer.is_valid()
 #         serializer.save(request)
-#         serializer = ResourceListTypeSerializer(data = request.data)
+#         serializer = ResourceTypesTypeSerializer(data = request.data)
 #         serializer.is_valid()
 #         serializer.save(request)
 #         return Response({"Message":"Successful"}, status=status.HTTP_201_CREATED)
@@ -134,21 +135,21 @@ class TypeEditorBaseView(generics.CreateAPIView):
 
         queryset  = Type.objects.all()
         serializer = TypeDetailsSerializer(queryset,many = True)
-        self._getResourceList(serializer.data,request.data.get('CULTURE'))
+        self._getResourceTypes(serializer.data,request.data.get('CULTURE'))
         sorted_list = sorted(list(serializer.data), key=lambda d: str(d['TYPE']))
         
         return Response({"Message": sorted_list}, status=status.HTTP_200_OK)
    
-    def _getResourceList(self,data,culture):
+    def _getResourceTypes(self,data,culture):
         for index in range(0,len(data)):
             # queryset_types_prop = type_property.objects.filter(TYPE = data[index].get('TYPE'))
             # serializer_prop = TypePropertySerializer(queryset_types_prop,many = True)
             
             if data[index].get('SORT_ORDER'):
                 data[index]['SORT_ORDER'] = int(data[index].get('SORT_ORDER')) 
-            queryset = resource_list.objects.filter(ID = data[index].get('LABEL_ID'),CULTURE = culture)
+            queryset = resources_types.objects.filter(ID = data[index].get('LABEL_ID'),CULTURE = culture)
             if queryset:
-                serializer = ResourceListSerializer(queryset,many = True)
+                serializer = ResourceTypesSerializer(queryset,many = True)
                 data[index]['SHORT_LABEL'] = serializer.data[0].get('SHORT_LABEL')
                 data[index]['MOBILE_LABEL'] = serializer.data[0].get('MOBILE_LABEL')
 
@@ -159,8 +160,8 @@ class TypeView(generics.ListAPIView):
     permission_classes = [permissions.AllowAny]
 
     def get(self, request, *args, **kwargs):
+        import_data(Type,"types")
 
-        typeAddData.import_data("TYPE")
         return Response({"Message": "successful"}, status=status.HTTP_200_OK)
 
 
@@ -206,18 +207,18 @@ class TypeDetailNewView(generics.CreateAPIView):
         for item in types:
             queryset = type_property.objects.filter(TYPE = item)
             serializer = TypePropertySerializer(queryset,many = True)
-            self._getResourceList(serializer.data,culture)
+            self._getResourceTypes(serializer.data,culture)
             # self._getCodeList(serializer.data,culture)
             propertys[item] = serializer.data
         
 
-    def _getResourceList(self,data,culture):
+    def _getResourceTypes(self,data,culture):
         for index in range(0,len(data)):
             if data[index].get('SORT_ORDER'):
                 data[index]['SORT_ORDER'] = int(data[index].get('SORT_ORDER')) 
-            queryset = resource_list.objects.filter(ID = data[index].get('LABEL_ID'),CULTURE = culture)
+            queryset = resources_types.objects.filter(ID = data[index].get('LABEL_ID'),CULTURE = culture)
             if queryset:
-                serializer = ResourceListSerializer(queryset,many = True)
+                serializer = ResourceTypesSerializer(queryset,many = True)
                 data[index]['SHORT_LABEL'] = serializer.data[0].get('SHORT_LABEL')
                 data[index]['MOBILE_LABEL'] = serializer.data[0].get('MOBILE_LABEL')
 
@@ -272,7 +273,7 @@ class TypeDetailNewView(generics.CreateAPIView):
 #             #     return Response(cache_data, status=status.HTTP_200_OK)
 
 #             seriliazerPropertyList = []
-#             seriliazerResourceList = []
+#             seriliazerResourceTypes = []
 #             typeQuary = Type.objects.filter(TYPE=request.data.get("TYPE"))
             
 #             validate_find(typeQuary,request=request)
@@ -326,12 +327,12 @@ class TypeDetailNewView(generics.CreateAPIView):
 #                         index = label_id.index(value_label)
 #                     except Exception as e:
 #                         label_id.append(value_label)
-#                         resourceListQuery = resource_list.objects.filter(
+#                         resourceListQuery = resources_types.objects.filter(
 #                             ID=value_label, CULTURE=culture
 #                         )
 #                         if resourceListQuery:
 #                             filterDict = value
-#                             serializerResource = ResourceListSerializer(
+#                             serializerResource = ResourceTypesSerializer(
 #                                 resourceListQuery, many=True
 #                             )
 #                             filterDict["RESOURCE-LIST"] = serializerResource.data

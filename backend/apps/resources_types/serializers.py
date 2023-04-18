@@ -2,19 +2,19 @@ import uuid
 from datetime import datetime
 from rest_framework import serializers
 
-from .models import resource_list
+from .models import resources_types
 
 
-class ResourceListSaveSerializer(serializers.Serializer):
+class ResourceTypesSaveSerializer(serializers.Serializer):
     def create(self, validated_data):
         validated_data["VERSION"] = uuid.uuid4().hex
         validated_data["ROW_ID"] = uuid.uuid4().hex
-        ResourceList = resource_list.objects.create(**validated_data)
-        ResourceList.save()
-        return ResourceList
+        ResourceTypes = resources_types.objects.create(**validated_data)
+        ResourceTypes.save()
+        return ResourceTypes
 
 
-class ResourceListTypeSerializer(serializers.Serializer):
+class ResourceTypesTypeSerializer(serializers.Serializer):
     def save(self, validated_data):
         resource_dict = dict()
         types = validated_data.data.get("TYPE")
@@ -28,7 +28,7 @@ class ResourceListTypeSerializer(serializers.Serializer):
         resource_dict["VERSION"] = uuid.uuid4().hex
         resource_dict["ROW_ID"] = uuid.uuid4().hex
         resource_dict["CULTURE"] = validated_data.data.get("CULTURE")
-        qs = resource_list.objects.filter(
+        qs = resources_types.objects.filter(
             ID=resource_dict["ID"],
             SHORT_LABEL=resource_dict.get("SHORT_LABEL"),
             CULTURE=resource_dict["CULTURE"],
@@ -36,30 +36,30 @@ class ResourceListTypeSerializer(serializers.Serializer):
         if qs:
             qs.update(**resource_dict)
         else:
-            rs_list = resource_list.objects.create(**resource_dict)
+            rs_list = resources_types.objects.create(**resource_dict)
             rs_list.save()
-        return resource_list
+        return resources_types
 
 
-class ResourceListDetailsSerializer(serializers.ModelSerializer):
+class ResourceTypesDetailsSerializer(serializers.ModelSerializer):
     class Meta:
-        model = resource_list
+        model = resources_types
         fields = "__all__"
 
 
-class ResourceListParentSerializer(serializers.ModelSerializer):
+class ResourceTypesParentSerializer(serializers.ModelSerializer):
     class Meta:
-        model = resource_list
+        model = resources_types
         fields = ["PARENT"]
 
 
-class ResourceListSerializer(serializers.ModelSerializer):
+class ResourceTypesSerializer(serializers.ModelSerializer):
     class Meta:
-        model = resource_list
+        model = resources_types
         fields = ["CULTURE", "SHORT_LABEL", "MOBILE_LABEL"]
 
 
-class ResourceListLabelSerializer(serializers.ModelSerializer):
+class ResourceTypesLabelSerializer(serializers.ModelSerializer):
     class Meta:
-        model = resource_list
+        model = resources_types
         fields = ["SHORT_LABEL", "MOBILE_LABEL"]

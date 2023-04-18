@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import resource_list
+from .models import resources_types
 
 # Register your models here.
-admin.site.register(resource_list)
+admin.site.register(resources_types)

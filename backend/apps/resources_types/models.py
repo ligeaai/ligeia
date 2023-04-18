@@ -44,7 +44,7 @@ class resources_types(models.Model):
     VERSION = models.CharField(
         max_length=32,
         default=uuid.uuid4().hex,
-        null=False,
+        null=True,
     )
     DB_ID = models.CharField(
         max_length=32,

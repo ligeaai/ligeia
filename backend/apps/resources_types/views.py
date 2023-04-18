@@ -5,9 +5,9 @@ from rest_framework.response import Response
 import uuid
 from rest_framework import status
 from .serializers import (
-    ResourceListDetailsSerializer,
-    ResourceListSaveSerializer,
-    ResourceListParentSerializer,
+    ResourceTypesDetailsSerializer,
+    ResourceTypesSaveSerializer,
+    ResourceTypesParentSerializer,
 )
 from apps.type.models import type as Type
 from apps.type.serializers import (
@@ -16,67 +16,45 @@ from apps.type.serializers import (
 )
 
 # Create your views here.
-from .models import resource_list
+from .models import resources_types
 from apps.type_link.models import type_link
 from apps.type_link.serializers import TypeLinkDetails2Serializer
 from services.parsers.addData.type import typeAddData
 from utils.models_utils import validate_model_not_null, validate_find
+from utils.utils import import_data
 
-
-class ResourceListSaveView(generics.CreateAPIView):
+class ResourceTypesSaveView(generics.CreateAPIView):
 
     permission_classes = [permissions.AllowAny]
 
     def post(self, request, *args, **kwargs):
-        validate_model_not_null(request.data, "resource_list", request)
-        serializer = ResourceListSaveSerializer(data=request.data)
+        validate_model_not_null(request.data, "resources_types", request)
+        serializer = ResourceTypesSaveSerializer(data=request.data)
         serializer.is_valid()
         serializer.create(request.data)
         return Response({"Message": "successful"}, status=status.HTTP_200_OK)
 
 
-class ResourceListView(generics.ListAPIView):
+class ResourceTypesView(generics.ListAPIView):
 
-    serializer_class = ResourceListSaveSerializer
+    serializer_class = ResourceTypesSaveSerializer
     permission_classes = [permissions.AllowAny]
 
     def get(self, request, *args, **kwargs):
 
-        typeAddData.import_data("RESOURCE_LIST")
-        qs = type_link.objects.all().distinct("TYPE")
-        serializer = TypeLinkDetails2Serializer(qs, many=True)
-        self._reFormatter(serializer.data)
+        import_data(resources_types,"resources_types")
         return Response({"Message": "Succsessfull"}, status=status.HTTP_200_OK)
 
-    def _reFormatter(self, data):
-        for index in range(0, len(data)):
-            tempt = ""
-            tempt = data[index].get("TYPE")
-            tempt = str(tempt).replace("_", " ")
-            tempt = tempt.title()
-            data[index]["SHORT_LABEL"] = tempt
-            new_dict = {
-                "CULTURE": "en-US",
-                "ID": data[index].get("TYPE"),
-                "SHORT_LABEL": tempt,
-                "MOBILE_LABEL": tempt,
-                "LAYER_NAME": "OG_STD",
-                "ROW_ID": uuid.uuid4().hex,
-            }
-            rs_list = resource_list.objects.create(**new_dict)
-            rs_list.save()
-
-
-class ResourceListDrawerMenutView(generics.CreateAPIView):
+class ResourceTypesDrawerMenutView(generics.CreateAPIView):
     permission_classes = [permissions.AllowAny]
 
     def post(self, request, *args, **kwargs):
         culture = request.data.get("CULTURE")
-        queryset = resource_list.objects.filter(
+        queryset = resources_types.objects.filter(
             ID="drawerMenu", CULTURE=culture, HIDDEN=False
         ).order_by("SORT_ORDER")
         validate_find(queryset, request)
-        serializer = ResourceListDetailsSerializer(queryset, many=True)
+        serializer = ResourceTypesDetailsSerializer(queryset, many=True)
         new_dict = dict()
         self.layers = []
         self._getchild(serializer.data, new_dict, 0, culture)
@@ -84,10 +62,10 @@ class ResourceListDrawerMenutView(generics.CreateAPIView):
 
     def _getchild(self, data, new_dict, sart, culture):
         for item in data:
-            queryset = resource_list.objects.filter(
+            queryset = resources_types.objects.filter(
                 ID=item.get("PARENT"), CULTURE=culture, HIDDEN=False
             )
-            serializer = ResourceListDetailsSerializer(queryset, many=True)
+            serializer = ResourceTypesDetailsSerializer(queryset, many=True)
             if queryset:
                 tempt = {}
                 for value in serializer.data:
@@ -127,10 +105,10 @@ class ResourceListDrawerMenutView(generics.CreateAPIView):
                 x = find_type.index(item.get("LABEL_ID"))
             except:
                 tempt2 = {}
-                queryset = resource_list.objects.filter(
+                queryset = resources_types.objects.filter(
                     ID=item.get("LABEL_ID"), CULTURE=culture, HIDDEN=False
                 )
-                serializer = ResourceListDetailsSerializer(queryset, many=True)
+                serializer = ResourceTypesDetailsSerializer(queryset, many=True)
                 serializer.data[0]["TYPE"] = item.get("TYPE")
                 if item.get("LABEL_ID") == "TYPE.ORG_UNIT2":
                     short_label = serializer.data[0].get("SHORT_LABEL")
@@ -142,32 +120,32 @@ class ResourceListDrawerMenutView(generics.CreateAPIView):
                 tempt[serializer.data[0].get("SHORT_LABEL")] = serializer.data[0]
 
 
-class ResourceListDetailView(generics.CreateAPIView):
+class ResourceTypesDetailView(generics.CreateAPIView):
 
     authentication_classes = []
     permission_classes = []
 
     def post(self, request):
-        queryset = resource_list.objects.filter(ROW_ID=request.data.get("ROW_ID"))
+        queryset = resources_types.objects.filter(ROW_ID=request.data.get("ROW_ID"))
         validate_find(queryset, request)
-        serializer = ResourceListDetailsSerializer(queryset, many=True)
+        serializer = ResourceTypesDetailsSerializer(queryset, many=True)
         return Response(
             {"Message": "successful", "BODY": serializer.data},
             status=status.HTTP_200_OK,
         )
 
 
-class ResourceListEditorTreeMenuView(generics.CreateAPIView):
+class ResourceTypesEditorTreeMenuView(generics.CreateAPIView):
 
     authentication_classes = []
     permission_classes = []
 
     def post(self, request):
-        queryset = resource_list.objects.filter(
+        queryset = resources_types.objects.filter(
             CULTURE=request.data.get("CULTURE")
         ).distinct("PARENT")
         validate_find(queryset, request)
-        serializer = ResourceListDetailsSerializer(queryset, many=True)
+        serializer = ResourceTypesDetailsSerializer(queryset, many=True)
 
         sorted_list = sorted(list(serializer.data), key=lambda d: str(d["PARENT"]))
         return Response(
@@ -176,17 +154,17 @@ class ResourceListEditorTreeMenuView(generics.CreateAPIView):
         )
 
 
-class ResourceListEditorHierarchyView(generics.CreateAPIView):
+class ResourceTypesEditorHierarchyView(generics.CreateAPIView):
 
     authentication_classes = []
     permission_classes = []
 
     def post(self, request):
-        queryset = resource_list.objects.filter(
+        queryset = resources_types.objects.filter(
             CULTURE=request.data.get("CULTURE"), PARENT=request.data.get("PARENT")
         )
         validate_find(queryset, request)
-        serializer = ResourceListDetailsSerializer(queryset, many=True)
+        serializer = ResourceTypesDetailsSerializer(queryset, many=True)
         for index in range(len(serializer.data)):
             spliter = (
                 serializer.data[index]

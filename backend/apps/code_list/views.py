@@ -1,5 +1,5 @@
 import uuid
-
+import couchdb
 from django.shortcuts import render
 from rest_framework import generics, permissions, status
 from rest_framework.authentication import TokenAuthentication
@@ -24,13 +24,14 @@ from utils.models_utils import (
     null_value_to_space,
     validate_find,
 )
+
+from utils.utils import import_data
 from utils.permissions.admin import CreatePermission,ReadPermission,UpdatePermission,DeletePermission
 create_per = CreatePermission(model_type="CODE_LIST")
 read_per = CreatePermission(model_type="CODE_LIST")
 update_per = CreatePermission(model_type="CODE_LIST")
 delete_per = CreatePermission(model_type="CODE_LIST")
 logger = KafkaLogger()
-
 
 class CodeListSaveScriptView(generics.CreateAPIView):
     authentication_classes = ()
@@ -110,7 +111,9 @@ class CodeListView(generics.ListAPIView):
     permission_classes = [permissions.AllowAny]
 
     def get(self, request, *args, **kwargs):
-        typeAddData.import_data("CODE_LIST")
+        
+        import_data(code_list,"code_list")
+
         return Response({"Message": "successful"}, status=status.HTTP_200_OK)
 
 

@@ -8,7 +8,7 @@ from services.parsers.addData.type import typeAddData
 # Create your views here.
 from .models import type_property
 from .serializers import TypePropertyDetailsSerializer, TypePropertySaveSerializer,TypePropertySaveUpdateSerializer
-
+from utils.utils import import_data
 
 class TypePropertySaveView(generics.CreateAPIView):
 
@@ -23,7 +23,7 @@ class TypePropertyView(generics.ListAPIView):
 
     def get(self, request, *args, **kwargs):
 
-        typeAddData.import_data("TYPE_PROPERTY")
+        import_data(type_property,"type_property")
         return Response({"Message": "Succsesful"}, status=status.HTTP_200_OK)
 
 

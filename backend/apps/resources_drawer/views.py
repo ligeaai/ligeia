@@ -8,15 +8,15 @@ from .models import resources_drawer
 from services.parsers.addData.type import typeAddData
 from django.db.models import Q
 from apps.type.models import type as Type
-from apps.resource_list.models import resource_list
-
+from apps.resources_types.models import resources_types
+from utils.utils import import_data
 
 class ResourceDrawerSaveView(generics.CreateAPIView):
 
     permission_classes = [permissions.AllowAny]
 
     def post(self, request, *args, **kwargs):
-        validate_model_not_null(request.data, "resources_drawer", request)
+        validate_model_not_null(request.data, "resources_types", request)
         serializer = ResourceDrawerSaveSerializer(data=request.data)
         serializer.is_valid()
         serializer.create(request.data)
@@ -29,14 +29,7 @@ class ResourceDrawerScriptView(generics.CreateAPIView):
     permission_classes = [permissions.AllowAny]
 
     def post(self, request, *args, **kwargs):
-        for item in request.data.get('ITEMS'):
-            if "NULL" in item:
-                for key in my_dict:
-                    if my_dict[key] is "“NULL”":
-                        my_dict[key] = None
-            serializer = ResourceDrawerSaveSerializer(data=item)
-            serializer.is_valid()
-            serializer.create(item)
+        import_data(resources_drawer,"resources_drawer")
         return Response({"Message": "Succsessfull"}, status=status.HTTP_200_OK)
 
 
@@ -67,13 +60,14 @@ class DrawerView(generics.CreateAPIView):
             id = (value.get('PARENT'))
             if len(id.split('.'))>1:
                 info = id.split('.')[1]
-                if info == "OG_STD":
+                if info == "LG_STD":
                     type_qs = ((Type.objects.filter(LAYER_NAME=info)
                                             .values('LABEL_ID',"TYPE")))
                     id_list = [item['LABEL_ID'] for item in type_qs]
                     type_list = [item['TYPE'] for item in type_qs]
                     for layer in self.layers:
-                        id_list.remove(layer)
+                        if layer in id_list:
+                            id_list.remove(layer)
                 else:
                     id_list = [id]
                     type_qs = (Type.objects.filter(LABEL_ID__in=id_list)
@@ -81,12 +75,12 @@ class DrawerView(generics.CreateAPIView):
                     id_list = [item['LABEL_ID'] for item in type_qs]
                     type_list = [item['TYPE'] for item in type_qs]
                     self.layers.append(id)
-                
-                qs = resource_list.objects.filter(
+                qs = resources_types.objects.filter(
                             Q(ID__in=id_list) & Q(CULTURE=self.culture) & Q(HIDDEN=False)
                             ).order_by("SHORT_LABEL")
-                
+                print(qs)
                 serializer = ResourceDrawerDetailsSerializer(qs, many=True)
+                # print(qs)
                 for data in (serializer.data):
                     label = data.get('SHORT_LABEL')
                     id = data.get('ID')
@@ -141,11 +135,7 @@ class DrawerView(generics.CreateAPIView):
         self.roles = []
         if request.role:
             self.roles = request.role.keys()
-        queryset = resources_drawer.objects.filter(
-            Q(ID="drawerMenu")
-            & Q(CULTURE=self.culture)
-            & Q(HIDDEN=False)
-        ).order_by("SORT_ORDER")
+        queryset = self._get_Queryset('drawerMenu')
         
         serializer = ResourceDrawerDetailsSerializer(queryset, many=True).data
         self.new_dict = dict()

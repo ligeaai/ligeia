@@ -11,8 +11,8 @@ from .serializers import (
     TagsUomConversionSerializer,
 )
 from apps.type_property.models import type_property
-from apps.resource_list.models import resource_list
-from apps.resource_list.serializers import ResourceListLabelSerializer
+from apps.resources_types.models import resources_types
+from apps.resources_types.serializers import ResourceTypesLabelSerializer
 from apps.type_property.serializers import TypePropertyDetailsSerializer
 from apps.item_link.models import item_link
 from apps.item_link.serializers import ItemLinkSaveSerializer, ItemLinkDetailsSerializer
@@ -134,7 +134,7 @@ class TagsPropertysView(generics.CreateAPIView):
 
     def _resourceLabel(self, data, dataList, culture):
         label_ids = [item.get("LABEL_ID") for item in data]
-        qs_resources = resource_list.objects.filter(ID__in=label_ids, CULTURE=culture)
+        qs_resources = resources_types.objects.filter(ID__in=label_ids, CULTURE=culture)
         resources = {}
         for resource in qs_resources:
             resources[resource.ID] = {
@@ -177,11 +177,11 @@ class TagsTypeLinkView(generics.CreateAPIView):
             .order_by("TYPE")
         )
 
-        qs_resource = resource_list.objects.filter(
+        qs_resource = resources_types.objects.filter(
             ID__in=query, CULTURE=culture
         ).order_by("ID")
 
-        labels = ResourceListLabelSerializer(qs_resource, many=True).data
+        labels = ResourceTypesLabelSerializer(qs_resource, many=True).data
         response_value = [
             {**label, "TO_TYPE": to_type} for label, to_type in zip(labels, to_type)
         ]

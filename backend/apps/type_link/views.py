@@ -3,10 +3,10 @@ from rest_framework import generics, permissions, status
 from rest_framework.response import Response
 from .models import type_link
 from services.parsers.addData.type import typeAddData
-from apps.resource_list.models import resource_list
+from apps.resources_types.models import resources_types
 from apps.type.models import type as Type
 from apps.type.serializers import TypeResourceListManagerSerializer
-from apps.resource_list.serializers import ResourceListDetailsSerializer
+from apps.resources_types.serializers import ResourceTypesDetailsSerializer
 from .serializers import (
     TypeLinkSaveSerializer,
     TypeLinkDetailsSerializer,
@@ -14,6 +14,7 @@ from .serializers import (
 )
 from django.db.models import Q
 from utils.models_utils import validate_model_not_null, validate_find
+from utils.utils import import_data
 
 # Create your views here.
 class TypeLinkSaveView(generics.CreateAPIView):
@@ -32,8 +33,8 @@ class TypeLinkView(generics.ListAPIView):
     permission_classes = [permissions.AllowAny]
 
     def get(self, request, *args, **kwargs):
+        import_data(type_link,"type_link")
 
-        typeAddData.import_data("TYPE_LINK")
         return Response({"Message": "successful"}, status=status.HTTP_200_OK)
 
 
@@ -57,7 +58,7 @@ class TypeNewLinkSchemasView(generics.CreateAPIView):
             )
             types = [str("TYPE.") + target_type.get("TYPE") for target_type in target]
             resource_label = (
-                resource_list.objects.filter(
+                resources_types.objects.filter(
                     ID__in=types,
                     CULTURE=culture_val,
                 )
@@ -76,7 +77,7 @@ class TypeNewLinkSchemasView(generics.CreateAPIView):
     # def _resourceLabel(self):
 
     #     label_ids =
-    #     qs_resources = resource_list.objects.filter(ID__in=label_ids, CULTURE=culture)
+    #     qs_resources = resources_types.objects.filter(ID__in=label_ids, CULTURE=culture)
     #     resources = {}
     #     for resource in qs_resources:
     #         resources[resource.ID] = {
@@ -128,7 +129,7 @@ class TypeLinkDetailsView(generics.CreateAPIView):
         qs_ToType = Type.objects.filter(TYPE=ToTypes)
         ToType_serializer = TypeResourceListManagerSerializer(qs_ToType, many=True)
         linkType = str("TYPE.") + str(linkType)
-        qsLinkType = resource_list.objects.filter(ID=linkType, CULTURE=culture)
+        qsLinkType = resources_types.objects.filter(ID=linkType, CULTURE=culture)
         print(linkType)
         resource_list_LinkTypeserialzer = ResourceListDetailsSerializer(
             qsLinkType, many=True
@@ -140,11 +141,11 @@ class TypeLinkDetailsView(generics.CreateAPIView):
 
         for index in range(len(data)):
             try:
-                qsFrom = resource_list.objects.filter(ID=from_label_id, CULTURE=culture)
+                qsFrom = resources_types.objects.filter(ID=from_label_id, CULTURE=culture)
                 resource_list_Fromserialzer = ResourceListDetailsSerializer(
                     qsFrom, many=True
                 )
-                qsTo = resource_list.objects.filter(ID=to_label_id, CULTURE=culture)
+                qsTo = resources_types.objects.filter(ID=to_label_id, CULTURE=culture)
                 resource_list_Toserialzer = ResourceListDetailsSerializer(
                     qsTo, many=True
                 )
@@ -198,7 +199,7 @@ class RelatedTypeView(generics.CreateAPIView):
         types = [target_type.get(get_label) for target_type in type_items]
         target_type = Type.objects.filter(TYPE__in=types).values_list("LABEL_ID")
         resource_label = (
-            resource_list.objects.filter(
+            resources_types.objects.filter(
                 ID__in=target_type,
                 CULTURE=culture_val,
             )

@@ -1,4 +1,4 @@
-from .es_models import ResourceListDocument
+from .es_models import ResourceTypesDocument
 from .es_serializer import ResourceTypesDocumentSimpleSerializer
 from rest_framework import permissions, status
 from django_elasticsearch_dsl_drf.viewsets import DocumentViewSet
