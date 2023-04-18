@@ -7,7 +7,8 @@ import os
 import base64
 
 # Create a Redis Connection
-rds = redis.StrictRedis("redis-test1", port=6379, db=1)
+Redis_Db_Name = os.environ.get("Redis_Db_Name")
+rds = redis.StrictRedis(Redis_Db_Name, port=6379, db=1)
 # Create Kafka Consumer
 host = os.environ.get("Kafka_Host_DP")
 consumer = KafkaConsumer("live_data", bootstrap_servers=host)

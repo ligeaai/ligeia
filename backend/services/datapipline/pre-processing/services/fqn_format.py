@@ -109,7 +109,7 @@ for message in consumer:
         producer.send("backorlivee", value=data)
         producer.flush()
     except:
-        pass
+        print("There is a problem with the incoming data :" + data)
 
 
 # {"completion": "203", "created_by": "Электон 18.25", "date": "2024-01-26 08:00:03.236", "tag_name": "Ток ПЭД (В)", "uom": " А", "tag_value": 0.0}

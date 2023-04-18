@@ -9,10 +9,10 @@ import os
 topic = "backfill_data"
 host = os.environ.get("Kafka_Host_DP")
 consumer = KafkaConsumer(topic, bootstrap_servers=host)
-
+Mongo_Db_Name = os.environ.get("Mongo_Db_Name")
 client = MongoClient("mongodb://root:admin@mongodb-timescale:27017/")
-mongo_db = client["backfilldata20"]
-timeseries_collection = mongo_db["backfilldata20"]
+mongo_db = client[Mongo_Db_Name]
+timeseries_collection = mongo_db[Mongo_Db_Name]
 
 
 def convert_to_time(time):
