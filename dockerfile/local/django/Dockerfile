@@ -42,15 +42,12 @@ RUN chmod +x /start
 
 RUN pip install watchdog
 
-COPY ./dockerfile/local/django/celery/worker/start /start-celeryworker
-RUN sed -i 's/\r$//g' /start-celeryworker
-RUN chmod +x /start-celeryworker
+# COPY ./dockerfile/local/django/celery/worker/start /start-celeryworker
+# RUN sed -i 's/\r$//g' /start-celeryworker
+# RUN chmod +x /start-celeryworker
 
-COPY ./dockerfile/local/django/celery/flower/start /start-flower
-RUN sed -i 's/\r$//g' /start-flower
-RUN chmod +x /start-flower
-
-# copy project
-# COPY . .
+# COPY ./dockerfile/local/django/celery/flower/start /start-flower
+# RUN sed -i 's/\r$//g' /start-flower
+# RUN chmod +x /start-flower
 
 ENTRYPOINT ["/entrypoint"]

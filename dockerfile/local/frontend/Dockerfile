@@ -3,7 +3,7 @@ WORKDIR /frontend
 
 RUN apk update && apk add bash
 
-COPY ./frontend .
+COPY ./frontend /frontend
 RUN npm config set legacy-peer-deps true
 RUN npm install
 
