@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { Grid } from "@mui/material";
 
 import {
-  BreadcrumbBox,
+  Breadcrumb,
   ItemSperatorLineXL,
   PropLinkTabs,
   MainBox,
@@ -53,7 +53,7 @@ const Tags = ({ isHome }) => {
         }}
       >
         <Grid container>
-          <BreadcrumbBox />
+          <Breadcrumb />
           <ItemSperatorLineXL />
           <Grid
             item

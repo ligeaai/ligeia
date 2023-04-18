@@ -8,7 +8,7 @@ import {
   PropLinkTabs,
   ComponentError,
   MyDivider,
-  BreadcrumbBox,
+  Breadcrumb,
   MainBox,
 } from "../../../../components";
 
@@ -55,10 +55,11 @@ const Item = ({ isHome }) => {
           borderRadius: "3px",
           width: "100px",
           color: "text.primary",
+          overflow: "hidden",
         }}
       >
         <Grid container>
-          <BreadcrumbBox />
+          <Breadcrumb />
           <ItemSperatorLineXL />
           <Grid container sx={{ alignItems: "center", pl: 2, marginY: "2px" }}>
             <Grid item sx={{ mr: "2px" }}>

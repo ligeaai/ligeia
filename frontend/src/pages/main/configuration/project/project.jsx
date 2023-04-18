@@ -3,7 +3,7 @@ import React from "react";
 import { Grid } from "@mui/material";
 
 import {
-  BreadcrumbBox,
+  Breadcrumb,
   ItemSperatorLineXL,
   MainBox,
 } from "../../../../components";
@@ -23,7 +23,7 @@ const Project = () => {
         }}
       >
         <Grid container>
-          <BreadcrumbBox />
+          <Breadcrumb />
           <ItemSperatorLineXL />
           <Grid item xs={12} sx={{ mt: 1, ml: 1, mr: 2 }}>
             <ProjectEditor />

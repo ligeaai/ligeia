@@ -8,6 +8,7 @@ import { confirmationPushHistory } from "../../services/utils/historyPush";
 import { setGoFunctionConfirmation } from "../../services/actions/confirmation/historyConfirmation";
 
 const Breadcrumbs = () => {
+  //TODO use useLocation, remove params
   const dispatch = useDispatch();
   const pathnames = decodeURI(window.location.pathname)
     .split("/")
@@ -23,15 +24,11 @@ const Breadcrumbs = () => {
       aria-label="breadcrumb"
       separator="\"
       sx={{ ".MuiBreadcrumbs-separator": { mx: 0.5 } }}
+      className="breadcrumb-container"
     >
       <HomeIcon
         fontSize="small"
-        sx={{
-          position: "relative",
-          top: "3px",
-          cursor: "pointer",
-          color: "icon.primary",
-        }}
+        className="breadcrumb-container__home-icon"
         onClick={() => handleClick("/")}
       />
 
@@ -42,13 +39,7 @@ const Breadcrumbs = () => {
         return isLast ? (
           <Typography
             key={name}
-            sx={{
-              fontSize: "14px",
-              color: "primary.main",
-              cursor: "pointer",
-              textTransform: "capitalize",
-              fontWeight: "bold",
-            }}
+            className="breadcrumb-container__text  breadcrumb-container__text-last"
           >
             {name}
           </Typography>
@@ -56,12 +47,7 @@ const Breadcrumbs = () => {
           <Typography
             key={name}
             onClick={() => handleClick(routeTo)}
-            sx={{
-              fontSize: "14px",
-              color: "text.primary",
-              cursor: "pointer",
-              textTransform: "capitalize",
-            }}
+            className="breadcrumb-container__text"
           >
             {name}
           </Typography>

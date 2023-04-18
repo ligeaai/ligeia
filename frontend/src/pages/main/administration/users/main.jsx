@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { Grid } from "@mui/material";
 
 import {
-  BreadcrumbBox,
+  Breadcrumb,
   ItemSperatorLineXL,
   MainBox,
 } from "../../../../components";
@@ -37,7 +37,7 @@ const Main = () => {
         }}
       >
         <Grid container sx={{ height: "100%" }}>
-          <BreadcrumbBox />
+          <Breadcrumb />
           <ItemSperatorLineXL />
           <Grid item xs={12} sx={{ height: "calc(100% - 48px)", p: 1 }}>
             <UsersEditor />

@@ -6,7 +6,7 @@ import { Box, Grid } from "@mui/material";
 import {
   ItemSperatorLineXL,
   CollapsableMenu,
-  BreadcrumbBox,
+  Breadcrumb,
   MainBox,
 } from "../../../components";
 
@@ -39,7 +39,7 @@ const Overview = () => {
         }}
       >
         <Grid container>
-          <BreadcrumbBox />
+          <Breadcrumb />
           <ItemSperatorLineXL />
           {isActiveTabs ? <Tabs /> : <Box sx={{ backgroundColor: "red" }} />}
         </Grid>

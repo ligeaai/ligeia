@@ -1,7 +1,6 @@
 import ActionMenu from "./navigationComp/actionMenu";
 import MyBox from "./box/box"
 import Breadcrumb from "./breadcrumb/breadcrumb";
-import BreadcrumbBox from "./breadcrumb/breadcrumbBox";
 import BigBox from "./box/bigBox";
 import Cards from "./cardGenerator/cards";
 import CheckboxList from "./checkList/checkList";
@@ -47,7 +46,7 @@ import TreeMenuItems from "./treeMenu/treeMenuGenerator"
 
 
 export {
-    ActionMenu, Breadcrumb, BreadcrumbBox, Cards, CheckboxList, BigBox, ColorTextfield, CollapsableMenu, Confirmation, ComponentError, ComponentErrorBody, CustomNoRowsOverlay, CustomToolbar, MyDivider, DatePicker, DataGrid, Drawer, ErrorBoundary,
+    ActionMenu, Breadcrumb, Cards, CheckboxList, BigBox, ColorTextfield, CollapsableMenu, Confirmation, ComponentError, ComponentErrorBody, CustomNoRowsOverlay, CustomToolbar, MyDivider, DatePicker, DataGrid, Drawer, ErrorBoundary,
     ErrorMessage, Highchart, InputGenerator, Loadable, Loading, LoadingComponent, MyBox, MyCheckBox, MyNavigator, MyNumberTextField, MyTextField, MyMultilineTextField, PropLinkTabs, SocialButton,
     IndentSelect, ItemSperatorLine, ItemSperatorLineXL, Items, SearchBar, SearchBarMobile, Select, TreeMenu, MainBox, MainPageSkeleton, MyDialog, MyTabs, MyRadioButton, Stepper, TreeMenuItems, HistoryConfirmation
 }

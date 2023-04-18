@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { Grid } from "@mui/material";
 
 import {
-  BreadcrumbBox,
+  Breadcrumb,
   ItemSperatorLineXL,
   ComponentError,
   PropLinkTabs,
@@ -133,7 +133,7 @@ const Type = () => {
         }}
       >
         <Grid container>
-          <BreadcrumbBox />
+          <Breadcrumb />
           <ItemSperatorLineXL />
           <Grid container sx={{ alignItems: "center", pl: 2, marginY: "2px" }}>
             <Grid item sx={{ mr: "2px" }}>
