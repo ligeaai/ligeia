@@ -6,7 +6,7 @@ import time
 import redis
 from asgiref.sync import sync_to_async, async_to_sync
 from utils.consumer_utils import find_tag, retive_last_data
-
+import os
 
 class WSConsumeOnlyLastData(AsyncWebsocketConsumer):
     async def send_messages(self):
@@ -20,7 +20,8 @@ class WSConsumeOnlyLastData(AsyncWebsocketConsumer):
 
     async def connect(self):
         await self.accept()
-        self.rds = redis.StrictRedis("redis-test1", port=6379, db=1)
+        redis_host = os.environ("REDIS_TS_HOST")
+        self.rds = redis.StrictRedis(redis_host, port=6379, db=1)
         self.tag_id = self.scope["url_route"]["kwargs"]["tag_id"]
         self.is_active = True
         tag_name, asset = await sync_to_async(find_tag)(self.tag_id)

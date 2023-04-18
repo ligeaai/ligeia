@@ -4,14 +4,16 @@ import json
 from pymongo import MongoClient, DESCENDING
 from asgiref.sync import sync_to_async, async_to_sync
 from utils.consumer_utils import find_tag, retrieve_backfill_data
-
+import os
 
 class AlarmsConsumer(AsyncWebsocketConsumer):
     async def connect(self):
         await self.accept()
-        self.client = MongoClient("mongodb://root:admin@mongodb-timescale:27017/")
-        self.mongo_db = self.client["alarms"]
-        self.collection = self.mongo_db["alarms"]
+        mongo_client = os.environ("Mongo_Client")
+        mongodb_name = os.environ("MongoDb_alarms_Name")
+        self.client = MongoClient(mongo_client)
+        self.mongo_db = self.client[mongodb_name]
+        self.collection = self.mongo_db[mongodb_name]
         self.layer_name = self.scope["url_route"]["kwargs"]["layer_name"]
         self.kwargs = {
             "query": {

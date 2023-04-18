@@ -9,7 +9,7 @@ from utils.consumer_utils import (
     createThread,
     delThread,
 )
-
+import os
 
 class WSConsumerBackfill(AsyncWebsocketConsumer):
     def send_messages(self):
@@ -18,9 +18,11 @@ class WSConsumerBackfill(AsyncWebsocketConsumer):
 
     async def connect(self):
         await self.accept()
-        self.client = MongoClient("mongodb://root:admin@mongodb-timescale:27017/")
-        self.mongo_db = self.client["backfilldata1"]
-        self.collection = self.mongo_db["backfilldata1"]
+        mongo_client = os.environ("Mongo_Client")
+        mongodb_name = os.environ("MongoDb_Backfill_Name")
+        self.client = MongoClient(mongo_client)
+        self.mongo_db = self.client[mongodb_name]
+        self.collection = self.mongo_db[mongodb_name]
         self.tag_id = self.scope["url_route"]["kwargs"]["tag_id"]
         self.tag_name, self.asset = await sync_to_async(find_tag)(self.tag_id)
         self.kwargs = {
