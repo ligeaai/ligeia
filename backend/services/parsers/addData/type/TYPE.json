@@ -1,10 +1,10 @@
-{
-    "ADHOC_REPORT": {
+[
+    {
         "TYPE": "ADHOC_REPORT",
         "TYPE_CLASS": "ITEM",
         "LABEL_ID": "TYPE.ADHOC_REPORT",
         "CHANGE_INTERVAL": "NULL",
-        "LAYER_NAME": "LG_STD",
+        "LAYER_NAME": "AVM",
         "DESCRIPTION_ID": "NULL",
         "HIDDEN": "False",
         "BASE_TYPE": "NULL",
@@ -21,12 +21,12 @@
         "STATUS": "NULL",
         "REV_GRP_ID": "NULL"
     },
-    "ANALYSIS_POINT": {
+    {
         "TYPE": "ANALYSIS_POINT",
         "TYPE_CLASS": "ITEM",
         "LABEL_ID": "TYPE.ANALYSIS_POINT",
         "CHANGE_INTERVAL": "NULL",
-        "LAYER_NAME": "LG_STD",
+        "LAYER_NAME": "OG_STD",
         "DESCRIPTION_ID": "NULL",
         "HIDDEN": "False",
         "BASE_TYPE": "DOMAIN_BASE",
@@ -43,12 +43,12 @@
         "STATUS": "NULL",
         "REV_GRP_ID": "NULL"
     },
-    "APP_SRV": {
+    {
         "TYPE": "APP_SRV",
         "TYPE_CLASS": "ITEM",
         "LABEL_ID": "TYPE.APP_SRV",
         "CHANGE_INTERVAL": "NULL",
-        "LAYER_NAME": "LG_STD",
+        "LAYER_NAME": "AVM",
         "DESCRIPTION_ID": "NULL",
         "HIDDEN": "False",
         "BASE_TYPE": "NULL",
@@ -65,12 +65,12 @@
         "STATUS": "NULL",
         "REV_GRP_ID": "NULL"
     },
-    "BATTERY": {
+    {
         "TYPE": "BATTERY",
         "TYPE_CLASS": "ITEM",
         "LABEL_ID": "TYPE.BATTERY",
         "CHANGE_INTERVAL": "NULL",
-        "LAYER_NAME": "LG_STD",
+        "LAYER_NAME": "OG_STD",
         "DESCRIPTION_ID": "NULL",
         "HIDDEN": "False",
         "BASE_TYPE": "DOMAIN_BASE",
@@ -87,12 +87,12 @@
         "STATUS": "NULL",
         "REV_GRP_ID": "NULL"
     },
-    "BORE": {
+    {
         "TYPE": "BORE",
         "TYPE_CLASS": "ITEM",
         "LABEL_ID": "TYPE.BORE",
         "CHANGE_INTERVAL": "NULL",
-        "LAYER_NAME": "LG_STD",
+        "LAYER_NAME": "OG_STD",
         "DESCRIPTION_ID": "NULL",
         "HIDDEN": "False",
         "BASE_TYPE": "DOMAIN_BASE",
@@ -109,12 +109,12 @@
         "STATUS": "NULL",
         "REV_GRP_ID": "NULL"
     },
-    "CHEM_INJ_POINT": {
+    {
         "TYPE": "CHEM_INJ_POINT",
         "TYPE_CLASS": "ITEM",
         "LABEL_ID": "TYPE.CHEM_INJ_POINT",
         "CHANGE_INTERVAL": "NULL",
-        "LAYER_NAME": "LG_STD",
+        "LAYER_NAME": "OG_STD",
         "DESCRIPTION_ID": "NULL",
         "HIDDEN": "False",
         "BASE_TYPE": "DOMAIN_BASE",
@@ -131,12 +131,12 @@
         "STATUS": "NULL",
         "REV_GRP_ID": "NULL"
     },
-    "CHEMICAL": {
+    {
         "TYPE": "CHEMICAL",
         "TYPE_CLASS": "ITEM",
         "LABEL_ID": "TYPE.CHEMICAL",
         "CHANGE_INTERVAL": "NULL",
-        "LAYER_NAME": "LG_STD",
+        "LAYER_NAME": "OG_STD",
         "DESCRIPTION_ID": "NULL",
         "HIDDEN": "False",
         "BASE_TYPE": "DOMAIN_BASE",
@@ -153,12 +153,12 @@
         "STATUS": "NULL",
         "REV_GRP_ID": "NULL"
     },
-    "COMPANY": {
+    {
         "TYPE": "COMPANY",
         "TYPE_CLASS": "ITEM",
         "LABEL_ID": "TYPE.COMPANY",
         "CHANGE_INTERVAL": "NULL",
-        "LAYER_NAME": "LG_STD",
+        "LAYER_NAME": "OG_STD",
         "DESCRIPTION_ID": "NULL",
         "HIDDEN": "False",
         "BASE_TYPE": "DOMAIN_BASE",
@@ -175,12 +175,12 @@
         "STATUS": "NULL",
         "REV_GRP_ID": "NULL"
     },
-    "COMPLETION": {
+    {
         "TYPE": "COMPLETION",
         "TYPE_CLASS": "ITEM",
         "LABEL_ID": "TYPE.COMPLETION",
         "CHANGE_INTERVAL": "NULL",
-        "LAYER_NAME": "LG_STD",
+        "LAYER_NAME": "OG_STD",
         "DESCRIPTION_ID": "NULL",
         "HIDDEN": "False",
         "BASE_TYPE": "DOMAIN_BASE",
@@ -197,12 +197,12 @@
         "STATUS": "NULL",
         "REV_GRP_ID": "NULL"
     },
-    "COMPRESSOR": {
+    {
         "TYPE": "COMPRESSOR",
         "TYPE_CLASS": "ITEM",
         "LABEL_ID": "TYPE.COMPRESSOR",
         "CHANGE_INTERVAL": "NULL",
-        "LAYER_NAME": "LG_STD",
+        "LAYER_NAME": "OG_STD",
         "DESCRIPTION_ID": "NULL",
         "HIDDEN": "False",
         "BASE_TYPE": "EQUIP_BASE",
@@ -219,12 +219,12 @@
         "STATUS": "NULL",
         "REV_GRP_ID": "NULL"
     },
-    "CONTACT": {
+    {
         "TYPE": "CONTACT",
         "TYPE_CLASS": "ITEM",
         "LABEL_ID": "TYPE.CONTACT",
         "CHANGE_INTERVAL": "NULL",
-        "LAYER_NAME": "LG_STD",
+        "LAYER_NAME": "OG_STD",
         "DESCRIPTION_ID": "NULL",
         "HIDDEN": "False",
         "BASE_TYPE": "NULL",
@@ -241,12 +241,12 @@
         "STATUS": "NULL",
         "REV_GRP_ID": "NULL"
     },
-    "COUNTER_METER": {
+    {
         "TYPE": "COUNTER_METER",
         "TYPE_CLASS": "ITEM",
         "LABEL_ID": "TYPE.COUNTER_METER",
         "CHANGE_INTERVAL": "NULL",
-        "LAYER_NAME": "LG_STD",
+        "LAYER_NAME": "OG_STD",
         "DESCRIPTION_ID": "NULL",
         "HIDDEN": "False",
         "BASE_TYPE": "EQUIP_BASE",
@@ -263,12 +263,12 @@
         "STATUS": "NULL",
         "REV_GRP_ID": "NULL"
     },
-    "CRYSTAL_REPORT": {
+    {
         "TYPE": "CRYSTAL_REPORT",
         "TYPE_CLASS": "ITEM",
         "LABEL_ID": "TYPE.CRYSTAL_REPORT",
         "CHANGE_INTERVAL": "NULL",
-        "LAYER_NAME": "LG_STD",
+        "LAYER_NAME": "AVM",
         "DESCRIPTION_ID": "NULL",
         "HIDDEN": "False",
         "BASE_TYPE": "NULL",
@@ -285,12 +285,12 @@
         "STATUS": "NULL",
         "REV_GRP_ID": "NULL"
     },
-    "DATABASE": {
+    {
         "TYPE": "DATABASE",
         "TYPE_CLASS": "ITEM",
         "LABEL_ID": "TYPE.DATABASE",
         "CHANGE_INTERVAL": "NULL",
-        "LAYER_NAME": "LG_STD",
+        "LAYER_NAME": "AVM",
         "DESCRIPTION_ID": "NULL",
         "HIDDEN": "False",
         "BASE_TYPE": "NULL",
@@ -307,12 +307,12 @@
         "STATUS": "NULL",
         "REV_GRP_ID": "NULL"
     },
-    "DESK": {
+    {
         "TYPE": "DESK",
         "TYPE_CLASS": "ITEM",
         "LABEL_ID": "TYPE.DESK",
         "CHANGE_INTERVAL": "NULL",
-        "LAYER_NAME": "LG_STD",
+        "LAYER_NAME": "AVM",
         "DESCRIPTION_ID": "NULL",
         "HIDDEN": "NULL",
         "BASE_TYPE": "DOMAIN_BASE",
@@ -329,12 +329,12 @@
         "STATUS": "NULL",
         "REV_GRP_ID": "NULL"
     },
-    "DEVN_SURVEY": {
+    {
         "TYPE": "DEVN_SURVEY",
         "TYPE_CLASS": "ITEM",
         "LABEL_ID": "TYPE.DEVN_SURVEY",
         "CHANGE_INTERVAL": "FIXED",
-        "LAYER_NAME": "LG_STD",
+        "LAYER_NAME": "OG_STD",
         "DESCRIPTION_ID": "NULL",
         "HIDDEN": "False",
         "BASE_TYPE": "DOMAIN_BASE",
@@ -351,12 +351,12 @@
         "STATUS": "NULL",
         "REV_GRP_ID": "NULL"
     },
-    "DIST_TEMP_SENS": {
+    {
         "TYPE": "DIST_TEMP_SENS",
         "TYPE_CLASS": "ITEM",
         "LABEL_ID": "TYPE.DIST_TEMP_SENS",
         "CHANGE_INTERVAL": "FIXED",
-        "LAYER_NAME": "LG_STD",
+        "LAYER_NAME": "OG_STD",
         "DESCRIPTION_ID": "NULL",
         "HIDDEN": "False",
         "BASE_TYPE": "DOMAIN_BASE",
@@ -373,12 +373,12 @@
         "STATUS": "NULL",
         "REV_GRP_ID": "NULL"
     },
-    "DOMAIN_BASE": {
+    {
         "TYPE": "DOMAIN_BASE",
         "TYPE_CLASS": "ITEM",
         "LABEL_ID": "TYPE.DOMAIN_BASE",
         "CHANGE_INTERVAL": "NULL",
-        "LAYER_NAME": "LG_STD",
+        "LAYER_NAME": "AVM",
         "DESCRIPTION_ID": "NULL",
         "HIDDEN": "False",
         "BASE_TYPE": "NULL",
@@ -395,12 +395,12 @@
         "STATUS": "NULL",
         "REV_GRP_ID": "NULL"
     },
-    "ELECTR_METER": {
+    {
         "TYPE": "ELECTR_METER",
         "TYPE_CLASS": "ITEM",
         "LABEL_ID": "TYPE.ELECTR_METER",
         "CHANGE_INTERVAL": "NULL",
-        "LAYER_NAME": "LG_STD",
+        "LAYER_NAME": "OG_STD",
         "DESCRIPTION_ID": "NULL",
         "HIDDEN": "False",
         "BASE_TYPE": "EQUIP_BASE",
@@ -417,12 +417,12 @@
         "STATUS": "NULL",
         "REV_GRP_ID": "NULL"
     },
-    "ENGINE": {
+    {
         "TYPE": "ENGINE",
         "TYPE_CLASS": "ITEM",
         "LABEL_ID": "TYPE.ENGINE",
         "CHANGE_INTERVAL": "NULL",
-        "LAYER_NAME": "LG_STD",
+        "LAYER_NAME": "OG_STD",
         "DESCRIPTION_ID": "NULL",
         "HIDDEN": "False",
         "BASE_TYPE": "EQUIP_BASE",
@@ -439,12 +439,12 @@
         "STATUS": "NULL",
         "REV_GRP_ID": "NULL"
     },
-    "EQUIP_BASE": {
+    {
         "TYPE": "EQUIP_BASE",
         "TYPE_CLASS": "ITEM",
         "LABEL_ID": "TYPE.EQUIP_BASE",
         "CHANGE_INTERVAL": "NULL",
-        "LAYER_NAME": "LG_STD",
+        "LAYER_NAME": "OG_STD",
         "DESCRIPTION_ID": "NULL",
         "HIDDEN": "False",
         "BASE_TYPE": "DOMAIN_BASE",
@@ -461,12 +461,12 @@
         "STATUS": "NULL",
         "REV_GRP_ID": "NULL"
     },
-    "EQUIPMENT": {
+    {
         "TYPE": "EQUIPMENT",
         "TYPE_CLASS": "ITEM",
         "LABEL_ID": "TYPE.EQUIPMENT",
         "CHANGE_INTERVAL": "NULL",
-        "LAYER_NAME": "LG_STD",
+        "LAYER_NAME": "OG_STD",
         "DESCRIPTION_ID": "NULL",
         "HIDDEN": "False",
         "BASE_TYPE": "EQUIP_BASE",
@@ -483,12 +483,12 @@
         "STATUS": "NULL",
         "REV_GRP_ID": "NULL"
     },
-    "EXCHANGER": {
+    {
         "TYPE": "EXCHANGER",
         "TYPE_CLASS": "ITEM",
         "LABEL_ID": "TYPE.EXCHANGER",
         "CHANGE_INTERVAL": "NULL",
-        "LAYER_NAME": "LG_STD",
+        "LAYER_NAME": "OG_STD",
         "DESCRIPTION_ID": "NULL",
         "HIDDEN": "False",
         "BASE_TYPE": "NULL",
@@ -505,12 +505,12 @@
         "STATUS": "NULL",
         "REV_GRP_ID": "NULL"
     },
-    "FILTER": {
+    {
         "TYPE": "FILTER",
         "TYPE_CLASS": "ITEM",
         "LABEL_ID": "TYPE.FILTER",
         "CHANGE_INTERVAL": "NULL",
-        "LAYER_NAME": "LG_STD",
+        "LAYER_NAME": "OG_STD",
         "DESCRIPTION_ID": "NULL",
         "HIDDEN": "False",
         "BASE_TYPE": "NULL",
@@ -527,12 +527,12 @@
         "STATUS": "NULL",
         "REV_GRP_ID": "NULL"
     },
-    "FORMATION": {
+    {
         "TYPE": "FORMATION",
         "TYPE_CLASS": "ITEM",
         "LABEL_ID": "TYPE.FORMATION",
         "CHANGE_INTERVAL": "FIXED",
-        "LAYER_NAME": "LG_STD",
+        "LAYER_NAME": "OG_STD",
         "DESCRIPTION_ID": "NULL",
         "HIDDEN": "False",
         "BASE_TYPE": "DOMAIN_BASE",
@@ -549,12 +549,12 @@
         "STATUS": "NULL",
         "REV_GRP_ID": "NULL"
     },
-    "GAS_METER": {
+    {
         "TYPE": "GAS_METER",
         "TYPE_CLASS": "ITEM",
         "LABEL_ID": "TYPE.GAS_METER",
         "CHANGE_INTERVAL": "NULL",
-        "LAYER_NAME": "LG_STD",
+        "LAYER_NAME": "OG_STD",
         "DESCRIPTION_ID": "NULL",
         "HIDDEN": "False",
         "BASE_TYPE": "DOMAIN_BASE",
@@ -571,12 +571,12 @@
         "STATUS": "NULL",
         "REV_GRP_ID": "NULL"
     },
-    "GEO_UNIT1": {
+    {
         "TYPE": "GEO_UNIT1",
         "TYPE_CLASS": "ITEM",
         "LABEL_ID": "TYPE.GEO_UNIT1",
         "CHANGE_INTERVAL": "NULL",
-        "LAYER_NAME": "LG_STD",
+        "LAYER_NAME": "OG_STD",
         "DESCRIPTION_ID": "NULL",
         "HIDDEN": "False",
         "BASE_TYPE": "DOMAIN_BASE",
@@ -593,12 +593,12 @@
         "STATUS": "NULL",
         "REV_GRP_ID": "NULL"
     },
-    "GEO_UNIT2": {
+    {
         "TYPE": "GEO_UNIT2",
         "TYPE_CLASS": "ITEM",
         "LABEL_ID": "TYPE.GEO_UNIT2",
         "CHANGE_INTERVAL": "NULL",
-        "LAYER_NAME": "LG_STD",
+        "LAYER_NAME": "OG_STD",
         "DESCRIPTION_ID": "NULL",
         "HIDDEN": "False",
         "BASE_TYPE": "DOMAIN_BASE",
@@ -615,12 +615,12 @@
         "STATUS": "NULL",
         "REV_GRP_ID": "NULL"
     },
-    "GEO_UNIT3": {
+    {
         "TYPE": "GEO_UNIT3",
         "TYPE_CLASS": "ITEM",
         "LABEL_ID": "TYPE.GEO_UNIT3",
         "CHANGE_INTERVAL": "NULL",
-        "LAYER_NAME": "LG_STD",
+        "LAYER_NAME": "OG_STD",
         "DESCRIPTION_ID": "NULL",
         "HIDDEN": "False",
         "BASE_TYPE": "DOMAIN_BASE",
@@ -637,12 +637,12 @@
         "STATUS": "NULL",
         "REV_GRP_ID": "NULL"
     },
-    "GEO_ZONE": {
+    {
         "TYPE": "GEO_ZONE",
         "TYPE_CLASS": "ITEM",
         "LABEL_ID": "TYPE.GEO_ZONE",
         "CHANGE_INTERVAL": "FIXED",
-        "LAYER_NAME": "LG_STD",
+        "LAYER_NAME": "OG_STD",
         "DESCRIPTION_ID": "NULL",
         "HIDDEN": "False",
         "BASE_TYPE": "DOMAIN_BASE",
@@ -659,12 +659,12 @@
         "STATUS": "NULL",
         "REV_GRP_ID": "NULL"
     },
-    "GRID_REPORT": {
+    {
         "TYPE": "GRID_REPORT",
         "TYPE_CLASS": "ITEM",
         "LABEL_ID": "TYPE.GRID_REPORT",
         "CHANGE_INTERVAL": "NULL",
-        "LAYER_NAME": "LG_STD",
+        "LAYER_NAME": "AVM",
         "DESCRIPTION_ID": "NULL",
         "HIDDEN": "False",
         "BASE_TYPE": "NULL",
@@ -681,12 +681,12 @@
         "STATUS": "NULL",
         "REV_GRP_ID": "NULL"
     },
-    "GROUP": {
+    {
         "TYPE": "GROUP",
         "TYPE_CLASS": "ITEM",
         "LABEL_ID": "TYPE.GROUP",
         "CHANGE_INTERVAL": "NULL",
-        "LAYER_NAME": "LG_STD",
+        "LAYER_NAME": "AVM",
         "DESCRIPTION_ID": "NULL",
         "HIDDEN": "False",
         "BASE_TYPE": "DOMAIN_BASE",
@@ -703,12 +703,12 @@
         "STATUS": "NULL",
         "REV_GRP_ID": "NULL"
     },
-    "HEATER": {
+    {
         "TYPE": "HEATER",
         "TYPE_CLASS": "ITEM",
         "LABEL_ID": "TYPE.HEATER",
         "CHANGE_INTERVAL": "NULL",
-        "LAYER_NAME": "LG_STD",
+        "LAYER_NAME": "OG_STD",
         "DESCRIPTION_ID": "NULL",
         "HIDDEN": "NULL",
         "BASE_TYPE": "EQUIP_BASE",
@@ -725,12 +725,12 @@
         "STATUS": "NULL",
         "REV_GRP_ID": "NULL"
     },
-    "LIQUID_METER": {
+    {
         "TYPE": "LIQUID_METER",
         "TYPE_CLASS": "ITEM",
         "LABEL_ID": "TYPE.LIQUID_METER",
         "CHANGE_INTERVAL": "NULL",
-        "LAYER_NAME": "LG_STD",
+        "LAYER_NAME": "OG_STD",
         "DESCRIPTION_ID": "NULL",
         "HIDDEN": "False",
         "BASE_TYPE": "DOMAIN_BASE",
@@ -747,12 +747,12 @@
         "STATUS": "NULL",
         "REV_GRP_ID": "NULL"
     },
-    "MAIL_GROUP": {
+    {
         "TYPE": "MAIL_GROUP",
         "TYPE_CLASS": "ITEM",
         "LABEL_ID": "TYPE.MAIL_GROUP",
         "CHANGE_INTERVAL": "FIXED",
-        "LAYER_NAME": "LG_STD",
+        "LAYER_NAME": "AVM",
         "DESCRIPTION_ID": "NULL",
         "HIDDEN": "False",
         "BASE_TYPE": "NULL",
@@ -769,12 +769,12 @@
         "STATUS": "NULL",
         "REV_GRP_ID": "NULL"
     },
-    "MAIL_RECIPIENT": {
+    {
         "TYPE": "MAIL_RECIPIENT",
         "TYPE_CLASS": "ITEM",
         "LABEL_ID": "TYPE.MAIL_RECIPIENT",
         "CHANGE_INTERVAL": "FIXED",
-        "LAYER_NAME": "LG_STD",
+        "LAYER_NAME": "AVM",
         "DESCRIPTION_ID": "NULL",
         "HIDDEN": "False",
         "BASE_TYPE": "NULL",
@@ -791,12 +791,12 @@
         "STATUS": "NULL",
         "REV_GRP_ID": "NULL"
     },
-    "MPHASE_METER": {
+    {
         "TYPE": "MPHASE_METER",
         "TYPE_CLASS": "ITEM",
         "LABEL_ID": "TYPE.MPHASE_METER",
         "CHANGE_INTERVAL": "FIXED",
-        "LAYER_NAME": "LG_STD",
+        "LAYER_NAME": "OG_STD",
         "DESCRIPTION_ID": "NULL",
         "HIDDEN": "False",
         "BASE_TYPE": "DOMAIN_BASE",
@@ -813,12 +813,12 @@
         "STATUS": "NULL",
         "REV_GRP_ID": "NULL"
     },
-    "NAVIGATOR": {
+    {
         "TYPE": "NAVIGATOR",
         "TYPE_CLASS": "ITEM",
         "LABEL_ID": "TYPE.NAVIGATOR",
         "CHANGE_INTERVAL": "NULL",
-        "LAYER_NAME": "LG_STD",
+        "LAYER_NAME": "AVM",
         "DESCRIPTION_ID": "NULL",
         "HIDDEN": "False",
         "BASE_TYPE": "NULL",
@@ -835,12 +835,12 @@
         "STATUS": "NULL",
         "REV_GRP_ID": "NULL"
     },
-    "NETWORK": {
+    {
         "TYPE": "NETWORK",
         "TYPE_CLASS": "ITEM",
         "LABEL_ID": "TYPE.NETWORK",
         "CHANGE_INTERVAL": "DAY",
-        "LAYER_NAME": "LG_STD",
+        "LAYER_NAME": "AVM",
         "DESCRIPTION_ID": "NULL",
         "HIDDEN": "False",
         "BASE_TYPE": "DOMAIN_BASE",
@@ -857,12 +857,12 @@
         "STATUS": "NULL",
         "REV_GRP_ID": "NULL"
     },
-    "OFFICE_DOC": {
+    {
         "TYPE": "OFFICE_DOC",
         "TYPE_CLASS": "ITEM",
         "LABEL_ID": "TYPE.OFFICE_DOC",
         "CHANGE_INTERVAL": "NULL",
-        "LAYER_NAME": "LG_STD",
+        "LAYER_NAME": "AVM",
         "DESCRIPTION_ID": "NULL",
         "HIDDEN": "False",
         "BASE_TYPE": "NULL",
@@ -879,12 +879,12 @@
         "STATUS": "NULL",
         "REV_GRP_ID": "NULL"
     },
-    "ORG_UNIT1": {
+    {
         "TYPE": "ORG_UNIT1",
         "TYPE_CLASS": "ITEM",
         "LABEL_ID": "TYPE.ORG_UNIT1",
         "CHANGE_INTERVAL": "NULL",
-        "LAYER_NAME": "LG_STD",
+        "LAYER_NAME": "OG_STD",
         "DESCRIPTION_ID": "NULL",
         "HIDDEN": "False",
         "BASE_TYPE": "DOMAIN_BASE",
@@ -901,12 +901,12 @@
         "STATUS": "NULL",
         "REV_GRP_ID": "NULL"
     },
-    "ORG_UNIT2": {
+    {
         "TYPE": "ORG_UNIT2",
         "TYPE_CLASS": "ITEM",
         "LABEL_ID": "TYPE.ORG_UNIT2",
         "CHANGE_INTERVAL": "NULL",
-        "LAYER_NAME": "LG_STD",
+        "LAYER_NAME": "OG_STD",
         "DESCRIPTION_ID": "NULL",
         "HIDDEN": "False",
         "BASE_TYPE": "DOMAIN_BASE",
@@ -923,12 +923,12 @@
         "STATUS": "NULL",
         "REV_GRP_ID": "NULL"
     },
-    "ORG_UNIT3": {
+    {
         "TYPE": "ORG_UNIT3",
         "TYPE_CLASS": "ITEM",
         "LABEL_ID": "TYPE.ORG_UNIT3",
         "CHANGE_INTERVAL": "NULL",
-        "LAYER_NAME": "LG_STD",
+        "LAYER_NAME": "OG_STD",
         "DESCRIPTION_ID": "NULL",
         "HIDDEN": "False",
         "BASE_TYPE": "DOMAIN_BASE",
@@ -945,12 +945,12 @@
         "STATUS": "NULL",
         "REV_GRP_ID": "NULL"
     },
-    "ORG_UNIT4": {
+    {
         "TYPE": "ORG_UNIT4",
         "TYPE_CLASS": "ITEM",
         "LABEL_ID": "TYPE.ORG_UNIT4",
         "CHANGE_INTERVAL": "NULL",
-        "LAYER_NAME": "LG_STD",
+        "LAYER_NAME": "OG_STD",
         "DESCRIPTION_ID": "NULL",
         "HIDDEN": "False",
         "BASE_TYPE": "DOMAIN_BASE",
@@ -967,12 +967,12 @@
         "STATUS": "NULL",
         "REV_GRP_ID": "NULL"
     },
-    "PIG_POINT": {
+    {
         "TYPE": "PIG_POINT",
         "TYPE_CLASS": "ITEM",
         "LABEL_ID": "TYPE.PIG_POINT",
         "CHANGE_INTERVAL": "NULL",
-        "LAYER_NAME": "LG_STD",
+        "LAYER_NAME": "OG_STD",
         "DESCRIPTION_ID": "NULL",
         "HIDDEN": "NULL",
         "BASE_TYPE": "DOMAIN_BASE",
@@ -989,12 +989,12 @@
         "STATUS": "NULL",
         "REV_GRP_ID": "NULL"
     },
-    "PIPELINE": {
+    {
         "TYPE": "PIPELINE",
         "TYPE_CLASS": "ITEM",
         "LABEL_ID": "TYPE.PIPELINE",
         "CHANGE_INTERVAL": "FIXED",
-        "LAYER_NAME": "LG_STD",
+        "LAYER_NAME": "OG_STD",
         "DESCRIPTION_ID": "NULL",
         "HIDDEN": "False",
         "BASE_TYPE": "DOMAIN_BASE",
@@ -1011,12 +1011,12 @@
         "STATUS": "NULL",
         "REV_GRP_ID": "NULL"
     },
-    "PROC_GRP": {
+    {
         "TYPE": "PROC_GRP",
         "TYPE_CLASS": "ITEM",
         "LABEL_ID": "TYPE.PROC_GRP",
         "CHANGE_INTERVAL": "DAY",
-        "LAYER_NAME": "LG_STD",
+        "LAYER_NAME": "AVM",
         "DESCRIPTION_ID": "NULL",
         "HIDDEN": "False",
         "BASE_TYPE": "NULL",
@@ -1033,12 +1033,12 @@
         "STATUS": "NULL",
         "REV_GRP_ID": "NULL"
     },
-    "PROCESS": {
+    {
         "TYPE": "PROCESS",
         "TYPE_CLASS": "ITEM",
         "LABEL_ID": "TYPE.PROCESS",
         "CHANGE_INTERVAL": "DAY",
-        "LAYER_NAME": "LG_STD",
+        "LAYER_NAME": "AVM",
         "DESCRIPTION_ID": "NULL",
         "HIDDEN": "False",
         "BASE_TYPE": "NULL",
@@ -1055,12 +1055,12 @@
         "STATUS": "NULL",
         "REV_GRP_ID": "NULL"
     },
-    "PUMP": {
+    {
         "TYPE": "PUMP",
         "TYPE_CLASS": "ITEM",
         "LABEL_ID": "TYPE.PUMP",
         "CHANGE_INTERVAL": "NULL",
-        "LAYER_NAME": "LG_STD",
+        "LAYER_NAME": "OG_STD",
         "DESCRIPTION_ID": "NULL",
         "HIDDEN": "False",
         "BASE_TYPE": "EQUIP_BASE",
@@ -1077,12 +1077,12 @@
         "STATUS": "NULL",
         "REV_GRP_ID": "NULL"
     },
-    "RESERVOIR": {
+    {
         "TYPE": "RESERVOIR",
         "TYPE_CLASS": "ITEM",
         "LABEL_ID": "TYPE.RESERVOIR",
         "CHANGE_INTERVAL": "FIXED",
-        "LAYER_NAME": "LG_STD",
+        "LAYER_NAME": "OG_STD",
         "DESCRIPTION_ID": "NULL",
         "HIDDEN": "False",
         "BASE_TYPE": "DOMAIN_BASE",
@@ -1099,12 +1099,12 @@
         "STATUS": "NULL",
         "REV_GRP_ID": "NULL"
     },
-    "ROUTE": {
+    {
         "TYPE": "ROUTE",
         "TYPE_CLASS": "ITEM",
         "LABEL_ID": "TYPE.ROUTE",
         "CHANGE_INTERVAL": "NULL",
-        "LAYER_NAME": "LG_STD",
+        "LAYER_NAME": "OG_STD",
         "DESCRIPTION_ID": "NULL",
         "HIDDEN": "False",
         "BASE_TYPE": "DOMAIN_BASE",
@@ -1121,12 +1121,12 @@
         "STATUS": "NULL",
         "REV_GRP_ID": "NULL"
     },
-    "SCADA": {
+    {
         "TYPE": "SCADA",
         "TYPE_CLASS": "ITEM",
         "LABEL_ID": "TYPE.SCADA",
         "CHANGE_INTERVAL": "DAY",
-        "LAYER_NAME": "LG_STD",
+        "LAYER_NAME": "AVM",
         "DESCRIPTION_ID": "NULL",
         "HIDDEN": "False",
         "BASE_TYPE": "NULL",
@@ -1143,12 +1143,12 @@
         "STATUS": "NULL",
         "REV_GRP_ID": "NULL"
     },
-    "SCENARIO": {
+    {
         "TYPE": "SCENARIO",
         "TYPE_CLASS": "ITEM",
         "LABEL_ID": "TYPE.SCENARIO",
         "CHANGE_INTERVAL": "DAY",
-        "LAYER_NAME": "LG_STD",
+        "LAYER_NAME": "AVM",
         "DESCRIPTION_ID": "NULL",
         "HIDDEN": "False",
         "BASE_TYPE": "NULL",
@@ -1165,12 +1165,12 @@
         "STATUS": "NULL",
         "REV_GRP_ID": "NULL"
     },
-    "SCREEN_CFG_REF": {
+    {
         "TYPE": "SCREEN_CFG_REF",
         "TYPE_CLASS": "ITEM",
         "LABEL_ID": "TYPE.SCREEN_CFG_REF",
         "CHANGE_INTERVAL": "NULL",
-        "LAYER_NAME": "LG_STD",
+        "LAYER_NAME": "AVM",
         "DESCRIPTION_ID": "NULL",
         "HIDDEN": "False",
         "BASE_TYPE": "NULL",
@@ -1187,12 +1187,12 @@
         "STATUS": "NULL",
         "REV_GRP_ID": "NULL"
     },
-    "SCREEN_REF": {
+    {
         "TYPE": "SCREEN_REF",
         "TYPE_CLASS": "ITEM",
         "LABEL_ID": "TYPE.SCREEN_REF",
         "CHANGE_INTERVAL": "NULL",
-        "LAYER_NAME": "LG_STD",
+        "LAYER_NAME": "AVM",
         "DESCRIPTION_ID": "NULL",
         "HIDDEN": "False",
         "BASE_TYPE": "NULL",
@@ -1209,12 +1209,12 @@
         "STATUS": "NULL",
         "REV_GRP_ID": "NULL"
     },
-    "SEC_DEFAULT": {
+    {
         "TYPE": "SEC_DEFAULT",
         "TYPE_CLASS": "ITEM",
         "LABEL_ID": "TYPE.SEC_DEFAULT",
         "CHANGE_INTERVAL": "NULL",
-        "LAYER_NAME": "LG_STD",
+        "LAYER_NAME": "AVM",
         "DESCRIPTION_ID": "NULL",
         "HIDDEN": "False",
         "BASE_TYPE": "NULL",
@@ -1231,12 +1231,12 @@
         "STATUS": "NULL",
         "REV_GRP_ID": "NULL"
     },
-    "SEPARATOR": {
+    {
         "TYPE": "SEPARATOR",
         "TYPE_CLASS": "ITEM",
         "LABEL_ID": "TYPE.SEPARATOR",
         "CHANGE_INTERVAL": "NULL",
-        "LAYER_NAME": "LG_STD",
+        "LAYER_NAME": "OG_STD",
         "DESCRIPTION_ID": "NULL",
         "HIDDEN": "False",
         "BASE_TYPE": "EQUIP_BASE",
@@ -1253,12 +1253,12 @@
         "STATUS": "NULL",
         "REV_GRP_ID": "NULL"
     },
-    "STOP": {
+    {
         "TYPE": "STOP",
         "TYPE_CLASS": "ITEM",
         "LABEL_ID": "TYPE.STOP",
         "CHANGE_INTERVAL": "NULL",
-        "LAYER_NAME": "LG_STD",
+        "LAYER_NAME": "OG_STD",
         "DESCRIPTION_ID": "NULL",
         "HIDDEN": "False",
         "BASE_TYPE": "DOMAIN_BASE",
@@ -1275,12 +1275,12 @@
         "STATUS": "NULL",
         "REV_GRP_ID": "NULL"
     },
-    "SUB_DIAGRAM": {
+    {
         "TYPE": "SUB_DIAGRAM",
         "TYPE_CLASS": "ITEM",
         "LABEL_ID": "TYPE.SUB_DIAGRAM",
         "CHANGE_INTERVAL": "NULL",
-        "LAYER_NAME": "LG_STD",
+        "LAYER_NAME": "AVM",
         "DESCRIPTION_ID": "NULL",
         "HIDDEN": "NULL",
         "BASE_TYPE": "NULL",
@@ -1297,12 +1297,12 @@
         "STATUS": "NULL",
         "REV_GRP_ID": "NULL"
     },
-    "SUBSYSTEM": {
+    {
         "TYPE": "SUBSYSTEM",
         "TYPE_CLASS": "ITEM",
         "LABEL_ID": "TYPE.SUBSYSTEM",
         "CHANGE_INTERVAL": "NULL",
-        "LAYER_NAME": "LG_STD",
+        "LAYER_NAME": "AVM",
         "DESCRIPTION_ID": "NULL",
         "HIDDEN": "False",
         "BASE_TYPE": "NULL",
@@ -1319,12 +1319,12 @@
         "STATUS": "NULL",
         "REV_GRP_ID": "NULL"
     },
-    "SUBTYPE_REF": {
+    {
         "TYPE": "SUBTYPE_REF",
         "TYPE_CLASS": "ITEM",
         "LABEL_ID": "TYPE.SUBTYPE_REF",
         "CHANGE_INTERVAL": "NULL",
-        "LAYER_NAME": "LG_STD",
+        "LAYER_NAME": "AVM",
         "DESCRIPTION_ID": "NULL",
         "HIDDEN": "False",
         "BASE_TYPE": "NULL",
@@ -1341,12 +1341,12 @@
         "STATUS": "NULL",
         "REV_GRP_ID": "NULL"
     },
-    "SWITCH": {
+    {
         "TYPE": "SWITCH",
         "TYPE_CLASS": "ITEM",
         "LABEL_ID": "TYPE.SWITCH",
         "CHANGE_INTERVAL": "NULL",
-        "LAYER_NAME": "LG_STD",
+        "LAYER_NAME": "OG_STD",
         "DESCRIPTION_ID": "NULL",
         "HIDDEN": "False",
         "BASE_TYPE": "DOMAIN_BASE",
@@ -1363,12 +1363,12 @@
         "STATUS": "NULL",
         "REV_GRP_ID": "NULL"
     },
-    "SYS_PERM": {
+    {
         "TYPE": "SYS_PERM",
         "TYPE_CLASS": "ITEM",
         "LABEL_ID": "TYPE.SYS_PERM",
         "CHANGE_INTERVAL": "NULL",
-        "LAYER_NAME": "LG_STD",
+        "LAYER_NAME": "AVM",
         "DESCRIPTION_ID": "NULL",
         "HIDDEN": "False",
         "BASE_TYPE": "NULL",
@@ -1385,12 +1385,12 @@
         "STATUS": "NULL",
         "REV_GRP_ID": "NULL"
     },
-    "SYS_ROLE": {
+    {
         "TYPE": "SYS_ROLE",
         "TYPE_CLASS": "ITEM",
         "LABEL_ID": "TYPE.SYS_ROLE",
         "CHANGE_INTERVAL": "NULL",
-        "LAYER_NAME": "LG_STD",
+        "LAYER_NAME": "AVM",
         "DESCRIPTION_ID": "NULL",
         "HIDDEN": "False",
         "BASE_TYPE": "NULL",
@@ -1407,12 +1407,12 @@
         "STATUS": "NULL",
         "REV_GRP_ID": "NULL"
     },
-    "SYS_SEC_ROLE": {
+    {
         "TYPE": "SYS_SEC_ROLE",
         "TYPE_CLASS": "ITEM",
         "LABEL_ID": "TYPE.SYS_SEC_ROLE",
         "CHANGE_INTERVAL": "NULL",
-        "LAYER_NAME": "LG_STD",
+        "LAYER_NAME": "AVM",
         "DESCRIPTION_ID": "NULL",
         "HIDDEN": "False",
         "BASE_TYPE": "NULL",
@@ -1429,12 +1429,12 @@
         "STATUS": "NULL",
         "REV_GRP_ID": "NULL"
     },
-    "SYS_USER": {
+    {
         "TYPE": "SYS_USER",
         "TYPE_CLASS": "ITEM",
         "LABEL_ID": "TYPE.SYS_USER",
         "CHANGE_INTERVAL": "NULL",
-        "LAYER_NAME": "LG_STD",
+        "LAYER_NAME": "AVM",
         "DESCRIPTION_ID": "NULL",
         "HIDDEN": "False",
         "BASE_TYPE": "NULL",
@@ -1451,12 +1451,12 @@
         "STATUS": "NULL",
         "REV_GRP_ID": "NULL"
     },
-    "SYSTEM": {
+    {
         "TYPE": "SYSTEM",
         "TYPE_CLASS": "ITEM",
         "LABEL_ID": "TYPE.SYSTEM",
         "CHANGE_INTERVAL": "NULL",
-        "LAYER_NAME": "LG_STD",
+        "LAYER_NAME": "AVM",
         "DESCRIPTION_ID": "NULL",
         "HIDDEN": "False",
         "BASE_TYPE": "NULL",
@@ -1473,12 +1473,12 @@
         "STATUS": "NULL",
         "REV_GRP_ID": "NULL"
     },
-    "TANK": {
+    {
         "TYPE": "TANK",
         "TYPE_CLASS": "ITEM",
         "LABEL_ID": "TYPE.TANK",
         "CHANGE_INTERVAL": "NULL",
-        "LAYER_NAME": "LG_STD",
+        "LAYER_NAME": "OG_STD",
         "DESCRIPTION_ID": "NULL",
         "HIDDEN": "False",
         "BASE_TYPE": "DOMAIN_BASE",
@@ -1495,12 +1495,12 @@
         "STATUS": "NULL",
         "REV_GRP_ID": "NULL"
     },
-    "TANK_STRAP_MDL": {
+    {
         "TYPE": "TANK_STRAP_MDL",
         "TYPE_CLASS": "ITEM",
         "LABEL_ID": "TYPE.TANK_STRAP_MDL",
         "CHANGE_INTERVAL": "NULL",
-        "LAYER_NAME": "LG_STD",
+        "LAYER_NAME": "OG_STD",
         "DESCRIPTION_ID": "NULL",
         "HIDDEN": "False",
         "BASE_TYPE": "DOMAIN_BASE",
@@ -1517,12 +1517,12 @@
         "STATUS": "NULL",
         "REV_GRP_ID": "NULL"
     },
-    "TEST_ITEM": {
+    {
         "TYPE": "TEST_ITEM",
         "TYPE_CLASS": "ITEM",
         "LABEL_ID": "TYPE.TEST_ITEM",
         "CHANGE_INTERVAL": "NULL",
-        "LAYER_NAME": "LG_STD",
+        "LAYER_NAME": "AVM",
         "DESCRIPTION_ID": "NULL",
         "HIDDEN": "NULL",
         "BASE_TYPE": "NULL",
@@ -1539,12 +1539,12 @@
         "STATUS": "NULL",
         "REV_GRP_ID": "NULL"
     },
-    "TEST_ITEM_2": {
+    {
         "TYPE": "TEST_ITEM_2",
         "TYPE_CLASS": "ITEM",
         "LABEL_ID": "TYPE.TEST_ITEM_2",
         "CHANGE_INTERVAL": "NULL",
-        "LAYER_NAME": "LG_STD",
+        "LAYER_NAME": "AVM",
         "DESCRIPTION_ID": "NULL",
         "HIDDEN": "NULL",
         "BASE_TYPE": "DOMAIN_BASE",
@@ -1561,12 +1561,12 @@
         "STATUS": "NULL",
         "REV_GRP_ID": "NULL"
     },
-    "UNITTEST_ITEM": {
+    {
         "TYPE": "UNITTEST_ITEM",
         "TYPE_CLASS": "ITEM",
         "LABEL_ID": "TYPE.UNITTEST_ITEM",
         "CHANGE_INTERVAL": "NULL",
-        "LAYER_NAME": "LG_STD",
+        "LAYER_NAME": "AVM",
         "DESCRIPTION_ID": "NULL",
         "HIDDEN": "NULL",
         "BASE_TYPE": "TEST_ITEM",
@@ -1583,12 +1583,12 @@
         "STATUS": "NULL",
         "REV_GRP_ID": "NULL"
     },
-    "USER_DEF_GROUP": {
+    {
         "TYPE": "USER_DEF_GROUP",
         "TYPE_CLASS": "ITEM",
         "LABEL_ID": "TYPE.USER_DEF_GROUP",
         "CHANGE_INTERVAL": "STATIC",
-        "LAYER_NAME": "LG_STD",
+        "LAYER_NAME": "AVM",
         "DESCRIPTION_ID": "NULL",
         "HIDDEN": "False",
         "BASE_TYPE": "NULL",
@@ -1605,12 +1605,12 @@
         "STATUS": "NULL",
         "REV_GRP_ID": "NULL"
     },
-    "VESSEL": {
+    {
         "TYPE": "VESSEL",
         "TYPE_CLASS": "ITEM",
         "LABEL_ID": "TYPE.VESSEL",
         "CHANGE_INTERVAL": "NULL",
-        "LAYER_NAME": "LG_STD",
+        "LAYER_NAME": "OG_STD",
         "DESCRIPTION_ID": "NULL",
         "HIDDEN": "False",
         "BASE_TYPE": "EQUIP_BASE",
@@ -1627,12 +1627,12 @@
         "STATUS": "NULL",
         "REV_GRP_ID": "NULL"
     },
-    "WELL": {
+    {
         "TYPE": "WELL",
         "TYPE_CLASS": "ITEM",
         "LABEL_ID": "TYPE.WELL",
         "CHANGE_INTERVAL": "NULL",
-        "LAYER_NAME": "LG_STD",
+        "LAYER_NAME": "OG_STD",
         "DESCRIPTION_ID": "NULL",
         "HIDDEN": "False",
         "BASE_TYPE": "DOMAIN_BASE",
@@ -1649,12 +1649,12 @@
         "STATUS": "NULL",
         "REV_GRP_ID": "NULL"
     },
-    "WELLPAIR": {
+    {
         "TYPE": "WELLPAIR",
         "TYPE_CLASS": "ITEM",
         "LABEL_ID": "TYPE.WELLPAIR",
         "CHANGE_INTERVAL": "DAY",
-        "LAYER_NAME": "LG_STD",
+        "LAYER_NAME": "OG_STD",
         "DESCRIPTION_ID": "NULL",
         "HIDDEN": "False",
         "BASE_TYPE": "NULL",
@@ -1671,12 +1671,12 @@
         "STATUS": "NULL",
         "REV_GRP_ID": "NULL"
     },
-    "TAG_CACHE": {
+    {
         "TYPE": "TAG_CACHE",
         "TYPE_CLASS": "TRANSACTION",
         "LABEL_ID": "TYPE.TAG_CACHE",
         "CHANGE_INTERVAL": "EVENT",
-        "LAYER_NAME": "LG_STD",
+        "LAYER_NAME": "AVM",
         "DESCRIPTION_ID": "NULL",
         "HIDDEN": "False",
         "BASE_TYPE": "NULL",
@@ -1693,12 +1693,12 @@
         "STATUS": "NULL",
         "REV_GRP_ID": "NULL"
     },
-    "TAG_ITEM": {
+    {
         "TYPE": "TAG_ITEM",
         "TYPE_CLASS": "ITEM",
         "LABEL_ID": "TYPE.TAG",
         "CHANGE_INTERVAL": "EVENT",
-        "LAYER_NAME": "LG_STD",
+        "LAYER_NAME": "AVM",
         "DESCRIPTION_ID": "NULL",
         "HIDDEN": "False",
         "BASE_TYPE": "NULL",
@@ -1715,4 +1715,4 @@
         "STATUS": "NULL",
         "REV_GRP_ID": "NULL"
     }
-}
+]
