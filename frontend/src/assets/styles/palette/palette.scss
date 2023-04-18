@@ -13,6 +13,7 @@ $themes: (
     bg-card: #e0e0e0,
     bg-tree-menu: #efebe9,
     bg-tree-menu-icon: #819ca9,
+    bg-action-icon-tooltip: #9fa8da,
 
     border-card: #607d8b,
     border-card-hover: #00897b,
@@ -21,6 +22,7 @@ $themes: (
     text-drawer-selected-item: #546e7a,
     text-card: #616161,
     text-tree-menu: #212121,
+    action-menu-icon: #263238,
 
     app-logo: url("../../Images/header/ligeiaLogo.png"),
   ),
@@ -34,6 +36,7 @@ $themes: (
     bg-card: #9e9e9e,
     bg-tree-menu: #616161,
     bg-tree-menu-icon: #ffffff,
+    bg-action-icon-tooltip: #5c6bc0,
 
     border-card: #424242,
     border-card-hover: #607d8b,
@@ -42,6 +45,7 @@ $themes: (
     text-drawer-selected-item: #eceff1,
     text-card: #eeeeee,
     text-tree-menu: #ffffff,
+    action-menu-icon: #ffffff,
 
     app-logo: url("../../Images/header/ligeiaLogoDark.png"),
   ),
@@ -55,6 +59,7 @@ $themes: (
     bg-card: #ffffff,
     bg-tree-menu: #f5eff6,
     bg-tree-menu-icon: #424242,
+    bg-action-icon-tooltip: #9fa8da,
 
     border-card: #43a047,
     border-card-hover: #66bb6a,
@@ -63,6 +68,7 @@ $themes: (
     text-drawer-selected-item: #000000,
     text-card: #616161,
     text-tree-menu: #616161,
+    action-menu-icon: #263238,
 
     app-logo: url("../../Images/header/ligeiaLogo.png"),
   ),
@@ -76,6 +82,7 @@ $themes: (
     bg-card: #323033,
     bg-tree-menu: #323033,
     bg-tree-menu-icon: #ffffff,
+    bg-action-icon-tooltip: #5c6bc0,
 
     border-card: #605d62,
     border-card-hover: #607d8b,
@@ -84,6 +91,7 @@ $themes: (
     text-drawer-selected-item: #ffffff,
     text-card: #eeeeee,
     text-tree-menu: #aeaaae,
+    action-menu-icon: #ffffff,
 
     app-logo: url("../../Images/header/ligeiaLogoDark.png"),
   ),
@@ -97,6 +105,7 @@ $themes: (
     bg-card: #ffffff,
     bg-tree-menu: #f5eff6,
     bg-tree-menu-icon: #424242,
+    bg-action-icon-tooltip: #9fa8da,
 
     border-card: #43a047,
     border-card-hover: #66bb6a,
@@ -105,6 +114,7 @@ $themes: (
     text-drawer-selected-item: #000000,
     text-card: #616161,
     text-tree-menu: #616161,
+    action-menu-icon: #263238,
 
     app-logo: url("../../Images/header/ligeiaLogo.png"),
   ),
@@ -128,6 +138,8 @@ $themes: (
     bg-tree-menu: #323033,
     //tree menü icon bg, breadcrumb home icon
     bg-tree-menu-icon: #ffffff,
+    //action menu icon tooltip
+    bg-action-icon-tooltip: #5c6bc0,
 
     //BORDERS
     //home page card border
@@ -143,6 +155,8 @@ $themes: (
     text-card: #ffffff,
     //tree menu text, breadcrumb last text
     text-tree-menu: #ffffff,
+    //action menu icon color
+    action-menu-icon: #ffffff,
 
     //Images
     app-logo: url("../../Images/header/ligeiaLogoDark.png"),

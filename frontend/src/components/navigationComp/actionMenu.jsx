@@ -1,6 +1,6 @@
 import React from "react";
 
-import { IconButton, Grid, Tooltip } from "@mui/material";
+import { IconButton, Box, Tooltip } from "@mui/material";
 
 import AddBoxOutlinedIcon from "@mui/icons-material/AddBoxOutlined";
 import AddToPhotosOutlinedIcon from "@mui/icons-material/AddToPhotosOutlined";
@@ -12,7 +12,7 @@ import ArrowCircleRightOutlinedIcon from "@mui/icons-material/ArrowCircleRightOu
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 
 const actionIcon = (props) => {
-  const defaultFunction = () => { };
+  const defaultFunction = () => {};
   const {
     btnNew = defaultFunction,
     btnNewIsActive = true,
@@ -88,7 +88,7 @@ const actionIcon = (props) => {
     },
   ];
   return (
-    <Grid container sx={{ alignItems: "center" }}>
+    <Box className="action-menu-container">
       {icons.map((Element, key) => {
         if (!Element.isDisabled) {
           return (
@@ -96,16 +96,21 @@ const actionIcon = (props) => {
               key={key}
               title={Element.tooltip}
               componentsProps={{
-                tooltip: { sx: { backgroundColor: "icon.success" } },
+                tooltip: {
+                  id: "action-menu-container__tooltip",
+                },
               }}
-              sx={{ display: Element.isActive ? "flex" : "none" }}
+              className={Element.isActive ? "" : "invisible"}
             >
               <IconButton
                 onClick={() => {
                   Element.function();
                 }}
               >
-                <Element.Icon fontSize="small" sx={{ color: "icon.secondary" }} />
+                <Element.Icon
+                  fontSize="small"
+                  className="action-menu-container__icon"
+                />
               </IconButton>
             </Tooltip>
           );
@@ -117,7 +122,7 @@ const actionIcon = (props) => {
           );
         }
       })}
-    </Grid>
+    </Box>
   );
 };
 

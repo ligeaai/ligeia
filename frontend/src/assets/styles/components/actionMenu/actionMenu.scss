@@ -1,0 +1,16 @@
+@import "../../palette/palette.scss";
+.action-menu-container {
+  display: flex;
+  align-items: center;
+  .invisible {
+    display: none;
+  }
+  &__icon {
+    @include themify($themes) {
+      color: themed("action-menu-icon");
+    }
+  }
+}
+#action-menu-container__tooltip {
+  background-color: #9fa8da;
+}
