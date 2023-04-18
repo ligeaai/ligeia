@@ -49,25 +49,27 @@ class DrawerView(generics.CreateAPIView):
             if len(id.split('.'))>1:
                 info = id.split('.')[1]
                 if info == "OG_STD":
-                    type_list = list(Type.objects.filter(LAYER_NAME=info)
-                                            .values_list('LABEL_ID', flat=True))
-                    print(len(type_list))
+                    id_list = list((Type.objects.filter(LAYER_NAME=info)
+                                            .values_list('LABEL_ID', flat=True)))
+                    type_list = list((Type.objects.filter(LAYER_NAME=info)
+                                            .values_list('TYPE', flat=True)))
                     for layer in self.layers:
-                        type_list.remove(layer)
+                        id_list.remove(layer)
                 else:
-                    type_list = [id]
+                    id_list = [id]
+                    type_list = list((Type.objects.filter(LABEL_ID__in=id_list)
+                                .values_list('TYPE', flat=True)))
                     self.layers.append(id)
                 qs = resource_list.objects.filter(
-                            Q(ID__in=type_list) & Q(CULTURE=self.culture) & Q(HIDDEN=False)
+                            Q(ID__in=id_list) & Q(CULTURE=self.culture) & Q(HIDDEN=False)
                             ).order_by("SHORT_LABEL")
                 serializer = ResourceListDetailsSerializer(qs, many=True)
-                for data in serializer.data:
+                for data,types in zip(serializer.data,type_list):
                     label = data.get('SHORT_LABEL')
                     if data.get('SHORT_LABEL') == None:
                         label = data.get('MOBILE_LABEL')
-                    # print(data,"-------------> DATA")
+                    data['TYPE'] = types
                     tempt[label] = data
-        # print(tempt,"\n\n")
         return tempt
 
     def _filtered_process(self,item,data,request,tempt):
@@ -107,7 +109,9 @@ class DrawerView(generics.CreateAPIView):
     def post(self, request, *args, **kwargs):
         self.culture = request.data.get('CULTURE')
         self.layers = []
-        self.roles = request.role.keys()
+        self.roles = []
+        if request.role:
+            self.roles = request.role.keys()
         queryset = resource_list.objects.filter(
             Q(ID="drawerMenu2")
             & Q(CULTURE=self.culture)
