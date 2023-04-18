@@ -6,6 +6,8 @@ import redis
 from django.core.exceptions import ValidationError
 from django.core.validators import validate_email as django_validate_email
 from django.db import transaction
+import couchdb
+
 
 rds = redis.StrictRedis(env('REDIS_HOST'),port=6379,db=0)
 def validate_email(value):
@@ -64,3 +66,16 @@ class redisCaching():
         return True
     
     
+def import_data(model,model_name):
+    username = "COUCHDB_USER"
+    password = "COUCHDB_PASSWORD"
+    url = 'http://20.230.239.209:5984/'
+    server = couchdb.Server(url)
+    server.resource.credentials = (username, password)
+    db = server[model_name]
+    docs = db.view('_all_docs', include_docs=True)
+    for doc in docs:
+        data = (doc['doc'].get('values'))
+    chunked_data = [data[i:i+1000] for i in range(0, len(data), 1000)]
+    for chunk in chunked_data:
+        model.objects.bulk_create([model(**item) for item in chunk])
