@@ -5,7 +5,7 @@ import Cards from "../../components/cardGenerator/cards";
 import { selectDrawerItem } from "../../services/actions/drawerMenu/drawerMenu";
 const cards = [
   {
-    cardTitle: "Asset",
+    cardTitle: "Overview",
     cardURL: "/overview",
   },
   {
