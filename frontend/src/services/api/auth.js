@@ -28,7 +28,7 @@ const socialLogin = (text, path, body) => {
     return instance.post(`/auth/${text}/${path}/`, body, unAuthConfig);
 };
 const checkMail = (body) => {
-    return instance.post(`auth/user/check/`, body, unAuthConfig);
+    return instance.post(`/auth/user/check/`, body, unAuthConfig);
 }
 
 const Auth = {
