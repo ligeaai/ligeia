@@ -79,18 +79,18 @@ class DrawerView(generics.CreateAPIView):
             id = (value.get('PARENT'))
             if len(id.split('.'))>1:
                 info = id.split('.')[1]
-                if info == "LG_STD":
+                if info == "STD":
                     self.tempt_data = True
                     id_list = []
                     type_qs= []
                 else:
-                    type_qs = (Type.objects.filter(LABEL_ID__in=id)
+                    type_qs = (Type.objects.filter(LABEL_ID=id)
                                 .values('LABEL_ID',"TYPE"))
                     id_list = [item['LABEL_ID'] for item in type_qs]
                     self.layers.append(id)
 
                 # print(qs)
-                self._tempt_add_resources_types(tempt,id_list,type_qs)
+                tempt = self._tempt_add_resources_types(tempt,id_list,type_qs)
         return tempt
 
     def _filtered_process(self,item,data,request,tempt):
@@ -130,7 +130,7 @@ class DrawerView(generics.CreateAPIView):
 
     def _get_lg_std_Items(self):
         if self.tempt_data:
-            type_qs = ((Type.objects.filter(LAYER_NAME="LG_STD")
+            type_qs = ((Type.objects.filter(LAYER_NAME="STD")
                                             .values('LABEL_ID',"TYPE")))
             id_list = [item['LABEL_ID'] for item in type_qs]
             for layer in self.layers:
@@ -158,6 +158,7 @@ class DrawerView(generics.CreateAPIView):
                 del self.new_dict[keys]
             if value.get('Items') == {}:
                 del self.new_dict[keys]
-        self.new_dict["Configuration"]["Items"]["Items"]["Items"] =self._get_lg_std_Items()           
+        if self.new_dict["Configuration"]:
+            self.new_dict["Configuration"]["Items"]["Items"]["Items"] =self._get_lg_std_Items()           
         return Response(self.new_dict, status=status.HTTP_200_OK)
 
