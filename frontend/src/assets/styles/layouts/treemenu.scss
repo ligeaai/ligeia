@@ -22,7 +22,7 @@
       height: 30px;
       padding: 2.5px;
       position: absolute;
-      top: 6px;
+      top: 27px;
       right: -15px;
       box-shadow: $shadow-two;
       z-index: 3;
@@ -40,14 +40,6 @@
         // right: -12px;
         background-color: #1a72ec;
         box-shadow: $shadow-five;
-      }
-      &:hover {
-        // padding: 1.5px;
-        // width: 28px;
-        // height: 28px;
-        // top: 23.5px;
-        // right: -12px;
-        box-shadow: $shadow-one;
       }
     }
     &__divider {
