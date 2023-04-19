@@ -81,7 +81,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     last_name = models.CharField(_("Last Name"), max_length=50)
     email = models.EmailField(_("Email address"), unique=True)
     layer_name = models.ManyToManyField(
-        layer, related_name="layerName", null=True, blank=True
+        layer, related_name="layerName", blank=True
     )
     role = models.ForeignKey(roles, on_delete=models.SET_NULL, null=True)
     is_staff = models.BooleanField(_("staff status"), default=False)

@@ -7,7 +7,7 @@ from apps.item.models import item
 class bi_dashboard(models.Model):
     NAME = models.CharField(max_length=1000)
     WIDGETS = models.ManyToManyField(
-        bi_widget, related_name="widgets", null=True, blank=True
+        bi_widget, related_name="widgets", blank=True
     )
     CULTURE = models.CharField(
         max_length=10,

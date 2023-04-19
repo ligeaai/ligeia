@@ -44,7 +44,7 @@ class bi_widget_property(models.Model):
         db_index=True,
     )
     PROPERTY_TAG = models.ManyToManyField(
-        tags, related_name="tags", null=True, blank=True
+        tags, related_name="tags",  blank=True
     )
     PROPERTY_TYPE = models.CharField(
         max_length=150,
