@@ -68,6 +68,7 @@
     width: 5px;
     top: 0;
     right: 0;
+    border-radius: 5px;
     &:hover {
       @include themify($themes) {
         background-color: themed("text-drawer-selected-item");

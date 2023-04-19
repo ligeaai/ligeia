@@ -168,6 +168,7 @@ const DrawerMenu = (props) => {
               backgroundColor: "text.main",
               cursor: "w-resize",
             },
+            borderRadius: "5px",
           }}
           onMouseDown={handler}
         />
