@@ -55,43 +55,42 @@ class DrawerView(generics.CreateAPIView):
             filtered.append(value)
         return filtered
     
+    def _tempt_add_resources_types(self,tempt,id_list,type_qs):
+        # print(qs)
+        qs = resources_types.objects.filter(
+                            Q(ID__in=id_list) & Q(CULTURE=self.culture) & Q(HIDDEN=False)
+                            ).order_by("SHORT_LABEL")
+        serializer = ResourceDrawerDetailsSerializer(qs, many=True)
+        for data in (serializer.data):
+            label = data.get('SHORT_LABEL')
+            id = data.get('ID')
+            for types in type_qs:
+                if types.get('LABEL_ID') == id:
+                    data['TYPE'] = types.get('TYPE')
+                
+            if data.get('SHORT_LABEL') == None:
+                label = data.get('MOBILE_LABEL')
+            
+            tempt[label] = data
+        return tempt
+    
     def _resources_drawer(self,serializer,tempt):
         for index, value in enumerate(serializer.data):
             id = (value.get('PARENT'))
             if len(id.split('.'))>1:
                 info = id.split('.')[1]
                 if info == "LG_STD":
-                    type_qs = ((Type.objects.filter(LAYER_NAME=info)
-                                            .values('LABEL_ID',"TYPE")))
-                    id_list = [item['LABEL_ID'] for item in type_qs]
-                    type_list = [item['TYPE'] for item in type_qs]
-                    for layer in self.layers:
-                        if layer in id_list:
-                            id_list.remove(layer)
+                    self.tempt_data = True
+                    id_list = []
+                    type_qs= []
                 else:
-                    id_list = [id]
-                    type_qs = (Type.objects.filter(LABEL_ID__in=id_list)
+                    type_qs = (Type.objects.filter(LABEL_ID__in=id)
                                 .values('LABEL_ID',"TYPE"))
                     id_list = [item['LABEL_ID'] for item in type_qs]
-                    type_list = [item['TYPE'] for item in type_qs]
                     self.layers.append(id)
-                qs = resources_types.objects.filter(
-                            Q(ID__in=id_list) & Q(CULTURE=self.culture) & Q(HIDDEN=False)
-                            ).order_by("SHORT_LABEL")
-                print(qs)
-                serializer = ResourceDrawerDetailsSerializer(qs, many=True)
+
                 # print(qs)
-                for data in (serializer.data):
-                    label = data.get('SHORT_LABEL')
-                    id = data.get('ID')
-                    for types in type_qs:
-                        if types.get('LABEL_ID') == id:
-                            data['TYPE'] = types.get('TYPE')
-                        
-                    if data.get('SHORT_LABEL') == None:
-                        label = data.get('MOBILE_LABEL')
-                    
-                    tempt[label] = data
+                self._tempt_add_resources_types(tempt,id_list,type_qs)
         return tempt
 
     def _filtered_process(self,item,data,request,tempt):
@@ -129,10 +128,22 @@ class DrawerView(generics.CreateAPIView):
             queryset = self._get_Queryset(id)
             self._process(queryset,item,request)
 
+    def _get_lg_std_Items(self):
+        if self.tempt_data:
+            type_qs = ((Type.objects.filter(LAYER_NAME="LG_STD")
+                                            .values('LABEL_ID',"TYPE")))
+            id_list = [item['LABEL_ID'] for item in type_qs]
+            for layer in self.layers:
+                id_list.remove(layer)
+            tempt = {}
+            return self._tempt_add_resources_types(tempt,id_list,type_qs)
+            
+
     def post(self, request, *args, **kwargs):
         self.culture = request.data.get('CULTURE')
         self.layers = []
         self.roles = []
+        self.tempt_data = False
         if request.role:
             self.roles = request.role.keys()
         queryset = self._get_Queryset('drawerMenu')
@@ -147,6 +158,6 @@ class DrawerView(generics.CreateAPIView):
                 del self.new_dict[keys]
             if value.get('Items') == {}:
                 del self.new_dict[keys]
-                
+        self.new_dict["Configuration"]["Items"]["Items"]["Items"] =self._get_lg_std_Items()           
         return Response(self.new_dict, status=status.HTTP_200_OK)
 
