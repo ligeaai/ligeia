@@ -19,14 +19,20 @@ const DrawerMenu = (props) => {
   function saveWidth(width) {
     dispatch(updateTreeViewCouch(path, width));
   }
-  function openTreeMenu(width) {
+  function showLeftArrow() {
     $(".treemenu-container__box__toggle-button-left").show();
     $(".treemenu-container__box__toggle-button-right").hide();
+  }
+  function showRightArrow() {
+    $(".treemenu-container__box__toggle-button-left").hide();
+    $(".treemenu-container__box__toggle-button-right").show();
+  }
+  function openTreeMenu(width) {
+    showLeftArrow();
     $(".treemenu-container__box").animate({ width: width }, 400);
   }
   function closeTreeMenu() {
-    $(".treemenu-container__box__toggle-button-left").hide();
-    $(".treemenu-container__box__toggle-button-right").show();
+    showRightArrow();
     $(".treemenu-container__box").animate({ width: 0 }, 400);
   }
 
@@ -37,10 +43,12 @@ const DrawerMenu = (props) => {
     function onMouseMove(mouseMoveEvent) {
       if (startSize - startPosition + mouseMoveEvent.pageX < 10) {
         $(".treemenu-container__box").width(0);
+        showRightArrow();
       } else {
         $(".treemenu-container__box").width(
           startSize - startPosition + mouseMoveEvent.pageX
         );
+        showLeftArrow();
       }
     }
     function onMouseUp() {
@@ -58,6 +66,7 @@ const DrawerMenu = (props) => {
   React.useEffect(() => {
     const myFunc = async () => {
       var res = await dispatch(await loadTreeViewWidth(path));
+      console.log(res[path]);
       res[path] > 0 ? openTreeMenu(res[path]) : closeTreeMenu();
       $(".treemenu-container__box__toggle-button").show();
     };
