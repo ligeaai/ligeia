@@ -12,30 +12,42 @@
     height: 100%;
     width: 0px;
     &__search-bar {
-      padding: 16px 16px 0;
+      padding: 12px 16px 0;
       overflow: hidden;
     }
     &__toggle-button {
       display: none;
       border-radius: 50px;
-      width: 25px;
-      height: 25px;
+      width: 30px;
+      height: 30px;
+      padding: 2.5px;
       position: absolute;
-      top: 25px;
-      right: -12px;
+      top: 6px;
+      right: -15px;
       box-shadow: $shadow-two;
       z-index: 3;
       cursor: pointer;
-      @include themify($themes) {
-        background-color: themed("bg-tree-menu-icon");
+      // @include themify($themes) {
+      //   background-color: themed("bg-tree-menu-icon");
+      // }
+      background-color: #0b61d9;
+      color: #fff;
+      &:hover {
+        // padding: 1.5px;
+        // width: 28px;
+        // height: 28px;
+        // top: 23.5px;
+        // right: -12px;
+        background-color: #1a72ec;
+        box-shadow: $shadow-five;
       }
       &:hover {
-        padding: 1.5px;
-        width: 28px;
-        height: 28px;
-        top: 23.5px;
-        right: -12px;
-        box-shadow: $shadow-four;
+        // padding: 1.5px;
+        // width: 28px;
+        // height: 28px;
+        // top: 23.5px;
+        // right: -12px;
+        box-shadow: $shadow-one;
       }
     }
     &__divider {

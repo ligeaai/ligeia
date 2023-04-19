@@ -85,7 +85,8 @@ const DrawerMenu = (props) => {
           item
           xs={12}
           sx={{
-            padding: 2,
+            px: 2,
+            pt: 1.5,
             pb: 0,
             position: "relative",
             borderRadius: "5px",
@@ -95,17 +96,8 @@ const DrawerMenu = (props) => {
           <SearchBarMobile theme={"light"} />
         </Grid>
         <Box
-          sx={{
-            borderRadius: "50px",
-            width: "25px",
-            height: "25px",
-            position: "absolute",
-            boxShadow: 2,
-            backgroundColor: "icon.primary",
-            top: "25px",
-            right: "-12px",
-            zIndex: { xs: 0, sm: 3 },
-          }}
+          className="treemenu-container__box__toggle-button"
+          sx={{ display: "flex !important" }}
           onClick={async () => {
             await setLeftMenuWidth(() =>
               leftMenuWidth > 0 || leftMenuWidth === "min-content"
@@ -159,17 +151,7 @@ const DrawerMenu = (props) => {
           </Box>
         </Grid>
         <Box
-          sx={{
-            position: "absolute",
-            height: "calc(100% - 4px)",
-            width: "5px",
-            right: 0,
-            "&:hover": {
-              backgroundColor: "text.main",
-              cursor: "w-resize",
-            },
-            borderRadius: "5px",
-          }}
+          className="treemenu-container__resize-border"
           onMouseDown={handler}
         />
       </Grid>

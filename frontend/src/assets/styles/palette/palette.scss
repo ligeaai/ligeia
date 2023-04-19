@@ -23,6 +23,7 @@ $themes: (
     text-card: #616161,
     text-tree-menu: #212121,
     action-menu-icon: #263238,
+    breadcrumb-icon: #819ca9,
 
     app-logo: url("../../Images/header/ligeiaLogo.png"),
   ),
@@ -35,7 +36,7 @@ $themes: (
     bg-app-header: #212121,
     bg-card: #9e9e9e,
     bg-tree-menu: #616161,
-    bg-tree-menu-icon: #ffffff,
+    bg-tree-menu-icon: #0b61d9,
     bg-action-icon-tooltip: #5c6bc0,
 
     border-card: #424242,
@@ -46,6 +47,7 @@ $themes: (
     text-card: #eeeeee,
     text-tree-menu: #ffffff,
     action-menu-icon: #ffffff,
+    breadcrumb-icon: #ffffff,
 
     app-logo: url("../../Images/header/ligeiaLogoDark.png"),
   ),
@@ -69,6 +71,7 @@ $themes: (
     text-card: #616161,
     text-tree-menu: #616161,
     action-menu-icon: #263238,
+    breadcrumb-icon: #424242,
 
     app-logo: url("../../Images/header/ligeiaLogo.png"),
   ),
@@ -81,7 +84,7 @@ $themes: (
     bg-app-header: #1c1b1e,
     bg-card: #323033,
     bg-tree-menu: #323033,
-    bg-tree-menu-icon: #ffffff,
+    bg-tree-menu-icon: #0b61d9,
     bg-action-icon-tooltip: #5c6bc0,
 
     border-card: #605d62,
@@ -92,7 +95,7 @@ $themes: (
     text-card: #eeeeee,
     text-tree-menu: #aeaaae,
     action-menu-icon: #ffffff,
-
+    breadcrumb-icon: #ffffff,
     app-logo: url("../../Images/header/ligeiaLogoDark.png"),
   ),
   temp2: (
@@ -115,7 +118,7 @@ $themes: (
     text-card: #616161,
     text-tree-menu: #616161,
     action-menu-icon: #263238,
-
+    breadcrumb-icon: #424242,
     app-logo: url("../../Images/header/ligeiaLogo.png"),
   ),
   tempDark2: (
@@ -137,7 +140,7 @@ $themes: (
     //tree menü bg, breadcrumb bg
     bg-tree-menu: #323033,
     //tree menü icon bg, breadcrumb home icon
-    bg-tree-menu-icon: #ffffff,
+    bg-tree-menu-icon: #0b61d9,
     //action menu icon tooltip
     bg-action-icon-tooltip: #5c6bc0,
 
@@ -157,7 +160,8 @@ $themes: (
     text-tree-menu: #ffffff,
     //action menu icon color
     action-menu-icon: #ffffff,
-
+    //breadcrumb home icon
+    breadcrumb-icon: #ffffff,
     //Images
     app-logo: url("../../Images/header/ligeiaLogoDark.png"),
   ),
