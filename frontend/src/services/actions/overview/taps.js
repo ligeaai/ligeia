@@ -14,7 +14,6 @@ import { uuidv4 } from "../../utils/uuidGenerator";
 const _setLinkedItem = () => (dispatch, getState) => {
   const selectedItem = getState().collapseMenu.selectedItem;
   let list = []
-  console.log(selectedItem)
   function myFunc(myItems, index = 0) {
     myItems.map(e => {
       list.push([e.FROM_ITEM_ID, e.FROM_ITEM_NAME, index])
@@ -40,7 +39,6 @@ export const loadTapsOverview = () => async (dispatch, getState) => {
     cancelToken = axios.CancelToken.source();
     const body = JSON.stringify({ ITEM_ID: linkId })
     let res = await Overview.getDashboards(body, cancelToken)
-    console.log(res);
     var titles = Object.keys(res.data);
     var widgets = res.data;
     var data = {}
@@ -133,7 +131,6 @@ export const updateTabHeader =
         CULTURE: culture,
         LAYER_NAME: "KNOC"
       })
-      console.log(body);
       try {
         await Overview.updateDashboards(body)
         await dispatch(loadTapsOverview());

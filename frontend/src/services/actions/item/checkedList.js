@@ -65,7 +65,6 @@ export const saveLinks = async (date, linkType, TO_TYPE, FROM_TYPE, refresh) => 
         }
         try {
             body = JSON.stringify(body)
-            console.log(body);
 
             await ItemLinkService.save(body)
         } catch (err) {

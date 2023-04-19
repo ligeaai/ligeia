@@ -39,7 +39,6 @@ const MyCheckList = (props) => {
           [props.type]: props.data[props.type],
           CULTURE: CULTURE,
         });
-        console.log(body);
         if (cancelToken) {
           cancelToken.cancel();
         }

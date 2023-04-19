@@ -89,7 +89,6 @@ const Tabular = ({ highchartProps, backfillData }) => {
       setAllData([]);
 
       client.map((e) => {
-        console.log("tabular");
         e.close();
       });
     };

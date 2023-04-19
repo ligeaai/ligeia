@@ -37,7 +37,6 @@ const TagName = () => {
     );
   }, [transaction_prop, asset]);
   const handleChangeFunc = (e) => {
-    console.log(asset);
     dispatch(setIsActiveConfirmation(true));
     dispatch(addSaveTagValue("SHORT_NAME", e));
     dispatch(addSaveTagValue("NAME", `${asset}.${e}`));
@@ -295,7 +294,6 @@ const TransactionPropertySelect = () => {
   const defaultValue = useSelector((state) => state.tags.saveValues.ITEM_ID);
 
   const handleChangeFunc = async (value) => {
-    console.log(value);
     dispatch(setIsActiveConfirmation(true));
     dispatch(addSaveTagValue("ITEM_ID", value));
     dispatch(addSaveTagValue("TRANSACTION_PROPERTY", value));
@@ -350,8 +348,6 @@ const TextFields = (props) => {
   }
   if (row.PROPERTY_TYPE === "CODE") {
     if (row.CODE) {
-      console.log(row);
-
       var values = [{ ROW_ID: "", CODE_TEXT: "" }];
       const sortedCode = row.CODE.sort((a, b) =>
         a.CODE_TEXT > b.CODE_TEXT ? 1 : -1

@@ -78,7 +78,6 @@ export const signup = (email, first_name, last_name, password) => async dispatch
     const body = JSON.stringify({ email, first_name, last_name, password });
     try {
         const res = await Auth.register(body)
-        console.log(res);
         dispatch({
             type: SIGNUP_SUCCESS,
             payload: res.data.token

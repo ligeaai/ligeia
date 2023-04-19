@@ -137,7 +137,6 @@ const _save = (value, userEmail) => async (dispatch, getState) => {
     temp["HIERARCHY"] = [getState().treeview.selectedItem.ROW_ID]
     temp.LAST_UPDT_USER = userEmail
     const body = JSON.stringify({ ...temp })
-    console.log(body);
     try {
         let res;
         if (isNew === -2) {

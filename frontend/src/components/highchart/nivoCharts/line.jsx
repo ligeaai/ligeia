@@ -42,7 +42,6 @@ const MyResponsiveLine = ({ liveData, highchartProps, height }) => {
           saveAs(blob, "my-chart.png");
         });
     } else {
-      console.log("kşlsad");
     }
   };
   React.useEffect(() => {

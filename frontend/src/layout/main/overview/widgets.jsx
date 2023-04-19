@@ -29,7 +29,6 @@ const Widgets = React.forwardRef((props, ref) => {
     async function myFunc() {
       const body = JSON.stringify({ WIDGET_ID: widget });
       let res = await Overview.getWidget(body);
-      console.log(res.data);
       setHighChartProps(() => {
         return res.data;
       });

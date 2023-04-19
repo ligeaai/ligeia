@@ -20,7 +20,6 @@ export const loadRoleLink = () => async (dispatch, getState) => {
             cancelToken.cancel()
         }
         cancelToken = axios.CancelToken.source();
-        console.log(body);
         let res = await Roles.getRoleLink(body, cancelToken)
         dispatch({
             type: SET_LINKED_USERS_ROLE,
@@ -45,7 +44,6 @@ export const saveRoleLink = (user) => async (dispatch, getState) => {
     const role_id = getState().treeview.selectedItem.ROLES_ID
     try {
         let users = []
-        console.log(user);
         Promise.all(user.map(e => {
             users.push(e.email)
         }))
@@ -53,7 +51,6 @@ export const saveRoleLink = (user) => async (dispatch, getState) => {
             role_id,
             users
         })
-        console.log(body);
         await Roles.updateRoleLink(body)
         dispatch(loadRoleLink())
     } catch (err) {

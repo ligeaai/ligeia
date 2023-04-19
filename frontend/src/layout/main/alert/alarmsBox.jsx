@@ -36,7 +36,6 @@ const AlarmsBox = () => {
         if (client.readyState === client.OPEN) {
           if (typeof e.data === "string") {
             let jsonData = JSON.parse(e.data);
-            console.log(jsonData);
             dispatch(setAlarmsItem(jsonData.slice(-5)));
             return true;
           }

@@ -75,96 +75,88 @@ function TreeDataWithGap() {
     },
   ]);
   return (
-    <Box>
-      <Box
-        sx={{
-          m: 0.5,
-          button: {
-            minWidth: "36px",
-            height: "36px",
-            borderRadius: "50px",
+    <Box
+      sx={{
+        button: {
+          minWidth: "36px",
+          height: "36px",
+          borderRadius: "50px",
+        },
+        minHeight: "calc(500px - 36px - 16px - 40px )",
+        height: "calc(100vh - 60px - 36px - 16px - 60px)",
+        width: "100%",
+        "& .MuiInputBase-input": {
+          padding: "0px important",
+        },
+        "& .MuiDataGrid-cell--editing": {
+          backgroundColor: "background.secondary",
+        },
+        "& .super-app-theme--cell": {
+          backgroundColor: "background.secondary",
+        },
+        "& .MuiDataGrid-cellContent": { fontSize: "12px" },
+        "& .MuiDataGrid-virtualScrollerRenderZone": {
+          "&>*:nth-of-type(1)": {
+            "&>*:nth-of-type(1)": {
+              svg: {
+                display: "none",
+              },
+            },
+          },
+        },
+      }}
+    >
+      <DataGridPro
+        componentsProps={{
+          basePopper: {
+            sx: {
+              ".MuiDataGrid-columnsPanel": {
+                span: {
+                  fontSize: "14px",
+                },
+                "&>*:nth-of-type(2)": {
+                  display: "none",
+                },
+              },
+              "& .MuiInputBase-input": {
+                fontSize: "14px",
+              },
+              "& .MuiButtonBase-root": {
+                fontSize: "14px",
+              },
+            },
           },
         }}
-      >
-        <Box
-          sx={{
-            minHeight: "calc(500px - 36px - 16px - 40px )",
-            height: "calc(100vh - 60px - 36px - 16px - 60px)",
-            width: "100%",
-            "& .MuiInputBase-input": {
-              padding: "0px important",
-            },
-            "& .MuiDataGrid-cell--editing": {
-              backgroundColor: "background.secondary",
-            },
-            "& .super-app-theme--cell": {
-              backgroundColor: "background.secondary",
-            },
-            "& .MuiDataGrid-cellContent": { fontSize: "12px" },
-            "& .MuiDataGrid-virtualScrollerRenderZone": {
-              "&>*:nth-of-type(1)": {
-                "&>*:nth-of-type(1)": {
-                  svg: {
-                    display: "none",
-                  },
-                },
-              },
-            },
-          }}
-        >
-          <DataGridPro
-            componentsProps={{
-              basePopper: {
-                sx: {
-                  ".MuiDataGrid-columnsPanel": {
-                    span: {
-                      fontSize: "14px",
-                    },
-                    "&>*:nth-of-type(2)": {
-                      display: "none",
-                    },
-                  },
-                  "& .MuiInputBase-input": {
-                    fontSize: "14px",
-                  },
-                  "& .MuiButtonBase-root": {
-                    fontSize: "14px",
-                  },
-                },
-              },
-            }}
-            localeText={{
-              toolbarColumns: "",
-              toolbarFilters: "",
-              toolbarDensity: "",
-              toolbarExport: "",
-            }}
-            density="compact"
-            defaultGroupingExpansionDepth={1}
-            hideFooter={true}
-            treeData
-            onCellEditCommit={onCellEditCommit}
-            rows={Object.values(rows)}
-            columns={dispatch(getColumns())}
-            getTreeDataPath={getTreeDataPath}
-            getRowId={(row) => row.ROW_ID}
-            //loading={childCodeList.loading}
-            isRowSelectable={(rowId) => rowId.id !== selectedParent.rowId}
-            checkboxSelection={true}
-            disableSelectionOnClick={true}
-            onSelectionModelChange={(rowId) => dispatch(setSelectedRows(rowId))}
-            sortModel={sortModel}
-            onSortModelChange={(model) => setSortModel(model)}
-            components={{
-              Toolbar: CustomToolbar,
-              NoRowsOverlay: CustomNoRowsOverlay,
-              LoadingOverlay: LinearProgress,
-            }}
-            groupingColDef={groupingColDef}
-            disableIgnoreModificationsIfProcessingProps
-          />
-        </Box>
-      </Box>
+        localeText={{
+          toolbarColumns: "",
+          toolbarFilters: "",
+          toolbarDensity: "",
+          toolbarExport: "",
+        }}
+        density="compact"
+        defaultGroupingExpansionDepth={1}
+        hideFooter={true}
+        treeData
+        onCellEditCommit={onCellEditCommit}
+        rows={Object.values(rows)}
+        columns={dispatch(getColumns())}
+        getTreeDataPath={getTreeDataPath}
+        getRowId={(row) => row.ROW_ID}
+        //loading={childCodeList.loading}
+        isRowSelectable={(rowId) => rowId.id !== selectedParent.rowId}
+        checkboxSelection={true}
+        disableSelectionOnClick={true}
+        onSelectionModelChange={(rowId) => dispatch(setSelectedRows(rowId))}
+        sortModel={sortModel}
+        onSortModelChange={(model) => setSortModel(model)}
+        components={{
+          Toolbar: CustomToolbar,
+          NoRowsOverlay: CustomNoRowsOverlay,
+          LoadingOverlay: LinearProgress,
+        }}
+        groupingColDef={groupingColDef}
+        disableIgnoreModificationsIfProcessingProps
+      />
     </Box>
   );
 }
