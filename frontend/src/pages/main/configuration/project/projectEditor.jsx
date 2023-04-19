@@ -211,7 +211,7 @@ const ProjectEditor = () => {
     };
   }, []);
   return (
-    <Grid container sx={{ p: 1.5 }}>
+    <Grid container>
       <Grid item xs={12} className={"project-container__body__row"}>
         <Grid container className={"project-container__body__select-box"}>
           <Grid item className={"project-container__body__label"}>
