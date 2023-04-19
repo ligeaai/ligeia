@@ -20,8 +20,8 @@ urlpatterns = [
     path("resources-types/", include("apps.resources_types.urls")),
     path("resource-drawer/", include("apps.resources_drawer.urls")),
     # uom
-    path("uoms/", include("apps.uoms.urls")),
-    path("uom_unit/", include("apps.uom_base_unit.urls")),
+    path("uom/", include("apps.uom.urls")),
+    path("uom-unit/", include("apps.uom_base_unit.urls")),
     # bi related
     path("layouts/", include("apps.bi_layouts.urls")),
     path("dashboard/", include("apps.bi_dashbord.urls")),

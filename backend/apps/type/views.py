@@ -74,25 +74,6 @@ class TypeAndPropertySaveView(generics.CreateAPIView):
         return Response({"Message":"Successful"}, status=status.HTTP_201_CREATED)
 
 
-# class TypeAndPropertyUpdateView(generics.CreateAPIView):
-#     permission_classes = [permissions.AllowAny]
-
-#     def post(self, request, *args, **kwargs):
-#         serializer = TypeCustomSaveSerializer(data=request.data)
-#         serializer.is_valid()
-#         serializer.save(request)
-#         serializer = TypePropertyCustomSaveSerializer(data=request.data)
-#         serializer.is_valid()
-#         serializer.save(request)
-#         serializer = ResourceTypesTypeSerializer(data = request.data)
-#         serializer.is_valid()
-#         serializer.save(request)
-#         return Response({"Message":"Successful"}, status=status.HTTP_201_CREATED)
-
-
-
-
-
 class TypeDeleteView(generics.UpdateAPIView):
     serializer_class = TypeSaveSerializer
     permission_classes = [permissions.AllowAny]
@@ -160,7 +141,7 @@ class TypeView(generics.ListAPIView):
     permission_classes = [permissions.AllowAny]
 
     def get(self, request, *args, **kwargs):
-        import_data(Type,"types")
+        import_data(Type,"type")
 
         return Response({"Message": "successful"}, status=status.HTTP_200_OK)
 
@@ -223,135 +204,3 @@ class TypeDetailNewView(generics.CreateAPIView):
                 data[index]['MOBILE_LABEL'] = serializer.data[0].get('MOBILE_LABEL')
 
     
-                    
-    # def _getCodeList(self,data,culture):
-    #     for index in range(0,len(data)):
-    #         # queryset = code_list.objects.filter(LIST_TYPE = "CODE_LIST",CODE=data[index].get('CODE_LIST'), CULTURE=culture)
-    #         queryset = code_list.objects.filter(LIST_TYPE=data[index].get('CODE_LIST'), CULTURE=culture)
-    #         child_code = CodeListORM.getCodeList(queryset,culture=culture,hierarchy=False)
-    #         data[index]['CODE'] = child_code
-    
-            
-            
-            
-            
-            
-            
-
-
-
-
-    #     for index in range(0,len(data)):
-    #         queryset = code_list.objects.filter(LIST_TYPE = "CODE_LIST",CODE=data[index].get('CODE_LIST'), CULTURE=culture)
-    #         if queryset:
-    #             serializer = codeListNameSerializer(queryset,many = True)
-    #             self._getChildCodeList(serializer.data,culture)
-    #             data[index]['CODE_LIST'] = serializer.data  
-            
-            
-    # def _getChildCodeList(self,data,culture):
-    #     for index in range(0,len(data)):
-    #         queryset = code_list.objects.filter(LIST_TYPE = data[index].get('CODE'), CULTURE=culture)
-    #         if queryset:
-    #             serializer = codeListNameSerializer(queryset,many = True)
-    #             data[index]['CHILD'] = serializer.data
-    #             self._getChildCodeList(serializer.data,culture)
-
-
-
-# class TypeDetailView(generics.CreateAPIView):
-#     permission_classes = [permissions.AllowAny]
-#     serializer_class = [
-#         TypeSerializer,
-#         TypePropertySerializer,
-#     ]
-    
-#     def post(self, request):
-#             cache_key = request.data.get("TYPE") + "-" + request.data.get("CULTURE")
-#             # cache_data = Red.get(cache_key)
-#             # if cache_data:
-#             #     return Response(cache_data, status=status.HTTP_200_OK)
-
-#             seriliazerPropertyList = []
-#             seriliazerResourceTypes = []
-#             typeQuary = Type.objects.filter(TYPE=request.data.get("TYPE"))
-            
-#             validate_find(typeQuary,request=request)
-            
-#             serializerType = TypeSerializer(typeQuary, many=True)
-#             for typeValue in serializerType.data[0].values():
-#                 print(typeValue)
-#                 proertyQuery = type_property.objects.filter(TYPE=typeValue)
-#                 serializerProperty = TypePropertySerializer(proertyQuery, many=True)
-#                 seriliazerPropertyList.append(serializerProperty)
-
-#             filterDict = dict()
-#             propertyList = []
-#             culture = request.data.get("CULTURE")
-#             for parser in seriliazerPropertyList:
-#                 dicList = []
-#                 label_id = []
-#                 codeListType = []
-#                 for value in parser.data:
-#                     try:
-#                         if value.get("CODE_LIST"):
-#                             index = codeListType.index(value.get("CODE_LIST"))
-
-#                     except Exception as e:
-#                         codeListValue = value.get("CODE_LIST")
-#                         codeListType.append(codeListValue)
-#                         parentCodeListQuery = code_list.objects.filter(
-#                             LIST_TYPE="CODE_LIST", CULTURE=culture, CODE=codeListValue
-#                         )
-#                         childCodeListQuery = code_list.objects.filter(
-#                             LIST_TYPE=codeListValue, CULTURE=culture
-#                         )
-#                         serializerCodeList = codeListNameSerializer(
-#                                     childCodeListQuery, many=True
-#                                 )
-#                         if parentCodeListQuery:
-#                             parentserializerCodeList = codeListNameSerializer(
-#                                 childCodeListQuery, many=True
-#                             )
-#                             if childCodeListQuery:
-
-#                                 parentserializerCodeList.data[0][
-#                                     "CHILD"
-#                                 ] = serializerCodeList.data
-                        
-#                             value["CODE-LIST"] = parentserializerCodeList.data
-#                     if value.get('SORT_ORDER'):
-#                         value['SORT_ORDER'] = int(value.get('SORT_ORDER'))
-#                     value_label = value.get("LABEL_ID")
-#                     try:
-#                         index = label_id.index(value_label)
-#                     except Exception as e:
-#                         label_id.append(value_label)
-#                         resourceListQuery = resources_types.objects.filter(
-#                             ID=value_label, CULTURE=culture
-#                         )
-#                         if resourceListQuery:
-#                             filterDict = value
-#                             serializerResource = ResourceTypesSerializer(
-#                                 resourceListQuery, many=True
-#                             )
-#                             filterDict["RESOURCE-LIST"] = serializerResource.data
-#                             dicList.append(filterDict)
-#                 propertyList.append(dicList)
-
-#             typeProperty = {
-#                 "TYPE": propertyList[0],
-#                 "BASETYPE": propertyList[1],
-#             }
-#             data = {
-#                 "TYPE": {
-#                     "TYPE COLUMNS": serializerType.data,
-#                     "TYPE PROPERTY COLUMNS": typeProperty,
-#                 },
-#             }
-            
-#             cache_data = Red.set(cache_key, data)
-#             logger.info("Type and type property listed",request=request)
-#             return Response(data, status=status.HTTP_200_OK)
-       
-           

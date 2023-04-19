@@ -8,7 +8,7 @@ from utils.models_utils import (
     validate_model_not_null,
     validate_find,
 )
-
+from utils.utils import import_data
 # Create your views here.
 from .models import layer
 from .serializers import LayerSaveSerializer,LayerDropDownSerializer
@@ -44,7 +44,7 @@ class LayerView(generics.ListAPIView):
     def get(self, request, *args, **kwargs):
  
 
-        typeAddData.import_data("LAYER")
+        import_data(layer,"layer")
         return Response({"Message": "Successful"}, status=status.HTTP_200_OK)
 
 

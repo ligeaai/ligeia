@@ -1,35 +1,37 @@
-"CULTURE","ID","SHORT_LABEL","MOBILE_LABEL","ICON","PARENT","LAYER_NAME","HIDDEN","LAST_UPDT_USER","LAST_UPDT_DATE","VERSION","DB_ID","ROW_ID","STATUS","SORT_ORDER","REV_GRP_ID"
-"en-US","REPORTING","Reporting Desinger","Reporting",NULL,"REPORTING-REPORTINGDESINGER","AVM","False",NULL,"2023-04-16","fef63c68124842d2ada653761988a754",NULL,"7dab437b11054d299ea8a3fee0f21108",NULL,NULL,NULL
-"en-US","ITEM-TAGS","Tag Calculated","Tag Calculated",NULL,"TAGS_CALCULATED","AVM","False",NULL,"2017-10-13","4dd1cf1a5ec54a9582eaa2b745ec83bd",NULL,"55d70e085a8a422abf404e4b98a67328",NULL,3,"3"
-"en-US","ITEM-TAGS","Tag Manager","Tag Manager",NULL,"TAGS_MANAGER","AVM","False",NULL,"2017-10-13","ce6e50d8c1cf47bbbfaf0ee32ee2c226",NULL,"dee5c995df324c27b460fdb923f7c038",NULL,2,"3"
-"en-US","ITEM-TAGS","Tag Import","Tag Import",NULL,"TAGS_IMPORT","AVM","False",NULL,"2017-10-13","979cb93e141e48b48b822956103cc2b8",NULL,"61ec9c7306834685beb12c11a16630c2",NULL,1,"3"
-"en-US","ITEM","Tags","Tags","DriveFileMoveOutlined","ITEM-TAGS","AVM","False",NULL,"2017-10-13","683e00eb54d643caba0dc2b22408e137",NULL,"87747f9058f647c8825159e22accc00f",NULL,5,"3"
-"en-US","TOOLS","Types","Types",NULL,"TYPES","AVM","False",NULL,"2017-10-13","4bc3c059e07a4a0e8b4b3b4254db1574",NULL,"7b56d31b2f594a679d8fa3da8df2c4c0",NULL,4,"3"
-"en-US","TOOLS","Code List","Code List",NULL,"CODE_LIST","AVM","False",NULL,"2017-10-13","cc4447e4fb9d4e4c9df1d869f7643ec3",NULL,"c531f878f7dc41099f645bd2828caa3d",NULL,3,"3"
-"en-US","TOOLS","Resources","Resources",NULL,"RESOURCE_LIST","AVM","False",NULL,"2017-10-13","e0bc334ebd2349ffa248e24ba38c7c82",NULL,"7f2bf8516c564797ab2e91e80061fde2",NULL,2,"3"
-"en-US","TOOLS","Project","Project",NULL,"PROJECT","AVM","False",NULL,"2017-10-13","75e818c0ef034fbc9015e9e2468a4802",NULL,"eb99665c83254ad695635645510888c3",NULL,1,"3"
-"en-US","drawerMenu2","Tools","Tools","HomeRepairService","TOOLS","AVM","False",NULL,"2017-10-13","031b464c427c46ea83dbde1c8bfeccb8",NULL,"0d0d3e91db5b4f9c906e7694ce853725",NULL,5,"3"
-"en-US","ITEM-ITEMS","ITEMS-TEMPT","ITEM-TEMPT",NULL,"TYPE.OG_STD","AVM","False",NULL,"2017-10-13","beccd8393de2406ea0668ae2877e4495",NULL,"3a04a04c1da447b1a9a29bca862c4514",NULL,NULL,"3"
-"en-US","ITEM-ROUTES&STOP","RoutesStop-Tempt","RoutesStop-Tempt",NULL,"TYPE.ROUTE","AVM","False",NULL,"2017-10-13","82b265f859a746e098904c94410109ea",NULL,"87f5335084374865bf45c8ca2777f05e",NULL,NULL,"3"
-"en-US","ITEM-ROUTES&STOP","RoutesStop-Tempt","RoutesStop-Tempt",NULL,"TYPE.STOP","AVM","False",NULL,"2017-10-13","f8994e6bd2044792984cbf509e080f4d",NULL,"02a6c64d7ed34b27b72ca7d20a7cc8ac",NULL,NULL,"3"
-"en-US","ITEM-GEOGRAPHY","Geography-Tempt","Geography-Tempt",NULL,"TYPE.GEO_UNIT1","AVM","False",NULL,"2017-10-13","f06c69eb585c4d588808db339d92dca3",NULL,"a0fb370a834b4490acd742e132dc4585",NULL,NULL,"3"
-"en-US","ITEM-GEOGRAPHY","Geography-Tempt","Geography-Tempt",NULL,"TYPE.GEO_UNIT2","AVM","False",NULL,"2017-10-13","ab7df9c820ee4e179207b74fb03a6578",NULL,"d20d7c76e680447889b5e8cfcec04938",NULL,NULL,"3"
-"en-US","ITEM-GEOGRAPHY","Geography-Tempt","Geography-Tempt",NULL,"TYPE.GEO_UNIT3","AVM","False",NULL,"2017-10-13","3601c208a0b847d5a8ea61cdcad1d1cd",NULL,"42692c6421e640b3b06447ac1f5a92bd",NULL,NULL,"3"
-"en-US","ITEM-ORGANIZATION","Orgnaization-Tempt","Orgnaization-Tempt",NULL,"TYPE.ORG_UNIT4","AVM","False",NULL,"2017-10-13","ab1cc7719153443da0fc1c1b5716fb4c",NULL,"14336ec3b6084a549e9657e0c02c5def",NULL,5,"3"
-"en-US","ITEM-ORGANIZATION","Orgnaization-Tempt","Orgnaization-Tempt",NULL,"TYPE.ORG_UNIT3","AVM","False",NULL,"2017-10-13","ee8fa242260448da8b4c02bb47cf5e34",NULL,"8a04d079148e4224a1a71dc8dd8dda93",NULL,4,"3"
-"en-US","ITEM-ORGANIZATION","Orgnaization-Tempt","Orgnaization-Tempt",NULL,"TYPE.ORG_UNIT2","AVM","False",NULL,"2017-10-13","0356137aa17948fab9f3f8d61e22db9a",NULL,"63c0dc39267b4d4c8638e48bcb0cc26a",NULL,3,"3"
-"en-US","ITEM-ORGANIZATION","Orgnaization-Tempt","Orgnaization-Tempt",NULL,"TYPE.ORG_UNIT1","AVM","False",NULL,"2017-10-13","328650e73bba4d5fb807c229e8969a5a",NULL,"abfc7ed1a88f453396b10a2ff704bfbd",NULL,2,"3"
-"en-US","ITEM-ORGANIZATION","Orgnaization-Tempt","Orgnaization-Tempt",NULL,"TYPE.COMPANY","AVM","False",NULL,"2017-10-13","9eed6b2a965c4065ae9ca850b42bfebe",NULL,"d4c7e12bbeb842ad9d29ffe06d74b25f",NULL,1,"3"
-"en-US","ITEM","Items","Items","DriveFileMoveOutlined","ITEM-ITEMS","AVM","False",NULL,"2017-10-13","73917bde652249cd8c66176c15ef20d1",NULL,"e59db57963f74befa686a5a6316fde2a",NULL,2,"3"
-"en-US","ITEM","Routes And Stops","Routes And Stops","DriveFileMoveOutlined","ITEM-ROUTES&STOP","AVM","False",NULL,"2017-10-13","4cb8b8e1c0314df1898eedd5fda8c9eb",NULL,"434f38ec2438415ea6b295eb8a1486c6",NULL,4,"3"
-"en-US","ITEM","Geography","Geography","DriveFileMoveOutlined","ITEM-GEOGRAPHY","AVM","False",NULL,"2017-10-13","defaa3c2db8b4109b03ea5f6568c4b34",NULL,"a713c6b7a7674a3b92474bef2f5f9c25",NULL,1,"3"
-"en-US","ITEM","Orgnaization","Orgnaization","DriveFileMoveOutlined","ITEM-ORGANIZATION","AVM","False",NULL,"2017-10-13","82d3f07f139d447b83b334fbdf9add53",NULL,"a6d222cabe664d998095c89054c7b48e",NULL,3,"3"
-"en-US","drawerMenu2","Configuration","Configuration","SettingsOutlined","ITEM","AVM","False",NULL,"2017-10-13","791640bad18747ee85460531ca206cec",NULL,"1dae18c318d548d2ac6ae9043f3d95d3",NULL,6,"3"
-"en-US","ADMINISTRATION","Diagnostics","Diagnostics",NULL,"DIAGNOSTICS","AVM","False",NULL,"2017-10-13","eb281d97ad1c4b9293b4581805b4debb",NULL,"593e4487c3ec4daf97f89a3899c3be98",NULL,NULL,"3"
-"en-US","ADMINISTRATION","Roles","Roles",NULL,"ROLES","AVM","False",NULL,"2017-10-13","57f7c01dd58d49daa4c38c90a9a97cc4",NULL,"8dbc7d02c35e403285d310f2f081a4ff",NULL,NULL,"3"
-"en-US","ADMINISTRATION","Users","Users",NULL,"USERS","AVM","False",NULL,"2017-10-13","83e530f6031b49e7b9b1e59f9db3fe13",NULL,"505b22d75e9046e897fad22012484116",NULL,NULL,"3"
-"en-US","ADMINISTRATION","Profile","Profile",NULL,"PROFILE","AVM","False",NULL,"2017-10-13","b99f84c624e240b58538fdae8d9a4e68",NULL,"dd32588ac7f243fbbb72bf3c96301f5a",NULL,NULL,"3"
-"en-US","drawerMenu2","Administration","Adminstration","AdminPanelSettingsOutlined","ADMINISTRATION","AVM","False",NULL,"2017-10-13","5e7962a5e5fc4ae8b654a6bf32efe212",NULL,"d20215999f994c5b81f8e6029d2d50cd",NULL,4,"3"
-"en-US","drawerMenu2","Reporting","Reporting","FeedOutlined","REPORTING","AVM","False",NULL,"2017-10-13","8c55e1f8dcc54be591b3ebd82a3ffab8",NULL,"dc50b884bf4b42658d1e9056c86c1762",NULL,3,"3"
-"en-US","drawerMenu2","Overview","Overview","DashboardOutlined","OVERVIEW","AVM","False",NULL,"2017-10-13","752639bd109d42debedad4f0f55ee691",NULL,"1bc6603b8d174d0cbe14bf99aacc4e86",NULL,2,"3"
-"en-US","drawerMenu2","Home","Home","Home","HOME","AVM","False",NULL,"2017-10-13","9c184d7cfb2d459788d52eaf3badc50b",NULL,"69bab724048e458a9748aba9637b1592",NULL,1,"3"
+CULTURE,ID,SHORT_LABEL,MOBILE_LABEL,ICON,PARENT,LAYER_NAME,HIDDEN,LAST_UPDT_USER,LAST_UPDT_DATE,VERSION,DB_ID,ROW_ID,STATUS,SORT_ORDER,REV_GRP_ID
+en-US,drawerMenu,Home,Home,Home,HOME,STD,FALSE,NULL,,,demo,,NULL,1,
+en-US,drawerMenu,Overview,Overview,DashboardOutlined,OVERVIEW,STD,FALSE,NULL,,,demo,,NULL,2,
+en-US,drawerMenu,Reporting,Reporting,FeedOutlined,REPORT,STD,FALSE,NULL,,,demo,,NULL,3,
+en-US,drawerMenu,Administration,Adminstration,AdminPanelSettingsOutlined,ADMIN,STD,FALSE,NULL,,,demo,,NULL,4,
+en-US,drawerMenu,Tools,Tools,HomeRepairService,TOOLS,STD,FALSE,NULL,,,demo,,NULL,5,
+en-US,drawerMenu,Configuration,Configuration,SettingsOutlined,CONFIG,STD,FALSE,NULL,,,demo,,NULL,6,
+en-US,REPORT,Viewer,Viewer,NULL,MSRS_VIEWER,STD,FALSE,NULL,,,demo,,NULL,1,
+en-US,REPORT,Designer,Designer,NULL,MSRS_DESIGNER,STD,FALSE,NULL,,,demo,,NULL,2,
+en-US,ADMIN,Profile,Profile,NULL,PROFILE,STD,FALSE,NULL,,,,,NULL,1,
+en-US,ADMIN,Users,Users,NULL,USERS,STD,FALSE,NULL,,,,,NULL,2,
+en-US,ADMIN,Roles,Roles,NULL,ROLES,STD,FALSE,NULL,,,,,NULL,3,
+en-US,ADMIN,Diagnostics,Diagnostics,NULL,DIAGNOSTICS,STD,FALSE,NULL,,,,,NULL,4,
+en-US,TOOLS,Project,Project,NULL,PROJECT,STD,FALSE,NULL,,,,,NULL,1,
+en-US,TOOLS,Resources,Resources,NULL,RESOURCE_LIST,STD,FALSE,NULL,,,,,NULL,2,
+en-US,TOOLS,Code List,Code List,NULL,CODE_LIST,STD,FALSE,NULL,,,,,NULL,3,
+en-US,TOOLS,Types,Types,NULL,TYPES,STD,FALSE,NULL,,,,,NULL,4,
+en-US,TOOLS,Workflows,Workflows,NULL,WORKFLOWS,STD,FALSE,NULL,,,,,NULL,5,
+en-US,CONFIG,Tags,Tags,DriveFileMoveOutlined,ITEM-TAGS,STD,FALSE,NULL,,,,,NULL,1,
+en-US,CONFIG,Routes And Stops,Routes And Stops,DriveFileMoveOutlined,ITEM-ROUTES&STOP,STD,FALSE,NULL,,,,,NULL,2,
+en-US,CONFIG,Orgnaization,Orgnaization,DriveFileMoveOutlined,ITEM-ORGANIZATION,STD,FALSE,NULL,,,,,NULL,3,
+en-US,CONFIG,Geography,Geography,DriveFileMoveOutlined,ITEM-GEOGRAPHY,STD,FALSE,NULL,,,,,NULL,4,
+en-US,CONFIG,Items,Items,DriveFileMoveOutlined,ITEM-ITEMS,STD,FALSE,NULL,,,,,NULL,5,
+en-US,ITEM-TAGS,Tag Import,Tag Import,NULL,TAGS_IMPORT,STD,FALSE,NULL,,,,,NULL,1,
+en-US,ITEM-TAGS,Tag Manager,Tag Manager,NULL,TAGS_MANAGER,STD,FALSE,NULL,,,,,NULL,2,
+en-US,ITEM-TAGS,Tag Calculated,Tag Calculated,NULL,TAGS_CALCULATED,STD,FALSE,NULL,,,,,NULL,3,
+en-US,ITEM-ROUTES&STOP,RoutesStop-Tempt,RoutesStop-Tempt,NULL,TYPE.ROUTE,STD,FALSE,NULL,,,,,NULL,1,
+en-US,ITEM-ROUTES&STOP,RoutesStop-Tempt,RoutesStop-Tempt,NULL,TYPE.STOP,STD,FALSE,NULL,,,,,NULL,2,
+en-US,ITEM-ORGANIZATION,Orgnaization-Tempt,Orgnaization-Tempt,NULL,TYPE.COMPANY,STD,FALSE,NULL,,,,,NULL,1,
+en-US,ITEM-ORGANIZATION,Orgnaization-Tempt,Orgnaization-Tempt,NULL,TYPE.ORG_UNIT1,STD,FALSE,NULL,,,,,NULL,2,
+en-US,ITEM-ORGANIZATION,Orgnaization-Tempt,Orgnaization-Tempt,NULL,TYPE.ORG_UNIT2,STD,FALSE,NULL,,,,,NULL,3,
+en-US,ITEM-ORGANIZATION,Orgnaization-Tempt,Orgnaization-Tempt,NULL,TYPE.ORG_UNIT3,STD,FALSE,NULL,,,,,NULL,4,
+en-US,ITEM-ORGANIZATION,Orgnaization-Tempt,Orgnaization-Tempt,NULL,TYPE.ORG_UNIT4,STD,FALSE,NULL,,,,,NULL,5,
+en-US,ITEM-GEOGRAPHY,Geography-Tempt,Geography-Tempt,NULL,TYPE.GEO_UNIT1,STD,FALSE,NULL,,,,,NULL,1,
+en-US,ITEM-GEOGRAPHY,Geography-Tempt,Geography-Tempt,NULL,TYPE.GEO_UNIT2,STD,FALSE,NULL,,,,,NULL,2,
+en-US,ITEM-GEOGRAPHY,Geography-Tempt,Geography-Tempt,NULL,TYPE.GEO_UNIT3,STD,FALSE,NULL,,,,,NULL,3,
+en-US,ITEM-ITEMS,ITEMS-TEMPT,ITEM-TEMPT,NULL,TYPE.STD,STD,FALSE,NULL,,,,,NULL,1,

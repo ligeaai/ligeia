@@ -10,9 +10,10 @@ from .serializers import (
 )
 import uuid
 from django.db.models import Q
-from apps.uoms.models import uom
-from apps.uoms.serializers import UomQuantitySerializer, UomDetailsSerializer
+from apps.uom.models import uom
+from apps.uom.serializers import UomQuantitySerializer, UomDetailsSerializer
 from services.parsers.addData.type import typeAddData
+from utils.utils import import_data
 
 
 class UomUnitSaveView(generics.CreateAPIView):
@@ -33,7 +34,7 @@ class UomUnitScriptView(generics.ListAPIView):
     permission_classes = [permissions.AllowAny]
 
     def get(self, request, *args, **kwargs):
-        typeAddData.import_data("UOM_UNIT")
+        import_data(uom_base_unit,"uom_unit")
         return Response({"Message": "Succsessfull"}, status=status.HTTP_200_OK)
 
 
