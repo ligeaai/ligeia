@@ -11,11 +11,12 @@ modelApp = [
     "apps.item_version",
     "apps.layer",
     "apps.tags",
+    "apps.tags_calculated",
     "apps.notifications",
     "apps.websocket",
     "apps.uoms",
     "apps.uom_base_unit",
-    "apps.calculated_tag",
+
     # "apps.widgets",
     # "apps.widget_property",
     # "apps.bi_layouts",
