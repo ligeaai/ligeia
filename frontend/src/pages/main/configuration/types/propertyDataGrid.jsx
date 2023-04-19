@@ -157,4 +157,4 @@ const DetailPanelContent = () => {
   );
 };
 
-export default DetailPanelContent;
+export default React.memo(DetailPanelContent);

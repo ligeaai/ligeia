@@ -119,7 +119,6 @@ export default function HorizontalLinearStepper({
   const handleStep = (step) => () => {
     setActiveStep(step);
   };
-  console.log(components);
   return (
     <Box sx={{ width: "100%", height: "100%", pt: 2 }}>
       <Stepper activeStep={activeStep} connector={<QontoConnector />}>

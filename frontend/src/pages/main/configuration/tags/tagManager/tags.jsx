@@ -7,12 +7,11 @@ import {
   Breadcrumb,
   ItemSperatorLineXL,
   PropLinkTabs,
-  MainBox,
 } from "../../../../../components";
 import DrawerMenu from "../../../../../layout/main/asset/treeViewMenu";
 import TagsActionMenu from "./tagsActionMenu";
 
-import Properties from "./properties";
+import Properties from "./propertiesEditor";
 
 import {
   cleanAllTags,
@@ -40,42 +39,26 @@ const Tags = ({ isHome }) => {
     };
   }, []);
   return (
-    <MainBox>
+    <Grid container columnGap={0.5} className="tag-manager-container">
       <Grid item>
         <DrawerMenu Element={<Menu />} path="tags" />
       </Grid>
-      <Grid
-        item
-        xs={12}
-        sx={{
-          boxShadow: 3,
-          borderRadius: "3px",
-        }}
-      >
-        <Grid container>
-          <Breadcrumb />
-          <ItemSperatorLineXL />
-          <Grid
-            item
-            sx={{
-              ml: 1.5,
-              display: "flex",
-              alignItems: "center",
-              marginY: "2px",
-            }}
-          >
-            <TagsActionMenu />
-          </Grid>
-          <ItemSperatorLineXL />
-          <Grid item xs={12} sx={{ mt: 1, mr: 1 }}>
-            <PropLinkTabs
-              MyProperties={<Properties></Properties>}
-              isLinkOpen={false}
-            />
-          </Grid>
+      <Grid item xs={12} className="tag-manager-container__body">
+        <Breadcrumb />
+        <ItemSperatorLineXL />
+        <Grid item className="tag-manager-container__body__action-menu-box">
+          <TagsActionMenu />
+        </Grid>
+        <ItemSperatorLineXL />
+        <Grid
+          item
+          xs={12}
+          className="tag-manager-container__body__property-box"
+        >
+          <PropLinkTabs MyProperties={<Properties />} isLinkOpen={false} />
         </Grid>
       </Grid>
-    </MainBox>
+    </Grid>
   );
 };
 

@@ -21,7 +21,6 @@ const _fillUuids = (rows) => async (dispatch, getState) => {
     Object.keys(rows).map(e => {
         if (rows[e].PROPERTY_TYPE === "GUID") {
             var newUuid = uuidv4()
-            console.log(rows[e]);
             dispatch({
                 type: SET_TAG_SAVE_VALUES,
                 payload: { key: rows[e].PROPERTY_NAME, value: newUuid.replace(/-/g, "") }

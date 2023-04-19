@@ -27,6 +27,9 @@ const logout = () => {
 const socialLogin = (text, path, body) => {
     return instance.post(`/auth/${text}/${path}/`, body, unAuthConfig);
 };
+const checkMail = (body) => {
+    return instance.post(`auth/user/check/`, body, unAuthConfig);
+}
 
 const Auth = {
     get,
@@ -35,7 +38,8 @@ const Auth = {
     forgetPass,
     resetNewPass,
     logout,
-    socialLogin
+    socialLogin,
+    checkMail
 };
 
 

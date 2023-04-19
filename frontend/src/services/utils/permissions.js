@@ -20,7 +20,6 @@ export const isNewDeleted = (param) => (dispatch, getState) => {
 
 export const isCreated = (param) => (dispatch, getState) => {
     const isCreated = getState().auth.user?.role?.PROPERTY_ID[param]?.CREATE
-    console.log(isCreated);
     return returnValCheck(isCreated)
 }
 
@@ -33,9 +32,6 @@ export const isNewUpdated = (param) => (dispatch, getState) => {
     const isUpdated = getState().auth.user?.role?.PROPERTY_ID[param]?.UPDATE
     const isCreated = getState().auth.user?.role?.PROPERTY_ID[param]?.CREATE
     const isNew = getState().treeview.selectedItem.selectedIndex === -2
-    console.log(isUpdated);
-    console.log(isCreated);
-    console.log(isNew);
     if (isNew && isCreated) {
         return true
     } else {

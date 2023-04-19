@@ -11,7 +11,6 @@ const getCodelistDetail = (body) => {
         cancelToken.cancel()
     }
     cancelToken = axios.CancelToken.source();
-    console.log(body);
     return instance.post("/code-list/deep-details/", body, { ...config(), cancelToken: cancelToken.token });
 };
 

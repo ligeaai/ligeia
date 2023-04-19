@@ -36,7 +36,6 @@ export const fillProperties = async (WIDGET_TYPE) => async (dispatch) => {
 export const loadSelectItems = async () => async dispatch => {
     try {
         let res = await Overview.getWidgetTypeList()
-        console.log(res.data);
         dispatch({
             type: SET_SELECT_ITEM_OVERVIEW_DIALOG,
             payload: res.data
@@ -114,7 +113,6 @@ export const saveNewChart = () => async (dispatch, getState) => {
     const selected = getState().tapsOverview.selected
     const dashboardId = getState().tapsOverview.widgets[selected].ROW_ID
     const selectedChartType = getState().overviewDialog.selectedItem
-    console.log(chartProps);
     const uuid = uuidv4()
     try {
         const WIDGET = {
@@ -151,7 +149,6 @@ export const updateChart = (widgetId, refresh) => async (dispatch, getState) => 
     const chartProps = getState().overviewDialog.highchartProps;
     const body = JSON.stringify({ UPDATE: fillTheUpdateProperty(chartProps, widgetId), DELETE: [] });
     try {
-        console.log(body);
         await Overview.updateWidget(body)
         refresh()
     } catch (err) {

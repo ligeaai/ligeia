@@ -15,7 +15,6 @@ function renderEditcell(params) {
 
 
 export const getColumns = () => (dispatch, getState) => {
-    console.log(getState().auth);
     const columns = [
         {
             field: "CODE",

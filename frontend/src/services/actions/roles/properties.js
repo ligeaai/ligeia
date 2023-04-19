@@ -157,7 +157,6 @@ export const deleteRole = () => async (dispatch, getState) => {
     const ROLES_ID = getState().treeview.selectedItem.ROLES_ID
     try {
         const body = JSON.stringify({ ROLES_ID })
-        console.log(body);
         let res = await Roles.removeRole(body)
         dispatch(refreshTreeView())
     } catch {

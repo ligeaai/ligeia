@@ -37,7 +37,6 @@ function TreeDataWithGap() {
     return Number.isNaN(max) ? 150 : max * 10 + 24;
   };
   React.useEffect(() => {
-    console.log("sads");
     setColumns([
       {
         field: "TYPE",
@@ -191,14 +190,10 @@ function TreeDataWithGap() {
             "calc(100vh - 60px - 36px - 16px - 60px - 78px)"
           }
           autoPageSize={true}
-          columnWidths={{
-            LABEL_ID: 300,
-            name: "auto",
-            age: "auto",
-          }}
           getDetailPanelContent={getDetailPanelContent}
           disableIgnoreModificationsIfProcessingProps
-        />
+          //disableColumnResize={true}
+        ></DataGridPro>
       </Box>
     </Box>
   );

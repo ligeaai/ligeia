@@ -33,7 +33,6 @@ function helperClose() {
     $(".drawer-menu-icon-close").hide();
 }
 export const configureDrawermenu = (prop) => {
-    console.log(prop);
     prop ? helperOpen() : helperClose();
 }
 

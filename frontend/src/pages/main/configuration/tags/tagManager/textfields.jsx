@@ -1,7 +1,6 @@
 import React from "react";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
-import { makeStyles } from "@mui/styles";
 
 import {
   Select,
@@ -16,36 +15,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { instance, config } from "../../../../../services/baseApi";
 import { addSaveTagValue } from "../../../../../services/actions/tags/tags";
 import { setIsActiveConfirmation } from "../../../../../services/actions/confirmation/historyConfirmation";
-const useStyles = makeStyles((theme) => {
-  return {
-    box: {
-      boxShadow: theme.shadows[1],
-      padding: "8px",
-      borderRadius: "3px",
-      margin: "8px",
-    },
-    selectBox: {
-      alignItems: "center",
-      marginBottom: "4px",
-      width: "100%",
-    },
-    field: {
-      width: "calc(100% - 200px)",
-      minWidth: "125px",
-    },
-    label: {
-      width: "180px",
-      fontSize: "14px",
-      fontFamily: theme.typography.fontFamily,
-    },
-    labelFields: {
-      width: "calc(100% - 200px)",
-    },
-  };
-});
+
 const TagName = () => {
   const dispatch = useDispatch();
-  const classes = useStyles();
   const items = useSelector((state) => state.tags.items);
   const transaction_prop = useSelector(
     (state) => state.tags.saveValues.TRANSACTION_PROPERTY
@@ -65,7 +37,6 @@ const TagName = () => {
     );
   }, [transaction_prop, asset]);
   const handleChangeFunc = (e) => {
-    console.log(asset);
     dispatch(setIsActiveConfirmation(true));
     dispatch(addSaveTagValue("SHORT_NAME", e));
     dispatch(addSaveTagValue("NAME", `${asset}.${e}`));
@@ -74,11 +45,22 @@ const TagName = () => {
   return (
     <>
       <Grid item xs={12} md={6}>
-        <Grid container className={classes.selectBox}>
-          <Grid item className={classes.label} sx={{ color: "primary.main" }}>
+        <Grid
+          container
+          className="tag-manager-container__body__property-box__prop-item__box__select-box"
+        >
+          <Grid
+            item
+            className="tag-manager-container__body__property-box__prop-item__box__body tag-manager-container__body__property-box__prop-item__box__label"
+          >
             Short Name
           </Grid>
-          <Grid item className={classes.labelFields}>
+          <Grid
+            item
+            className={
+              "tag-manager-container__body__property-box__prop-item__box__label-field"
+            }
+          >
             <MyTextField
               defaultValue={shortName}
               handleChangeFunc={handleChangeFunc}
@@ -87,11 +69,22 @@ const TagName = () => {
         </Grid>
       </Grid>
       <Grid item xs={12} md={6}>
-        <Grid container className={classes.selectBox}>
-          <Grid item className={classes.label} sx={{ color: "primary.main" }}>
+        <Grid
+          container
+          className="tag-manager-container__body__property-box__prop-item__box__select-box"
+        >
+          <Grid
+            item
+            className="tag-manager-container__body__property-box__prop-item__box__body tag-manager-container__body__property-box__prop-item__box__label"
+          >
             Tag Name
           </Grid>
-          <Grid item className={classes.labelFields}>
+          <Grid
+            item
+            className={
+              "tag-manager-container__body__property-box__prop-item__box__label-field"
+            }
+          >
             <MyTextField disabled={true} defaultValue={name} />
           </Grid>
         </Grid>
@@ -102,7 +95,6 @@ const TagName = () => {
 
 const Uom = () => {
   const dispatch = useDispatch();
-  const classes = useStyles();
   const [qt, setqt] = React.useState([]);
   const [uom, setuom] = React.useState([]);
   const qtDefault = useSelector(
@@ -139,11 +131,22 @@ const Uom = () => {
   return (
     <>
       <Grid item xs={12} md={6}>
-        <Grid container className={classes.selectBox}>
-          <Grid item className={classes.label} sx={{ color: "primary.main" }}>
+        <Grid
+          container
+          className="tag-manager-container__body__property-box__prop-item__box__select-box"
+        >
+          <Grid
+            item
+            className="tag-manager-container__body__property-box__prop-item__box__body tag-manager-container__body__property-box__prop-item__box__label"
+          >
             Quantity Type
           </Grid>
-          <Grid item className={classes.labelFields}>
+          <Grid
+            item
+            className={
+              "tag-manager-container__body__property-box__prop-item__box__label-field"
+            }
+          >
             <Select
               values={qt}
               valuesPath="QUANTITY_TYPE"
@@ -155,11 +158,22 @@ const Uom = () => {
         </Grid>
       </Grid>
       <Grid item xs={12} md={6}>
-        <Grid container className={classes.selectBox}>
-          <Grid item className={classes.label} sx={{ color: "primary.main" }}>
+        <Grid
+          container
+          className="tag-manager-container__body__property-box__prop-item__box__select-box"
+        >
+          <Grid
+            item
+            className="tag-manager-container__body__property-box__prop-item__box__body tag-manager-container__body__property-box__prop-item__box__label"
+          >
             Uom Name
           </Grid>
-          <Grid item className={classes.labelFields}>
+          <Grid
+            item
+            className={
+              "tag-manager-container__body__property-box__prop-item__box__label-field"
+            }
+          >
             <Select
               values={uom}
               valuesPath="NAME"
@@ -171,11 +185,22 @@ const Uom = () => {
         </Grid>
       </Grid>
       <Grid item xs={12} md={6}>
-        <Grid container className={classes.selectBox}>
-          <Grid item className={classes.label} sx={{ color: "primary.main" }}>
+        <Grid
+          container
+          className="tag-manager-container__body__property-box__prop-item__box__select-box"
+        >
+          <Grid
+            item
+            className="tag-manager-container__body__property-box__prop-item__box__body tag-manager-container__body__property-box__prop-item__box__label"
+          >
             Unit Of Measure
           </Grid>
-          <Grid item className={classes.labelFields}>
+          <Grid
+            item
+            className={
+              "tag-manager-container__body__property-box__prop-item__box__label-field"
+            }
+          >
             <Select
               values={uom}
               valuesPath="CATALOG_SYMBOL"
@@ -269,7 +294,6 @@ const TransactionPropertySelect = () => {
   const defaultValue = useSelector((state) => state.tags.saveValues.ITEM_ID);
 
   const handleChangeFunc = async (value) => {
-    console.log(value);
     dispatch(setIsActiveConfirmation(true));
     dispatch(addSaveTagValue("ITEM_ID", value));
     dispatch(addSaveTagValue("TRANSACTION_PROPERTY", value));
@@ -324,8 +348,6 @@ const TextFields = (props) => {
   }
   if (row.PROPERTY_TYPE === "CODE") {
     if (row.CODE) {
-      console.log(row);
-
       var values = [{ ROW_ID: "", CODE_TEXT: "" }];
       const sortedCode = row.CODE.sort((a, b) =>
         a.CODE_TEXT > b.CODE_TEXT ? 1 : -1
