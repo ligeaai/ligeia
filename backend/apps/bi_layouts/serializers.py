@@ -1,12 +1,12 @@
 import uuid
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
-from .models import Layout
+from .models import bi_layout
 
 
 class LayoutsSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Layout
+        model = bi_layout
         fields = "__all__"
 
     def is_valid(self, raise_exception=False):
@@ -16,7 +16,7 @@ class LayoutsSerializer(serializers.ModelSerializer):
     def save(self, validated_data):
         try:
             row_id = validated_data.get("ROW_ID")
-            qs = Layout.objects.filter(ROW_ID=row_id)
+            qs = bi_layout.objects.filter(ROW_ID=row_id)
             if qs.exists():
                 instance = super().update(qs.first(), validated_data)
             else:

@@ -1,7 +1,7 @@
 from django.db import models
 import uuid
 from django.utils import timezone
-from apps.widgets.models import Widget
+from apps.bi_widgets.models import bi_widget
 from apps.tags.models import tags
 
 """
@@ -19,8 +19,8 @@ from apps.tags.models import tags
 """
 
 
-class widget_property(models.Model):
-    WIDGET_ID = models.ManyToManyField(Widget, related_name="property")
+class bi_widget_property(models.Model):
+    WIDGET_ID = models.ManyToManyField(bi_widget, related_name="property")
     WIDGET_TYPE = models.CharField(
         max_length=14,
         null=True,

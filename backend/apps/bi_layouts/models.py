@@ -1,8 +1,8 @@
 from django.db import models
-from apps.widgets.models import Widget
+from apps.bi_widgets.models import bi_widget
 
 
-class Layout(models.Model):
+class bi_layout(models.Model):
     static = models.BooleanField(default=False)
     w = models.IntegerField()
     moved = models.BooleanField(default=True)
@@ -10,5 +10,5 @@ class Layout(models.Model):
     x = models.IntegerField()
     y = models.IntegerField()
     l_type = models.CharField(max_length=10)
-    i = models.ForeignKey(Widget, on_delete=models.CASCADE, related_name="layouts")
+    i = models.ForeignKey(bi_widget, on_delete=models.CASCADE, related_name="layouts")
     ROW_ID = models.CharField(max_length=1000, null=True, default="*****")

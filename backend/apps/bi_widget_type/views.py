@@ -2,7 +2,7 @@ from django.shortcuts import render
 from .serializers import Widget_TypeSaveSerializer
 from rest_framework import permissions, generics, status
 from rest_framework.response import Response
-from .models import widget_type
+from .models import bi_widget_type
 
 # Create your views here.
 class WidgetTypeSaveView(generics.CreateAPIView):
@@ -24,5 +24,5 @@ class WidgetTypeGetView(generics.CreateAPIView):
     permission_classes = [permissions.AllowAny]
 
     def post(self, request, *args, **kwargs):
-        qs = widget_type.objects.filter(**request.data).values()
+        qs = bi_widget_type.objects.filter(**request.data).values()
         return Response(qs, status=status.HTTP_200_OK)

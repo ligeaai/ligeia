@@ -1,15 +1,15 @@
 from django.shortcuts import render
 from rest_framework import generics, permissions, status
 from rest_framework.response import Response
-from .models import Widget
+from .models import bi_widget
 from .serializers import WidgetSaveSerializer
 import uuid
-from apps.widget_property.serializers import Widget_PropertySaveSerializer
+from apps.bi_widget_property.serializers import Widget_PropertySaveSerializer
 from rest_framework.response import Response
 from django.db import transaction
-from apps.dashbord.models import Dashboard
+from apps.bi_dashbord.models import bi_dashboard
 from rest_framework.exceptions import ValidationError
-from apps.layouts.serializers import LayoutsSerializer
+from apps.bi_layouts.serializers import LayoutsSerializer
 
 # Create your views here.
 class WidgetSaveView(generics.CreateAPIView):
@@ -69,7 +69,7 @@ class WidgetDeleteiew(generics.CreateAPIView):
     permission_classes = [permissions.AllowAny]
 
     def post(self, request, *args, **kwargs):
-        qs = Widget.objects.filter(**request.data).first()
+        qs = bi_widget.objects.filter(**request.data).first()
         if qs:
             qs.delete()
             return Response({"Message": "Succsesful"}, status=status.HTTP_200_OK)

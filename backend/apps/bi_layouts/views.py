@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from rest_framework import generics, permissions, status
 from rest_framework.response import Response
-from .models import Layout
+from .models import bi_layout
 from .serializers import LayoutsSerializer
 import uuid
 from rest_framework.response import Response
@@ -29,7 +29,7 @@ class LayoutsUpdateView(generics.CreateAPIView):
     def post(self, request, *args, **kwargs):
         for keys, values in request.data.items():
             for value in values:
-                qs = Layout.objects.filter(i=value.get("i"), l_type=keys)
+                qs = bi_layout.objects.filter(i=value.get("i"), l_type=keys)
                 if qs:
                     qs.update(**value)
 

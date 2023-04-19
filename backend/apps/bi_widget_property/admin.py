@@ -1,5 +1,5 @@
 from django.contrib import admin
 
-from .models import widget_property
+from .models import bi_widget_property
 
-admin.site.register(widget_property)
+admin.site.register(bi_widget_property)

@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from rest_framework import generics, permissions, status
 from rest_framework.response import Response
-from .models import widget_property
+from .models import bi_widget_property
 from .serializers import (
     Widget_PropertySaveSerializer,
     Widget_PropertyGetSerializer,
@@ -31,7 +31,7 @@ class WidgetPropertyGetView(generics.CreateAPIView):
     permission_classes = [permissions.AllowAny]
 
     def post(self, request, *args, **kwargs):
-        qs = widget_property.objects.filter(WIDGET_ID=request.data.get("WIDGET_ID"))
+        qs = bi_widget_property.objects.filter(WIDGET_ID=request.data.get("WIDGET_ID"))
         serializer = Widget_PropertyGetSerializer(qs, many=True)
         new_dict = {}
         for item in serializer.data:
@@ -62,7 +62,7 @@ class WidgetPropertyUpdateView(generics.CreateAPIView):
                     widgetId = deleteItem.get("WIDGET_ID")
                     propertyName = deleteItem.get("PROPERTY_NAME")
                     qs = (
-                        widget_property.objects.filter(
+                        bi_widget_property.objects.filter(
                             WIDGET_ID=widgetId, PROPERTY_NAME=propertyName
                         )
                         .first()

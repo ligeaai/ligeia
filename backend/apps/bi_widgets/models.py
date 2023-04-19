@@ -3,7 +3,7 @@ import uuid
 from django.utils import timezone
 
 # Create your models here.
-class Widget(models.Model):
+class bi_widget(models.Model):
     WIDGET_ID = models.CharField(
         max_length=32,
         primary_key=True,

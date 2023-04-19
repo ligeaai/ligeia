@@ -1,14 +1,14 @@
 import uuid
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
-from .models import widget_property
+from .models import bi_widget_property
 from datetime import datetime
 
 
 class Widget_PropertyGetSerializer(serializers.ModelSerializer):
     class Meta:
         depth = 1
-        model = widget_property
+        model = bi_widget_property
         fields = (
             "WIDGET_ID",
             "PROPERTY_NAME",
@@ -21,7 +21,7 @@ class Widget_PropertyGetSerializer(serializers.ModelSerializer):
 
 class Widget_PropertySaveSerializer(serializers.ModelSerializer):
     class Meta:
-        model = widget_property
+        model = bi_widget_property
         fields = "__all__"
 
     def is_valid(self, raise_exception=False):
@@ -33,7 +33,7 @@ class Widget_PropertySaveSerializer(serializers.ModelSerializer):
             validated_data["START_DATETIME"] = "2023-03-25"
             validated_data["END_DATETIME"] = "9000-01-01"
             row_id = validated_data.get("ROW_ID")
-            qs = widget_property.objects.filter(ROW_ID=row_id)
+            qs = bi_widget_property.objects.filter(ROW_ID=row_id)
             if qs.exists():
                 instance = super().update(qs.first(), validated_data)
             else:
@@ -47,7 +47,7 @@ class Widget_PropertySaveSerializer(serializers.ModelSerializer):
 
 class Widget_PropertyUpdateSerializer(serializers.ModelSerializer):
     class Meta:
-        model = widget_property
+        model = bi_widget_property
         fields = "__all__"
 
     def is_valid(self, raise_exception=False):
@@ -58,7 +58,7 @@ class Widget_PropertyUpdateSerializer(serializers.ModelSerializer):
         try:
             widgetId = validated_data.get("WIDGET_ID")
             propertyName = validated_data.get("PROPERTY_NAME")
-            qs = widget_property.objects.filter(
+            qs = bi_widget_property.objects.filter(
                 WIDGET_ID=widgetId, PROPERTY_NAME=propertyName
             )
             if qs.exists():
