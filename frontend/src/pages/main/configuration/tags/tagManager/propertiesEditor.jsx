@@ -159,7 +159,7 @@ const PropertiesEditor = () => {
                         item
                         className="tag-manager-container__body__property-box__prop-item__box__body tag-manager-container__body__property-box__prop-item__box__label"
                       >
-                        asdsadasd {tagValues.TAG_INFORMATIONS[e].SHORT_LABEL}
+                        {tagValues.TAG_INFORMATIONS[e].SHORT_LABEL}
                       </Grid>
                       <Grid
                         item
