@@ -59,6 +59,7 @@ const DrawerMenu = (props) => {
     const myFunc = async () => {
       var res = await dispatch(await loadTreeViewWidth(path));
       res[path] > 0 ? openTreeMenu(res[path]) : closeTreeMenu();
+      $(".treemenu-container__box__toggle-button").show();
     };
     myFunc();
   }, []);
