@@ -1,52 +1,26 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 
-import Grid from "@mui/material/Grid";
-import TextField from "@mui/material/TextField";
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import { BigBox, MyTextField, Select } from "../../../../components";
-import { makeStyles } from "@mui/styles";
-import { instance, config } from "../../../../services/baseApi";
+import {
+  Grid,
+  TextField,
+  Box,
+  Button,
+  IconButton,
+  Typography,
+} from "@mui/material";
 
+import { MyTextField, Select } from "../../../../components";
+import { instance, config } from "../../../../services/baseApi";
+import ClearIcon from "@mui/icons-material/Clear";
 import {
   changeProjectValue,
   cleanProjectReducer,
 } from "../../../../services/actions/project/project";
-import { Typography } from "@mui/material";
 
-const useStyles = makeStyles((theme) => ({
-  selectBox: {
-    alignItems: "center",
-  },
-  label: {
-    width: "180px",
-  },
-  field: {
-    width: "calc(100% - 396px)",
-  },
-  row: {
-    paddingBottom: "12px",
-  },
-  textfield: {
-    fontSize: "14px",
-    width: "100%",
-    "& .MuiOutlinedInput-input": {
-      fontSize: "14px",
-      paddingTop: "4px",
-      paddingBottom: "4px",
-    },
-    "& .MuiInputBase-root": {
-      fontSize: "14px",
-      paddingTop: "4px",
-      paddingBottom: "4px",
-    },
-  },
-}));
 const Layers = (props) => {
   const { path, stateWay, text } = props;
   const dispatch = useDispatch();
-  const classes = useStyles();
   const [values, setLayerValues] = React.useState([]);
   const selectedItem = useSelector((state) => state.project[stateWay]);
   const [defaultVal, setDefaultVal] = React.useState("");
@@ -83,9 +57,9 @@ const Layers = (props) => {
     );
   };
   return (
-    <Grid item xs={12} className={classes.row}>
-      <Grid container className={classes.selectBox}>
-        <Grid item className={classes.label}>
+    <Grid item xs={12} className={"project-container__body__row"}>
+      <Grid container className={"project-container__body__select-box"}>
+        <Grid item className={"project-container__body__label"}>
           {text}:
         </Grid>
         <Grid item>
@@ -94,15 +68,14 @@ const Layers = (props) => {
               {selectedItem.map((e) => {
                 return (
                   <Box>
-                    <Button
+                    <IconButton
                       onClick={() => {
                         deleteSelectedItem(e);
                       }}
-                      sx={{ p: 0 }}
                     >
-                      X
-                    </Button>
-                    <Box sx={{ mr: 1, display: "inline-block" }}>{e}</Box>{" "}
+                      <ClearIcon fontSize="small" />
+                    </IconButton>
+                    <span>{e}</span>
                     <br />
                   </Box>
                 );
@@ -125,26 +98,21 @@ const ConnectionString = () => {
   const defaultStr =
     "Network Library=DBMSSOCN;Data Source=localhost,1433;Initial Catalog?alpha;User ID=sa;Password=Gas2013+;Applicatıon Name=AVM";
   const dispatch = useDispatch();
-  const classes = useStyles();
   const value = useSelector((state) => state.project.CONNECTION_STRING);
   const handleChange = (e) => {
     dispatch(changeProjectValue("CONNECTION_STRING", e.target.value));
   };
   return (
-    <Grid item xs={12} className={classes.row}>
-      <Grid
-        container
-        className={classes.selectBox}
-        sx={{ width: "100%", color: "text.main" }}
-      >
-        <Grid item className={classes.label}>
+    <Grid item xs={12} className={"project-container__body__row"}>
+      <Grid container className={"project-container__body__select-box"}>
+        <Grid item className={"project-container__body__label"}>
           Connection String
         </Grid>
-        <Grid item className={classes.field}>
+        <Grid item className={"project-container__body__field"}>
           <TextField
             multiline
             maxRows={4}
-            className={classes.textfield}
+            className={"project-container__body__textfield"}
             value={value}
             onChange={handleChange}
           />
@@ -165,20 +133,19 @@ const ConnectionString = () => {
 };
 const DatabaseCreationFile = () => {
   const dispatch = useDispatch();
-  const classes = useStyles();
   const value = useSelector((state) => state.project.DATABASE_CREATE_FILE);
   const handleChange = (e) => {
     dispatch(changeProjectValue("DATABASE_CREATE_FILE", e.target.value));
   };
   return (
-    <Grid item xs={12} className={classes.row}>
-      <Grid container className={classes.selectBox} sx={{ color: "text.main" }}>
-        <Grid item className={classes.label}>
+    <Grid item xs={12} className={"project-container__body__row"}>
+      <Grid container className={"project-container__body__select-box"}>
+        <Grid item className={"project-container__body__label"}>
           Database creation File
         </Grid>
-        <Grid item className={classes.field}>
+        <Grid item className={"project-container__body__field"}>
           <TextField
-            className={classes.textfield}
+            className={"project-container__body__textfield"}
             value={value}
             onChange={handleChange}
           />
@@ -195,15 +162,14 @@ const DatabaseCreationFile = () => {
 };
 const ImplementationName = () => {
   const dispatch = useDispatch();
-  const classes = useStyles();
   const value = useSelector((state) => state.project.IMPLEMENTATION_NAME);
   const handleChange = (e) => {
     dispatch(changeProjectValue("IMPLEMENTATION_NAME", e));
   };
   return (
-    <Grid item xs={12} className={classes.row}>
-      <Grid container className={classes.selectBox} sx={{ color: "text.main" }}>
-        <Grid item className={classes.label}>
+    <Grid item xs={12} className={"project-container__body__row"}>
+      <Grid container className={"project-container__body__select-box"}>
+        <Grid item className={"project-container__body__label"}>
           Implementation Name:
         </Grid>
         <Grid item>
@@ -216,15 +182,14 @@ const ImplementationName = () => {
 
 const UnitSystem = () => {
   const dispatch = useDispatch();
-  const classes = useStyles();
   const value = useSelector((state) => state.project.UNIT_SYSTEM);
   const handleChange = (e) => {
     dispatch(changeProjectValue("UNIT_SYSTEM", e));
   };
   return (
-    <Grid item xs={12} className={classes.row}>
-      <Grid container className={classes.selectBox} sx={{ color: "text.main" }}>
-        <Grid item className={classes.label}>
+    <Grid item xs={12} className={"project-container__body__row"}>
+      <Grid container className={"project-container__body__select-box"}>
+        <Grid item className={"project-container__body__label"}>
           Unit System:
         </Grid>
         <Grid item>
@@ -240,66 +205,50 @@ const UnitSystem = () => {
 };
 const ProjectEditor = () => {
   const dispatch = useDispatch();
-  const classes = useStyles();
   React.useEffect(() => {
     return () => {
       dispatch(cleanProjectReducer());
     };
   }, []);
   return (
-    <BigBox
-      Element={
-        <Grid container sx={{ p: 1.5 }}>
-          <Grid item xs={12} className={classes.row}>
-            <Grid
-              container
-              className={classes.selectBox}
-              sx={{ color: "text.main" }}
-            >
-              <Grid item className={classes.label}>
-                Data source:
-              </Grid>
-              <Grid item>
-                <Select values={["Postgre Sql"]} defaultValue={"Postgre Sql"} />
-              </Grid>
-            </Grid>
+    <Grid container sx={{ p: 1.5 }}>
+      <Grid item xs={12} className={"project-container__body__row"}>
+        <Grid container className={"project-container__body__select-box"}>
+          <Grid item className={"project-container__body__label"}>
+            Data source:
           </Grid>
-          <ConnectionString />
-          <DatabaseCreationFile />
-          <ImplementationName />
-          <Typography sx={{ color: "text.main" }}>
-            <Layers
-              key={"Cultures"}
-              path="/code-list/culture/"
-              stateWay="CULTURES"
-              text="Cultures"
-            />
-            <Layers
-              key={"Layers"}
-              path="/layer/layer-dropdown/"
-              stateWay="LAYERS"
-              text="Layers"
-            />
-          </Typography>
-          <UnitSystem />
           <Grid item>
-            <Button
-              variant="contained"
-              sx={{
-                color: "text.main",
-                backgroundColor: "background.success",
-                "&:hover": {
-                  backgroundColor: "hover.success",
-                  color: "primary.dark",
-                },
-              }}
-            >
-              Save
-            </Button>
+            <Select values={["Postgre Sql"]} defaultValue={"Postgre Sql"} />
           </Grid>
         </Grid>
-      }
-    ></BigBox>
+      </Grid>
+      <ConnectionString />
+      <DatabaseCreationFile />
+      <ImplementationName />
+      <Typography className={"project-container__body__select-box"}>
+        <Layers
+          key={"Cultures"}
+          path="/code-list/culture/"
+          stateWay="CULTURES"
+          text="Cultures"
+        />
+        <Layers
+          key={"Layers"}
+          path="/layer/layer-dropdown/"
+          stateWay="LAYERS"
+          text="Layers"
+        />
+      </Typography>
+      <UnitSystem />
+      <Grid item>
+        <Button
+          variant="contained"
+          className="project-container__body__btn-save"
+        >
+          Save
+        </Button>
+      </Grid>
+    </Grid>
   );
 };
 
