@@ -22,6 +22,7 @@ import history from "../../../routers/history";
 import Layout from "../../../layout/authorization/layout";
 
 import { setEmailPass } from "../../../services/reducers/registerFormReducer";
+import { emailCheck } from "../../../services/actions/auth";
 
 const validationSchema = yup.object({
   email: yup
@@ -59,7 +60,20 @@ const MyBody = () => {
           isAgree: values.isAgree,
         })
       );
-      history.push(`/signup/signup`);
+      if (await emailCheck(values.email)) {
+        formik.touched.email = false;
+        history.push(`/signup/signup`);
+      } else {
+        formik.touched.email = true;
+        formik.errors.email = `${values.email} already exists`;
+        dispatch({
+          type: "SNACKBAR_ERROR",
+          payload: {
+            msg: "Email already in use, please use a different email address",
+            type: "info",
+          },
+        });
+      }
     },
   });
 
@@ -83,6 +97,7 @@ const MyBody = () => {
               position: "absolute",
               typography: "subtitle2",
               paddingBottom: "10px",
+              zIndex: 2,
             }}
           >
             {formik.errors.email}

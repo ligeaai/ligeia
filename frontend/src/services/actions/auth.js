@@ -226,3 +226,14 @@ export const myGithubLogin = (access_token, path) => async (dispatch) => {
         dispatch(setLoaderFalse())
     }
 };
+
+export const emailCheck = async (email) => {
+    try {
+        let res = await Auth.register({ email })
+
+        return res.data
+    } catch {
+        return true
+
+    }
+}
