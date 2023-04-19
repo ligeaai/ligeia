@@ -42,7 +42,17 @@ from .serializers import (
 
 logger = KafkaLogger()
 
+class UserCheckView(generics.GenericAPIView):
+    serializer_class = UserSerializer
+    permission_classes = [AllowAny]
 
+    def post(self, request, *args, **kwargs):
+        is_available = False
+        user = User.objects.filter(email = request.data.get('email'))
+        if user:
+            is_available = True
+          
+        return Response(is_available, status=status.HTTP_200_OK)
 class UserModelViewSet(ModelViewSet):
     """
     Endpiont for user model, It accept all operations except for user creation.

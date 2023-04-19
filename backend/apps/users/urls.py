@@ -21,7 +21,8 @@ from .views import (
     UserRoleUpdate,
     GetUserRolesView,
     GetUserByRoleIdView,
-    UserRoleDeleteView
+    UserRoleDeleteView,
+    UserCheckView
 )
 from .social_views import (
     FacebookLogin,
@@ -63,7 +64,7 @@ urlpatterns = [
         name="resetnewpassword",
     ),
     
-    
+    path("user/check/", UserCheckView.as_view(), name="UserCheckView"),
     path("users/get/roleid/", GetUserByRoleIdView.as_view(), name="GetUserByRoleIdView"),
     path("users/roles/", GetUserRolesView.as_view(), name="GetUserRolesView"),
     path("user/layer/update/", UserLayerUpdate.as_view(), name="UserLayerUpdate"),
