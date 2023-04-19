@@ -1,8 +1,6 @@
 import React from "react";
 import Grid from "@mui/material/Grid";
 
-import { makeStyles } from "@mui/styles";
-
 import { useDispatch, useSelector } from "react-redux";
 import TextFields from "./textfields";
 import { fillTagData } from "../../../../../services/actions/tags/tags";
@@ -12,37 +10,9 @@ import {
   setTitleConfirmation,
 } from "../../../../../services/actions/confirmation/historyConfirmation";
 import { saveTag, addNewTag } from "../../../../../services/actions/tags/tags";
-const useStyles = makeStyles((theme) => {
-  return {
-    box: {
-      boxShadow: theme.shadows[1],
-      padding: "8px",
-      borderRadius: "3px",
-      margin: "8px",
-    },
-    selectBox: {
-      alignItems: "center",
-      marginBottom: "4px",
-      width: "100%",
-    },
-    field: {
-      width: "calc(100% - 200px)",
-      minWidth: "125px",
-    },
-    label: {
-      width: "180px",
-      fontSize: "14px",
-      fontFamily: theme.typography.fontFamily,
-    },
-    labelFields: {
-      width: "calc(100% - 200px)",
-    },
-  };
-});
 
 const PropertiesEditor = () => {
   const dispatch = useDispatch();
-  const classes = useStyles();
   const tagValues = useSelector((state) => state.tags.tagValues);
   const tagId = useSelector((state) => state.treeview.selectedItem.TAG_ID);
   const selectedIndex = useSelector(
@@ -65,24 +35,48 @@ const PropertiesEditor = () => {
 
   if (Object.keys(tagValues).length > 0 && (tagId || selectedIndex === -2)) {
     return (
-      <Grid container>
-        <Grid item xs={12} className={classes.box}>
+      <Grid
+        container
+        className="tag-manager-container__body__property-box__prop-item"
+      >
+        <Grid
+          item
+          xs={12}
+          className="tag-manager-container__body__property-box__prop-item__box"
+        >
           <Grid container>
             <Grid
               item
               xs={12}
-              sx={{ fontWeight: "bold", mb: 0.5, color: "text.primary" }}
+              className="tag-manager-container__body__property-box__prop-item__box__header"
             >
               Tag Link
             </Grid>
-            <Grid item xs={12} md={6} sx={{ color: "primary.main" }}>
+            <Grid
+              item
+              xs={12}
+              md={6}
+              className="tag-manager-container__body__property-box__prop-item__box__body"
+            >
               {Object.keys(tagValues.TAG_LINK).map((e, key) => {
                 return (
-                  <Grid container className={classes.selectBox} key={key}>
-                    <Grid item className={classes.label}>
+                  <Grid
+                    container
+                    className="tag-manager-container__body__property-box__prop-item__box__select-box"
+                    key={key}
+                  >
+                    <Grid
+                      item
+                      className="tag-manager-container__body__property-box__prop-item__box__label"
+                    >
                       {tagValues.TAG_LINK[e].SHORT_LABEL}
                     </Grid>
-                    <Grid item className={classes.labelFields}>
+                    <Grid
+                      item
+                      className={
+                        "tag-manager-container__body__property-box__prop-item__box__label-field"
+                      }
+                    >
                       <TextFields row={tagValues.TAG_LINK[e]} />
                     </Grid>
                   </Grid>
@@ -91,12 +85,16 @@ const PropertiesEditor = () => {
             </Grid>
           </Grid>
         </Grid>
-        <Grid item xs={12} className={classes.box}>
+        <Grid
+          item
+          xs={12}
+          className="tag-manager-container__body__property-box__prop-item__box"
+        >
           <Grid container>
             <Grid
               item
               xs={12}
-              sx={{ fontWeight: "bold", mb: 0.5, color: "text.primary" }}
+              className="tag-manager-container__body__property-box__prop-item__box__header"
             >
               Tag Information
             </Grid>
@@ -104,15 +102,24 @@ const PropertiesEditor = () => {
               item
               xs={12}
               key={"startdatetime"}
-              sx={{ color: "primary.main" }}
+              className="tag-manager-container__body__property-box__prop-item__box__body"
             >
               <Grid container>
                 <Grid item xs={6}>
-                  <Grid container className={classes.selectBox}>
-                    <Grid item className={classes.label}>
+                  <Grid
+                    container
+                    className="tag-manager-container__body__property-box__prop-item__box__select-box"
+                  >
+                    <Grid
+                      item
+                      className="tag-manager-container__body__property-box__prop-item__box__label"
+                    >
                       {tagValues.TAG_INFORMATIONS[0].SHORT_LABEL}
                     </Grid>
-                    <Grid item className={classes.field}>
+                    <Grid
+                      item
+                      className="tag-manager-container__body__property-box__prop-item__box__field"
+                    >
                       <TextFields row={tagValues.TAG_INFORMATIONS[0]} />
                     </Grid>
                   </Grid>
@@ -144,15 +151,22 @@ const PropertiesEditor = () => {
                   <TextFields row={tagValues.TAG_INFORMATIONS[e]} />
                 ) : (
                   <Grid item xs={12} md={6} key={key}>
-                    <Grid container className={classes.selectBox}>
+                    <Grid
+                      container
+                      className="tag-manager-container__body__property-box__prop-item__box__select-box"
+                    >
                       <Grid
                         item
-                        className={classes.label}
-                        sx={{ color: "primary.main" }}
+                        className="tag-manager-container__body__property-box__prop-item__box__body tag-manager-container__body__property-box__prop-item__box__label"
                       >
-                        {tagValues.TAG_INFORMATIONS[e].SHORT_LABEL}
+                        asdsadasd {tagValues.TAG_INFORMATIONS[e].SHORT_LABEL}
                       </Grid>
-                      <Grid item className={classes.labelFields}>
+                      <Grid
+                        item
+                        className={
+                          "tag-manager-container__body__property-box__prop-item__box__label-field"
+                        }
+                      >
                         <TextFields row={tagValues.TAG_INFORMATIONS[e]} />
                       </Grid>
                     </Grid>
@@ -164,13 +178,22 @@ const PropertiesEditor = () => {
               item
               xs={12}
               key={"description"}
-              sx={{ color: "primary.main" }}
+              className="tag-manager-container__body__property-box__prop-item__box__body"
             >
-              <Grid container className={classes.selectBox}>
-                <Grid item className={classes.label}>
+              <Grid
+                container
+                className="tag-manager-container__body__property-box__prop-item__box__select-box"
+              >
+                <Grid
+                  item
+                  className="tag-manager-container__body__property-box__prop-item__box__label"
+                >
                   {tagValues.TAG_INFORMATIONS[6].SHORT_LABEL}
                 </Grid>
-                <Grid item className={classes.field}>
+                <Grid
+                  item
+                  className="tag-manager-container__body__property-box__prop-item__box__field"
+                >
                   <TextFields row={tagValues.TAG_INFORMATIONS[6]} />
                 </Grid>
               </Grid>

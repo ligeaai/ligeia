@@ -1,7 +1,7 @@
 //Mui color palette
 $actionHover: rgba(255, 255, 255, 0.08);
 $text-disabled: rgba(255, 255, 255, 0.5);
-
+$grey-200: #eeeeee;
 $themes: (
   light: (
     bg-all: #eeeeee,
@@ -147,13 +147,13 @@ $themes: (
     border-card-hover: #009900,
 
     //TEXTS
-    //drawer menu list item text and icons, drawer menu open icon,breadcrumb text
+    //drawer menu list item text and icons, drawer menu open icon,breadcrumb text,tag manager header
     text-drawer-item: #ffffff,
     //drawer menu list item text and icons selected, treemenu resize border
     text-drawer-selected-item: #ffffff,
     //card title,card body
     text-card: #ffffff,
-    //tree menu text, breadcrumb last text
+    //tree menu text, breadcrumb last text,tag manager body
     text-tree-menu: #ffffff,
     //action menu icon color
     action-menu-icon: #ffffff,

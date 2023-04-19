@@ -13,6 +13,7 @@ import {
   setSelectedRows,
 } from "../../../../services/actions/type/datagrid";
 const DetailPanelContent = () => {
+  console.log("asdasd");
   const dispatch = useDispatch();
   const rows = useSelector((state) => state.dataGridType.propertyRows);
   const [columns, setColumns] = React.useState([]);
@@ -157,4 +158,4 @@ const DetailPanelContent = () => {
   );
 };
 
-export default DetailPanelContent;
+export default React.memo(DetailPanelContent);

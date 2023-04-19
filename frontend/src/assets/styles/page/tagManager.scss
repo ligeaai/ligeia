@@ -1,0 +1,56 @@
+@import "../components/boxes.scss";
+@import "../palette/shadow.scss";
+@import "../palette/palette.scss";
+.tag-manager-container {
+  @include treeViewandItemBox;
+  &__body {
+    @include layoutBox;
+    &__action-menu-box {
+      margin: 2px 0 2px 12px !important;
+      display: flex;
+      align-items: center;
+    }
+    &__property-box {
+      margin-top: 8px !important;
+      margin-right: 8px !important;
+      height: calc(100% - 100px);
+      &__prop-item {
+        @include appBox;
+        &__box {
+          box-shadow: $shadow-one;
+          padding: 8px;
+          border-radius: 3px;
+          margin: 8px !important;
+          &__header {
+            font-weight: bold;
+            margin-bottom: 0.5 !important;
+            @include themify($themes) {
+              color: themed("text-drawer-item");
+            }
+          }
+          &__body {
+            @include themify($themes) {
+              color: themed("text-tree-menu");
+            }
+          }
+          &__label {
+            width: 180px;
+            font-size: 14px;
+          }
+          &__select-box {
+            align-items: center;
+            margin-bottom: 4px;
+            width: 100%;
+          }
+          &__label-field {
+            width: calc(100% - 200px);
+          }
+          &__field {
+            width: calc(100% - 200px);
+            min-width: 125px;
+          }
+        }
+      }
+    }
+  }
+}

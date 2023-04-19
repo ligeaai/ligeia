@@ -229,7 +229,8 @@ export const myGithubLogin = (access_token, path) => async (dispatch) => {
 
 export const emailCheck = async (email) => {
     try {
-        let res = await Auth.register({ email })
+        const body = JSON.stringify({ email: email })
+        let res = await Auth.register(body)
 
         return res.data
     } catch {
