@@ -4,6 +4,12 @@
   flex-wrap: nowrap !important;
   height: 100%;
 }
+@mixin fullScreenBox {
+  flex-wrap: nowrap !important;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+}
 
 @mixin layoutBox {
   //drawer , home page box ,tag, codelist

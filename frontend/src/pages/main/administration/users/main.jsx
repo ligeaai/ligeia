@@ -27,24 +27,13 @@ const Main = () => {
   }, []);
 
   return (
-    <MainBox>
-      <Grid
-        item
-        xs={12}
-        sx={{
-          boxShadow: 3,
-          borderRadius: "3px",
-        }}
-      >
-        <Grid container sx={{ height: "100%" }}>
-          <Breadcrumb />
-          <ItemSperatorLineXL />
-          <Grid item xs={12} sx={{ height: "calc(100% - 48px)", p: 1 }}>
-            <UsersEditor />
-          </Grid>
-        </Grid>
+    <Grid container className="users-container">
+      <Breadcrumb />
+      <ItemSperatorLineXL />
+      <Grid item xs={12} className="users-container__body">
+        <UsersEditor />
       </Grid>
-    </MainBox>
+    </Grid>
   );
 };
 

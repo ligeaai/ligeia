@@ -1,6 +1,10 @@
 @import "../palette/palette";
 @import "../components/boxes.scss";
 @import "../components/scrollbar.scss";
+.drawer-container {
+  overflow: hidden;
+  @include layoutBox;
+}
 .drawer-menu {
   z-index: 2;
   position: "relative";
@@ -11,7 +15,6 @@
     background-color: themed("bg-drawer");
   }
   @include defaultScroll;
-  @include layoutBox;
   .drawer-menu__list-item {
     border-radius: 8px;
     @include themify($themes) {

@@ -1,0 +1,17 @@
+@import "../components/boxes.scss";
+.users-container {
+  @include layoutBox;
+  overflow: hidden;
+  &__body {
+    height: calc(100% - 48px);
+    padding: 8px;
+  }
+}
+
+.full-screen-box {
+  .users-container {
+    height: 100vh !important;
+    width: 100%;
+    overflow: hidden;
+  }
+}
