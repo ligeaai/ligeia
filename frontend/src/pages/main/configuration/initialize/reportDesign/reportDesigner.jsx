@@ -6,8 +6,8 @@ import "@grapecity/activereports/styles/ar-js-designer.css";
 import { selectDrawerItem } from "../../../../../services/actions/drawerMenu/drawerMenu";
 
 function ReportDesigner() {
-  document.title = "Ligeia.ai | Reporting Designer";
-  selectDrawerItem("Reporting Designer");
+  document.title = "Ligeia.ai | Designer";
+  selectDrawerItem("Designer");
   const report = {
     Name: "Report",
     Type: "report",

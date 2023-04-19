@@ -4,8 +4,8 @@ import "@grapecity/activereports/styles/ar-js-ui.css";
 import "@grapecity/activereports/styles/ar-js-viewer.css";
 import { selectDrawerItem } from "../../../services/actions/drawerMenu/drawerMenu";
 function App() {
-  document.title = "Ligeia.ai | Reporting Desinger";
-  selectDrawerItem("Reporting Desinger");
+  document.title = "Ligeia.ai | Viewer";
+  selectDrawerItem("Viewer");
   const report = {
     Name: "Report",
     Type: "report",
