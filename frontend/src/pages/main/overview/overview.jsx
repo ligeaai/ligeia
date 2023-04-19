@@ -26,14 +26,13 @@ const Overview = () => {
   }, []);
   return (
     <MainBox>
-      <Grid item>
-        <DrawerMenu Element={CollapsableMenu} path="overview" />
-      </Grid>
+      <DrawerMenu Element={CollapsableMenu} path="overview" />
 
       <Grid
         item
         xs={12}
         sx={{
+          overflow: "hidden",
           boxShadow: 3,
           borderRadius: "3px",
         }}

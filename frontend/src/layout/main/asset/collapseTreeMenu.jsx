@@ -70,10 +70,9 @@ const DrawerMenu = (props) => {
         position: "relative",
         width: leftMenuWidth,
         height: "100%",
-        borderRadius: "5px",
+        borderRadius: "3px",
         minHeight: "500px",
         boxShadow: 3,
-        mr: 0.5,
       }}
     >
       <Grid
