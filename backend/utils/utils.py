@@ -67,15 +67,22 @@ class redisCaching():
     
     
 def import_data(model,model_name):
-    username = "COUCHDB_USER"
-    password = "COUCHDB_PASSWORD"
-    url = 'http://20.230.239.209:5984/'
-    server = couchdb.Server(url)
-    server.resource.credentials = (username, password)
-    db = server[model_name]
-    docs = db.view('_all_docs', include_docs=True)
-    for doc in docs:
-        data = (doc['doc'].get('values'))
-    chunked_data = [data[i:i+1000] for i in range(0, len(data), 1000)]
-    for chunk in chunked_data:
-        model.objects.bulk_create([model(**item) for item in chunk])
+    with transaction.atomic():
+        try:
+            # username = env("COUCHDB_USER")
+            # password = env("COUCHDB_PASSWORD")
+            username = "COUCHDB_USER"
+            password = "COUCHDB_PASSWORD"
+            url = env("COUCHDB_URL")
+            server = couchdb.Server(url)
+            server.resource.credentials = (username, password)
+            db = server["demo"]
+            data = db.get(model_name).get('values')
+            chunked_data = [data[i:i+1000] for i in range(0, len(data), 1000)]
+            for chunk in chunked_data:
+                model.objects.bulk_create([model(**item) for item in chunk])
+            return True
+        except Exception as e:
+            print(str(e))
+            transaction.set_rollback(True)
+            return{"error": str(e)}

@@ -130,7 +130,7 @@ class DrawerView(generics.CreateAPIView):
 
     def _get_lg_std_Items(self):
         if self.tempt_data:
-            type_qs = ((Type.objects.filter(LAYER_NAME="STD")
+            type_qs = ((Type.objects.filter(TYPE_CLASS="ITEM")
                                             .values('LABEL_ID',"TYPE")))
             id_list = [item['LABEL_ID'] for item in type_qs]
             for layer in self.layers:

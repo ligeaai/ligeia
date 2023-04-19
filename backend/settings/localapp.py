@@ -13,7 +13,7 @@ modelApp = [
     "apps.tags_calculated",
     "apps.resources_types",
     "apps.resources_drawer",
-    "apps.uoms",
+    "apps.uom",
     "apps.uom_base_unit",
     "apps.bi_layouts",
     "apps.bi_dashbord",
