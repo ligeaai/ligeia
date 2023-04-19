@@ -61,46 +61,39 @@ const CodeList = ({ isHome }) => {
   }, [isHome]);
 
   return (
-    <MainBox>
+    <Grid container columnGap={0.5} className="code-list-container">
       <Grid item>
         <DrawerMenu Element={<Menu />} path="codelist" />
       </Grid>
 
-      <Grid
-        item
-        xs={12}
-        sx={{
-          boxShadow: 3,
-          borderRadius: "3px",
-          width: "100px",
-        }}
-      >
-        <Grid container>
-          <Breadcrumb />
-          <ItemSperatorLineXL />
-          <Grid container sx={{ alignItems: "center", pl: 2, marginY: "2px" }}>
-            <Grid item sx={{ mr: "2px" }}>
-              <MyActionMenu />
-            </Grid>
-            <MyDivider />
-            <Grid item sx={{ mx: 1 }}>
-              <Select
-                values={layerValues}
-                defaultValue={filteredLayerName}
-                handleChangeFunc={selectHandleChangeFunc}
-              />
-            </Grid>
-            <MyDivider />
+      <Grid item xs={12} className="code-list-container__body">
+        <Breadcrumb />
+        <ItemSperatorLineXL />
+        <Grid container className="code-list-container__body__action-box">
+          <Grid item className="code-list-container__body__action-box__icons">
+            <MyActionMenu />
           </Grid>
-          <ItemSperatorLineXL />
-          <Grid item xs={12} sx={{ mt: 1 }}>
-            <ComponentError errMsg="Error">
-              <PropLinkTabs MyProperties={<DataGridPro />} isLinkOpen={false} />
-            </ComponentError>
+          <MyDivider />
+          <Grid
+            item
+            className="code-list-container__body__action-box__layer-select"
+          >
+            <Select
+              values={layerValues}
+              defaultValue={filteredLayerName}
+              handleChangeFunc={selectHandleChangeFunc}
+            />
           </Grid>
+          <MyDivider />
+        </Grid>
+        <ItemSperatorLineXL />
+        <Grid item xs={12} className="code-list-container__body__property-box">
+          <ComponentError errMsg="Error">
+            <PropLinkTabs MyProperties={<DataGridPro />} isLinkOpen={false} />
+          </ComponentError>
         </Grid>
       </Grid>
-    </MainBox>
+    </Grid>
   );
 };
 

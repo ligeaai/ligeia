@@ -6,7 +6,7 @@
 }
 
 @mixin layoutBox {
-  //drawer , home page box ,
+  //drawer , home page box ,tag, codelist
   box-shadow: $shadow-three;
   border-radius: 3px;
   height: 100% !important;
@@ -25,4 +25,12 @@
   // border: 0.5px solid;
   // border-color: $grey-200;
   // border-radius: 5px;
+}
+
+@mixin dataGridBox {
+  button: {
+    min-width: 36px;
+    height: 36px;
+    border-radius: 50px;
+  }
 }

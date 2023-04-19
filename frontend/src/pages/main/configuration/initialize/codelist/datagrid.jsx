@@ -76,15 +76,13 @@ function TreeDataWithGap() {
   ]);
   return (
     <Box
+      id="code-list-container__body__property-box__datagrid"
       sx={{
         button: {
           minWidth: "36px",
           height: "36px",
           borderRadius: "50px",
         },
-        minHeight: "calc(500px - 36px - 16px - 40px )",
-        height: "calc(100vh - 60px - 36px - 16px - 60px)",
-        width: "100%",
         "& .MuiInputBase-input": {
           padding: "0px important",
         },

@@ -1,0 +1,25 @@
+@import "../components/boxes.scss";
+.code-list-container {
+  @include treeViewandItemBox;
+  &__body {
+    @include layoutBox;
+    &__action-box {
+      align-items: center;
+      padding-left: 16px !important;
+      margin-inline: 2px !important;
+      &__icons {
+        margin-right: 2px !important;
+      }
+      &__layer-select {
+        margin-inline: 8px !important;
+      }
+    }
+    &__property-box {
+      margin-top: 8px !important;
+      height: calc(100% - 100px);
+      #code-list-container__body__property-box__datagrid {
+        height: 100%;
+      }
+    }
+  }
+}
