@@ -18,5 +18,10 @@ class bi_dashboard(models.Model):
         max_length=50,
         null=False,
     )
+    START_DATETIME = models.DateField(
+        null=True,
+        db_index=True,
+        default = "2023-01-01"
+    )
     ITEM_ID = models.ForeignKey(item, on_delete=models.CASCADE, null=True)
     ROW_ID = models.CharField(max_length=32, null=True, default="*****")

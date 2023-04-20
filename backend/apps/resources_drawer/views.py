@@ -138,6 +138,16 @@ class DrawerView(generics.CreateAPIView):
             return self._tempt_add_resources_types(tempt,id_list,type_qs)
             
 
+    def delete_empty_items(self,data):
+        for item in list(data.keys()):
+            task = data[item].get('Items')
+            if task:
+                self.delete_empty_items(task)
+            if task == {}:
+                print(item)
+                del data[item]
+
+
     def post(self, request, *args, **kwargs):
         self.culture = request.data.get('CULTURE')
         self.layers = []
@@ -152,12 +162,14 @@ class DrawerView(generics.CreateAPIView):
         serializer = self._filter_role(serializer ,request)
         self._getChild(serializer,request)
         new_dict_copy = self.new_dict.copy()
+        # print(new_dict_copy.keys())
         for keys,value in new_dict_copy.items():
             if not value.get('ID') == "drawerMenu":
                 del self.new_dict[keys]
-            if value.get('Items') == {}:
-                del self.new_dict[keys]
         if "Configuration" in self.new_dict.keys():
-            self.new_dict["Configuration"]["Items"]["Items"]["Items"] =self._get_lg_std_Items()           
+            self.new_dict["Configuration"]["Items"]["Items"]["Items"] =self._get_lg_std_Items()
+        
+        self.delete_empty_items(self.new_dict)
+
         return Response(self.new_dict, status=status.HTTP_200_OK)
 

@@ -22,7 +22,7 @@ class DashBoardsView(generics.CreateAPIView):
             bi_layout.objects.order_by().values_list("l_type", flat=True).distinct()
         )
 
-        dashboards = bi_dashboard.objects.filter(ITEM_ID=request.data.get("ITEM_ID"))
+        dashboards = bi_dashboard.objects.filter(ITEM_ID=request.data.get("ITEM_ID")).order_by("START_DATETIME")
         result = {}
         for dashboard in dashboards:
             tempt = {
