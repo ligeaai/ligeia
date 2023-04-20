@@ -50,7 +50,6 @@ class DrawerView(generics.CreateAPIView):
             parent = value.get('PARENT')
             if parent in self.roles:
                 if not request.role[parent]['READ']:
-                    print(parent," NO Permissions")
                     continue
             filtered.append(value)
         return filtered
@@ -158,7 +157,7 @@ class DrawerView(generics.CreateAPIView):
                 del self.new_dict[keys]
             if value.get('Items') == {}:
                 del self.new_dict[keys]
-        if self.new_dict["Configuration"]:
+        if "Configuration" in self.new_dict.keys():
             self.new_dict["Configuration"]["Items"]["Items"]["Items"] =self._get_lg_std_Items()           
         return Response(self.new_dict, status=status.HTTP_200_OK)
 

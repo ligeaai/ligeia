@@ -66,7 +66,7 @@ class redisCaching():
         return True
     
     
-def import_data(model,model_name):
+def import_data(model="model",model_name = "model_name",is_relationship=False):
     with transaction.atomic():
         try:
             # username = env("COUCHDB_USER")
@@ -79,8 +79,12 @@ def import_data(model,model_name):
             db = server["demo"]
             data = db.get(model_name).get('values')
             chunked_data = [data[i:i+1000] for i in range(0, len(data), 1000)]
-            for chunk in chunked_data:
-                model.objects.bulk_create([model(**item) for item in chunk])
+            if is_relationship:
+                for chunk in chunked_data:
+                    model.objects.bulk_create(chunk)
+            else:
+                for chunk in chunked_data:
+                    model.objects.bulk_create([model(**item) for item in chunk])
             return True
         except Exception as e:
             print(str(e))
