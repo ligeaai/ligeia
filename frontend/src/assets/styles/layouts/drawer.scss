@@ -17,7 +17,7 @@
   @include defaultScroll;
   &:hover {
     padding-right: 0px;
-    overflow: auto;
+    overflow: scroll;
   }
   .drawer-menu__list-item {
     border-radius: 8px;
