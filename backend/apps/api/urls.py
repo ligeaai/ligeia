@@ -26,6 +26,7 @@ urlpatterns = [
     path("layouts/", include("apps.bi_layouts.urls")),
     path("dashboard/", include("apps.bi_dashbord.urls")),
     path("widgets/", include("apps.bi_widgets.urls")),
+    path("widgets-type/", include("apps.bi_widget_type.urls")),
     path("widget-property/", include("apps.bi_widget_property.urls")),
     # authorization
     path("auth/", include("apps.users.urls")),
