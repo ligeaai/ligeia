@@ -6,7 +6,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.utils.translation import gettext_lazy as _
 from rest_framework import serializers, status
 from rest_framework.response import Response
-
+from apps.roles.models import roles
 # from .models import User
 from utils.utils import validate_email as email_is_valid
 
@@ -45,6 +45,9 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
         extra_kwargs = {"password": {"write_only": True}}
 
     def create(self, validated_data):
+        roles_id = (roles.objects.filter(LAYER_NAME = "STD",ROLES_NAME = "User")
+                                 .first())
+        validated_data['role'] = roles_id
         user = User.objects.create(**validated_data)
         user.layer_name.set(['STD'])
         user.set_password(validated_data["password"])

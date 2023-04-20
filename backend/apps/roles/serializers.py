@@ -15,7 +15,6 @@ class RolesPropertySerializer(serializers.ModelSerializer):
         fields = ["PROPERTY_ID"]
 
 
-
 class RolesSaveAndUpdatePropertySaveSerializer(serializers.ModelSerializer):
     class Meta:
         model = roles

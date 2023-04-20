@@ -7,4 +7,7 @@ class roles_property(models.Model):
     READ = models.BooleanField(default=False)
     UPDATE = models.BooleanField(default=False)
     DELETE = models.BooleanField(default=False)
+    LAST_UPDT_DATE = models.DateField(
+        null=True,
+    )
     ROW_ID = models.CharField(max_length=32, primary_key=True, null=False)

@@ -9,6 +9,7 @@ from django.db import transaction
 from utils.models_utils import (
     validate_find,
 )
+from utils.utils import import_data
 
 
 class RolesSaveView(generics.GenericAPIView):
@@ -42,6 +43,14 @@ class RolesSaveView(generics.GenericAPIView):
                 return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
                      
             return Response({"Message": "Succsesful"}, status=status.HTTP_200_OK)
+
+class RolesScriptView(generics.GenericAPIView):
+    serializer_class = RolesPropertySaveSerializer
+    permission_classes = [permissions.AllowAny]
+
+    def get(self, request, *args, **kwargs):
+        message = import_data(roles,"roles",is_relationship = True)
+        return Response({"Message":message}, status=status.HTTP_200_OK)
 
 
 class RolesGetView(generics.GenericAPIView):
