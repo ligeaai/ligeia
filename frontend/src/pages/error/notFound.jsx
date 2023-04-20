@@ -4,12 +4,12 @@ import { grey } from "@mui/material/colors";
 import { Grid, Typography, Link } from "@mui/material";
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
 import history from "../../routers/history";
-const notFound = () => {
+const notFound = ({ width = "100vh" }) => {
   return (
     <Grid
       container
       sx={{
-        height: "100vh",
+        height: width,
         justifyContent: "center",
         alignItems: "center",
         backgroundColor: "background.main",

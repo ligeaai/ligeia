@@ -17,6 +17,8 @@ import { MyTextField } from "../../../pages/main/configuration/items/properties/
 import { uuidv4 } from "../../utils/uuidGenerator";
 import { loadTreeviewItem, selectTreeViewItem } from "../treeview/treeview"
 import { newDate, swapDayAndYear } from "../../utils/dateFormatter";
+import { isNewUpdated } from "../../utils/permissions";
+
 const typeFinder = {
     "BOOL": "PROPERTY_STRING",
     "TEXT": "PROPERTY_STRING",
@@ -26,7 +28,6 @@ const typeFinder = {
     "BLOB_ID": "PROPERTY_BINARY",
     "DATE": "PROPERTY_DATE"
 }
-
 const MemoizedInputBaseEditInputCell = React.memo(MyTextField);
 
 function myMemoFunction(params) {
@@ -48,20 +49,9 @@ export class column {
 }
 
 const _createColumn = (columnId) => (dispatch, getState) => {
-    const isNew = getState().treeview.selectedItem.selectedIndex
-    const create = getState().auth.user.role?.PROPERTY_ID?.ITEM?.CREATE
-    const update = getState().auth.user.role?.PROPERTY_ID?.ITEM?.UPDATE
-    let editable = false;
-    if (isNew === -2 && create) {
-        editable = true
-    } else if (isNew === -2 && !create && update) {
-        editable = false
-    } else if (update) {
-        editable = true
-    }
     dispatch({
         type: ADD_COLUMN_ITEM,
-        payload: { [columnId]: new column({ columnId: columnId, editable: editable }) }
+        payload: { [columnId]: new column({ columnId: columnId, editable: isNewUpdated("ITEM") }) }
     })
     dispatch({
         type: UPDATE_COL_ITEM,

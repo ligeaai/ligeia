@@ -1,6 +1,10 @@
 function returnValCheck(val) {
     return val === undefined ? false : val
 }
+export const isRead = (param) => (dispatch, getState) => {
+    const isRead = getState().auth.user?.role?.PROPERTY_ID[param]?.READ
+    return isRead
+}
 
 export const isDeleted = (param) => (dispatch, getState) => {
     const isDeleted = getState().auth.user?.role?.PROPERTY_ID[param]?.DELETE
