@@ -1,0 +1,22 @@
+$bg: url("../../../Images/backgorunds/image.jpeg");
+@import "./footer.scss";
+.starter-container {
+  background-image: $bg;
+  background-size: contain;
+  height: 100vh;
+  min-height: 750px;
+  min-width: 510px;
+  position: relative;
+  background-color: rgb(38, 38, 38);
+  &__body {
+    height: calc(100% - 200px);
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .starter-container {
+    &__body {
+      height: calc(100% - 250px);
+    }
+  }
+}

@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const baseUrl = "http://20.230.239.209:8000"
-// const baseUrl = "http://localhost:8000"
+
 const apiVersion = "/api/v1"
 export const wsBaseUrl = "ws://20.230.239.209:8000"
 export const instance = axios.create({
