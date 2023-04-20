@@ -9,12 +9,16 @@
   z-index: 2;
   position: "relative";
   height: 100%;
-  overflow: auto;
-  padding: 8px 6px;
+  padding: 8px;
   @include themify($themes) {
     background-color: themed("bg-drawer");
   }
+  overflow: hidden;
   @include defaultScroll;
+  &:hover {
+    padding-right: 0px;
+    overflow: auto;
+  }
   .drawer-menu__list-item {
     border-radius: 8px;
     @include themify($themes) {
