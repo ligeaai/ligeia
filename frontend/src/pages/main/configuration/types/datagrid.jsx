@@ -28,7 +28,7 @@ function TreeDataWithGap() {
         }
       }
       if (index !== -1)
-        setColumns((prev) => {
+        await setColumns((prev) => {
           const updatedObject = {
             ...prev[index],
             width: value.length * 10 + 24,
