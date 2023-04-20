@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { CustomNoRowsOverlay } from "../../../../../components";
 
-import { columns } from "./columns";
+import { getColumns } from "./columns";
 import CustomToolbar from "./customToolbar";
 
 import { editCell } from "../../../../../services/actions/roles/properties";
@@ -20,7 +20,7 @@ const PropertiesDataGrid = () => {
 
   return (
     <DataGrid
-      columns={columns}
+      columns={dispatch(getColumns())}
       rows={Object.values(rows)}
       // hideFooter={true}
       onCellEditCommit={onCellEditCommit}

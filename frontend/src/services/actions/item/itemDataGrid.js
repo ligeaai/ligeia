@@ -51,7 +51,7 @@ export class column {
 const _createColumn = (columnId) => (dispatch, getState) => {
     dispatch({
         type: ADD_COLUMN_ITEM,
-        payload: { [columnId]: new column({ columnId: columnId, editable: isNewUpdated("ITEM") }) }
+        payload: { [columnId]: new column({ columnId: columnId, editable: isNewUpdated("CONFIG") }) }
     })
     dispatch({
         type: UPDATE_COL_ITEM,

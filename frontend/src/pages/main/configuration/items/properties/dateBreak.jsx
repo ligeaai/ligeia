@@ -12,7 +12,7 @@ const DateBreak = ({ props }) => {
   const [date, setDate] = React.useState(instanttime);
   const usedDates = useSelector((state) => state.itemDataGrid.col);
   const permission = useSelector(
-    (state) => state.auth.user?.role?.PROPERTY_ID?.ITEM
+    (state) => state.auth.user?.role?.PROPERTY_ID?.CONFIG
   );
   const checkDateBreaks = (date) => {
     var returnValue = true;

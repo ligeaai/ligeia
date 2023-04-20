@@ -74,15 +74,15 @@ const PropertiesActionMenu = () => {
       btnDelete={btnDelete}
       saveGoPrev={saveGoPrev}
       saveGoNext={saveGoNext}
-      btnNewIsDisabled={!dispatch(isCreated("ITEM"))}
+      btnNewIsDisabled={!dispatch(isCreated("CONFIG"))}
       saveIsDisabled={
         !(
-          dispatch(isCreated("ITEM")) ||
-          dispatch(isUpdated("ITEM")) ||
-          dispatch(isDeleted("ITEM"))
+          dispatch(isCreated("CONFIG")) ||
+          dispatch(isUpdated("CONFIG")) ||
+          dispatch(isDeleted("CONFIG"))
         )
       }
-      btnDeleteIsDisabled={!dispatch(isDeleted("ITEM"))}
+      btnDeleteIsDisabled={!dispatch(isDeleted("CONFIG"))}
     />
   );
 };

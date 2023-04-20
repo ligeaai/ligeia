@@ -16,7 +16,7 @@ const CustomColumnMenu = (props) => {
     (state) => state.treeview.selectedItem.selectedIndex
   );
   const permission = useSelector(
-    (state) => state.auth.user?.role?.PROPERTY_ID?.ITEM.DELETE
+    (state) => state.auth.user?.role?.PROPERTY_ID?.PROPERTY_ID?.DELETE
   );
   return (
     <Box>

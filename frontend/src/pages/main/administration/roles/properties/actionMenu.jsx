@@ -11,6 +11,10 @@ import {
   deleteRole,
   saveRole,
 } from "../../../../../services/actions/roles/properties";
+import {
+  isCreated,
+  isDeleted,
+} from "../../../../../services/utils/permissions";
 const PropertiesActionMenu = () => {
   const dispatch = useDispatch();
   const selectedIndex = useSelector(
@@ -55,8 +59,13 @@ const PropertiesActionMenu = () => {
       btnDelete={btnDelete}
       saveGoPrev={saveGoPrev}
       saveGoNext={saveGoNext}
+      btnNewIsDisabled={!dispatch(isCreated("ROLES"))}
       saveIsDisabled={selectedIndex === -3}
-      btnDeleteIsDisabled={selectedIndex === -2 || selectedIndex === -3}
+      btnDeleteIsDisabled={
+        selectedIndex === -2 ||
+        selectedIndex === -3 ||
+        !dispatch(isDeleted("ROLES"))
+      }
       saveGoNextIsDisabled={selectedIndex === -2 || selectedIndex === -3}
       saveGoPrevIsDisabled={selectedIndex === -2 || selectedIndex === -3}
     />

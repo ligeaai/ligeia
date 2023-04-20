@@ -54,9 +54,9 @@ const Palette = () => {
 
                 icon: {
                     primary: "#819ca9", //moved tree menü icon
-                    secondary: "#263238", // items under icon
+                    secondary: "#263238", // moved action menu icon
                     main: "#819ca9", //seachbar icon
-                    success: "#9fa8da", // icon hover text 
+                    success: "#9fa8da", // moved action menu icon 
                 },
 
 
