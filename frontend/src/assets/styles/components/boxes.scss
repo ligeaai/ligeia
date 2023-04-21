@@ -1,8 +1,11 @@
 @import "../palette/shadow.scss";
 @import "../palette/palette.scss";
+
 @mixin treeViewandItemBox {
+  display: flex;
   flex-wrap: nowrap !important;
   height: 100%;
+  width: 100%;
 }
 @mixin fullScreenBox {
   flex-wrap: nowrap !important;
@@ -31,6 +34,18 @@
   // border: 0.5px solid;
   // border-color: $grey-200;
   // border-radius: 5px;
+}
+
+@mixin actionBox {
+  align-items: center;
+  padding-left: 16px !important;
+  margin: 2px !important;
+  width: 100%;
+}
+
+@mixin propertyBox {
+  padding: 8px !important;
+  height: calc(100% - 85px);
 }
 
 @mixin dataGridBox {

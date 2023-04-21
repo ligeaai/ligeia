@@ -91,7 +91,6 @@ function DiagnosticEditor() {
           )}
         </Tabs>
       </Box>
-
       <TabPanel value={value} index={value}></TabPanel>
     </Box>
   );

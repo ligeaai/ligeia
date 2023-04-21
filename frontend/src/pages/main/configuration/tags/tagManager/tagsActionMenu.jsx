@@ -7,6 +7,12 @@ import {
   deleteTag,
   saveButton,
 } from "../../../../../services/actions/tags/tags";
+import {
+  isCreated,
+  isUpdated,
+  isDeleted,
+  isNewUpdated,
+} from "../../../../../services/utils/permissions";
 const TagsActionMenu = () => {
   const dispatch = useDispatch();
   const selectedIndex = useSelector(
@@ -36,6 +42,9 @@ const TagsActionMenu = () => {
       saveGoNext={saveGoNext}
       infoIsActive={false}
       dublicateIsActive={false}
+      btnNewIsDisabled={!dispatch(isCreated("TAGS_MANAGER"))}
+      saveIsDisabled={!dispatch(isNewUpdated("TAGS_MANAGER"))}
+      btnDeleteIsDisabled={!dispatch(isDeleted("TAGS_MANAGER"))}
     />
   );
 };

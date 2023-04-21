@@ -58,7 +58,7 @@ const PropertiesEditor = () => {
               md={6}
               className="tag-manager-container__body__property-box__prop-item__box__body"
             >
-              {Object.keys(tagValues.TAG_LINK).map((e, key) => {
+              {Object.keys(tagValues?.TAG_LINK).map((e, key) => {
                 return (
                   <Grid
                     container
@@ -69,7 +69,7 @@ const PropertiesEditor = () => {
                       item
                       className="tag-manager-container__body__property-box__prop-item__box__label"
                     >
-                      {tagValues.TAG_LINK[e].SHORT_LABEL}
+                      {tagValues?.TAG_LINK[e]?.SHORT_LABEL}
                     </Grid>
                     <Grid
                       item
@@ -77,7 +77,7 @@ const PropertiesEditor = () => {
                         "tag-manager-container__body__property-box__prop-item__box__label-field"
                       }
                     >
-                      <TextFields row={tagValues.TAG_LINK[e]} />
+                      <TextFields row={tagValues?.TAG_LINK[e]} />
                     </Grid>
                   </Grid>
                 );
@@ -114,41 +114,44 @@ const PropertiesEditor = () => {
                       item
                       className="tag-manager-container__body__property-box__prop-item__box__label"
                     >
-                      {tagValues.TAG_INFORMATIONS[0].SHORT_LABEL}
+                      {tagValues?.TAG_INFORMATIONS[0]?.SHORT_LABEL}
                     </Grid>
                     <Grid
                       item
                       className="tag-manager-container__body__property-box__prop-item__box__field"
                     >
-                      <TextFields row={tagValues.TAG_INFORMATIONS[0]} />
+                      <TextFields row={tagValues?.TAG_INFORMATIONS[0]} />
                     </Grid>
                   </Grid>
                 </Grid>
               </Grid>
             </Grid>
             {/* <Uom  /> */}
-            {Object.keys(tagValues.TAG_INFORMATIONS).map((e, key) => {
+            {Object.keys(tagValues?.TAG_INFORMATIONS).map((e, key) => {
               if (
-                tagValues.TAG_INFORMATIONS[e].PROPERTY_TYPE !== "GUID" &&
-                tagValues.TAG_INFORMATIONS[e].PROPERTY_NAME !==
+                tagValues?.TAG_INFORMATIONS[e]?.PROPERTY_TYPE !== "GUID" &&
+                tagValues?.TAG_INFORMATIONS[e]?.PROPERTY_NAME !==
                   "END_DATETIME" &&
-                tagValues.TAG_INFORMATIONS[e].PROPERTY_NAME !==
+                tagValues?.TAG_INFORMATIONS[e]?.PROPERTY_NAME !==
                   "LAST_UPDT_USER" &&
-                tagValues.TAG_INFORMATIONS[e].PROPERTY_NAME !==
+                tagValues?.TAG_INFORMATIONS[e]?.PROPERTY_NAME !==
                   "LAST_UPDT_DATE" &&
-                tagValues.TAG_INFORMATIONS[e].PROPERTY_NAME !== "LOAD" &&
-                tagValues.TAG_INFORMATIONS[e].PROPERTY_NAME !== "ITEM_ID" &&
-                tagValues.TAG_INFORMATIONS[e].PROPERTY_NAME !== "TARGET_ID" &&
-                tagValues.TAG_INFORMATIONS[e].PROPERTY_NAME !==
+                tagValues?.TAG_INFORMATIONS[e]?.PROPERTY_NAME !== "LOAD" &&
+                tagValues?.TAG_INFORMATIONS[e]?.PROPERTY_NAME !== "ITEM_ID" &&
+                tagValues?.TAG_INFORMATIONS[e]?.PROPERTY_NAME !== "TARGET_ID" &&
+                tagValues?.TAG_INFORMATIONS[e]?.PROPERTY_NAME !==
                   "FULL_INTERVAL" &&
-                tagValues.TAG_INFORMATIONS[e].PROPERTY_NAME !== "ACCESS" &&
-                tagValues.TAG_INFORMATIONS[e].PROPERTY_NAME !== "DESCRIPTION" &&
-                tagValues.TAG_INFORMATIONS[e].PROPERTY_NAME !== "START_DATETIME"
+                tagValues?.TAG_INFORMATIONS[e]?.PROPERTY_NAME !== "ACCESS" &&
+                tagValues?.TAG_INFORMATIONS[e]?.PROPERTY_NAME !==
+                  "DESCRIPTION" &&
+                tagValues?.TAG_INFORMATIONS[e]?.PROPERTY_NAME !==
+                  "START_DATETIME"
               ) {
-                return tagValues.TAG_INFORMATIONS[e].PROPERTY_NAME === "UOM" ? (
-                  <TextFields row={tagValues.TAG_INFORMATIONS[e]} />
-                ) : tagValues.TAG_INFORMATIONS[e].PROPERTY_NAME === "NAME" ? (
-                  <TextFields row={tagValues.TAG_INFORMATIONS[e]} />
+                return tagValues?.TAG_INFORMATIONS[e]?.PROPERTY_NAME ===
+                  "UOM" ? (
+                  <TextFields row={tagValues?.TAG_INFORMATIONS[e]} />
+                ) : tagValues?.TAG_INFORMATIONS[e]?.PROPERTY_NAME === "NAME" ? (
+                  <TextFields row={tagValues?.TAG_INFORMATIONS[e]} />
                 ) : (
                   <Grid item xs={12} md={6} key={key}>
                     <Grid
@@ -159,7 +162,7 @@ const PropertiesEditor = () => {
                         item
                         className="tag-manager-container__body__property-box__prop-item__box__body tag-manager-container__body__property-box__prop-item__box__label"
                       >
-                        {tagValues.TAG_INFORMATIONS[e].SHORT_LABEL}
+                        {tagValues?.TAG_INFORMATIONS[e]?.SHORT_LABEL}
                       </Grid>
                       <Grid
                         item
@@ -188,13 +191,13 @@ const PropertiesEditor = () => {
                   item
                   className="tag-manager-container__body__property-box__prop-item__box__label"
                 >
-                  {tagValues.TAG_INFORMATIONS[6].SHORT_LABEL}
+                  {tagValues?.TAG_INFORMATIONS[6]?.SHORT_LABEL}
                 </Grid>
                 <Grid
                   item
                   className="tag-manager-container__body__property-box__prop-item__box__field"
                 >
-                  <TextFields row={tagValues.TAG_INFORMATIONS[6]} />
+                  <TextFields row={tagValues?.TAG_INFORMATIONS[6]} />
                 </Grid>
               </Grid>
             </Grid>

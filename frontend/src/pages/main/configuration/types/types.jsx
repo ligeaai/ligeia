@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 
-import { Grid } from "@mui/material";
+import { Grid, Box } from "@mui/material";
 
 import {
   Breadcrumb,
@@ -11,7 +11,6 @@ import {
   Select,
   TreeMenuItems,
   MyDivider,
-  MainBox,
 } from "../../../../components";
 import DrawerMenu from "../../../../layout/main/asset/treeViewMenu";
 
@@ -39,6 +38,7 @@ import { refreshDataGridType } from "../../../../services/actions/type/datagrid"
 import TypeService from "../../../../services/api/type";
 import { useIsMount } from "../../../../hooks/useIsMount";
 import { selectDrawerItem } from "../../../../services/actions/drawerMenu/drawerMenu";
+import "../../../../assets/styles/page/tools/types/types.scss";
 const Menu = () => {
   document.title = `Ligeia.ai | Types`;
   selectDrawerItem("Types");
@@ -109,56 +109,49 @@ const Type = () => {
   }, []);
 
   return (
-    <MainBox>
-      <Grid item>
-        <DrawerMenu
-          Element={
-            <Menu
-              path={TypeService.getAll}
-              textPath="TYPE"
-              historyPathLevel={2}
-            />
-          }
-          path="types"
-        />
-      </Grid>
+    <React.Fragment>
+      <DrawerMenu
+        Element={
+          <Menu
+            path={TypeService.getAll}
+            textPath="TYPE"
+            historyPathLevel={2}
+          />
+        }
+        path="types"
+      />
 
-      <Grid
-        item
-        xs={12}
-        sx={{
-          boxShadow: 3,
-          borderRadius: "3px",
-          width: "100px",
-        }}
-      >
-        <Grid container>
-          <Breadcrumb />
-          <ItemSperatorLineXL />
-          <Grid container sx={{ alignItems: "center", pl: 2, marginY: "2px" }}>
-            <Grid item sx={{ mr: "2px" }}>
-              <MyActionMenu />
-            </Grid>
-            <MyDivider />
-            <Grid item sx={{ mx: 1 }}>
-              <Select
-                values={layerValues}
-                defaultValue={filteredLayerName}
-                handleChangeFunc={selectHandleChangeFunc}
-              />
-            </Grid>
-            <MyDivider />
-          </Grid>
-
-          <ItemSperatorLineXL />
-          <Grid item xs={12} sx={{ mt: 1 }}>
+      <Box className="types-container__body">
+        <Breadcrumb />
+        <ItemSperatorLineXL />
+        <Grid container className="types-container__body__action-box">
+          <Grid item className="types-container__body__action-box__icons">
             <ComponentError errMsg="Error">
-              <PropLinkTabs MyProperties={<DataGridPro />} isLinkOpen={false} />
+              <MyActionMenu />
             </ComponentError>
           </Grid>
+          <MyDivider />
+          <Grid
+            item
+            className="types-container__body__action-box__layer-select"
+          >
+            <Select
+              values={layerValues}
+              defaultValue={filteredLayerName}
+              handleChangeFunc={selectHandleChangeFunc}
+            />
+          </Grid>
+          <MyDivider />
         </Grid>
-      </Grid>
-    </MainBox>
+
+        <ItemSperatorLineXL />
+        <Grid item xs={12} className="types-container__body__property-box">
+          <ComponentError errMsg="Error">
+            <PropLinkTabs MyProperties={<DataGridPro />} isLinkOpen={false} />
+          </ComponentError>
+        </Grid>
+      </Box>
+    </React.Fragment>
   );
 };
 

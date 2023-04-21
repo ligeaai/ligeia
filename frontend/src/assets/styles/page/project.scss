@@ -4,6 +4,7 @@
 .project-container {
   @include layoutBox;
   overflow: hidden;
+  min-width: 635px;
   &__body {
     height: calc(100% - 58px);
     padding: 15px !important;

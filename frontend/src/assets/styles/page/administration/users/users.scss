@@ -1,7 +1,8 @@
-@import "../components/boxes.scss";
+@import "../../../components/boxes.scss";
 .users-container {
   @include layoutBox;
   overflow: hidden;
+  min-width: 350px;
   &__body {
     height: calc(100% - 48px);
     padding: 8px;

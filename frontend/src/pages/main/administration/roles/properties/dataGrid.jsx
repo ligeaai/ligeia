@@ -8,6 +8,7 @@ import { getColumns } from "./columns";
 import CustomToolbar from "./customToolbar";
 
 import { editCell } from "../../../../../services/actions/roles/properties";
+import { Box } from "@mui/material";
 
 const PropertiesDataGrid = () => {
   const dispatch = useDispatch();
@@ -19,24 +20,38 @@ const PropertiesDataGrid = () => {
   };
 
   return (
-    <DataGrid
-      columns={dispatch(getColumns())}
-      rows={Object.values(rows)}
-      // hideFooter={true}
-      onCellEditCommit={onCellEditCommit}
-      getRowId={(row) => row.ROW_ID}
-      pagination
-      componentsProps={{
-        footer: {
-          style: { justifyContent: "flex-start" },
+    <Box
+      className="roles-container__body__property-box__datagrid"
+      sx={{
+        button: {
+          minWidth: "36px",
+          height: "36px",
+          borderRadius: "36px",
+          span: {
+            m: 0,
+          },
         },
       }}
-      autoPageSize={true}
-      components={{
-        Toolbar: CustomToolbar,
-        NoRowsOverlay: CustomNoRowsOverlay,
-      }}
-    />
+    >
+      <DataGrid
+        columns={dispatch(getColumns())}
+        rows={Object.values(rows)}
+        // hideFooter={true}
+        onCellEditCommit={onCellEditCommit}
+        getRowId={(row) => row.ROW_ID}
+        pagination
+        componentsProps={{
+          footer: {
+            style: { justifyContent: "flex-start" },
+          },
+        }}
+        autoPageSize={true}
+        components={{
+          Toolbar: CustomToolbar,
+          NoRowsOverlay: CustomNoRowsOverlay,
+        }}
+      />
+    </Box>
   );
 };
 

@@ -5,7 +5,7 @@ import { Grid } from "@mui/material";
 import {
   Breadcrumb,
   ItemSperatorLineXL,
-  MainBox,
+  ComponentError,
 } from "../../../../components";
 import UsersEditor from "./usersEditor";
 
@@ -14,6 +14,7 @@ import {
   cleanUsers,
 } from "../../../../services/actions/users/users";
 import { selectDrawerItem } from "../../../../services/actions/drawerMenu/drawerMenu";
+import "../../../../assets/styles/page/administration/users/users.scss";
 const Main = () => {
   document.title = "Ligeia.ai | Users";
   selectDrawerItem("Users");
@@ -31,7 +32,9 @@ const Main = () => {
       <Breadcrumb />
       <ItemSperatorLineXL />
       <Grid item xs={12} className="users-container__body">
-        <UsersEditor />
+        <ComponentError errMsg="Error">
+          <UsersEditor />
+        </ComponentError>
       </Grid>
     </Grid>
   );

@@ -40,17 +40,15 @@ const Properties = ({ MyProperties, isLinkOpen = true, MyLinks }) => {
       container
       sx={{
         flexWrap: "noWrap",
-        // minHeight: "calc(500px - 50px - 36px - 10px)",
-        // height: "calc(100vh - 60px  - 50px - 36px - 10px)",
-        height: "calc(100% - 8px)",
+        height: "100%",
+        position: "relative",
       }}
     >
       <Grid
         item
         sx={{
-          pl: 0.5,
           paddingRight: "4px",
-          my: 0.5,
+          mr: 0.5,
           height: "100%",
         }}
       >
@@ -128,7 +126,7 @@ const Properties = ({ MyProperties, isLinkOpen = true, MyLinks }) => {
         orientation="vertical"
         flexItem
         sx={{
-          mt: 0.5,
+          my: 0.5,
           borderWidth: "0.2px",
           borderColor: "status.secondary",
           backgroundColor: "status.secondary",
@@ -138,8 +136,6 @@ const Properties = ({ MyProperties, isLinkOpen = true, MyLinks }) => {
         item
         xs={12}
         sx={{
-          mr: 1,
-          marginLeft: "2px",
           width: "calc(100% - 52px)",
         }}
       >

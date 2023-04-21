@@ -6,6 +6,7 @@ import { Grid, Box, Button } from "@mui/material";
 
 import { updateUser } from "../../../../services/actions/users/users";
 import Roles from "../../../../services/api/roles";
+import { isUpdated } from "../../../../services/utils/permissions";
 
 const UpdateDialogBody = ({ handleClose, rowData, ...rest }) => {
   const dispatch = useDispatch();
@@ -93,6 +94,7 @@ const UpdateDialogBody = ({ handleClose, rowData, ...rest }) => {
                 );
                 handleClose();
               }}
+              disabled={!dispatch(isUpdated("USERS"))}
               variant="outlined"
             >
               Save

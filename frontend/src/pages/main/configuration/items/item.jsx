@@ -22,6 +22,7 @@ import Link from "./link/link";
 import LinkActionMenu from "./link/linkActionMenu";
 import TreeMenu from "./treeMenu";
 import { selectDrawerItem } from "../../../../services/actions/drawerMenu/drawerMenu";
+import "../../../../assets/styles/page/item.scss";
 const Item = ({ isHome }) => {
   const dispatch = useDispatch();
   const isLinksActive = useSelector(
@@ -42,48 +43,36 @@ const Item = ({ isHome }) => {
     }
   }, [isHome]);
   return (
-    <MainBox>
+    <Grid container columnGap={0.5} className="item-container">
       <Grid item>
         <DrawerMenu Element={<TreeMenu />} path="item" />
       </Grid>
 
-      <Grid
-        item
-        xs={12}
-        sx={{
-          boxShadow: 3,
-          borderRadius: "3px",
-          width: "100px",
-          color: "text.primary",
-          overflow: "hidden",
-        }}
-      >
-        <Grid container>
-          <Breadcrumb />
-          <ItemSperatorLineXL />
-          <Grid container sx={{ alignItems: "center", pl: 2, marginY: "2px" }}>
-            <Grid item sx={{ mr: "2px" }}>
-              {isLinksActive ? <LinkActionMenu /> : <MyActionMenu />}
-            </Grid>
-            <MyDivider />
-            <Grid item sx={{ mr: 1 }}>
-              {isLinksActive ? <DateBreak props={true} /> : <DateBreak />}
-            </Grid>
-            <MyDivider />
+      <Grid item xs={12} className="item-container__body">
+        <Breadcrumb />
+        <ItemSperatorLineXL />
+        <Grid container className="item-container__body__action-box">
+          <Grid item className="item-container__body__action-box__icons">
+            {isLinksActive ? <LinkActionMenu /> : <MyActionMenu />}
           </Grid>
+          <MyDivider />
+          <Grid item className="item-container__body__action-box__date-break">
+            {isLinksActive ? <DateBreak props={true} /> : <DateBreak />}
+          </Grid>
+          <MyDivider />
+        </Grid>
 
-          <ItemSperatorLineXL />
-          <Grid item xs={12} sx={{ mt: 1, mr: 1 }}>
-            <ComponentError errMsg="Error">
-              <PropLinkTabs
-                MyProperties={<Properties></Properties>}
-                MyLinks={<Link />}
-              />
-            </ComponentError>
-          </Grid>
+        <ItemSperatorLineXL />
+        <Grid item xs={12} className="item-container__body__property-box">
+          <ComponentError errMsg="Error">
+            <PropLinkTabs
+              MyProperties={<Properties></Properties>}
+              MyLinks={<Link />}
+            />
+          </ComponentError>
         </Grid>
       </Grid>
-    </MainBox>
+    </Grid>
   );
 };
 

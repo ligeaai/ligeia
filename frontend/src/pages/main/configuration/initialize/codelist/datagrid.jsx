@@ -76,12 +76,16 @@ function TreeDataWithGap() {
   ]);
   return (
     <Box
-      id="code-list-container__body__property-box__datagrid"
+      className="code-list-container__body__property-box__datagrid"
       sx={{
         button: {
           minWidth: "36px",
           height: "36px",
           borderRadius: "50px",
+          color: "icon.secondary",
+          span: {
+            m: 0,
+          },
         },
         "& .MuiInputBase-input": {
           padding: "0px important",

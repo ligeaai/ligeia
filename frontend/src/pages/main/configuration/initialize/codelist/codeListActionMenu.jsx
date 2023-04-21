@@ -68,14 +68,7 @@ export const CustomToolbar = () => {
               tooltip: { sx: { backgroundColor: "icon.success" } },
             }}
           >
-            <GridToolbarFilterButton
-              sx={{
-                color: "icon.secondary",
-                span: {
-                  m: 0,
-                },
-              }}
-            />
+            <GridToolbarFilterButton />
           </Tooltip>
           <Tooltip
             title={"Find Column"}
@@ -83,14 +76,7 @@ export const CustomToolbar = () => {
               tooltip: { sx: { backgroundColor: "icon.success" } },
             }}
           >
-            <GridToolbarColumnsButton
-              sx={{
-                color: "icon.secondary",
-                span: {
-                  m: 0,
-                },
-              }}
-            />
+            <GridToolbarColumnsButton />
           </Tooltip>
           <Tooltip
             title={"Show Density"}
@@ -98,14 +84,7 @@ export const CustomToolbar = () => {
               tooltip: { sx: { backgroundColor: "icon.success" } },
             }}
           >
-            <GridToolbarDensitySelector
-              sx={{
-                color: "icon.secondary",
-                span: {
-                  m: 0,
-                },
-              }}
-            />
+            <GridToolbarDensitySelector />
           </Tooltip>
           <Tooltip
             title={"Show Export"}
@@ -113,14 +92,7 @@ export const CustomToolbar = () => {
               tooltip: { sx: { backgroundColor: "icon.success" } },
             }}
           >
-            <GridToolbarExport
-              sx={{
-                color: "icon.secondary",
-                span: {
-                  m: 0,
-                },
-              }}
-            />
+            <GridToolbarExport />
           </Tooltip>
         </Grid>
       </Grid>

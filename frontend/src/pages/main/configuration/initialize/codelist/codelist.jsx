@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 
-import { Grid } from "@mui/material";
+import { Grid, Box } from "@mui/material";
 
 import {
   Breadcrumb,
@@ -10,7 +10,6 @@ import {
   PropLinkTabs,
   Select,
   MyDivider,
-  MainBox,
 } from "../../../../../components";
 import DrawerMenu from "../../../../../layout/main/asset/treeViewMenu";
 
@@ -26,7 +25,7 @@ import { instance, config } from "../../../../../services/baseApi";
 
 import Menu from "./treeMenu";
 import { selectDrawerItem } from "../../../../../services/actions/drawerMenu/drawerMenu";
-
+import "../../../../../assets/styles/page/tools/codelist/codelist.scss";
 const CodeList = ({ isHome }) => {
   document.title = `Ligeia.ai | Code List`;
   selectDrawerItem("Code List");
@@ -61,17 +60,17 @@ const CodeList = ({ isHome }) => {
   }, [isHome]);
 
   return (
-    <Grid container columnGap={0.5} className="code-list-container">
-      <Grid item>
-        <DrawerMenu Element={<Menu />} path="codelist" />
-      </Grid>
+    <React.Fragment>
+      <DrawerMenu Element={<Menu />} path="codelist" />
 
-      <Grid item xs={12} className="code-list-container__body">
+      <Box className="code-list-container__body">
         <Breadcrumb />
         <ItemSperatorLineXL />
         <Grid container className="code-list-container__body__action-box">
           <Grid item className="code-list-container__body__action-box__icons">
-            <MyActionMenu />
+            <ComponentError errMsg="Error">
+              <MyActionMenu />
+            </ComponentError>
           </Grid>
           <MyDivider />
           <Grid
@@ -92,8 +91,8 @@ const CodeList = ({ isHome }) => {
             <PropLinkTabs MyProperties={<DataGridPro />} isLinkOpen={false} />
           </ComponentError>
         </Grid>
-      </Grid>
-    </Grid>
+      </Box>
+    </React.Fragment>
   );
 };
 

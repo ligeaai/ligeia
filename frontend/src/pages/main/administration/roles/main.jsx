@@ -2,7 +2,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import Grid from "@mui/material/Grid";
-
+import Box from "@mui/material/Box";
 import {
   ItemSperatorLineXL,
   PropLinkTabs,
@@ -21,6 +21,7 @@ import TreeMenu from "./treeMenu";
 
 import { cleanRoles } from "../../../../services/actions/roles/roles";
 import { selectDrawerItem } from "../../../../services/actions/drawerMenu/drawerMenu";
+import "../../../../assets/styles/page/administration/roles/roles.scss";
 const Main = ({ isHome }) => {
   document.title = "Ligeia.ai | Roles";
   selectDrawerItem("Roles");
@@ -32,42 +33,31 @@ const Main = ({ isHome }) => {
     };
   }, []);
   return (
-    <MainBox>
-      <Grid item>
-        <DrawerMenu Element={<TreeMenu />} path="item" />
-      </Grid>
+    <React.Fragment>
+      <DrawerMenu Element={<TreeMenu />} path="item" />
 
-      <Grid
-        item
-        xs={12}
-        sx={{
-          boxShadow: 3,
-          borderRadius: "3px",
-          width: "100px",
-          color: "text.primary",
-        }}
-      >
-        <Grid container>
-          <Breadcrumb />
-          <ItemSperatorLineXL />
-          <Grid container sx={{ alignItems: "center", pl: 2, marginY: "2px" }}>
-            <Grid item sx={{ mr: "2px" }}>
-              {isLinksActive ? <LinkActionMenu /> : <MyActionMenu />}
-            </Grid>
-          </Grid>
-
-          <ItemSperatorLineXL />
-          <Grid item xs={12} sx={{ mt: 1, mr: 1 }}>
+      <Box className="roles-container__body">
+        <Breadcrumb />
+        <ItemSperatorLineXL />
+        <Grid container className="roles-container__body__action-box">
+          <Grid item className="roles-container__body__action-box__icons">
             <ComponentError errMsg="Error">
-              <PropLinkTabs
-                MyProperties={<Properties isHome={isHome} />}
-                MyLinks={<Link isHome={isHome} />}
-              />
+              {isLinksActive ? <LinkActionMenu /> : <MyActionMenu />}
             </ComponentError>
           </Grid>
         </Grid>
-      </Grid>
-    </MainBox>
+
+        <ItemSperatorLineXL />
+        <Grid item xs={12} className="roles-container__body__property-box">
+          <ComponentError errMsg="Error">
+            <PropLinkTabs
+              MyProperties={<Properties isHome={isHome} />}
+              MyLinks={<Link isHome={isHome} />}
+            />
+          </ComponentError>
+        </Grid>
+      </Box>
+    </React.Fragment>
   );
 };
 

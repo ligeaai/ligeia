@@ -15,7 +15,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { instance, config } from "../../../../../services/baseApi";
 import { addSaveTagValue } from "../../../../../services/actions/tags/tags";
 import { setIsActiveConfirmation } from "../../../../../services/actions/confirmation/historyConfirmation";
-
 const TagName = () => {
   const dispatch = useDispatch();
   const items = useSelector((state) => state.tags.items);
@@ -317,7 +316,7 @@ const TextFields = (props) => {
   const { row } = props;
   const handleChangeFunc = (value) => {
     dispatch(setIsActiveConfirmation(true));
-    dispatch(addSaveTagValue(row.PROPERTY_NAME, value));
+    dispatch(addSaveTagValue(row?.PROPERTY_NAME, value));
   };
   const historyHandleChangeFunc = (value) => {
     dispatch(setIsActiveConfirmation(true));
@@ -326,17 +325,19 @@ const TextFields = (props) => {
     m += 1;
     var y = value.getFullYear();
     var newdate = y + "-" + m + "-" + d;
-    dispatch(addSaveTagValue(row.PROPERTY_NAME, newdate));
+    dispatch(addSaveTagValue(row?.PROPERTY_NAME, newdate));
   };
 
   const defaultValue = useSelector((state) =>
-    state.tags.saveValues ? state.tags.saveValues[row.PROPERTY_NAME] : "loading"
+    state.tags.saveValues
+      ? state.tags.saveValues[row?.PROPERTY_NAME]
+      : "loading"
   );
   var myDefaultValue = defaultValue ? defaultValue : undefined;
   const errFunc = () => {
     return (
       (myDefaultValue === undefined || myDefaultValue === "") &&
-      (row.MANDATORY === "False" ? false : true)
+      (row?.MANDATORY === "False" ? false : true)
     );
   };
   if (myDefaultValue === "loading") {
@@ -346,14 +347,14 @@ const TextFields = (props) => {
       </Box>
     );
   }
-  if (row.PROPERTY_TYPE === "CODE") {
-    if (row.CODE) {
+  if (row?.PROPERTY_TYPE === "CODE") {
+    if (row?.CODE) {
       var values = [{ ROW_ID: "", CODE_TEXT: "" }];
       const sortedCode = row.CODE.sort((a, b) =>
         a.CODE_TEXT > b.CODE_TEXT ? 1 : -1
       );
       values = values.concat(sortedCode);
-      if (row.PROPERTY_NAME === "UOM") {
+      if (row?.PROPERTY_NAME === "UOM") {
         return <Uom />;
       }
       return (
@@ -370,7 +371,7 @@ const TextFields = (props) => {
       return <>CODE NULL</>;
     }
   }
-  if (row.PROPERTY_TYPE === "DATETIME") {
+  if (row?.PROPERTY_TYPE === "DATETIME") {
     return (
       <DatePicker
         errFunc={errFunc}
@@ -379,11 +380,11 @@ const TextFields = (props) => {
       />
     );
   }
-  if (row.PROPERTY_TYPE === "TEXT") {
-    if (row.PROPERTY_NAME === "NAME") {
+  if (row?.PROPERTY_TYPE === "TEXT") {
+    if (row?.PROPERTY_NAME === "NAME") {
       return <TagName></TagName>;
     }
-    if (row.PROPERTY_NAME !== "DESCRIPTION") {
+    if (row?.PROPERTY_NAME !== "DESCRIPTION") {
       return (
         <MyTextField
           errFunc={errFunc}
@@ -394,7 +395,7 @@ const TextFields = (props) => {
     }
     return <MyMultilineTextField />;
   }
-  if (row.PROPERTY_TYPE === "BOOL") {
+  if (row?.PROPERTY_TYPE === "BOOL") {
     return (
       <MyCheckBox
         errFunc={errFunc}
@@ -403,7 +404,7 @@ const TextFields = (props) => {
       />
     );
   }
-  if (row.PROPERTY_TYPE === "NUMBER" || row.PROPERTY_TYPE === "DURATION") {
+  if (row?.PROPERTY_TYPE === "NUMBER" || row?.PROPERTY_TYPE === "DURATION") {
     return (
       <MyNumberTextField
         errFunc={errFunc}
@@ -412,14 +413,14 @@ const TextFields = (props) => {
       />
     );
   }
-  if (row.PROPERTY_TYPE === "ITEM") {
-    if (row.PROPERTY_NAME === "TRANSACTION_TYPE") {
+  if (row?.PROPERTY_TYPE === "ITEM") {
+    if (row?.PROPERTY_NAME === "TRANSACTION_TYPE") {
       return <TransactionTypeSelect row={row} defaultValue={myDefaultValue} />;
-    } else if (row.PROPERTY_NAME === "TRANSACTION_PROPERTY") {
+    } else if (row?.PROPERTY_NAME === "TRANSACTION_PROPERTY") {
       return <TransactionPropertySelect defaultValue={myDefaultValue} />;
     }
   }
-  return <>{row.PROPERTY_TYPE}</>;
+  return <>{row?.PROPERTY_TYPE}</>;
 };
 
 export default TextFields;

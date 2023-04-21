@@ -1,29 +1,22 @@
 import React from "react";
 
-import { useSelector } from "react-redux";
-
 import DataGrid from "./dataGrid";
-import { MyBox } from "../../../../../components";
+import { Box } from "@mui/material";
 const Properties = () => {
-  const isFullScreen = useSelector((state) => state.fullScreen.isFullScreen);
   return (
-    <MyBox
+    <Box
+      className="item-container__body__property-box__datagrid"
       sx={{
-        maxWidth: `calc(100% - 21px)`,
-        minHeight: isFullScreen
-          ? "calc(500px - 60px - 40px )"
-          : "calc(500px - 50px - 36px - 26px )",
-        height: isFullScreen
-          ? "calc(100vh - 60px - 40px )"
-          : "calc(100vh - 60px - 50px - 36px - 26px )",
+        height: "100%",
+        width: "100%",
         "& .super-app-theme--cell": {
           backgroundColor: "background.info",
         },
-        m: 0.5,
         button: { color: "status.secondary" },
       }}
-      Element={<DataGrid />}
-    ></MyBox>
+    >
+      <DataGrid />
+    </Box>
   );
 };
 

@@ -1,15 +1,13 @@
 @import "../palette/palette";
 @import "../components/boxes.scss";
 @import "../components/scrollbar.scss";
-.drawer-container {
-  overflow: hidden;
-  @include layoutBox;
-}
+
 .drawer-menu {
   z-index: 2;
   position: "relative";
   height: 100%;
   padding: 8px;
+  width: 100%;
   @include themify($themes) {
     background-color: themed("bg-drawer");
   }
@@ -80,6 +78,7 @@
 @media screen and (max-width: 480px) {
   .drawer-menu {
     position: absolute;
+    height: calc(100% - 66px);
   }
   .drawer-menu-closed {
     display: none;

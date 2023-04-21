@@ -31,6 +31,7 @@ function ReportDesigner() {
       className="demo-app"
       style={{
         height: "100%",
+        width: "100%",
       }}
     >
       <Designer report={report}></Designer>

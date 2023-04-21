@@ -15,28 +15,26 @@ const Drawer = () => {
     dispatch(loadDrawerMenu());
   }, [isAuth]);
   return (
-    <Box className="drawer-container">
-      <ComponentError
-        errMsg={
-          <ComponentErrorBody
-            text="Something went wrong"
-            icon={<ErrorOutlineIcon />}
-          />
-        }
-      >
-        <Box className={`drawer-menu`}>
-          {navItems ? (
-            Object.keys(navItems).length > 0 ? (
-              <App menu={navItems} />
-            ) : (
-              <>Data No Found</>
-            )
+    <ComponentError
+      errMsg={
+        <ComponentErrorBody
+          text="Something went wrong"
+          icon={<ErrorOutlineIcon />}
+        />
+      }
+    >
+      <Box className={`drawer-menu`}>
+        {navItems ? (
+          Object.keys(navItems).length > 0 ? (
+            <App menu={navItems} />
           ) : (
-            <LoadingComponent></LoadingComponent>
-          )}
-        </Box>
-      </ComponentError>
-    </Box>
+            <>Data No Found</>
+          )
+        ) : (
+          <LoadingComponent></LoadingComponent>
+        )}
+      </Box>
+    </ComponentError>
   );
 };
 

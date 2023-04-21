@@ -29,17 +29,19 @@ const Main = ({ Element }) => {
 
   return (
     <Box className="main-layout">
-      <Box className="full-screen-box">{Element}</Box>
+      <Box className="full-screen-box">
+        <Box className="full-screen-box__body">{Element}</Box>
+      </Box>
       <Box className="normal-screen-box">
         <Header />
-        <Grid className="main-layout__app-body" container columnSpacing={0.5}>
-          <Grid item>
+        <Box className="main-layout__app-body">
+          <Box className="main-layout__app-body__drawer-container">
             <Drawer />
-          </Grid>
-          <Grid item xs={12}>
+          </Box>
+          <Box className="main-layout__app-body__element-container">
             {Element}
-          </Grid>
-        </Grid>
+          </Box>
+        </Box>
       </Box>
       <Box className="full-screen-icon-box">
         <IconButton
