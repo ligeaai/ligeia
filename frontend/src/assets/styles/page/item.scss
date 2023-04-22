@@ -1,4 +1,5 @@
 @import "../components/boxes.scss";
+@import "../palette/palette.scss";
 .item-container {
   @include treeViewandItemBox;
 
@@ -20,6 +21,13 @@
         height: 100%;
         margin-left: 8px;
       }
+    }
+    &__links-box {
+      border-radius: 3px;
+      border: 1px solid;
+      border-color: $grey-200;
+      margin-left: 8px;
+      height: 100%;
     }
   }
 }

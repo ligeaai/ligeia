@@ -15,7 +15,6 @@ import {
 
 import history from "../../../routers/history";
 
-import Start from "../../../layout/start/start";
 import Layout from "../../../layout/authorization/layout";
 
 import { signup } from "../../../services/actions/auth";

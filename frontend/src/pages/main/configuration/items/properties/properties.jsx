@@ -7,8 +7,6 @@ const Properties = () => {
     <Box
       className="item-container__body__property-box__datagrid"
       sx={{
-        height: "100%",
-        width: "100%",
         "& .super-app-theme--cell": {
           backgroundColor: "background.info",
         },

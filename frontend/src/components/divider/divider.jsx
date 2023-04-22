@@ -6,11 +6,7 @@ const divider = () => {
       orientation="vertical"
       variant="middle"
       flexItem
-      sx={{
-        borderWidth: "0.2px",
-        borderColor: "text.main",
-        backgroundColor: "text.main",
-      }}
+      className="vertical-divider"
     />
   );
 };

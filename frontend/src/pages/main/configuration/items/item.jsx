@@ -9,7 +9,6 @@ import {
   ComponentError,
   MyDivider,
   Breadcrumb,
-  MainBox,
 } from "../../../../components";
 
 import DrawerMenu from "../../../../layout/main/asset/treeViewMenu";
@@ -18,7 +17,7 @@ import Properties from "./properties/properties";
 import { cleanDataGridItemAndRows } from "../../../../services/actions/item/itemDataGrid";
 import MyActionMenu from "./properties/actionMenu";
 import DateBreak from "./properties/dateBreak";
-import Link from "./link/link";
+import LinkEditor from "./link/linkEditor";
 import LinkActionMenu from "./link/linkActionMenu";
 import TreeMenu from "./treeMenu";
 import { selectDrawerItem } from "../../../../services/actions/drawerMenu/drawerMenu";
@@ -67,7 +66,7 @@ const Item = ({ isHome }) => {
           <ComponentError errMsg="Error">
             <PropLinkTabs
               MyProperties={<Properties></Properties>}
-              MyLinks={<Link />}
+              MyLinks={<LinkEditor />}
             />
           </ComponentError>
         </Grid>

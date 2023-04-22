@@ -28,16 +28,9 @@ export default function CheckboxList(props) {
   };
 
   return (
-    <List
-      sx={{
-        width: "100%",
-        height: "100%",
-      }}
-    >
+    <List className="check-list-container">
       {data.length === 0 ? (
-        <Box sx={{ width: "100%", textAlign: "center", fontSize: "14px" }}>
-          No Data
-        </Box>
+        <Box className="check-list-container__no-data">No Data</Box>
       ) : (
         <></>
       )}

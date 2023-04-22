@@ -41,7 +41,7 @@ const LinkEditor = () => {
   }, [selectedIndex]);
   if (name) {
     return (
-      <Grid container sx={{ minHeight: "100%", height: "min-content" }}>
+      <Grid container className="item-container__body__links-box">
         <Grid item xs={12} md={6}>
           <Box sx={{ width: "100%", textAlign: "center", fontWeight: "bold" }}>
             In

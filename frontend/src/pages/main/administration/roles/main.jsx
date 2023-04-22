@@ -8,7 +8,6 @@ import {
   PropLinkTabs,
   ComponentError,
   Breadcrumb,
-  MainBox,
 } from "../../../../components";
 
 import DrawerMenu from "../../../../layout/main/asset/treeViewMenu";

@@ -1,18 +1,3 @@
-// import React from "react";
-// import ErrorPage from "../../pages/error/errorPage";
-
-// const ErrorBoundary = ({ children }) => {
-//   const [hasError, setHasError] = React.useState(false);
-
-//   React.useEffect(() => {
-//     setHasError(true);
-//   }, []);
-
-//   return hasError ? <ErrorPage /> : children;
-// };
-
-// export default ErrorBoundary;
-
 import React from "react";
 import ErrorPage from "../../pages/error/errorPage";
 
