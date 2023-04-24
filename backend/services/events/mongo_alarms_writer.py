@@ -9,11 +9,13 @@ import uuid
 
 topic = os.environ.get("Kafka_Alarms_Topic")
 host = os.environ.get("Kafka_Host_DP")
+mongo_client = os.environ["Mongo_Client"]
+db_name = os.environ["MongoDb_alarms_Name"]
 consumer = KafkaConsumer(topic, bootstrap_servers=host)
 
-client = MongoClient(os.environ.get("Mongo_Client"))
-mongo_db = client["alarms"]
-timeseries_collection = mongo_db["alarms"]
+client = MongoClient(client)
+mongo_db = client[db_name]
+timeseries_collection = mongo_db[db_name]
 
 
 def convert_to_time(time):

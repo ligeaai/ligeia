@@ -9,11 +9,11 @@ import os
 class AlarmsConsumer(AsyncWebsocketConsumer):
     async def connect(self):
         await self.accept()
-        mongo_client = os.environ("Mongo_Client")
-        mongodb_name = os.environ("MongoDb_alarms_Name")
+        mongo_client = os.environ["Mongo_Client"]
+        db_name = os.environ["MongoDb_alarms_Name"]
         self.client = MongoClient(mongo_client)
-        self.mongo_db = self.client[mongodb_name]
-        self.collection = self.mongo_db[mongodb_name]
+        self.mongo_db = self.client[db_name]
+        self.collection = self.mongo_db[db_name]
         self.layer_name = self.scope["url_route"]["kwargs"]["layer_name"]
         self.kwargs = {
             "query": {
