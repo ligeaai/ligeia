@@ -41,9 +41,12 @@ const LinkEditor = () => {
   }, [selectedIndex]);
   if (name) {
     return (
-      <Grid container className="item-container__body__links-box">
+      <Grid container className="item-container__body__property-box__links">
         <Grid item xs={12} md={6}>
-          <Box sx={{ width: "100%", textAlign: "center", fontWeight: "bold" }}>
+          <Box
+            container
+            className="item-container__body__property-box__links__in-out"
+          >
             In
           </Box>
           <ItemLinks
@@ -52,19 +55,9 @@ const LinkEditor = () => {
             type={"TO_TYPE"}
           />
         </Grid>
-        <Grid item sx={{ position: "relative" }}>
-          <Divider
-            sx={{
-              position: "absolute",
-              left: "50%",
-              borderWidth: "0.1px",
-              height: "100%",
-              backgroundColor: "text.primary",
-            }}
-          />
-        </Grid>
+        <Divider className="item-container__body__property-box__links__divider" />
         <Grid item xs={12} md={6}>
-          <Box sx={{ width: "100%", textAlign: "center", fontWeight: "bold" }}>
+          <Box className="item-container__body__property-box__links__in-out">
             Out
           </Box>
           <ItemLinks

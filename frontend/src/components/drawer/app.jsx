@@ -54,7 +54,11 @@ const SingleLevel = ({ item, url }) => {
       )}-list-item`}
       onClick={handleClick}
     >
-      {Icon ? <Icon /> : <Box sx={{ width: "24px" }}></Box>}
+      {Icon ? (
+        <Icon />
+      ) : (
+        <Box className="drawer-menu__list-item__empty-box"></Box>
+      )}
       <Typography
         variant="subtitle2"
         className={"drawer-menu__list-item__text"}
@@ -82,7 +86,11 @@ const MultiLevel = ({ item, url }) => {
         className={`drawer-menu__list-item
          drawer-menu__${urlFormatter(item.SHORT_LABEL)}-list-item`}
       >
-        {Icon ? <Icon /> : <Box sx={{ width: "24px" }}></Box>}
+        {Icon ? (
+          <Icon />
+        ) : (
+          <Box className="drawer-menu__list-item__empty-box"></Box>
+        )}
 
         <Typography
           variant="subtitle2"

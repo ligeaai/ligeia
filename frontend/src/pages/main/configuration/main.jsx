@@ -10,7 +10,6 @@ const Main = ({ way }) => {
   document.title = `Ligeia.ai | ${way}`;
   selectDrawerItem(way);
   const dispatch = useDispatch();
-  const isFullScreen = useSelector((state) => state.fullScreen.isFullScreen);
   const drawerData = useSelector((state) => state.drawerMenu.data);
   React.useEffect(() => {
     if (drawerData) {
@@ -32,14 +31,7 @@ const Main = ({ way }) => {
       });
 
     return (
-      <Box
-        sx={{
-          minHeight: isFullScreen ? "100vh" : "100%",
-          height: "500px",
-          boxShadow: 3,
-          borderRadius: "3px",
-        }}
-      >
+      <Box className="home-main">
         <Cards cards={cards} />
       </Box>
     );

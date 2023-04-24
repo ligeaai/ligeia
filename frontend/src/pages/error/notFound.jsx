@@ -1,51 +1,30 @@
 import React from "react";
-
-import { grey } from "@mui/material/colors";
 import { Grid, Typography, Link } from "@mui/material";
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
 import history from "../../routers/history";
-const notFound = ({ width = "100vh" }) => {
+import "../../assets/styles/page/errorPage.scss";
+const notFound = () => {
   return (
-    <Grid
-      container
-      sx={{
-        height: width,
-        justifyContent: "center",
-        alignItems: "center",
-        backgroundColor: "background.main",
-      }}
-    >
-      <Grid
-        item
-        xs={4}
-        sx={{
-          boxShadow: 3,
-          color: "text.primary",
-          backgroundColor: "background.success",
-          borderRadius: "3px",
-          py: 1,
-          pt: 0,
-        }}
-      >
+    <Grid container className="error-pop-up">
+      <Grid item xs={4} className="error-pop-up__body">
         <Grid container>
-          <Grid item xs={12} sx={{ textAlign: "center", boxShadow: 1, py: 1 }}>
+          <Grid item xs={12} className="error-pop-up__body__icon">
             <ErrorOutlineIcon fontSize="large" />
           </Grid>
-          <Grid item xs={12} sx={{ textAlign: "center", my: 1 }}>
+          <Grid item xs={12} className="error-pop-up__body__text">
             <Typography variant="h4">404!</Typography>
           </Grid>
-          <Grid item xs={12} sx={{ textAlign: "center", my: 1 }}>
+          <Grid item xs={12} className="error-pop-up__body__text">
             <Typography variant="h5">Page not found</Typography>
           </Grid>
-          <Grid item xs={12} sx={{ textAlign: "center", my: 1 }}>
+          <Grid item xs={12} className="error-pop-up__body__text">
             <Typography variant="h6">
               (Would you like to return{" "}
               <Link
-                underline="none"
+                //underline="none"
                 onClick={() => {
                   history.push("/home");
                 }}
-                sx={{ cursor: "pointer", color: "icon.success" }}
               >
                 home
               </Link>

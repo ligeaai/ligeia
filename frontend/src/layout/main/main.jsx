@@ -30,6 +30,11 @@ const Main = ({ Element }) => {
   return (
     <Box className="main-layout">
       <Box className="full-screen-box">
+        <Box className="full-screen-box__header-box">
+          <Box className="full-screen-box__header-box__header">
+            <Header />
+          </Box>
+        </Box>
         <Box className="full-screen-box__body">{Element}</Box>
       </Box>
       <Box className="normal-screen-box">

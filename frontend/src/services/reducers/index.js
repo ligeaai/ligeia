@@ -10,6 +10,7 @@ import dataGridType from "./type/datagrid"
 import drawerMenu from './drawerMenu/drawerMenu';
 import errorReducer from './errorReducer';
 import project from './project/project';
+import profile from './profile/profile';
 import fullScreenReducer from './fullScreenReducer';
 import itemDataGrid from './item/itemDataGrid';
 import itemLinkEditor from './item/itemLinkEditor';
@@ -30,6 +31,6 @@ import users from './users/users';
 
 
 export {
-    authReducer, alarms, confirmation, checkedList, collapseMenu, diagnostic, historyConfirmation, dataGridCodeList, dataGridType, drawerMenu, errorReducer, project, fullScreenReducer,
+    authReducer, alarms, confirmation, checkedList, collapseMenu, diagnostic, historyConfirmation, dataGridCodeList, dataGridType, drawerMenu, errorReducer, project, profile, fullScreenReducer,
     itemDataGrid, itemLinkEditor, langReducer, loaderReducer, roles, overviewDialog, registerFormReducer, searchBarReducer, stepper, tags, tapsOverview, themeReducer, treeview, dataGridResourceList, users
 }

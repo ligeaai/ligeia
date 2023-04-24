@@ -5,7 +5,7 @@ import { Grid } from "@mui/material";
 import {
   Breadcrumb,
   ItemSperatorLineXL,
-  MainBox,
+  ComponentError,
 } from "../../../../components";
 import DiagnosticEditor from "./diagnosticEditor";
 
@@ -14,6 +14,7 @@ import {
   cleanDiagnostic,
 } from "../../../../services/actions/diagnostic/diagnostic";
 import { selectDrawerItem } from "../../../../services/actions/drawerMenu/drawerMenu";
+import "../../../../assets/styles/page/administration/diagnostic/diagnostic.scss";
 const Main = () => {
   document.title = "Ligeia.ai | Diagnostics";
   selectDrawerItem("Diagnostics");
@@ -27,24 +28,15 @@ const Main = () => {
   }, []);
 
   return (
-    <MainBox>
-      <Grid
-        item
-        xs={12}
-        sx={{
-          boxShadow: 3,
-          borderRadius: "3px",
-        }}
-      >
-        <Grid container sx={{ height: "100%" }}>
-          <Breadcrumb />
-          <ItemSperatorLineXL />
-          <Grid item xs={12} sx={{ height: "calc(100% - 48px)" }}>
-            <DiagnosticEditor />
-          </Grid>
-        </Grid>
+    <Grid container className="diagnostic-container">
+      <Breadcrumb />
+      <ItemSperatorLineXL />
+      <Grid item xs={12} className="diagnostic-container__body">
+        <ComponentError errMsg="Error">
+          <DiagnosticEditor />
+        </ComponentError>
       </Grid>
-    </MainBox>
+    </Grid>
   );
 };
 

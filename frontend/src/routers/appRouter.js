@@ -15,7 +15,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 const Diagnostics = Loadable(React.lazy(() => import("../pages/main/administration/diagnostics/main")));
 const Users = Loadable(React.lazy(() => import("../pages/main/administration/users/main")));
-const Profile = Loadable(React.lazy(() => import("../pages/main/administration/profile")));
+const Profile = Loadable(React.lazy(() => import("../pages/main/administration/profile/main")));
 const CodeList = Loadable(React.lazy(() => import("../pages/main/configuration/initialize/codelist/codelist")))
 const ResourceList = Loadable(React.lazy(() => import("../pages/main/configuration/initialize/resource/resourceList")))
 const Configuration = Loadable(React.lazy(() => import("../pages/main/configuration/main")))

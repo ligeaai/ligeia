@@ -173,3 +173,7 @@ export const LOAD_ROLES_PROPERTY = "LOAD_ROLES_PROPERTY"
 export const UPDATE_ROLES_NAME_PROPERTY = "UPDATE_ROLES_NAME_PROPERTY"
 export const SET_LINKS_ACTIVE_ROLE = "SET_LINKS_ACTIVE_ROLE"
 export const SET_LINKED_USERS_ROLE = "SET_LINKED_USERS_ROLE"
+
+//--------Profile------------------------------
+export const LOAD_PROFILE = "LOAD_PROFILE"
+export const CLEAN_PROFILE = "CLEAN_PROFILE"

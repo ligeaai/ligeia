@@ -23,14 +23,16 @@ const configureSubMenu = (params) => {
 function helperOpen() {
     $(".drawer-menu").removeClass("drawer-menu-closed");
     $(".drawer-menu .drawer-menu__list-item__text").show();
-    $("#drawer-menu-icon-open").hide();
+    $(".drawer-menu-icon-open").hide();
     $(".drawer-menu-icon-close").show();
+    $(".drawer-menu-icon-box").css("visibility", "visible");
 }
 function helperClose() {
     $(".drawer-menu").addClass("drawer-menu-closed");
     $(".drawer-menu .drawer-menu__list-item__text").hide();
-    $("#drawer-menu-icon-open").show();
+    $(".drawer-menu-icon-open").show();
     $(".drawer-menu-icon-close").hide();
+    $(".drawer-menu-icon-box").css("visibility", "visible");
 }
 export const configureDrawermenu = (prop) => {
     prop ? helperOpen() : helperClose();

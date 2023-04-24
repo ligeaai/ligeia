@@ -42,10 +42,8 @@ const Item = ({ isHome }) => {
     }
   }, [isHome]);
   return (
-    <Grid container columnGap={0.5} className="item-container">
-      <Grid item>
-        <DrawerMenu Element={<TreeMenu />} path="item" />
-      </Grid>
+    <React.Fragment>
+      <DrawerMenu Element={<TreeMenu />} path="item" />
 
       <Grid item xs={12} className="item-container__body">
         <Breadcrumb />
@@ -71,7 +69,7 @@ const Item = ({ isHome }) => {
           </ComponentError>
         </Grid>
       </Grid>
-    </Grid>
+    </React.Fragment>
   );
 };
 

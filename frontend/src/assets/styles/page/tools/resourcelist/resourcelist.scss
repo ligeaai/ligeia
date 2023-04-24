@@ -1,5 +1,5 @@
 @import "../../../components/boxes.scss";
-.types-container__body {
+.resource-list-container__body {
   @include layoutBox;
   overflow: hidden;
   width: 100%;
@@ -23,25 +23,4 @@
       margin-left: 8px;
     }
   }
-}
-
-.types-property-container {
-  height: 100%;
-  padding: 0px 50px;
-  box-sizing: border-box;
-  &__paper {
-    flex: 1;
-    width: 100%;
-    padding: 8px;
-    &__datagrid-box {
-      height: 100%;
-    }
-  }
-}
-
-.types-property-action-menu-icon {
-  color: #4b4b4b;
-}
-.types-property-action-menu-icon span:first-child {
-  margin: 0;
 }

@@ -73,17 +73,16 @@ const SingleSelectCell = (params) => {
     <Box
       onMouseUp={handleClick}
       {...params}
+      className={`item-container__body__property-box__datagrid__single-select ${
+        params.row[params.field] === "" && params.row.MANDATORY === "True"
+          ? "errorhandling"
+          : ""
+      }`}
       sx={{
-        width: "100%",
         "& .MuiOutlinedInput-notchedOutline": {
           border: "none",
         },
       }}
-      className={
-        params.row[params.field] === "" && params.row.MANDATORY === "True"
-          ? "errorhandling"
-          : ""
-      }
     >
       <Select
         values={values}
@@ -162,12 +161,11 @@ export const MyTextField = (params) => {
           );
         }}
         checked={params.value}
-        className={
+        className={`item-container__body__property-box__datagrid__checkbox ${
           params.row[params.field] === "" && params.row.MANDATORY === "True"
             ? "errorhandling"
             : ""
-        }
-        sx={{ margin: "auto" }}
+        }`}
       />
     );
   } else if (params.row.PROPERTY_TYPE === "CODE") {

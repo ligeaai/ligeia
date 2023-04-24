@@ -1,0 +1,57 @@
+@import "../../../components/boxes.scss";
+.profile-container {
+  @include layoutBox;
+  overflow: hidden;
+  min-width: 750px;
+  &__body {
+    height: calc(100% - 58px);
+    margin: 8px;
+    border: 1px solid;
+    border-color: $grey-200;
+    border-radius: 3px;
+    padding: 8px;
+    @include themify($themes) {
+      color: themed("text-drawer-selected-item");
+    }
+    &__header {
+      padding: 32px;
+      &__user-info-box {
+        display: flex;
+        justify-content: center;
+        padding-left: 30px;
+        flex-direction: column;
+        &__user-name {
+          font-size: 30px;
+          font-weight: 600;
+          display: block;
+        }
+      }
+      &__avatar {
+        font-size: 65px;
+        width: 150px;
+        height: 150px;
+        border-radius: 150px;
+      }
+    }
+
+    &__form {
+      margin: 32px;
+      border: 1px solid;
+      border-color: $grey-200;
+      border-radius: 3px;
+      padding: 8px;
+      position: relative;
+      &__update-icon {
+        position: absolute;
+        right: 8px;
+      }
+      &__header {
+        margin-bottom: 8px;
+      }
+      &__item {
+        margin-bottom: 8px;
+        font-size: 14px;
+      }
+    }
+  }
+}

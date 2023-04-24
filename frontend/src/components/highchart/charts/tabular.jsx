@@ -7,6 +7,7 @@ import {
   dateFormatterDMY,
   dateFormatDDMMYYHHMMSS,
 } from "../../../services/utils/dateFormatter";
+
 var W3CWebSocket = require("websocket").w3cwebsocket;
 const Tabular = ({ highchartProps, backfillData }) => {
   const [allData, setAllData] = React.useState([]);

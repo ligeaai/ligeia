@@ -4,6 +4,7 @@ import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 
 import { clean_error } from "../../services/actions/error";
+import "../../assets/styles/components/error/componentError.scss";
 const ErrorMessage = (props) => {
   const dispatch = useDispatch();
   const err = useSelector((state) => state.error);
@@ -33,7 +34,7 @@ const ErrorMessage = (props) => {
           <Alert
             onClose={errMsgClose}
             severity={err.errType}
-            sx={{ width: "100%" }}
+            className="error-message"
           >
             {err.errMsg}
           </Alert>

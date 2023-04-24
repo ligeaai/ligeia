@@ -16,14 +16,14 @@ const DrawerIcon = () => {
   function handleClick() {
     $(".drawer-menu").toggleClass("drawer-menu-closed");
     $(".drawer-menu .drawer-menu__list-item__text").toggle(200);
-    $("#drawer-menu-icon-open").toggle();
+    $(".drawer-menu-icon-open").toggle();
     $(".drawer-menu-icon-close").toggle();
     dispatch(setOpenTab("Drawer"));
   }
   return (
     <Grid item className="drawer-menu-icon-box">
       <IconButton onClick={handleClick}>
-        <MenuIcon id="drawer-menu-icon-open" className="drawer-menu-icon" />
+        <MenuIcon className="drawer-menu-icon-open drawer-menu-icon" />
         <MenuOpenOutlinedIcon className="drawer-menu-icon drawer-menu-icon-close" />
       </IconButton>
     </Grid>
@@ -46,7 +46,7 @@ const Header = () => {
           </Grid>
         </Grid>
       </Grid>
-      <Grid itemclassName="app-header-box">
+      <Grid item>
         <Grid container columnSpacing={2} className="app-header__right-box">
           <AlertIcon />
           <SettingMenu />

@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { Grid, Button, Typography } from "@mui/material";
+import { Box, Grid, Button, Typography } from "@mui/material";
 
 import { MyDialog } from "../../../../../components";
 import { loadRoleLink } from "../../../../../services/actions/roles/link";
@@ -17,11 +17,11 @@ const RolesLinks = () => {
     dispatch(loadRoleLink());
   }, [roleId]);
   return (
-    <Grid container rowGap={2} sx={{ p: 2 }}>
-      <Grid item xs={12} sx={{ textAlign: "center", fontSize: "18px" }}>
+    <>
+      <Box className="roles-container__body__property-box__links__header">
         Linked Users
-      </Grid>
-      <Grid item xs={12}>
+      </Box>
+      <Box>
         <Grid container rowGap={2} columnSpacing={2}>
           {users.map((e, i) => {
             return (
@@ -31,18 +31,18 @@ const RolesLinks = () => {
             );
           })}
         </Grid>
-      </Grid>
-      <Grid item xs={12}>
+      </Box>
+      <Box>
         <MyDialog
           Button={
             <Button variant="outlined">
-              <Typography sx={{ color: "primary.main" }}>New</Typography>
+              <Typography>New</Typography>
             </Button>
           }
           DialogBody={addRolePopUp}
         />
-      </Grid>
-    </Grid>
+      </Box>
+    </>
   );
 };
 

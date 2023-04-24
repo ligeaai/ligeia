@@ -1,33 +1,74 @@
 @import "../components/boxes.scss";
-@import "../palette/palette.scss";
-.item-container {
-  @include treeViewandItemBox;
+.item-container__body {
+  @include layoutBox;
+  overflow: hidden;
+  width: 100%;
+  min-width: 480px !important;
+  margin-left: 4px;
+  &__action-box {
+    @include actionBox;
+    &__icons {
+      margin-right: 2px !important;
+    }
+    &__date-break {
+      margin-inline: 8px !important;
 
-  &__body {
-    @include layoutBox;
-    min-width: 492px;
-    &__action-box {
-      @include actionBox;
-      &__icons {
-        margin-right: 2px !important;
-      }
-      &__date-break {
-        margin-right: 8px !important;
-      }
-    }
-    &__property-box {
-      @include propertyBox;
-      &__datagrid {
+      &__container {
+        align-items: center;
         height: 100%;
-        margin-left: 8px;
+        &__btn-box {
+          align-items: center;
+          &__btn {
+            text-transform: capitalize;
+            font-size: 12px;
+            margin: 0 2px;
+          }
+          &__date-picker {
+            width: 125px;
+          }
+        }
       }
     }
-    &__links-box {
-      border-radius: 3px;
+  }
+  &__property-box {
+    @include propertyBox;
+    width: 100%;
+
+    &__datagrid {
+      height: 100%;
+      margin-left: 8px;
+      &__checkbox {
+        margin: auto;
+      }
+
+      &__single-select {
+        width: 100%;
+      }
+    }
+    &__links {
+      height: 100%;
+      margin-left: 8px;
       border: 1px solid;
       border-color: $grey-200;
-      margin-left: 8px;
-      height: 100%;
+      border-radius: 3px;
+      position: relative;
+      @include themify($themes) {
+        color: themed("text-drawer-selected-item");
+      }
+      &__in-out {
+        width: 100%;
+        text-align: center;
+        font-weight: bold;
+      }
+      &__divider {
+        position: absolute;
+        left: 50%;
+        border-width: 0.1px;
+        height: 100%;
+        @include themify($themes) {
+          background-color: themed("text-drawer-selected-item");
+        }
+      }
     }
   }
 }

@@ -1,10 +1,14 @@
 @import "../../palette/palette.scss";
+
 .breadcrumb-container {
   height: 42px;
   display: flex;
   align-items: center;
   padding-left: 24px;
   width: 100%;
+  .MuiBreadcrumbs-separator {
+    margin-inline: 4px !important;
+  }
   @include themify($themes) {
     background-color: themed("bg-tree-menu");
   }

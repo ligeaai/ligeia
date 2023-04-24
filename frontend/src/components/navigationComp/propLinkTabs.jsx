@@ -6,7 +6,7 @@ import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import DashboardCustomizeOutlinedIcon from "@mui/icons-material/DashboardCustomizeOutlined";
 import { useDispatch } from "react-redux";
-
+import "../../assets/styles/layouts/proplink.scss";
 const Properties = ({ MyProperties, isLinkOpen = true, MyLinks }) => {
   const dispatch = useDispatch();
   const [view, setView] = React.useState("Properties");
@@ -36,22 +36,8 @@ const Properties = ({ MyProperties, isLinkOpen = true, MyLinks }) => {
     }
   }, [view]);
   return (
-    <Grid
-      container
-      sx={{
-        flexWrap: "noWrap",
-        height: "100%",
-        position: "relative",
-      }}
-    >
-      <Grid
-        item
-        sx={{
-          paddingRight: "4px",
-          mr: 0.5,
-          height: "100%",
-        }}
-      >
+    <Grid container flexWrap={"noWrap"} className="prop-link-container">
+      <Grid item className="prop-link-container__btn-group">
         <ToggleButtonGroup
           orientation="vertical"
           value={view}
@@ -61,7 +47,7 @@ const Properties = ({ MyProperties, isLinkOpen = true, MyLinks }) => {
           <ToggleButton
             value="Properties"
             aria-label="properties"
-            sx={{ p: 1 }}
+            className="prop-link-container__btn-group__btn"
             onMouseEnter={() => {
               handleMouseEnter("Properties");
             }}
@@ -69,16 +55,7 @@ const Properties = ({ MyProperties, isLinkOpen = true, MyLinks }) => {
           >
             <Typography
               variant="body2"
-              sx={{
-                color: "text.primary",
-                writingMode: "vertical-rl",
-                WebkitTransform: "rotate(180deg)",
-                MozTransform: "rotate(180deg)",
-                OTransform: "rotate(180deg)",
-                msTransform: "rotate(180deg)",
-                textTransform: "capitalize",
-                fontWeight: "bold",
-              }}
+              className="prop-link-container__btn-group__btn__text"
             >
               {view === "Properties" || isHover === "Properties" ? (
                 <>
@@ -92,7 +69,9 @@ const Properties = ({ MyProperties, isLinkOpen = true, MyLinks }) => {
           <ToggleButton
             value="Links"
             aria-label="links"
-            sx={{ p: 1, display: isLinkOpen ? "flex" : "none" }}
+            className={`prop-link-container__btn-group__btn ${
+              isLinkOpen ? "" : "prop-link-container__btn-group__display"
+            }`}
             onMouseEnter={() => {
               handleMouseEnter("Links");
             }}
@@ -100,16 +79,7 @@ const Properties = ({ MyProperties, isLinkOpen = true, MyLinks }) => {
           >
             <Typography
               variant="body2"
-              sx={{
-                color: "text.primary",
-                writingMode: "vertical-rl",
-                WebkitTransform: "rotate(180deg)",
-                MozTransform: "rotate(180deg)",
-                OTransform: "rotate(180deg)",
-                msTransform: "rotate(180deg)",
-                textTransform: "capitalize",
-                fontWeight: "bold",
-              }}
+              className="prop-link-container__btn-group__btn__text"
             >
               {view === "Links" || isHover === "Links" ? (
                 <>
@@ -125,20 +95,9 @@ const Properties = ({ MyProperties, isLinkOpen = true, MyLinks }) => {
       <Divider
         orientation="vertical"
         flexItem
-        sx={{
-          my: 0.5,
-          borderWidth: "0.2px",
-          borderColor: "status.secondary",
-          backgroundColor: "status.secondary",
-        }}
+        className="prop-link-container__divider"
       />
-      <Grid
-        item
-        xs={12}
-        sx={{
-          width: "calc(100% - 52px)",
-        }}
-      >
+      <Grid item xs={12} className="prop-link-container__body">
         {view === "Properties" ? MyProperties : <></>}
         {view === "Links" ? MyLinks : <></>}
       </Grid>

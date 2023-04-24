@@ -342,7 +342,7 @@ const TextFields = (props) => {
   };
   if (myDefaultValue === "loading") {
     return (
-      <Box sx={{ width: "50px", height: "20px" }}>
+      <Box className="tag-manager-loading">
         <LoadingComponent></LoadingComponent>
       </Box>
     );

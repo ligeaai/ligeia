@@ -1,6 +1,7 @@
 import React from "react";
 import Checkbox from "@mui/material/Checkbox";
 import Box from "@mui/material/Box";
+import "../../assets/styles/components/inputs/checkbox.scss";
 const MyCheckbox = (props) => {
   const {
     handleChangeFunc = () => {},
@@ -18,13 +19,13 @@ const MyCheckbox = (props) => {
     setValue(!value);
   };
   return (
-    <Box sx={{ minWidth: "125px", width: "100%" }}>
+    <Box className="chekcbox-container">
       <Checkbox
         size="small"
         checked={value}
         onChange={handleChange}
         error={errFunc()}
-        sx={{ fontSize: "14px", padding: "4px" }}
+        className="chekcbox-container__input"
       />
     </Box>
   );

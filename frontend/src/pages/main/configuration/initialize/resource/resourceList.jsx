@@ -26,6 +26,7 @@ import { instance, config } from "../../../../../services/baseApi";
 import ResourcelistService from "../../../../../services/api/resourceList";
 import { useIsMount } from "../../../../../hooks/useIsMount";
 import { selectDrawerItem } from "../../../../../services/actions/drawerMenu/drawerMenu";
+import "../../../../../assets/styles/page/tools/resourcelist/resourcelist.scss";
 const Menu = () => {
   document.title = `Ligeia.ai | Resources`;
   selectDrawerItem("Resources");
@@ -54,7 +55,6 @@ const Menu = () => {
 
 const ResourceList = ({ isHome }) => {
   const dispatch = useDispatch();
-  const isFullScreen = useSelector((state) => state.fullScreen.isFullScreen);
   const filteredLayerName = useSelector(
     (state) => state.treeview.filteredLayerName
   );
@@ -84,69 +84,46 @@ const ResourceList = ({ isHome }) => {
   }, [isHome]);
 
   return (
-    <Grid
-      container
-      sx={{
-        minHeight: isFullScreen ? "100vh" : "100%",
-        height: "500px",
-        flexWrap: "nowrap",
-      }}
-    >
-      <Grid item>
-        <DrawerMenu Element={<Menu />} path="resources" />
-      </Grid>
-      <Grid
-        item
-        xs={12}
-        sx={{
-          boxShadow: 3,
-          borderRadius: "3px",
-          width: "100px",
-        }}
-      >
-        <Grid container>
+    <React.Fragment>
+      <DrawerMenu Element={<Menu />} path="resources" />
+
+      <Box className="resource-list-container__body">
+        <Breadcrumb />
+        <ItemSperatorLineXL />
+        <Grid container className="resource-list-container__body__action-box">
           <Grid
             item
-            xs={12}
-            sx={{
-              position: "relative",
-              height: "42px",
-              display: "flex",
-              alignItems: "center",
-              backgroundColor: "status.main",
-              color: "text.primary",
-              borderTopLeftRadius: "3px",
-              borderTopRightRadius: "3px",
-            }}
+            className="resource-list-container__body__action-box__icons"
           >
-            <Box sx={{ ml: 2.5 }}>
-              <Breadcrumb />
-            </Box>
-          </Grid>
-          <ItemSperatorLineXL />
-          <Grid container sx={{ alignItems: "center", pl: 2, marginY: "2px" }}>
-            <Grid item sx={{ mr: "2px" }}>
-              <MyActionMenu />
-            </Grid>
-            <MyDivider />
-            <Grid item sx={{ mx: 1 }}>
-              <Select
-                values={layerValues}
-                defaultValue={filteredLayerName}
-                handleChangeFunc={selectHandleChangeFunc}
-              />
-            </Grid>
-            <MyDivider />
-          </Grid>
-          <ItemSperatorLineXL />
-          <Grid item xs={12} sx={{ mt: 1 }}>
             <ComponentError errMsg="Error">
-              <PropLinkTabs MyProperties={<DataGridPro />} isLinkOpen={false} />
+              <MyActionMenu />
             </ComponentError>
           </Grid>
+          <MyDivider />
+          <Grid
+            item
+            className="resource-list-container__body__action-box__layer-select"
+          >
+            <Select
+              values={layerValues}
+              defaultValue={filteredLayerName}
+              handleChangeFunc={selectHandleChangeFunc}
+            />
+          </Grid>
+          <MyDivider />
         </Grid>
-      </Grid>
-    </Grid>
+        <ItemSperatorLineXL />
+        <Grid
+          item
+          xs={12}
+          className="resource-list-container__body__property-box"
+        >
+          <ComponentError errMsg="Error">
+            <PropLinkTabs MyProperties={<DataGridPro />} isLinkOpen={false} />
+          </ComponentError>
+        </Grid>
+      </Box>
+    </React.Fragment>
   );
 };
 

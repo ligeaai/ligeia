@@ -50,6 +50,7 @@ export const loadTagsLabel = () => async (dispatch, getState) => {
         const CULTURE = getState().lang.cultur
         const body = JSON.stringify({ CULTURE })
         let res = await TagService.getTagsProperty(body)
+        console.log(res.data);
         // transfer to backend
         var sortedTagInfo = res.data.TAG_INFORMATIONS.sort((a, b) =>
             parseInt(a.SORT_ORDER) > parseInt(b.SORT_ORDER) ? 1 : -1

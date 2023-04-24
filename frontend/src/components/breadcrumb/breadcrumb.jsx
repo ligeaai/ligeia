@@ -23,7 +23,6 @@ const Breadcrumbs = () => {
     <MUIBreadcrumbs
       aria-label="breadcrumb"
       separator="\"
-      sx={{ ".MuiBreadcrumbs-separator": { mx: 0.5 } }}
       className="breadcrumb-container"
     >
       <HomeIcon

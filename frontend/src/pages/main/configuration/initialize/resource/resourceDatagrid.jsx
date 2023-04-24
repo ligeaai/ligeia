@@ -62,95 +62,79 @@ export default function TreeDataWithGap() {
     }
   }, [rowId]);
 
-  // const [sortModel, setSortModel] = React.useState([
-  //     {
-  //         field: "CODE",
-  //         sort: "asc",
-  //     },
-  // ]);
   return (
-    <Box>
-      <Box
-        sx={{
-          m: 0.5,
-          "& .super-app-theme--cell": {
-            backgroundColor: "success.info",
-          },
+    <Box
+      className="resource-list-container__body__property-box__datagrid"
+      sx={{
+        "& .super-app-theme--cell": {
+          backgroundColor: "success.info",
+        },
 
-          button: {
-            minWidth: "36px",
-            height: "36px",
-            borderRadius: "50px",
+        button: {
+          minWidth: "36px",
+          height: "36px",
+          borderRadius: "50px",
+        },
+        "& .MuiInputBase-input": {
+          padding: "0px important",
+        },
+        "& .super-app-theme--cell": {
+          backgroundColor: "success.info",
+        },
+        "& .MuiDataGrid-cellContent": { fontSize: "12px" },
+        "& .MuiDataGrid-cell--editing": {
+          backgroundColor: "background.secondary",
+        },
+      }}
+    >
+      <DataGridPro
+        componentsProps={{
+          basePopper: {
+            sx: {
+              ".MuiDataGrid-columnsPanel": {
+                span: {
+                  fontSize: "14px",
+                },
+                // "&>*:nth-of-type(2)": {
+                //     display: "none",
+                // },
+              },
+              "& .MuiInputBase-input": {
+                fontSize: "14px",
+              },
+              "& .MuiButtonBase-root": {
+                fontSize: "14px",
+              },
+            },
           },
         }}
-      >
-        <Box
-          sx={{
-            minHeight: "calc(500px - 36px - 16px - 40px )",
-            height: "calc(100vh - 60px - 36px - 16px - 60px)",
-            width: "100%",
-            "& .MuiInputBase-input": {
-              padding: "0px important",
-            },
-            "& .super-app-theme--cell": {
-              backgroundColor: "success.info",
-            },
-            "& .MuiDataGrid-cellContent": { fontSize: "12px" },
-            "& .MuiDataGrid-cell--editing": {
-              backgroundColor: "background.secondary",
-            },
-          }}
-        >
-          <DataGridPro
-            componentsProps={{
-              basePopper: {
-                sx: {
-                  ".MuiDataGrid-columnsPanel": {
-                    span: {
-                      fontSize: "14px",
-                    },
-                    // "&>*:nth-of-type(2)": {
-                    //     display: "none",
-                    // },
-                  },
-                  "& .MuiInputBase-input": {
-                    fontSize: "14px",
-                  },
-                  "& .MuiButtonBase-root": {
-                    fontSize: "14px",
-                  },
-                },
-              },
-            }}
-            localeText={{
-              toolbarColumns: "",
-              toolbarFilters: "",
-              toolbarDensity: "",
-              toolbarExport: "",
-            }}
-            density="compact"
-            defaultGroupingExpansionDepth={1}
-            hideFooter={true}
-            onCellEditCommit={onCellEditCommit}
-            rows={Object.values(rows)}
-            columns={columns}
-            getRowId={(row) => row.ROW_ID}
-            //loading={childCodeList.loading}
-            isRowSelectable={(rowId) => rowId.id !== selectedParent.rowId}
-            checkboxSelection={true}
-            disableSelectionOnClick={true}
-            onSelectionModelChange={(rowId) => dispatch(setSelectedRows(rowId))}
-            // sortModel={sortModel}
-            // onSortModelChange={(model) => setSortModel(model)}
-            components={{
-              Toolbar: CustomToolbar,
-              NoRowsOverlay: CustomNoRowsOverlay,
-              LoadingOverlay: LinearProgress,
-            }}
-            disableIgnoreModificationsIfProcessingProps
-          />
-        </Box>
-      </Box>
+        localeText={{
+          toolbarColumns: "",
+          toolbarFilters: "",
+          toolbarDensity: "",
+          toolbarExport: "",
+        }}
+        density="compact"
+        defaultGroupingExpansionDepth={1}
+        hideFooter={true}
+        onCellEditCommit={onCellEditCommit}
+        rows={Object.values(rows)}
+        columns={columns}
+        getRowId={(row) => row.ROW_ID}
+        //loading={childCodeList.loading}
+        isRowSelectable={(rowId) => rowId.id !== selectedParent.rowId}
+        checkboxSelection={true}
+        disableSelectionOnClick={true}
+        onSelectionModelChange={(rowId) => dispatch(setSelectedRows(rowId))}
+        // sortModel={sortModel}
+        // onSortModelChange={(model) => setSortModel(model)}
+        components={{
+          Toolbar: CustomToolbar,
+          NoRowsOverlay: CustomNoRowsOverlay,
+          LoadingOverlay: LinearProgress,
+        }}
+        disableIgnoreModificationsIfProcessingProps
+      />
     </Box>
   );
 }

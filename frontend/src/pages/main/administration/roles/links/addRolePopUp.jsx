@@ -39,47 +39,33 @@ const AddRolePopUp = ({ handleClose }) => {
           defaultData={checked}
         />
       </Box>
-      <Box
-        sx={{
-          position: "fixed",
-          width: "100%",
-          bottom: 0,
-          p: 0.5,
-        }}
-      >
-        <Grid
-          container
-          sx={{
-            flexDirection: "row-reverse",
-            p: 0.5,
-            alignItems: "center",
-            height: "100%",
-          }}
-        >
-          <Grid item>
-            <Button
-              color="inherit"
-              onClick={() => {
-                handleClose();
-              }}
-              sx={{ mr: 0.5 }}
-              variant="outlined"
-            >
-              Cancel
-            </Button>
-            <Button
-              color="inherit"
-              onClick={() => {
-                dispatch(saveRoleLink(checked));
-                handleClose();
-              }}
-              variant="outlined"
-            >
-              Save
-            </Button>
-          </Grid>
+
+      <Grid container columnSpacing={0.5} className="add-role-pop-up">
+        <Grid item>
+          <Button
+            color="inherit"
+            onClick={() => {
+              handleClose();
+            }}
+            variant="outlined"
+          >
+            Cancel
+          </Button>
         </Grid>
-      </Box>
+
+        <Grid item>
+          <Button
+            color="inherit"
+            onClick={() => {
+              dispatch(saveRoleLink(checked));
+              handleClose();
+            }}
+            variant="outlined"
+          >
+            Save
+          </Button>
+        </Grid>
+      </Grid>
     </Box>
   );
 };

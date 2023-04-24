@@ -7,7 +7,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 
 import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
-
+import "../../assets/styles/components/inputs/datepicker.scss";
 const MaterialUIPickers = ({
   time = "9000-10-10",
   onChangeFunc = () => {},
@@ -37,6 +37,7 @@ const MaterialUIPickers = ({
           <TextField
             {...params}
             variant="outlined"
+            className="date-picker-input"
             sx={{
               minWidth: "125px",
               width: "100%",

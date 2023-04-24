@@ -34,7 +34,7 @@ const UpdateDialogBody = ({ handleClose, rowData, ...rest }) => {
     myFunc();
   }, []);
   return (
-    <Box sx={{ overflow: "scroll", height: "100%" }}>
+    <Box>
       Roles
       <Box>
         <MyRadioButton
@@ -53,55 +53,38 @@ const UpdateDialogBody = ({ handleClose, rowData, ...rest }) => {
           defaultData={checked}
         />
       </Box>
-      <Box
-        sx={{
-          position: "fixed",
-          width: "100%",
-          bottom: 0,
-          backgroundColor: "background.main",
-          p: 0.5,
-        }}
-      >
-        <Grid
-          container
-          sx={{
-            flexDirection: "row-reverse",
-            p: 0.5,
-            alignItems: "center",
-            height: "100%",
-          }}
-        >
-          <Grid item>
-            <Button
-              color="inherit"
-              onClick={() => {
-                handleClose();
-              }}
-              sx={{ mr: 0.5 }}
-              variant="outlined"
-            >
-              Cancel
-            </Button>
-            <Button
-              color="inherit"
-              onClick={() => {
-                dispatch(
-                  updateUser({
-                    ...rowData,
-                    role: checkedRoles ? checkedRoles : null,
-                    layer_name: checked,
-                  })
-                );
-                handleClose();
-              }}
-              disabled={!dispatch(isUpdated("USERS"))}
-              variant="outlined"
-            >
-              Save
-            </Button>
-          </Grid>
+      <Grid container columnSpacing={0.5} className="add-role-pop-up">
+        <Grid item>
+          <Button
+            color="inherit"
+            onClick={() => {
+              handleClose();
+            }}
+            variant="outlined"
+          >
+            Cancel
+          </Button>
         </Grid>
-      </Box>
+        <Grid item>
+          <Button
+            color="inherit"
+            onClick={() => {
+              dispatch(
+                updateUser({
+                  ...rowData,
+                  role: checkedRoles ? checkedRoles : null,
+                  layer_name: checked,
+                })
+              );
+              handleClose();
+            }}
+            disabled={!dispatch(isUpdated("USERS"))}
+            variant="outlined"
+          >
+            Save
+          </Button>
+        </Grid>
+      </Grid>
     </Box>
   );
 };

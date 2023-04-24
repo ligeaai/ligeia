@@ -32,16 +32,17 @@ const DateBreak = ({ props }) => {
     setDate(newValue);
   };
   return (
-    <Grid container sx={{ alignItems: "center", height: "100%" }}>
+    <Grid
+      container
+      className="item-container__body__action-box__date-break__container"
+    >
       <Grid item>
-        <Grid container sx={{ alignItems: "center" }}>
+        <Grid
+          container
+          className="item-container__body__action-box__date-break__container__btn-box"
+        >
           <Button
-            sx={{
-              textTransform: "capitalize",
-              fontSize: "12px",
-              color: "status.primary",
-              mx: "2px",
-            }}
+            className="item-container__body__action-box__date-break__container__btn-box__btn"
             disabled={props || !(permission?.CREATE || permission?.UPDATE)}
             onClick={() => {
               if (checkDateBreaks(date)) {
@@ -51,7 +52,10 @@ const DateBreak = ({ props }) => {
           >
             Add a Date Break:
           </Button>
-          <Grid item sx={{ width: "125px" }}>
+          <Grid
+            className="item-container__body__action-box__date-break__container__btn-box__date-picker"
+            item
+          >
             <DatePicker time={date} onChangeFunc={onChange} disabled={props} />
           </Grid>
         </Grid>

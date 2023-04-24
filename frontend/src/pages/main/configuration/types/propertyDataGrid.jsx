@@ -104,12 +104,13 @@ const DetailPanelContent = () => {
     ]);
   }, []);
   return (
-    <Stack
-      sx={{ height: "100%", px: "50px", boxSizing: "border-box" }}
-      direction="column"
-    >
-      <Paper sx={{ flex: 1, width: "100%", p: 1 }}>
-        <Stack direction="column" spacing={1} sx={{ height: 1 }}>
+    <Stack className="types-property-container" direction="column">
+      <Paper className="types-property-container__paper">
+        <Stack
+          direction="column"
+          spacing={1}
+          className="types-property-container__paper__datagrid-box"
+        >
           <DataGridPro
             componentsProps={{
               basePopper: {

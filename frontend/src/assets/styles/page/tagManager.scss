@@ -56,8 +56,7 @@
     }
   }
 }
-.full-screen-box {
-  .tag-manager-container {
-    @include fullScreenBox;
-  }
+.tag-manager-loading {
+  width: 50px;
+  height: 20px;
 }

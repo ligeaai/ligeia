@@ -16,9 +16,7 @@ const CustomToolbar = () => {
   const dispatch = useDispatch();
   const name = useSelector((state) => state.roles.roles.ROLES_NAME);
   return (
-    <GridToolbarContainer
-      sx={{ display: "flex", justifyContent: "space-between" }}
-    >
+    <GridToolbarContainer className="roles-custom-toolbar">
       <Grid>
         <GridToolbarFilterButton />
         <GridToolbarColumnsButton />

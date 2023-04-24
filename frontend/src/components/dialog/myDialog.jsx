@@ -48,7 +48,6 @@ function AlertDialog({ Button, DialogBody, ...rest }) {
         PaperProps={{
           sx: {
             overflow: "hidden",
-            backgroundColor: "background.main",
           },
         }}
       >
