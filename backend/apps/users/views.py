@@ -25,7 +25,7 @@ from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
 from services.logging.Handlers import KafkaLogger
 from utils.utils import AtomicMixin
-
+from utils.models_utils import validate_find
 from apps.roles.models import roles
 from .models import *
 from .models import User
@@ -53,6 +53,21 @@ class UserCheckView(generics.GenericAPIView):
             is_available = True
           
         return Response(is_available, status=status.HTTP_200_OK)
+
+class UserInfoUpdateView(generics.GenericAPIView):
+    serializer_class = UserModelDepthSerializer
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, *args, **kwargs):
+        user = User.objects.filter(email=request.user).first()
+        validate_find(user, request)
+        for key, value in request.data.items():
+            setattr(user, key, value)
+        user.save()
+        serializer = self.serializer_class(user)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+
 class UserModelViewSet(ModelViewSet):
     """
     Endpiont for user model, It accept all operations except for user creation.

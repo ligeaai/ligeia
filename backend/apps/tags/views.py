@@ -121,8 +121,8 @@ class TagsPropertysView(generics.CreateAPIView):
     permission_classes = [permissions.AllowAny]
 
     def post(self, request, *args, **kwargs):
-        tag_info = type_property.objects.filter(TYPE="TAG_CACHE")
-        tag_link = type_property.objects.filter(TYPE="TAG_MAP")
+        tag_info = type_property.objects.filter(TYPE="TAG_INFO")
+        tag_link = type_property.objects.filter(TYPE="TAG_LINK")
         serializer_info = TypePropertyDetailsSerializer(tag_info, many=True).data
         serializer_link = TypePropertyDetailsSerializer(tag_link, many=True).data
         tag_INFO = []
