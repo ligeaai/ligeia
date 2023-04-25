@@ -1,7 +1,12 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { CheckboxList, MyRadioButton } from "../../../../components";
+import {
+  CheckboxList,
+  MyRadioButton,
+  DialogHeaderHelper,
+  FooterHelper,
+} from "../../../../components";
 import { Grid, Box, Button } from "@mui/material";
 
 import { updateUser } from "../../../../services/actions/users/users";
@@ -34,26 +39,31 @@ const UpdateDialogBody = ({ handleClose, rowData, ...rest }) => {
     myFunc();
   }, []);
   return (
-    <Box>
-      Roles
+    <Box className="user-update-pop-up">
       <Box>
-        <MyRadioButton
-          data={roles}
-          dataTextPath="ROLES_NAME"
-          dataValuePath="ROLES_ID"
-          handleToggleFunc={handleToggleRole}
-          defaultData={checkedRoles}
-        />
+        <DialogHeaderHelper text="Update User" />
       </Box>
-      Layers
-      <Box>
-        <CheckboxList
-          data={layers}
-          handleToggleFunc={handleToggleFunc}
-          defaultData={checked}
-        />
+      <Box className="user-update-pop-up-body">
+        Roles
+        <Box>
+          <MyRadioButton
+            data={roles}
+            dataTextPath="ROLES_NAME"
+            dataValuePath="ROLES_ID"
+            handleToggleFunc={handleToggleRole}
+            defaultData={checkedRoles}
+          />
+        </Box>
+        Layers
+        <Box>
+          <CheckboxList
+            data={layers}
+            handleToggleFunc={handleToggleFunc}
+            defaultData={checked}
+          />
+        </Box>
       </Box>
-      <Grid container columnSpacing={0.5} className="add-role-pop-up">
+      <Grid container columnSpacing={0.5} className="user-update-pop-up-footer">
         <Grid item>
           <Button
             color="inherit"

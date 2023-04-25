@@ -62,6 +62,7 @@ export const usersColumn = [
             }
             DialogBody={UpdateDialogBody}
             rowData={params.row}
+            defaultWH={[350, 400]}
         />,
         flex: 0.2,
     }

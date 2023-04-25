@@ -27,9 +27,19 @@ const logout = () => {
 const socialLogin = (text, path, body) => {
     return instance.post(`/auth/${text}/${path}/`, body, unAuthConfig);
 };
+
 const checkMail = (body) => {
     return instance.post(`/auth/user/check/`, body, unAuthConfig);
 }
+const profileUpdate = (body) => {
+    return instance.post(`/auth/user/info/update/`, body, config());
+}
+
+const updatePassword = (body) => {
+    return instance.post(`/auth/change-password/`, body, config());
+}
+
+
 
 const Auth = {
     get,
@@ -39,7 +49,9 @@ const Auth = {
     resetNewPass,
     logout,
     socialLogin,
-    checkMail
+    checkMail,
+    profileUpdate,
+    updatePassword
 };
 
 

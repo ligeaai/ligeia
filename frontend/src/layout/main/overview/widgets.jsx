@@ -219,6 +219,7 @@ const Widgets = React.forwardRef((props, ref) => {
                 }}
                 highchartProps={highchartProps}
                 chartId={widget}
+                defaultWH={[700, 500]}
               />
             </Grid>
           </Grid>

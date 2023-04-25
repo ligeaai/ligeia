@@ -15,11 +15,13 @@ import { ComponentError } from "./errorMessage/componentError"
 import ComponentErrorBody from "./errorMessage/componentErrorBody";
 import { CustomNoRowsOverlay } from "./datagrid/customNoRowOwerlay";
 import CustomToolbar from "./datagrid/customToolbar"
+import DialogHeaderHelper from "./dialog/headerHelper"
 import DatePicker from "./datePicker/datePicker";
 import Drawer from "./drawer/drawer";
 import DataGrid from "./datagrid/dataGrid"
 import { ErrorBoundary } from "./errorMessage/errorBoundary"
 import ErrorMessage from "./errorMessage/errorMessage"
+import FooterHelper from "./dialog/footerHelper";
 import InputGenerator from "./inputGenerator/inputGenerator"
 import Loadable from "./loading/loadable";
 import Loading from "./loading/loading";
@@ -44,7 +46,7 @@ import TreeMenuItems from "./treeMenu/treeMenuGenerator"
 
 
 export {
-    ActionMenu, Breadcrumb, Cards, CheckboxList, ColorTextfield, CollapsableMenu, Confirmation, ComponentError, ComponentErrorBody, CustomNoRowsOverlay, CustomToolbar, MyDivider, DatePicker, DataGrid, Drawer, ErrorBoundary,
-    ErrorMessage, Highchart, InputGenerator, Loadable, Loading, LoadingComponent, MyCheckBox, MyNavigator, MyNumberTextField, MyTextField, MyMultilineTextField, PropLinkTabs, SocialButton,
+    ActionMenu, Breadcrumb, Cards, CheckboxList, ColorTextfield, CollapsableMenu, Confirmation, ComponentError, ComponentErrorBody, CustomNoRowsOverlay, CustomToolbar, MyDivider, DatePicker, DataGrid, Drawer, DialogHeaderHelper, ErrorBoundary,
+    ErrorMessage, FooterHelper, Highchart, InputGenerator, Loadable, Loading, LoadingComponent, MyCheckBox, MyNavigator, MyNumberTextField, MyTextField, MyMultilineTextField, PropLinkTabs, SocialButton,
     IndentSelect, ItemSperatorLine, ItemSperatorLineXL, Items, SearchBar, SearchBarMobile, Select, TreeMenu, MainBox, MainPageSkeleton, MyDialog, MyTabs, MyRadioButton, Stepper, TreeMenuItems, HistoryConfirmation
 }

@@ -26,6 +26,7 @@ $themes: (
     breadcrumb-icon: #819ca9,
 
     app-logo: url("../../Images/header/ligeiaLogo.png"),
+    text-color: black,
   ),
   dark: (
     bg-all: #757575,
@@ -50,6 +51,7 @@ $themes: (
     breadcrumb-icon: #ffffff,
 
     app-logo: url("../../Images/header/ligeiaLogoDark.png"),
+    text-color: #ffffff,
   ),
   temp: (
     bg-all: #f8f1f9,
@@ -74,6 +76,7 @@ $themes: (
     breadcrumb-icon: #424242,
 
     app-logo: url("../../Images/header/ligeiaLogo.png"),
+    text-color: black,
   ),
   tempDark: (
     bg-all: #000000,
@@ -97,6 +100,7 @@ $themes: (
     action-menu-icon: #ffffff,
     breadcrumb-icon: #ffffff,
     app-logo: url("../../Images/header/ligeiaLogoDark.png"),
+    text-color: #ffffff,
   ),
   temp2: (
     bg-all: #f8f1f9,
@@ -120,6 +124,7 @@ $themes: (
     action-menu-icon: #263238,
     breadcrumb-icon: #424242,
     app-logo: url("../../Images/header/ligeiaLogo.png"),
+    text-color: black,
   ),
   tempDark2: (
     //BACKGROUNDS
@@ -164,6 +169,7 @@ $themes: (
     breadcrumb-icon: #ffffff,
     //Images
     app-logo: url("../../Images/header/ligeiaLogoDark.png"),
+    text-color: #ffffff,
   ),
 ) !default;
 

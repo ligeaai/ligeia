@@ -1,14 +1,24 @@
 import React from "react";
 
+import { MyDialog } from "../../../../components";
+
 import { Box, IconButton } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
+import UpdateUserInfo from "./updateUserInfo";
 const profileForm = ({ user }) => {
   return (
     <Box className="profile-container__body__form">
       <Box className="profile-container__body__form__update-icon">
-        <IconButton>
-          <EditIcon />
-        </IconButton>
+        <MyDialog
+          Button={
+            <IconButton>
+              <EditIcon />
+            </IconButton>
+          }
+          DialogBody={UpdateUserInfo}
+          user={user}
+          defaultWH={[350, 350]}
+        />
       </Box>
       <Box className="profile-container__body__form__header">
         User Information

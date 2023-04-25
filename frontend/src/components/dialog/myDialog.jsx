@@ -5,6 +5,7 @@ import Dialog from "@mui/material/Dialog";
 import Paper from "@mui/material/Paper";
 import Draggable from "react-draggable";
 import { ResizableBox } from "react-resizable";
+import "../../assets/styles/components/dialog/dialog.scss";
 function PaperComponent(props) {
   const nodeRef = React.useRef(null);
   return (
@@ -18,11 +19,11 @@ function PaperComponent(props) {
   );
 }
 
-function AlertDialog({ Button, DialogBody, ...rest }) {
+function AlertDialog({ Button, DialogBody, defaultWH = [500, 300], ...rest }) {
   const [open, setOpen] = React.useState(false);
   const nodeRef = React.useRef(null);
-  const [width, setWidth] = React.useState(905);
-  const [height, setHeight] = React.useState(505);
+  const [width, setWidth] = React.useState(defaultWH[0]);
+  const [height, setHeight] = React.useState(defaultWH[1]);
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -35,7 +36,7 @@ function AlertDialog({ Button, DialogBody, ...rest }) {
     setHeight(size.height);
   };
   return (
-    <Box>
+    <Box className="dialog-container">
       <Box onClick={handleClickOpen}>{Button}</Box>
 
       <Dialog
@@ -46,21 +47,23 @@ function AlertDialog({ Button, DialogBody, ...rest }) {
         PaperComponent={PaperComponent}
         aria-labelledby="draggable-dialog-title"
         PaperProps={{
-          sx: {
-            overflow: "hidden",
-          },
+          className: "dialog-container__paper",
         }}
       >
         <ResizableBox
           width={width}
           height={height}
           resizeHandles={["n", "e", "s", "w", "ne", "sw", "se", "nw"]}
-          minConstraints={[700, 500]}
+          minConstraints={[50, 50]}
           maxConstraints={[window.innerWidth - 200, window.innerHeight - 200]}
           onResize={handleResize}
-          sx={{ overflow: "hidden" }}
         >
-          <DialogBody handleClose={handleClose} height={height} {...rest} />
+          <DialogBody
+            handleClose={handleClose}
+            height={height}
+            width={width}
+            {...rest}
+          />
         </ResizableBox>
       </Dialog>
     </Box>

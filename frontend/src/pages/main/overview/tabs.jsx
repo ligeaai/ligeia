@@ -47,7 +47,11 @@ const Tabs = () => {
       }}
     >
       <MyTabs />
-      <MyDialog Button={<MyFab />} DialogBody={DialogContent} />
+      <MyDialog
+        Button={<MyFab />}
+        DialogBody={DialogContent}
+        defaultWH={[700, 500]}
+      />
     </Box>
   );
 };

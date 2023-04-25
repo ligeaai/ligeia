@@ -107,7 +107,7 @@ const Uom = () => {
     setuom([]);
     const myFunc = async () => {
       try {
-        let res = await instance.get("/uom_unit/type/", config());
+        let res = await instance.get("/uom-unit/type/", config());
         setqt(res.data);
       } catch {}
     };
@@ -117,7 +117,7 @@ const Uom = () => {
     const myFunc = async () => {
       try {
         const body = JSON.stringify({ QUANTITY_TYPE: qtDefault });
-        let res = await instance.post("/uom_unit/name/", body, config());
+        let res = await instance.post("/uom-unit/name/", body, config());
         setuom(res.data);
       } catch {}
     };
@@ -261,10 +261,14 @@ const TransactionTypeSelect = () => {
     var ignore = false;
     const body = JSON.stringify({ CULTURE: culture });
     const myFunc = async () => {
-      let res = await instance.post("/tags/links/", body, config());
-      if (!ignore) {
-        setvalues(res.data);
-        loadItems(defaultValue);
+      try {
+        let res = await instance.post("/tags/links/", body, config());
+        if (!ignore) {
+          setvalues(res.data);
+          loadItems(defaultValue);
+        }
+      } catch (err) {
+        console.log(err);
       }
     };
     if (selectedIndex !== -3) {
