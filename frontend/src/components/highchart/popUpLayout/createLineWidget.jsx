@@ -13,7 +13,7 @@ import {
 
 import { changeValeus } from "../../../services/actions/overview/overviewDialog";
 import PopUpItem from "./popUpItem";
-
+import "../../../assets/styles/page/overview/popUpLayout.scss";
 const CreateWidget = () => {
   const dispatch = useDispatch();
   const EnableTitles = useSelector(
@@ -47,7 +47,7 @@ const CreateWidget = () => {
       container
       columnSpacing={2}
       rowGap={2}
-      sx={{ div: { fontSize: "14px" } }}
+      className="pop-up-layout-font-size"
     >
       <Grid item xs={12} sm={8.5}>
         <Grid container rowGap={2}>
@@ -73,7 +73,7 @@ const CreateWidget = () => {
       <Grid item xs={12} sm={3.5}>
         <Grid container>
           <Grid item xs={12}>
-            <List sx={{ width: "100%", bgcolor: "inherit" }}>
+            <List>
               {[
                 "Enable Name",
                 "Enable Navbar",

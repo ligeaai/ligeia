@@ -1,12 +1,12 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import $ from "jquery";
-import { Box, Grid } from "@mui/material";
+import { Box } from "@mui/material";
 
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 
-import { SearchBarMobile } from "../../../components";
+import { ComponentError, SearchBarMobile } from "../../../components";
 
 import {
   loadTreeViewWidth,
@@ -29,6 +29,7 @@ const DrawerMenu = (props) => {
   }
   function openTreeMenu(width) {
     showLeftArrow();
+    console.log(width);
     $(".treemenu-container__box").animate({ width: width }, 400);
   }
   function closeTreeMenu() {
@@ -37,6 +38,7 @@ const DrawerMenu = (props) => {
   }
 
   const handler = (mouseDownEvent) => {
+    console.log($(".treemenu-container__box").width());
     const startSize = $(".treemenu-container__box").width();
     const startPosition = mouseDownEvent.pageX;
     document.getElementById("main-box").style.userSelect = "none";
@@ -86,8 +88,25 @@ const DrawerMenu = (props) => {
               closeTreeMenu();
               saveWidth(0);
             } else {
-              openTreeMenu(250);
-              saveWidth(250);
+              var tempDiv = $("<div>")
+                .css({
+                  width: "min-content",
+                  position: "absolute",
+                  left: "-9999px",
+                })
+                .appendTo($("body"));
+
+              tempDiv.text($(".treemenu-container__box__element-box").text());
+              var width = tempDiv.width();
+
+              tempDiv.remove();
+              if ($(".treemenu-container__box").width() < width) {
+                openTreeMenu(width + 5);
+                saveWidth(width + 5);
+              } else if (width === 0) {
+                openTreeMenu(250);
+                saveWidth(250);
+              }
             }
           }}
         >
@@ -95,7 +114,9 @@ const DrawerMenu = (props) => {
           <ChevronRightIcon className="treemenu-container__box__toggle-button-right" />
         </Box>
         <Box className="treemenu-container__box__divider" />
-        <Box className="treemenu-container__box__element-box">{Element}</Box>
+        <Box className="treemenu-container__box__element-box">
+          <ComponentError errMsg="Error">{Element}</ComponentError>
+        </Box>
       </Box>
       <Box
         className="treemenu-container__resize-border"

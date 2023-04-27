@@ -1,13 +1,13 @@
 import * as React from "react";
+import $ from "jquery";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import PropTypes from "prop-types";
 import SvgIcon from "@mui/material/SvgIcon";
-import { alpha, styled } from "@mui/material/styles";
+import { styled } from "@mui/material/styles";
 import TreeView from "@mui/lab/TreeView";
 import TreeItem, { treeItemClasses } from "@mui/lab/TreeItem";
 import Collapse from "@mui/material/Collapse";
-import { uuidv4 } from "../../services/utils/uuidGenerator";
 import {
   setSelectedCollapseMenu,
   updateCollapseMenuCouch,
@@ -19,13 +19,14 @@ import {
   selectTab,
 } from "../../services/actions/overview/taps";
 import history from "../../routers/history";
-import { Box } from "@mui/material";
 import {
   overviewBreadcrumpGo,
   filterMenu,
 } from "../../services/actions/collapseMenu/collapseMenu";
 import { useIsMount } from "../../hooks/useIsMount";
 import ItemLinkService from "../../services/api/itemLink";
+import "../../assets/styles/page/overview/collapseTreeMenu.scss";
+import { updateTreeViewCouch } from "../../services/actions/treeview/treeview";
 function MinusSquare(props) {
   return (
     <SvgIcon fontSize="inherit" style={{ width: 14, height: 14 }} {...props}>
@@ -95,7 +96,7 @@ const StyledTreeItem = styled((props) => (
   },
 
   ".mySelected": {
-    backgroundColor: "rgba(33, 33, 33, 0.08) !important",
+    backgroundColor: "rgba(33, 33, 33, 0.5) !important",
   },
   ".mySelectedNo": {
     backgroundColor: "inherit !important",
@@ -129,7 +130,7 @@ const MyStyledTreeItem = React.memo(({ myItems, path, location }) => {
           ContentProps={{
             className:
               `${path}/${e.FROM_ITEM_NAME}` === pathname
-                ? "mySelected"
+                ? "collapse-menu-selected"
                 : "mySelectedNo",
           }}
         >
@@ -148,7 +149,7 @@ const MyStyledTreeItem = React.memo(({ myItems, path, location }) => {
         ContentProps={{
           className:
             `${path}/${e.FROM_ITEM_NAME}` === pathname
-              ? "mySelected"
+              ? "collapse-menu-selected"
               : "mySelectedNo",
         }}
         onClick={async () => {
@@ -162,7 +163,6 @@ function CustomizedTreeView({ onOpen, setWidthTrue }) {
   const ref = React.createRef();
   const isMount = useIsMount();
   const dispatch = useDispatch();
-  const isFullScreen = useSelector((state) => state.fullScreen.isFullScreen);
   const selectedItem = useSelector((state) => state.collapseMenu.selectedItem);
   const items = useSelector((state) => state.collapseMenu.filerMenu);
   const expandedItems = useSelector(
@@ -171,7 +171,22 @@ function CustomizedTreeView({ onOpen, setWidthTrue }) {
   const text = useSelector((state) => state.searchBar.text);
   const location = useLocation();
   const timerOnOpen = () => {
-    onOpen(document.getElementById("treeItems").offsetWidth);
+    var tempDiv = $("<div>")
+      .css({
+        width: "min-content",
+        position: "absolute",
+        left: "-9999px",
+      })
+      .appendTo($("body"));
+
+    tempDiv.text($(".treemenu-container__box__element-box").text());
+    var width = tempDiv.width();
+
+    tempDiv.remove();
+    if ($(".treemenu-container__box").width() < width) {
+      $(".treemenu-container__box").animate({ width: width + 5 }, 400);
+      dispatch(updateTreeViewCouch("overview", width + 5));
+    }
   };
   const onNodeSelect = (event, nodeId) => {
     if (event.target.tagName === "svg" || event.target.tagName === "path") {
@@ -179,12 +194,11 @@ function CustomizedTreeView({ onOpen, setWidthTrue }) {
       const copyExpanded = [...expandedItems];
       if (index === -1) {
         copyExpanded.push(nodeId);
+        setTimeout(timerOnOpen, 400);
       } else {
         copyExpanded.splice(index, 1);
       }
       dispatch(updateCollapseMenuCouch(copyExpanded));
-      setWidthTrue();
-      setTimeout(timerOnOpen, 400);
     }
   };
   async function myFunc(e) {
@@ -231,42 +245,22 @@ function CustomizedTreeView({ onOpen, setWidthTrue }) {
     }
   }, [text]);
   return (
-    <Box
-      sx={{
-        height: isFullScreen
-          ? "calc(100vh - 85px )"
-          : "calc(100vh - 85px - 60px - 4px)",
-        minHeight: "416px",
-        overflowY: "auto",
-        "&::-webkit-scrollbar": {
-          width: "0.25em",
-        },
-        "&::-webkit-scrollbar-track": {
-          boxShadow: "inset 0 0 6px rgba(0,0,0,0.00)",
-          webkitBoxShadow: "inset 0 0 6px rgba(0,0,0,0.00)",
-        },
-        "&::-webkit-scrollbar-thumb": {
-          backgroundColor: "rgba(0,0,0,.2)",
-        },
-      }}
+    <TreeView
+      aria-label="customized"
+      expanded={expandedItems}
+      defaultCollapseIcon={<MinusSquare className="MyIcon" />}
+      defaultExpandIcon={<PlusSquare className="MyIcon" />}
+      defaultEndIcon={<CloseSquare />}
+      onNodeSelect={onNodeSelect}
+      ref={ref}
     >
-      <TreeView
-        aria-label="customized"
-        expanded={expandedItems}
-        defaultCollapseIcon={<MinusSquare className="MyIcon" />}
-        defaultExpandIcon={<PlusSquare className="MyIcon" />}
-        defaultEndIcon={<CloseSquare />}
+      <MyStyledTreeItem
+        myItems={items}
+        path={"overview"}
+        location={location.pathname}
         onNodeSelect={onNodeSelect}
-        ref={ref}
-      >
-        <MyStyledTreeItem
-          myItems={items}
-          path={"overview"}
-          location={location.pathname}
-          onNodeSelect={onNodeSelect}
-        ></MyStyledTreeItem>
-      </TreeView>
-    </Box>
+      ></MyStyledTreeItem>
+    </TreeView>
   );
 }
 

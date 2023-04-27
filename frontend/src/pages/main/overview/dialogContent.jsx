@@ -14,8 +14,8 @@ import linechartPopUp from "../../../components/highchart/newPopUp/lineChartHc";
 import angularPopUp from "../../../components/highchart/newPopUp/angularHc";
 import SolidPopUp from "../../../components/highchart/newPopUp/solidHc";
 import measurementPopUp from "../../../components/highchart/newPopUp/measurementCustom";
-
-const DialogContent = ({ handleClose, height }) => {
+import "../../../assets/styles/page/overview/createPopUp.scss";
+const DialogContent = ({ handleClose }) => {
   const dispatch = useDispatch();
   const [refresh, setRefresh] = React.useState(false);
   const selectedItem = useSelector(
@@ -60,77 +60,52 @@ const DialogContent = ({ handleClose, height }) => {
     handleClose();
   }
   return (
-    <Grid container sx={{ width: "100%" }}>
+    <Box className="overview-create-pop-up">
       <Box
         id="draggable-dialog-title"
-        sx={{
-          cursor: "all-scroll",
-          backgroundColor: "background.main",
-          width: "100%",
-          position: "absolute",
-          height: "44px",
-          top: 0,
-          left: 0,
-        }}
+        className="overview-create-pop-up__drag"
       ></Box>
-
-      <Grid
-        item
-        xs={12}
-        sx={{
-          p: 0.5,
-          pl: 1,
-        }}
-      >
-        <Grid
-          container
-          sx={{ justifyContent: "space-between", alignItems: "center" }}
-        >
-          <Grid item>
-            <Grid container columnSpacing={2}>
-              <Grid item>
-                <Select
-                  values={["Widgets", "Forms"]}
-                  handleChangeFunc={(val) => {
-                    setWidgetType(val);
-                  }}
-                  defaultValue={widgetType}
-                />
-              </Grid>
-              <Grid item>
-                <Select
-                  values={widgetType === "Widgets" ? values : [" "]}
-                  handleChangeFunc={handleChangeFunc}
-                  defaultValue={widgetType === "Widgets" ? selectedItem : " "}
-                />
-              </Grid>
+      <Grid className="overview-create-pop-up__header" container>
+        <Grid item>
+          <Grid container columnSpacing={2}>
+            <Grid item>
+              <Select
+                values={["Widgets", "Forms"]}
+                handleChangeFunc={(val) => {
+                  setWidgetType(val);
+                }}
+                defaultValue={widgetType}
+              />
+            </Grid>
+            <Grid item>
+              <Select
+                values={widgetType === "Widgets" ? values : [" "]}
+                handleChangeFunc={handleChangeFunc}
+                defaultValue={widgetType === "Widgets" ? selectedItem : " "}
+              />
             </Grid>
           </Grid>
-          <Grid item>
-            <IconButton onClick={handleClose}>
-              <CloseIcon fontSize="small" />
-            </IconButton>
-          </Grid>
+        </Grid>
+        <Grid item>
+          <IconButton onClick={handleClose}>
+            <CloseIcon fontSize="small" />
+          </IconButton>
         </Grid>
       </Grid>
       {widgetType === "Widgets" ? (
-        <Box sx={{ width: "99999px" }}>
-          {refresh ? (
-            <Stepper
-              components={body[type]}
-              finishFunc={finishFunc}
-              height={height}
-            ></Stepper>
-          ) : (
-            <Box sx={{ height: "450px" }}>
-              <LoadingComponent />
-            </Box>
-          )}
-        </Box>
+        refresh ? (
+          <Box className="overview-create-pop-up__stepper-box">
+            <Stepper components={body[type]} finishFunc={finishFunc} />
+          </Box>
+        ) : (
+          <Box className="overview-create-pop-up__loading-box">
+            <LoadingComponent />
+          </Box>
+        )
       ) : (
-        <Box sx={{ width: "400px", height: "400px" }} />
+        <Box className="overview-create-pop-up__emty-box" />
       )}
-    </Grid>
+    </Box>
   );
 };
 

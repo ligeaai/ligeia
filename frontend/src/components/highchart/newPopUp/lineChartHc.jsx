@@ -3,16 +3,13 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { Box } from "@mui/material";
 
-import { MyNumberTextField, ColorTextfield } from "../..";
-import {
-  changeValeus,
-  cleanStops,
-} from "../../../services/actions/overview/overviewDialog";
+import { changeValeus } from "../../../services/actions/overview/overviewDialog";
 import CreateLineWidget from "../popUpLayout/createLineWidget";
 import LineAssets from "../popUpLayout/lineAssets";
 import CustomLineChart from "../popUpLayout/customLineChart";
 import { fillMandatory } from "../../../services/actions/stepper/stepper";
 import Inputs from "../popup/inputs";
+import "../../../assets/styles/page/overview/popUpLayout.scss";
 function LineChartPopUp() {
   const dispatch = useDispatch();
   const handleChangeFunc = (key, val) => {
@@ -28,8 +25,8 @@ function LineChartPopUp() {
     ["Proporties", <CreateLineWidget />],
     [
       "Assets",
-      <Box sx={{ height: "calc(100% - 44px)" }}>
-        <Box sx={{ ml: 2, mb: 1.5, fontSize: "14px" }}>Assets</Box>
+      <Box className="overview-line-chart-hc-asset-box">
+        <Box className="overview-line-chart-hc-asset-box__title">Assets</Box>
         <LineAssets
           handleChangeFunc={(value) => {
             handleChangeFunc("Assets", value);
@@ -39,8 +36,8 @@ function LineChartPopUp() {
     ],
     [
       "Measurements",
-      <Box sx={{ height: "calc(100% - 44px)" }}>
-        <Box sx={{ ml: 2, mb: 1.5, fontSize: "14px" }}>Inputs</Box>
+      <Box className="overview-line-chart-hc-asset-box">
+        <Box className="overview-line-chart-hc-asset-box__title">Inputs</Box>
         <Inputs
           handleChangeFunc={(value) => {
             handleChangeFunc("Inputs", value);

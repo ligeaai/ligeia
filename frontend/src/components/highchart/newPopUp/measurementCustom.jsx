@@ -13,6 +13,7 @@ import ChoseMeasure from "../popUpLayout/choseMeasure";
 import { Stops } from "../popUpLayout/stops";
 import Measurement from "../popUpLayout/measurement";
 import { fillMandatory } from "../../../services/actions/stepper/stepper";
+import "../../../assets/styles/page/overview/popUpLayout.scss";
 function MeasuremenCustom() {
   const dispatch = useDispatch();
   const stopsNum = useSelector(
@@ -27,7 +28,7 @@ function MeasuremenCustom() {
     [
       "Stops",
       <>
-        <Grid container rowGap={2} sx={{ div: { fontSize: "14px" }, pb: 2 }}>
+        <Grid container rowGap={2} className="pop-up-layout-font-size">
           <Grid item xs={12}>
             <Grid container columnSpacing={2}>
               <Measurement />
@@ -44,17 +45,7 @@ function MeasuremenCustom() {
                           cleanStops("Stops", value, ["Low", "High", "Color"])
                         );
                       }}
-                      sx={{
-                        fontSize: "14px",
-                        "& .MuiOutlinedInput-input": {
-                          fontSize: "14px",
-                          paddingTop: "4px",
-                          paddingBottom: "4px",
-                          paddingRight: "2px",
-                        },
-                        width: 75,
-                        minWidth: 75,
-                      }}
+                      className="overview-number-text-field"
                     />
                   </Grid>
                 </Grid>

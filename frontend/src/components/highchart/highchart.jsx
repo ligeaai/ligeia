@@ -2,7 +2,6 @@ import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 
 import React from "react";
-import { useSelector } from "react-redux";
 import Box from "@mui/material/Box";
 import { styled } from "@mui/material/styles";
 import {
@@ -16,13 +15,9 @@ import {
 } from "./charts";
 import { Bar, Pie, HeatMap, Line, TreeMap, BackFillLine } from "./nivoCharts";
 import { Matrix } from "./customWidget";
+import "../../assets/styles/page/overview/chartContainer.scss";
 const MyBox = styled(Box)(({ theme }) => {
   return {
-    width: "100%",
-    height: "100%",
-    ".highcharts-background": {
-      fill: theme.palette.background.success,
-    },
     ".highcharts-label-box": {
       fill: theme.palette.background.main,
     },
@@ -172,7 +167,11 @@ const Highchart = ({
     "TreeMap Chart [Nivo]": <TreeMap highchartProps={highchartProps} />,
   };
 
-  return <MyBox>{chartType[highchartProps.Type]}</MyBox>;
+  return (
+    <MyBox className="chart-container" style={{ width, height }}>
+      {chartType[highchartProps.Type]}
+    </MyBox>
+  );
 };
 
 export default Highchart;

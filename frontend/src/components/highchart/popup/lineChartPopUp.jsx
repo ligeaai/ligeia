@@ -5,7 +5,6 @@ import { Grid, Box, Typography, IconButton } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import { changeValeus } from "../../../services/actions/overview/overviewDialog";
 import Inputs from "./inputs";
-import PopUpItem from "../popUpLayout/popUpItem";
 import CustomLineChart from "../popUpLayout/customLineChart";
 import CreateLineWidget from "../popUpLayout/createLineWidget";
 import LineAssets from "../popUpLayout/lineAssets";
@@ -20,77 +19,46 @@ const Linechart = ({ handleClose, title, height }) => {
   };
   return (
     <>
-      <Typography
-        id="draggable-dialog-title"
-        sx={{
-          fontWeight: "bold",
-          fontSize: "14px",
-          width: "100%",
-          cursor: "all-scroll",
-          backgroundColor: "background.main",
-          height: "44px",
-          top: 0,
-          px: 2,
-          position: "sticky",
-          zIndex: 2,
-        }}
-      >
-        <Grid
-          container
-          sx={{
-            height: "44px",
-            alignContent: "center",
-            justifyContent: "space-between",
-          }}
-        >
-          <Grid
-            item
-            sx={{ alignSelf: "center", color: "text.blue" }}
-            onClick={handeleOnClick("Properties")}
-          >
-            {title}
-          </Grid>
-          {["Properties", "Assets", "Measurements", "Settings"].map((e) => (
-            <Grid
-              item
-              sx={{ alignSelf: "center", cursor: "pointer" }}
-              onClick={handeleOnClick(e)}
-            >
-              {e}
-            </Grid>
-          ))}
-
-          <Grid item>
-            <IconButton onClick={handleClose}>
-              <CloseIcon fontSize="small" />
-            </IconButton>
-          </Grid>
-        </Grid>
-      </Typography>
       <Grid
         container
-        rowGap={2}
-        sx={{
-          div: { fontSize: "14px" },
-          p: 2,
-          height: height - 96,
-          overflowY: "auto",
-          alignContent: "flex-start",
-        }}
+        id="draggable-dialog-title"
+        className="overview-update-pop-up__box__header"
       >
+        <Grid
+          item
+          className="overview-update-pop-up__box__header__id"
+          onClick={handeleOnClick("Properties")}
+        >
+          {title}
+        </Grid>
+        {["Properties", "Assets", "Measurements", "Settings"].map((e) => (
+          <Grid item style={{ cursor: "pointer" }} onClick={handeleOnClick(e)}>
+            {e}
+          </Grid>
+        ))}
+
+        <Grid item>
+          <IconButton onClick={handleClose}>
+            <CloseIcon fontSize="small" />
+          </IconButton>
+        </Grid>
+      </Grid>
+      <Box className="overview-update-pop-up__box__body">
         {selectedWidget === "Properties" ? (
-          <>
-            <Typography>Properties</Typography>
-            <Grid item xs={12}>
-              <CreateLineWidget />
-            </Grid>
-          </>
+          <Box>
+            <Typography className="overview-update-pop-up__box__body__label">
+              Properties
+            </Typography>
+            <CreateLineWidget />
+          </Box>
         ) : (
           <></>
         )}
         {selectedWidget === "Assets" ? (
-          <Box sx={{ height: "calc(100% - 44px)", width: "100%" }}>
-            <Typography sx={{ mb: 1.5 }}>Assets</Typography>
+          <Box className="overview-update-pop-up__box__body__asset-box">
+            <Typography className="overview-update-pop-up__box__body__label">
+              Assets
+            </Typography>
             <LineAssets
               handleChangeFunc={(value) => {
                 handleChangeFunc("Assets", value);
@@ -101,8 +69,8 @@ const Linechart = ({ handleClose, title, height }) => {
           <></>
         )}
         {selectedWidget === "Measurements" ? (
-          <Box sx={{ height: "calc(100% - 44px)", width: "100%" }}>
-            <Typography sx={{ width: "100%", mb: 1.5 }}>
+          <Box className="overview-update-pop-up__box__body__asset-box">
+            <Typography className="overview-update-pop-up__box__body__label">
               Measurements
             </Typography>
             <Inputs
@@ -115,16 +83,16 @@ const Linechart = ({ handleClose, title, height }) => {
           <></>
         )}
         {selectedWidget === "Settings" ? (
-          <>
-            <Typography>Settings</Typography>
-            <Grid item>
-              <CustomLineChart />
-            </Grid>
-          </>
+          <Box>
+            <Typography className="overview-update-pop-up__box__body__label">
+              Settings
+            </Typography>
+            <CustomLineChart />
+          </Box>
         ) : (
           <></>
         )}
-      </Grid>
+      </Box>
     </>
   );
 };

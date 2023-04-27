@@ -12,6 +12,7 @@ import CreateWidget from "../popUpLayout/createWidget";
 import ChoseMeasure from "../popUpLayout/choseMeasure";
 import Measurement from "../popUpLayout/measurement";
 import { fillMandatory } from "../../../services/actions/stepper/stepper";
+import "../../../assets/styles/page/overview/popUpLayout.scss";
 const Stops = () => {
   const dispatch = useDispatch();
   const highchartProps = useSelector(
@@ -83,7 +84,7 @@ function MeasuremenCustom() {
     [
       "Stops",
       <>
-        <Grid container rowGap={2} sx={{ div: { fontSize: "14px" }, pb: 2 }}>
+        <Grid container rowGap={2} className="pop-up-layout-font-size">
           <Grid item>
             <Grid container columnSpacing={2}>
               <Measurement />
@@ -100,17 +101,7 @@ function MeasuremenCustom() {
                           cleanStops("Stops", value, ["Stops", "Color"])
                         );
                       }}
-                      sx={{
-                        fontSize: "14px",
-                        "& .MuiOutlinedInput-input": {
-                          fontSize: "14px",
-                          paddingTop: "4px",
-                          paddingBottom: "4px",
-                          paddingRight: "2px",
-                        },
-                        width: 75,
-                        minWidth: 75,
-                      }}
+                      className="overview-number-text-field"
                     />
                   </Grid>
                 </Grid>

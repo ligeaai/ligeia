@@ -15,7 +15,7 @@ import {
   updateChecked,
   setCheckedsAsset,
 } from "../../../services/actions/overview/taps";
-
+import "../../../assets/styles/page/overview/inputs.scss";
 const RenderRow = (props) => {
   const {
     data,
@@ -33,11 +33,6 @@ const RenderRow = (props) => {
       key={index}
       component="div"
       disablePadding
-      sx={{
-        ".MuiButtonBase-root": {
-          py: 0.5,
-        },
-      }}
       onClick={(event) => {
         selectFunc(data[index], !selected);
       }}
@@ -47,15 +42,7 @@ const RenderRow = (props) => {
       </ListItemIcon>
       <ListItemText
         primary={`${data[index][primaryText]}`}
-        sx={{
-          span: {
-            color: "primary.main",
-            fontSize: "14px",
-            overflow: "hidden",
-            whiteSpace: "nowrap",
-            textOverflow: "ellipsis",
-          },
-        }}
+        className="overview-inputs-container__list-box__item__text"
       />
     </ListItem>
   );
@@ -73,13 +60,6 @@ const Inputs = (props) => {
   const dispatch = useDispatch();
   const { handleChangeFunc } = props;
   const ItemData = useSelector((state) => state.overviewDialog.itemData);
-  // const assets = useSelector((state) =>
-  //   typeof state.overviewDialog.highchartProps["Assets"] === "string"
-  //     ? JSON.parse(
-  //         state.overviewDialog.highchartProps["Assets"].replace(/'/g, '"')
-  //       )
-  //     : state.overviewDialog.highchartProps["Assets"]
-  // );
 
   const assets = useSelector(
     (state) => state.overviewDialog.highchartProps["Assets"]
@@ -144,12 +124,7 @@ const Inputs = (props) => {
   };
 
   const customList = (items) => (
-    <Paper
-      sx={{
-        width: "100%",
-        height: "100%",
-      }}
-    >
+    <Paper className="overview-inputs-container__list-box__item">
       <AutoSizer>
         {({ height, width }) => (
           <FixedSizeList
@@ -178,15 +153,14 @@ const Inputs = (props) => {
       container
       justifyContent="center"
       columns={24}
-      sx={{ height: "100%", alignItems: "center" }}
+      className="overview-inputs-container"
     >
-      <Grid item xs={10.5} sx={{ height: "100%" }}>
+      <Grid item xs={10.5} className="overview-inputs-container__list-box">
         {customList(left)}
       </Grid>
       <Grid item xs={3}>
-        <Grid container direction="column" alignItems="center">
+        <Grid container rowGap={1} direction="column" alignItems="center">
           <Button
-            sx={{ my: 0.5 }}
             variant="outlined"
             size="small"
             onClick={handleAllRight}
@@ -196,7 +170,6 @@ const Inputs = (props) => {
             ≫
           </Button>
           <Button
-            sx={{ my: 0.5 }}
             variant="outlined"
             size="small"
             onClick={handleCheckedRight}
@@ -206,7 +179,6 @@ const Inputs = (props) => {
             &gt;
           </Button>
           <Button
-            sx={{ my: 0.5 }}
             variant="outlined"
             size="small"
             onClick={handleCheckedLeft}
@@ -216,7 +188,6 @@ const Inputs = (props) => {
             &lt;
           </Button>
           <Button
-            sx={{ my: 0.5 }}
             variant="outlined"
             size="small"
             onClick={handleAllLeft}
@@ -227,7 +198,7 @@ const Inputs = (props) => {
           </Button>
         </Grid>
       </Grid>
-      <Grid item xs={10.5} sx={{ height: "100%" }}>
+      <Grid item xs={10.5} className="overview-inputs-container__list-box">
         {customList(right)}
       </Grid>
     </Grid>

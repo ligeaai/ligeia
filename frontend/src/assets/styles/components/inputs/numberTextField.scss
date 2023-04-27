@@ -1,0 +1,19 @@
+.number-text-field {
+  font-size: 14px;
+  & .MuiOutlinedInput-input {
+    font-size: 14px;
+    padding: 4px 2px 4px 0px;
+  }
+  width: 100%;
+  min-width: 125px;
+}
+
+.overview-number-text-field {
+  font-size: 14px;
+  & .MuiOutlinedInput-input {
+    font-size: 14px;
+    padding: 4px 2px 4px 0px;
+  }
+  width: 75px;
+  min-width: 75px;
+}

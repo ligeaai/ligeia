@@ -25,16 +25,17 @@ const TabPanel = (props) => {
   const { children, value, index, ...other } = props;
 
   return (
-    <Typography
+    <Box
       component="div"
       role="tabpanel"
       hidden={value !== index}
       id={`action-tabpanel-${index}`}
       aria-labelledby={`action-tab-${index}`}
+      className="overview-container__tab-box__tab-body__tab-panel"
       {...other}
     >
-      {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
-    </Typography>
+      {value === index && <>{children}</>}
+    </Box>
   );
 };
 
@@ -75,37 +76,27 @@ const MyTap = React.forwardRef(
     if (!changeText)
       return (
         <Box
-          sx={{
-            borderRadius: "10px",
-            height: "30px",
-            backgroundColor: "inherit",
-            padding: "4px",
-            fontSize: active === i ? "14px" : "12px",
-            display: "flex",
-            marginY: "2px",
-            marginRight: "6px",
-            alignItems: "center",
-            position: "relative",
-            border: !(active === i) ? "none" : "1px solid #ffffff",
-            ":hover": {
-              backgroundColor: "hover.primary",
-            },
-          }}
+          className={`overview-container__tab-box__tab-header__tabs__item ${
+            active === i
+              ? "overview-container__tab-box__tab-header__tabs__item__active"
+              : ""
+          }`}
         >
           <Tab
             ref={ref}
             label={`${x}`}
             {...a11yProps(i)}
             {...rest}
+            className={`overview-container__tab-box__tab-header__tabs__item__text ${
+              active === i
+                ? "overview-container__tab-box__tab-header__tabs__item__active__text"
+                : ""
+            }`}
             sx={{
               width: "max-content",
               maxWidth: "150px",
               textTransform: "capitalize",
               fontSize: "12px",
-              fontWeight: active === i ? "700" : "400",
-              ":hover": {
-                textShadow: "0.5px 0.5px 0.5px black",
-              },
             }}
             onDoubleClick={() => {
               setChangeText(true);
@@ -151,7 +142,6 @@ function MyTabs() {
   const [value, setValue] = React.useState(null);
   const titles = useSelector((state) => state.tapsOverview.titles);
   const widgets = useSelector((state) => state.tapsOverview.widgets);
-  const isFullScreen = useSelector((state) => state.fullScreen.isFullScreen);
   const selected = useSelector((state) => state.tapsOverview.selected);
   const menuSelectedItem = useSelector(
     (state) => state.collapseMenu.selectedItem.path
@@ -177,44 +167,17 @@ function MyTabs() {
   };
 
   return (
-    <Box
-      sx={{
-        backgroundColor: "background.info",
-        position: "relative",
-        height: "40px",
-        px: 1,
-        header: {
-          height: "40px",
-        },
-        ".react-swipeable-view-container": {
-          height: "100%",
-        },
-        // "#myResponsiveGridLayout": {
-        //   backgroundColor: "background.main",
-        // },
-      }}
-    >
-      <AppBar
-        position="static"
-        sx={{
-          width: "100%",
-          boxShadow: "none",
-          display: "flex",
-          alignContent: "center",
-        }}
-      >
+    <>
+      <AppBar className="overview-container__tab-box__tab-header">
         <Tabs
           value={value}
           onChange={handleChange}
           aria-label="action tabs example"
           variant="scrollable"
+          indicatorColor="none"
           scrollButtons="auto"
-          textColor="inherit"
-          sx={{
-            minHeight: "40px",
-            backgroundColor: "background.info",
-            pt: "2px",
-          }}
+          //textColor="inherit"
+          className="overview-container__tab-box__tab-header__tabs"
         >
           {titles.map((x, i) => {
             return (
@@ -247,40 +210,22 @@ function MyTabs() {
           </Grid>
         </Tabs>
       </AppBar>
-
-      <SwipeableViews
-        index={value}
-        onChangeIndex={handleChangeIndex}
-        style={{
-          minHeight: isFullScreen
-            ? "calc(500px - 56px - 48px  )"
-            : "calc(500px - 50px - 16px  - 48px )",
-          height: isFullScreen
-            ? "calc(100vh - 56px - 48px )"
-            : "calc(100vh - 60px - 50px - 16px - 48px )",
-        }}
-        //    id="myResponsiveGridLayout"
-      >
-        {Object.keys(widgets).map((widgetProps, i) => {
-          return (
-            <TabPanel
-              value={value}
-              index={i}
-              key={i}
-              sx={{
-                backgroundColor: "background.main",
-                height: "100%",
-                "& > .MuiBox-root:nth-of-type(1)": {
-                  padding: "0px",
-                },
-              }}
-            >
-              <TabItems widgetname={widgetProps}></TabItems>
-            </TabPanel>
-          );
-        })}
-      </SwipeableViews>
-    </Box>
+      <Box className="overview-container__tab-box__tab-body">
+        <SwipeableViews
+          index={value}
+          onChangeIndex={handleChangeIndex}
+          style={{ height: "100%" }}
+        >
+          {Object.keys(widgets).map((widgetProps, i) => {
+            return (
+              <TabPanel value={value} index={i} key={i}>
+                <TabItems widgetname={widgetProps}></TabItems>
+              </TabPanel>
+            );
+          })}
+        </SwipeableViews>
+      </Box>
+    </>
   );
 }
 

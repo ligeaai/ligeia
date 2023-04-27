@@ -13,7 +13,7 @@ import {
 
 import { MyNumberTextField, MyCheckBox, ColorTextfield } from "../..";
 import { changeValeus } from "../../../services/actions/overview/overviewDialog";
-
+import "../../../assets/styles/page/overview/popUpLayout.scss";
 const ColorPicker = () => {
   const dispatch = useDispatch();
   const Inputs = useSelector(
@@ -30,14 +30,18 @@ const ColorPicker = () => {
       {Inputs.map((e, i) => (
         <Grid item key={i}>
           <Grid container rowGap={1}>
-            <Grid item xs={12} sx={{ fontSize: "14px", fontWeight: "bold" }}>
+            <Grid item xs={12} className="overview-custom-line-chart-tag-name">
               {e.NAME}
             </Grid>
             <Grid item xs={12}>
               <Grid container rowGap={0.5} columnGap={2}>
                 <Grid item xs={4}>
                   <Grid container rowGap={0.5}>
-                    <Grid item xs={12} sx={{ fontSize: "12px" }}>
+                    <Grid
+                      item
+                      xs={12}
+                      className="overview-custom-line-chart-prop"
+                    >
                       Color
                     </Grid>
                     <Grid item xs={12}>
@@ -52,7 +56,11 @@ const ColorPicker = () => {
                 </Grid>
                 <Grid item xs={4}>
                   <Grid container rowGap={0.5}>
-                    <Grid item xs={12} sx={{ fontSize: "12px" }}>
+                    <Grid
+                      item
+                      xs={12}
+                      className="overview-custom-line-chart-prop"
+                    >
                       Disable Data Grouping
                     </Grid>
                     <Grid item xs={12}>
@@ -96,7 +104,7 @@ const MinMaxSelection = ({ name }) => {
       <Grid container rowGap={0.5} columnGap={2}>
         <Grid itme xs={12} sm={6} md={4}>
           <Grid container rowGap={0.5}>
-            <Grid item xs={12} sx={{ fontSize: "12px" }}>
+            <Grid item xs={12} className="overview-custom-line-chart-prop">
               Y-Axis Minimum
             </Grid>
             <Grid item xs={12}>
@@ -112,7 +120,7 @@ const MinMaxSelection = ({ name }) => {
         </Grid>
         <Grid itme xs={12} sm={6} md={4}>
           <Grid container rowGap={0.5}>
-            <Grid item xs={12} sx={{ fontSize: "12px" }}>
+            <Grid item xs={12} className="overview-custom-line-chart-prop">
               Y-Axis Maximum
             </Grid>
             <Grid item xs={12}>
@@ -165,7 +173,7 @@ const MyList = () => {
     dispatch(changeValeus(key, val));
   };
   return (
-    <List sx={{ width: "100%", bgcolor: "inherit" }}>
+    <List>
       {[
         "Enable Custom Color",
         "Enable Manuel Y-Axis Min/Max",

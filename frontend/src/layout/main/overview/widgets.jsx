@@ -1,19 +1,18 @@
 import React from "react";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Switch from "@mui/material/Switch";
 import { IconButton } from "@mui/material";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import SettingsIcon from "@mui/icons-material/Settings";
-import { instance, config } from "../../../services/couchApi";
 import { deleteChart } from "../../../services/actions/overview/taps";
 import { useDispatch, useSelector } from "react-redux";
 import { LoadingComponent, MyDialog } from "../../../components";
 import MyHighchart from "./highchart";
 import UpdatePopUp from "./updatePopup";
 import Overview from "../../../services/api/overview";
+import "../../../assets/styles/page/overview/widget.scss";
 const Widgets = React.forwardRef((props, ref) => {
   const { widget, style, className, children, ...rest } = props;
   const [myclass, setMyClass] = React.useState("");
@@ -53,26 +52,20 @@ const Widgets = React.forwardRef((props, ref) => {
       <Box
         ref={ref}
         key={`${widget}`}
-        className={`${myclass} ${className}`}
+        className={`${myclass} ${className} overview-widget-box`}
         style={{ ...style }}
-        sx={{
-          boxShadow: 4,
-          borderRadius: "5px",
-          color: "text.primary",
-          backgroundColor: "background.success",
-          overflow: "hidden",
-        }}
         {...rest}
       >
-        <Box
+        <Grid
+          container
           id={widget}
-          className="grid-item__title"
-          sx={{
-            fontSize: "14px",
-            "&:hover": {
-              cursor: "move",
-            },
-          }}
+          className={`grid-item__title overview-widget-box__header  ${
+            highchartProps["Name Font Size(em)"] !== ""
+              ? highchartProps["Name Font Size(em)"] > 24
+                ? ""
+                : "grid-item__title overview-widget-box__header__align"
+              : "grid-item__title overview-widget-box__header__align"
+          }`}
           onClick={() => {
             setMyClass("react-draggable-dragging");
           }}
@@ -80,150 +73,135 @@ const Widgets = React.forwardRef((props, ref) => {
             setMyClass("");
           }}
         >
-          <Grid
-            container
-            sx={{
-              justifyContent: "space-between",
-              flexWrap: "nowrap",
-              p: 0.5,
-              alignItems:
-                highchartProps["Name Font Size(em)"] !== ""
-                  ? highchartProps["Name Font Size(em)"] > 24
-                    ? ""
-                    : "center"
-                  : "center",
-            }}
-          >
-            <Grid item>
-              <Grid container sx={{ alignItems: "center" }}>
-                <Grid item>
-                  <IconButton
-                    onClick={() => {
-                      dispatch(deleteChart(widget));
-                    }}
-                  >
-                    <DeleteForeverIcon />
-                  </IconButton>
-                </Grid>
-                <Grid
-                  item
-                  sx={{
-                    ml: 0.5,
-                    display:
-                      (highchartProps.Type === "Line Chart [Highchart]" ||
-                        highchartProps.Type === "Line Chart [Nivo]") &&
-                      highchartProps["Show Enable Name"]
-                        ? "inline-block"
-                        : "none",
-                    fontSize:
-                      highchartProps["Name Font Size(em)"] !== ""
-                        ? `${highchartProps["Name Font Size(em)"]}px`
-                        : "14px",
+          <Grid item>
+            <Grid container columnSpacing={0.5} flexWrap="nowrap">
+              <Grid item>
+                <IconButton
+                  onClick={() => {
+                    dispatch(deleteChart(widget));
                   }}
                 >
-                  {highchartProps.Name}
-                </Grid>
+                  <DeleteForeverIcon />
+                </IconButton>
+              </Grid>
+              <Grid
+                item
+                className="grid-item__title overview-widget-box__header__left-box"
+                sx={{
+                  display:
+                    (highchartProps.Type === "Line Chart [Highchart]" ||
+                      highchartProps.Type === "Line Chart [Nivo]") &&
+                    highchartProps["Show Enable Name"]
+                      ? "inline-block"
+                      : "none",
+                  fontSize:
+                    highchartProps["Name Font Size(em)"] !== ""
+                      ? `${highchartProps["Name Font Size(em)"]}px`
+                      : "14px",
+                }}
+              >
+                {highchartProps.Name}
               </Grid>
             </Grid>
-            <Grid
-              item
-              sx={{
-                display:
-                  highchartProps.Type === "Line Chart [Highchart]" ||
-                  highchartProps.Type === "Line Chart [Nivo]" ||
-                  highchartProps["Show Name"]
-                    ? "none"
-                    : "flex",
-                fontSize:
-                  highchartProps["Name Font Size(em)"] !== ""
-                    ? `${highchartProps["Name Font Size(em)"]}px`
-                    : "14px",
-              }}
-            >
-              {highchartProps.Name}
-            </Grid>
-            <Grid
-              item
-              sx={{
-                display:
-                  highchartProps.Type === "Line Chart [Highchart]" ||
-                  highchartProps.Type === "Line Chart [Nivo]"
-                    ? "flex"
-                    : "none",
-              }}
-            >
-              <FormControlLabel
-                control={
-                  <Switch
-                    color="error"
-                    size="small"
-                    checked={tabular}
-                    onChange={() => {
-                      setTabular((prev) => {
-                        return !prev;
-                      });
-                    }}
-                  />
-                }
-                label="Tabular"
-              />
-              <FormControlLabel
-                control={
-                  <Switch
-                    color="error"
-                    size="small"
-                    checked={liveData}
-                    onChange={() => {
-                      setLiveData((prev) => {
-                        setbackfill(prev);
-                        return !prev;
-                      });
-                    }}
-                  />
-                }
-                label="Live"
-              />
-              <FormControlLabel
-                control={
-                  <Switch
-                    color="error"
-                    size="small"
-                    checked={backfill}
-                    onChange={() => {
-                      setbackfill((prev) => {
-                        setLiveData(prev);
-                        return !prev;
-                      });
-                    }}
-                  />
-                }
-                label="Backfill"
-              />
-            </Grid>
-            <Grid
-              item
-              className="cancelDrag"
-              onClick={(e) => {
-                e.stopPropagation();
-              }}
-            >
-              <MyDialog
-                Button={
-                  <IconButton>
-                    <SettingsIcon />
-                  </IconButton>
-                }
-                DialogBody={UpdatePopUp}
-                refresh={() => {
-                  setRefres((prev) => !prev);
-                }}
-                highchartProps={highchartProps}
-                chartId={widget}
-                defaultWH={[700, 500]}
-              />
-            </Grid>
           </Grid>
-        </Box>
+          <Grid
+            item
+            sx={{
+              display:
+                highchartProps.Type === "Line Chart [Highchart]" ||
+                highchartProps.Type === "Line Chart [Nivo]" ||
+                highchartProps["Show Name"]
+                  ? "none"
+                  : "flex",
+              fontSize:
+                highchartProps["Name Font Size(em)"] !== ""
+                  ? `${highchartProps["Name Font Size(em)"]}px`
+                  : "14px",
+            }}
+          >
+            {highchartProps.Name}
+          </Grid>
+          <Grid
+            item
+            sx={{
+              display:
+                highchartProps.Type === "Line Chart [Highchart]" ||
+                highchartProps.Type === "Line Chart [Nivo]"
+                  ? "flex"
+                  : "none",
+            }}
+          >
+            <FormControlLabel
+              control={
+                <Switch
+                  color="error"
+                  size="small"
+                  checked={tabular}
+                  onChange={() => {
+                    setTabular((prev) => {
+                      return !prev;
+                    });
+                  }}
+                />
+              }
+              label="Tabular"
+            />
+            <FormControlLabel
+              control={
+                <Switch
+                  color="error"
+                  size="small"
+                  checked={liveData}
+                  onChange={() => {
+                    setLiveData((prev) => {
+                      setbackfill(prev);
+                      return !prev;
+                    });
+                  }}
+                />
+              }
+              label="Live"
+            />
+            <FormControlLabel
+              control={
+                <Switch
+                  color="error"
+                  size="small"
+                  checked={backfill}
+                  onChange={() => {
+                    setbackfill((prev) => {
+                      setLiveData(prev);
+                      return !prev;
+                    });
+                  }}
+                />
+              }
+              label="Backfill"
+            />
+          </Grid>
+          <Grid
+            item
+            className="cancelDrag"
+            onClick={(e) => {
+              e.stopPropagation();
+            }}
+          >
+            <MyDialog
+              Button={
+                <IconButton>
+                  <SettingsIcon />
+                </IconButton>
+              }
+              DialogBody={UpdatePopUp}
+              refresh={() => {
+                setRefres((prev) => !prev);
+              }}
+              highchartProps={highchartProps}
+              chartId={widget}
+              defaultWH={[700, 500]}
+            />
+          </Grid>
+        </Grid>
         <Box className="grid-item__graph">
           <MyHighchart
             highchartProps={highchartProps}
@@ -241,14 +219,8 @@ const Widgets = React.forwardRef((props, ref) => {
   return (
     <Box
       ref={ref}
-      className={`grid-item ${className}`}
-      sx={{
-        ...style,
-        boxShadow: 4,
-        borderRadius: "5px",
-        color: "text.primary",
-        backgroundColor: "background.success",
-      }}
+      className={`grid-item ${className} overview-widget-box-loading`}
+      style={{ ...style }}
       {...rest}
     >
       <LoadingComponent />

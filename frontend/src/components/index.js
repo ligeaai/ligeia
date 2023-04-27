@@ -27,7 +27,6 @@ import Loadable from "./loading/loadable";
 import Loading from "./loading/loading";
 import LoadingComponent from "./loading/loadingComopnent";
 import MyNavigator from "./drawer/myNavigator";
-import MainBox from "./box/mainBox";
 import PropLinkTabs from "./navigationComp/propLinkTabs"
 import SocialButton from "./buttons/socialButton";
 import MyTextField from "./textfield/textfield";
@@ -48,5 +47,5 @@ import TreeMenuItems from "./treeMenu/treeMenuGenerator"
 export {
     ActionMenu, Breadcrumb, Cards, CheckboxList, ColorTextfield, CollapsableMenu, Confirmation, ComponentError, ComponentErrorBody, CustomNoRowsOverlay, CustomToolbar, MyDivider, DatePicker, DataGrid, Drawer, DialogHeaderHelper, ErrorBoundary,
     ErrorMessage, FooterHelper, Highchart, InputGenerator, Loadable, Loading, LoadingComponent, MyCheckBox, MyNavigator, MyNumberTextField, MyTextField, MyMultilineTextField, PropLinkTabs, SocialButton,
-    IndentSelect, ItemSperatorLine, ItemSperatorLineXL, Items, SearchBar, SearchBarMobile, Select, TreeMenu, MainBox, MainPageSkeleton, MyDialog, MyTabs, MyRadioButton, Stepper, TreeMenuItems, HistoryConfirmation
+    IndentSelect, ItemSperatorLine, ItemSperatorLineXL, Items, SearchBar, SearchBarMobile, Select, TreeMenu, MainPageSkeleton, MyDialog, MyTabs, MyRadioButton, Stepper, TreeMenuItems, HistoryConfirmation
 }

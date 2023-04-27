@@ -5,6 +5,7 @@ import { changeValeus } from "../../../services/actions/overview/overviewDialog"
 import { Select } from "../..";
 import ItemLinkService from "../../../services/api/itemLink";
 import { IndentSelect } from "../../";
+import "../../../assets/styles/page/overview/popUpLayout.scss";
 const ChoseMeasure = () => {
   const dispatch = useDispatch();
   const ItemData = useSelector((state) => state.overviewDialog.itemData);
@@ -37,7 +38,7 @@ const ChoseMeasure = () => {
       container
       columnSpacing={2}
       rowGap={2}
-      sx={{ div: { fontSize: "14px" } }}
+      className="pop-up-layout-font-size"
     >
       <Grid item xs={12} md={6}>
         <Grid container rowGap={0.5}>

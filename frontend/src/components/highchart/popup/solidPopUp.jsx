@@ -116,53 +116,28 @@ const SolidPopUp = ({ handleClose, title, height }) => {
   };
   return (
     <>
-      <Typography
+      <Grid
+        container
         id="draggable-dialog-title"
-        sx={{
-          fontWeight: "bold",
-          fontSize: "14px",
-          width: "100%",
-          cursor: "all-scroll",
-          backgroundColor: "background.main",
-          height: "44px",
-          top: 0,
-          px: 2,
-          position: "sticky",
-          zIndex: 2,
-        }}
+        className="overview-update-pop-up__box__header"
       >
-        <Grid
-          container
-          sx={{
-            height: "44px",
-            alignContent: "center",
-            justifyContent: "space-between",
-          }}
-        >
-          <Grid item sx={{ alignSelf: "center", color: "text.blue" }}>
-            {title}
-          </Grid>
-
-          <Grid item>
-            <IconButton onClick={handleClose}>
-              <CloseIcon fontSize="small" />
-            </IconButton>
-          </Grid>
+        <Grid item className="overview-update-pop-up__box__header__id">
+          {title}
         </Grid>
-      </Typography>
+
+        <Grid item>
+          <IconButton onClick={handleClose}>
+            <CloseIcon fontSize="small" />
+          </IconButton>
+        </Grid>
+      </Grid>
       <Grid
         container
         columnSpacing={2}
         rowGap={2}
-        sx={{
-          div: { fontSize: "14px" },
-          p: 2,
-          height: height - 96,
-          overflowY: "auto",
-          alignContent: "flex-start",
-        }}
+        className="overview-update-pop-up__box__body"
       >
-        <Grid item xs={12} sm={9} sx={{ height: "min-content" }}>
+        <Grid item xs={12} sm={9}>
           <Grid container rowGap={2}>
             <Grid item xs={12}>
               <Grid container columnSpacing={2} rowGap={2}>
@@ -183,17 +158,19 @@ const SolidPopUp = ({ handleClose, title, height }) => {
             <Grid item xs={12}>
               <Grid container columnSpacing={2} rowGap={2}>
                 <Grid item xs={12}>
-                  <Typography sx={{ pb: 2 }}>Measurement</Typography>
+                  <Typography className="overview-update-pop-up__box__body__label">
+                    Measurement
+                  </Typography>
                   <ChoseMeasure />
                 </Grid>
               </Grid>
             </Grid>
           </Grid>
         </Grid>
-        <Grid item xs={12} sm={3} sx={{ height: "min-content" }}>
+        <Grid item xs={12} sm={3}>
           <Grid container>
             <Grid item xs={12}>
-              <List sx={{ width: "100%", bgcolor: "inherit" }}>
+              <List>
                 {[
                   "Name",
                   "Tag Name",
@@ -248,17 +225,7 @@ const SolidPopUp = ({ handleClose, title, height }) => {
                         cleanStops("Stops", value, ["Low", "High", "Color"])
                       );
                     }}
-                    sx={{
-                      fontSize: "14px",
-                      "& .MuiOutlinedInput-input": {
-                        fontSize: "14px",
-                        paddingTop: "4px",
-                        paddingBottom: "4px",
-                        paddingRight: "2px",
-                      },
-                      width: 75,
-                      minWidth: 75,
-                    }}
+                    className="overview-number-text-field"
                   />
                 </Grid>
               </Grid>
@@ -266,7 +233,10 @@ const SolidPopUp = ({ handleClose, title, height }) => {
           </Grid>
           <Grid item>
             <Typography
-              sx={{ display: stops === "0" || stops === "" ? "none" : "flex" }}
+              style={{
+                padding: "16px 0",
+                display: stops === "0" || stops === "" ? "none" : "flex",
+              }}
             >
               Stops
             </Typography>

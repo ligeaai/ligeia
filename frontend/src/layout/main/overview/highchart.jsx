@@ -11,16 +11,14 @@ const OverviewEditor = ({
 }) => {
   if (highchartProps.Name !== "") {
     return (
-      <Box sx={{ width: width, height: height }}>
-        <Highchart
-          highchartProps={highchartProps}
-          width={width}
-          height={height}
-          liveData={liveData}
-          backfillData={backfillData}
-          tabular={tabular}
-        />
-      </Box>
+      <Highchart
+        highchartProps={highchartProps}
+        width={width}
+        height={height}
+        liveData={liveData}
+        backfillData={backfillData}
+        tabular={tabular}
+      />
     );
   }
   return <></>;

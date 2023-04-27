@@ -72,11 +72,7 @@ const QontoConnector = styled(StepConnector)(({ theme }) => ({
     borderRadius: 1,
   },
 }));
-export default function HorizontalLinearStepper({
-  components,
-  finishFunc,
-  height,
-}) {
+export default function HorizontalLinearStepper({ components, finishFunc }) {
   const dispatch = useDispatch();
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set());
@@ -107,98 +103,73 @@ export default function HorizontalLinearStepper({
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
-  const handleSkip = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    setSkipped((prevSkipped) => {
-      const newSkipped = new Set(prevSkipped.values());
-      newSkipped.add(activeStep);
-      return newSkipped;
-    });
-  };
+  // const handleSkip = () => {
+  //   setActiveStep((prevActiveStep) => prevActiveStep + 1);
+  //   setSkipped((prevSkipped) => {
+  //     const newSkipped = new Set(prevSkipped.values());
+  //     newSkipped.add(activeStep);
+  //     return newSkipped;
+  //   });
+  // };
 
   const handleStep = (step) => () => {
     setActiveStep(step);
   };
   return (
-    <Box sx={{ width: "100%", height: "100%", pt: 2 }}>
-      <Stepper activeStep={activeStep} connector={<QontoConnector />}>
-        {components().map((label, index) => {
-          const stepProps = {};
-          const labelProps = {};
-          if (isStepSkipped(index)) {
-            stepProps.completed = false;
-          }
-          return (
-            <Step key={label[0]} {...stepProps}>
-              <StepButton onClick={handleStep(index)}>
-                <StepLabel {...labelProps} StepIconComponent={QontoStepIcon}>
-                  {label[0]}
-                </StepLabel>
-              </StepButton>
-            </Step>
-          );
-        })}
-      </Stepper>
-      <Divider sx={{ mt: 2, mb: 2 }}></Divider>
-      <Box sx={{ width: "100%" }}>
-        <Typography
-          sx={{
-            height: height - 166,
-            width: "100%",
-            overflowY: "auto",
-            px: 1,
-            pb: 1.5,
-          }}
-        >
+    <Box className="overview-create-pop-up__stepper">
+      <Box className="overview-create-pop-up__stepper__box">
+        <Stepper activeStep={activeStep} connector={<QontoConnector />}>
+          {components().map((label, index) => {
+            const stepProps = {};
+            const labelProps = {};
+            if (isStepSkipped(index)) {
+              stepProps.completed = false;
+            }
+            return (
+              <Step key={label[0]} {...stepProps}>
+                <StepButton onClick={handleStep(index)}>
+                  <StepLabel {...labelProps} StepIconComponent={QontoStepIcon}>
+                    {label[0]}
+                  </StepLabel>
+                </StepButton>
+              </Step>
+            );
+          })}
+        </Stepper>
+        <Divider className="overview-create-pop-up__stepper__box__divider"></Divider>
+        <Typography className="overview-create-pop-up__stepper__box__body">
           {components()[activeStep][1]}
         </Typography>
-        <Box
-          sx={{
-            display: "fixed",
-            width: "100%",
-            backgroundColor: "background.main",
-          }}
-        >
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "space-between",
-              width: "100%",
-              p: 1,
-            }}
-          >
-            <Button
-              color="inherit"
-              disabled={activeStep === 0}
-              onClick={handleBack}
-              sx={{ mr: 1 }}
-              variant="outlined"
-            >
-              Back
-            </Button>
-            <Box sx={{ flex: "1 1 auto" }} />
-            {false && (
-              <Button
-                color="inherit"
-                onClick={handleSkip}
-                sx={{ mr: 1 }}
-                variant="outlined"
-              >
-                Skip
-              </Button>
-            )}
+      </Box>
 
-            {activeStep === components().length - 1 ? (
-              <Button onClick={finishFunc} variant="outlined">
-                Finish
-              </Button>
-            ) : (
-              <Button onClick={handleNext} variant="outlined">
-                Next
-              </Button>
-            )}
-          </Box>
-        </Box>
+      <Box className="overview-create-pop-up__stepper__footer">
+        <Button
+          color="inherit"
+          disabled={activeStep === 0}
+          onClick={handleBack}
+          variant="outlined"
+        >
+          Back
+        </Button>
+        {/* {false && (
+          <Button
+            color="inherit"
+            onClick={handleSkip}
+            variant="outlined"
+          >
+            Skip
+          </Button>
+        )} */}
+
+        {activeStep === components().length - 1 ? (
+          <Button onClick={finishFunc} variant="outlined">
+            Finish
+          </Button>
+        ) : (
+          <Button onClick={handleNext} variant="outlined">
+            Next
+          </Button>
+        )}
       </Box>
     </Box>
   );

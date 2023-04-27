@@ -15,7 +15,7 @@ import LinechartPopUp from "../../../components/highchart/popup/lineChartPopUp";
 import AngularPopUp from "../../../components/highchart/popup/angularPopUp";
 import SolidPopUp from "../../../components/highchart/popup/solidPopUp";
 import MeasurementPopUp from "../../../components/highchart/popup/measurementPopUp";
-
+import "../../../assets/styles/page/overview/updateContainer.scss";
 const DialogContent = ({ highchartProps, chartId, refresh, ...rest }) => {
   const dispatch = useDispatch();
   const type = useSelector((state) => state.overviewDialog.values.Type);
@@ -61,57 +61,42 @@ const DialogContent = ({ highchartProps, chartId, refresh, ...rest }) => {
     myFunc();
   }, []);
   return (
-    <Grid container sx={{ width: "100%", height: "100%" }}>
-      {type === highchartProps.Type ? (
-        body[highchartProps.Type]
-      ) : (
-        <Grid item xs={12} sx={{ width: "250px", height: "300px" }}>
+    <Grid container className="overview-update-pop-up">
+      <Grid item xs={12} className="overview-update-pop-up__box">
+        {type === highchartProps.Type ? (
+          body[highchartProps.Type]
+        ) : (
           <LoadingComponent />
-        </Grid>
-      )}
+        )}
+      </Grid>
 
       <Grid
-        item
-        xs={12}
-        sx={{
-          position: "fixed",
-          width: "100%",
-          bottom: 0,
-          backgroundColor: "background.main",
-          p: 0.5,
-        }}
+        container
+        columnSpacing={0.5}
+        className="overview-update-pop-up__footer"
       >
-        <Grid
-          container
-          sx={{
-            flexDirection: "row-reverse",
-            p: 0.5,
-            alignItems: "center",
-            height: "100%",
-          }}
-        >
-          <Grid item>
-            <Button
-              color="inherit"
-              onClick={() => {
-                rest.handleClose();
-              }}
-              sx={{ mr: 0.5 }}
-              variant="outlined"
-            >
-              Cancel
-            </Button>
-            <Button
-              color="inherit"
-              onClick={() => {
-                dispatch(updateChart(chartId, refresh));
-                rest.handleClose();
-              }}
-              variant="outlined"
-            >
-              Save
-            </Button>
-          </Grid>
+        <Grid item>
+          <Button
+            color="inherit"
+            onClick={() => {
+              rest.handleClose();
+            }}
+            variant="outlined"
+          >
+            Cancel
+          </Button>
+        </Grid>
+        <Grid item>
+          <Button
+            color="inherit"
+            onClick={() => {
+              dispatch(updateChart(chartId, refresh));
+              rest.handleClose();
+            }}
+            variant="outlined"
+          >
+            Save
+          </Button>
         </Grid>
       </Grid>
     </Grid>

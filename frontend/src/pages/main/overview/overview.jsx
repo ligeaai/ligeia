@@ -7,15 +7,16 @@ import {
   ItemSperatorLineXL,
   CollapsableMenu,
   Breadcrumb,
-  MainBox,
+  ComponentError,
 } from "../../../components";
 
-import DrawerMenu from "../../../layout/main/asset/collapseTreeMenu";
+import DrawerMenu from "../../../layout/main/asset/treeViewMenu";
 
 import Tabs from "./tabs";
 import { loadCollapseMenu } from "../../../services/actions/collapseMenu/collapseMenu";
 import ItemLinkService from "../../../services/api/itemLink";
 import { selectDrawerItem } from "../../../services/actions/drawerMenu/drawerMenu";
+import "../../../assets/styles/page/overview/main.scss";
 const Overview = () => {
   const dispatch = useDispatch();
   const isActiveTabs = useSelector((state) => state.tapsOverview.isActive);
@@ -25,25 +26,16 @@ const Overview = () => {
     dispatch(loadCollapseMenu(ItemLinkService.hierarchy));
   }, []);
   return (
-    <MainBox>
-      <DrawerMenu Element={CollapsableMenu} path="overview" />
-
-      <Grid
-        item
-        xs={12}
-        sx={{
-          overflow: "hidden",
-          boxShadow: 3,
-          borderRadius: "3px",
-        }}
-      >
-        <Grid container>
-          <Breadcrumb />
-          <ItemSperatorLineXL />
-          {isActiveTabs ? <Tabs /> : <Box sx={{ backgroundColor: "red" }} />}
-        </Grid>
+    <React.Fragment>
+      <DrawerMenu Element={<CollapsableMenu />} path="overview" />
+      <Grid Grid item xs={12} className="overview-container">
+        <Breadcrumb />
+        <ItemSperatorLineXL />
+        <ComponentError errMsg="Error">
+          {isActiveTabs ? <Tabs /> : <Box />}
+        </ComponentError>
       </Grid>
-    </MainBox>
+    </React.Fragment>
   );
 };
 

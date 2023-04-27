@@ -1,0 +1,88 @@
+@import "../../palette/palette.scss";
+@mixin color() {
+  @include themify($themes) {
+    color: themed("text-color");
+  }
+}
+@mixin fill() {
+  @include themify($themes) {
+    fill: themed("text-color");
+  }
+}
+@mixin background() {
+  @include themify($themes) {
+    fill: themed("bg-card");
+  }
+}
+@mixin fillBackground() {
+  @include themify($themes) {
+    fill: themed("bg-card");
+  }
+}
+
+.chart-container {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  .highcharts-background {
+    @include themify($themes) {
+      fill: lighten(themed("bg-card"), 10%);
+    }
+  }
+
+  .highcharts-axis-labels {
+    text {
+      @include color();
+      @include fill();
+    }
+  }
+  .highcharts-input-group {
+    text {
+      @include color();
+      @include fill();
+    }
+  }
+
+  .highcharts-range-selector-buttons {
+    text {
+      @include fill();
+    }
+
+    rect {
+      @include fillBackground();
+    }
+  }
+
+  .highcharts-exporting-group {
+    rect {
+      @include fillBackground();
+    }
+
+    path {
+      @include fill();
+      @include themify($themes) {
+        stroke: themed("text-color");
+      }
+    }
+  }
+
+  .highcharts-menu {
+    li {
+      @include color();
+    }
+    @include background();
+  }
+
+  .highcharts-root {
+    text {
+      @include color();
+      @include fill();
+    }
+  }
+
+  .highcharts-data-labels {
+    text {
+      @include fill();
+    }
+  }
+}

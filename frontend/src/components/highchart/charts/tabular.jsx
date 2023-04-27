@@ -96,21 +96,19 @@ const Tabular = ({ highchartProps, backfillData }) => {
   }, [backfillData]);
 
   return (
-    <Box sx={{ width: "100%", height: "100%", p: 1 }}>
-      <DataGrid
-        columns={[
-          { field: "completion", headerName: "Asset" },
-          { field: "tag_name", headerName: "Tag Name" },
-          { field: "timestamp", headerName: "Time Stamp", type: "dateTime" },
-          { field: "value", headerName: "Value" },
-          { field: "uom", headerName: "UoM" },
-          { field: "created_by", headerName: "Created By" },
-          { field: "createdTime", headerName: "Created Time" },
-          { field: "layer", headerName: "Layer" },
-        ]}
-        rows={allData}
-      />
-    </Box>
+    <DataGrid
+      columns={[
+        { field: "completion", headerName: "Asset" },
+        { field: "tag_name", headerName: "Tag Name" },
+        { field: "timestamp", headerName: "Time Stamp", type: "dateTime" },
+        { field: "value", headerName: "Value" },
+        { field: "uom", headerName: "UoM" },
+        { field: "created_by", headerName: "Created By" },
+        { field: "createdTime", headerName: "Created Time" },
+        { field: "layer", headerName: "Layer" },
+      ]}
+      rows={allData}
+    />
   );
 };
 

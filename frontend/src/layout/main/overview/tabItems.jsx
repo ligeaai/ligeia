@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 import { Responsive, WidthProvider } from "react-grid-layout";
 
@@ -63,7 +63,7 @@ const TabItems = (props) => {
       onResize();
     });
     onResize();
-    observer.observe(document.getElementById("myResponsiveGridLayout"));
+    observer.observe(containerRef.current);
   }, []);
   React.useEffect(() => {
     refLayout.current.forceUpdate();
@@ -74,7 +74,10 @@ const TabItems = (props) => {
     }, 100);
   }, [width]);
   return (
-    <div ref={containerRef} id={"myResponsiveGridLayout"}>
+    <div
+      ref={containerRef}
+      className="overview-container__tab-box__tab-body__tab-panel__react-grid-layout-box"
+    >
       <ResponsiveGridLayout
         bounds="parent"
         ref={refLayout}
