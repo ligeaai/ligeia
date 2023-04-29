@@ -24,21 +24,15 @@
       position: absolute;
       top: 27px;
       right: -15px;
-      box-shadow: $shadow-two;
+      //box-shadow: $shadow-two;c
       z-index: 3;
       cursor: pointer;
-      // @include themify($themes) {
-      //   background-color: themed("bg-tree-menu-icon");
-      // }
-      background-color: #0b61d9;
+      // background-color: #0b61d9;
       color: #fff;
       &:hover {
-        // padding: 1.5px;
-        // width: 28px;
-        // height: 28px;
-        // top: 23.5px;
-        // right: -12px;
-        background-color: #1a72ec;
+        @include themify($themes) {
+          background-color: themed("bg-drawer-selected-item-hover");
+        }
         box-shadow: $shadow-five;
       }
     }
