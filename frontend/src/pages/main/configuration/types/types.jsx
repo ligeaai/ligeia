@@ -39,6 +39,7 @@ import TypeService from "../../../../services/api/type";
 import { useIsMount } from "../../../../hooks/useIsMount";
 import { selectDrawerItem } from "../../../../services/actions/drawerMenu/drawerMenu";
 import "../../../../assets/styles/page/tools/types/types.scss";
+import "../../../../assets/styles/layouts/template.scss";
 const Menu = () => {
   document.title = `Ligeia.ai | Types`;
   selectDrawerItem("Types");
@@ -121,11 +122,17 @@ const Type = () => {
         path="types"
       />
 
-      <Box className="types-container__body">
+      <Box className="template-container__body">
         <Breadcrumb />
         <ItemSperatorLineXL />
-        <Grid container className="types-container__body__action-box">
-          <Grid item className="types-container__body__action-box__icons">
+        <Grid
+          container
+          className="template-container__body__action-box types-container__body__action-box"
+        >
+          <Grid
+            item
+            className="template-container__body__action-box__icons types-container__body__action-box__icons"
+          >
             <ComponentError errMsg="Error">
               <MyActionMenu />
             </ComponentError>
@@ -145,7 +152,11 @@ const Type = () => {
         </Grid>
 
         <ItemSperatorLineXL />
-        <Grid item xs={12} className="types-container__body__property-box">
+        <Grid
+          item
+          xs={12}
+          className="template-container__body__property-box types-container__body__property-box"
+        >
           <ComponentError errMsg="Error">
             <PropLinkTabs MyProperties={<DataGridPro />} isLinkOpen={false} />
           </ComponentError>

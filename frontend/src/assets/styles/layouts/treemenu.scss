@@ -8,6 +8,7 @@
   @include themify($themes) {
     background-color: themed("bg-tree-menu");
   }
+  margin-right: 4px;
   &__box {
     height: 100%;
     width: 0px;

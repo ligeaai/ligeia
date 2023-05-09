@@ -15,6 +15,7 @@ import {
 } from "../../../../services/actions/diagnostic/diagnostic";
 import { selectDrawerItem } from "../../../../services/actions/drawerMenu/drawerMenu";
 import "../../../../assets/styles/page/administration/diagnostic/diagnostic.scss";
+import "../../../../assets/styles/layouts/template.scss";
 const Main = () => {
   document.title = "Ligeia.ai | Diagnostics";
   selectDrawerItem("Diagnostics");
@@ -28,7 +29,7 @@ const Main = () => {
   }, []);
 
   return (
-    <Grid container className="diagnostic-container">
+    <Grid container className="template-container__body diagnostic-container">
       <Breadcrumb />
       <ItemSperatorLineXL />
       <Grid item xs={12} className="diagnostic-container__body">

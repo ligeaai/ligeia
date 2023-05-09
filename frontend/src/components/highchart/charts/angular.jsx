@@ -27,13 +27,14 @@ const Angular = ({ highchartProps, width, height }) => {
     var client;
 
     async function myFunc() {
-      setMeasurementData(highchartProps.Measurement[0]);
+      console.log(highchartProps);
+      setMeasurementData(highchartProps?.Measurement[0]);
       setKey(key + 1);
     }
     myFunc();
     if (client) client.close();
     client = new W3CWebSocket(
-      `${wsBaseUrl}/ws/live/last_data/${highchartProps.Measurement[0].TAG_ID}`
+      `${wsBaseUrl}/ws/live/last_data/${highchartProps?.Measurement[0].TAG_ID}`
     );
     client.onerror = function () {
       console.log("Connection Error");

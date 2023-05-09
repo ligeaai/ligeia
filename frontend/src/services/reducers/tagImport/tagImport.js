@@ -1,19 +1,21 @@
 import {
-    FILL_STEPPER_MANDATORY
+    UPDATE_PROGRESS_TAG_IMPORT
 } from "../../actions/types"
 
 const initialState = {
-    isMandatoryFields: {}
+    percent: "0",
+    data: []
 };
 
 export default function (state = initialState, action) {
     const { type, payload } = action;
 
     switch (type) {
-        case FILL_STEPPER_MANDATORY:
+        case UPDATE_PROGRESS_TAG_IMPORT:
             return {
                 ...state,
-                isMandatoryFields: payload
+                percent: payload.percent,
+                data: payload.data
             }
 
         default:

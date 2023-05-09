@@ -9,12 +9,13 @@ import {
 import ProfileEdior from "./profileEditor";
 import { selectDrawerItem } from "../../../../services/actions/drawerMenu/drawerMenu";
 import "../../../../assets/styles/page/administration/profile/profile.scss";
+import "../../../../assets/styles/layouts/template.scss";
 const Main = () => {
   document.title = "Ligeia.ai | Profile";
   selectDrawerItem("Profile");
 
   return (
-    <Grid container className="profile-container">
+    <Grid container className="template-container__body profile-container">
       <Breadcrumb />
       <ItemSperatorLineXL />
       <Grid item xs={12} className="profile-container__body">

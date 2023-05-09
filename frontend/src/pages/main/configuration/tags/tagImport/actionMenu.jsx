@@ -1,19 +1,41 @@
 import React from "react";
+import { useDispatch } from "react-redux";
 
 import { IconButton } from "@mui/material";
+import HistoryIcon from "@mui/icons-material/History";
 import PublishIcon from "@mui/icons-material/Publish";
+import RestoreFromTrashIcon from "@mui/icons-material/RestoreFromTrash";
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
-import { importExelFile } from "../../../../../services/actions/tagImport/tagImport";
+import {
+  deleteAllLogs,
+  importExelFile,
+  openWebSocket,
+} from "../../../../../services/actions/tagImport/tagImport";
 import TemplateExel from "./templateExel";
 import { MyDialog } from "../../../../../components";
 
 const ActionMenu = () => {
+  const dispatch = useDispatch();
   function handleFileChange(event) {
-    importExelFile(event.target.files[0]);
+    dispatch(importExelFile(event.target.files[0]));
   }
 
   return (
     <>
+      <IconButton
+        onClick={() => {
+          dispatch(deleteAllLogs());
+        }}
+      >
+        <RestoreFromTrashIcon />
+      </IconButton>
+      <IconButton
+        onClick={() => {
+          dispatch(openWebSocket());
+        }}
+      >
+        <HistoryIcon />
+      </IconButton>
       <MyDialog
         Button={
           <IconButton>

@@ -1,4 +1,6 @@
 import React from "react";
+import { useDispatch } from "react-redux";
+
 import { Grid } from "@mui/material";
 
 import { Breadcrumb, ItemSperatorLineXL } from "../../../../../components";
@@ -6,23 +8,31 @@ import { Breadcrumb, ItemSperatorLineXL } from "../../../../../components";
 import { selectDrawerItem } from "../../../../../services/actions/drawerMenu/drawerMenu";
 import Body from "./body";
 import ActionMenu from "./actionMenu";
+import { closeWebSocket } from "../../../../../services/actions/tagImport/tagImport";
+
 import "../../../../../assets/styles/page/configuration/tagImport.scss";
 import "../../../../../assets/styles/layouts/template.scss";
 const Main = () => {
   document.title = `Ligeia.ai | Tag Import`;
   selectDrawerItem("Tag Import");
+  const dispatch = useDispatch();
+  React.useEffect(() => {
+    return () => {
+      dispatch(closeWebSocket());
+    };
+  }, []);
   return (
-    <Grid
-      container
-      columnGap={0.5}
-      className="template-container tag-import-container"
-    >
-      <Grid item xs={12} className="template-container__body">
+    <React.Fragment>
+      <Grid
+        item
+        xs={12}
+        className="template-container__body tag-import-container"
+      >
         <Breadcrumb />
         <ItemSperatorLineXL />
         <Grid
-          item
-          className="template-container__body__action-menu-box tag-import-container__action-box"
+          container
+          className="template-container__body__action-box tag-import-container__action-box"
         >
           <ActionMenu />
         </Grid>
@@ -35,7 +45,7 @@ const Main = () => {
           <Body />
         </Grid>
       </Grid>
-    </Grid>
+    </React.Fragment>
   );
 };
 

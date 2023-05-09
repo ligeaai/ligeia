@@ -36,6 +36,7 @@ const Tags = Loadable(React.lazy(() => import("../pages/main/configuration/tags/
 const TagImport = Loadable(React.lazy(() => import("../pages/main/configuration/tags/tagImport/main")));
 const TagCalculated = Loadable(React.lazy(() => import("../pages/main/configuration/tags/tagCalculated/main")));
 const Types = Loadable(React.lazy(() => import("../pages/main/configuration/types/types")));
+const Workflows = Loadable(React.lazy(() => import("../pages/main/tools/workflows/main")));
 
 const AppRouter1 = () => {
   return (
@@ -70,6 +71,8 @@ const AppRouter1 = () => {
             <Route exact path="/tools/code_list/:codelist" element={<CodeList isHome={false} />} />
             <Route exact path="/tools/resources" element={<ResourceList isHome={true} />} />
             <Route exact path="/tools/resources/:resourceList" element={<ResourceList isHome={false} />} />
+            <Route exact path="/tools/workflows" element={<Workflows isHome={true} />} />
+            <Route exact path="/tools/workflows/:workflows" element={<Workflows isHome={false} />} />
 
 
             <Route exact path="/configuration/tags/tag_manager" element={<Tags isHome={true} />} />

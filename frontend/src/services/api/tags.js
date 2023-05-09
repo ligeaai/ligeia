@@ -31,8 +31,12 @@ const remove = (body) => {
 };
 
 const importExel = (body) => {
-    return instance.post(`/tags/test/`, body, config());
+    return instance.post(`/tags/import/`, body, config());
 };
+
+const deleteLogs = () => {
+    return instance.get(`/tags/import/delete/`, config());
+}
 
 const elasticSearch = (text, body, cancelToken) => {
     return instance.get(`/tags/es/${text}`, { ...config(), cancelToken: cancelToken.token });
@@ -46,6 +50,7 @@ const TagService = {
     getTagsProperty,
     createAndUpdate,
     importExel,
+    deleteLogs,
     remove
 };
 

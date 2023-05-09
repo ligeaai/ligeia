@@ -1,8 +1,5 @@
 @import "../../../components/boxes.scss";
 .diagnostic-container {
-  @include layoutBox;
-  overflow: hidden;
-  min-width: 350px;
   &__body {
     height: calc(100% - 48px);
   }

@@ -21,6 +21,7 @@ import TreeMenu from "./treeMenu";
 import { cleanRoles } from "../../../../services/actions/roles/roles";
 import { selectDrawerItem } from "../../../../services/actions/drawerMenu/drawerMenu";
 import "../../../../assets/styles/page/administration/roles/roles.scss";
+import "../../../../assets/styles/layouts/template.scss";
 const Main = ({ isHome }) => {
   document.title = "Ligeia.ai | Roles";
   selectDrawerItem("Roles");
@@ -35,11 +36,11 @@ const Main = ({ isHome }) => {
     <React.Fragment>
       <DrawerMenu Element={<TreeMenu />} path="item" />
 
-      <Box className="roles-container__body">
+      <Box className="template-container__body roles-container__body">
         <Breadcrumb />
         <ItemSperatorLineXL />
-        <Grid container className="roles-container__body__action-box">
-          <Grid item className="roles-container__body__action-box__icons">
+        <Grid container className=" template-container__body__action-box ">
+          <Grid item className="template-container__body__action-box__icons">
             <ComponentError errMsg="Error">
               {isLinksActive ? <LinkActionMenu /> : <MyActionMenu />}
             </ComponentError>
@@ -47,7 +48,11 @@ const Main = ({ isHome }) => {
         </Grid>
 
         <ItemSperatorLineXL />
-        <Grid item xs={12} className="roles-container__body__property-box">
+        <Grid
+          item
+          xs={12}
+          className=" template-container__body__property-box roles-container__body__property-box"
+        >
           <ComponentError errMsg="Error">
             <PropLinkTabs
               MyProperties={<Properties isHome={isHome} />}

@@ -17,6 +17,7 @@ import { loadCollapseMenu } from "../../../services/actions/collapseMenu/collaps
 import ItemLinkService from "../../../services/api/itemLink";
 import { selectDrawerItem } from "../../../services/actions/drawerMenu/drawerMenu";
 import "../../../assets/styles/page/overview/main.scss";
+import "../../../assets/styles/layouts/template.scss";
 const Overview = () => {
   const dispatch = useDispatch();
   const isActiveTabs = useSelector((state) => state.tapsOverview.isActive);
@@ -28,7 +29,12 @@ const Overview = () => {
   return (
     <React.Fragment>
       <DrawerMenu Element={<CollapsableMenu />} path="overview" />
-      <Grid Grid item xs={12} className="overview-container">
+      <Grid
+        Grid
+        item
+        xs={12}
+        className="overview-container template-container__body"
+      >
         <Breadcrumb />
         <ItemSperatorLineXL />
         <ComponentError errMsg="Error">

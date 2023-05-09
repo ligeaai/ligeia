@@ -22,6 +22,7 @@ import LinkActionMenu from "./link/linkActionMenu";
 import TreeMenu from "./treeMenu";
 import { selectDrawerItem } from "../../../../services/actions/drawerMenu/drawerMenu";
 import "../../../../assets/styles/page/item.scss";
+import "../../../../assets/styles/layouts/template.scss";
 const Item = ({ isHome }) => {
   const dispatch = useDispatch();
   const isLinksActive = useSelector(
@@ -45,11 +46,18 @@ const Item = ({ isHome }) => {
     <React.Fragment>
       <DrawerMenu Element={<TreeMenu />} path="item" />
 
-      <Grid item xs={12} className="item-container__body">
+      <Grid
+        item
+        xs={12}
+        className="template-container__body item-container__body"
+      >
         <Breadcrumb />
         <ItemSperatorLineXL />
-        <Grid container className="item-container__body__action-box">
-          <Grid item className="item-container__body__action-box__icons">
+        <Grid
+          container
+          className="template-container__body__actions-box item-container__body__action-box"
+        >
+          <Grid item className="template-container__body__actions-box__icons">
             {isLinksActive ? <LinkActionMenu /> : <MyActionMenu />}
           </Grid>
           <MyDivider />
@@ -60,7 +68,11 @@ const Item = ({ isHome }) => {
         </Grid>
 
         <ItemSperatorLineXL />
-        <Grid item xs={12} className="item-container__body__property-box">
+        <Grid
+          item
+          xs={12}
+          className="template-container__body__property-box item-container__body__property-box"
+        >
           <ComponentError errMsg="Error">
             <PropLinkTabs
               MyProperties={<Properties></Properties>}

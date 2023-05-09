@@ -177,3 +177,6 @@ export const SET_LINKED_USERS_ROLE = "SET_LINKED_USERS_ROLE"
 //--------Profile------------------------------
 export const LOAD_PROFILE = "LOAD_PROFILE"
 export const CLEAN_PROFILE = "CLEAN_PROFILE"
+
+//-------TAG Import--------------------
+export const UPDATE_PROGRESS_TAG_IMPORT = "UPDATE_PROGRESS_TAG_IMPORT"

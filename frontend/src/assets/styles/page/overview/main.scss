@@ -2,11 +2,6 @@
 @import "../../palette/palette.scss";
 @import "../../components/scrollbar.scss";
 .overview-container {
-  @include layoutBox;
-  overflow: hidden;
-  width: 100%;
-  min-width: 470px !important;
-  margin-left: 4px;
   &__tab-box {
     height: calc(100% - 43.6px);
     &__tab-header {

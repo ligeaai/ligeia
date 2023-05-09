@@ -21,6 +21,7 @@ import roles from './roles/roles';
 import searchBarReducer from './searchBarReducer';
 import stepper from "./stepper/stepper"
 import tags from "./tags/tags"
+import tagImport from './tagImport/tagImport';
 import tapsOverview from "./overview/taps"
 import themeReducer from './themeReducer';
 import treeview from './treeview/treeview';
@@ -31,5 +32,6 @@ import users from './users/users';
 
 export {
     authReducer, alarms, confirmation, checkedList, collapseMenu, diagnostic, historyConfirmation, dataGridCodeList, dataGridType, drawerMenu, errorReducer, project, profile,
-    itemDataGrid, itemLinkEditor, langReducer, loaderReducer, roles, overviewDialog, registerFormReducer, searchBarReducer, stepper, tags, tapsOverview, themeReducer, treeview, dataGridResourceList, users
+    itemDataGrid, itemLinkEditor, langReducer, loaderReducer, roles, overviewDialog, registerFormReducer, searchBarReducer, stepper, tags,
+    tagImport, tapsOverview, themeReducer, treeview, dataGridResourceList, users
 }

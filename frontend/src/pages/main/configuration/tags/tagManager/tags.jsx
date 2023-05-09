@@ -21,7 +21,7 @@ import {
 import { selectTreeViewItem } from "../../../../../services/actions/treeview/treeview";
 import Menu from "./treeMenu";
 import { selectDrawerItem } from "../../../../../services/actions/drawerMenu/drawerMenu";
-
+import "../../../../../assets/styles/layouts/template.scss";
 const Tags = ({ isHome }) => {
   document.title = `Ligeia.ai | Tag Manager`;
   selectDrawerItem("Tag Manager");
@@ -39,26 +39,28 @@ const Tags = ({ isHome }) => {
     };
   }, []);
   return (
-    <Grid container columnGap={0.5} className="tag-manager-container">
-      <Grid item>
-        <DrawerMenu Element={<Menu />} path="tags" />
-      </Grid>
-      <Grid item xs={12} className="tag-manager-container__body">
+    <React.Fragment>
+      <DrawerMenu Element={<Menu />} path="tags" />
+      <Grid
+        item
+        xs={12}
+        className="template-container__body tag-manager-container__body"
+      >
         <Breadcrumb />
         <ItemSperatorLineXL />
-        <Grid item className="tag-manager-container__body__action-menu-box">
+        <Grid item className="template-container__body__action-box">
           <TagsActionMenu />
         </Grid>
         <ItemSperatorLineXL />
         <Grid
           item
           xs={12}
-          className="tag-manager-container__body__property-box"
+          className="template-container__body__property-box tag-manager-container__body__property-box"
         >
           <PropLinkTabs MyProperties={<Properties />} isLinkOpen={false} />
         </Grid>
       </Grid>
-    </Grid>
+    </React.Fragment>
   );
 };
 

@@ -15,6 +15,7 @@ import {
 } from "../../../../services/actions/users/users";
 import { selectDrawerItem } from "../../../../services/actions/drawerMenu/drawerMenu";
 import "../../../../assets/styles/page/administration/users/users.scss";
+import "../../../../assets/styles/layouts/template.scss";
 const Main = () => {
   document.title = "Ligeia.ai | Users";
   selectDrawerItem("Users");
@@ -28,7 +29,7 @@ const Main = () => {
   }, []);
 
   return (
-    <Grid container className="users-container">
+    <Grid container className="template-container__body users-container">
       <Breadcrumb />
       <ItemSperatorLineXL />
       <Grid item xs={12} className="users-container__body">
