@@ -24,6 +24,6 @@ stages:
       displayName: Build an image
       inputs:
         command: build
-        dockerfile: '$(Build.SourcesDirectory)/airflow/Dockerfile'
+        dockerfile: '$(Build.SourcesDirectory)/dockerfile/local/django/Dockerfile'
         tags: |
           $(tag)
