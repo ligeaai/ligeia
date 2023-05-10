@@ -45,7 +45,6 @@ class AtomicMixin:
 
         return response
 
-
 class redisCaching():
 
     def set(cache_key,data):
@@ -54,16 +53,25 @@ class redisCaching():
         return True
 
     def get(cache_key):
-        cache_data = rds.get(cache_key)
-        if not cache_data:
+        try:
+            cache_data = rds.get(cache_key)
+            print("girdi")
+            if not cache_data:
+                return None
+            cache_data = cache_data.decode('utf-8')
+            cache_data = json.loads(cache_data)
+            return cache_data
+        except:
             return None
-        cache_data = cache_data.decode('utf-8')
-        cache_data = json.loads(cache_data)
-        return cache_data
     
     def delete(cache_key):
         rds.delete(cache_key)
         return True
+    
+    def lpush(cache_key, *args):
+        rds.lpush(cache_key, *args)
+        return True
+
     
     
 def import_data(model="model",model_name = "model_name",is_relationship=False):
@@ -90,3 +98,17 @@ def import_data(model="model",model_name = "model_name",is_relationship=False):
             print(str(e))
             transaction.set_rollback(True)
             return{"error": str(e)}
+
+
+def tag_import_mandorty(columns):
+    mandatory = ["START_DATETIME","EVENT_TYPE","NAME"]
+    response = []
+    
+    for item in mandatory:
+        if not (item in columns):
+            print(item)
+            response.append(item)
+
+    if len(response) >= 1:
+        raise ValidationError({"Message":
+                        "fields = "+str(response)+" is missing in the loaded file"})

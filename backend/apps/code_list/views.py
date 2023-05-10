@@ -101,9 +101,8 @@ class CodeListWIDGET_TYPEView(generics.ListAPIView):
     permission_classes = [permissions.AllowAny]
 
     def get(self, request, *args, **kwargs):
-        queryset = code_list.objects.filter(LIST_TYPE="WIDGET_TYPE")
-        serializer = CodeListDetailsSerializer(queryset, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        queryset = code_list.objects.filter(LIST_TYPE="WIDGET_TYPE").order_by('CODE_TEXT').values_list('CODE_TEXT',flat =True)
+        return Response(queryset, status=status.HTTP_200_OK)
 
 
 class CodeListView(generics.ListAPIView):

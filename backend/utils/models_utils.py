@@ -1,5 +1,4 @@
 from rest_framework.exceptions import ValidationError
-
 from services.logging.Handlers import KafkaLogger 
 models = {
             "CODE_LIST":['LIST_TYPE','CULTURE','CODE','ROW_ID','LAYER_NAME'],
@@ -8,7 +7,7 @@ models = {
             "LAYER":["LAYER_NAME","LAYER_LEVEL","LAST_UPDT_USER","LAST_UPDT_DATE"],
             "RESOURCES_TYPE":["CULTURE","ID","LAYER_NAME"],
             "TYPE":["TYPE","TYPE_CLASS","LAYER_NAME","ROW_ID"],
-            "TAGS":["ITEM_ID","TAG_ID","START_DATETIME",'ROW_ID',"EVENT_TYPE"],
+            "TAGS":["TAG_ID","START_DATETIME",'ROW_ID',"EVENT_TYPE","NAME"],
             "TYPE_PROPERTY":["TYPE","PROPERTY_NAME","LAYER_NAME","ROW_ID"],
             "TYPE_LINK":["TYPE","FROM_TYPE","FROM_TYPE_CLASS","TO_TYPE","TO_TYPE_CLASS","LAYER_NAME","ROW_ID"],
             "ITEM_LINK":["LINK_ID","LINK_TYPE","START_DATETIME","END_DATETIME","FROM_ITEM_ID","FROM_ITEM_TYPE","TO_ITEM_ID","TO_ITEM_TYPE","ROW_ID"]

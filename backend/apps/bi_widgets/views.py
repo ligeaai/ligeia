@@ -23,10 +23,10 @@ class WidgetSaveView(generics.CreateAPIView):
             return widget_prop
 
     def _widgetPropertySave(self, data):
-        for property in data:
-            serializer = Widget_PropertySaveSerializer(data=property)
+        for propertys in data:
+            serializer = Widget_PropertySaveSerializer(data=propertys)
             serializer.is_valid()
-            widget_prop = serializer.save(property)
+            widget_prop = serializer.save(propertys)
 
     def _layoutSave(self, widget_id):
         l_types = ["lg", "md", "sm", "xs", "xxs"]
@@ -39,7 +39,7 @@ class WidgetSaveView(generics.CreateAPIView):
             serializer.save(layout)
 
     def _dashboardAdd(self, dashboardId, widgetId):
-        dash = Dashboard.objects.filter(ROW_ID=dashboardId).first()
+        dash = bi_dashboard.objects.filter(ROW_ID=dashboardId).first()
         if dash:
             dash.WIDGETS.add(widgetId)
             dash.save()

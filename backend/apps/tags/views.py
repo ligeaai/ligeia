@@ -9,6 +9,7 @@ from .serializers import (
     TagsNameSerializer,
     TagsFieldsSerializer,
     TagsUomConversionSerializer,
+    TagsImportFileSerializer,
 )
 from apps.type_property.models import type_property
 from apps.resources_types.models import resources_types
@@ -25,6 +26,12 @@ from apps.type_link.serializers import TypeLinkDetailsSerializer
 from utils.models_utils import validate_model_not_null
 import datetime
 from django.db import transaction
+from io import StringIO, BytesIO
+import io
+import pandas as pd
+import numpy as np
+from apps.item_property.models import item_property
+from utils.utils import tag_import_mandorty
 
 # Create your views here.
 
@@ -41,7 +48,6 @@ from django.db import transaction
 
 
 class TagsSaveView(generics.CreateAPIView):
-
     permission_classes = [permissions.AllowAny]
 
     def post(self, request, *args, **kwargs):
@@ -77,7 +83,6 @@ class TagsSaveView(generics.CreateAPIView):
 
 
 class TagsDetailsView(generics.ListAPIView):
-
     permission_classes = [permissions.AllowAny]
 
     def get_queryset(self):
@@ -90,7 +95,6 @@ class TagsDetailsView(generics.ListAPIView):
 
 
 class TagsSpesificDetailsView(generics.CreateAPIView):
-
     permission_classes = [permissions.AllowAny]
 
     def get_queryset(self):
@@ -107,7 +111,6 @@ class TagsSpesificDetailsView(generics.CreateAPIView):
 
 
 class TagsDeleteView(generics.CreateAPIView):
-
     permission_classes = [permissions.AllowAny]
 
     def post(self, request, *args, **kwargs):
@@ -115,6 +118,164 @@ class TagsDeleteView(generics.CreateAPIView):
         if qs:
             qs.delete()
         return Response("Succsessful", status=status.HTTP_200_OK)
+
+
+from concurrent.futures import ThreadPoolExecutor
+import asyncio
+from utils.utils import redisCaching as Red
+from datetime import datetime
+import numpy as np
+import json
+import environ
+import redis
+
+env = environ.Env(DEBUG=(bool, False))
+rds = redis.StrictRedis(env("REDIS_HOST"), port=6379, db=0)
+
+
+class TagsImportDeleteView(generics.ListAPIView):
+    serializer_class = TagsImportFileSerializer
+    permission_classes = [permissions.AllowAny]
+
+    def get(self, request, *args, **kwargs):
+        Red.delete("importTag")
+        return Response("Successful", status=status.HTTP_200_OK)
+
+
+class TagsImportHistoryListView(generics.ListAPIView):
+    serializer_class = TagsImportFileSerializer
+    permission_classes = [permissions.AllowAny]
+
+    def get_queryset(self):
+        pass
+
+    def get(self, request, *args, **kwargs):
+        try:
+            hash_dict = Red.get("importHistory")
+            keys = list(hash_dict.keys())
+            return Response(keys, status=status.HTTP_200_OK)
+        except Exception as e:
+            return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
+
+class TagsImportHistoryView(generics.ListAPIView):
+    serializer_class = TagsImportFileSerializer
+    permission_classes = [permissions.AllowAny]
+    lookup_field = "pk"
+
+    def get_queryset(self):
+        pass
+
+    def get(self, request, *args, **kwargs):
+        try:
+            hash_dict = Red.get("importHistory")
+            keys = self.kwargs["keys"]
+            data = json.loads(hash_dict.get(keys))
+            return Response(data, status=status.HTTP_200_OK)
+        except Exception as e:
+            return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
+
+class TagsImportView(generics.CreateAPIView):
+    serializer_class = TagsImportFileSerializer
+    permission_classes = [permissions.AllowAny]
+
+    def post(self, request, *args, **kwargs):
+        try:
+            try:
+                csv_data = pd.read_csv(
+                    BytesIO(request.FILES["files"].read()),
+                    encoding="ISO-8859-1",
+                    sep=";",
+                    index_col=False,
+                )
+                if len(csv_data.columns) < 2:
+                    csv_data = pd.read_csv(
+                        BytesIO(request.FILES["files"].read()),
+                        encoding="ISO-8859-1",
+                        sep=",",
+                        index_col=False,
+                    )
+            except:
+                csv_data = pd.read_excel(
+                    BytesIO(request.FILES["file"].read()),
+                    encoding="ISO-8859-1",
+                    sep=";",
+                )
+
+            tag_import_mandorty(list(csv_data.columns))
+            if "LINK_TO" in list(csv_data.columns):
+                csv_data.rename(columns={"LINK_TO": "ITEM_ID"}, inplace=True)
+            csv_data = csv_data.replace(np.nan, None)
+            json_data = csv_data.to_dict(orient="records")
+            chunk_size = 1000
+            chunked_data = [
+                json_data[i : i + chunk_size]
+                for i in range(0, len(json_data), chunk_size)
+            ]
+            index = 1
+            for chunk in chunked_data:
+                chunk_list = self.create_list(chunk)
+                chunk_list.append((len(csv_data), index * len(chunk)))
+                tags.objects.bulk_create(chunk_list)
+                index += 1
+            hash_dict = Red.get("importHistory")
+            data = list(rds.lrange("importTag", 0, -1))
+            if hash_dict:
+                hash_dict[request.FILES["files"].name] = data[1].decode("utf-8")
+                Red.set("importHistory", hash_dict)
+            else:
+                hash_dict = {request.FILES["files"].name: data[1].decode("utf-8")}
+                Red.set("importHistory", hash_dict)
+            return Response("Successful", status=status.HTTP_200_OK)
+        except Exception as e:
+            return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
+    def create_list(self, chunk):
+        tempt = []
+        for item in chunk:
+            props = item_property.objects.filter(
+                PROPERTY_TYPE="NAME", PROPERTY_STRING=item["ITEM_ID"]
+            ).values("ITEM_ID", "ITEM_TYPE")
+            item["ITEM_ID"] = None
+            if props:
+                item["ITEM_ID"] = props[0]["ITEM_ID"]
+                item["TRANSACTION_TYPE"] = props[0]["ITEM_TYPE"]
+
+            if item["START_DATETIME"] is None:
+                now = datetime.now()
+                item["START_DATETIME"] = now.strftime("%Y-%m-%d")
+
+            item["EVENT_TYPE"] = "E"
+            item["TAG_ID"] = uuid.uuid4().hex
+            item["ROW_ID"] = uuid.uuid4().hex
+            item["LAYER_NAME"] = "TEST"
+            models = tags(**item)
+            tempt.append(tags(**item))
+        return tempt
+
+
+# class TagsImportView(generics.CreateAPIView):
+
+#     serializer_class = TagsSaveSerializer
+#     permission_classes = [permissions.AllowAny]
+
+#     def post(self, request, *args, **kwargs):
+#         with transaction.atomic():
+#             try:
+#                 data = request.data
+#                 chunked_data = [data[i:i+1000] for i in range(0, len(data), 1000)]
+#                 if is_relationship:
+#                     for chunk in chunked_data:
+#                         tags.objects.bulk_create(chunk)
+#                 else:
+#                     for chunk in chunked_data:
+#                         tags.objects.bulk_create([tags(**item) for item in chunk])
+#                 return Response("Succsessful", status=status.HTTP_200_OK)
+#             except Exception as e:
+#                 print(str(e))
+#                 transaction.set_rollback(True)
+#                 return{"error": str(e)}
 
 
 class TagsPropertysView(generics.CreateAPIView):
@@ -189,7 +350,6 @@ class TagsTypeLinkView(generics.CreateAPIView):
 
 
 class TagsNameViews(generics.CreateAPIView):
-
     serializer_class = TagsDetiailsSerializer
     permission_classes = [permissions.AllowAny]
 
@@ -200,7 +360,6 @@ class TagsNameViews(generics.CreateAPIView):
 
 
 class TagsSearchViews(generics.CreateAPIView):
-
     serializer_class = TagsDetiailsSerializer
     permission_classes = [permissions.AllowAny]
 
@@ -211,7 +370,6 @@ class TagsSearchViews(generics.CreateAPIView):
 
 
 class TagsUomConversionView(generics.ListAPIView):
-
     permission_classes = [permissions.AllowAny]
 
     def get_queryset(self):
