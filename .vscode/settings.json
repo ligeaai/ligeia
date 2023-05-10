@@ -3,7 +3,7 @@
   "python.terminal.activateEnvInCurrentTerminal": true,
   // "python.defaultInterpreterPath": "$IEFPP/core/venv/bin/python3",
   "python.pythonPath": "/Users/rustembeisekin/Documents/GitHub/ligeia.ai/.venv/bin/python",
-  "python.formatting.provider": "black",
+  "python.formatting.provider": "none",
   "editor.formatOnSave": true,
   "git.ignoreLimitWarning": true,
   "terminal.integrated.profile.linux#": "/bin/zsh",
@@ -13,7 +13,10 @@
       "args": ["-l"]
     }
   },
-  "python.linting.enabled": false
+  "python.linting.enabled": false,
+  "[python]": {
+    "editor.defaultFormatter": "ms-python.black-formatter"
+  }
 
   // "venvFolders": "~/core/.venv",
   // "python.venvPath": "",

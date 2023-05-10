@@ -30,5 +30,5 @@ class RolesTypeGetView(generics.GenericAPIView):
             queryset = roles_type.objects.all()
             serializer = self.get_serializer(queryset,many = True)
             return Response(serializer.data)
-        except Execption as e:
+        except Exception as e:
             return Response(str(e), status=status.HTTP_400_BAD_REQUEST)
