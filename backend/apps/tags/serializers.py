@@ -9,6 +9,10 @@ from services.logging.Handlers import KafkaLogger
 logger = KafkaLogger()
 
 
+class TagsImportFileSerializer(serializers.Serializer):
+    files = serializers.FileField()
+
+
 class TagsSaveSerializer(serializers.Serializer):
     def save(self, validated_data):  #
         qs = tags.objects.filter(TAG_ID=validated_data.get("TAG_ID"))

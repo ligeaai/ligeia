@@ -1,12 +1,115 @@
 from django.db import models
 import uuid
 from django.utils import timezone
+from utils.utils import redisCaching as red
+import redis 
+import environ
+from apps.item_link.serializers import ItemLinkSaveSerializer
+from utils.models_utils import validate_model_not_null
+import json
+env = environ.Env(DEBUG=(bool, False))
+rds = redis.StrictRedis(env('REDIS_HOST'), port=6379, db=0)
+from django.db.utils import IntegrityError
+class TagsQuerySet(models.QuerySet):
+    
+    def getRedis(self):
+        data = rds.lrange('importTag', 0, -1)
+        return data
+    
+    def updateLog(self,old_log,new_log):
+        if old_log:
+            # print(old_log)
+            old_log = old_log[1]
+            old_log = json.loads(old_log)
+            for item in new_log:
+                old_log.append(item)
+        else:
+            old_log = new_log
+        return old_log
+
+    def updatePercent(self):
+        print(self.index,"---",self.max_length,"--->",(self.index/self.max_length)*100 )
+        return (self.index/self.max_length)*100 
+
+
+    def updateRedis(self,messages):
+        old_logs = self.getRedis()
+        new_log = self.updateLog(old_logs,messages)
+        new_percent = self.updatePercent()
+        data = [[new_log],new_percent]
+        rds.delete('importTag')
+        new_log = json.dumps(new_log)
+        rds.lpush('importTag', new_log)
+        rds.lpush('importTag', new_percent)
+
+    def bulk_create(self, objs, batch_size=None, ignore_conflicts=False):
+        new_objs = []
+        self.max_length,self.index = objs[-1]
+        objs = objs[:-1]
+        messages = self.myFuns(objs,batch_size,ignore_conflicts)
+        self.updateRedis(messages)
+        return objs
+    
+    def myFuns(self,objs,batch_size,ignore_conflicts):
+        messages = []
+        error_objs = []
+        try:
+            super().bulk_create(objs, batch_size=batch_size, ignore_conflicts=False)
+            for obj in objs:
+                self.saveLink(obj)
+                message = obj.NAME + " eklendi"
+                messages.append(message)
+                # red.lpush('importTag', message)
+        except IntegrityError as e:
+            for obj in objs:
+                try:
+                    obj.save()
+                    self.saveLink(obj)
+                    message = obj.NAME + " eklendi"
+                    messages.append(message)
+                    # red.lpush('importTag', message)
+                except IntegrityError as e:
+                    message = obj.NAME + " Failed"
+                    messages.append(message)
+                    error_objs.append(obj)
+        objs = set(set(objs)- set(error_objs))
+        return messages
+            
+        
+
+    def saveLink(self,obj):
+        if obj.ITEM_ID is not None:
+            link_dict = {
+                "LINK_ID": uuid.uuid4().hex,
+                "TO_ITEM_ID": obj.ITEM_ID,
+                "TO_ITEM_TYPE": obj.TRANSACTION_TYPE,
+                "END_DATETIME": "9000-01-01",
+                "FROM_ITEM_ID": obj.TAG_ID,
+                "FROM_ITEM_TYPE": "TAG_CACHE",
+                "LINK_TYPE": "TAG_ITEM",
+                "START_DATETIME": obj.START_DATETIME,
+                "ROW_ID": uuid.uuid4().hex,
+                # "LAST_UPDT_USER":request.user
+                }
+            # validate_model_not_null(link_dict, "ITEM_LINK", request=request)
+            link_serializer = ItemLinkSaveSerializer(data=link_dict)
+            link_serializer.is_valid()
+            message = link_serializer.save(link_dict)
+            # print(message)
+
+
+class TagsModelManager(models.Manager):
+    def get_queryset(self):
+        return TagsQuerySet(self.model, using=self._db)
+
+
 
 # Create your models here.
 class tags(models.Model):
+    objects = TagsModelManager()
     ITEM_ID = models.CharField(
         max_length=32,
-        null=False,
+        null=True,
         db_index=True,
     )
     EVENT_TYPE = models.CharField(
@@ -24,7 +127,7 @@ class tags(models.Model):
         max_length=32,
         null=True,
     )
-    NAME = models.CharField(max_length=100, null=True, db_index=True)
+    NAME = models.CharField(max_length=100, null=True, db_index=True,unique=True)
     DESCRIPTION = models.CharField(
         max_length=1000,
         null=True,
