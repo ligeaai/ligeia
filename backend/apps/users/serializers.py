@@ -1,5 +1,4 @@
 import uuid
-
 from django.contrib.auth import authenticate, get_user_model
 from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ObjectDoesNotExist
@@ -101,21 +100,24 @@ class UserLoginSerializer(serializers.Serializer):
         return data
 
 
+
+
+
 class ChangePasswordSerializer(serializers.Serializer):
-    new_password1 = serializers.CharField(
+    new_password = serializers.CharField(
         write_only=True, required=True, validators=[validate_password]
     )
-    new_password2 = serializers.CharField(
+    new_password_confirmation = serializers.CharField(
         write_only=True, required=True, validators=[validate_password]
     )
     old_password = serializers.CharField(write_only=True, required=True)
 
     class Meta:
         model = User
-        fields = ("old_password", "new_password1", "new_password2")
+        fields = ("old_password", "new_password", "new_password_confirmation")
 
     def validate(self, data):
-        if data["new_password1"] != data["new_password2"]:
+        if data["new_password"] != data["new_password_confirmation"]:
             raise serializers.ValidationError(_("Password fields didn't match."))
         return data
 
@@ -126,7 +128,7 @@ class ChangePasswordSerializer(serializers.Serializer):
         return value
 
     def save(self, **kwargs):
-        password = self.validated_data["new_password1"]
+        password = self.validated_data["new_password"]
         user = self.context["request"].user
         user.set_password(password)
         user.save()

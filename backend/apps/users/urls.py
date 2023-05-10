@@ -4,26 +4,33 @@ from django.urls import include, path, re_path
 
 from rest_framework.routers import DefaultRouter
 
-from .views import (
-
-    UserList,
-    UserLoginView,
+from .auth_views import (
     UserRegisterView,
+    UserLoginView,
     UserChangePassword,
     ForgetPassword,
+    ResetForgetPassword,
+    logout,
+)
+
+from .update_views import (
+    UserInfoUpdateView,
+    UserLayerUpdate,
+    UserRoleUpdate,
+    UserRoleDeleteView,
+
+)
+
+
+from .views import (
+    UserList,
     UserConfirmEmailView,
     UserEmailConfirmationStatusView,
     UserModelViewSet,
     UserDetails,
-    ResetForgetPassword,
-    logout,
-    UserLayerUpdate,
-    UserRoleUpdate,
     GetUserRolesView,
     GetUserByRoleIdView,
-    UserRoleDeleteView,
     UserCheckView,
-    UserInfoUpdateView
 )
 from .social_views import (
     FacebookLogin,
@@ -31,7 +38,6 @@ from .social_views import (
     GoogleRegister,
     FacebookRegister,
     GitHubLogin,
-    github_callback,
 )
 
 from allauth.socialaccount.providers.github import views
@@ -44,7 +50,6 @@ router.register("user-detail", UserDetails, basename="user-detail")
 urlpatterns = [
     path("logout/", logout.as_view(), name="logout"),
     path("github/", GitHubLogin.as_view()),
-    path("github/callback/", github_callback, name="github_callback"),
     path("github/url/", views.oauth2_login, name="github-url"),
     path("google/register", GoogleRegister.as_view(), name="google-register"),
     path("google/login", GoogleLogin.as_view(), name="google-login"),
