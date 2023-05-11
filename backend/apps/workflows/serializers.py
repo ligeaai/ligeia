@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime
 import uuid
 from utils.models_utils import validate_model_not_null, validate_value
 from rest_framework import serializers
