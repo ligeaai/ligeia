@@ -145,12 +145,10 @@ class TypeEditorBaseView(generics.CreateAPIView):
     def post(self, request, *args, **kwargs):
         queryset = Type.objects.all().order_by("TYPE")
         serializer = TypeDetailsSerializer(queryset, many=True)
-        serializer.data = _getResourceTypes(
-            serializer.data, request.data.get("CULTURE")
-        )
+        data = _getResourceTypes(serializer.data, request.data.get("CULTURE"))
         # sorted_list = sorted(list(serializer.data), key=lambda d: str(d['TYPE']))
 
-        return Response({"Message": serializer.data}, status=status.HTTP_200_OK)
+        return Response({"Message": data}, status=status.HTTP_200_OK)
 
 
 class TypeView(generics.ListAPIView):
@@ -208,6 +206,6 @@ class TypeDetailNewView(generics.CreateAPIView):
         for item in types:
             queryset = type_property.objects.filter(TYPE=item)
             serializer = TypePropertySerializer(queryset, many=True)
-            serializer.data = _getResourceTypes(serializer.data, culture)
+            data = _getResourceTypes(serializer.data, culture)
             # self._getCodeList(serializer.data,culture)
-            propertys[item] = serializer.data
+            propertys[item] = data
