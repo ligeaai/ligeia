@@ -82,6 +82,23 @@ class TagsSaveView(generics.CreateAPIView):
             return Response(message, status=status.HTTP_200_OK)
 
 
+class WorkflowItemGetTagView(generics.CreateAPIView):
+    permission_classes = [permissions.AllowAny]
+    serializer_class = TagsFieldsSerializer
+
+    def get_queryset(self):
+        pass
+
+    def post(self, request, *args, **kwargs):
+        data = request.data
+        queryset = (
+            tags.objects.filter(ITEM_ID__in=data)
+            .order_by("NAME")
+            .values("TAG_ID", "NAME")
+        )
+        return Response(queryset, status=status.HTTP_200_OK)
+
+
 class TagsDetailsView(generics.ListAPIView):
     permission_classes = [permissions.AllowAny]
 

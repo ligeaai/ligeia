@@ -14,11 +14,13 @@ from .views import (
     TagsImportDeleteView,
     TagsImportHistoryListView,
     TagsImportHistoryView,
+    WorkflowItemGetTagView,
 )
 
 from .elasticsearch.es_view import ESBlogViewSet
 
 urlpatterns = [
+    path("item/tags/", WorkflowItemGetTagView.as_view(), name="tags save "),
     path("save/", TagsSaveView.as_view(), name="tags save "),
     path("import/", TagsImportView.as_view(), name="tags save "),
     path(

@@ -34,6 +34,7 @@ urlpatterns = [
     path("roles-type/", include("apps.roles_type.urls")),
     path("roles-property/", include("apps.roles_property.urls")),
     # other
-    path("health", DjangoHealthView.as_view(), name="healt status"),
+    path("workflows/", include("apps.workflows.urls"), name="workflows"),
+    path("health/", DjangoHealthView.as_view(), name="healt status"),
     path("notifications/", include("apps.notifications.urls")),
 ]

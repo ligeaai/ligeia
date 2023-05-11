@@ -5,8 +5,24 @@ from .models import workflows
 from rest_framework.exceptions import ValidationError
 
 
-
 class WorkflowsSerializers(serializers.ModelSerializer):
     class Meta:
         model = workflows
         fields = "__all__"
+
+    def is_valid(self):
+        return True
+
+    def create(self, validated_data):
+        validated_data["ROW_ID"] = uuid.uuid4().hex
+        validated_data["VERSION"] = uuid.uuid4().hex
+        workflow = workflows.objects.create(**validated_data)
+        workflow.save()
+        return workflow
+
+    def update(self, validated_data):
+        workflow = workflows.objects.filter(ROW_ID=validated_data["ROW_ID"])
+        if workflow:
+            workflow.update()
+            workflow.save()
+        return workflow
