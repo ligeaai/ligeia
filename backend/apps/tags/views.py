@@ -201,14 +201,14 @@ class TagsImportView(generics.CreateAPIView):
         try:
             try:
                 csv_data = pd.read_csv(
-                    BytesIO(request.FILES["files"].read()),
+                    BytesIO(request.FILES["file"].read()),
                     encoding="ISO-8859-1",
                     sep=";",
                     index_col=False,
                 )
                 if len(csv_data.columns) < 2:
                     csv_data = pd.read_csv(
-                        BytesIO(request.FILES["files"].read()),
+                        BytesIO(request.FILES["file"].read()),
                         encoding="ISO-8859-1",
                         sep=",",
                         index_col=False,
