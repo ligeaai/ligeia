@@ -15,6 +15,7 @@ import StepConnector, {
 import { styled } from "@mui/material/styles";
 import Check from "@mui/icons-material/Check";
 import { StepButton } from "@mui/material";
+import "../../assets/styles/page/overview/createPopUp.scss";
 const QontoStepIconRoot = styled("div")(({ theme, ownerState }) => ({
   color: theme.palette.mode === "dark" ? theme.palette.grey[700] : "#eaeaf0",
   display: "flex",
@@ -102,16 +103,6 @@ export default function HorizontalLinearStepper({ components, finishFunc }) {
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
-
-  // const handleSkip = () => {
-  //   setActiveStep((prevActiveStep) => prevActiveStep + 1);
-  //   setSkipped((prevSkipped) => {
-  //     const newSkipped = new Set(prevSkipped.values());
-  //     newSkipped.add(activeStep);
-  //     return newSkipped;
-  //   });
-  // };
-
   const handleStep = (step) => () => {
     setActiveStep(step);
   };
@@ -151,16 +142,6 @@ export default function HorizontalLinearStepper({ components, finishFunc }) {
         >
           Back
         </Button>
-        {/* {false && (
-          <Button
-            color="inherit"
-            onClick={handleSkip}
-            variant="outlined"
-          >
-            Skip
-          </Button>
-        )} */}
-
         {activeStep === components().length - 1 ? (
           <Button onClick={finishFunc} variant="outlined">
             Finish

@@ -37,6 +37,9 @@ const importExel = (body) => {
 const deleteLogs = () => {
     return instance.get(`/tags/import/delete/`, config());
 }
+const workflow = (body) => {
+    return instance.post(`/tags/item/tags/`, body, config());
+}
 
 const elasticSearch = (text, body, cancelToken) => {
     return instance.get(`/tags/es/${text}`, { ...config(), cancelToken: cancelToken.token });
@@ -51,6 +54,7 @@ const TagService = {
     createAndUpdate,
     importExel,
     deleteLogs,
+    workflow,
     remove
 };
 

@@ -27,11 +27,12 @@ import themeReducer from './themeReducer';
 import treeview from './treeview/treeview';
 import dataGridResourceList from './resource/resource';
 import users from './users/users';
+import workflow from './workflow/workflow';
 
 
 
 export {
     authReducer, alarms, confirmation, checkedList, collapseMenu, diagnostic, historyConfirmation, dataGridCodeList, dataGridType, drawerMenu, errorReducer, project, profile,
     itemDataGrid, itemLinkEditor, langReducer, loaderReducer, roles, overviewDialog, registerFormReducer, searchBarReducer, stepper, tags,
-    tagImport, tapsOverview, themeReducer, treeview, dataGridResourceList, users
+    tagImport, tapsOverview, themeReducer, treeview, dataGridResourceList, users, workflow
 }

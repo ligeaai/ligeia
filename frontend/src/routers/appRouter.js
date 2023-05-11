@@ -75,15 +75,17 @@ const AppRouter1 = () => {
             <Route exact path="/tools/workflows/:workflows" element={<Workflows isHome={false} />} />
 
 
-            <Route exact path="/configuration/tags/tag_manager" element={<Tags isHome={true} />} />
-            <Route exact path="/configuration/tags/tag_import" element={<TagImport isHome={true} />} />
-            <Route exact path="/configuration/tags/tag_calculated" element={<TagCalculated isHome={true} />} />
-            <Route exact path="/configuration/tags/tag_manager/:tags" element={<Tags isHome={false} />} />
-
             <Route exact path="/configuration" element={<Configuration way="Configuration" />} />
             <Route exact path="/configuration/:myKey" element={<MyNavigator way="Configuration" />} />
             <Route exact path="/configuration/:myKey/:type/:item" element={<Items isHome={false} />} />
             <Route path="/configuration/:myKey/:type" element={<Items isHome={true} />} />
+
+            <Route exact path="/configuration/tags/tag_manager" element={<Tags isHome={true} />} />
+            <Route exact path="/configuration/tags/tag_import" element={<TagImport isHome={true} />} />
+            <Route exact path="/configuration/tags/tag_calculated" element={<TagCalculated isHome={true} />} />
+            <Route exact path="/configuration/tags/tag_manager/:tags" element={<Tags isHome={false} />} />
+            <Route exact path="/configuration/tags/tag_manager/:tags/*" element={<Tags isHome={false} />} />
+
             <Route path="*" element={<NotFoundPage width="100%" />} />
           </Route>
 

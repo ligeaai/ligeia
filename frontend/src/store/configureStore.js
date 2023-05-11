@@ -47,7 +47,7 @@ import {
     themeReducer,
     treeview,
     users,
-
+    workflow
 } from '../services/reducers'
 
 const persistConfig = {
@@ -86,7 +86,7 @@ const rootReducer = combineReducers({
     theme: themeReducer,
     treeview: treeview,
     users: users,
-
+    workflow: workflow
 })
 
 

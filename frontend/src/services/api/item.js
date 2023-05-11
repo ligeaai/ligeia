@@ -5,6 +5,10 @@ const getAll = (body, cancelToken, type) => {
     return instance.get(`/item/details/${type}`, { ...config(), cancelToken: cancelToken.token });
 };
 
+const getAllItems = (type) => {
+    return instance.get(`/item/details/${type}`, config());
+};
+
 
 const getTypeProperty = (body, cancelToken) => {
     return instance.post(
@@ -43,6 +47,7 @@ const elasticSearch = (text, body, cancelToken) => {
 
 const ItemService = {
     getAll,
+    getAllItems,
     getTypeProperty,
     getItemValues,
     create,

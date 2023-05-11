@@ -10,10 +10,10 @@ export const fillMandatory = (payload) => dispatch => {
 }
 
 export const checkMandatory = (index) => (dispatch, getState) => {
-    const highchartProps = getState().overviewDialog.highchartProps
-    const mandatory = getState().stepper.isMandatoryFields[index]
+    const highchartProps = getState()?.overviewDialog?.highchartProps
+    const mandatory = getState()?.stepper?.isMandatoryFields[index]
     let returnVal = true
-    mandatory.map(e => {
+    mandatory?.map(e => {
         if (highchartProps[e].length === 0) {
             returnVal = false
         }
