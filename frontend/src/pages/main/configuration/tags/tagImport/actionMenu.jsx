@@ -35,7 +35,7 @@ const ActionMenu = () => {
             dispatch(deleteAllLogs());
           }}
         >
-          <RestoreFromTrashIcon />
+          <RestoreFromTrashIcon fontSize="small" />
         </IconButton>
       </Tooltip>
       <Tooltip
@@ -51,7 +51,7 @@ const ActionMenu = () => {
             dispatch(openWebSocket());
           }}
         >
-          <HistoryIcon />
+          <HistoryIcon fontSize="small" />
         </IconButton>
       </Tooltip>
       <MyDialog
@@ -65,7 +65,7 @@ const ActionMenu = () => {
             }}
           >
             <IconButton>
-              <ErrorOutlineIcon />
+              <ErrorOutlineIcon fontSize="small" />
             </IconButton>
           </Tooltip>
         }
@@ -90,7 +90,7 @@ const ActionMenu = () => {
             }}
           >
             <IconButton component="span">
-              <PublishIcon />
+              <PublishIcon fontSize="small" />
             </IconButton>
           </Tooltip>
         </label>

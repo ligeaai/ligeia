@@ -4,11 +4,11 @@ import { useSelector } from "react-redux";
 
 function LinearProgressWithLabel(props) {
   return (
-    <Box className="tag-import-container__property-box__progress-bar__box">
-      <Box className="tag-import-container__property-box__progress-bar__box__linear-progress">
+    <Box className="tag-manager-container__body__property-box__prop-item__progress-bar__box">
+      <Box className="tag-manager-container__body__property-box__prop-item__progress-bar__box__linear-progress">
         <LinearProgress variant="determinate" {...props} />
       </Box>
-      <Box className="tag-import-container__property-box__progress-bar__box__percent">
+      <Box className="tag-manager-container__body__property-box__prop-item__progress-bar__box__percent">
         <Typography variant="body2" color="text.secondary">{`${Math.round(
           props.value
         )}%`}</Typography>
@@ -22,12 +22,12 @@ const Body = () => {
 
   return (
     log.length > 0 && (
-      <React.Fragment>
-        <Box className="tag-import-container__property-box__progress-bar">
+      <Box className="tag-manager-container__body__property-box__prop-item">
+        <Box className="tag-manager-container__body__property-box__prop-item__progress-bar">
           <LinearProgressWithLabel value={progress} />
         </Box>
 
-        <Box className="tag-import-container__property-box__logs">
+        <Box className="tag-manager-container__body__property-box__prop-item__logs">
           <Grid container rowGap={0.5}>
             {log.map((e) => {
               return (
@@ -38,7 +38,7 @@ const Body = () => {
             })}
           </Grid>
         </Box>
-      </React.Fragment>
+      </Box>
     )
   );
 };

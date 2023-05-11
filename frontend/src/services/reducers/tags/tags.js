@@ -3,9 +3,9 @@ import {
     SET_TAG_SAVE_VALUES,
     CLEAN_ALL_TAGS,
     FILL_SAVE_VALUES_TAGS,
-    LOAD_ITEMS_FOR_TAGLINKS
-} from "../../actions/types"
+    LOAD_ITEMS_FOR_TAGLINKS,
 
+} from "../../actions/types"
 
 
 const initialState = {
@@ -13,7 +13,6 @@ const initialState = {
     saveValues: {},
     items: [],
 };
-
 
 
 export default function (state = initialState, action) {

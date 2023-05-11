@@ -1,7 +1,6 @@
 @import "../../components/scrollbar.scss";
 .tag-import-container {
   &__action-box {
-    justify-content: flex-end;
     &__helper-datagrid {
       height: calc(100% - 110px);
       padding: 8px;

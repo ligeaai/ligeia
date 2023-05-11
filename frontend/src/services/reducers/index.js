@@ -16,6 +16,7 @@ import itemLinkEditor from './item/itemLinkEditor';
 import langReducer from './langReducer';
 import loaderReducer from './loaderReducer';
 import overviewDialog from "./overview/overviewDialog";
+import propLinkTap from './propLinkTap/propLinkTap';
 import registerFormReducer from './registerFormReducer';
 import roles from './roles/roles';
 import searchBarReducer from './searchBarReducer';
@@ -33,6 +34,6 @@ import workflow from './workflow/workflow';
 
 export {
     authReducer, alarms, confirmation, checkedList, collapseMenu, diagnostic, historyConfirmation, dataGridCodeList, dataGridType, drawerMenu, errorReducer, project, profile,
-    itemDataGrid, itemLinkEditor, langReducer, loaderReducer, roles, overviewDialog, registerFormReducer, searchBarReducer, stepper, tags,
+    itemDataGrid, itemLinkEditor, langReducer, loaderReducer, roles, overviewDialog, propLinkTap, registerFormReducer, searchBarReducer, stepper, tags,
     tagImport, tapsOverview, themeReducer, treeview, dataGridResourceList, users, workflow
 }

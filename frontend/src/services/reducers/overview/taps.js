@@ -9,7 +9,6 @@ import {
 } from "../../actions/types"
 
 
-
 const initialState = {
     titles: [],
     widgets: [],

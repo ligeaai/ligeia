@@ -7,13 +7,21 @@ import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import DashboardCustomizeOutlinedIcon from "@mui/icons-material/DashboardCustomizeOutlined";
 import { useDispatch } from "react-redux";
 import "../../assets/styles/layouts/proplink.scss";
-const Properties = ({ MyProperties, isLinkOpen = true, MyLinks }) => {
+import { changePage } from "../../services/actions/propLinkTap/propLinkTap";
+const Properties = ({
+  MyProperties,
+  isLinkOpen = true,
+  MyLinks,
+  isImportOpen = false,
+  Import = <></>,
+}) => {
   const dispatch = useDispatch();
   const [view, setView] = React.useState("Properties");
   const [isHover, setIsHover] = React.useState("");
   const handleChange = (event, nextView) => {
     if (nextView) {
       setView(nextView);
+      dispatch(changePage(nextView));
     }
   };
   const handleMouseEnter = (view) => {
@@ -90,6 +98,30 @@ const Properties = ({ MyProperties, isLinkOpen = true, MyLinks }) => {
               )}
             </Typography>
           </ToggleButton>
+          <ToggleButton
+            value="Import"
+            aria-label="import"
+            className={`prop-link-container__btn-group__btn ${
+              isImportOpen ? "" : "prop-link-container__btn-group__display"
+            }`}
+            onMouseEnter={() => {
+              handleMouseEnter("Import");
+            }}
+            onMouseLeave={handleMouseLeave}
+          >
+            <Typography
+              variant="body2"
+              className="prop-link-container__btn-group__btn__text"
+            >
+              {view === "Import" || isHover === "Import" ? (
+                <>
+                  <DashboardCustomizeOutlinedIcon /> Import
+                </>
+              ) : (
+                <DashboardCustomizeOutlinedIcon />
+              )}
+            </Typography>
+          </ToggleButton>
         </ToggleButtonGroup>
       </Grid>
       <Divider
@@ -100,6 +132,7 @@ const Properties = ({ MyProperties, isLinkOpen = true, MyLinks }) => {
       <Grid item xs={12} className="prop-link-container__body">
         {view === "Properties" ? MyProperties : <></>}
         {view === "Links" ? MyLinks : <></>}
+        {view === "Import" ? Import : <></>}
       </Grid>
     </Grid>
   );

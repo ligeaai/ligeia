@@ -1,5 +1,5 @@
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { Grid } from "@mui/material";
 
@@ -10,7 +10,7 @@ import {
 } from "../../../../../components";
 import DrawerMenu from "../../../../../layout/main/asset/treeViewMenu";
 import TagsActionMenu from "./tagsActionMenu";
-
+import ImportActionMenu from "../tagImport/actionMenu";
 import Properties from "./propertiesEditor";
 
 import {
@@ -22,9 +22,13 @@ import { selectTreeViewItem } from "../../../../../services/actions/treeview/tre
 import Menu from "./treeMenu";
 import { selectDrawerItem } from "../../../../../services/actions/drawerMenu/drawerMenu";
 import "../../../../../assets/styles/layouts/template.scss";
+
+import Import from "../tagImport/body";
+
 const Tags = ({ isHome }) => {
   document.title = `Ligeia.ai | Tag Manager`;
   selectDrawerItem("Tag Manager");
+  const page = useSelector((state) => state.propLinkTap?.page);
   const dispatch = useDispatch();
   React.useEffect(() => {
     if (isHome) {
@@ -48,8 +52,8 @@ const Tags = ({ isHome }) => {
       >
         <Breadcrumb />
         <ItemSperatorLineXL />
-        <Grid item className="template-container__body__action-box">
-          <TagsActionMenu />
+        <Grid container className="template-container__body__action-box">
+          {page === "Import" ? <ImportActionMenu /> : <TagsActionMenu />}
         </Grid>
         <ItemSperatorLineXL />
         <Grid
@@ -57,7 +61,12 @@ const Tags = ({ isHome }) => {
           xs={12}
           className="template-container__body__property-box tag-manager-container__body__property-box"
         >
-          <PropLinkTabs MyProperties={<Properties />} isLinkOpen={false} />
+          <PropLinkTabs
+            MyProperties={<Properties />}
+            isLinkOpen={false}
+            isImportOpen={true}
+            Import={<Import />}
+          />
         </Grid>
       </Grid>
     </React.Fragment>
