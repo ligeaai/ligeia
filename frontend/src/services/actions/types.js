@@ -67,8 +67,8 @@ export const LOAD_DRAWER_MENU = "LOAD_DRAWER_MENU";
 export const DRAWER_MENU_SET_OPEN = "DRAWER_MENU_SET_OPEN";
 
 //-----------Project ---------------------
-export const CHANGE_VALUE_PROJECT = "CHANGE_VALUE_PROJECT";
-export const CLEAN_VALUE_PROJECT = "CLEAN_VALUE_PROJECT";
+export const UPDATE_DATA_PROJECT = "UPDATE_DATA_PROJECT";
+export const CLEAN_PROJECT = "CLEAN_PROJECT";
 
 //------------TYPE -------------------
 export const SET_ROW_DATAGRID_TYPE = "SET_ROW_DATAGRID_TYPE";
@@ -175,8 +175,9 @@ export const SET_LINKS_ACTIVE_ROLE = "SET_LINKS_ACTIVE_ROLE"
 export const SET_LINKED_USERS_ROLE = "SET_LINKED_USERS_ROLE"
 
 //--------Profile------------------------------
-export const LOAD_PROFILE = "LOAD_PROFILE"
-export const CLEAN_PROFILE = "CLEAN_PROFILE"
+export const LOAD_PROFILE = "LOAD_PROFILE";
+export const CLEAN_PROFILE = "CLEAN_PROFILE";
+export const LOAD_DATA_PROJECT = "LOAD_DATA_PROJECT";
 
 //-------TAG Import--------------------
 export const UPDATE_PROGRESS_TAG_IMPORT = "UPDATE_PROGRESS_TAG_IMPORT"

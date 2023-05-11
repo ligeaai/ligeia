@@ -8,7 +8,8 @@ import {
     SET_TAGS_WORKFLOW,
     SET_CHECKED_TAGS_WORKFLOW,
     SET_UPDATE_CHECKED_TAGS_WORKFLOW,
-    SET_IS_ACTIVE_CONFIRMATION
+    SET_IS_ACTIVE_CONFIRMATION,
+    LOAD_DATA_WORKFLOW
 } from "../types"
 import axios from "axios"
 import { selectTreeViewItem, loadTreeviewItem } from "../treeview/treeview"
@@ -81,6 +82,7 @@ export const deleteWorkflow = () => async (dispatch, getState) => {
             return await WorkflowService.getAll(body, cancelToken);
         }, "NAME"))
         dispatch(selectTreeViewItem(selectedIndex, "NAME"));
+        return true
     }
     catch (err) {
     }
@@ -128,7 +130,6 @@ export const updateCheckedTags = (key, val) => (dispatch, getState) => {
 export const saveWorkflow = () => async (dispatch, getState) => {
     const isNew = getState().treeview.selectedItem.selectedIndex
     const body = getState().workflow.data
-    console.log(body);
     try {
         if (isNew === -2) {
             let res = await WorkflowService.create(body)
@@ -156,7 +157,7 @@ export const loadWorkflowProp = () => async (dispatch, getState) => {
         let res = await WorkflowService.getItemValues(ROW_ID, cancelToken)
         console.log(res.data);
         dispatch({
-            type: "LOAD_DATA_WORKFLOW",
+            type: LOAD_DATA_WORKFLOW,
             payload: res.data[0]
         })
     } catch {

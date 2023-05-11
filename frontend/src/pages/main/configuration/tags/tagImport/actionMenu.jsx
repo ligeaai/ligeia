@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 
-import { IconButton } from "@mui/material";
+import { IconButton, Tooltip } from "@mui/material";
 import HistoryIcon from "@mui/icons-material/History";
 import PublishIcon from "@mui/icons-material/Publish";
 import RestoreFromTrashIcon from "@mui/icons-material/RestoreFromTrash";
@@ -22,25 +22,52 @@ const ActionMenu = () => {
 
   return (
     <>
-      <IconButton
-        onClick={() => {
-          dispatch(deleteAllLogs());
+      <Tooltip
+        title={"Delete"}
+        componentsProps={{
+          tooltip: {
+            id: "action-menu-container__tooltip",
+          },
         }}
       >
-        <RestoreFromTrashIcon />
-      </IconButton>
-      <IconButton
-        onClick={() => {
-          dispatch(openWebSocket());
+        <IconButton
+          onClick={() => {
+            dispatch(deleteAllLogs());
+          }}
+        >
+          <RestoreFromTrashIcon />
+        </IconButton>
+      </Tooltip>
+      <Tooltip
+        title={"Log History"}
+        componentsProps={{
+          tooltip: {
+            id: "action-menu-container__tooltip",
+          },
         }}
       >
-        <HistoryIcon />
-      </IconButton>
+        <IconButton
+          onClick={() => {
+            dispatch(openWebSocket());
+          }}
+        >
+          <HistoryIcon />
+        </IconButton>
+      </Tooltip>
       <MyDialog
         Button={
-          <IconButton>
-            <ErrorOutlineIcon />
-          </IconButton>
+          <Tooltip
+            title={"Helper Exel"}
+            componentsProps={{
+              tooltip: {
+                id: "action-menu-container__tooltip",
+              },
+            }}
+          >
+            <IconButton>
+              <ErrorOutlineIcon />
+            </IconButton>
+          </Tooltip>
         }
         DialogBody={TemplateExel}
         defaultWH={[700, 500]}
@@ -54,9 +81,18 @@ const ActionMenu = () => {
             style={{ display: "none" }}
             onChange={handleFileChange}
           />
-          <IconButton component="span">
-            <PublishIcon />
-          </IconButton>
+          <Tooltip
+            title={"Helper Exel"}
+            componentsProps={{
+              tooltip: {
+                id: "action-menu-container__tooltip",
+              },
+            }}
+          >
+            <IconButton component="span">
+              <PublishIcon />
+            </IconButton>
+          </Tooltip>
         </label>
       </form>
     </>

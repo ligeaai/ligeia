@@ -36,6 +36,7 @@ const PropertiesEditor = () => {
   if (Object.keys(tagValues).length > 0 && (tagId || selectedIndex === -2)) {
     return (
       <Grid
+        key={selectedIndex}
         container
         className="tag-manager-container__body__property-box__prop-item"
       >

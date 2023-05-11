@@ -1,36 +1,31 @@
 import {
-    CHANGE_VALUE_PROJECT,
-    CLEAN_VALUE_PROJECT
+    UPDATE_DATA_PROJECT,
+    LOAD_DATA_PROJECT,
+    CLEAN_PROJECT
 } from "../../actions/types"
 
-
-
 const initialState = {
-    DATA_SOURCE: "Postgre Sql",
-    CONNECTION_STRING: "",
-    DATABASE_CREATE_FILE: "",
-    IMPLEMENTATION_NAME: "",
-    CULTURES: [],
-    LAYERS: [],
-    UNIT_SYSTEM: "",
-
+    data: {}
 };
-
-
 
 export default function (state = initialState, action) {
 
     const { type, payload } = action;
 
     switch (type) {
-        case CHANGE_VALUE_PROJECT:
+        case UPDATE_DATA_PROJECT:
             return {
                 ...state,
-                [payload.key]: payload.value
+                data: { ...state.data, [payload.key]: payload.value }
             }
-        case CLEAN_VALUE_PROJECT:
+        case LOAD_DATA_PROJECT:
             return {
-                ...initialState
+                ...state,
+                data: payload
+            }
+        case CLEAN_PROJECT:
+            return {
+                data: {}
             }
         default:
             return {

@@ -25,7 +25,7 @@ const Main = Loadable(React.lazy(() => import("../pages/main/main")));
 const NotFoundPage = Loadable(React.lazy(() => import("../pages/error/notFound")));
 const Items = Loadable(React.lazy(() => import("../pages/main/configuration/items/item")));
 const Overview = Loadable(React.lazy(() => import("../pages/main/overview/overview")));
-const Project = Loadable(React.lazy(() => import("../pages/main/configuration/project/project")));
+const Project = Loadable(React.lazy(() => import("../pages/main/tools/project/main")));
 const Register = Loadable(React.lazy(() => import("../pages/authorization/register/register")));
 const RegisterPageTwo = Loadable(React.lazy(() => import("../pages/authorization/register/registerPageTwo")));
 const Reporting = Loadable(React.lazy(() => import("../pages/main/asset/reporting")));
@@ -67,6 +67,7 @@ const AppRouter1 = () => {
             <Route exact path="/tools/types" element={<Types isHome={true} />} />
             <Route exact path="/tools/types/:tags" element={<Types isHome={false} />} />
             <Route exact path="/tools/project" element={<Project isHome={true} />} />
+            <Route exact path="/tools/project/:project" element={<Project isHome={false} />} />
             <Route exact path="/tools/code_list" element={<CodeList isHome={true} />} />
             <Route exact path="/tools/code_list/:codelist" element={<CodeList isHome={false} />} />
             <Route exact path="/tools/resources" element={<ResourceList isHome={true} />} />

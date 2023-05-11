@@ -7,23 +7,21 @@ import { ActionMenu } from "../../../../components";
 import { selectTreeViewItem } from "../../../../services/actions/treeview/treeview";
 import { setConfirmation } from "../../../../services/reducers/confirmation";
 import { setIsActiveConfirmation } from "../../../../services/actions/confirmation/historyConfirmation";
-
 import {
-  cleanWorkflowData,
-  deleteWorkflow,
-  saveWorkflow,
-} from "../../../../services/actions/workflow/workflow";
+  deleteProject,
+  saveProject,
+  cleanProjectData,
+} from "../../../../services/actions/project/project";
 
-const WorkflowsActionMenu = () => {
+const ProjectActionMenu = () => {
   const isChanged = useSelector((state) => state.historyConfirmation.isActive);
   const selectedIndex = useSelector(
     (state) => state.treeview.selectedItem.selectedIndex
   );
   const name = useSelector((state) => state.treeview.selectedItem?.NAME);
-
   const dispatch = useDispatch();
   const btnNew = () => {
-    dispatch(cleanWorkflowData());
+    dispatch(cleanProjectData());
     dispatch(selectTreeViewItem(-2, "new", 2));
   };
   const save = () => {
@@ -33,7 +31,7 @@ const WorkflowsActionMenu = () => {
           title: "Are you sure you want to save this ?",
           body: `${name ? name : "new"}`,
           agreefunction: async () => {
-            dispatch(saveWorkflow());
+            dispatch(saveProject());
             dispatch(setIsActiveConfirmation(false));
           },
         })
@@ -47,7 +45,7 @@ const WorkflowsActionMenu = () => {
         title: "Are you sure you want to delete this ?",
         body: `${name ? name : "new"}`,
         agreefunction: () => {
-          dispatch(deleteWorkflow());
+          dispatch(deleteProject());
           dispatch(setIsActiveConfirmation(false));
         },
       })
@@ -71,9 +69,8 @@ const WorkflowsActionMenu = () => {
       btnDelete={btnDelete}
       saveGoPrev={saveGoPrev}
       saveGoNext={saveGoNext}
-      saveIsDisabled={selectedIndex === -2}
     />
   );
 };
 
-export default WorkflowsActionMenu;
+export default ProjectActionMenu;
