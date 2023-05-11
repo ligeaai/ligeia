@@ -6,6 +6,7 @@ from .views import (
     WorkFlowsDeleteView,
     WorkFlowsUpdateView,
     WorkFlowsGetView,
+    WorkFlowsGetByIdView,
 )
 
 urlpatterns = [
@@ -13,4 +14,5 @@ urlpatterns = [
     path("update/", WorkFlowsUpdateView.as_view(), name="update "),
     path("delete/", WorkFlowsDeleteView.as_view(), name="delete "),
     path("get/", WorkFlowsGetView.as_view(), name="get "),
+    path("get/<str:row_id>/", WorkFlowsGetByIdView.as_view(), name="get by id "),
 ]

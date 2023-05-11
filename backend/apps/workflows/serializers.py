@@ -10,7 +10,7 @@ class WorkflowsSerializers(serializers.ModelSerializer):
         model = workflows
         fields = "__all__"
 
-    def is_valid(self):
+    def is_valid(self, raise_exception=False):
         return True
 
     def create(self, validated_data):
@@ -26,3 +26,9 @@ class WorkflowsSerializers(serializers.ModelSerializer):
             workflow.update()
             workflow.save()
         return workflow
+
+
+class WorkflowsGetByIdSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = workflows
+        fields = "__all__"

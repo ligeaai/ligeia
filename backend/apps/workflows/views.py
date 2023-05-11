@@ -3,7 +3,7 @@ from utils.models_utils import validate_find
 from rest_framework import generics, permissions, status
 from rest_framework.response import Response
 from .models import workflows
-from .serializers import WorkflowsSerializers
+from .serializers import WorkflowsSerializers, WorkflowsGetByIdSerializers
 import json
 
 
@@ -53,9 +53,20 @@ class WorkFlowsDeleteView(generics.CreateAPIView):
 class WorkFlowsGetView(generics.ListAPIView):
     serializer_class = WorkflowsSerializers
     permission_classes = [permissions.AllowAny]
-    queryset = workflows.objects.all().order_by("NAME")
+    queryset = workflows.objects.all().order_by("NAME").values("NAME", "ROW_ID")
 
     def get(self, request, *args, **kwargs):
         qs = self.get_queryset()
-        serializer = WorkflowsSerializers(qs, many=True)
+        return Response(qs)
+
+
+class WorkFlowsGetByIdView(generics.CreateAPIView):
+    serializer_class = WorkflowsGetByIdSerializers
+    permission_classes = [permissions.AllowAny]
+    queryset = workflows.objects.none()
+
+    def get(self, request, *args, **kwargs):
+        row_id = self.kwargs["row_id"]
+        queryset = workflows.objects.filter(ROW_ID=row_id)
+        serializer = WorkflowsGetByIdSerializers(queryset, many=True)
         return Response(serializer.data)
