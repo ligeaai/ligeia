@@ -14,8 +14,6 @@ class WorkFlowsCreateView(generics.CreateAPIView):
     def post(self, request, *args, **kwargs):
         data = request.data
         serializer = self.get_serializer(data=data)
-        data["ITEM_ID"] = json.dumps(data["ITEM_ID"], ensure_ascii="utf-8")
-        data["TAG_ID"] = json.dumps(data["TAG_ID"], ensure_ascii="utf-8")
         if serializer.is_valid():
             serializer.create(data)
             return Response(request.data)
@@ -29,8 +27,6 @@ class WorkFlowsUpdateView(generics.CreateAPIView):
 
     def post(self, request, *args, **kwargs):
         data = request.data
-        data["ITEM_ID"] = json.dumps(data["ITEM_ID"], ensure_ascii="utf-8")
-        data["TAG_ID"] = json.dumps(data["TAG_ID"], ensure_ascii="utf-8")
         serializer = self.get_serializer(data=data)
         if serializer.is_valid():
             serializer.update(data)
