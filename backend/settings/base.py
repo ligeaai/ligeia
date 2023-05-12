@@ -104,9 +104,9 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.locale.LocaleMiddleware",
+    "django.middleware.csrf.CsrfViewMiddleware",
     "apps.middleware.user_role.UserRoleMiddleware",
     # "apps.middleware.test.TestMiddleware",
-    "django.middleware.csrf.CsrfViewMiddleware"
     # "social_django.middleware.SocialAuthExceptionMiddleware",
 ]
 
