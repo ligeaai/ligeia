@@ -46,7 +46,7 @@ for msg in consumer:
     # print(time_for_redis)
     # ----------------- VALUES -----------------
     columns = {
-        "completion": data["header"]["asset"],
+        # "completion": data["header"]["asset"],
         "version": data["header"]["version"],
         # "created_by": data["header"]["created_by"],
         "createdTime": data["header"]["createdTime"],
