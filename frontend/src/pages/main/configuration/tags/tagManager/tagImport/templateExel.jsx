@@ -1,7 +1,7 @@
 import React from "react";
 import { Box, Button } from "@mui/material";
 
-import { DialogHeaderHelper, DataGrid } from "../../../../../components";
+import { DialogHeaderHelper, DataGrid } from "../../../../../../components";
 import { columns, rows } from "./columns";
 const templateExel = ({ handleClose }) => {
   return (

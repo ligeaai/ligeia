@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   openWebSocket,
   closeWebSocket,
-} from "../../../../../services/actions/tagImport/tagImport";
+} from "../../../../../../services/actions/tagImport/tagImport";
 function LinearProgressWithLabel(props) {
   return (
     <Box className="tag-manager-container__body__property-box__prop-item__progress-bar__box">

@@ -9,9 +9,9 @@ import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
 import {
   deleteAllLogs,
   importExelFile,
-} from "../../../../../services/actions/tagImport/tagImport";
+} from "../../../../../../services/actions/tagImport/tagImport";
 import TemplateExel from "./templateExel";
-import { MyDialog } from "../../../../../components";
+import { MyDialog } from "../../../../../../components";
 import HistorySelecFolder from "./historySelectFolder";
 const ActionMenu = () => {
   const dispatch = useDispatch();

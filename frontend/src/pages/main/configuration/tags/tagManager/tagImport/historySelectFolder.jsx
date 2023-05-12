@@ -6,9 +6,9 @@ import {
   DialogHeaderHelper,
   FooterHelper,
   MyRadioButton,
-} from "../../../../../components";
-import TagService from "../../../../../services/api/tags";
-import { showHistory } from "../../../../../services/actions/tagImport/tagImport";
+} from "../../../../../../components";
+import TagService from "../../../../../../services/api/tags";
+import { showHistory } from "../../../../../../services/actions/tagImport/tagImport";
 const HistorySelect = ({ handleClose }) => {
   const dispatch = useDispatch();
   const [folderList, setFolderList] = useState([]);

@@ -10,7 +10,7 @@ import {
 } from "../../../../../components";
 import DrawerMenu from "../../../../../layout/main/asset/treeViewMenu";
 import TagsActionMenu from "./tagsActionMenu";
-import ImportActionMenu from "../tagImport/actionMenu";
+import ImportActionMenu from "./tagImport/actionMenu";
 import Properties from "./propertiesEditor";
 
 import {
@@ -23,7 +23,7 @@ import Menu from "./treeMenu";
 import { selectDrawerItem } from "../../../../../services/actions/drawerMenu/drawerMenu";
 import "../../../../../assets/styles/layouts/template.scss";
 
-import Import from "../tagImport/body";
+import Import from "./tagImport/body";
 
 const Tags = ({ isHome }) => {
   document.title = `Ligeia.ai | Tag Manager`;
