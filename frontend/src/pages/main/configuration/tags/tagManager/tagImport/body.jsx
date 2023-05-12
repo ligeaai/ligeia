@@ -1,7 +1,10 @@
 import React from "react";
 import { Box, Grid, LinearProgress, Typography } from "@mui/material";
-import { useSelector } from "react-redux";
-
+import { useDispatch, useSelector } from "react-redux";
+import {
+  openWebSocket,
+  closeWebSocket,
+} from "../../../../../services/actions/tagImport/tagImport";
 function LinearProgressWithLabel(props) {
   return (
     <Box className="tag-manager-container__body__property-box__prop-item__progress-bar__box">
@@ -17,21 +20,34 @@ function LinearProgressWithLabel(props) {
   );
 }
 const Body = () => {
+  const dispatch = useDispatch();
   const log = useSelector((state) => state.tagImport.data);
   const progress = useSelector((state) => state.tagImport.percent);
-
+  const lock = useSelector((state) => state.tagImport.lock);
+  React.useEffect(() => {
+    dispatch(openWebSocket());
+    return () => {
+      dispatch(closeWebSocket());
+      dispatch({
+        type: "TOGGLE_LOCK_TAG_IMPORT",
+        payload: false,
+      });
+    };
+  }, []);
   return (
-    log.length > 0 && (
+    lock && (
       <Box className="tag-manager-container__body__property-box__prop-item">
-        <Box className="tag-manager-container__body__property-box__prop-item__progress-bar">
-          <LinearProgressWithLabel value={progress} />
-        </Box>
+        {progress && (
+          <Box className="tag-manager-container__body__property-box__prop-item__progress-bar">
+            <LinearProgressWithLabel value={progress} />
+          </Box>
+        )}
 
         <Box className="tag-manager-container__body__property-box__prop-item__logs">
           <Grid container rowGap={0.5}>
-            {log.map((e) => {
+            {log.map((e, i) => {
               return (
-                <Grid item xs={12}>
+                <Grid item key={i} xs={12}>
                   {e}
                 </Grid>
               );

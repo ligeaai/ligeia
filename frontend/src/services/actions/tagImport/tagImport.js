@@ -1,9 +1,10 @@
 import {
-    UPDATE_PROGRESS_TAG_IMPORT
+    UPDATE_PROGRESS_TAG_IMPORT,
+    TOGGLE_LOCK_TAG_IMPORT
 } from "../types"
 import TagService from "../../api/tags";
 import { wsBaseUrl } from "../../baseApi";
-
+import { loadTreeviewItem } from "../treeview/treeview";
 var W3CWebSocket = require("websocket").w3cwebsocket;
 let client;
 
@@ -26,10 +27,10 @@ export const openWebSocket = () => async (dispatch) => {
                 if (typeof e?.data === "string") {
                     let data = JSON.parse(e?.data);
                     console.log(data);
-                    if (data.length > 0)
+                    if (data.length > 1)
                         dispatch({
                             type: UPDATE_PROGRESS_TAG_IMPORT,
-                            payload: { percent: data[0], data: JSON.parse(data[1]) }
+                            payload: { percent: parseInt(data?.[0]), data: JSON.parse(data?.[1]) }
                         })
                     return data;
                 }
@@ -51,14 +52,14 @@ export const closeWebSocket = () => async (dispatch) => {
 
 export const importExelFile = (file) => async (dispatch) => {
     try {
-        dispatch(openWebSocket());
+        dispatch({
+            type: TOGGLE_LOCK_TAG_IMPORT,
+            payload: true
+        })
         const formData = new FormData();
         formData.append("file", file);
         let res = await TagService.importExel(formData)
-        // setInterval(function () {
-        //     client.close()
-        // }, 3000);
-
+        await dispatch(loadTreeviewItem(TagService.getAll, "NAME"));
     } catch (err) {
         client.close();
         dispatch(
@@ -79,4 +80,21 @@ export const deleteAllLogs = () => async (dispatch) => {
 
         console.log(err);
     }
+}
+
+export const showHistory = (folderName) => async (dispatch) => {
+    try {
+        let res = await TagService.historyTagImport(folderName)
+        dispatch({
+            type: UPDATE_PROGRESS_TAG_IMPORT,
+            payload: { percent: false, data: res.data }
+        })
+        dispatch({
+            type: TOGGLE_LOCK_TAG_IMPORT,
+            payload: true,
+        });
+    } catch {
+
+    }
+
 }

@@ -37,8 +37,17 @@ const importExel = (body) => {
 const deleteLogs = () => {
     return instance.get(`/tags/import/delete/`, config());
 }
+
 const workflow = (body) => {
     return instance.post(`/tags/item/tags/`, body, config());
+}
+
+const historyFolderList = () => {
+    return instance.get(`/tags/import/history/list/`, config());
+}
+
+const historyTagImport = (foldername) => {
+    return instance.get(`/tags/import/history/${foldername}/`, config());
 }
 
 const elasticSearch = (text, body, cancelToken) => {
@@ -55,6 +64,8 @@ const TagService = {
     importExel,
     deleteLogs,
     workflow,
+    historyFolderList,
+    historyTagImport,
     remove
 };
 

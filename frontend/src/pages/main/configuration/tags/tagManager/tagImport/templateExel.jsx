@@ -10,7 +10,7 @@ const templateExel = ({ handleClose }) => {
         <DialogHeaderHelper text="Tag Import Helper Exel" />
       </Box>
       <Box
-        className="tag-import-container__action-box__helper-datagrid"
+        className="tag-manager-container__body__action-box__helper-datagrid"
         sx={{
           button: {
             minWidth: "36px",
@@ -26,11 +26,11 @@ const templateExel = ({ handleClose }) => {
         <DataGrid rows={rows} columns={columns} hideFooter />
       </Box>
       <Box className="dialog-container__paper__footer">
-        <Box className="tag-import-container__action-box__footer">
-          <Box className="tag-import-container__action-box__footer__content">
+        <Box className="tag-manager-container__body__action-box__footer">
+          <Box className="tag-manager-container__body__action-box__footer__content">
             Notes: Tag name is required.
           </Box>
-          <Box className="tag-import-container__action-box__footer__cancel">
+          <Box className="tag-manager-container__body__action-box__footer__cancel">
             <Button
               color="inherit"
               onClick={() => {

@@ -33,8 +33,8 @@ export const fillTagData = (tagId) => async (dispatch, getState) => {
     try {
         const body = JSON.stringify({ TAG_ID: tagId })
         let res = await TagService.getTagItem(body)
-        res.data[0].LAST_UPDATE_DATE = swapDayAndYear(res.data[0].LAST_UPDATE_DATE)
-        res.data[0].START_DATETIME = swapDayAndYear(res.data[0].START_DATETIME)
+        res.data[0].LAST_UPDATE_DATE = swapDayAndYear(res.data[0]?.LAST_UPDATE_DATE)
+        res.data[0].START_DATETIME = swapDayAndYear(res.data[0]?.START_DATETIME)
         dispatch({
             type: FILL_SAVE_VALUES_TAGS,
             payload: res.data[0]

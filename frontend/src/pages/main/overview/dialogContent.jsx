@@ -35,7 +35,7 @@ const DialogContent = ({ handleClose }) => {
     "Bar Chart [Nivo]": measurementPopUp,
     "Pie Chart [Nivo]": measurementPopUp,
     "Heat Map [Nivo]": measurementPopUp,
-    "Matrix [Custom]": measurementPopUp,
+    "Matrix [Custom]": linechartPopUp,
     "TreeMap Chart [Nivo]": measurementPopUp,
   };
   const handleChangeFunc = async (props) => {

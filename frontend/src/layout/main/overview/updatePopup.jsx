@@ -42,7 +42,7 @@ const DialogContent = ({ highchartProps, chartId, refresh, ...rest }) => {
     "Bar Chart [Nivo]": <AngularPopUp title={"Bar Chart [Nivo]"} {...rest} />,
     "Pie Chart [Nivo]": <AngularPopUp title={"Pie Chart [Nivo]"} {...rest} />,
     "Heat Map [Nivo]": <AngularPopUp title={"Heat Map [Nivo]"} {...rest} />,
-    "Matrix [Custom]": <AngularPopUp title={"Matrix [Custom]"} {...rest} />,
+    "Matrix [Custom]": <LinechartPopUp title={"Matrix [Custom]"} {...rest} />,
     "Line Chart [Nivo]": (
       <LinechartPopUp title={"Line Chart [Nivo]"} {...rest} />
     ),

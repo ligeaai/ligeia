@@ -181,6 +181,8 @@ export const LOAD_DATA_PROJECT = "LOAD_DATA_PROJECT";
 
 //-------TAG Import--------------------
 export const UPDATE_PROGRESS_TAG_IMPORT = "UPDATE_PROGRESS_TAG_IMPORT"
+export const TOGGLE_LOCK_TAG_IMPORT = "TOGGLE_LOCK_TAG_IMPORT"
+
 
 //-------Workflow------------------
 export const UPDATE_DATA_WORKFLOW = "UPDATE_DATA_WORKFLOW";

@@ -77,8 +77,8 @@ const Inputs = (props) => {
   const leftChecked = intersection(checked, left);
   const rightChecked = intersection(checked, right);
   React.useEffect(() => {
-    setLeft(tags.filter((e) => !Inputs.some((a) => a.TAG_ID === e.TAG_ID)));
-    setRight(tags.filter((e) => Inputs.some((a) => a.TAG_ID === e.TAG_ID)));
+    setLeft(tags.filter((e) => !Inputs?.some((a) => a.TAG_ID === e.TAG_ID)));
+    setRight(tags.filter((e) => Inputs?.some((a) => a.TAG_ID === e.TAG_ID)));
     dispatch(setCheckeds(tags));
   }, [tags]);
   React.useEffect(() => {

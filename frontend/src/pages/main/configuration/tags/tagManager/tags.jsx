@@ -52,7 +52,10 @@ const Tags = ({ isHome }) => {
       >
         <Breadcrumb />
         <ItemSperatorLineXL />
-        <Grid container className="template-container__body__action-box">
+        <Grid
+          container
+          className="template-container__body__action-box template-container__body__action-box"
+        >
           {page === "Import" ? <ImportActionMenu /> : <TagsActionMenu />}
         </Grid>
         <ItemSperatorLineXL />

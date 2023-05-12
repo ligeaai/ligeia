@@ -70,8 +70,8 @@ const Inputs = (props) => {
   const leftChecked = intersection(checked, left);
   const rightChecked = intersection(checked, right);
   React.useEffect(() => {
-    setLeft(ItemData.filter((e) => !assets.some((a) => a[0] === e[0])));
-    setRight(ItemData.filter((e) => assets.some((a) => a[0] === e[0])));
+    setLeft(ItemData.filter((e) => !assets?.some((a) => a[0] === e[0])));
+    setRight(ItemData.filter((e) => assets?.some((a) => a[0] === e[0])));
     dispatch(setCheckedsAsset(ItemData));
   }, [ItemData]);
 

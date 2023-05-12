@@ -9,11 +9,10 @@ import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
 import {
   deleteAllLogs,
   importExelFile,
-  openWebSocket,
 } from "../../../../../services/actions/tagImport/tagImport";
 import TemplateExel from "./templateExel";
 import { MyDialog } from "../../../../../components";
-
+import HistorySelecFolder from "./historySelectFolder";
 const ActionMenu = () => {
   const dispatch = useDispatch();
   function handleFileChange(event) {
@@ -38,22 +37,25 @@ const ActionMenu = () => {
           <RestoreFromTrashIcon fontSize="small" />
         </IconButton>
       </Tooltip>
-      <Tooltip
-        title={"Log History"}
-        componentsProps={{
-          tooltip: {
-            id: "action-menu-container__tooltip",
-          },
-        }}
-      >
-        <IconButton
-          onClick={() => {
-            dispatch(openWebSocket());
-          }}
-        >
-          <HistoryIcon fontSize="small" />
-        </IconButton>
-      </Tooltip>
+      <MyDialog
+        Button={
+          <Tooltip
+            title={"Log History"}
+            componentsProps={{
+              tooltip: {
+                id: "action-menu-container__tooltip",
+              },
+            }}
+          >
+            <IconButton>
+              <HistoryIcon fontSize="small" />
+            </IconButton>
+          </Tooltip>
+        }
+        DialogBody={HistorySelecFolder}
+        defaultWH={[400, 400]}
+      />
+
       <MyDialog
         Button={
           <Tooltip
