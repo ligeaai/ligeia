@@ -225,27 +225,30 @@ class TagsImportView(generics.CreateAPIView):
                 csv_data.rename(columns={"LINK_TO": "ITEM_ID"}, inplace=True)
             csv_data = csv_data.replace(np.nan, None)
             json_data = csv_data.to_dict(orient="records")
-            chunk_size = 1000
+            chunk_size = 10
             chunked_data = [
                 json_data[i : i + chunk_size]
                 for i in range(0, len(json_data), chunk_size)
             ]
-            index = 1
+            index = 0
             for chunk in chunked_data:
                 chunk_list = self.create_list(chunk)
-                chunk_list.append((len(csv_data), index * len(chunk)))
-                tags.objects.bulk_create(chunk_list)
                 index += 1
+                chunk_list.append(
+                    (len(csv_data), index * len(chunk), chunk_size, index)
+                )
+                tags.objects.bulk_create(chunk_list)
             hash_dict = Red.get("importHistory")
             data = list(rds.lrange("importTag", 0, -1))
             if hash_dict:
-                hash_dict[request.FILES["files"].name] = data[1].decode("utf-8")
+                hash_dict[request.FILES["file"].name] = data[1].decode("utf-8")
                 Red.set("importHistory", hash_dict)
             else:
-                hash_dict = {request.FILES["files"].name: data[1].decode("utf-8")}
+                hash_dict = {request.FILES["file"].name: data[1].decode("utf-8")}
                 Red.set("importHistory", hash_dict)
             return Response("Successful", status=status.HTTP_200_OK)
         except Exception as e:
+            print(str(e))
             return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
     def create_list(self, chunk):

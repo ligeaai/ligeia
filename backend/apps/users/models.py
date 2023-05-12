@@ -76,12 +76,12 @@ class UserManager(BaseUserManager):
 
 
 class User(AbstractBaseUser, PermissionsMixin):
-
     first_name = models.CharField(_("First Name"), max_length=50)
     last_name = models.CharField(_("Last Name"), max_length=50)
     email = models.EmailField(_("Email address"), unique=True)
-    layer_name = models.ManyToManyField(
-        layer, related_name="layerName", blank=True
+    layer_name = models.ManyToManyField(layer, related_name="layerName", blank=True)
+    active_layer = models.ForeignKey(
+        layer, related_name="active_layer", on_delete=models.SET_NULL, null=True
     )
     role = models.ForeignKey(roles, on_delete=models.SET_NULL, null=True)
     is_staff = models.BooleanField(_("staff status"), default=False)

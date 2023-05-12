@@ -35,5 +35,5 @@ class WidgetTypeScriptView(generics.ListAPIView):
     permission_classes = [permissions.AllowAny]
 
     def get(self, request, *args, **kwargs):
-        import_data(bi_widget_type,"widgets_type")
-        return Response({"Message":"Successful"}, status=status.HTTP_201_CREATED)
+        import_data(bi_widget_type, "bi_widget_type")
+        return Response({"Message": "Successful"}, status=status.HTTP_201_CREATED)

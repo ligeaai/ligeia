@@ -9,29 +9,32 @@ from utils.models_utils import (
     validate_find,
 )
 from utils.utils import import_data
+
 # Create your views here.
 from .models import layer
-from .serializers import LayerSaveSerializer,LayerDropDownSerializer
+from .serializers import LayerSaveSerializer, LayerDropDownSerializer
+
 
 class LayerDropDownView(generics.ListAPIView):
     permission_classes = [permissions.AllowAny]
-    
+
     def get_queryset(self):
         return
+
     def get(self, request, *args, **kwargs):
-        queryset = list(layer.objects.values_list('LAYER_NAME', flat=True))
+        queryset = list(layer.objects.values_list("LAYER_NAME", flat=True))
         return Response(
             queryset,
             status=status.HTTP_200_OK,
         )
+
 
 class LayerSaveView(generics.CreateAPIView):
     serializer_class = LayerSaveSerializer
     permission_classes = [permissions.AllowAny]
 
     def post(self, request, *args, **kwargs):
-        print(request.data)
-        validate_model_not_null(request.data, "LAYER",request=request)
+        validate_model_not_null(request.data, "LAYER", request=request)
         serializer = LayerSaveSerializer(data=request.data)
         serializer.is_valid()
         serializer.create(request.data)
@@ -42,14 +45,10 @@ class LayerView(generics.ListAPIView):
     permission_classes = [permissions.AllowAny]
 
     def get(self, request, *args, **kwargs):
- 
-
-        import_data(layer,"layer")
+        import_data(layer, "layer")
         return Response({"Message": "Successful"}, status=status.HTTP_200_OK)
 
 
-
-    
 class LayerModelViewSet(generics.ListAPIView):
     permission_classes = (permissions.AllowAny,)
 

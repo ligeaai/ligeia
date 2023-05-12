@@ -2,21 +2,23 @@ from django.db import models
 import uuid
 from django.utils import timezone
 from utils.utils import redisCaching as red
-import redis 
+import redis
 import environ
 from apps.item_link.serializers import ItemLinkSaveSerializer
 from utils.models_utils import validate_model_not_null
 import json
+
 env = environ.Env(DEBUG=(bool, False))
-rds = redis.StrictRedis(env('REDIS_HOST'), port=6379, db=0)
+rds = redis.StrictRedis(env("REDIS_HOST"), port=6379, db=0)
 from django.db.utils import IntegrityError
+
+
 class TagsQuerySet(models.QuerySet):
-    
     def getRedis(self):
-        data = rds.lrange('importTag', 0, -1)
+        data = rds.lrange("importTag", 0, -1)
         return data
-    
-    def updateLog(self,old_log,new_log):
+
+    def updateLog(self, old_log, new_log):
         if old_log:
             # print(old_log)
             old_log = old_log[1]
@@ -28,29 +30,33 @@ class TagsQuerySet(models.QuerySet):
         return old_log
 
     def updatePercent(self):
-        print(self.index,"---",self.max_length,"--->",(self.index/self.max_length)*100 )
-        return (self.index/self.max_length)*100 
+        i = self.index / self.chunk_size
 
+        percent = (self.index / self.max_length) * 100
+        if i != self.total:
+            percent = 100
 
-    def updateRedis(self,messages):
+        return percent
+
+    def updateRedis(self, messages):
         old_logs = self.getRedis()
-        new_log = self.updateLog(old_logs,messages)
+        new_log = self.updateLog(old_logs, messages)
         new_percent = self.updatePercent()
-        data = [[new_log],new_percent]
-        rds.delete('importTag')
+        data = [[new_log], new_percent]
+        rds.delete("importTag")
         new_log = json.dumps(new_log)
-        rds.lpush('importTag', new_log)
-        rds.lpush('importTag', new_percent)
+        rds.lpush("importTag", new_log)
+        rds.lpush("importTag", new_percent)
 
     def bulk_create(self, objs, batch_size=None, ignore_conflicts=False):
         new_objs = []
-        self.max_length,self.index = objs[-1]
+        self.max_length, self.index, self.chunk_size, self.total = objs[-1]
         objs = objs[:-1]
-        messages = self.myFuns(objs,batch_size,ignore_conflicts)
+        messages = self.myFuns(objs, batch_size, ignore_conflicts)
         self.updateRedis(messages)
         return objs
-    
-    def myFuns(self,objs,batch_size,ignore_conflicts):
+
+    def myFuns(self, objs, batch_size, ignore_conflicts):
         messages = []
         error_objs = []
         try:
@@ -72,12 +78,10 @@ class TagsQuerySet(models.QuerySet):
                     message = obj.NAME + " Failed"
                     messages.append(message)
                     error_objs.append(obj)
-        objs = set(set(objs)- set(error_objs))
+        objs = set(set(objs) - set(error_objs))
         return messages
-            
-        
 
-    def saveLink(self,obj):
+    def saveLink(self, obj):
         if obj.ITEM_ID is not None:
             link_dict = {
                 "LINK_ID": uuid.uuid4().hex,
@@ -90,7 +94,7 @@ class TagsQuerySet(models.QuerySet):
                 "START_DATETIME": obj.START_DATETIME,
                 "ROW_ID": uuid.uuid4().hex,
                 # "LAST_UPDT_USER":request.user
-                }
+            }
             # validate_model_not_null(link_dict, "ITEM_LINK", request=request)
             link_serializer = ItemLinkSaveSerializer(data=link_dict)
             link_serializer.is_valid()
@@ -101,7 +105,6 @@ class TagsQuerySet(models.QuerySet):
 class TagsModelManager(models.Manager):
     def get_queryset(self):
         return TagsQuerySet(self.model, using=self._db)
-
 
 
 # Create your models here.
@@ -127,7 +130,7 @@ class tags(models.Model):
         max_length=32,
         null=True,
     )
-    NAME = models.CharField(max_length=100, null=True, db_index=True,unique=True)
+    NAME = models.CharField(max_length=100, null=True, db_index=True, unique=True)
     DESCRIPTION = models.CharField(
         max_length=1000,
         null=True,

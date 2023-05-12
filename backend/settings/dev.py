@@ -24,6 +24,14 @@ DATABASES = {
         "HOST": env("PG_HOST"),
         "PORT": env("PG_PORT"),
     },
+    "layer_db": {
+        "ENGINE": env("PG_ENGINE"),
+        "NAME": env("PG_DB"),
+        "USER": env("PG_USER"),
+        "PASSWORD": env("PG_PASS"),
+        "HOST": env("PG_HOST"),
+        "PORT": env("PG_PORT"),
+    },
     # "mongodb": {
     #     "NAME": "db_dictionaries",
     #     "ENGINE": "djongo",
@@ -42,4 +50,3 @@ DATABASES = {
 
 CELERY_BROKER_URL = os.environ.get("CELERY_BROKER", "redis://127.0.0.1:6379/0")
 CELERY_RESULT_BACKEND = os.environ.get("CELERY_BACKEND", "redis://127.0.0.1:6379/0")
-

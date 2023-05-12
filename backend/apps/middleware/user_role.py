@@ -12,14 +12,13 @@ class UserRoleMiddleware:
     def __call__(self, request):
         request = self._get_user_from_token(request)
         self._set_user_role(request)
-
         response = self.get_response(request)
 
         return response
 
     def _get_user_from_token(self, request):
-        auth_header = request.headers.get('Authorization')
-        if not auth_header or not auth_header.startswith('Token '):
+        auth_header = request.headers.get("Authorization")
+        if not auth_header or not auth_header.startswith("Token "):
             return request
 
         try:
@@ -38,15 +37,14 @@ class UserRoleMiddleware:
             return
 
         try:
-            user_role = User.objects.filter(email=request.user).values('role').first()
+            user_role = User.objects.filter(email=request.user).values("role").first()
             if user_role:
-                role = roles.objects.filter(ROLES_ID=user_role['role']).first() 
+                role = roles.objects.filter(ROLES_ID=user_role["role"]).first()
                 if role:
                     serializer = RolesPropertySerializer(role)
                     response = {
-                        item["ROLES_TYPES"]: {
-                            **item
-                        } for item in serializer.data.get('PROPERTY_ID')
+                        item["ROLES_TYPES"]: {**item}
+                        for item in serializer.data.get("PROPERTY_ID")
                     }
                     request.role = response
                 else:

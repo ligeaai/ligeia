@@ -4,19 +4,21 @@ from channels.generic.websocket import AsyncWebsocketConsumer
 from asgiref.sync import sync_to_async
 import environ
 import asyncio
+
 env = environ.Env(DEBUG=(bool, False))
 
 
 class ImportTagConsumer(AsyncWebsocketConsumer):
-
     async def connect(self):
-        self.rds = redis.StrictRedis(env('REDIS_HOST'), port=6379, db=0)
+        self.rds = redis.StrictRedis(env("REDIS_HOST"), port=6379, db=0)
         self.import_tag_channel = "importTag"
         await self.channel_layer.group_add(self.import_tag_channel, self.channel_name)
         await self.accept()
 
     async def disconnect(self, close_code):
-        await self.channel_layer.group_discard(self.import_tag_channel, self.channel_name)
+        await self.channel_layer.group_discard(
+            self.import_tag_channel, self.channel_name
+        )
         self.rds.connection_pool.disconnect()
 
     async def receive(self, text_data):
@@ -24,8 +26,8 @@ class ImportTagConsumer(AsyncWebsocketConsumer):
 
     @sync_to_async
     def get_data(self):
-        data = list(self.rds.lrange('importTag', -500, -1))
-        data_list = [d.decode('utf-8') for d in data]
+        data = list(self.rds.lrange("importTag", -500, -1))
+        data_list = [d.decode("utf-8") for d in data]
         return data_list
 
     async def send_data(self, event):
@@ -33,9 +35,9 @@ class ImportTagConsumer(AsyncWebsocketConsumer):
         while self.is_active:
             data = await self.get_data()
             if data != old_data:
-                await (self.send)(json.dumps(data, ensure_ascii=False))
+                await self.send(json.dumps(data, ensure_ascii=False))
                 old_data = data
-            await asyncio.sleep(5)
+            await asyncio.sleep(0.01)
 
     async def data_changed(self, event):
         await self.send_data(event)
@@ -48,9 +50,9 @@ class ImportTagConsumer(AsyncWebsocketConsumer):
         await self.close()
 
     async def websocket_connect(self, message):
-        self.rds = redis.StrictRedis(env('REDIS_HOST'), port=6379, db=0)
+        self.rds = redis.StrictRedis(env("REDIS_HOST"), port=6379, db=0)
         self.import_tag_channel = "importTag"
         await self.channel_layer.group_add(self.import_tag_channel, self.channel_name)
         await self.accept()
         self.is_active = True
-        await self.websocket_data_consumer(None)    
+        await self.websocket_data_consumer(None)
