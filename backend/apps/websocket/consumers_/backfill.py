@@ -11,6 +11,7 @@ from utils.consumer_utils import (
 )
 import os
 
+
 class WSConsumerBackfill(AsyncWebsocketConsumer):
     def send_messages(self):
         qs = retrieve_backfill_data(**self.kwargs)
@@ -24,12 +25,11 @@ class WSConsumerBackfill(AsyncWebsocketConsumer):
         self.mongo_db = self.client[mongodb_name]
         self.collection = self.mongo_db[mongodb_name]
         self.tag_id = self.scope["url_route"]["kwargs"]["tag_id"]
-        self.tag_name, self.asset = await sync_to_async(find_tag)(self.tag_id)
+        self.tag_name = await sync_to_async(find_tag)(self.tag_id)
         self.kwargs = {
             "query": {
                 "$and": [
                     {"tag_name": self.tag_name},
-                    {"asset": self.asset},
                 ]
             },
             "collection": self.collection,
@@ -42,7 +42,6 @@ class WSConsumerBackfill(AsyncWebsocketConsumer):
             query = {
                 "$and": [
                     {"tag_name": self.tag_name},
-                    {"asset": self.asset},
                     {"date": {"$gte": start_date}},
                     {"date": {"$lte": end_date}},
                 ]

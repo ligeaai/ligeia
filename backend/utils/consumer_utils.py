@@ -33,6 +33,7 @@ def retive_live_data(start_time="-", end_time="+", tag_name="", asset="", redis=
 def retive_last_data(tag_name="", asset="", redis=""):
     query = ["tag_name=" + tag_name]
     data = redis.mget(query, with_labels=True, latest=False)
+    # print(data)
     return data[-1]
 
 

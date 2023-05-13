@@ -7,6 +7,9 @@ import redis
 from asgiref.sync import sync_to_async, async_to_sync
 from utils.consumer_utils import find_tag, retive_live_data
 import os
+import environ
+
+env = environ.Env(DEBUG=(bool, False))
 
 
 class WSLiveConsumer(AsyncWebsocketConsumer):
@@ -16,16 +19,15 @@ class WSLiveConsumer(AsyncWebsocketConsumer):
             self.kwargs["start_time"], self.kwargs["end_time"], *data = query_tuple
             if data:
                 await self.send(json.dumps(data[0], ensure_ascii=False))
-            await asyncio.sleep(5)
+            await asyncio.sleep(2.5)
 
     async def connect(self):
         await self.accept()
-        redis_host = "ligeiaai-redis-ts"
+        redis_host = env("REDIS_TS_HOST")
         self.rds = redis.StrictRedis(redis_host, port=6379, db=2)
         self.tag_id = self.scope["url_route"]["kwargs"]["tag_id"]
         self.is_active = True
         tag_name = await sync_to_async(find_tag)(self.tag_id)
-        print(tag_name)
         self.kwargs = {"tag_name": tag_name, "redis": self.rds.ts()}
         self.task = asyncio.create_task(self.send_messages())
 
