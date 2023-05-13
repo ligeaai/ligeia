@@ -13,6 +13,7 @@ import { changeLanguage, changeLangs } from "../../services/actions/language";
 import NestedMenu from "./nestedMenu";
 import { instance, config } from "../../services/baseApi";
 import Auth from "../../services/api/auth";
+import { ComponentError } from "../../components";
 
 const SettingsMenu = () => {
   const dispatch = useDispatch();
@@ -120,6 +121,7 @@ const SettingsMenu = () => {
           />
         </Grid>
       </Grid>
+
       {settingsMenu ? (
         <Box
           sx={{
@@ -130,48 +132,50 @@ const SettingsMenu = () => {
             zIndex: 3,
           }}
         >
-          <NestedMenu
-            menuItems={[
-              {
-                icon: <Brightness2OutlinedIcon />,
-                fixedText: "Appearance",
-                text: theme,
-                subtable: [
-                  "dark",
-                  "light",
-                  "temp",
-                  "tempDark",
-                  "temp2",
-                  "tempDark2",
-                ],
-                functions: themeSelect,
-              },
-              {
-                icon: <TranslateIcon />,
-                fixedText: "Language",
-                text: lang,
-                subtable: langItems,
-                functions: langSelect,
-              },
-              {
-                icon: <LanguageIcon />,
-                fixedText: "Location",
-                text: "Canada",
-                subtable: ["Canada", "Kazakistan", "Türkiye"],
-                functions: locationSelect,
-              },
-              {
-                icon: <LanguageIcon />,
-                fixedText: "Layer",
-                text: user?.active_layer,
-                subtable: user.layer_name,
-                functions: layerSelect,
-              },
-            ]}
-            isSubmenuOpen={settingsMenu}
-            setSettingsMenuFunc={setSettingsMenuFunc}
-            themeMode={theme}
-          />
+          <ComponentError errMsg="Error">
+            <NestedMenu
+              menuItems={[
+                {
+                  icon: <Brightness2OutlinedIcon />,
+                  fixedText: "Appearance",
+                  text: theme,
+                  subtable: [
+                    "dark",
+                    "light",
+                    "temp",
+                    "tempDark",
+                    "temp2",
+                    "tempDark2",
+                  ],
+                  functions: themeSelect,
+                },
+                {
+                  icon: <TranslateIcon />,
+                  fixedText: "Language",
+                  text: lang,
+                  subtable: langItems,
+                  functions: langSelect,
+                },
+                {
+                  icon: <LanguageIcon />,
+                  fixedText: "Location",
+                  text: "Canada",
+                  subtable: ["Canada", "Kazakistan", "Türkiye"],
+                  functions: locationSelect,
+                },
+                {
+                  icon: <LanguageIcon />,
+                  fixedText: "Layer",
+                  text: user?.active_layer,
+                  subtable: user?.layer_name,
+                  functions: layerSelect,
+                },
+              ]}
+              isSubmenuOpen={settingsMenu}
+              setSettingsMenuFunc={setSettingsMenuFunc}
+              themeMode={theme}
+            />
+          </ComponentError>
         </Box>
       ) : null}
     </Grid>

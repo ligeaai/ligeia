@@ -2,6 +2,7 @@ import React from "react";
 import Box from "@mui/material/Box";
 import DataGrid from "../../datagrid/dataGrid";
 import "../../../assets/styles/components/overview/matrixWidget.scss";
+import DataGridCell from "./dataGridCell";
 const Matrix = ({ highchartProps }) => {
   const [columns, setColumns] = React.useState([]);
   const [rows, setRows] = React.useState([]);
@@ -14,10 +15,7 @@ const Matrix = ({ highchartProps }) => {
           headerName: e[1],
           flex: 1,
           renderCell: (params) => {
-            console.log(params);
-            return (
-              params?.row?.[params.field] && <>{params?.row?.[params.field]}</>
-            );
+            return <DataGridCell {...params} />;
           },
         });
       })
@@ -45,6 +43,7 @@ const Matrix = ({ highchartProps }) => {
           tag: temp[0].SHORT_NAME,
         };
         temp.map((e) => {
+          console.log(e);
           rowItem = { ...rowItem, [e.ITEM_ID]: e.TAG_ID };
         });
         row.push(rowItem);

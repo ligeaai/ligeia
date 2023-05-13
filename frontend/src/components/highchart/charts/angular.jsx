@@ -50,7 +50,6 @@ const Angular = ({ highchartProps, width, height }) => {
         if (client.readyState === client.OPEN) {
           if (typeof e.data === "string") {
             let data = JSON.parse(e.data);
-            console.log(data);
             Object.keys(data).map((e) => {
               setCategories((prev) => new Date(data[e][1] * 1000));
               setValue((prev) => data[e][2]);
