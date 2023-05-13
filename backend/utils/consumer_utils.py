@@ -7,8 +7,9 @@ def find_tag(tag_id):
     tag = tags.objects.filter(TAG_ID=tag_id)
     if tag:
         serializer = TagsFieldsSerializer(tag, many=True).data[0]
-        asset, tag_name = serializer.get("NAME").split(".")
-        return tag_name, asset
+        # asset, tag_name = serializer.get("NAME").split(".")
+        # return tag_name, asset
+        return serializer.get("NAME")
     else:
         raise BaseException("Tags not found")
 
@@ -17,7 +18,7 @@ def retive_live_data(start_time="-", end_time="+", tag_name="", asset="", redis=
     data = redis.mrange(
         start_time,
         end_time,
-        ["tag_name=" + tag_name, "asset=" + asset],
+        ["tag_name=" + tag_name],
         with_labels=True,
         empty=True,
     )
@@ -30,7 +31,7 @@ def retive_live_data(start_time="-", end_time="+", tag_name="", asset="", redis=
 
 
 def retive_last_data(tag_name="", asset="", redis=""):
-    query = ["tag_name=" + tag_name, "asset=" + asset]
+    query = ["tag_name=" + tag_name]
     data = redis.mget(query, with_labels=True, latest=False)
     return data[-1]
 
