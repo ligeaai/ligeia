@@ -12,6 +12,7 @@ import {
   updateChart,
 } from "../../../services/actions/overview/overviewDialog";
 import LinechartPopUp from "../../../components/highchart/popup/lineChartPopUp";
+import MatrixCustomPopUp from "../../../components/overview/matrix/updatePopUp";
 import AngularPopUp from "../../../components/highchart/popup/angularPopUp";
 import SolidPopUp from "../../../components/highchart/popup/solidPopUp";
 import MeasurementPopUp from "../../../components/highchart/popup/measurementPopUp";
@@ -42,7 +43,9 @@ const DialogContent = ({ highchartProps, chartId, refresh, ...rest }) => {
     "Bar Chart [Nivo]": <AngularPopUp title={"Bar Chart [Nivo]"} {...rest} />,
     "Pie Chart [Nivo]": <AngularPopUp title={"Pie Chart [Nivo]"} {...rest} />,
     "Heat Map [Nivo]": <AngularPopUp title={"Heat Map [Nivo]"} {...rest} />,
-    "Matrix [Custom]": <LinechartPopUp title={"Matrix [Custom]"} {...rest} />,
+    "Matrix [Custom]": (
+      <MatrixCustomPopUp title={"Matrix [Custom]"} {...rest} />
+    ),
     "Line Chart [Nivo]": (
       <LinechartPopUp title={"Line Chart [Nivo]"} {...rest} />
     ),

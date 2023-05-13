@@ -55,9 +55,9 @@ const Item = ({ isHome }) => {
         <ItemSperatorLineXL />
         <Grid
           container
-          className="template-container__body__actions-box item-container__body__action-box"
+          className="template-container__body__action-box item-container__body__action-box"
         >
-          <Grid item className="template-container__body__actions-box__icons">
+          <Grid item className="template-container__body__action-box__icons">
             {isLinksActive ? <LinkActionMenu /> : <MyActionMenu />}
           </Grid>
           <MyDivider />

@@ -46,7 +46,7 @@ export const usersColumn = [
         headerName: "Layer Name",
         renderCell: (params) => {
             return params.value.map((e, i) => {
-                return <Box key={i}>{e.LAYER_NAME}, </Box>
+                return <Box key={i}>{e}{params.value.length - 1 > i && <>,</>} </Box>
             })
         },
         flex: 2,

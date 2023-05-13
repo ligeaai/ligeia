@@ -17,7 +17,7 @@ const UpdateDialogBody = ({ handleClose, rowData, ...rest }) => {
   const dispatch = useDispatch();
   const layers = useSelector((state) => state.users.layers);
   const [checked, setChecked] = React.useState(
-    rowData.layer_name.map((e) => e.LAYER_NAME)
+    rowData.layer_name.map((e) => e)
   );
   const [roles, setRoles] = React.useState([]);
   const [checkedRoles, setCheckedRoles] = React.useState(

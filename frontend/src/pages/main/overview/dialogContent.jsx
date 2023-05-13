@@ -11,6 +11,7 @@ import {
 } from "../../../services/actions/overview/overviewDialog";
 import { saveNewChart } from "../../../services/actions/overview/overviewDialog";
 import linechartPopUp from "../../../components/highchart/newPopUp/lineChartHc";
+import matrixCustom from "../../../components/overview/matrix/newPopUp";
 import angularPopUp from "../../../components/highchart/newPopUp/angularHc";
 import SolidPopUp from "../../../components/highchart/newPopUp/solidHc";
 import measurementPopUp from "../../../components/highchart/newPopUp/measurementCustom";
@@ -35,7 +36,7 @@ const DialogContent = ({ handleClose }) => {
     "Bar Chart [Nivo]": measurementPopUp,
     "Pie Chart [Nivo]": measurementPopUp,
     "Heat Map [Nivo]": measurementPopUp,
-    "Matrix [Custom]": linechartPopUp,
+    "Matrix [Custom]": matrixCustom,
     "TreeMap Chart [Nivo]": measurementPopUp,
   };
   const handleChangeFunc = async (props) => {

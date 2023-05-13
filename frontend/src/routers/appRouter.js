@@ -78,6 +78,7 @@ const AppRouter1 = () => {
             <Route exact path="/configuration" element={<Configuration way="Configuration" />} />
             <Route exact path="/configuration/:myKey" element={<MyNavigator way="Configuration" />} />
             <Route exact path="/configuration/:myKey/:type/:item" element={<Items isHome={false} />} />
+            <Route exact path="/configuration/:myKey/:type/:item/*" element={<Items isHome={false} />} />
             <Route path="/configuration/:myKey/:type" element={<Items isHome={true} />} />
 
             <Route exact path="/configuration/tags/tag_manager" element={<Tags isHome={true} />} />

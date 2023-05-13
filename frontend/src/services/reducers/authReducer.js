@@ -21,7 +21,8 @@ import {
     GOOGLE_AUTH_FAIL,
     FACEBOOK_AUTH_SUCCESS,
     FACEBOOK_AUTH_FAIL,
-    LOGOUT
+    LOGOUT,
+    UPDATE_USER
 } from '../actions/types';
 
 const initialState = {
@@ -35,6 +36,12 @@ export default function (state = initialState, action) {
     const { type, payload } = action;
 
     switch (type) {
+        case UPDATE_USER: {
+            return {
+                ...state,
+                user: { ...state.user, [payload.key]: payload.val }
+            }
+        }
         case AUTHENTICATED_SUCCESS:
             return {
                 ...state,

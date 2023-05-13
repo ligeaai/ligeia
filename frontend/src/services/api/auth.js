@@ -39,6 +39,10 @@ const updatePassword = (body) => {
     return instance.post(`/auth/change-password/`, body, config());
 }
 
+const activeLayerUpdate = (body) => {
+    return instance.post(`/auth/users/active/layer/`, body, config());
+}
+
 
 
 const Auth = {
@@ -51,6 +55,7 @@ const Auth = {
     socialLogin,
     checkMail,
     profileUpdate,
+    activeLayerUpdate,
     updatePassword
 };
 

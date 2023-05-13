@@ -12,6 +12,7 @@ import { changeLanguage, changeLangs } from "../../services/actions/language";
 
 import NestedMenu from "./nestedMenu";
 import { instance, config } from "../../services/baseApi";
+import Auth from "../../services/api/auth";
 
 const SettingsMenu = () => {
   const dispatch = useDispatch();
@@ -30,6 +31,7 @@ const SettingsMenu = () => {
   React.useEffect(() => {
     const myFunc = async () => {
       try {
+        console.log(config());
         let res = await instance.get(`/code-list/culture/`, config());
         var myRes = [];
         res.data.Message.map((e) => {
@@ -61,6 +63,13 @@ const SettingsMenu = () => {
   };
   const locationSelect = (location) => {};
 
+  const layerSelect = (LAYER_NAME) => {
+    try {
+      const body = JSON.stringify({ LAYER_NAME });
+      Auth.activeLayerUpdate(body);
+      window.location.reload();
+    } catch {}
+  };
   return (
     <Grid item className="settingsMenu">
       <Grid
@@ -150,6 +159,13 @@ const SettingsMenu = () => {
                 text: "Canada",
                 subtable: ["Canada", "Kazakistan", "Türkiye"],
                 functions: locationSelect,
+              },
+              {
+                icon: <LanguageIcon />,
+                fixedText: "Layer",
+                text: user?.active_layer,
+                subtable: user.layer_name,
+                functions: layerSelect,
               },
             ]}
             isSubmenuOpen={settingsMenu}

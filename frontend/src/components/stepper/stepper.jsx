@@ -81,7 +81,6 @@ export default function HorizontalLinearStepper({ components, finishFunc }) {
   const isStepSkipped = (step) => {
     return skipped.has(step);
   };
-
   const handleNext = () => {
     if (!dispatch(checkMandatory(activeStep))) {
       dispatch({
@@ -95,7 +94,6 @@ export default function HorizontalLinearStepper({ components, finishFunc }) {
       newSkipped = new Set(newSkipped.values());
       newSkipped.delete(activeStep);
     }
-
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
     setSkipped(newSkipped);
   };

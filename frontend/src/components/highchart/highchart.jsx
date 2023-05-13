@@ -14,7 +14,7 @@ import {
   BarHc,
 } from "./charts";
 import { Bar, Pie, HeatMap, Line, TreeMap, BackFillLine } from "./nivoCharts";
-import { Matrix } from "./customWidget";
+import Matrix from "../overview/matrix/chart";
 import "../../assets/styles/page/overview/chartContainer.scss";
 const MyBox = styled(Box)(({ theme }) => {
   return {

@@ -22,7 +22,7 @@ export const CHANGE_PASSWORD_SUCCESS = 'CHANGE_PASSWORD_SUCCESS';
 export const CHANGE_PASSWORD_FAIL = 'CHANGE_PASSWORD_FAIL';
 export const GITHUB_AUTH_FAIL = 'GITHUB_AUTH_FAIL';
 export const GITHUB_AUTH_SUCCESS = 'GITHUB_AUTH_SUCCESS';
-
+export const UPDATE_USER = "UPDATE_USER"
 //-----------Error---------------------
 export const ADD_ERROR_SUCCESS = 'ADD_ERROR_SUCCESS';
 export const ADD_ERROR_FAIL = 'ADD_ERROR_FAIL';
