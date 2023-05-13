@@ -2,7 +2,7 @@ import axios from "axios";
 import { instance, config } from "../baseApi"
 
 const getAll = (body, cancelToken) => {
-    return instance.get("/tags/details/", body, { ...config(), cancelToken: cancelToken.token });
+    return instance.get("/tags/details/", { ...config(), cancelToken: cancelToken.token });
 };
 let cancelToken;
 const getTagItem = (body) => {
