@@ -52,7 +52,7 @@ for message in consumer:
     data = literal_eval(df.decode("utf8"))
     add_data(
         data["payload"]["insert"][0]["fqn"],
-        data["payload"]["insert"][0]["vqts"][0]["v"],
+        data["payload"]["insert"][0]["vqt"][0]["v"],
     )
     check_repeated_values(data["payload"]["insert"][0]["fqn"])
     data["step-status"] = "frozen-data"

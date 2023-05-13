@@ -41,7 +41,7 @@ def add_veriable(data, data_timestamp):
     data['message_type'] = 'raw-data'
     data['createdTime'] = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')
     data['asset'] = id_split[2]
-    data['tag_name'] = id_split[3]
+    data['tag_name'] = data['id']
     data['createdTime'] = str(datetime.datetime.now())
     del data['id']
     return data
@@ -77,10 +77,10 @@ i = 0
 def on_message(client, userdata, msg):
     my_json = msg.payload.decode('utf8')
     incoming_data = json.loads(my_json)
-    print(incoming_data)
+    # print(incoming_data)
     for i in range(len(incoming_data['values'])):
         i += 1
-        print(add_veriable(incoming_data['values'][i - 1], incoming_data['timestamp']))
+        add_veriable(incoming_data['values'][i - 1], incoming_data['timestamp'])
         data = incoming_data['values'][i - 1]
         data['DiffInHours'] = time_difference(data['date'], data['createdTime'])
         data['message_type'] = message_type_specify(
