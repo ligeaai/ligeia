@@ -1,11 +1,16 @@
 import {
     UPDATE_DATA_PROJECT,
     LOAD_DATA_PROJECT,
-    CLEAN_PROJECT
+    CLEAN_PROJECT,
+    SET_DATABASES_PROJECT,
+    SET_KUBERNETES_PROJECT
 } from "../../actions/types"
 
+
 const initialState = {
-    data: {}
+    data: {},
+    databases: [],
+    kubernetes: []
 };
 
 export default function (state = initialState, action) {
@@ -13,6 +18,16 @@ export default function (state = initialState, action) {
     const { type, payload } = action;
 
     switch (type) {
+        case SET_KUBERNETES_PROJECT:
+            return {
+                ...state,
+                kubernetes: payload
+            }
+        case SET_DATABASES_PROJECT:
+            return {
+                ...state,
+                databases: payload
+            }
         case UPDATE_DATA_PROJECT:
             return {
                 ...state,
@@ -25,7 +40,8 @@ export default function (state = initialState, action) {
             }
         case CLEAN_PROJECT:
             return {
-                data: {}
+                ...state,
+                data: {},
             }
         default:
             return {

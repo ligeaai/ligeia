@@ -10,7 +10,6 @@ import AlertIcon from "./alert/alarmsIcon";
 import SettingMenu from "./settingsMenu";
 import history from "../../routers/history";
 import { setOpenTab } from "../../services/actions/drawerMenu/drawerMenu";
-
 const DrawerIcon = () => {
   const dispatch = useDispatch();
   function handleClick() {

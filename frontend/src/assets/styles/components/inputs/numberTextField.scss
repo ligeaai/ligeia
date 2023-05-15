@@ -2,7 +2,8 @@
   font-size: 14px;
   & .MuiOutlinedInput-input {
     font-size: 14px;
-    padding: 4px 2px 4px 0px;
+    padding: 4px 2px 4px 0px !important;
+    padding-left: 14px !important;
   }
   width: 100%;
   min-width: 125px;
@@ -12,7 +13,7 @@
   font-size: 14px;
   & .MuiOutlinedInput-input {
     font-size: 14px;
-    padding: 4px 2px 4px 0px;
+    padding: 4px 2px 4px 0px !important;
   }
   width: 75px;
   min-width: 75px;

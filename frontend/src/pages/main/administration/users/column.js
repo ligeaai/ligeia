@@ -1,6 +1,6 @@
 import React from "react";
 
-import { IconButton, Box } from "@mui/material";
+import { IconButton, Chip } from "@mui/material";
 import EditIcon from '@mui/icons-material/Edit';
 
 import { MyDialog } from "../../../../components";
@@ -46,7 +46,7 @@ export const usersColumn = [
         headerName: "Layer Name",
         renderCell: (params) => {
             return params.value.map((e, i) => {
-                return <Box key={i}>{e}{params.value.length - 1 > i && <>,</>} </Box>
+                return <><Chip label={e} color="secondary" variant="outlined" size="small" /></>
             })
         },
         flex: 2,

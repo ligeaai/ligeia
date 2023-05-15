@@ -16,7 +16,7 @@ const TreeMenu = () => {
   const dispatch = useDispatch();
   React.useEffect(() => {
     if (!isMount) {
-      dispatch(loadTreeviewItem(pathFunction, "NAME"));
+      dispatch(loadTreeviewItem(pathFunction, "LAYER_NAME"));
     }
     return async () => {
       dispatch(await cleanTreeview());
@@ -28,7 +28,11 @@ const TreeMenu = () => {
   };
 
   return (
-    <TreeMenuItems path={pathFunction} textPath="NAME" historyPathLevel={2} />
+    <TreeMenuItems
+      path={pathFunction}
+      textPath="LAYER_NAME"
+      historyPathLevel={2}
+    />
   );
 };
 

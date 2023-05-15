@@ -2,32 +2,45 @@ import { instance, config } from "../baseApi"
 
 
 const getAll = (body, cancelToken) => {
-    return instance.get(`/project/get/`, { ...config(), cancelToken: cancelToken.token });
+    return instance.get(`layer/treemenu`, { ...config(), cancelToken: cancelToken.token });
 };
 
 const getItemValues = (body, cancelToken) => {
-    return instance.get(
-        `/project/get/${body}/`, { ...config(), cancelToken: cancelToken.token }
+    return instance.post(
+        `layer/treemenu/details/`, body, { ...config(), cancelToken: cancelToken.token }
     )
 }
 
 const update = (body) => {
     return instance.post(
-        "/project/update/", body, config()
+        "/layer/update/", body, config()
     )
 }
 
 const create = (body) => {
     return instance.post(
-        "/project/create/", body, config()
+        "/layer/create/", body, config()
     )
 }
 
 const remove = (body) => {
     return instance.post(
-        "/project/delete/", body, config()
+        "/layer/delete/", body, config()
     )
 }
+
+
+const databases = () => {
+    return instance.get(
+        "/code-list/layer/db", config()
+    )
+}
+const kubernetes = (text) => {
+    return instance.get(
+        `/code-list/layer/db/engine/${text}/`, config()
+    )
+}
+
 
 const elasticSearch = (text, body, cancelToken) => {
     return instance.post(``, body, { ...config(), cancelToken: cancelToken.token });
@@ -40,6 +53,9 @@ const ProjectService = {
     create,
     update,
     remove,
+
+    databases,
+    kubernetes,
     elasticSearch
 };
 
