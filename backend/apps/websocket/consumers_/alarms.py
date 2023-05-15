@@ -6,6 +6,7 @@ from asgiref.sync import sync_to_async, async_to_sync
 from utils.consumer_utils import find_tag, retrieve_backfill_data
 import os
 
+
 class AlarmsConsumer(AsyncWebsocketConsumer):
     async def connect(self):
         await self.accept()

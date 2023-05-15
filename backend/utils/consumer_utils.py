@@ -23,8 +23,9 @@ def retive_live_data(start_time="-", end_time="+", tag_name="", asset="", redis=
         empty=True,
     )
     try:
-        start_time = (list(data[-1].values())[0][1][0][0]) + 1
-
+        start_time = list(data[-1].values())[0][1][0][0] + 1
+        print(start_time)
+        print(len(data))
         return start_time, end_time, data
     except:
         return start_time, end_time

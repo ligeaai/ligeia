@@ -10,6 +10,9 @@ from utils.consumer_utils import (
     delThread,
 )
 import os
+import environ
+
+env = environ.Env(DEBUG=(bool, False))
 
 
 class WSConsumerBackfill(AsyncWebsocketConsumer):
@@ -19,8 +22,8 @@ class WSConsumerBackfill(AsyncWebsocketConsumer):
 
     async def connect(self):
         await self.accept()
-        mongo_client = os.environ("Mongo_Client")
-        mongodb_name = os.environ("MongoDb_Backfill_Name")
+        mongo_client = env("Mongo_Client")
+        mongodb_name = env("MongoDb_Backfill_Name")
         self.client = MongoClient(mongo_client)
         self.mongo_db = self.client[mongodb_name]
         self.collection = self.mongo_db[mongodb_name]

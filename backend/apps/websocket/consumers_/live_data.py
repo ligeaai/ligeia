@@ -14,12 +14,14 @@ env = environ.Env(DEBUG=(bool, False))
 
 class WSLiveConsumer(AsyncWebsocketConsumer):
     async def send_messages(self):
+        offset = 0
         while self.is_active:
             query_tuple = retive_live_data(**self.kwargs)
             self.kwargs["start_time"], self.kwargs["end_time"], *data = query_tuple
             if data:
-                await self.send(json.dumps(data[0], ensure_ascii=False))
-            await asyncio.sleep(2.5)
+                await self.send(json.dumps(data[0][offset:], ensure_ascii=False))
+                offset = len(data[0])
+            await asyncio.sleep(2)
 
     async def connect(self):
         await self.accept()
