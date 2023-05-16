@@ -24,7 +24,7 @@ class WSConsumeOnlyLastData(AsyncWebsocketConsumer):
 
     async def connect(self):
         await self.accept()
-        redis_host = env("REDIS_TS_HOST")
+        redis_host = env("Redis_Db_Name")
         self.rds = redis.StrictRedis(redis_host, port=6379, db=2)
         self.tag_id = self.scope["url_route"]["kwargs"]["tag_id"]
         self.is_active = True
