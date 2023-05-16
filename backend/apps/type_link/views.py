@@ -16,6 +16,7 @@ from django.db.models import Q
 from utils.models_utils import validate_model_not_null, validate_find
 from utils.utils import import_data
 
+
 # Create your views here.
 class TypeLinkSaveView(generics.CreateAPIView):
     serializer_class = TypeLinkDetails2Serializer
@@ -33,17 +34,15 @@ class TypeLinkView(generics.ListAPIView):
     permission_classes = [permissions.AllowAny]
 
     def get(self, request, *args, **kwargs):
-        import_data(type_link,"type_link")
+        import_data(type_link, "type_link")
 
         return Response({"Message": "successful"}, status=status.HTTP_200_OK)
 
 
 class TypeNewLinkSchemasView(generics.CreateAPIView):
-
     permission_classes = [permissions.AllowAny]
 
     def post(self, request, *args, **kwargs):
-
         type_val = request.data.get("TYPE")
         culture_val = request.data.get("CULTURE")
         new_dict = {}
@@ -87,11 +86,9 @@ class TypeNewLinkSchemasView(generics.CreateAPIView):
 
 
 class TypeLinkDetailsView(generics.CreateAPIView):
-
     permission_classes = [permissions.AllowAny]
 
     def post(self, request, *args, **kwargs):
-
         obj = {
             "TO_TYPE": Q(TO_TYPE=request.data.get("TYPE")),
             "FROM_TYPE": Q(FROM_TYPE=request.data.get("TYPE")),
@@ -131,7 +128,7 @@ class TypeLinkDetailsView(generics.CreateAPIView):
         linkType = str("TYPE.") + str(linkType)
         qsLinkType = resources_types.objects.filter(ID=linkType, CULTURE=culture)
         print(linkType)
-        resource_list_LinkTypeserialzer = ResourceListDetailsSerializer(
+        resource_list_LinkTypeserialzer = ResourceTypesDetailsSerializer(
             qsLinkType, many=True
         )
 
@@ -141,12 +138,14 @@ class TypeLinkDetailsView(generics.CreateAPIView):
 
         for index in range(len(data)):
             try:
-                qsFrom = resources_types.objects.filter(ID=from_label_id, CULTURE=culture)
-                resource_list_Fromserialzer = ResourceListDetailsSerializer(
+                qsFrom = resources_types.objects.filter(
+                    ID=from_label_id, CULTURE=culture
+                )
+                resource_list_Fromserialzer = ResourceTypesDetailsSerializer(
                     qsFrom, many=True
                 )
                 qsTo = resources_types.objects.filter(ID=to_label_id, CULTURE=culture)
-                resource_list_Toserialzer = ResourceListDetailsSerializer(
+                resource_list_Toserialzer = ResourceTypesDetailsSerializer(
                     qsTo, many=True
                 )
                 if qsFrom:

@@ -360,7 +360,10 @@ class ItemLinkHierarchyView(generics.ListAPIView):
             self._getChild(serializer.data)
             for thread in self.threads:
                 thread.join()
-            return Response(serializer.data)
+            if serializer.data:
+                return Response(serializer.data)
+            else:
+                return Response(status=status.HTTP_204_NO_CONTENT)
 
     def _getChild(self, data):
         for index in range(len(data)):
@@ -401,16 +404,19 @@ class ItemLinkHierarchyView(generics.ListAPIView):
                 )
 
     def _add_elasticsearch(self, data="", is_first=False):
-        if is_first == True:
-            indices = list(self.es.indices.get_alias().keys())
-            if "hierarchy" in indices:
-                self.es.delete_by_query(
-                    index="hierarchy", body={"query": {"match_all": {}}}
-                )
-
-        else:
-            for item in data:
-                self.es.index(index="hierarchy", body=item)
+        try:
+            if is_first == True:
+                indices = list(self.es.indices.get_alias().keys())
+                print(indices)
+                if "hierarchy" in indices:
+                    self.es.delete_by_query(
+                        index="hierarchy", body={"query": {"match_all": {}}}
+                    )
+            else:
+                for item in data:
+                    self.es.index(index="hierarchy", body=item)
+        except Exception as e:
+            pass
 
 
 class TagsLinksSelectedView(generics.CreateAPIView):

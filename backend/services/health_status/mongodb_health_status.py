@@ -3,20 +3,22 @@ import os
 import datetime
 from kafka import KafkaProducer
 import json
-from helper import send_alarm
+from .helper import send_alarm
 
 
-try:
-    client = MongoClient(os.environ["Mongo_Client"])
-    db = client["test_database"]
-    coll = db["test_collection"]
-    count = coll.count_documents({})
-    print("MongoDB health check: OK")
+def mongoHealtCheck():
+    try:
+        client = MongoClient(os.environ["Mongo_Client"])
+        db = client["test_database"]
+        coll = db["test_collection"]
+        count = coll.count_documents({})
+        print("MongoDB health check: OK")
+        return True
 
-except Exception as e:
-    error_message = f"Error: Could not connect to MongoDB: {e}"
-    send_alarm(error_message,"Mongo-db")
-
+    except Exception as e:
+        error_message = f"Error: Could not connect to MongoDB: {e}"
+        send_alarm(error_message, "Mongo-db")
+        return False
 
 
 # HELPER FUNC BW

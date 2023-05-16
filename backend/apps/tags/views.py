@@ -32,7 +32,17 @@ import pandas as pd
 import numpy as np
 from apps.item_property.models import item_property
 from utils.utils import tag_import_mandorty
+from concurrent.futures import ThreadPoolExecutor
+import asyncio
+from utils.utils import redisCaching as Red
+from datetime import datetime
+import numpy as np
+import json
+import environ
+import redis
 
+env = environ.Env(DEBUG=(bool, False))
+rds = redis.StrictRedis(env("REDIS_HOST"), port=6379, db=0)
 # Create your views here.
 
 
@@ -135,19 +145,6 @@ class TagsDeleteView(generics.CreateAPIView):
         if qs:
             qs.delete()
         return Response("Succsessful", status=status.HTTP_200_OK)
-
-
-from concurrent.futures import ThreadPoolExecutor
-import asyncio
-from utils.utils import redisCaching as Red
-from datetime import datetime
-import numpy as np
-import json
-import environ
-import redis
-
-env = environ.Env(DEBUG=(bool, False))
-rds = redis.StrictRedis(env("REDIS_HOST"), port=6379, db=0)
 
 
 class TagsImportDeleteView(generics.ListAPIView):

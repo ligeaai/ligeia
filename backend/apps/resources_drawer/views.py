@@ -125,8 +125,8 @@ class DrawerView(generics.CreateAPIView):
             type_qs = Type.objects.filter(TYPE_CLASS="ITEM").values("LABEL_ID", "TYPE")
             id_list = [item["LABEL_ID"] for item in type_qs]
             for layer in self.layers:
-                print(layer)
-                # id_list.remove(layer)
+                # print(layer)
+                id_list.remove(layer)
             tempt = {}
             return self._tempt_add_resources_types(tempt, id_list, type_qs)
 

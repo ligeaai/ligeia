@@ -3,7 +3,7 @@ import os
 import json
 from kafka import KafkaProducer
 from datetime import datetime
-from helper import send_alarm
+from .helper import send_alarm
 
 
 def HealthCheckForPostgre():
@@ -19,11 +19,14 @@ def HealthCheckForPostgre():
         result = cur.fetchone()
         if result == (1,):
             print("PostgreSQL is up and running!")
+            return True
         else:
             print("PostgreSQL is not running.")
+            return False
     except (psycopg2.OperationalError, psycopg2.DatabaseError) as e:
         error_message = ("Error connecting to PostgreSQL:", str(e))
         send_alarm(error_message, "Postgre-SQL")
+        return False
     finally:
         cur.close()
         conn.close()

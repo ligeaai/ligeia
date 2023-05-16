@@ -17,7 +17,6 @@ from utils.utils import import_data
 
 
 class UomUnitSaveView(generics.CreateAPIView):
-
     serializer_class = UomUnitDetailsSerializer
     permission_classes = [permissions.AllowAny]
 
@@ -34,12 +33,11 @@ class UomUnitScriptView(generics.ListAPIView):
     permission_classes = [permissions.AllowAny]
 
     def get(self, request, *args, **kwargs):
-        import_data(uom_base_unit,"uom_unit")
+        import_data(uom_base_unit, "uom_base_unit")
         return Response({"Message": "Succsessfull"}, status=status.HTTP_200_OK)
 
 
 class UomUnitDetailView(generics.CreateAPIView):
-
     serializer_class = UomUnitDetailsSerializer
     permission_classes = [permissions.AllowAny]
 
@@ -97,7 +95,6 @@ class UomUnitsNameView(generics.CreateAPIView):
 
 
 class BaseUomEditorSaveUpdateView(generics.CreateAPIView):
-
     permission_classes = [permissions.AllowAny]
 
     def post(self, request, *args, **kwargs):

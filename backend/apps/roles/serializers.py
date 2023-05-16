@@ -2,6 +2,7 @@ import uuid
 from rest_framework import serializers
 from .models import roles
 
+
 class RolesSaveSerializer(serializers.ModelSerializer):
     class Meta:
         model = roles
@@ -13,6 +14,13 @@ class RolesPropertySerializer(serializers.ModelSerializer):
         depth = 1
         model = roles
         fields = ["PROPERTY_ID"]
+
+
+class RolesPropertyNameSerializer(serializers.ModelSerializer):
+    class Meta:
+        depth = 1
+        model = roles
+        fields = ["PROPERTY_ID", "ROLES_NAME"]
 
 
 class RolesSaveAndUpdatePropertySaveSerializer(serializers.ModelSerializer):
