@@ -17,15 +17,25 @@ import "../../../assets/styles/page/overview/popUpLayout.scss";
 const StepOne = () => {
   const dispatch = useDispatch();
   const EnableTitles = useSelector(
-    (state) => state.overviewDialog.highchartProps["Show Enable Name"]
+    (state) => state.overviewDialog.highchartProps["Show Name"]
   );
   const EnableHorizontal = useSelector(
     (state) => state.overviewDialog.highchartProps["Show Horizontal"]
   );
 
+  const UnitOfMeasurement = useSelector(
+    (state) => state.overviewDialog.highchartProps["Show Unit of Measurement"]
+  );
+
+  const Measurement = useSelector(
+    (state) => state.overviewDialog.highchartProps["Show Measurement"]
+  );
+
   const values = {
-    "Enable Name": EnableTitles,
+    Name: EnableTitles,
     Horizontal: EnableHorizontal,
+    "Unit of Measurement": UnitOfMeasurement,
+    Measurement: Measurement,
   };
   const handleChangeFunc = (key, val) => {
     dispatch(changeValeus(key, val));
@@ -44,6 +54,7 @@ const StepOne = () => {
               <PopUpItem type="text" title="Name" nullTrue={true} />
               <PopUpItem type="number" title="Name Font Size(em)" />
               <PopUpItem type="number" title="Widget Refresh (seconds)" />
+              <PopUpItem type="number" title="Decimal Places" />
               <PopUpItem type="number" title="UOM Font Size" />
               <PopUpItem type="number" title="Value Font Size" />
               <PopUpItem type="number" title="Header Font Size" />
@@ -55,33 +66,35 @@ const StepOne = () => {
         <Grid container>
           <Grid item xs={12}>
             <List>
-              {["Enable Name", "Horizontal"].map((value) => {
-                const labelId = `checkbox-list-label-${value}`;
-                return (
-                  <ListItem key={value} disablePadding>
-                    <ListItemButton
-                      role={undefined}
-                      onClick={() => {
-                        handleChangeFunc(`Show ${value}`, !values[value]);
-                      }}
-                      dense
-                    >
-                      <ListItemIcon>
-                        <Checkbox
-                          edge="start"
-                          checked={
-                            value === "Name" ? !values[value] : values[value]
-                          }
-                          tabIndex={-1}
-                          disableRipple
-                          inputProps={{ "aria-labelledby": labelId }}
-                        />
-                      </ListItemIcon>
-                      <ListItemText id={labelId} primary={`${value}`} />
-                    </ListItemButton>
-                  </ListItem>
-                );
-              })}
+              {["Name", "Horizontal", "Unit of Measurement", "Measurement"].map(
+                (value) => {
+                  const labelId = `checkbox-list-label-${value}`;
+                  return (
+                    <ListItem key={value} disablePadding>
+                      <ListItemButton
+                        role={undefined}
+                        onClick={() => {
+                          handleChangeFunc(`Show ${value}`, !values[value]);
+                        }}
+                        dense
+                      >
+                        <ListItemIcon>
+                          <Checkbox
+                            edge="start"
+                            checked={
+                              value === "Name" ? !values[value] : values[value]
+                            }
+                            tabIndex={-1}
+                            disableRipple
+                            inputProps={{ "aria-labelledby": labelId }}
+                          />
+                        </ListItemIcon>
+                        <ListItemText id={labelId} primary={`${value}`} />
+                      </ListItemButton>
+                    </ListItem>
+                  );
+                }
+              )}
             </List>
           </Grid>
         </Grid>

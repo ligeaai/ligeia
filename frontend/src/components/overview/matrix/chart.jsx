@@ -1,26 +1,68 @@
 import React from "react";
+import $ from "jquery";
 import Box from "@mui/material/Box";
 import DataGrid from "../../datagrid/dataGrid";
 import "../../../assets/styles/components/overview/matrixWidget.scss";
 import DataGridCell from "./dataGridCell";
+
 const Matrix = ({ highchartProps }) => {
   const [columns, setColumns] = React.useState([]);
   const [rows, setRows] = React.useState([]);
+
+  const valueFormatter = (data) => {
+    return `${parseFloat(
+      parseFloat(data).toFixed(
+        highchartProps?.["Decimal Places"] === ""
+          ? 3
+          : highchartProps?.["Decimal Places"]
+      )
+    )} `;
+  };
+  const handlePropChange = () => {
+    $(".matrix-widget-container__val").css({
+      "font-size":
+        highchartProps?.["Value Font Size"] !== ""
+          ? highchartProps?.["Value Font Size"] + "px"
+          : "12px",
+      display: highchartProps?.["Show Measurement"] ? "inline-block" : "none",
+    });
+
+    $(".matrix-widget-container__uom").css({
+      "font-size":
+        highchartProps?.["UOM Font Size"] !== ""
+          ? highchartProps?.["UOM Font Size"] + "px"
+          : "12px",
+      display: highchartProps?.["Show Unit of Measurement"]
+        ? "inline-block"
+        : "none",
+    });
+  };
   React.useEffect(() => {
     let column = [{ field: "tag", headerName: " ", flex: 2 }];
+    console.log(highchartProps?.["Show Measurement"]);
     Promise.all(
       highchartProps?.Assets?.map((e) => {
         column.push({
           field: e[0],
           headerName: e[1],
           flex: 1,
+          headerClassName: "matrix-widget-container__datagrid__header",
           renderCell: (params) => {
-            return <DataGridCell {...params} />;
+            console.log(highchartProps?.["Show Measurement"]);
+            return (
+              <DataGridCell
+                {...params}
+                handlePropChange={handlePropChange}
+                valueFormatter={valueFormatter}
+              />
+            );
           },
         });
       })
     );
+
     setColumns(column);
+
     let shortnames = {};
     Promise.all(
       highchartProps?.Inputs?.map((e, i) => {
@@ -43,59 +85,53 @@ const Matrix = ({ highchartProps }) => {
           tag: temp[0].SHORT_NAME,
         };
         temp.map((e) => {
-          console.log(e);
-          rowItem = { ...rowItem, [e.ITEM_ID]: e.TAG_ID };
+          rowItem = {
+            ...rowItem,
+            [e.ITEM_ID]: e.TAG_ID,
+            [e.ITEM_ID + "UOM"]: e?.UOM ? e.UOM : "",
+          };
         });
         row.push(rowItem);
       })
     );
-    console.log(row);
     setRows(row);
-  }, []);
+  }, [highchartProps.Inputs]);
+  React.useEffect(() => {
+    handlePropChange();
+  }, [highchartProps]);
+
+  React.useEffect(() => {
+    highchartProps?.Inputs.map((e) => {
+      $(`.matrix-widget-container__${e.TAG_ID}__val`).html(
+        valueFormatter(
+          parseFloat($(`.matrix-widget-container__${e.TAG_ID}__val`).html())
+        )
+      );
+    });
+  }, [highchartProps?.["Decimal Places"]]);
   return (
-    <Box className="matrix-widget-container">
-      <DataGrid columns={columns} rows={rows} />
+    <Box
+      className={`matrix-widget-container`}
+      sx={{
+        height: "100%",
+        display: "flex",
+        flexDirection: "column",
+        "& .matrix-widget-container__datagrid__header": {
+          fontSize: highchartProps?.["Header Font Size"]
+            ? highchartProps?.["Header Font Size"] + "px"
+            : "14px",
+        },
+      }}
+    >
+      <DataGrid
+        columns={columns}
+        rows={rows}
+        components={{}}
+        // orientation="horizontal"
+        // autoHeight
+      />
     </Box>
   );
-
-  //   return (
-  //     <Box sx={{ width: width, height: height }}>
-  //       <Grid container>
-  //         <Grid item xs={8}>
-  //           <Box sx={{ width: (width * 8) / 12, height: height }}>
-  //             <DataGrid columns={[]} rows={[]} />
-  //           </Box>
-  //         </Grid>
-  //         <Grid item xs={4} sx={{ p: 2 }}>
-  //           <Grid
-  //             container
-  //             sx={{ border: "1px solid black", boxShadow: 1, p: 0.5 }}
-  //           >
-  //             <Grid item xs={6}>
-  //               Machine:
-  //             </Grid>
-  //             <Grid item xs={6}></Grid>
-  //             <Grid item xs={6}>
-  //               Speed:
-  //             </Grid>
-  //             <Grid item xs={6}></Grid>
-  //             <Grid item xs={6}>
-  //               Load:
-  //             </Grid>
-  //             <Grid item xs={6}></Grid>
-  //             <Grid item xs={6}>
-  //               State:
-  //             </Grid>
-  //             <Grid item xs={6}></Grid>
-  //             <Grid item xs={6}>
-  //               Alarm:
-  //             </Grid>
-  //             <Grid item xs={6}></Grid>
-  //           </Grid>
-  //         </Grid>
-  //       </Grid>
-  //     </Box>
-  //   );
 };
 
 export default Matrix;

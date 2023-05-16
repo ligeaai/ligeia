@@ -3,15 +3,11 @@ import $ from "jquery";
 import { wsBaseUrl } from "../../../services/baseApi";
 
 var W3CWebSocket = require("websocket").w3cwebsocket;
-const DataGridCell = (params) => {
+const DataGridCell = ({ handlePropChange, valueFormatter, ...params }) => {
   React.useEffect(() => {
+    handlePropChange();
     var client;
-    console.log(params);
     if (params?.row?.[params.field]) {
-      $(`.matrix-widget-container__${params?.row?.[params.field]}`).html(
-        params?.row?.[params.field]
-      );
-
       client = new W3CWebSocket(
         `${wsBaseUrl}/ws/live/last_data/${params?.row?.[params.field]}`
       );
@@ -29,11 +25,15 @@ const DataGridCell = (params) => {
           if (client.readyState === client.OPEN) {
             if (typeof e.data === "string") {
               let data = JSON.parse(e.data);
-              Object.keys(data).map((e) => {
-                $(
-                  `.matrix-widget-container__${params?.row?.[params.field]}`
-                ).html(data[e][2]);
-              });
+              Promise.all(
+                Object.keys(data).map((e) => {
+                  $(
+                    `.matrix-widget-container__${
+                      params?.row?.[params.field]
+                    }__val`
+                  ).html(valueFormatter(data[e][2]));
+                })
+              );
               return data;
             }
           }
@@ -42,14 +42,30 @@ const DataGridCell = (params) => {
       };
     }
     return () => {
-      client && client.onclose();
+      client && client.close();
     };
   }, []);
+
   return (
     <div
-      className={`matrix-widget-container__${params?.row?.[params.field]}`}
-    />
+      className={`matrix-widget-container__${
+        params?.row?.[params.field]
+      } matrix-widget-container__cell`}
+    >
+      <span
+        className={`matrix-widget-container__${params?.row?.[params.field]}__val
+        matrix-widget-container__val`}
+      ></span>
+      <span
+        className={`matrix-widget-container__${
+          params?.row?.[params.field]
+        }__uom 
+        matrix-widget-container__uom`}
+      >
+        {params?.row?.[`${params.field + "UOM"}`]}
+      </span>
+    </div>
   );
 };
 
-export default DataGridCell;
+export default React.memo(DataGridCell);

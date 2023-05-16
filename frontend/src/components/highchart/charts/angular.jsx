@@ -51,7 +51,8 @@ const Angular = ({ highchartProps, width, height }) => {
           if (typeof e.data === "string") {
             let data = JSON.parse(e.data);
             Object.keys(data).map((e) => {
-              setCategories((prev) => new Date(data[e][1] * 1000));
+              console.log(data[e][2]);
+              setCategories((prev) => new Date(data[e][1]));
               setValue((prev) => data[e][2]);
             });
             return data;
@@ -120,7 +121,7 @@ const Angular = ({ highchartProps, width, height }) => {
     // the value axis
     yAxis: {
       min: 0,
-      max: 150,
+      max: 1000,
       tickPixelInterval: 72,
       tickPosition: "inside",
       tickColor: Highcharts.defaultOptions.chart.backgroundColor || "#FFFFFF",

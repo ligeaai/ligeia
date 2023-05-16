@@ -14,7 +14,7 @@ import {
 import { changeValeus } from "../../../services/actions/overview/overviewDialog";
 import PopUpItem from "./popUpItem";
 import "../../../assets/styles/page/overview/popUpLayout.scss";
-const CreateWidget = () => {
+const CreateWidget = ({ enableExport = true }) => {
   const dispatch = useDispatch();
   const Name = useSelector(
     (state) => state.overviewDialog.highchartProps["Show Name"]
@@ -33,7 +33,7 @@ const CreateWidget = () => {
     (state) => state.overviewDialog.highchartProps["Show Timestamp"]
   );
   const EnableExport = useSelector(
-    (state) => state.overviewDialog.highchartProps["Show Enable Export"]
+    (state) => state.overviewDialog.highchartProps?.["Show Enable Export"]
   );
 
   const values = {
@@ -81,32 +81,34 @@ const CreateWidget = () => {
                 "Measurement",
                 "Unit of Measurement",
                 "Timestamp",
-                "Enable Export",
+                enableExport && "Enable Export",
               ].map((value) => {
                 const labelId = `checkbox-list-label-${value}`;
                 return (
-                  <ListItem key={value} disablePadding>
-                    <ListItemButton
-                      role={undefined}
-                      onClick={() => {
-                        handleChangeFunc(`Show ${value}`, !values[value]);
-                      }}
-                      dense
-                    >
-                      <ListItemIcon>
-                        <Checkbox
-                          edge="start"
-                          checked={
-                            value === "Name" ? !values[value] : values[value]
-                          }
-                          tabIndex={-1}
-                          disableRipple
-                          inputProps={{ "aria-labelledby": labelId }}
-                        />
-                      </ListItemIcon>
-                      <ListItemText id={labelId} primary={`${value}`} />
-                    </ListItemButton>
-                  </ListItem>
+                  value && (
+                    <ListItem key={value} disablePadding>
+                      <ListItemButton
+                        role={undefined}
+                        onClick={() => {
+                          handleChangeFunc(`Show ${value}`, !values[value]);
+                        }}
+                        dense
+                      >
+                        <ListItemIcon>
+                          <Checkbox
+                            edge="start"
+                            checked={
+                              value === "Name" ? !values[value] : values[value]
+                            }
+                            tabIndex={-1}
+                            disableRipple
+                            inputProps={{ "aria-labelledby": labelId }}
+                          />
+                        </ListItemIcon>
+                        <ListItemText id={labelId} primary={`${value}`} />
+                      </ListItemButton>
+                    </ListItem>
+                  )
                 );
               })}
             </List>

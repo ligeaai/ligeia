@@ -23,7 +23,7 @@ function MeasuremenCustom() {
     dispatch(fillMandatory([["Name"], ["Measurement"]]));
   }, []);
   return [
-    ["Properties", <CreateWidget />],
+    ["Properties", <CreateWidget enableExport={false} />],
     ["Measurement", <ChoseMeasure />],
     [
       "Stops",
