@@ -106,9 +106,10 @@ MIDDLEWARE = [
     "django.middleware.locale.LocaleMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "apps.middleware.user_role.UserRoleMiddleware",
-    # "apps.middleware.test.TestMiddleware",
+    "apps.middleware.change_db.ChangeDBMiddleware",
     # "social_django.middleware.SocialAuthExceptionMiddleware",
 ]
+
 
 ROOT_URLCONF = "core.urls"
 ASGI_APPLICATION = "core.asgi.application"

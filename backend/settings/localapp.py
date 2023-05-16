@@ -26,5 +26,6 @@ modelApp = [
     "apps.notifications",
     "apps.websocket",
     "apps.workflows",
+    "apps.customcommand",
 ]
 #     "apps.uom",
