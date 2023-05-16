@@ -9,6 +9,10 @@ class layer(models.Model):
         primary_key=True,
         null=False,
     )
+    DATA_SOURCE = models.CharField(
+        max_length=100,
+        null=True,
+    )
     LAYER_LEVEL = models.CharField(
         max_length=100,
         null=False,
@@ -24,12 +28,10 @@ class layer(models.Model):
         null=True,
     )
     LAST_UPDT_DATE = models.DateField(
-        default=timezone.now,
         null=True,
     )
     VERSION = models.CharField(
         max_length=32,
-        default=uuid.uuid4,
         null=False,
     )
     DB_ID = models.CharField(
@@ -38,7 +40,6 @@ class layer(models.Model):
     )
     ROW_ID = models.CharField(
         max_length=32,
-        default=uuid.uuid4,
         null=False,
     )
     STATUS = models.CharField(

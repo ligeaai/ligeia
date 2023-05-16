@@ -8,6 +8,7 @@ from apps.templates.orm_CodeList import CodeListORM
 from services.logging.Handlers import KafkaLogger
 from services.parsers.addData.type import typeAddData
 from utils.utils import redisCaching as Red
+
 # Create your views here.
 from .models import code_list
 from .serializers import (
@@ -26,32 +27,40 @@ from utils.models_utils import (
 )
 
 from utils.utils import import_data
-from utils.permissions.admin import CreatePermission,ReadPermission,UpdatePermission,DeletePermission
+from utils.permissions.admin import (
+    CreatePermission,
+    ReadPermission,
+    UpdatePermission,
+    DeletePermission,
+)
+
 create_per = CreatePermission(model_type="CODE_LIST")
 read_per = CreatePermission(model_type="CODE_LIST")
 update_per = CreatePermission(model_type="CODE_LIST")
 delete_per = CreatePermission(model_type="CODE_LIST")
 logger = KafkaLogger()
 
+
 class CodeListSaveScriptView(generics.CreateAPIView):
     authentication_classes = ()
-    permission_classes = [permissions.AllowAny,create_per]
+    permission_classes = [permissions.AllowAny, create_per]
     serializer_class = CodeListSaveSerializer
 
     def create(self, request, *args, **kwargs):
-        del request.data['HIERARCHY']
+        del request.data["HIERARCHY"]
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        serializer.save()
+        serializer.save(request.data)
         return Response({"Message": "Successful"}, status=status.HTTP_200_OK)
+
 
 class CodeListUpdateView(generics.CreateAPIView):
     authentication_classes = ()
-    permission_classes = [permissions.AllowAny,update_per]
+    permission_classes = [permissions.AllowAny, update_per]
     serializer_class = CodeListSaveSerializer
 
     def post(self, request, *args, **kwargs):
-        del request.data['HIERARCHY']
+        del request.data["HIERARCHY"]
         serializer = CodeListSaveSerializer(data=request.data)
         serializer.is_valid()
         serializer.save(request.data)
@@ -63,7 +72,6 @@ class CodeListSaveAndUpdateNewView(generics.UpdateAPIView):
     permission_classes = [permissions.AllowAny]
 
     def put(self, request, *args, **kwargs):
-
         serializer = CodeListCustomNewSerializer(data=request.data)
         serializer.is_valid()
         message = serializer.save(request)
@@ -76,7 +84,6 @@ class CodeListSaveAndUpdateView(generics.UpdateAPIView):
     permission_classes = [permissions.AllowAny]
 
     def put(self, request, *args, **kwargs):
-
         serializer = CodeListCustomSerializer(data=request.data)
         Red.delete(str(request.user) + request.data.get("HIERARCHY")[0])
         serializer.is_valid()
@@ -101,7 +108,11 @@ class CodeListWIDGET_TYPEView(generics.ListAPIView):
     permission_classes = [permissions.AllowAny]
 
     def get(self, request, *args, **kwargs):
-        queryset = code_list.objects.filter(LIST_TYPE="WIDGET_TYPE").order_by('CODE_TEXT').values_list('CODE_TEXT',flat =True)
+        queryset = (
+            code_list.objects.filter(LIST_TYPE="WIDGET_TYPE")
+            .order_by("CODE_TEXT")
+            .values_list("CODE_TEXT", flat=True)
+        )
         return Response(queryset, status=status.HTTP_200_OK)
 
 
@@ -110,10 +121,54 @@ class CodeListView(generics.ListAPIView):
     permission_classes = [permissions.AllowAny]
 
     def get(self, request, *args, **kwargs):
-        
-        import_data(code_list,"code_list")
+        import_data(code_list, "code_list")
 
         return Response({"Message": "successful"}, status=status.HTTP_200_OK)
+
+
+from apps.layer.helpers import change_db
+from django.db.models import Q
+import importlib
+
+
+class CodeListLayerDbView(generics.ListAPIView):
+    serializer_class = CodeListSaveSerializer
+    permission_classes = [permissions.AllowAny]
+
+    def get(self, request, *args, **kwargs):
+        change_db("default")
+        queryset = code_list.objects.filter(
+            Q(LIST_TYPE="DB"), ~Q(CODE="IMAGES")
+        ).values("CODE_TEXT", "CHAR1", "CHAR2", "ROW_ID", "CODE")
+
+        return Response(queryset, status=status.HTTP_200_OK)
+
+
+class CodeListLayerDbEngineView(generics.ListAPIView):
+    serializer_class = CodeListSaveSerializer
+    permission_classes = [permissions.AllowAny]
+
+    def get(self, request, *args, **kwargs):
+        change_db("default")
+        """The models variable retrieves the parent records of the data that has the DB Code.
+            A for loop checks the status of these records based on their char1 and char2 values,
+            and returns the status."""
+
+        models = code_list.objects.filter(PARENT=kwargs["code"]).values(
+            "CODE_TEXT", "CHAR1", "CHAR2", "VAL1"
+        )
+        for model in models:
+            modul_path, modul_name = model.pop("CHAR1").split(",")
+            module_import = importlib.import_module(modul_path)
+            functions = getattr(module_import, modul_name)
+            response_value = False
+            if functions:
+                response_value = functions()
+                model["status"] = response_value
+                model["HOST"] = model.pop("CODE_TEXT")
+                model["ENGINE"] = model.pop("CHAR2")
+                model["PORT"] = int(model.pop("VAL1"))
+        return Response(models, status=status.HTTP_200_OK)
 
 
 class CodeListParentView(generics.CreateAPIView):
@@ -129,7 +184,7 @@ class CodeListParentView(generics.CreateAPIView):
         queryset = code_list.objects.filter(
             LIST_TYPE=list_types,
             CULTURE=culture,
-        ).order_by('CODE_TEXT')
+        ).order_by("CODE_TEXT")
         validate_find(queryset, request=request)
         serializer = CodeListDetailsSerializer(queryset, many=True)
         serializer = null_value_to_space(serializer.data, request=request)
@@ -140,13 +195,11 @@ class CodeListParentView(generics.CreateAPIView):
 
 
 class CodeListDetailView(generics.CreateAPIView):
-
     serializer_class = CodeListDetailsSerializer
     authentication_classes = []
     permission_classes = [permissions.AllowAny]
 
     def post(self, request, *args, **kwargs):
-
         if request.data.get("ROW_ID"):
             cache_key = str(request.user) + request.data.get("ROW_ID")
 
@@ -224,7 +277,7 @@ class CodeListParentDeleteView(generics.CreateAPIView):
 
 
 class CodeListDeleteView(generics.CreateAPIView):
-    permission_classes = [permissions.AllowAny,delete_per]
+    permission_classes = [permissions.AllowAny, delete_per]
 
     def post(self, request, *args, **kwargs):
         message = "Codelist deletion successful"
@@ -243,10 +296,9 @@ class CodeListDeleteView(generics.CreateAPIView):
 
 
 class CodeListDeepDetailView(generics.CreateAPIView):
-    permission_classes = [permissions.AllowAny,read_per]
+    permission_classes = [permissions.AllowAny, read_per]
 
     def post(self, request, *args, **kwargs):
-
         cache_key = str(request.user) + request.data.get("ROW_ID")
         cache_data = Red.get(cache_key)
         if cache_data:

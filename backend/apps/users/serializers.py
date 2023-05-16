@@ -6,6 +6,9 @@ from django.utils.translation import gettext_lazy as _
 from rest_framework import serializers, status
 from rest_framework.response import Response
 from apps.roles.models import roles
+from apps.layer.serializers import LayerDropDownSerializer
+from apps.roles.serializers import RolesPropertyNameSerializer
+
 # from .models import User
 from utils.utils import validate_email as email_is_valid
 
@@ -16,16 +19,43 @@ User = get_user_model()
 from rest_framework.serializers import ModelSerializer
 
 
+class UserChangeDbSerializer(ModelSerializer):
+    class Meta:
+        fields = "__all__"
+        model = User
+
+
 class UserModelSerializer(ModelSerializer):
     class Meta:
         print("in meda")
         exclude = ("password",)
         model = User
 
-class UserModelDepthSerializer(ModelSerializer):
+
+class UserModelDepth2Serializer(ModelSerializer):
     class Meta:
         depth = 3
         exclude = ("password",)
+        model = User
+
+    def get_layer_name(self, obj):
+        temp = []
+        for item in obj:
+            temp.append(item.get("LAYER_NAME"))
+        return temp
+
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        representation["layer_name"] = self.get_layer_name(representation["layer_name"])
+        return representation
+
+
+class UserModelDepthSerializer(ModelSerializer):
+    class Meta:
+        depth = 3
+        exclude = [
+            "password",
+        ]
         model = User
 
 
@@ -44,11 +74,11 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
         extra_kwargs = {"password": {"write_only": True}}
 
     def create(self, validated_data):
-        roles_id = (roles.objects.filter(LAYER_NAME = "STD",ROLES_NAME = "User")
-                                 .first())
-        validated_data['role'] = roles_id
+        roles_id = roles.objects.filter(LAYER_NAME="STD", ROLES_NAME="User").first()
+        validated_data["role"] = roles_id
         user = User.objects.create(**validated_data)
-        user.layer_name.set(['STD'])
+        user.layer_name.set(["STD"])
+        user.active_layer.set(["STD"])
         user.set_password(validated_data["password"])
         user.save()
         return user
@@ -71,6 +101,7 @@ class UserLoginSerializer(serializers.Serializer):
 
     def validate(self, data):
         from rest_framework.exceptions import ValidationError
+
         email = data.get("email")
         password = data.get("password")
 
@@ -82,15 +113,14 @@ class UserLoginSerializer(serializers.Serializer):
                 user_qs = User.objects.filter(email=email)
                 if user_qs:
                     msg = _("Unable to log in with provided credentials(Password).")
-                    raise serializers.ValidationError({"Message":msg}, code="authorization")
+                    raise serializers.ValidationError(
+                        {"Message": msg}, code="authorization"
+                    )
                 else:
                     msg = _("Account doesn't exists")
-                    raise serializers.ValidationError({"Message":msg}, code="authorization")
-        
-            
-
-
-
+                    raise serializers.ValidationError(
+                        {"Message": msg}, code="authorization"
+                    )
 
         else:
             msg = _('Must include "username" and "password".')
@@ -98,9 +128,6 @@ class UserLoginSerializer(serializers.Serializer):
 
         data["user"] = user
         return data
-
-
-
 
 
 class ChangePasswordSerializer(serializers.Serializer):
@@ -136,7 +163,6 @@ class ChangePasswordSerializer(serializers.Serializer):
 
 
 class ForgetPasswordSerializer(serializers.Serializer):
-
     email = serializers.EmailField(required=True)
 
     class Meta:

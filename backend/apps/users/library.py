@@ -37,7 +37,9 @@ from .serializers import (
     UserModelSerializer,
     UserRegistrationSerializer,
     UserSerializer,
-    UserModelDepthSerializer
+    UserChangeDbSerializer,
+    UserModelDepth2Serializer,
+    UserModelDepthSerializer,
 )
 
 logger = KafkaLogger()

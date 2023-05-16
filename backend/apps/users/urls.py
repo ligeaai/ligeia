@@ -16,9 +16,9 @@ from .auth_views import (
 from .update_views import (
     UserInfoUpdateView,
     UserLayerUpdate,
+    UserActiveLayerUpdateView,
     UserRoleUpdate,
     UserRoleDeleteView,
-
 )
 
 
@@ -69,10 +69,14 @@ urlpatterns = [
         ResetForgetPassword.as_view(),
         name="resetnewpassword",
     ),
-    
     path("user/info/update/", UserInfoUpdateView.as_view(), name="UserInfoUpdateView"),
     path("user/check/", UserCheckView.as_view(), name="UserCheckView"),
-    path("users/get/roleid/", GetUserByRoleIdView.as_view(), name="GetUserByRoleIdView"),
+    path(
+        "users/get/roleid/", GetUserByRoleIdView.as_view(), name="GetUserByRoleIdView"
+    ),
+    path(
+        "users/active/layer/", UserActiveLayerUpdateView.as_view(), name="switch layer"
+    ),
     path("users/roles/", GetUserRolesView.as_view(), name="GetUserRolesView"),
     path("user/layer/update/", UserLayerUpdate.as_view(), name="UserLayerUpdate"),
     path("user/role/update/", UserRoleUpdate.as_view(), name="UserRoleUpdate"),

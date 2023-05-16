@@ -8,17 +8,14 @@ class UserCheckView(generics.GenericAPIView):
     def post(self, request, *args, **kwargs):
         try:
             is_available = False
-            user = User.objects.filter(email = request.data.get('email'))
+            user = User.objects.filter(email=request.data.get("email"))
             if user:
                 is_available = True
-          
+
             return Response(is_available, status=status.HTTP_200_OK)
         except Exception as e:
-            logger.warning(
-            request=request, message=str(e), warning=e
-        )
-            return Response({"error":str(e)}, status=status.HTTP_400_BAD_REQUEST)
-
+            logger.warning(request=request, message=str(e), warning=e)
+            return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
 
 class UserModelViewSet(ModelViewSet):
@@ -33,12 +30,13 @@ class UserModelViewSet(ModelViewSet):
     http_method_names = ("head", "option", "get")
 
 
+from apps.layer.helpers import to_layerDb
+
+
 class UserDetails(generics.ListAPIView):
     queryset = User.objects.none()
     serializer_class = UserModelDepthSerializer
-    authentication_classes = [
-        TokenAuthentication,
-    ]
+    permissions_classes = [AllowAny]
 
     def list(self, request):
         try:
@@ -46,44 +44,48 @@ class UserDetails(generics.ListAPIView):
             serializer = self.serializer_class(queryset)
             logger.info(request=request, message="User details listed")
             if request.role:
-                serializer.data["role"]['PROPERTY_ID'] = request.role
-            return Response(serializer.data, status=status.HTTP_200_OK)
+                serializer.data["role"]["PROPERTY_ID"] = request.role
+
+            data = serializer.data
+            user = User.objects.filter(email=request.user)[0]
+            data["layer_name"] = list(
+                user.layer_name.values_list("LAYER_NAME", flat=True)
+            )
+            try:
+                data["active_layer"] = user.active_layer.LAYER_NAME
+            except:
+                print(user)
+                to_layerDb("STD")
+                user = User.objects.filter(email=request.user)[0]
+                data["active_layer"] = user.active_layer.LAYER_NAME
+            return Response(data, status=status.HTTP_200_OK)
         except Exception as e:
             logger.warning(
                 request=request, message="user details could not be listed", warning=e
             )
-            return Response({"error":str(e)}, status=status.HTTP_400_BAD_REQUEST)
+            print(str(e))
+            return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
 
 class UserList(generics.ListAPIView):
     queryset = User.objects.all()
-    serializer_class = UserModelDepthSerializer
+    serializer_class = UserModelDepth2Serializer
     authentication_classes = [
         TokenAuthentication,
     ]
     permission_classes = []
 
     def list(self, request):
-        # Note the use of `get_queryset()` instead of `self.queryset`
         try:
             queryset = self.get_queryset()
-            serializer = UserModelDepthSerializer(queryset, many=True)
+            serializer = UserModelDepth2Serializer(queryset, many=True)
             logger.info(request=request, message="All users listed")
             return Response(serializer.data, status=status.HTTP_200_OK)
         except Exception as e:
             logger.warning(
                 request=request, message="All Users could not be listed", warning=e
             )
-            return Response({"error":str(e)}, status=status.HTTP_400_BAD_REQUEST)
-
-
-
-
-
-
-
-
-
+            return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
 
 # class ForgetPasswordChange(generics.GenericAPIView):
@@ -95,8 +97,6 @@ class UserList(generics.ListAPIView):
 #         phone = request.data.get("phone", False)
 #         otp = request.data.get("otp", False)
 #         password = request.data.get("password", False)
-
-
 
 
 class UserConfirmEmailView(AtomicMixin, GenericAPIView):
@@ -116,9 +116,11 @@ class UserConfirmEmailView(AtomicMixin, GenericAPIView):
             return Response(status=status.HTTP_404_NOT_FOUND)
         except Exception as e:
             logger.warning(
-                request=request, message="Failed  Receive an activation key as parameter and confirm emai", warning=e
+                request=request,
+                message="Failed  Receive an activation key as parameter and confirm emai",
+                warning=e,
             )
-            return Response({"error":str(e)}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
 
 class UserEmailConfirmationStatusView(generics.GenericAPIView):
@@ -132,9 +134,11 @@ class UserEmailConfirmationStatusView(generics.GenericAPIView):
             return Response({"status": user.confirmed_email}, status=status.HTTP_200_OK)
         except Exception as e:
             logger.warning(
-                request=request, message="Failed user current confirmed email ", warning=e
+                request=request,
+                message="Failed user current confirmed email ",
+                warning=e,
             )
-            return Response({"error":str(e)}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
 
 class GetUserRolesView(generics.GenericAPIView):
@@ -143,14 +147,14 @@ class GetUserRolesView(generics.GenericAPIView):
 
     def get(self, request, *args, **kwargs):
         try:
-            qs = User.objects.filter(role = None,layer_name = "OG_STD")
-            serializer = UserSerializer(qs,many = True)
+            qs = User.objects.filter(role=None, layer_name="OG_STD")
+            serializer = UserSerializer(qs, many=True)
             return Response(serializer.data)
         except Exception as e:
             logger.warning(
                 request=request, message="Failed  get user roles ", warning=e
             )
-            return Response({"Message":str(e)}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"Message": str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
 
 class GetUserByRoleIdView(generics.GenericAPIView):
@@ -159,11 +163,13 @@ class GetUserByRoleIdView(generics.GenericAPIView):
 
     def post(self, request, *args, **kwargs):
         try:
-            qs = User.objects.filter(role = request.data.get('ROLES_ID'),layer_name = "OG_STD")
-            serializer = UserSerializer(qs,many = True)
+            qs = User.objects.filter(
+                role=request.data.get("ROLES_ID"), layer_name="OG_STD"
+            )
+            serializer = UserSerializer(qs, many=True)
             return Response(serializer.data)
         except Exception as e:
             logger.warning(
                 request=request, message="Failed  get user By roles id ", warning=e
             )
-            return Response({"Message":str(e)}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"Message": str(e)}, status=status.HTTP_400_BAD_REQUEST)

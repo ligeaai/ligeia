@@ -14,6 +14,8 @@ from .views import (
     CodeListTypeDetailView,
     CodeListWIDGET_TYPEView,
     CodeListUpdateView,
+    CodeListLayerDbEngineView,
+    CodeListLayerDbView,
 )
 
 from .elasticsearch.es_view import ESCodeListViewSet
@@ -37,6 +39,12 @@ urlpatterns = [
     path("scripts/", CodeListView.as_view(), name="code-list"),
     path("details/", CodeListDetailView.as_view(), name="clDetails"),
     path("details/parent/", CodeListParentView.as_view(), name="clDetailsParent"),
+    path("layer/db/", CodeListLayerDbView.as_view(), name="layer db models"),
+    path(
+        "layer/db/engine/<str:code>/",
+        CodeListLayerDbEngineView.as_view(),
+        name="layer db model engine",
+    ),
     path("deep-details/", CodeListDeepDetailView.as_view(), name="clDetails"),
     path(
         "delete-child/",
