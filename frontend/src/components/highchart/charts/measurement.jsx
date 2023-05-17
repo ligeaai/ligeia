@@ -1,16 +1,17 @@
 import React from "react";
+import $ from "jquery";
+
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import { wsBaseUrl } from "../../../services/baseApi";
 import { dateFormatDDMMYYHHMMSS } from "../../../services/utils/dateFormatter";
-import TagService from "../../../services/api/tags";
-
+import { uuidv4 } from "../../../services/utils/uuidGenerator";
 var W3CWebSocket = require("websocket").w3cwebsocket;
 
 export const Measurement = ({ highchartProps }) => {
   const [measuremenetData, setMeasurementData] = React.useState(null);
-  const [categories, setCategories] = React.useState("");
   const [data, setData] = React.useState("0");
+  const [uuid, setUuid] = React.useState(uuidv4());
   function colorPicker(val) {
     let color = "inherit";
     let i = 0;
@@ -25,7 +26,6 @@ export const Measurement = ({ highchartProps }) => {
     }
     return color;
   }
-
   React.useEffect(() => {
     var client;
 
@@ -36,7 +36,11 @@ export const Measurement = ({ highchartProps }) => {
 
     if (client) client.close();
     client = new W3CWebSocket(
-      `${wsBaseUrl}/ws/live/last_data/${highchartProps.Measurement[0].TAG_ID}`
+      `${wsBaseUrl}/ws/live/last_data/${highchartProps.Measurement[0].TAG_ID}/${
+        highchartProps["Widget Refresh (seconds)"] === ""
+          ? 5
+          : parseInt(highchartProps["Widget Refresh (seconds)"])
+      }/`
     );
     client.onerror = function () {
       console.log("Connection Error");
@@ -52,11 +56,17 @@ export const Measurement = ({ highchartProps }) => {
         if (client.readyState === client.OPEN) {
           if (typeof e.data === "string") {
             let data = JSON.parse(e.data);
-            Object.keys(data).map((e) => {
-              setCategories((prev) =>
-                dateFormatDDMMYYHHMMSS(new Date(data[e][1] * 1000))
+            data.map((e) => {
+              $(`#${uuid}-categories`).html(
+                dateFormatDDMMYYHHMMSS(new Date(e[0]))
               );
-              setData((prev) => data[e][2]);
+              setData((prev) =>
+                parseFloat(e[1]).toFixed(
+                  highchartProps["Decimal Places"] === ""
+                    ? 0
+                    : highchartProps["Decimal Places"]
+                )
+              );
             });
             return data;
           }
@@ -65,10 +75,9 @@ export const Measurement = ({ highchartProps }) => {
       sendNumber();
     };
     return () => {
-      console.log("measue");
       client.close();
     };
-  }, [highchartProps.Measurement]);
+  }, [highchartProps.Measurement, highchartProps["Widget Refresh (seconds)"]]);
   return (
     <Box
       sx={{
@@ -128,11 +137,7 @@ export const Measurement = ({ highchartProps }) => {
                 fontWeight: "bold",
               }}
             >
-              {parseFloat(data).toFixed(
-                highchartProps["Decimal Places"] === ""
-                  ? 0
-                  : highchartProps["Decimal Places"]
-              )}
+              {data}
             </Grid>
             <Grid
               item
@@ -154,6 +159,7 @@ export const Measurement = ({ highchartProps }) => {
         </Grid>
       </Grid>
       <Box
+        id={`${uuid}-categories`}
         sx={{
           position: "absolute",
           bottom: "0px",
@@ -166,9 +172,7 @@ export const Measurement = ({ highchartProps }) => {
               : "14px",
           display: highchartProps["Show Timestamp"] ? "inline-block" : "none",
         }}
-      >
-        {categories}
-      </Box>
+      />
     </Box>
   );
 };

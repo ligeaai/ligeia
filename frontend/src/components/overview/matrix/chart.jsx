@@ -54,6 +54,7 @@ const Matrix = ({ highchartProps }) => {
                 {...params}
                 handlePropChange={handlePropChange}
                 valueFormatter={valueFormatter}
+                refreshSec={highchartProps["Widget Refresh (seconds)"]}
               />
             );
           },

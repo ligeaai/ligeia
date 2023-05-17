@@ -71,7 +71,8 @@ export default function (state = initialState, action) {
         case USER_LOADED_FAIL:
             return {
                 ...state,
-                user: null
+                user: null,
+                token: null
             }
         case CHANGE_PASSWORD_SUCCESS:
         case GITHUB_AUTH_FAIL:

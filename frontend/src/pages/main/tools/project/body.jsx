@@ -99,7 +99,7 @@ const Body = () => {
   const selectedIndex = useSelector(
     (state) => state.treeview.selectedItem.selectedIndex
   );
-  const name = useSelector((state) => state.treeview.selectedItem.NAME);
+  const name = useSelector((state) => state.treeview.selectedItem.LAYER_NAME);
 
   React.useEffect(() => {
     dispatch(loadDatabases());

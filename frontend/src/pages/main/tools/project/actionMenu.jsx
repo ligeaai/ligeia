@@ -18,7 +18,7 @@ const ProjectActionMenu = () => {
   const selectedIndex = useSelector(
     (state) => state.treeview.selectedItem.selectedIndex
   );
-  const name = useSelector((state) => state.treeview.selectedItem?.NAME);
+  const name = useSelector((state) => state.treeview.selectedItem?.LAYER_NAME);
   const dispatch = useDispatch();
   const btnNew = () => {
     dispatch(cleanProjectData());
@@ -53,11 +53,11 @@ const ProjectActionMenu = () => {
   };
 
   const saveGoPrev = () => {
-    dispatch(selectTreeViewItem(selectedIndex - 1, "NAME", 2));
+    dispatch(selectTreeViewItem(selectedIndex - 1, "LAYER_NAME", 2));
   };
 
   const saveGoNext = () => {
-    dispatch(selectTreeViewItem(selectedIndex + 1, "NAME", 2));
+    dispatch(selectTreeViewItem(selectedIndex + 1, "LAYER_NAME", 2));
   };
 
   return (

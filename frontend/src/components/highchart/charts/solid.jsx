@@ -38,7 +38,13 @@ export const Solid = ({ highchartProps, width, height }) => {
     myFunc();
     if (client) client.close();
     client = new W3CWebSocket(
-      `${wsBaseUrl}/ws/live/last_data/${highchartProps?.Measurement[0]?.TAG_ID}`
+      `${wsBaseUrl}/ws/live/last_data/${
+        highchartProps?.Measurement[0]?.TAG_ID
+      }/${
+        highchartProps["Widget Refresh (seconds)"] === ""
+          ? 5
+          : parseInt(highchartProps["Widget Refresh (seconds)"])
+      }/`
     );
     client.onerror = function () {
       console.log("Connection Error");
@@ -54,9 +60,10 @@ export const Solid = ({ highchartProps, width, height }) => {
         if (client.readyState === client.OPEN) {
           if (typeof e.data === "string") {
             let data = JSON.parse(e.data);
-            Object.keys(data).map((e) => {
-              setCategories((prev) => data[e][1]);
-              setValue((prev) => data[e][2]);
+            data.map((e) => {
+              console.log(data);
+              setCategories((prev) => new Date(e[0]));
+              setValue((prev) => e[1]);
             });
 
             //setTimeout(sendNumber, 5000);
@@ -69,7 +76,7 @@ export const Solid = ({ highchartProps, width, height }) => {
     return () => {
       client.close();
     };
-  }, [highchartProps.Measurement]);
+  }, [highchartProps.Measurement, highchartProps["Widget Refresh (seconds)"]]);
   const options = {
     chart: {
       type: "solidgauge",

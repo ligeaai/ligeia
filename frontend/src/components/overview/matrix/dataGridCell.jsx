@@ -3,13 +3,21 @@ import $ from "jquery";
 import { wsBaseUrl } from "../../../services/baseApi";
 
 var W3CWebSocket = require("websocket").w3cwebsocket;
-const DataGridCell = ({ handlePropChange, valueFormatter, ...params }) => {
+const DataGridCell = ({
+  refreshSec,
+  handlePropChange,
+  valueFormatter,
+  ...params
+}) => {
   React.useEffect(() => {
     handlePropChange();
     var client;
     if (params?.row?.[params.field]) {
+      console.log(params?.row?.[params.field]);
       client = new W3CWebSocket(
-        `${wsBaseUrl}/ws/live/last_data/${params?.row?.[params.field]}`
+        `${wsBaseUrl}/ws/live/last_data/${params?.row?.[params.field]}/${
+          refreshSec === "" ? 5 : parseInt(refreshSec)
+        }/`
       );
       client.onerror = function () {
         console.log("Connection Error");
@@ -26,12 +34,12 @@ const DataGridCell = ({ handlePropChange, valueFormatter, ...params }) => {
             if (typeof e.data === "string") {
               let data = JSON.parse(e.data);
               Promise.all(
-                Object.keys(data).map((e) => {
+                data.map((e) => {
                   $(
                     `.matrix-widget-container__${
                       params?.row?.[params.field]
                     }__val`
-                  ).html(valueFormatter(data[e][2]));
+                  ).html(valueFormatter(e[1]));
                 })
               );
               return data;
