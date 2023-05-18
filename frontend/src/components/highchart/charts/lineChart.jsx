@@ -31,138 +31,141 @@ const LineCharts = ({ highchartProps, width, height, chartType }) => {
           series.yAxis[0].remove();
         }
       }
+      if (highchartProps.Inputs) {
+        Promise.all(
+          highchartProps.Inputs.map(async (tag, index) => {
+            if (!highchartProps[`[${tag.NAME}] Disable Data Grouping`]) {
+              if (
+                !yAxiskey.hasOwnProperty(
+                  `${tag.UOM_QUANTITY_TYPE} (${tag.UOM})`
+                )
+              ) {
+                yAxiskey[`${tag.UOM_QUANTITY_TYPE} (${tag.UOM})`] = index;
+                series.addAxis({
+                  id: "yaxis-" + index,
+                  title: {
+                    text: tag.UOM
+                      ? `${tag.UOM_QUANTITY_TYPE} (${tag.UOM})`
+                      : "Undefined (UoM)",
+                    style: {
+                      fontSize:
+                        highchartProps["Graph Axis Title Font Size (em)"] === ""
+                          ? "11px"
+                          : `${highchartProps["Graph Axis Title Font Size (em)"]}px`,
+                    },
+                  },
+                  labels: {
+                    style: {
+                      fontSize:
+                        highchartProps["Graph Axis Value Font Size (em)"] === ""
+                          ? 11
+                          : highchartProps["Graph Axis Value Font Size (em)"],
+                    },
+                  },
+                  endOnTick: true,
+                  startOnTick: true,
+                  alignTicks: true,
+                  opposite: false,
+                  events: {
+                    load: function () {
+                      this.addSeries({});
+                    },
+                    afterSetExtremes: function (e) {
+                      if (e.min === e.max) {
+                        this.update({
+                          labels: {
+                            enabled: false,
+                          },
+                          title: {
+                            enabled: false,
+                          },
+                        });
+                      } else {
+                        this.update({
+                          labels: {
+                            enabled: true,
+                          },
+                          title: {
+                            enabled: true,
+                          },
+                        });
+                      }
+                    },
+                  },
+                });
+              }
+              let res = await TagService.lineChartData(tag.TAG_ID);
+              series.addSeries({
+                yAxis:
+                  "yaxis-" + yAxiskey[`${tag.UOM_QUANTITY_TYPE} (${tag.UOM})`],
+                name: tag.NAME,
 
-      Promise.all(
-        highchartProps.Inputs.map(async (tag, index) => {
-          if (!highchartProps[`[${tag.NAME}] Disable Data Grouping`]) {
-            if (
-              !yAxiskey.hasOwnProperty(`${tag.UOM_QUANTITY_TYPE} (${tag.UOM})`)
-            ) {
-              yAxiskey[`${tag.UOM_QUANTITY_TYPE} (${tag.UOM})`] = index;
-              series.addAxis({
-                id: "yaxis-" + index,
-                title: {
-                  text: tag.UOM
-                    ? `${tag.UOM_QUANTITY_TYPE} (${tag.UOM})`
-                    : "Undefined (UoM)",
-                  style: {
-                    fontSize:
-                      highchartProps["Graph Axis Title Font Size (em)"] === ""
-                        ? "11px"
-                        : `${highchartProps["Graph Axis Title Font Size (em)"]}px`,
-                  },
-                },
-                labels: {
-                  style: {
-                    fontSize:
-                      highchartProps["Graph Axis Value Font Size (em)"] === ""
-                        ? 11
-                        : highchartProps["Graph Axis Value Font Size (em)"],
-                  },
-                },
-                endOnTick: true,
-                startOnTick: true,
-                alignTicks: true,
-                opposite: false,
-                events: {
-                  load: function () {
-                    this.addSeries({});
-                  },
-                  afterSetExtremes: function (e) {
-                    if (e.min === e.max) {
-                      this.update({
-                        labels: {
-                          enabled: false,
-                        },
-                        title: {
-                          enabled: false,
-                        },
-                      });
-                    } else {
-                      this.update({
-                        labels: {
-                          enabled: true,
-                        },
-                        title: {
-                          enabled: true,
-                        },
-                      });
-                    }
-                  },
-                },
+                color: highchartProps["Enable Custom Colors"]
+                  ? highchartProps[`[${tag.NAME}] Color`]
+                  : "",
+
+                data: res.data,
+                // dataGrouping: {
+                //   units: [
+                //     ["week", [1]],
+                //     ["month", [1, 2, 3, 4, 6]],
+                //   ],
+                // },
               });
-            }
-            let res = await TagService.lineChartData(tag.TAG_ID);
-            series.addSeries({
-              yAxis:
-                "yaxis-" + yAxiskey[`${tag.UOM_QUANTITY_TYPE} (${tag.UOM})`],
-              name: tag.NAME,
+              client[index] = new W3CWebSocket(
+                `${wsBaseUrl}/ws/tags/${tag.TAG_ID}/${
+                  res.data[res.data.length - 1]?.[0]
+                    ? res.data[res.data.length - 1][0]
+                    : 0
+                }/${
+                  highchartProps["Widget Refresh (seconds)"] === ""
+                    ? 5
+                    : parseInt(highchartProps["Widget Refresh (seconds)"])
+                }/${res.data.length}/`
+              );
+              client[index].onerror = function () {
+                console.log("Connection Error");
+              };
+              client[index].onopen = function () {
+                console.log("connected");
+              };
+              client[index].onclose = function () {
+                console.log("WebSocket Client Closed Line");
+              };
 
-              color: highchartProps["Enable Custom Colors"]
-                ? highchartProps[`[${tag.NAME}] Color`]
-                : "",
-
-              data: res.data,
-              // dataGrouping: {
-              //   units: [
-              //     ["week", [1]],
-              //     ["month", [1, 2, 3, 4, 6]],
-              //   ],
-              // },
-            });
-            client[index] = new W3CWebSocket(
-              `${wsBaseUrl}/ws/tags/${tag.TAG_ID}/${
-                res.data[res.data.length - 1]?.[0]
-                  ? res.data[res.data.length - 1][0]
-                  : 0
-              }/${
-                highchartProps["Widget Refresh (seconds)"] === ""
-                  ? 5
-                  : parseInt(highchartProps["Widget Refresh (seconds)"])
-              }/${res.data.length}/`
-            );
-            client[index].onerror = function () {
-              console.log("Connection Error");
-            };
-            client[index].onopen = function () {
-              console.log("connected");
-            };
-            client[index].onclose = function () {
-              console.log("WebSocket Client Closed Line");
-            };
-
-            client[index].onmessage = function (e) {
-              async function sendNumber() {
-                if (client.readyState === client.OPEN) {
-                  if (
-                    typeof e.data === "string" &&
-                    Object.keys(series).length > 3
-                  ) {
-                    let jsonData = JSON.parse(e.data);
-                    jsonData.map((e) => {
-                      series.series.forEach(function (series) {
-                        if (series.name === tag.NAME) {
-                          series.addPoint(
-                            {
-                              x: e[0],
-                              y: e[1],
-                            },
-                            true,
-                            false,
-                            false
-                          );
-                        }
+              client[index].onmessage = function (e) {
+                async function sendNumber() {
+                  if (client.readyState === client.OPEN) {
+                    if (
+                      typeof e.data === "string" &&
+                      Object.keys(series).length > 3
+                    ) {
+                      let jsonData = JSON.parse(e.data);
+                      jsonData.map((e) => {
+                        series.series.forEach(function (series) {
+                          if (series.name === tag.NAME) {
+                            series.addPoint(
+                              {
+                                x: e[0],
+                                y: e[1],
+                              },
+                              true,
+                              false,
+                              false
+                            );
+                          }
+                        });
                       });
-                    });
-                    return true;
+                      return true;
+                    }
                   }
                 }
-              }
-              sendNumber();
-            };
-          }
-        })
-      );
+                sendNumber();
+              };
+            }
+          })
+        );
+      }
     }
     return () => {
       Promise.all(
@@ -171,7 +174,7 @@ const LineCharts = ({ highchartProps, width, height, chartType }) => {
         })
       );
     };
-  }, [highchartProps?.Inputs.length]);
+  }, [highchartProps?.Inputs?.length]);
 
   React.useEffect(() => {
     if (chartRef.current) {

@@ -12,82 +12,84 @@ const Tabular = ({ highchartProps, backfillData }) => {
   const [allData, setAllData] = React.useState([]);
   React.useEffect(() => {
     const client = [];
-    highchartProps.Inputs.map(async (tag, index) => {
-      // if (backfillData) {
-      //   client[index] = new W3CWebSocket(
-      //     `${wsBaseUrl}/ws/tags/backfill/${tag.TAG_ID}`
-      //   );
-      // } else {
+    if (highchartProps.Inputs) {
+      highchartProps.Inputs.map(async (tag, index) => {
+        // if (backfillData) {
+        //   client[index] = new W3CWebSocket(
+        //     `${wsBaseUrl}/ws/tags/backfill/${tag.TAG_ID}`
+        //   );
+        // } else {
 
-      let res = await TagService.tabularLiveData(tag.TAG_ID);
-      res.data.map((e, i) => {
-        e["tag_name"] = tag.NAME;
-        e["id"] = i;
-      });
-      setAllData(res.data);
-      client[index] = new W3CWebSocket(
-        `${wsBaseUrl}/ws/tabular/${tag.TAG_ID}/${
-          res.data[res.data.length - 1]?.[0]
-            ? res.data[res.data.length - 1][0]
-            : 0
-        }/${
-          highchartProps["Widget Refresh (seconds)"] === ""
-            ? 5
-            : parseInt(highchartProps["Widget Refresh (seconds)"])
-        }/${res.data.length}/`
-      );
-      // }
-      client[index].onerror = function () {
-        console.log("Connection Error");
-      };
-      client[index].onopen = function () {
-        console.log("connedted");
-      };
-      client[index].onclose = function () {
-        console.log("WebSocket Client Closed");
-      };
-      client[index].onmessage = function (e) {
-        async function sendNumber() {
-          if (client.readyState === client.OPEN) {
-            if (typeof e.data === "string") {
-              let jsonData = JSON.parse(e.data);
+        let res = await TagService.tabularLiveData(tag.TAG_ID);
+        res.data.map((e, i) => {
+          e["tag_name"] = tag.NAME;
+          e["id"] = i;
+        });
+        setAllData(res.data);
+        client[index] = new W3CWebSocket(
+          `${wsBaseUrl}/ws/tabular/${tag.TAG_ID}/${
+            res.data[res.data.length - 1]?.[0]
+              ? res.data[res.data.length - 1][0]
+              : 0
+          }/${
+            highchartProps["Widget Refresh (seconds)"] === ""
+              ? 5
+              : parseInt(highchartProps["Widget Refresh (seconds)"])
+          }/${res.data.length}/`
+        );
+        // }
+        client[index].onerror = function () {
+          console.log("Connection Error");
+        };
+        client[index].onopen = function () {
+          console.log("connedted");
+        };
+        client[index].onclose = function () {
+          console.log("WebSocket Client Closed");
+        };
+        client[index].onmessage = function (e) {
+          async function sendNumber() {
+            if (client.readyState === client.OPEN) {
+              if (typeof e.data === "string") {
+                let jsonData = JSON.parse(e.data);
 
-              // if (backfillData) {
-              //   jsonData.map((data) => {
-              //     setAllData((prev) => [
-              //       ...prev,
-              //       {
-              //         tag_name: tag.NAME,
-              //         completion: data.completion,
-              //         created_by: data.created_by,
-              //         createdTime: dateFormatterDMY(new Date(data.createdTime)),
-              //         layer: data.layer,
-              //         uom: data.uom,
-              //         timestamp: dateFormatterDMY(
-              //           new Date(data.timestamp * 1000)
-              //         ),
-              //         value: data.tag_value,
-              //         id: uuidv4(),
-              //       },
-              //     ]);
-              //   });
-              //   return true;
-              // }
-              jsonData.map((data) => {
-                setAllData((prev) => {
-                  return [
-                    ...prev,
-                    { ...data, id: uuidv4(), tag_name: tag.NAME },
-                  ];
+                // if (backfillData) {
+                //   jsonData.map((data) => {
+                //     setAllData((prev) => [
+                //       ...prev,
+                //       {
+                //         tag_name: tag.NAME,
+                //         completion: data.completion,
+                //         created_by: data.created_by,
+                //         createdTime: dateFormatterDMY(new Date(data.createdTime)),
+                //         layer: data.layer,
+                //         uom: data.uom,
+                //         timestamp: dateFormatterDMY(
+                //           new Date(data.timestamp * 1000)
+                //         ),
+                //         value: data.tag_value,
+                //         id: uuidv4(),
+                //       },
+                //     ]);
+                //   });
+                //   return true;
+                // }
+                jsonData.map((data) => {
+                  setAllData((prev) => {
+                    return [
+                      ...prev,
+                      { ...data, id: uuidv4(), tag_name: tag.NAME },
+                    ];
+                  });
                 });
-              });
-              return true;
+                return true;
+              }
             }
           }
-        }
-        sendNumber();
-      };
-    });
+          sendNumber();
+        };
+      });
+    }
     return () => {
       setAllData([]);
 
@@ -95,7 +97,7 @@ const Tabular = ({ highchartProps, backfillData }) => {
         e.close();
       });
     };
-  }, [backfillData, highchartProps.Inputs.length]);
+  }, [backfillData, highchartProps?.Inputs?.length]);
 
   return (
     <DataGrid
