@@ -31,9 +31,9 @@ def to_layerDb(layers):
         user_db_settings["NAME"] = user_db_settings["NAME"].lower()
         settings.DATABASES["layer_db"] = user_db_settings
         connections["layer_db"].settings_dict = settings.DATABASES["layer_db"]
-        print(
-            connections["layer_db"].settings_dict["NAME"].lower(), "--------->DB NAME"
-        )
+        # print(
+        #     connections["layer_db"].settings_dict["NAME"].lower(), "--------->DB NAME"
+        # )
         change_db("layer_db")
     except Exception as e:
         print("----------->", str(e))
@@ -122,22 +122,25 @@ def deleteDB(layer_name, db_settings):
 
 
 def backupDB(layer_name, db_settings):
-    to_layerDb(layer_name)
-    backup_file = f"backup/{db_settings.get('NAME').lower()}.sql"
-    backup_command = [
-        "pg_dump",
-        "-h",
-        db_settings["HOST"],
-        "-p",
-        str(db_settings["PORT"]),
-        "-U",
-        db_settings["USER"],
-        "-W",
-        "-d",
-        db_settings["NAME"],
-        "-f",
-        backup_file,
-    ]
+    try:
+        to_layerDb(layer_name)
+        backup_file = f"backup/{db_settings.get('NAME').lower()}.sql"
+        backup_command = [
+            "pg_dump",
+            "-h",
+            db_settings["HOST"],
+            "-p",
+            str(db_settings["PORT"]),
+            "-U",
+            db_settings["USER"],
+            "-W",
+            "-d",
+            db_settings["NAME"],
+            "-f",
+            backup_file,
+        ]
 
-    env = {**os.environ, "PGPASSWORD": db_settings["PASSWORD"]}
-    subprocess.run(backup_command, env=env)
+        env = {**os.environ, "PGPASSWORD": db_settings["PASSWORD"]}
+        subprocess.run(backup_command, env=env)
+    except Exception as e:
+        print(str(e))
