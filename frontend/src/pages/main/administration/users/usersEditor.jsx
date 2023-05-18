@@ -16,6 +16,7 @@ const UserEditor = () => {
   const rows = useSelector((state) => state.users.users);
   const layers = useSelector((state) => state.users.layers);
   const roles = useSelector((state) => state.users.roles);
+  const instantUserId = useSelector((state) => state.auth.user.id);
   const usersColumn = [
     {
       field: "first_name",
@@ -54,7 +55,6 @@ const UserEditor = () => {
               />
             </>
           );
-          return;
         });
       },
     },
@@ -101,8 +101,11 @@ const UserEditor = () => {
           onClick={() => {
             dispatch(deleteUser(params.row.id));
           }}
+          disabled={params.row.id === instantUserId}
         >
-          <ClearIcon color="error" />
+          <ClearIcon
+            color={params.row.id === instantUserId ? "disabled" : "error"}
+          />
         </IconButton>
       ),
       flex: 0.2,
