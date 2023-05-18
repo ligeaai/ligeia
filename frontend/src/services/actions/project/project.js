@@ -78,7 +78,7 @@ export const saveProject = () => async (dispatch, getState) => {
     try {
         dispatch(setLoaderTrue())
         body.DB_SETTINGS = kubernetes.filter(e => e.HOST === body.DB_SETTINGS)[0]
-        body.DB_SETTINGS.NAME = body.LAYER_NAME
+        body.DB_SETTINGS.NAME = body.LAYER_NAME.toLowerCase();
         delete body.DB_SETTINGS.status
         console.log(body);
         if (isNew === -2) {
@@ -86,9 +86,9 @@ export const saveProject = () => async (dispatch, getState) => {
         } else {
             let res = await ProjectService.update(body)
         }
-        // await dispatch(loadTreeviewItem(async (body, cancelToken) => {
-        //     return await ProjectService.getAll(body, cancelToken);
-        // }, "NAME"))
+        await dispatch(loadTreeviewItem(async (body, cancelToken) => {
+            return await ProjectService.getAll(body, cancelToken);
+        }, "NAME"))
         dispatch(setLoaderFalse())
         return true
 
