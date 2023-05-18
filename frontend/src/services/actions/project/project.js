@@ -13,6 +13,8 @@ import { Chip } from "@mui/material"
 import { selectTreeViewItem, loadTreeviewItem } from "../treeview/treeview"
 import ProjectService from "../../api/project"
 
+import { setLoaderTrue, setLoaderFalse } from "../loader"
+
 export const updateData = (key, value) => (dispatch) => {
     dispatch({
         type: UPDATE_DATA_PROJECT,
@@ -69,10 +71,12 @@ export const deleteProject = () => async (dispatch, getState) => {
 
 export const saveProject = () => async (dispatch, getState) => {
     const isNew = getState().treeview.selectedItem.selectedIndex
-    const body = getState().project.data
+    const data = getState().project.data
     const kubernetes = getState().project.kubernetes
+    const body = Object.assign({}, data);
     console.log(body);
     try {
+        dispatch(setLoaderTrue())
         body.DB_SETTINGS = kubernetes.filter(e => e.HOST === body.DB_SETTINGS)[0]
         body.DB_SETTINGS.NAME = body.LAYER_NAME
         delete body.DB_SETTINGS.status
@@ -82,12 +86,14 @@ export const saveProject = () => async (dispatch, getState) => {
         } else {
             let res = await ProjectService.update(body)
         }
-        await dispatch(loadTreeviewItem(async (body, cancelToken) => {
-            return await ProjectService.getAll(body, cancelToken);
-        }, "NAME"))
+        // await dispatch(loadTreeviewItem(async (body, cancelToken) => {
+        //     return await ProjectService.getAll(body, cancelToken);
+        // }, "NAME"))
+        dispatch(setLoaderFalse())
         return true
 
     } catch (err) {
+        dispatch(setLoaderFalse())
         console.log(err);
     }
 }
