@@ -2,15 +2,10 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ActionMenu } from "../../../../components";
 
-import {
-  addNewType,
-  saveTypeFunc,
-  deleteType,
-} from "../../../../services/actions/type/datagrid";
+import { deleteType } from "../../../../services/actions/type/datagrid";
 import { selectTreeViewItem } from "../../../../services/actions/treeview/treeview";
 import { confirmationPushHistory } from "../../../../services/utils/historyPush";
-import { setGoFunctionConfirmation } from "../../../../services/actions/confirmation/historyConfirmation";
-const CodelistActionMenu = () => {
+const TypeActionMenu = () => {
   const selectedIndex = useSelector(
     (state) => state.treeview.selectedItem.selectedIndex
   );
@@ -44,4 +39,4 @@ const CodelistActionMenu = () => {
   );
 };
 
-export default CodelistActionMenu;
+export default TypeActionMenu;

@@ -4,10 +4,6 @@ const getAll = (body, cancelToken) => {
     return instance.get("/roles/get/", { ...config(), cancelToken: cancelToken.token });
 }
 
-const getRoles = () => {
-    return instance.get("/roles/get/", config());
-}
-
 const getType = () => {
     return instance.get("/roles-type/get/", config());
 };
@@ -42,7 +38,6 @@ const getRolelessUser = () => {
 
 const Roles = {
     getAll,
-    getRoles,
     getType,
     saveRole,
     getRoleProp,
