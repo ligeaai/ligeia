@@ -50,6 +50,15 @@ const historyTagImport = (foldername) => {
     return instance.get(`/tags/import/history/${foldername}/`, config());
 }
 
+const lineChartData = (tagId) => {
+    return instance.get(`/tags/graph/live/${tagId}/`, config());
+}
+
+const tabularLiveData = (tagId) => {
+    return instance.get(`/tags/graph/tabular/live/${tagId}/`, config());
+}
+
+
 const elasticSearch = (text, body, cancelToken) => {
     return instance.get(`/tags/es/${text}`, { ...config(), cancelToken: cancelToken.token });
 };
@@ -66,6 +75,8 @@ const TagService = {
     workflow,
     historyFolderList,
     historyTagImport,
+    lineChartData,
+    tabularLiveData,
     remove
 };
 

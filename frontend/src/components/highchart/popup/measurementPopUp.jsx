@@ -23,7 +23,7 @@ import ChoseMeasure from "../popUpLayout/choseMeasure";
 import { Stops } from "../popUpLayout/stops";
 import Measurement from "../popUpLayout/measurement";
 import PopUpItem from "../popUpLayout/popUpItem";
-const MeasurementPopUp = ({ handleClose, height }) => {
+const MeasurementPopUp = ({ handleClose }) => {
   const dispatch = useDispatch();
   const stops = useSelector(
     (state) => state.overviewDialog.highchartProps["Stops"]

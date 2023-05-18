@@ -8,7 +8,7 @@ import Inputs from "./inputs";
 import CustomLineChart from "../popUpLayout/customLineChart";
 import CreateLineWidget from "../popUpLayout/createLineWidget";
 import LineAssets from "../popUpLayout/lineAssets";
-const Linechart = ({ handleClose, title, height }) => {
+const Linechart = ({ handleClose, title }) => {
   const dispatch = useDispatch();
   const [selectedWidget, setSelectedWidget] = React.useState("Properties");
   const handleChangeFunc = (key, val) => {
