@@ -2,6 +2,9 @@
 .git
 .gitignore
 
+
+./frontend/node_modules
+./frontend/package-lock.json
 # CI
 .codeclimate.yml
 .travis.yml
