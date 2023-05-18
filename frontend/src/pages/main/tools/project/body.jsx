@@ -23,7 +23,7 @@ const Postgre = () => {
   const values = useSelector((state) => state.project?.databases);
   const defaultValue = useSelector((state) => state.project?.data?.DATA_SOURCE);
   React.useEffect(() => {
-    if (!isMount) dispatch(loadKubernetes());
+    if (!isMount && defaultValue) dispatch(loadKubernetes());
   }, [defaultValue]);
   return (
     <Select
