@@ -65,7 +65,8 @@ const MyDataGrid = () => {
         sx={{
           boxSizing: "border-box",
           maxWidth: "100%",
-          width: `calc(521px + ${150 * (Object.keys(columns).length - 4)}px)`,
+          // width: `calc(521px + ${150 * (Object.keys(columns).length - 4)}px)`,
+          width: "100%",
           ".MuiDataGrid-pinnedRows": {
             zIndex: 2,
           },
