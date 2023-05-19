@@ -15,7 +15,7 @@ import axios from "axios";
 import ItemService from "../../api/item"
 import { MyTextField } from "../../../pages/main/configuration/items/properties/myTextField";
 import { uuidv4 } from "../../utils/uuidGenerator";
-import { loadTreeviewItem, selectTreeViewItem } from "../treeview/treeview"
+import { loadTreeviewItem, selectTreeViewItem, selectTreeItemAfterSave } from "../treeview/treeview"
 import { newDate, swapDayAndYear } from "../../utils/dateFormatter";
 import { isNewUpdated } from "../../utils/permissions";
 
@@ -275,9 +275,14 @@ export const saveItem = () => async (dispatch, getState) => {
                 if (DELETED.length > 0)
                     res = await ItemService.remove(deleteBody)
             }
-            dispatch(loadTreeviewItem(async (body, cancelToken) => {
+            await dispatch(loadTreeviewItem(async (body, cancelToken) => {
                 return await ItemService.getAll(body, cancelToken, type);
             }, "PROPERTY_STRING"))
+            dispatch(selectTreeItemAfterSave(
+                "PROPERTY_STRING",
+                3,
+                PROPERTYS.filter(e => e.PROPERTY_TYPE === "NAME")[0].PROPERTY_STRING),
+            )
             return res
         } catch (err) {
             dispatch({
