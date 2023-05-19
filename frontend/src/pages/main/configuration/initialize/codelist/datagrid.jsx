@@ -96,6 +96,9 @@ function TreeDataWithGap() {
         "& .super-app-theme--cell": {
           backgroundColor: "background.secondary",
         },
+        ".handleMandatory": {
+          border: "1px solid red !important",
+        },
         "& .MuiDataGrid-cellContent": { fontSize: "12px" },
         "& .MuiDataGrid-virtualScrollerRenderZone": {
           "&>*:nth-of-type(1)": {

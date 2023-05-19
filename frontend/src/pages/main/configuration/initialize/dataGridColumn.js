@@ -1,17 +1,6 @@
 import * as React from 'react';
-import { GridEditInputCell } from '@mui/x-data-grid-pro';
 
 import { isNewUpdated } from '../../../../services/utils/permissions';
-
-function renderEditcell(params) {
-    return (
-        <GridEditInputCell {...params} disabled={!params.colDef.editable} placeholder="Mandatory" sx={{
-            padding: "0px important", fontSize: "12px", "input": {
-                padding: "0px"
-            }
-        }} />
-    )
-}
 
 
 export const getColumns = () => (dispatch, getState) => {
@@ -31,14 +20,20 @@ export const getColumns = () => (dispatch, getState) => {
             headerName: "Code",
             editable: dispatch(isNewUpdated("CODE_LIST")),
             width: calculateWidth("CODE"),
-            renderCell: renderEditcell,
+            cellClassName: (params) => {
+                console.log(params);
+                return params.value === "" ? "handleMandatory" : ""
+            },
         },
         {
             field: "CODE_TEXT",
             headerName: "Code Text",
             editable: dispatch(isNewUpdated("CODE_LIST")),
             width: calculateWidth("CODE_TEXT"),
-            renderCell: renderEditcell,
+            cellClassName: (params) => {
+                console.log(params);
+                return params.value === "" ? "handleMandatory" : ""
+            },
         },
         {
             field: "PARENT",
@@ -116,7 +111,10 @@ export const getColumns = () => (dispatch, getState) => {
             headerName: "Layer Name",
             editable: dispatch(isNewUpdated("CODE_LIST")),
             width: calculateWidth("LAYER_NAME"),
-            renderCell: renderEditcell,
+            cellClassName: (params) => {
+                console.log(params);
+                return params.value === "" ? "handleMandatory" : ""
+            },
         },
         {
             field: "HIDDEN",
@@ -125,7 +123,10 @@ export const getColumns = () => (dispatch, getState) => {
             editable: dispatch(isNewUpdated("CODE_LIST")),
             type: "singleSelect",
             valueOptions: ["True", "False"],
-            renderCell: renderEditcell,
+            cellClassName: (params) => {
+                console.log(params);
+                return params.value === "" ? "handleMandatory" : ""
+            },
         },
         {
             field: "LAST_UPDT_USER",
