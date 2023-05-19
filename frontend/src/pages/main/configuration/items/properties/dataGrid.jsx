@@ -11,6 +11,7 @@ import {
   loadItemRowsDataGrid,
   editDataGridCell,
   saveItem,
+  cleanColumns,
 } from "../../../../../services/actions/item/itemDataGrid";
 
 import {
@@ -45,7 +46,7 @@ const MyDataGrid = () => {
     dispatch(setSaveFunctonConfirmation(saveItem));
     dispatch(setTitleConfirmation("Are you sure you want to save this ? "));
     dispatch(setBodyConfirmation(`${name ? name : "new"}`));
-    if (selectedIndex !== -3) dispatch({ type: "CLEAR_COLUMN_ITEM" });
+    if (selectedIndex !== -3) dispatch(cleanColumns());
     if (selectedIndex !== -2 && selectedIndex !== -3) {
       dispatch(loadItemRowsDataGrid());
     }

@@ -9,7 +9,9 @@ import {
     ADD_ERROR_SUCCESS,
     DELETE_COLUMN_ITEM,
     CLEAN_ITEM_AND_ROWS,
-    UPDATE_COL_ITEM
+    UPDATE_COL_ITEM,
+    UPDATE_COLUMN_WIDTH_ITEMS,
+    CLEAR_COLUMN_ITEM
 } from "../types"
 import axios from "axios";
 import ItemService from "../../api/item"
@@ -114,6 +116,31 @@ export const loadTypeRowsDataGrid = () => async (dispatch, getState) => {
     } catch (err) {
         return Promise.reject(err)
     }
+}
+
+export const cleanColumns = () => async (dispatch, getState) => {
+    const rows = getState().itemDataGrid.typeRows
+    dispatch({ type: CLEAR_COLUMN_ITEM })
+    function calculateWidth(type) {
+        let max = Math.max(
+            ...Object.keys(rows).map((e) => {
+                return rows[e][type]?.length === undefined ? 0 : rows[e][type]?.length;
+            })
+        );
+
+        return Number.isNaN(max) ? 150 : max * 7 + 24;
+    }
+    const values = {
+        SHORT_LABEL: "PROPERTY_NAME",
+        PROP_GRP: "PROP_GRP"
+    }
+    Object.keys(values).map(e => {
+        dispatch({
+            type: UPDATE_COLUMN_WIDTH_ITEMS,
+            payload: { key: values[e], val: calculateWidth(e) }
+        })
+
+    })
 }
 
 let itemCancelToken;

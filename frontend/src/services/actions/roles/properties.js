@@ -9,7 +9,7 @@ import { setConfirmation } from "../../reducers/confirmation";
 import Roles from "../../api/roles"
 
 import NewRoleSavePopUp from "../../../pages/main/administration/roles/properties/newRoleSavePopUp";
-import { loadTreeviewItem, selectTreeItemAfterSave } from "../treeview/treeview"
+import { loadTreeviewItem, selectTreeItemAfterSave, selectTreeViewItem } from "../treeview/treeview"
 
 import { uuidv4 } from "../../utils/uuidGenerator"
 
@@ -162,10 +162,12 @@ export const loadRolesProps = () => async (dispatch, getState) => {
 
 export const deleteRole = () => async (dispatch, getState) => {
     const ROLES_ID = getState().treeview.selectedItem.ROLES_ID
+    const selectedIndex = getState().treeview.selectedItem.selectedIndex
     try {
         const body = JSON.stringify({ ROLES_ID })
         let res = await Roles.removeRole(body)
-        dispatch(refreshTreeView())
+        await dispatch(refreshTreeView())
+        dispatch(selectTreeViewItem(selectedIndex, "ROLES_NAME", 2));
     } catch {
 
     }
