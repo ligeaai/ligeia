@@ -11,13 +11,13 @@ const TypeActionMenu = () => {
   );
   const dispatch = useDispatch();
   const btnNew = () => {
-    dispatch(selectTreeViewItem(-2, "new"));
+    dispatch(selectTreeViewItem(-2, "new", 2));
   };
   const saveGoPrev = () => {
-    dispatch(selectTreeViewItem(selectedIndex - 1, "TYPE"));
+    dispatch(selectTreeViewItem(selectedIndex - 1, "TYPE", 2));
   };
   const saveGoNext = () => {
-    dispatch(selectTreeViewItem(selectedIndex + 1, "TYPE"));
+    dispatch(selectTreeViewItem(selectedIndex + 1, "TYPE", 2));
   };
   const save = () => {
     dispatch(confirmationPushHistory());

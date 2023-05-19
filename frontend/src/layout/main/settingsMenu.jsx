@@ -64,10 +64,10 @@ const SettingsMenu = () => {
   };
   const locationSelect = (location) => {};
 
-  const layerSelect = (LAYER_NAME) => {
+  const layerSelect = async (LAYER_NAME) => {
     try {
       const body = JSON.stringify({ LAYER_NAME });
-      Auth.activeLayerUpdate(body);
+      await Auth.activeLayerUpdate(body);
       window.location.reload();
     } catch {}
   };

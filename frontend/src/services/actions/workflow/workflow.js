@@ -12,7 +12,7 @@ import {
     LOAD_DATA_WORKFLOW
 } from "../types"
 import axios from "axios"
-import { selectTreeViewItem, loadTreeviewItem } from "../treeview/treeview"
+import { selectTreeViewItem, loadTreeviewItem, selectTreeItemAfterSave } from "../treeview/treeview"
 
 import ItemService from "../../api/item"
 import WorkflowService from "../../api/workflow"
@@ -97,8 +97,6 @@ export const setTags = () => async (dispatch, getState) => {
         }))
         const body = JSON.stringify(temp)
         let res = await TagService.workflow(body);
-        console.log(body);
-        console.log(res);
         dispatch({
             type: SET_TAGS_WORKFLOW,
             payload: res.data
@@ -139,6 +137,7 @@ export const saveWorkflow = () => async (dispatch, getState) => {
         await dispatch(loadTreeviewItem(async (body, cancelToken) => {
             return await WorkflowService.getAll(body, cancelToken);
         }, "NAME"))
+        dispatch(selectTreeItemAfterSave("NAME", 2, body.NAME))
         return true
 
     } catch (err) {

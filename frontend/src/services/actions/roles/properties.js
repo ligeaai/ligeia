@@ -9,14 +9,15 @@ import { setConfirmation } from "../../reducers/confirmation";
 import Roles from "../../api/roles"
 
 import NewRoleSavePopUp from "../../../pages/main/administration/roles/properties/newRoleSavePopUp";
-import { loadTreeviewItem } from "../treeview/treeview"
+import { loadTreeviewItem, selectTreeItemAfterSave } from "../treeview/treeview"
 
 import { uuidv4 } from "../../utils/uuidGenerator"
 
-const refreshTreeView = () => dispatch => {
-    dispatch(loadTreeviewItem(async (body, cancelToken) => {
+const refreshTreeView = () => async dispatch => {
+    await dispatch(loadTreeviewItem(async (body, cancelToken) => {
         return await Roles.getAll(body, cancelToken);
     }, "ROLES_NAME"))
+    return true
 }
 
 const loadRolesProperty = (ROLES_NAME = "", ROLES_ID = uuidv4().replace(/-/g, "")) => (dispatch, getState) => {
@@ -76,8 +77,14 @@ export const updateRole = () => async (dispatch, getState) => {
     const ROLES = getState().roles.roles
     const PROPERTY = getState().roles.rows
     const body = JSON.stringify({ ROLES, PROPERTY: Object.values(PROPERTY) })
-    let res = await Roles.saveRole(body)
-    await dispatch(refreshTreeView())
+    try {
+        let res = await Roles.saveRole(body)
+        await dispatch(refreshTreeView())
+        dispatch(selectTreeItemAfterSave("ROLES_NAME", 2, ROLES.ROLES_NAME))
+    } catch {
+
+    }
+
     return true
 }
 
