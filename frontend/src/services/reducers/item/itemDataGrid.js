@@ -7,7 +7,8 @@ import {
     CLEAR_COLUMN_ITEM,
     DELETE_COLUMN_ITEM,
     CLEAN_ITEM_AND_ROWS,
-    UPDATE_COL_ITEM
+    UPDATE_COL_ITEM,
+    UPDATE_COLUMN_WIDTH_ITEMS
 } from "../../actions/types"
 import { Checkbox, TextField } from "@mui/material"
 
@@ -15,7 +16,7 @@ const columns = {
     "PROPERTY_NAME": {
         field: "PROPERTY_NAME",
         headerName: "Property",
-        minWidth: 200,
+        // minWidth: 100,
         renderCell: (params) => {
             return params.row.SHORT_LABEL;
         },
@@ -24,7 +25,7 @@ const columns = {
     "PROP_GRP": {
         field: "PROP_GRP",
         headerName: "Category",
-        minWidth: 100,
+        // minWidth: 100,
         cellClassName: "super-app-theme--cell",
     },
     "SORT_ORDER": {
@@ -63,6 +64,17 @@ export default function (state = initialState, action) {
     const { type, payload } = action;
 
     switch (type) {
+        case UPDATE_COLUMN_WIDTH_ITEMS: {
+            return {
+                ...state,
+                columns: {
+                    ...state.columns, [payload.key]: {
+                        ...state.columns[payload.key],
+                        width: payload.val
+                    }
+                }
+            }
+        }
         case CLEAN_ITEM_AND_ROWS:
             return {
                 ...state,

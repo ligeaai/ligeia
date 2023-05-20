@@ -9,13 +9,15 @@ import {
     ADD_ERROR_SUCCESS,
     DELETE_COLUMN_ITEM,
     CLEAN_ITEM_AND_ROWS,
-    UPDATE_COL_ITEM
+    UPDATE_COL_ITEM,
+    UPDATE_COLUMN_WIDTH_ITEMS,
+    CLEAR_COLUMN_ITEM
 } from "../types"
 import axios from "axios";
 import ItemService from "../../api/item"
 import { MyTextField } from "../../../pages/main/configuration/items/properties/myTextField";
 import { uuidv4 } from "../../utils/uuidGenerator";
-import { loadTreeviewItem, selectTreeViewItem } from "../treeview/treeview"
+import { loadTreeviewItem, selectTreeViewItem, selectTreeItemAfterSave } from "../treeview/treeview"
 import { newDate, swapDayAndYear } from "../../utils/dateFormatter";
 import { isNewUpdated } from "../../utils/permissions";
 
@@ -114,6 +116,31 @@ export const loadTypeRowsDataGrid = () => async (dispatch, getState) => {
     } catch (err) {
         return Promise.reject(err)
     }
+}
+
+export const cleanColumns = () => async (dispatch, getState) => {
+    const rows = getState().itemDataGrid.typeRows
+    dispatch({ type: CLEAR_COLUMN_ITEM })
+    function calculateWidth(type) {
+        let max = Math.max(
+            ...Object.keys(rows).map((e) => {
+                return rows[e][type]?.length === undefined ? 0 : rows[e][type]?.length;
+            })
+        );
+
+        return Number.isNaN(max) ? 150 : max * 7 + 24;
+    }
+    const values = {
+        SHORT_LABEL: "PROPERTY_NAME",
+        PROP_GRP: "PROP_GRP"
+    }
+    Object.keys(values).map(e => {
+        dispatch({
+            type: UPDATE_COLUMN_WIDTH_ITEMS,
+            payload: { key: values[e], val: calculateWidth(e) }
+        })
+
+    })
 }
 
 let itemCancelToken;
@@ -275,9 +302,14 @@ export const saveItem = () => async (dispatch, getState) => {
                 if (DELETED.length > 0)
                     res = await ItemService.remove(deleteBody)
             }
-            dispatch(loadTreeviewItem(async (body, cancelToken) => {
+            await dispatch(loadTreeviewItem(async (body, cancelToken) => {
                 return await ItemService.getAll(body, cancelToken, type);
             }, "PROPERTY_STRING"))
+            dispatch(selectTreeItemAfterSave(
+                "PROPERTY_STRING",
+                3,
+                PROPERTYS.filter(e => e.PROPERTY_TYPE === "NAME")[0].PROPERTY_STRING),
+            )
             return res
         } catch (err) {
             dispatch({

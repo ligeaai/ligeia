@@ -7,6 +7,7 @@ import {
     CLEAN_AFTER_SAVE,
     CLEAN_TREEVIEW,
     LOAD_TREE_VIEW_WIDTH
+
 } from "../types"
 
 import axios from "axios"
@@ -195,4 +196,11 @@ export const filterMenu = (text, path, body) => async (dispatch, getState) => {
         type: LOAD_FILTERED_TREEVIEW_ITEM,
         payload: value
     })
+}
+
+
+export const selectTreeItemAfterSave = (treeMenuName, breadcrumbPath, newItemName) => (dispatch, getState) => {
+    const treeItems = getState().treeview.treeMenuItem
+    const index = treeItems.findIndex(e => e[treeMenuName] === newItemName)
+    dispatch(selectTreeViewItem(index, treeMenuName, breadcrumbPath));
 }

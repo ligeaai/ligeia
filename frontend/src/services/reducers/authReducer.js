@@ -22,7 +22,7 @@ import {
     FACEBOOK_AUTH_SUCCESS,
     FACEBOOK_AUTH_FAIL,
     LOGOUT,
-    UPDATE_USER
+    UPDATE_USER,
 } from '../actions/types';
 
 const initialState = {

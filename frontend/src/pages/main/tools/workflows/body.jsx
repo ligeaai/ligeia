@@ -19,13 +19,15 @@ import {
   cleanWorkflow,
   loadWorkflowProp,
 } from "../../../../services/actions/workflow/workflow";
+import { setConfirmation } from "../../../../services/reducers/confirmation";
+import { setIsActiveConfirmation } from "../../../../services/actions/confirmation/historyConfirmation";
 const Body = () => {
   const dispatch = useDispatch();
   const selectedIndex = useSelector(
     (state) => state.treeview.selectedItem.selectedIndex
   );
   const name = useSelector((state) => state.treeview.selectedItem.NAME);
-
+  const isChanged = useSelector((state) => state.historyConfirmation.isActive);
   React.useEffect(() => {
     dispatch(setSaveFunctonConfirmation(saveWorkflow));
     dispatch(setTitleConfirmation("Are you sure you want to save this ? "));
@@ -47,7 +49,18 @@ const Body = () => {
           ];
         }}
         finishFunc={() => {
-          dispatch(saveWorkflow());
+          if (isChanged) {
+            dispatch(
+              setConfirmation({
+                title: "Are you sure you want to save this ?",
+                body: `${name ? name : "new"}`,
+                agreefunction: async () => {
+                  dispatch(saveWorkflow());
+                  dispatch(setIsActiveConfirmation(false));
+                },
+              })
+            );
+          }
         }}
       />
     </Box>

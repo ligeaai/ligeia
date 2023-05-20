@@ -10,7 +10,7 @@ import axios from "axios"
 
 import { Chip } from "@mui/material"
 
-import { selectTreeViewItem, loadTreeviewItem } from "../treeview/treeview"
+import { selectTreeViewItem, loadTreeviewItem, selectTreeItemAfterSave } from "../treeview/treeview"
 import ProjectService from "../../api/project"
 
 import { setLoaderTrue, setLoaderFalse } from "../loader"
@@ -57,15 +57,18 @@ export const deleteProject = () => async (dispatch, getState) => {
     const ROW_ID = getState().treeview.selectedItem.ROW_ID
     const selectedIndex = getState().treeview.selectedItem.selectedIndex
     const body = JSON.stringify({ ROW_ID });
+    dispatch(setLoaderTrue())
     try {
         let res = await ProjectService.remove(body)
         await dispatch(loadTreeviewItem(async (body, cancelToken) => {
             return await ProjectService.getAll(body, cancelToken);
         }, "NAME"))
         dispatch(selectTreeViewItem(selectedIndex, "NAME"));
+        dispatch(setLoaderFalse())
         return true
     }
     catch (err) {
+        dispatch(setLoaderFalse())
     }
 }
 
@@ -74,11 +77,10 @@ export const saveProject = () => async (dispatch, getState) => {
     const data = getState().project.data
     const kubernetes = getState().project.kubernetes
     const body = Object.assign({}, data);
-    console.log(body);
     try {
         dispatch(setLoaderTrue())
         body.DB_SETTINGS = kubernetes.filter(e => e.HOST === body.DB_SETTINGS)[0]
-        body.DB_SETTINGS.NAME = body.LAYER_NAME.toLowerCase();
+        body.DB_SETTINGS.NAME = body.LAYER_NAME.toLowerCase().replace(/ /g, "_");
         delete body.DB_SETTINGS.status
         console.log(body);
         if (isNew === -2) {
@@ -89,11 +91,13 @@ export const saveProject = () => async (dispatch, getState) => {
         await dispatch(loadTreeviewItem(async (body, cancelToken) => {
             return await ProjectService.getAll(body, cancelToken);
         }, "NAME"))
+        dispatch(selectTreeItemAfterSave("LAYER_NAME", 2, body.LAYER_NAME))
         dispatch(setLoaderFalse())
         return true
 
     } catch (err) {
         dispatch(setLoaderFalse())
+
         console.log(err);
     }
 }
@@ -115,11 +119,12 @@ export const loadKubernetes = () => async (dispatch, getState) => {
     try {
         const text = getState().project.data.DATA_SOURCE
         let res = await ProjectService.kubernetes(text)
+        console.log(res.data);
         Promise.all(
             res.data.map(e => {
-                e["NAME"] = <div>
+                e["NAME"] =
                     <Chip
-                        label={e.status ? "Success" : "Failed"}
+                        label={e.HOST}
                         variant="outlined"
                         size="small"
                         sx={{
@@ -127,9 +132,6 @@ export const loadKubernetes = () => async (dispatch, getState) => {
                             borderColor: e.status ? "green" : "red" + " !important"
                         }}
                     />
-                    {" "}
-                    {e.HOST}
-                </div>
             })
         )
         dispatch({

@@ -12,7 +12,7 @@ import {
 
 import TagService from "../../api/tags";
 
-import { loadTreeviewItem, selectTreeViewItem } from "../treeview/treeview";
+import { loadTreeviewItem, selectTreeViewItem, selectTreeItemAfterSave } from "../treeview/treeview";
 import { setIsActiveConfirmation } from "../confirmation/historyConfirmation";
 import { uuidv4 } from "../../utils/uuidGenerator"
 import { swapDayAndYear } from "../../utils/dateFormatter"
@@ -133,8 +133,9 @@ export const saveTag = () => async (dispatch, getState) => {
     const saveValues = getState().tags.saveValues
     if (_checkmandatoryFields(values, properties)) {
         let res = await _newTagSave(saveValues, user)
-        dispatch(loadTreeviewItem(TagService.getAll, "NAME"))
+        await dispatch(loadTreeviewItem(TagService.getAll, "NAME"))
         dispatch(setIsActiveConfirmation(false))
+        dispatch(selectTreeItemAfterSave("NAME", 3, saveValues.NAME))
         return Promise.resolve(res.data)
     }
     else {

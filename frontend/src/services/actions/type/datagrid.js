@@ -17,7 +17,7 @@ import {
     setConfirmation,
 } from "../../reducers/confirmation";
 
-import { loadTreeviewItem, selectTreeViewItem } from "../treeview/treeview"
+import { loadTreeviewItem, selectTreeItemAfterSave, selectTreeViewItem } from "../treeview/treeview"
 
 import TypeService from "../../api/type"
 
@@ -203,8 +203,7 @@ export const deleteType = () => (dispatch, getState) => {
                 if (checkmandatoryFields()) {
                     await _deleteType(body)
                     await dispatch(loadTreeviewItem(TypeService.getAll, "TYPE"))
-                    dispatch(selectTreeViewItem(selectedIndex, "TYPE"))
-                    //  dispatch(_goIndex(selectedIndex))
+                    dispatch(selectTreeViewItem(selectedIndex, "TYPE", 2))
                 }
                 else {
                     dispatch({
@@ -220,6 +219,8 @@ export const deleteType = () => (dispatch, getState) => {
 export const saveTypeAndProperty = () => async (dispatch, getState) => {
     const anyChangesType = getState().dataGridType.anyChangesType
     const anyChangesProperty = getState().dataGridType.anyChangesProperty
+    let body;
+    let typebody;
     if (anyChangesType) {
         const lastUpdateUser = getState().auth.user.email
         const now = new Date();
@@ -232,9 +233,9 @@ export const saveTypeAndProperty = () => async (dispatch, getState) => {
             }
         })
 
-        const body = JSON.stringify({ ...mySaveVal, LAST_UPDT_USER: lastUpdateUser, LAST_UPDT_DATE: newdate })
+        typebody = JSON.stringify({ ...mySaveVal, LAST_UPDT_USER: lastUpdateUser, LAST_UPDT_DATE: newdate })
         try {
-            let res = await TypeService.createUpdateType(body);
+            let res = await TypeService.createUpdateType(typebody);
         } catch (err) {
             return Promise.reject(err)
         }
@@ -248,7 +249,7 @@ export const saveTypeAndProperty = () => async (dispatch, getState) => {
             Object.keys(propertyRows).map(async e => {
                 if (changedRows.some(s => s === e)) {
                     delete propertyRows[e]["HIEARCHY"]
-                    var body = JSON.stringify({ ...propertyRows[e] })
+                    body = JSON.stringify({ ...propertyRows[e] })
                     try {
                         let res = await TypeService.createUpdateProperty(body);
                     }
@@ -257,11 +258,13 @@ export const saveTypeAndProperty = () => async (dispatch, getState) => {
             }))
         await Promise.all(
             deletedRows.map(async e => {
-                var body = JSON.stringify({ ROW_ID: e })
+                body = JSON.stringify({ ROW_ID: e })
                 let res = await TypeService.deleteProperty(body);
             }))
     }
     dispatch(loadTreeviewItem(TypeService.getAll, "TYPE"))
+    if (anyChangesType)
+        dispatch(selectTreeItemAfterSave("TYPE", 2, typebody.TYPE))
     dispatch({
         type: AFTER_GO_INDEX_TYPE
     })
