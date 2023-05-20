@@ -8,6 +8,7 @@ import MenuOpenOutlinedIcon from "@mui/icons-material/MenuOpenOutlined";
 
 import AlertIcon from "./alert/alarmsIcon";
 import SettingMenu from "./settingsMenu";
+import Menu from "./settingsMenu/main";
 import history from "../../routers/history";
 import { setOpenTab } from "../../services/actions/drawerMenu/drawerMenu";
 const DrawerIcon = () => {
@@ -48,7 +49,8 @@ const Header = () => {
       <Grid item>
         <Grid container columnSpacing={2} className="app-header__right-box">
           <AlertIcon />
-          <SettingMenu />
+          {/* <SettingMenu /> */}
+          <Menu />
         </Grid>
       </Grid>
     </Grid>

@@ -1,10 +1,5 @@
 @import "../../../components/boxes.scss";
 .code-list-container__body {
-  &__action-box {
-    &__layer-select {
-      margin-inline: 8px !important;
-    }
-  }
   &__property-box {
     &__datagrid {
       height: 100%;

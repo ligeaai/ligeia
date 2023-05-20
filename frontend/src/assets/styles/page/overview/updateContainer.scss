@@ -16,7 +16,7 @@
       align-items: center;
       justify-content: space-between;
       font-weight: bold;
-      font-size: 14px;
+      font-size: 1.1rem;
       width: 100%;
       &__id {
         @include themify($themes) {
@@ -26,7 +26,7 @@
     }
     &__body {
       div {
-        font-size: "14px";
+        font-size: 1.1rem;
       }
       padding: 16px;
       height: calc(100% - 55px);

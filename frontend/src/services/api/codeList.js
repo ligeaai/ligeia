@@ -34,6 +34,11 @@ const getItemPropCode = (body) => {
     return instance.post("code-list/property-code/", body, config());
 };
 
+
+const getCultures = () => {
+    return instance.get("/code-list/culture/", config());
+};
+
 const elasticSearch = (text, body, cancelToken) => {
     return instance.post(`/code-list/es/`, body, { ...config(), cancelToken: cancelToken.token });
 };
@@ -47,7 +52,8 @@ const CodelistService = {
     remove,
     details,
     getItemPropCode,
-    elasticSearch
+    elasticSearch,
+    getCultures
 };
 
 

@@ -68,13 +68,6 @@ const Type = () => {
   const isMount = useIsMount();
 
   const dispatch = useDispatch();
-  const filteredLayerName = useSelector(
-    (state) => state.treeview.filteredLayerName
-  );
-  const [layerValues, setLayerValues] = React.useState(["NONE"]);
-  const selectHandleChangeFunc = (params) => {
-    dispatch(setFilteredLayerName(params));
-  };
   const selectedIndex = useSelector(
     (state) => state.treeview.selectedItem.selectedIndex
   );
@@ -91,23 +84,6 @@ const Type = () => {
       dispatch(refreshDataGridType());
     }
   }, [selectedIndex, type]);
-
-  React.useEffect(() => {
-    const myFunc = async () => {
-      try {
-        let res = await instance.get(`/layer/layer-dropdown/`, config());
-        var myRes = [];
-        res.data.map((e) => {
-          myRes.push(e.LAYER_NAME);
-        });
-        setLayerValues(["NONE", ...myRes]);
-      } catch {}
-    };
-    myFunc();
-    return () => {
-      dispatch(cleanAllDataGrid());
-    };
-  }, []);
 
   return (
     <React.Fragment>
@@ -137,18 +113,6 @@ const Type = () => {
               <MyActionMenu />
             </ComponentError>
           </Grid>
-          <MyDivider />
-          <Grid
-            item
-            className="types-container__body__action-box__layer-select"
-          >
-            <Select
-              values={layerValues}
-              defaultValue={filteredLayerName}
-              handleChangeFunc={selectHandleChangeFunc}
-            />
-          </Grid>
-          <MyDivider />
         </Grid>
 
         <ItemSperatorLineXL />
