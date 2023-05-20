@@ -4,7 +4,7 @@ services:
     restart: unless-stopped
     build:
       context: ../../
-      dockerfile: ./dockerfile/local/frontend/Dockerfile
+      dockerfile: ./all_dockerfiles/local/frontend/Dockerfile
     container_name: ligeiaai-frontend-1
     env_file:
       - .env
@@ -28,7 +28,7 @@ services:
     restart: unless-stopped
     build:
       context: ../../
-      dockerfile: ./dockerfile/local/django/Dockerfile
+      dockerfile: ./all_dockerfiles/local/django/Dockerfile
     command: /start
     container_name: ligeiaai-django-1
     env_file:

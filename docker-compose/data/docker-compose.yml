@@ -36,63 +36,10 @@ services:
       KAFKA_JMX_HOSTNAME: localhost
     networks:
       - app_net
-  control-center:
-    image: confluentinc/cp-enterprise-control-center:5.3.1
-    hostname: control-center
-    container_name: ligeiaai-control-center
-    depends_on:
-      - zookeeper
-      - apache-kafka-broker1
-    ports:
-      - "9021:9021"
-    environment:
-      CONTROL_CENTER_BOOTSTRAP_SERVERS: 'broker:29092'
-      CONTROL_CENTER_ZOOKEEPER_CONNECT: 'zookeeper:2181'
-      CONTROL_CENTER_CONNECT_CLUSTER: 'connect:8088'
-      CONTROL_CENTER_REPLICATION_FACTOR: 1
-      CONTROL_CENTER_INTERNAL_TOPICS_PARTITIONS: 1
-      CONTROL_CENTER_MONITORING_INTERCEPTOR_TOPIC_PARTITIONS: 1
-      CONFLUENT_METRICS_TOPIC_REPLICATION: 1
-      PORT: 9021
-    networks:
-      - app_net
-  connect:
-    build:
-      context: .
-      dockerfile: ../../dockerfile/dev/datapipelines/Dockerfile
-    container_name: ligeiaai-connect
-    hostname: connect
-    ports:
-      - "8088:8088"
-    depends_on:
-      - apache-kafka-broker1
-    environment:
-      CONNECT_BOOTSTRAP_SERVERS: broker:29092
-      CONNECT_GROUP_ID: "connect-group"
-      CONNECT_CONFIG_STORAGE_TOPIC: "connect-config-storage"
-      CONNECT_OFFSET_STORAGE_TOPIC: "connect-offset-storage"
-      CONNECT_STATUS_STORAGE_TOPIC: "connect-status-storage"
-      CONNECT_KEY_CONVERTER: "org.apache.kafka.connect.storage.StringConverter"
-      CONNECT_VALUE_CONVERTER: "org.apache.kafka.connect.converters.ByteArrayConverter"
-      CONNECT_INTERNAL_KEY_CONVERTER: "org.apache.kafka.connect.json.JsonConverter"
-      CONNECT_INTERNAL_VALUE_CONVERTER: "org.apache.kafka.connect.json.JsonConverter"
-      CONNECT_PLUGIN_PATH: "/usr/share/confluent-hub-components"
-      CONNECT_REST_ADVERTISED_HOST_NAME: "connect"
-      CONNECT_REST_HOST_NAME: "connect"
-      CONNECT_REST_PORT: "8088"
-      CONNECT_CONFIG_STORAGE_REPLICATION_FACTOR: 1
-      CONNECT_OFFSET_STORAGE_REPLICATION_FACTOR: 1
-      CONNECT_STATUS_STORAGE_REPLICATION_FACTOR: 1
-      CONNECT_LOG4J_ROOT_LOGLEVEL: "INFO"
-      CLASSPATH: /usr/share/java/monitoring-interceptors/monitoring-interceptors-5.1.1.jar
-      CONNECT_PRODUCER_INTERCEPTOR_CLASSES: "io.confluent.monitoring.clients.interceptor.MonitoringProducerInterceptor"
-      CONNECT_CONSUMER_INTERCEPTOR_CLASSES: "io.confluent.monitoring.clients.interceptor.MonitoringConsumerInterceptor"
-    networks:
-      - app_net
   nifi:
     build:
       context: .
-      dockerfile: ../../dockerfile/local/datapipline/Nifi/Dockerfile
+      dockerfile: ../../all_dockerfiles/local/datapipline/Nifi/Dockerfile
     restart: unless-stopped
     image: apache/nifi:latest
     env_file:
@@ -149,10 +96,64 @@ services:
       - app_net
 networks:
   app_net:
-    external: true
+    driver: bridge
 volumes:
   zookeeper_data: null
   broker_data: null
   connect_data: null
   data:
     name: "mqtt-broker-data"
+
+  # control-center:
+  #   image: confluentinc/cp-enterprise-control-center:5.3.1
+  #   hostname: control-center
+  #   container_name: ligeiaai-control-center
+  #   depends_on:
+  #     - zookeeper
+  #     - apache-kafka-broker1
+  #   ports:
+  #     - "9021:9021"
+  #   environment:
+  #     CONTROL_CENTER_BOOTSTRAP_SERVERS: 'broker:29092'
+  #     CONTROL_CENTER_ZOOKEEPER_CONNECT: 'zookeeper:2181'
+  #     CONTROL_CENTER_CONNECT_CLUSTER: 'connect:8088'
+  #     CONTROL_CENTER_REPLICATION_FACTOR: 1
+  #     CONTROL_CENTER_INTERNAL_TOPICS_PARTITIONS: 1
+  #     CONTROL_CENTER_MONITORING_INTERCEPTOR_TOPIC_PARTITIONS: 1
+  #     CONFLUENT_METRICS_TOPIC_REPLICATION: 1
+  #     PORT: 9021
+  #   networks:
+  #     - app_net
+  # connect:
+  #   build:
+  #     context: .
+  #     dockerfile: ../../dockerfile/dev/datapipelines/Dockerfile
+  #   container_name: ligeiaai-connect
+  #   hostname: connect
+  #   ports:
+  #     - "8088:8088"
+  #   depends_on:
+  #     - apache-kafka-broker1
+  #   environment:
+  #     CONNECT_BOOTSTRAP_SERVERS: broker:29092
+  #     CONNECT_GROUP_ID: "connect-group"
+  #     CONNECT_CONFIG_STORAGE_TOPIC: "connect-config-storage"
+  #     CONNECT_OFFSET_STORAGE_TOPIC: "connect-offset-storage"
+  #     CONNECT_STATUS_STORAGE_TOPIC: "connect-status-storage"
+  #     CONNECT_KEY_CONVERTER: "org.apache.kafka.connect.storage.StringConverter"
+  #     CONNECT_VALUE_CONVERTER: "org.apache.kafka.connect.converters.ByteArrayConverter"
+  #     CONNECT_INTERNAL_KEY_CONVERTER: "org.apache.kafka.connect.json.JsonConverter"
+  #     CONNECT_INTERNAL_VALUE_CONVERTER: "org.apache.kafka.connect.json.JsonConverter"
+  #     CONNECT_PLUGIN_PATH: "/usr/share/confluent-hub-components"
+  #     CONNECT_REST_ADVERTISED_HOST_NAME: "connect"
+  #     CONNECT_REST_HOST_NAME: "connect"
+  #     CONNECT_REST_PORT: "8088"
+  #     CONNECT_CONFIG_STORAGE_REPLICATION_FACTOR: 1
+  #     CONNECT_OFFSET_STORAGE_REPLICATION_FACTOR: 1
+  #     CONNECT_STATUS_STORAGE_REPLICATION_FACTOR: 1
+  #     CONNECT_LOG4J_ROOT_LOGLEVEL: "INFO"
+  #     CLASSPATH: /usr/share/java/monitoring-interceptors/monitoring-interceptors-5.1.1.jar
+  #     CONNECT_PRODUCER_INTERCEPTOR_CLASSES: "io.confluent.monitoring.clients.interceptor.MonitoringProducerInterceptor"
+  #     CONNECT_CONSUMER_INTERCEPTOR_CLASSES: "io.confluent.monitoring.clients.interceptor.MonitoringConsumerInterceptor"
+  #   networks:
+  #     - app_net
