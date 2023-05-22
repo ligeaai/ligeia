@@ -170,6 +170,7 @@ export const LOAD_LAYER_LIST_USERS = "LOAD_LAYER_LIST_USERS"
 export const DELETE_USER = "DELETE_USER"
 export const UPDATE_LAYER_USERS = "UPDATE_LAYER_USERS"
 export const LOAD_ROLES_LIST_USERS = "LOAD_ROLES_LIST_USERS"
+export const UPDATE_ROLES_USERS = "UPDATE_ROLES_USERS"
 
 
 //-----------Roles------------------------------------

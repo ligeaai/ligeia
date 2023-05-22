@@ -34,7 +34,7 @@ const Settings = ({ changeMenu, handleClose }) => {
           changeMenu("main");
         }}
       >
-        <MenuItems Icon={ArrowBackIcon} text="Layer" />
+        <MenuItems Icon={ArrowBackIcon} text="Settings" />
       </MenuItem>
       <Divider />
 

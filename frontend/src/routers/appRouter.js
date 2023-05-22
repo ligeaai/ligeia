@@ -11,6 +11,7 @@ import PublicRoute from "./publicRouter";
 
 import { Confirmation, MyNavigator, Loadable, HistoryConfirmation, ErrorMessage } from "../components";
 import { applyTheme } from "../services/actions/theme";
+import { applyFontSize } from "../services/actions/fontSize";
 
 const Diagnostics = Loadable(React.lazy(() => import("../pages/main/administration/diagnostics/main")));
 const Users = Loadable(React.lazy(() => import("../pages/main/administration/users/main")));
@@ -108,6 +109,7 @@ const AppRouter1 = () => {
 const AppRouter = () => {
   React.useEffect(() => {
     applyTheme()
+    applyFontSize()
   }, [])
   return (
     <HistoryRouter history={history}>

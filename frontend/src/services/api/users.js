@@ -12,8 +12,12 @@ const createUser = (body) => {
     return instance.post("/auth/user/create/", body, config());
 }
 
-const updateUser = (body) => {
+const updateUserLayer = (body) => {
     return instance.post("/auth/user/layer/update/", body, config());
+};
+
+const updateUserRole = (body) => {
+    return instance.post("/auth/user/role/update/", body, config());
 };
 
 const removeUser = (body) => {
@@ -27,7 +31,8 @@ const Users = {
     getAll,
     getRoles,
     getLayers,
-    updateUser,
+    updateUserLayer,
+    updateUserRole,
     removeUser,
     createUser
 };
