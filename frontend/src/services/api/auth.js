@@ -44,6 +44,9 @@ const activeLayerUpdate = (body) => {
 }
 
 
+const userEnableLayer = () => {
+    return instance.get(`/auth/user/layers/`, config());
+}
 
 const Auth = {
     get,
@@ -56,7 +59,8 @@ const Auth = {
     checkMail,
     profileUpdate,
     activeLayerUpdate,
-    updatePassword
+    updatePassword,
+    userEnableLayer
 };
 
 

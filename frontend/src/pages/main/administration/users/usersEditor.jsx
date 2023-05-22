@@ -85,7 +85,7 @@ const UserEditor = () => {
                   dispatch(toggleLayer(layer, params.row.id));
                 }}
                 size="small"
-                sx={{ mr: 0.5 }}
+                sx={{ mr: 0.5, display: "block" }}
               />
             </>
           );
@@ -99,7 +99,7 @@ const UserEditor = () => {
       renderCell: (params) => (
         <IconButton
           onClick={() => {
-            dispatch(deleteUser(params.row.id));
+            dispatch(deleteUser(params.row.id, params.row.email));
           }}
           disabled={params.row.id === instantUserId}
         >
