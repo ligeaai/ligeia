@@ -36,6 +36,14 @@
         }
         box-shadow: $shadow-five;
       }
+      &-left {
+        width: auto !important;
+        height: auto !important;
+      }
+      &-right {
+        width: auto !important;
+        height: auto !important;
+      }
     }
     &__divider {
       width: calc(100% - 24px);

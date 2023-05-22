@@ -61,6 +61,7 @@ const AlertIcon = () => {
             sx={{
               color: "primary.light",
             }}
+            className="app-header__right-box__alert-icon"
           />
         </StyledBadge>
       </IconButton>

@@ -10,7 +10,8 @@
     background-color: themed("bg-app-header");
   }
   .drawer-menu-icon {
-    @include h-4;
+    // @include h-4;
+    font-size: 34px;
     @include themify($themes) {
       color: themed("text-drawer-item");
     }
@@ -42,5 +43,8 @@
   }
   .app-header__right-box {
     align-items: center;
+    &__alert-icon {
+      font-size: 24px;
+    }
   }
 }
