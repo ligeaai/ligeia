@@ -13,7 +13,7 @@ import {
 
 import Users from "../../api/users"
 import { setLoaderFalse, setLoaderTrue } from "../loader";
-
+import Roles from "../../api/roles";
 const getUsers = () => async dispatch => {
     let res = await Users.getAll()
     console.log(res.data);
@@ -87,11 +87,14 @@ export const saveUsers = () => async (dispatch, getState) => {
             console.log(deleteBody);
             await Users.removeUser(deleteBody)
         }
-        if (updatedUsers.find(e => e === instantUser.id) !== undefined)
+        if (updatedUsers.find(e => e === instantUser.id) !== undefined) {
+            let res = await Roles.getRoleProp({ ROLES_ID: instantUser.role })
+            console.log(res.data);
             dispatch({
                 type: USER_LOADED_SUCCESS,
-                payload: users.filter(e => e.id === instantUser.id)[0]
+                payload: { ...users.filter(e => e.id === instantUser.id)[0], role: res.data }
             })
+        }
         dispatch(checkActiveLayer(instantUser))
         dispatch(getUsers())
         setLoaderFalse()

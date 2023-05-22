@@ -8,7 +8,8 @@ import DoneIcon from "@mui/icons-material/Done";
 import MenuItems from "./menuItem";
 import Auth from "../../../services/api/auth";
 const Layer = ({ changeMenu, handleClose }) => {
-  const enableLayers = useSelector((state) => state.auth?.user?.layer_name);
+  const [enableLayers, setEnableLayers] = React.useState([]);
+  // const enableLayers = useSelector((state) => state.auth?.user?.layer_name);
   const activeLayer = useSelector((state) => state.auth?.user?.active_layer);
   const layerSelect = async (LAYER_NAME) => {
     try {
@@ -22,6 +23,14 @@ const Layer = ({ changeMenu, handleClose }) => {
       window.location.reload();
     } catch {}
   };
+  React.useEffect(() => {
+    async function myFunc() {
+      let res = await Auth.userEnableLayer();
+      console.log(res.data);
+      setEnableLayers(res.data);
+    }
+    myFunc();
+  }, []);
   return (
     <>
       <MenuItem
