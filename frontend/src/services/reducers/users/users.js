@@ -49,11 +49,11 @@ export default function (state = initialState, action) {
         case DELETE_USER: {
             return {
                 ...state,
-                deletedUsers: [...state.deletedUsers, payload],
-                users: state.users.filter(e => e.id !== payload),
-                updatedUsers: state.updatedUsers.filter(e => e !== payload),
-                updatedLayer: state.updatedLayer.filter(e => e !== payload),
-                updatedRoles: state.updatedRoles.filter(e => e !== payload),
+                deletedUsers: [...state.deletedUsers, payload.email],
+                users: state.users.filter(e => e.id !== payload.id),
+                updatedUsers: state.updatedUsers.filter(e => e !== payload.id),
+                updatedLayer: state.updatedLayer.filter(e => e !== payload.id),
+                updatedRoles: state.updatedRoles.filter(e => e !== payload.id),
             }
         }
         case LOAD_USERS_LIST: {

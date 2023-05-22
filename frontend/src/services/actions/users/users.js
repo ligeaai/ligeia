@@ -12,6 +12,7 @@ import {
 } from "../types"
 
 import Users from "../../api/users"
+import { setLoaderFalse, setLoaderTrue } from "../loader";
 
 const getUsers = () => async dispatch => {
     let res = await Users.getAll()
@@ -63,12 +64,14 @@ export const saveUsers = () => async (dispatch, getState) => {
     const updatedUsers = getState().users.updatedUsers
     const updatedLayer = getState().users.updatedLayer
     const updatedRoles = getState().users.updatedRoles
+    setLoaderTrue()
     try {
         if (updatedLayer.length > 0) {
             const body = { users: [] }
             users.filter(e => updatedLayer.find(a => a === e.id)).map(e => {
                 body.users.push({ email: e.email, layer_name: e.layer_name })
             })
+            console.log(body);
             await Users.updateUserLayer(body)
         }
         if (updatedRoles.length > 0) {
@@ -80,10 +83,8 @@ export const saveUsers = () => async (dispatch, getState) => {
             await Users.updateUserRole(roleUpadatebody)
         }
         if (deletedUsers.length > 0) {
-            const deleteBody = { users: [] }
-            users.filter(e => deletedUsers.find(a => a === e.id)).map(e => {
-                deleteBody.users.push(e.email)
-            })
+            const deleteBody = JSON.stringify({ users: deletedUsers, LAYER_NAME: instantUser.addNewUser })
+            console.log(deleteBody);
             await Users.removeUser(deleteBody)
         }
         if (updatedUsers.find(e => e === instantUser.id) !== undefined)
@@ -93,7 +94,9 @@ export const saveUsers = () => async (dispatch, getState) => {
             })
         dispatch(checkActiveLayer(instantUser))
         dispatch(getUsers())
+        setLoaderFalse()
     } catch (err) {
+        setLoaderFalse()
         console.log(err);
     }
 }
@@ -108,10 +111,10 @@ export const addNewUser = (body) => async dispatch => {
     }
 }
 
-export const deleteUser = (id) => async dispatch => {
+export const deleteUser = (id, email) => async dispatch => {
     dispatch({
         type: DELETE_USER,
-        payload: id
+        payload: { id: id, email: email }
     })
     dispatch({
         type: SET_IS_ACTIVE_CONFIRMATION,
